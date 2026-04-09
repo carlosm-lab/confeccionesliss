@@ -1,18 +1,34 @@
-import { Inter, Geist } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-sans",
   display: "swap",
 });
 
+import { siteConfig } from "@/config/site";
+
 export const metadata = {
   title: {
-    default: "[Nombre del Proyecto]",
-    template: "%s | [Nombre del Proyecto]",
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`,
   },
-  description: "Descripción del proyecto",
+  description: siteConfig.description,
+  metadataBase: new URL(siteConfig.url),
+  openGraph: {
+    title: siteConfig.name,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    images: [
+      {
+        url: siteConfig.ogImage,
+      },
+    ],
+    locale: "es_ES",
+    type: "website",
+  },
   robots: {
     index: true,
     follow: true,
@@ -31,10 +47,7 @@ export const viewport = {
   initialScale: 1,
 };
 
-import { ThemeProvider } from "@/components/theme-provider";
-import { cn } from "@/lib/utils";
-
-const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
+import { Providers } from "@/providers";
 
 export default function RootLayout({
   children,
@@ -42,20 +55,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="es"
-      className={cn(inter.variable, "font-sans", geist.variable)}
-      suppressHydrationWarning
-    >
+    <html lang="es" className={inter.variable} suppressHydrationWarning>
       <body className="antialiased">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

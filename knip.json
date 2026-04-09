@@ -1,0 +1,21 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "ignore": ["prototypes/**"],
+  "ignoreDependencies": [
+    "@base-ui/react",
+    "@t3-oss/env-nextjs",
+    "class-variance-authority",
+    "client-only",
+    "clsx",
+    "framer-motion",
+    "lucide-react",
+    "next-safe-action",
+    "server-only",
+    "tailwind-merge",
+    "zod",
+    "zustand",
+    "@testing-library/react"
+  ],
+  "entry": ["src/app/**/*.{ts,tsx}", "src/mocks/handlers.ts"],
+  "ignoreBinaries": ["commitlint"]
+}

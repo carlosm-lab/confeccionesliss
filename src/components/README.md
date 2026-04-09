@@ -4,7 +4,7 @@ Esta carpeta está destinada a contener todos los componentes de React utilizado
 
 ## Convenciones
 
-- Cada componente debe estar en su propio archivo con formato **PascalCase** (ej: `MiComponente.jsx` o `MiComponente.js`).
+- Cada componente debe estar en su propio archivo con formato **PascalCase** (ej: `MiComponente.tsx`).
 - Mantén los componentes pequeños, enfocados y reutilizables.
 - Agrupa los componentes por funcionalidad en subcarpetas si es necesario (ej: `layout/`, `ui/`, `forms/`).
 - Importa estilos de CSS Modules o utiliza clases de Tailwind CSS según las convenciones del proyecto.
