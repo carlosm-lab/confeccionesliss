@@ -19,10 +19,11 @@ const eslintConfig = defineConfig([
     settings: {
       "boundaries/elements": [
         { type: "server", pattern: "src/app/api/**/*" },
-        { type: "server", pattern: "src/actions/**/*" },
-        { type: "server", pattern: "src/lib/server/**/*" },
-        { type: "client", pattern: "src/components/**/*" },
-        { type: "client", pattern: "src/hooks/**/*" },
+        { type: "actions", pattern: "src/actions/**/*" },
+        { type: "lib", pattern: "src/lib/**/*" },
+        { type: "hooks", pattern: "src/hooks/**/*" },
+        { type: "ui", pattern: "src/components/ui/**/*" },
+        { type: "components", pattern: "src/components/**/*" },
         { type: "client", pattern: "src/app/(dev)/sandbox/**/*"}
       ],
     },
@@ -33,9 +34,14 @@ const eslintConfig = defineConfig([
           default: "allow",
           rules: [
             {
-              from: [["client"]],
-              disallow: [["server"]],
-              message: "Componentes de cliente no pueden importar código de servidor (Server Actions o APIs).",
+              from: ["ui"],
+              disallow: ["components", "hooks", "actions", "server"],
+              message: "UI components cannot import from higher layers.",
+            },
+            {
+              from: ["client", "components"],
+              disallow: ["server", "actions"],
+              message: "Client components cannot directly import server code or actions.",
             },
           ],
         },

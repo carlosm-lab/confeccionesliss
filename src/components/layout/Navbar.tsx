@@ -7,7 +7,7 @@ import { useAppStore } from "@/context/useAppStore";
 export function Navbar() {
   const pathname = usePathname();
   const cartItems = useAppStore((state) => state.cartItems);
-  const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+  const cartCount = cartItems.reduce((acc, item) => acc + item.cantidad, 0);
 
   // A helper to apply active state styling correctly
   const getNavClasses = (path: string) => {
