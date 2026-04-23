@@ -1,10 +1,18 @@
-import { Inter } from "next/font/google";
+import { Manrope, Noto_Serif } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
+const manrope = Manrope({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
+});
+
+const notoSerif = Noto_Serif({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  display: "swap",
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
 });
 
 import { siteConfig } from "@/config/site";
@@ -55,8 +63,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={inter.variable} suppressHydrationWarning>
-      <body className="antialiased">
+    <html
+      lang="es"
+      className={`${manrope.variable} ${notoSerif.variable} light`}
+      suppressHydrationWarning
+    >
+      <head>
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="flex min-h-screen flex-col antialiased">
         <Providers>{children}</Providers>
       </body>
     </html>
