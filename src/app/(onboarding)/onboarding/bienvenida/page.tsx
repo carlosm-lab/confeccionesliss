@@ -47,7 +47,7 @@ export default function BienvenidaPage() {
 
   useEffect(() => {
     if (secondsLeft <= 0) {
-      router.push(redirectUrl);
+      router.push(redirectUrl as any);
       return;
     }
     const timer = setTimeout(() => setSecondsLeft((s) => s - 1), 1000);
@@ -55,7 +55,7 @@ export default function BienvenidaPage() {
   }, [secondsLeft, router, redirectUrl]);
 
   const handleGoNow = useCallback(
-    () => router.push(redirectUrl),
+    () => router.push(redirectUrl as any),
     [router, redirectUrl]
   );
   const handleExplore = useCallback(() => router.push("/"), [router]);
