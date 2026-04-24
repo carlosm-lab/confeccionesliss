@@ -26,7 +26,7 @@ export default function ProductoPage({ params }: { params: { id: string } }) {
           <li>
             <Link
               className="hover:text-primary transition-colors"
-              href="/catalogo"
+              href={"/catalogo" as any}
             >
               Sector Salud
             </Link>
@@ -37,7 +37,7 @@ export default function ProductoPage({ params }: { params: { id: string } }) {
           <li>
             <Link
               className="hover:text-primary transition-colors"
-              href="/catalogo/medico"
+              href="/catalogo/salud"
             >
               Scrubs Médicos
             </Link>

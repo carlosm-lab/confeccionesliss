@@ -235,7 +235,7 @@ export default function ProfessionalInstitutionPage() {
             <span className="material-symbols-outlined">arrow_forward</span>
           </Link>
           <Link
-            href="/onboarding/roles"
+            href="/onboarding/rol"
             className="font-headline text-primary hover:bg-surface-container-low flex items-center justify-center gap-2 rounded-xl bg-transparent px-8 py-4 font-bold transition-colors"
           >
             <span className="material-symbols-outlined text-[20px]">

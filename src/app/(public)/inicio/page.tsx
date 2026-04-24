@@ -129,7 +129,7 @@ export default function HomePage() {
               Fisioterapia
             </Link>
             <Link
-              href="/catalogo/escuelas"
+              href={"/catalogo/escolar" as any}
               className="bg-surface-container-high text-on-surface font-label hover:bg-surface-variant flex shrink-0 snap-start items-center gap-2 rounded-full px-6 py-2 text-sm font-medium transition-colors"
             >
               <span className="material-symbols-outlined text-sm">school</span>{" "}
@@ -143,7 +143,7 @@ export default function HomePage() {
               Lab Clínico
             </Link>
             <Link
-              href="/catalogo/empresas"
+              href={"/catalogo/corporativo" as any}
               className="bg-surface-container-high text-on-surface font-label hover:bg-surface-variant flex shrink-0 snap-start items-center gap-2 rounded-full px-6 py-2 text-sm font-medium transition-colors"
             >
               <span className="material-symbols-outlined text-sm">domain</span>{" "}

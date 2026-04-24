@@ -56,7 +56,7 @@ export default function NotFound() {
             </Link>
             <Link
               className="border-outline-variant/20 text-primary-container hover:bg-surface-container-low rounded-md border-[1.5px] bg-transparent px-8 py-3 text-center font-medium transition-colors"
-              href="/catalogo/medico"
+              href="/catalogo/salud"
             >
               Ver catálogo
             </Link>
@@ -80,7 +80,7 @@ export default function NotFound() {
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             <Link
               className="group bg-surface-container-lowest hover:bg-surface-container-high relative flex items-start gap-4 overflow-hidden rounded-xl p-6 transition-all duration-300"
-              href="/catalogo/medico"
+              href="/catalogo/salud"
             >
               <div className="bg-primary-fixed/30 group-hover:bg-primary-fixed/50 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full transition-colors">
                 <span className="material-symbols-outlined text-primary">

@@ -54,7 +54,7 @@ export default function PreferencesPage() {
           </div>
           <div className="flex items-center gap-4">
             <Link
-              href="/onboarding/final"
+              href="/onboarding/bienvenida"
               className="font-medium text-slate-500 transition-colors duration-300 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
             >
               Skip
@@ -271,7 +271,7 @@ export default function PreferencesPage() {
         {/* Actions */}
         <div className="flex flex-col items-center gap-6">
           <Link
-            href="/onboarding/final"
+            href="/onboarding/bienvenida"
             className="from-primary-container font-label text-on-primary flex w-full items-center justify-center gap-2 rounded-md bg-gradient-to-r to-[#2c457d] py-4 text-lg font-bold transition-all hover:shadow-lg"
           >
             Continuar{" "}
@@ -290,7 +290,7 @@ export default function PreferencesPage() {
               Atrás
             </Link>
             <Link
-              href="/onboarding/final"
+              href="/onboarding/bienvenida"
               className="text-on-surface-variant hover:text-primary-container underline underline-offset-4 transition-colors"
             >
               Omitir este paso

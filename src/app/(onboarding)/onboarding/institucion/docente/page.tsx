@@ -177,7 +177,7 @@ export default function TeacherInstitutionPage() {
               </span>
             </Link>
             <Link
-              href="/onboarding/roles"
+              href="/onboarding/rol"
               className="text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-2 text-center font-medium transition-colors"
             >
               <span

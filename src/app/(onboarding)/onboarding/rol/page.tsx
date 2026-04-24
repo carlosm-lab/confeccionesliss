@@ -32,7 +32,7 @@ const ROLES = [
     label: "Profesional de la salud",
     desc: "Trabajo en un hospital, clínica o consultorio",
     icon: Stethoscope,
-    nextPath: "/onboarding/institucion/profesional",
+    nextPath: "/onboarding/preferencias",
   },
   {
     id: "institucion",
@@ -57,7 +57,7 @@ export default function RolPage() {
       setUser({ ...user, rol: selected });
     }
 
-    router.push(role.nextPath);
+    router.push(role.nextPath as any);
   }, [selected, user, setUser, router]);
 
   return (

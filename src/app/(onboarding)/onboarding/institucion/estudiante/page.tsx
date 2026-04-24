@@ -230,7 +230,7 @@ export default function StudentInstitutionPage() {
               </span>
             </Link>
             <Link
-              href="/onboarding/roles"
+              href="/onboarding/rol"
               className="font-label text-primary hover:bg-surface-container flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3 font-medium transition-colors duration-200"
             >
               <span className="material-symbols-outlined text-sm">

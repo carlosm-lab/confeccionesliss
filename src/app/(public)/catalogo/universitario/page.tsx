@@ -19,7 +19,7 @@ export default function CatalogoInstitucionalPage() {
           <span className="mx-2">/</span>
           <Link
             className="transition-colors hover:text-[#143067]"
-            href="/catalogo"
+            href={"/catalogo" as any}
           >
             Universidades
           </Link>
