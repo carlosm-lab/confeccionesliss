@@ -4,6 +4,7 @@ export const siteConfig = {
     "Taller artesanal de scrubs médicos y uniformes en San Miguel, El Salvador. Confección a medida para sector salud, universidades, escuelas y empresas.",
   url: "https://confeccionesliss.com",
   ogImage: "https://confeccionesliss.com/og.jpg",
+  twitterHandle: "@confeccionesliss",
   links: {
     whatsapp: "https://wa.me/50300000000",
     facebook: "https://facebook.com/confeccionesliss",

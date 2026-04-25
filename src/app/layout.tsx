@@ -48,6 +48,18 @@ export const metadata = {
       "max-snippet": -1,
     },
   },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
+    creator: siteConfig.twitterHandle,
+  },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export const viewport = {
@@ -56,6 +68,7 @@ export const viewport = {
 };
 
 import { Providers } from "@/providers";
+import { ConstructionModal } from "@/components/ui/ConstructionModal";
 
 export default function RootLayout({
   children,
@@ -76,7 +89,10 @@ export default function RootLayout({
         />
       </head>
       <body className="flex min-h-screen flex-col antialiased">
-        <Providers>{children}</Providers>
+        <Providers>
+          <ConstructionModal />
+          {children}
+        </Providers>
       </body>
     </html>
   );

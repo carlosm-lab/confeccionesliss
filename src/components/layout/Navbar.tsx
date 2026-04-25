@@ -39,22 +39,48 @@ export function Navbar() {
 
         {/* Navigation Links */}
         <nav className="hidden gap-8 md:flex">
-          <Link href="/" className={getNavClasses("/")}>
+          <Link
+            href="/"
+            className={getNavClasses("/")}
+            aria-current={pathname === "/" ? "page" : undefined}
+          >
             Inicio
           </Link>
-          <Link href="/catalogo/salud" className={getNavClasses("/catalogo")}>
+          <Link
+            href="/catalogo/salud"
+            className={getNavClasses("/catalogo")}
+            aria-current={pathname.startsWith("/catalogo") ? "page" : undefined}
+          >
             Catálogo
           </Link>
-          <Link href="/novedades" className={getNavClasses("/novedades")}>
+          <Link
+            href="/novedades"
+            className={getNavClasses("/novedades")}
+            aria-current={
+              pathname.startsWith("/novedades") ? "page" : undefined
+            }
+          >
             Novedades
           </Link>
-          <Link href="/blog" className={getNavClasses("/blog")}>
+          <Link
+            href="/blog"
+            className={getNavClasses("/blog")}
+            aria-current={pathname.startsWith("/blog") ? "page" : undefined}
+          >
             Blog
           </Link>
-          <Link href="/nosotros" className={getNavClasses("/nosotros")}>
+          <Link
+            href="/nosotros"
+            className={getNavClasses("/nosotros")}
+            aria-current={pathname.startsWith("/nosotros") ? "page" : undefined}
+          >
             Nosotros
           </Link>
-          <Link href="/contacto" className={getNavClasses("/contacto")}>
+          <Link
+            href="/contacto"
+            className={getNavClasses("/contacto")}
+            aria-current={pathname.startsWith("/contacto") ? "page" : undefined}
+          >
             Contacto
           </Link>
         </nav>
@@ -62,17 +88,21 @@ export function Navbar() {
         {/* Trailing Icons */}
         <div className="flex items-center gap-4">
           <button
-            aria-label="search"
+            aria-label="Buscar productos"
             className="transition-opacity hover:opacity-80"
           >
-            <span className="material-symbols-outlined">search</span>
+            <span className="material-symbols-outlined" aria-hidden="true">
+              search
+            </span>
           </button>
           <Link
             href="/carrito"
-            aria-label="shopping_cart"
+            aria-label={`Ver carrito de compras, ${cartCount} productos`}
             className="relative transition-opacity hover:opacity-80"
           >
-            <span className="material-symbols-outlined">shopping_cart</span>
+            <span className="material-symbols-outlined" aria-hidden="true">
+              shopping_cart
+            </span>
             {cartCount > 0 && (
               <span className="bg-tertiary absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full text-[10px] text-white">
                 {cartCount}
@@ -80,20 +110,24 @@ export function Navbar() {
             )}
           </Link>
           <button
-            aria-label="notifications"
+            aria-label="Ver notificaciones"
             className="relative transition-opacity hover:opacity-80"
           >
-            <span className="material-symbols-outlined">notifications</span>
+            <span className="material-symbols-outlined" aria-hidden="true">
+              notifications
+            </span>
             <span className="bg-tertiary absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full text-[10px] text-white">
               3
             </span>
           </button>
           <Link
             href="/cuenta"
-            aria-label="account_circle"
+            aria-label="Ver mi cuenta"
             className="transition-opacity hover:opacity-80"
           >
-            <span className="material-symbols-outlined">account_circle</span>
+            <span className="material-symbols-outlined" aria-hidden="true">
+              account_circle
+            </span>
           </Link>
         </div>
       </div>
