@@ -1,26 +1,92 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { X } from "lucide-react";
 
+const LOBBY_STORAGE_KEY = "confliss_lobby_seen";
+const OPEN_DELAY_MS = 5000;
+const IDLE_TIMEOUT_MS = 60000;
+const COUNTDOWN_SECONDS = 10;
+
 export function LobbyModal() {
   const [isOpen, setIsOpen] = useState(false);
+  const [countdown, setCountdown] = useState<number | null>(null);
+  const scrolledRef = useRef(false);
+  const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
+  // --- 1. Solo mostrar a NUEVOS usuarios (localStorage persiste entre sesiones) ---
+  // --- 5. Retraso de 5 segundos antes de abrir ---
   useEffect(() => {
-    // Verificar si es la primera vez que el usuario entra en esta sesión
-    const hasSeenLobby = sessionStorage.getItem("hasSeenLobby");
-    if (!hasSeenLobby) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+    const hasSeenLobby = localStorage.getItem(LOBBY_STORAGE_KEY);
+    if (hasSeenLobby) return;
+
+    const openTimer = setTimeout(() => {
       setIsOpen(true);
+    }, OPEN_DELAY_MS);
+
+    return () => clearTimeout(openTimer);
+  }, []);
+
+  // --- 3. Si no hace scroll en 60s, inicia countdown de 10s para cerrar ---
+  const startIdleCountdown = useCallback(() => {
+    setCountdown(COUNTDOWN_SECONDS);
+
+    countdownRef.current = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev === null || prev <= 1) {
+          if (countdownRef.current) clearInterval(countdownRef.current);
+          setIsOpen(false);
+          localStorage.setItem(LOBBY_STORAGE_KEY, "true");
+          return null;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  }, []);
+
+  const cancelCountdown = useCallback(() => {
+    setCountdown(null);
+    if (countdownRef.current) {
+      clearInterval(countdownRef.current);
+      countdownRef.current = null;
     }
   }, []);
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    // Inicia el timer de inactividad al abrir
+    idleTimerRef.current = setTimeout(() => {
+      if (!scrolledRef.current) {
+        startIdleCountdown();
+      }
+    }, IDLE_TIMEOUT_MS);
+
+    return () => {
+      if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
+      if (countdownRef.current) clearInterval(countdownRef.current);
+    };
+  }, [isOpen, startIdleCountdown]);
+
+  // Detectar scroll dentro del modal
+  const handleScroll = useCallback(() => {
+    scrolledRef.current = true;
+    // Si ya está en countdown, cancelarlo porque el usuario interactuó
+    cancelCountdown();
+    // Resetear el timer de inactividad
+    if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
+  }, [cancelCountdown]);
+
   const closeLobby = () => {
     setIsOpen(false);
-    sessionStorage.setItem("hasSeenLobby", "true");
+    localStorage.setItem(LOBBY_STORAGE_KEY, "true");
+    cancelCountdown();
+    if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
   };
 
   return (
@@ -38,21 +104,61 @@ export function LobbyModal() {
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.95, opacity: 0, y: 20 }}
             transition={{ type: "spring", bounce: 0, duration: 0.5 }}
-            className="selection:bg-primary selection:text-on-primary bg-surface relative flex h-[95vh] w-[95vw] max-w-[1600px] flex-col overflow-hidden rounded-2xl shadow-2xl ring-1 ring-black/5 antialiased"
+            className="selection:bg-primary selection:text-on-primary bg-surface relative flex h-[95vh] w-[80vw] max-w-[1400px] flex-col overflow-hidden rounded-2xl shadow-2xl ring-1 ring-black/5 antialiased"
           >
             {/* Header / Top Bar for closing */}
             <div className="bg-surface/80 absolute top-0 right-0 left-0 z-50 flex items-center justify-end p-4 backdrop-blur-md">
+              {/* --- 2. Flecha animada apuntando al botón --- */}
+              <motion.span
+                animate={{ x: [0, 8, 0] }}
+                transition={{
+                  duration: 1.2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="text-primary mr-1 text-xl"
+                aria-hidden="true"
+              >
+                →
+              </motion.span>
               <button
                 onClick={closeLobby}
                 className="hover:bg-surface-container-high text-on-surface flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold transition-colors"
+                aria-label="Cerrar lobby y entrar a la tienda"
               >
                 <span>Entrar a la Tienda</span>
-                <X className="h-5 w-5" />
+                <X className="h-5 w-5" aria-hidden="true" />
               </button>
             </div>
 
+            {/* --- 3. Countdown banner --- */}
+            <AnimatePresence>
+              {countdown !== null && (
+                <motion.div
+                  initial={{ y: -40, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -40, opacity: 0 }}
+                  className="bg-primary text-on-primary absolute top-14 right-0 left-0 z-50 flex items-center justify-center gap-3 py-2 text-sm font-medium"
+                >
+                  <span>
+                    Cerrando en {countdown}s por inactividad
+                  </span>
+                  <button
+                    onClick={cancelCountdown}
+                    className="bg-on-primary/20 rounded-full px-3 py-0.5 text-xs font-bold transition-colors hover:bg-on-primary/30"
+                  >
+                    Cancelar
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             {/* Scrollable Content */}
-            <div className="font-headline flex-grow overflow-y-auto">
+            <div
+              ref={scrollContainerRef}
+              onScroll={handleScroll}
+              className="font-headline flex-grow overflow-y-auto"
+            >
               <main className="flex-grow pt-16">
                 {/* Hero Section: Split Viewport */}
                 <section className="bg-surface-container-lowest relative flex min-h-[700px] flex-col overflow-hidden md:min-h-[870px] md:flex-row">
@@ -131,6 +237,7 @@ export function LobbyModal() {
                         <span
                           className="material-symbols-outlined"
                           style={{ fontVariationSettings: "'FILL' 1" }}
+                          aria-hidden="true"
                         >
                           person
                         </span>
@@ -144,6 +251,7 @@ export function LobbyModal() {
                         <span
                           className="material-symbols-outlined"
                           style={{ fontVariationSettings: "'FILL' 0" }}
+                          aria-hidden="true"
                         >
                           business
                         </span>
@@ -180,6 +288,7 @@ export function LobbyModal() {
                           <span
                             className="material-symbols-outlined text-3xl"
                             style={{ fontVariationSettings: "'FILL' 0" }}
+                            aria-hidden="true"
                           >
                             stethoscope
                           </span>
@@ -205,6 +314,7 @@ export function LobbyModal() {
                           <span
                             className="material-symbols-outlined text-3xl"
                             style={{ fontVariationSettings: "'FILL' 0" }}
+                            aria-hidden="true"
                           >
                             school
                           </span>
@@ -231,6 +341,7 @@ export function LobbyModal() {
                           <span
                             className="material-symbols-outlined text-3xl"
                             style={{ fontVariationSettings: "'FILL' 0" }}
+                            aria-hidden="true"
                           >
                             domain
                           </span>
@@ -256,6 +367,7 @@ export function LobbyModal() {
                           <span
                             className="material-symbols-outlined text-3xl"
                             style={{ fontVariationSettings: "'FILL' 0" }}
+                            aria-hidden="true"
                           >
                             work
                           </span>
@@ -284,6 +396,7 @@ export function LobbyModal() {
                           <span
                             className="material-symbols-outlined text-3xl"
                             style={{ fontVariationSettings: "'FILL' 0" }}
+                            aria-hidden="true"
                           >
                             content_cut
                           </span>
@@ -319,7 +432,7 @@ export function LobbyModal() {
                         {/* Step 1 */}
                         <div className="flex items-start gap-4">
                           <div className="text-primary flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-white shadow-sm">
-                            <span className="material-symbols-outlined">
+                            <span className="material-symbols-outlined" aria-hidden="true">
                               category
                             </span>
                           </div>
@@ -335,7 +448,7 @@ export function LobbyModal() {
                         {/* Step 2 */}
                         <div className="flex items-start gap-4">
                           <div className="text-primary flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-white shadow-sm">
-                            <span className="material-symbols-outlined">
+                            <span className="material-symbols-outlined" aria-hidden="true">
                               straighten
                             </span>
                           </div>
@@ -351,7 +464,7 @@ export function LobbyModal() {
                         {/* Step 3 */}
                         <div className="flex items-start gap-4">
                           <div className="text-primary flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-white shadow-sm">
-                            <span className="material-symbols-outlined">
+                            <span className="material-symbols-outlined" aria-hidden="true">
                               local_shipping
                             </span>
                           </div>
