@@ -16,8 +16,22 @@ interface UserProfile {
   email: string;
   avatar: string | null;
   primerLogin: boolean;
+  onboardingCompleted?: boolean;
   rol?: string;
   institucion?: string;
+  tipoCompra?: string;
+  coloresFavoritos?: string[];
+  apellidos?: string;
+  telefono?: string;
+  talla?: string;
+  genero?: string;
+  departamento?: string;
+  municipio?: string;
+  direccion?: {
+    calle?: string;
+    referencia?: string;
+  };
+  notificaciones?: Record<string, boolean>;
 }
 
 interface AppState {

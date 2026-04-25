@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Camera, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAppStore } from "@/context/useAppStore";
 
 const TALLAS = ["XS", "S", "M", "L", "XL", "2XL", "3XL"] as const;
 const GENEROS = [
@@ -35,9 +36,36 @@ export default function PerfilPage() {
   const [direccion, setDireccion] = useState("");
   const [referencia, setReferencia] = useState("");
 
+  const { user, setUser } = useAppStore();
+
   const handleContinue = useCallback(() => {
+    if (user) {
+      setUser({
+        ...user,
+        nombre: displayName || username || user.nombre,
+        telefono: phone,
+        talla: selectedTalla,
+        genero: selectedGenero,
+        departamento,
+        municipio,
+        direccion: { calle: direccion, referencia },
+      });
+    }
     router.push("/onboarding/rol");
-  }, [router]);
+  }, [
+    router,
+    user,
+    setUser,
+    displayName,
+    username,
+    phone,
+    selectedTalla,
+    selectedGenero,
+    departamento,
+    municipio,
+    direccion,
+    referencia,
+  ]);
 
   return (
     <div className="space-y-8">

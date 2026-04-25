@@ -20,7 +20,13 @@ export const updatePasswordSchema = z.object({
     .min(6, "La nueva contraseña debe tener al menos 6 caracteres"),
 });
 
+export const resendVerificationSchema = z.object({
+  email: z.string().email("Correo electrónico inválido"),
+  type: z.enum(["signup", "magiclink", "recovery"]).default("signup"),
+});
+
 export type LoginInput = z.infer<typeof loginSchema>;
 export type SignUpInput = z.infer<typeof signUpSchema>;
 export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
 export type UpdatePasswordInput = z.infer<typeof updatePasswordSchema>;
+export type ResendVerificationInput = z.infer<typeof resendVerificationSchema>;

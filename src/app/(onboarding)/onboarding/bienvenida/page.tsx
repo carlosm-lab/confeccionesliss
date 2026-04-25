@@ -6,6 +6,8 @@ import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAppStore } from "@/context/useAppStore";
+import { useAction } from "next-safe-action/hooks";
+import { updateOnboardingAction } from "@/actions/onboarding";
 
 const CONFETTI_COLORS = ["#143067", "#b43024", "#1a5c3a", "#d4a0a0", "#f4f5f7"];
 
@@ -44,6 +46,35 @@ export default function BienvenidaPage() {
     user?.institucion === "UGB"
       ? "/catalogo/universidades/ugb"
       : "/catalogo/salud";
+
+  const { execute } = useAction(updateOnboardingAction, {
+    onError: ({ error }) => {
+      console.error("Error saving onboarding data:", error.serverError);
+    },
+  });
+
+  useEffect(() => {
+    // Only execute once when component mounts
+    if (user) {
+      execute({
+        nombre: user.nombre,
+        apellidos: user.apellidos,
+        telefono: user.telefono,
+        talla: user.talla,
+        genero: user.genero,
+        departamento: user.departamento,
+        municipio: user.municipio,
+        direccion: user.direccion,
+        tipo_perfil: user.rol,
+        institucion: user.institucion,
+        tipo_compra: user.tipoCompra,
+        colores_favoritos: user.coloresFavoritos,
+        notificaciones: user.notificaciones,
+      });
+    }
+    // We intentionally omit `execute` from deps to avoid re-running if user state somehow updates
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (secondsLeft <= 0) {

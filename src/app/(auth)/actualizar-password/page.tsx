@@ -4,24 +4,25 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAction } from "next-safe-action/hooks";
-import { resetPasswordAction } from "@/actions/auth";
+import { updatePasswordAction } from "@/actions/auth";
 
-export default function RecuperarPage() {
-  const [email, setEmail] = useState("");
+export default function ActualizarPasswordPage() {
+  const [password, setPassword] = useState("");
   const router = useRouter();
 
-  const { execute, status, result } = useAction(resetPasswordAction, {
+  const { execute, status, result } = useAction(updatePasswordAction, {
     onSuccess: (data) => {
       if (data.data?.success) {
-        router.push("/verificar?type=reset");
+        // Redirigir al usuario al home o a su perfil
+        router.push("/onboarding/perfil");
       }
     },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) return;
-    execute({ email });
+    if (password.length < 6) return;
+    execute({ password });
   };
 
   const isLoading = status === "executing";
@@ -44,7 +45,7 @@ export default function RecuperarPage() {
         <div className="from-primary-fixed/20 pointer-events-none absolute top-0 left-0 -z-10 h-96 w-full bg-gradient-to-b to-transparent"></div>
         <div className="bg-secondary-container/30 pointer-events-none absolute -top-40 -right-40 -z-10 h-96 w-96 rounded-full blur-3xl"></div>
 
-        {/* Password Recovery Card */}
+        {/* Card */}
         <div className="bg-surface-container-lowest border-outline-variant/15 relative z-10 w-full max-w-[440px] rounded-xl border p-8 shadow-sm md:p-10">
           <div className="mb-8 flex flex-col items-center text-center">
             <div className="bg-primary-fixed mb-6 flex h-16 w-16 items-center justify-center rounded-full">
@@ -52,21 +53,20 @@ export default function RecuperarPage() {
                 className="material-symbols-outlined text-primary text-3xl"
                 style={{ fontVariationSettings: "'FILL' 1" }}
               >
-                lock
+                key
               </span>
             </div>
             <h2 className="font-headline text-on-surface mb-3 text-2xl font-bold tracking-tight md:text-3xl">
-              ¿Olvidaste tu contraseña?
+              Crea una nueva contraseña
             </h2>
             <p className="font-body text-on-surface-variant text-base leading-relaxed">
-              Ingresa tu correo y te enviaremos un enlace para restablecer tu
-              contraseña. Revisa también la carpeta de spam.
+              Ingresa tu nueva contraseña para tu cuenta.
             </p>
           </div>
 
           {result.serverError && (
             <div className="bg-error-container text-on-error-container mb-6 rounded-md p-4 text-sm">
-              Ocurrió un error al intentar enviar el enlace. Verifica tu correo.
+              Ocurrió un error al actualizar la contraseña. Intenta nuevamente.
             </div>
           )}
 
@@ -74,24 +74,25 @@ export default function RecuperarPage() {
             <div>
               <label
                 className="font-label text-on-surface mb-2 block text-sm font-medium"
-                htmlFor="recover-email"
+                htmlFor="new-password"
               >
-                Correo electrónico
+                Nueva contraseña
               </label>
               <div className="relative">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                   <span className="material-symbols-outlined text-outline">
-                    mail
+                    lock
                   </span>
                 </div>
                 <input
                   className="bg-surface-container-high text-on-surface focus:ring-primary font-body block w-full rounded-lg border-0 py-3 pr-3 pl-10 text-base transition-shadow focus:ring-2 focus:outline-none"
-                  id="recover-email"
-                  placeholder="tu@correo.com"
+                  id="new-password"
+                  placeholder="Mínimo 6 caracteres"
                   required
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  type="password"
+                  minLength={6}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   disabled={isLoading}
                 />
               </div>
@@ -99,26 +100,15 @@ export default function RecuperarPage() {
             <button
               className="font-headline text-on-primary bg-primary hover:bg-primary-container focus:ring-primary flex w-full items-center justify-center rounded-lg border border-transparent px-4 py-3 text-base font-semibold shadow-sm transition-colors duration-200 focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
               type="submit"
-              disabled={isLoading || !email.trim()}
+              disabled={isLoading || password.length < 6}
             >
               {isLoading ? (
                 <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
               ) : (
-                "Enviar enlace de recuperación"
+                "Guardar nueva contraseña"
               )}
             </button>
           </form>
-          <div className="mt-8 text-center">
-            <Link
-              className="font-label text-primary hover:text-primary-container group inline-flex items-center text-sm font-medium transition-colors"
-              href="/login"
-            >
-              <span className="material-symbols-outlined mr-1 text-lg transition-transform group-hover:-translate-x-1">
-                arrow_back
-              </span>
-              Volver al inicio de sesión
-            </Link>
-          </div>
         </div>
       </main>
 

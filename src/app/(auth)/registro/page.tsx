@@ -4,18 +4,68 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { signUpAction } from "@/actions/auth";
+import { createClient } from "@/lib/supabase/client";
 
 export default function RegistroPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setAuthError(null);
+
+    const formData = new FormData(e.currentTarget);
+    const nombre = formData.get("nombre") as string;
+    const apellidos = formData.get("apellidos") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const confirmPassword = formData.get("confirmPassword") as string;
+    const acceptTerms = formData.get("acceptTerms") as string;
+
+    if (!acceptTerms) {
+      setAuthError("Debes aceptar los términos y condiciones.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setAuthError("Las contraseñas no coinciden.");
+      return;
+    }
+
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
+
+    const result = await signUpAction({ nombre, apellidos, email, password });
+
+    if (result?.data) {
       router.push("/verificar");
-    }, 800);
+    } else if (result?.serverError) {
+      setAuthError(result.serverError);
+      setIsLoading(false);
+    } else if (result?.validationErrors) {
+      setAuthError("Revisa los datos ingresados.");
+      setIsLoading(false);
+    } else {
+      setAuthError("Ocurrió un error inesperado.");
+      setIsLoading(false);
+    }
+  };
+
+  const handleOAuth = async () => {
+    setIsLoading(true);
+    const supabase = createClient();
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/callback?next=/onboarding/perfil`,
+      },
+    });
+
+    if (error) {
+      setAuthError(error.message);
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -104,20 +154,43 @@ export default function RegistroPage() {
             <p className="font-body text-on-surface-variant mb-8">
               Es rápido y completamente gratis.
             </p>
+            {authError && (
+              <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-600">
+                {authError}
+              </div>
+            )}
             <form className="space-y-6" onSubmit={handleSubmit}>
-              <div>
-                <label
-                  className="font-label text-on-surface-variant mb-2 block text-sm"
-                  htmlFor="reg-fullName"
-                >
-                  Nombre completo
-                </label>
-                <input
-                  className="bg-surface-container-low focus:bg-surface-container-highest focus:border-primary text-on-surface w-full rounded border-b-2 border-none border-transparent p-3 transition-all focus:ring-0"
-                  id="reg-fullName"
-                  required
-                  type="text"
-                />
+              <div className="flex gap-4">
+                <div className="w-1/2">
+                  <label
+                    className="font-label text-on-surface-variant mb-2 block text-sm"
+                    htmlFor="reg-nombre"
+                  >
+                    Nombre
+                  </label>
+                  <input
+                    className="bg-surface-container-low focus:bg-surface-container-highest focus:border-primary text-on-surface w-full rounded border-b-2 border-none border-transparent p-3 transition-all focus:ring-0"
+                    id="reg-nombre"
+                    name="nombre"
+                    required
+                    type="text"
+                  />
+                </div>
+                <div className="w-1/2">
+                  <label
+                    className="font-label text-on-surface-variant mb-2 block text-sm"
+                    htmlFor="reg-apellidos"
+                  >
+                    Apellidos
+                  </label>
+                  <input
+                    className="bg-surface-container-low focus:bg-surface-container-highest focus:border-primary text-on-surface w-full rounded border-b-2 border-none border-transparent p-3 transition-all focus:ring-0"
+                    id="reg-apellidos"
+                    name="apellidos"
+                    required
+                    type="text"
+                  />
+                </div>
               </div>
               <div>
                 <label
@@ -129,6 +202,7 @@ export default function RegistroPage() {
                 <input
                   className="bg-surface-container-low focus:bg-surface-container-highest focus:border-primary text-on-surface w-full rounded border-b-2 border-none border-transparent p-3 transition-all focus:ring-0"
                   id="reg-email"
+                  name="email"
                   required
                   type="email"
                 />
@@ -143,8 +217,10 @@ export default function RegistroPage() {
                 <input
                   className="bg-surface-container-low focus:bg-surface-container-highest focus:border-primary text-on-surface mb-2 w-full rounded border-b-2 border-none border-transparent p-3 transition-all focus:ring-0"
                   id="reg-password"
+                  name="password"
                   required
                   type="password"
+                  minLength={6}
                 />
                 <div className="flex h-1 w-full space-x-1">
                   <div className="bg-error w-1/3 rounded-l"></div>
@@ -165,8 +241,10 @@ export default function RegistroPage() {
                 <input
                   className="bg-surface-container-low focus:bg-surface-container-highest focus:border-primary text-on-surface w-full rounded border-b-2 border-none border-transparent p-3 transition-all focus:ring-0"
                   id="reg-confirmPassword"
+                  name="confirmPassword"
                   required
                   type="password"
+                  minLength={6}
                 />
               </div>
               <div className="space-y-3">
@@ -174,6 +252,7 @@ export default function RegistroPage() {
                   <input
                     className="form-checkbox text-primary-container border-outline-variant focus:ring-primary-container mt-1 h-5 w-5 rounded"
                     required
+                    name="acceptTerms"
                     type="checkbox"
                   />
                   <span className="font-body text-on-surface-variant group-hover:text-on-surface text-sm transition-colors">
@@ -196,6 +275,7 @@ export default function RegistroPage() {
                 <label className="group flex cursor-pointer items-start space-x-3">
                   <input
                     className="form-checkbox text-primary-container border-outline-variant focus:ring-primary-container mt-1 h-5 w-5 rounded"
+                    name="receiveNews"
                     type="checkbox"
                   />
                   <span className="font-body text-on-surface-variant group-hover:text-on-surface text-sm transition-colors">
@@ -218,8 +298,10 @@ export default function RegistroPage() {
                 <div className="border-surface-variant flex-grow border-t"></div>
               </div>
               <button
-                className="bg-surface-container-lowest border-outline-variant text-on-surface font-label hover:bg-surface-container-low flex w-full items-center justify-center space-x-3 rounded border py-3 font-bold transition-colors"
+                className="bg-surface-container-lowest border-outline-variant text-on-surface font-label hover:bg-surface-container-low flex w-full items-center justify-center space-x-3 rounded border py-3 font-bold transition-colors disabled:opacity-50"
                 type="button"
+                onClick={handleOAuth}
+                disabled={isLoading}
               >
                 <svg className="h-5 w-5" viewBox="0 0 24 24">
                   <path

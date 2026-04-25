@@ -3,38 +3,62 @@
 import { useState, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useAppStore } from "@/context/useAppStore";
+import { useRouter, useSearchParams } from "next/navigation";
+import { signInAction } from "@/actions/auth";
+import { createClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { setUser } = useAppStore();
+  const searchParams = useSearchParams();
+  const errorMsg = searchParams.get("error");
+  const [authError, setAuthError] = useState<string | null>(
+    errorMsg === "auth_callback_error"
+      ? "Error al iniciar sesión con Google. Por favor, intenta de nuevo."
+      : null
+  );
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = useCallback(
-    (e: React.FormEvent) => {
-      e.preventDefault();
-      if (!email.trim() || !password.trim()) return;
-      setIsLoading(true);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim() || !password.trim()) return;
 
-      setTimeout(() => {
-        setUser({
-          id: "1",
-          nombre: "María González",
-          email,
-          avatar: null,
-          primerLogin: true,
-        });
-        setIsLoading(false);
-        router.push("/onboarding/perfil");
-      }, 800);
-    },
-    [email, password, setUser, router]
-  );
+    setIsLoading(true);
+    setAuthError(null);
+
+    const result = await signInAction({ email, password });
+
+    if (result?.data) {
+      // Middleware redirects properly, but just to be safe we push to root
+      router.push("/");
+      router.refresh();
+    } else if (result?.serverError) {
+      setAuthError("Credenciales incorrectas. Verifica tu email y contraseña.");
+      setIsLoading(false);
+    } else {
+      setAuthError("Ocurrió un error inesperado.");
+      setIsLoading(false);
+    }
+  };
+
+  const handleOAuth = async () => {
+    setIsLoading(true);
+    const supabase = createClient();
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/callback?next=/cuenta`,
+      },
+    });
+
+    if (error) {
+      setAuthError(error.message);
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="bg-surface text-on-surface flex min-h-screen flex-col">
@@ -131,6 +155,11 @@ export default function LoginPage() {
             <h2 className="font-headline text-on-surface mb-8 text-3xl font-bold">
               Bienvenido de vuelta
             </h2>
+            {authError && (
+              <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-600">
+                {authError}
+              </div>
+            )}
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label
@@ -198,7 +227,12 @@ export default function LoginPage() {
               </span>
               <div className="bg-outline-variant/30 h-px w-full"></div>
             </div>
-            <button className="bg-surface-container-lowest border-outline-variant/30 text-on-surface font-body hover:bg-surface-container-low flex w-full items-center justify-center space-x-3 rounded-xl border px-6 py-4 font-semibold transition-colors duration-200">
+            <button
+              type="button"
+              onClick={handleOAuth}
+              disabled={isLoading}
+              className="bg-surface-container-lowest border-outline-variant/30 text-on-surface font-body hover:bg-surface-container-low flex w-full items-center justify-center space-x-3 rounded-xl border px-6 py-4 font-semibold transition-colors duration-200 disabled:opacity-50"
+            >
               <svg className="h-5 w-5" viewBox="0 0 24 24">
                 <path
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
