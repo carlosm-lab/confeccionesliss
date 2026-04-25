@@ -12,7 +12,7 @@ export default function OrderDetailPage() {
     <div className="flex w-full max-w-screen-2xl mx-auto flex-col gap-8 px-4 md:px-8 py-8">
       {/* Breadcrumb */}
       <nav className="flex items-center space-x-2 font-label text-sm font-medium text-on-surface-variant">
-        <Link href="/inicio" className="transition-colors hover:text-primary">Inicio</Link>
+        <Link href="/" className="transition-colors hover:text-primary">Inicio</Link>
         <span className="material-symbols-outlined text-sm">chevron_right</span>
         <Link href="/pedidos" className="transition-colors hover:text-primary">Mis pedidos</Link>
         <span className="material-symbols-outlined text-sm">chevron_right</span>
@@ -105,7 +105,7 @@ export default function OrderDetailPage() {
                     <span className="font-label rounded bg-surface-container px-2 py-1 text-xs font-medium text-on-surface">Talla: L</span>
                     <span className="font-label rounded bg-surface-container px-2 py-1 text-xs font-medium text-on-surface">Color: Navy</span>
                   </div>
-                  <p className="font-label inline-block rounded bg-tertiary-fixed px-2 py-1 text-xs font-medium text-tertiary">Nota: Bordado "Dra. Gómez" en bolsillo izq.</p>
+                  <p className="font-label inline-block rounded bg-tertiary-fixed px-2 py-1 text-xs font-medium text-tertiary">Nota: Bordado &quot;Dra. G&oacute;mez&quot; en bolsillo izq.</p>
                 </div>
                 <div className="mt-4 sm:mt-0 flex w-full sm:w-auto flex-row sm:flex-col justify-between sm:justify-center text-right">
                   <span className="font-label mb-1 text-sm text-on-surface-variant">Cant: 2 x $45.00</span>

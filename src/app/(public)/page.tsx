@@ -1,331 +1,873 @@
 import Link from "next/link";
 import Image from "next/image";
+import { LobbyModal } from "@/components/ui/LobbyModal";
 
-export default function LobbyPage() {
+export default function HomePage() {
   return (
-    <div className="selection:bg-primary selection:text-on-primary font-headline relative flex min-h-screen flex-col antialiased">
-      <main className="flex-grow pt-10">
-        {/* Hero Section: Split Viewport */}
-        <section className="bg-surface-container-lowest relative flex min-h-[700px] flex-col overflow-hidden md:min-h-[870px] md:flex-row">
-          {/* Geometric Accent Background */}
-          <div
-            className="pointer-events-none absolute inset-0 z-0 opacity-5"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at 100% 0%, #143067 0%, transparent 50%)",
-            }}
-          />
-
-          <div className="z-10 flex w-full items-center justify-center p-12 md:w-1/2 lg:p-24">
-            <div className="max-w-xl">
-              <h1 className="text-primary mb-6 text-4xl leading-[1.1] font-extrabold tracking-tight md:text-[2.75rem]">
-                ¿Qué tipo de uniforme necesitas?
-              </h1>
-              <p className="text-on-surface-variant mb-10 text-lg leading-relaxed">
-                Encuentra el catálogo perfecto para ti. Diseños de alta
-                precisión para cada profesión.
-              </p>
-              <div className="flex flex-col gap-4 sm:flex-row">
-                <Link
-                  href="/inicio"
-                  className="from-primary to-primary-container text-on-primary rounded-md bg-gradient-to-r px-8 py-4 text-center font-medium shadow-[0_12px_32px_rgba(25,28,30,0.06)] transition-opacity hover:opacity-90"
-                >
-                  Ver Catálogo General
-                </Link>
-              </div>
+    <>
+      <LobbyModal />
+      {/* 3. HERO */}
+      <section className="bg-surface-container-low relative overflow-hidden px-8 pt-20 pb-28">
+        <div className="mx-auto flex max-w-screen-2xl flex-col items-center gap-16 lg:flex-row lg:pr-24 lg:pl-12">
+          {/* Left: Content (55%) */}
+          <div className="z-10 flex w-full flex-col items-start lg:w-[55%]">
+            <div className="bg-tertiary/10 text-tertiary mb-6 flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold tracking-widest uppercase">
+              <span className="material-symbols-outlined text-[16px]">
+                verified
+              </span>
+              Hecho en El Salvador
             </div>
-          </div>
-
-          <div className="relative z-10 flex w-full items-center justify-center p-8 md:w-1/2 md:p-12 lg:p-16">
-            <div className="relative grid h-full max-h-[700px] w-full grid-cols-2 gap-4">
-              <div className="relative col-span-1 row-span-2 h-full overflow-hidden rounded-lg shadow-sm">
-                <Image
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPHnbLu5luDAxr-SHXaYUG6Gg8RaeWWMKUXjg1cAaFc4ZI-oG_wIo2qIyzeEyVdLL0gQs_0OkxB1ee3MG_tbRJ7ZF8mwROvQLWFJfX-D9eXS1f2hXX2PfNpVkEVOjsbP20XWi8uILHtfbdsqKyUwCeYkVHToGbuimCb4VKRPGxjCd_IeOnmMc4WZGJLDhgf3iv80GLtmAGCs93gY3n2BpSvxZt8FD2vYtyZ63cx3FSyaD3CC20NWIBaTJG0oFAm0ieOnwkzqssWnc"
-                  alt="Medical professionals in clean blue scrubs"
-                  fill
-                  className="object-cover object-center"
-                />
-              </div>
-              <div className="relative h-64 overflow-hidden rounded-lg shadow-sm md:h-full">
-                <Image
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCz0tnWS1HEP6JI-4ivXwWhSjKzlj7xOGzTJDTUIvm5ITRePEf_LFL_HqUsDwnBYFFn4mmWheiGiAuR1STquLF-6rcDuk8F3CZ4K9DPG1sGbhojF2Eko7LJatixb3rlILf7ns4I16PCvDIeNvDExRrq8aQ8SXfiFy6ZneoMsxT4mSXrwS8-2ACqcHBne4FOthDCCltrn0d4vEfe9aIWAZ0M7NuMsTHiQSeeM0Ov1qJUB9bMbL5iz-PyOU_3H_baI6o2l6IaNIXSkG0"
-                  alt="Corporate team in formal wear"
-                  fill
-                  className="object-cover object-center"
-                />
-              </div>
-              <div className="relative h-64 overflow-hidden rounded-lg shadow-sm md:h-full">
-                <Image
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7BWgkJIQEwNUb4FnZGP7yr27oq4bx4syUzuSDSMPTkLf_vvj-rGQhKlg0zKY8UU1zXnw1-RgHeeYsfNB7GVQKZQQTA8-AirlcV0gQkk4K734JCUJMapaJqlLr3oNOu5dZgo58WEZMnc-qAB8X9cP8Y7mXmGRmvzRkIK3wsfvMzq8ELbZM6nE1g3T9DPaRBN-y_8cTyarh_FyHkUzS9vc-ONVmkW8RWYr0I0__Kp9rFTWg0k2vmYd59WYZhCEm7OIqh7QtzBaa0vc"
-                  alt="Students in uniform"
-                  fill
-                  className="object-cover object-center"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Purchase Type Strip */}
-        <section className="bg-surface-container-low border-surface-dim/30 relative z-20 border-t border-b">
-          <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-8 px-8 py-8 md:flex-row md:py-12">
-            <div className="flex-shrink-0">
-              <h2 className="text-primary text-xl font-bold tracking-tight">
-                ¿Cómo deseas comprar?
-              </h2>
-            </div>
-            <div className="bg-surface flex flex-col gap-2 rounded-lg p-2 shadow-sm sm:flex-row">
-              <Link
-                href="/inicio"
-                className="bg-primary text-on-primary hover:bg-primary-container flex items-center space-x-3 rounded-md px-6 py-3 font-medium transition-all"
-              >
-                <span
-                  className="material-symbols-outlined"
-                  style={{ fontVariationSettings: "'FILL' 1" }}
-                >
-                  person
+            <h1 className="text-primary mb-6 font-serif text-5xl leading-[1.1] tracking-tight lg:text-7xl">
+              Tu uniforme,
+              <br />
+              tu identidad
+              <br />
+              profesional
+            </h1>
+            <p className="text-on-surface-variant font-body mb-8 max-w-lg text-lg leading-relaxed lg:text-xl">
+              Confección artesanal de uniformes médicos y corporativos en San
+              Miguel. Diseñados para la precisión, ajustados para tu comodidad.
+            </p>
+            {/* Trust Badges */}
+            <div className="mb-10 flex flex-wrap gap-4">
+              <div className="text-secondary flex items-center gap-2 text-sm font-medium">
+                <span className="material-symbols-outlined text-primary-container">
+                  check_circle
                 </span>
-                <span>Compra individual</span>
+                Confección artesanal
+              </div>
+              <div className="text-secondary flex items-center gap-2 text-sm font-medium">
+                <span className="material-symbols-outlined text-primary-container">
+                  check_circle
+                </span>
+                Tela de calidad
+              </div>
+              <div className="text-secondary flex items-center gap-2 text-sm font-medium">
+                <span className="material-symbols-outlined text-primary-container">
+                  check_circle
+                </span>
+                Entrega en zona oriental
+              </div>
+            </div>
+            {/* CTAs */}
+            <div className="flex flex-wrap gap-4">
+              <Link
+                href="/catalogo/salud"
+                className="btn-gradient font-body ambient-shadow rounded-md px-8 py-4 font-semibold text-white transition-opacity hover:opacity-90"
+              >
+                Ver catálogo
               </Link>
               <Link
-                href="/contacto"
-                className="text-on-surface-variant hover:bg-surface-container flex items-center space-x-3 rounded-md px-6 py-3 transition-all"
+                href="https://wa.me/50370000000"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border-outline text-primary hover:bg-surface-variant/50 rounded-md border bg-transparent px-8 py-4 font-serif font-medium transition-colors"
               >
-                <span
-                  className="material-symbols-outlined"
-                  style={{ fontVariationSettings: "'FILL' 0" }}
-                >
-                  business
-                </span>
-                <span>Compra al por mayor</span>
+                Pedir por WhatsApp
               </Link>
             </div>
-            <div className="text-on-surface-variant max-w-xs text-center text-sm leading-relaxed md:text-left">
-              La compra al por mayor aplica para instituciones, clínicas y
-              grupos de 10 o más prendas.
+          </div>
+          {/* Right: Image (45%) */}
+          <div className="relative w-full lg:w-[45%]">
+            <div className="bg-primary-container absolute inset-0 translate-x-6 translate-y-6 transform rounded-tr-[100px] rounded-bl-[100px] opacity-20"></div>
+            <div className="ambient-shadow bg-surface-container-highest relative z-10 aspect-[4/5] overflow-hidden rounded-tl-xl rounded-br-xl">
+              <Image
+                width={800}
+                height={800}
+                alt="Profesional médico vistiendo un scrub de alta calidad"
+                className="h-full w-full object-cover object-center"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMIor4NQU8ZY6h6n53wLwP1PPv_4IfEVDlrdkQiVgvWOiidIyGatWukXX7ZzVsdzRcz71fAfJcvi2HELZG7UhjbUqAz3THePqzcXwVEFSXMa0_8RlkF37VvPCxi3qVma_OFXo80Xv6Ys_4iZKHWxLrn6BbTqt1WpiNtaLbAYB3k3U3CFLZ7Ir1kw-e3SwltcGqBC7zr1jVmabzJpJr_0Dxdp4gnvhAIm_RseUm_lKpMpO80Ncg0AwJ3Uyzgkf0sjKg62CnPdOG4qWK"
+              />
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Selector Cards Section */}
-        <section className="bg-surface px-8 py-24">
-          <div className="mx-auto max-w-6xl">
-            <div className="mb-16 text-center">
-              <h2 className="text-primary mb-4 text-[2rem] font-extrabold tracking-tight">
-                Elige tu categoría
-              </h2>
-              <p className="text-on-surface-variant mx-auto max-w-2xl">
-                Selecciona el área para la que necesitas confecciones y descubre
-                nuestras opciones especializadas.
-              </p>
-            </div>
+      {/* 4. CATEGORY ROW (Chips with icons) */}
+      <section className="bg-surface border-surface-variant/30 border-b py-8">
+        <div className="mx-auto max-w-screen-2xl px-8">
+          <div className="scrollbar-hide no-scrollbar relative flex snap-x gap-3 overflow-x-auto pb-4">
+            <Link
+              href="/catalogo/salud"
+              className="bg-primary font-label flex shrink-0 snap-start items-center gap-2 rounded-full px-6 py-2 text-sm font-medium text-white"
+            >
+              <span className="material-symbols-outlined text-sm">
+                grid_view
+              </span>{" "}
+              Todos
+            </Link>
+            <Link
+              href="/catalogo/salud?filter=medicos"
+              className="bg-surface-container-high text-on-surface font-label hover:bg-surface-variant flex shrink-0 snap-start items-center gap-2 rounded-full px-6 py-2 text-sm font-medium transition-colors"
+            >
+              <span className="material-symbols-outlined text-sm">
+                medical_services
+              </span>{" "}
+              Médicos
+            </Link>
+            <Link
+              href="/catalogo/salud?filter=enfermeria"
+              className="bg-surface-container-high text-on-surface font-label hover:bg-surface-variant flex shrink-0 snap-start items-center gap-2 rounded-full px-6 py-2 text-sm font-medium transition-colors"
+            >
+              <span className="material-symbols-outlined text-sm">healing</span>{" "}
+              Enfermería
+            </Link>
+            <Link
+              href="/catalogo/salud?filter=odontologia"
+              className="bg-surface-container-high text-on-surface font-label hover:bg-surface-variant flex shrink-0 snap-start items-center gap-2 rounded-full px-6 py-2 text-sm font-medium transition-colors"
+            >
+              <span className="material-symbols-outlined text-sm">
+                dentistry
+              </span>{" "}
+              Odontología
+            </Link>
+            <Link
+              href="/catalogo/salud?filter=fisioterapia"
+              className="bg-surface-container-high text-on-surface font-label hover:bg-surface-variant flex shrink-0 snap-start items-center gap-2 rounded-full px-6 py-2 text-sm font-medium transition-colors"
+            >
+              <span className="material-symbols-outlined text-sm">
+                physical_therapy
+              </span>{" "}
+              Fisioterapia
+            </Link>
+            <Link
+              href={"/catalogo/escolar" as any}
+              className="bg-surface-container-high text-on-surface font-label hover:bg-surface-variant flex shrink-0 snap-start items-center gap-2 rounded-full px-6 py-2 text-sm font-medium transition-colors"
+            >
+              <span className="material-symbols-outlined text-sm">school</span>{" "}
+              Estudiantes
+            </Link>
+            <Link
+              href="/catalogo/salud"
+              className="bg-surface-container-high text-on-surface font-label hover:bg-surface-variant flex shrink-0 snap-start items-center gap-2 rounded-full px-6 py-2 text-sm font-medium transition-colors"
+            >
+              <span className="material-symbols-outlined text-sm">biotech</span>{" "}
+              Lab Clínico
+            </Link>
+            <Link
+              href={"/catalogo/corporativo" as any}
+              className="bg-surface-container-high text-on-surface font-label hover:bg-surface-variant flex shrink-0 snap-start items-center gap-2 rounded-full px-6 py-2 text-sm font-medium transition-colors"
+            >
+              <span className="material-symbols-outlined text-sm">domain</span>{" "}
+              Empresas
+            </Link>
+          </div>
+        </div>
+      </section>
 
-            <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-2">
-              {/* Card 1: Médico */}
-              <div className="bg-surface-container-lowest group hover:border-t-primary relative flex h-full flex-col rounded-lg border-t-4 border-transparent p-10 shadow-[0_12px_32px_rgba(25,28,30,0.06)] transition-all hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(25,28,30,0.1)]">
-                <div className="bg-secondary/10 text-secondary absolute top-6 right-6 rounded-full px-3 py-1 text-xs font-bold tracking-widest uppercase">
-                  Principal
-                </div>
-                <div className="bg-primary/5 text-primary group-hover:bg-primary group-hover:text-on-primary mb-8 flex h-16 w-16 items-center justify-center rounded-full transition-colors">
-                  <span
-                    className="material-symbols-outlined text-3xl"
-                    style={{ fontVariationSettings: "'FILL' 0" }}
-                  >
-                    stethoscope
+      {/* 5. NOVEDADES */}
+      <section className="bg-surface px-8 py-20">
+        <div className="mx-auto max-w-screen-2xl">
+          <div className="mb-12 flex items-end justify-between lg:pr-12">
+            <h2 className="text-primary font-serif text-4xl">Novedades</h2>
+            <Link
+              href="/novedades"
+              className="text-primary font-body flex items-center gap-1 text-sm font-semibold tracking-wider uppercase hover:underline"
+            >
+              Ver todas{" "}
+              <span className="material-symbols-outlined text-[18px]">
+                arrow_forward
+              </span>
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+            {/* Product Card 1 */}
+            <div className="group ambient-shadow border-surface-variant flex flex-col overflow-hidden rounded-xl border bg-white transition-transform duration-300 hover:-translate-y-1">
+              <div className="bg-surface-container relative flex aspect-square items-center justify-center p-6">
+                <span className="bg-tertiary absolute top-4 left-4 rounded px-2 py-1 text-xs font-bold text-white">
+                  Nuevo
+                </span>
+                <button
+                  aria-label="Añadir a favoritos"
+                  className="text-outline hover:text-tertiary absolute top-4 right-4 z-10 transition-colors"
+                >
+                  <span className="material-symbols-outlined">
+                    favorite_border
+                  </span>
+                </button>
+                <Image
+                  width={800}
+                  height={800}
+                  alt="Scrub top"
+                  className="h-full w-full rounded object-cover"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAchu4owugaejCs4BMo2xGoxy7qsqP18zTQW-ksYQ2RWsOEVeWVCdsfHpn0lEgaxeXrMmj8uV8I6V4ee6ikie_qtd5BBZ0Xg7VQbe7cBJKbpPt8vVx_MyyZ1TSFmYMQdLZMYk-JB7ewnfWxXM9U_Mzh4So5AeoT-fysb5R9Gmp-vDmFpQHr0QeQ-hTBhzJIhnNPgtvwLUux8BNfxZ_nay8OrukMWHcBHovbjUjdebNO8Ks9V7OlnsPOGBkoIyciurbGMlOMoj9uQv_p"
+                />
+              </div>
+              <div className="flex flex-grow flex-col p-6">
+                <span className="font-label text-secondary mb-2 text-xs tracking-wider uppercase">
+                  Enfermería
+                </span>
+                <h3 className="text-on-surface mb-1 font-serif text-lg">
+                  Set &quot;Precision&quot; Azul Marino
+                </h3>
+                <p className="text-on-surface-variant font-body mb-4 font-semibold">
+                  $45.00
+                </p>
+                <div className="mb-6 flex gap-2">
+                  <span className="bg-surface-container text-secondary flex h-6 w-6 items-center justify-center rounded-full text-[10px]">
+                    S
+                  </span>
+                  <span className="bg-primary flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-bold text-white">
+                    M
+                  </span>
+                  <span className="bg-surface-container text-secondary flex h-6 w-6 items-center justify-center rounded-full text-[10px]">
+                    L
                   </span>
                 </div>
-                <h3 className="text-primary mb-4 text-2xl font-bold tracking-tight">
+                <button className="bg-primary font-body mt-auto flex w-full items-center justify-center gap-2 rounded-md py-3 text-sm font-semibold text-white opacity-90 transition-opacity group-hover:opacity-100">
+                  <span className="material-symbols-outlined text-sm">
+                    shopping_cart
+                  </span>{" "}
+                  Agregar al carrito
+                </button>
+              </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="group ambient-shadow border-surface-variant flex flex-col overflow-hidden rounded-xl border bg-white transition-transform duration-300 hover:-translate-y-1">
+              <div className="bg-surface-container relative flex aspect-square items-center justify-center p-6">
+                <span className="bg-tertiary absolute top-4 left-4 rounded px-2 py-1 text-xs font-bold text-white">
+                  Nuevo
+                </span>
+                <button
+                  aria-label="Añadir a favoritos"
+                  className="text-outline hover:text-tertiary absolute top-4 right-4 z-10 transition-colors"
+                >
+                  <span className="material-symbols-outlined">
+                    favorite_border
+                  </span>
+                </button>
+                <Image
+                  width={800}
+                  height={800}
+                  alt="Bata médica"
+                  className="h-full w-full rounded object-cover"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1dg_pqLOX2A6RX3FBs0wyZsaArck0ViXc4-ogvtrFGI8cd12D3xVp-Eg9fq0nVWP5ceV0FVwM8LfliiArsjazrSimOSza6kQSoB0i7wXuOjOvit6w60LsedI-e7HaF-ymeJY2iSNMHLXiiKTYQgCsucrDBR1BRoAsakNyxpC3FrnxR4JaB8u6MQYqMcop1_dew887jS107mDxdLRAy9CXcatWoo5eWJKT6zx1Kr2fT_vdwLmEA2s_EDFEEKz3ccx5gpGr0Z203u_A"
+                />
+              </div>
+              <div className="flex flex-grow flex-col p-6">
+                <span className="font-label text-secondary mb-2 text-xs tracking-wider uppercase">
+                  Médicos
+                </span>
+                <h3 className="text-on-surface mb-1 font-serif text-lg">
+                  Bata Blanca &quot;Atelier&quot;
+                </h3>
+                <p className="text-on-surface-variant font-body mb-4 font-semibold">
+                  $35.00
+                </p>
+                <div className="mb-6 flex gap-2">
+                  <span className="bg-surface-container text-secondary flex h-6 w-6 items-center justify-center rounded-full text-[10px]">
+                    M
+                  </span>
+                  <span className="bg-surface-container text-secondary flex h-6 w-6 items-center justify-center rounded-full text-[10px]">
+                    L
+                  </span>
+                </div>
+                <button className="bg-primary font-body mt-auto flex w-full items-center justify-center gap-2 rounded-md py-3 text-sm font-semibold text-white opacity-90 transition-opacity group-hover:opacity-100">
+                  <span className="material-symbols-outlined text-sm">
+                    shopping_cart
+                  </span>{" "}
+                  Agregar al carrito
+                </button>
+              </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="group ambient-shadow border-surface-variant flex flex-col overflow-hidden rounded-xl border bg-white transition-transform duration-300 hover:-translate-y-1">
+              <div className="bg-surface-container relative flex aspect-square items-center justify-center p-6">
+                <span className="bg-tertiary absolute top-4 left-4 rounded px-2 py-1 text-xs font-bold text-white">
+                  Nuevo
+                </span>
+                <button
+                  aria-label="Añadir a favoritos"
+                  className="text-outline hover:text-tertiary absolute top-4 right-4 z-10 transition-colors"
+                >
+                  <span className="material-symbols-outlined">
+                    favorite_border
+                  </span>
+                </button>
+                <div className="bg-surface-container-low border-outline-variant/30 flex h-full w-full items-center justify-center rounded-xl border">
+                  <span className="material-symbols-outlined text-outline text-4xl">
+                    image
+                  </span>
+                </div>
+              </div>
+              <div className="flex flex-grow flex-col p-6">
+                <span className="font-label text-secondary mb-2 text-xs tracking-wider uppercase">
+                  Estudiantes
+                </span>
+                <h3 className="text-on-surface mb-1 font-serif text-lg">
+                  Scrub Básico UES
+                </h3>
+                <p className="text-on-surface-variant font-body mb-4 font-semibold">
+                  $28.00
+                </p>
+                <div className="mb-6 flex gap-2">
+                  <span className="bg-surface-container text-secondary flex h-6 w-6 items-center justify-center rounded-full text-[10px]">
+                    S
+                  </span>
+                  <span className="bg-surface-container text-secondary flex h-6 w-6 items-center justify-center rounded-full text-[10px]">
+                    M
+                  </span>
+                </div>
+                <button className="bg-primary font-body mt-auto flex w-full items-center justify-center gap-2 rounded-md py-3 text-sm font-semibold text-white opacity-90 transition-opacity group-hover:opacity-100">
+                  <span className="material-symbols-outlined text-sm">
+                    shopping_cart
+                  </span>{" "}
+                  Agregar al carrito
+                </button>
+              </div>
+            </div>
+
+            {/* Card 4 */}
+            <div className="group ambient-shadow border-surface-variant flex flex-col overflow-hidden rounded-xl border bg-white transition-transform duration-300 hover:-translate-y-1">
+              <div className="bg-surface-container relative flex aspect-square items-center justify-center p-6">
+                <span className="bg-tertiary absolute top-4 left-4 rounded px-2 py-1 text-xs font-bold text-white">
+                  Nuevo
+                </span>
+                <button
+                  aria-label="Añadir a favoritos"
+                  className="text-outline hover:text-tertiary absolute top-4 right-4 z-10 transition-colors"
+                >
+                  <span className="material-symbols-outlined">
+                    favorite_border
+                  </span>
+                </button>
+                <div className="bg-surface-container-low border-outline-variant/30 flex h-full w-full items-center justify-center rounded-xl border">
+                  <span className="material-symbols-outlined text-outline text-4xl">
+                    image
+                  </span>
+                </div>
+              </div>
+              <div className="flex flex-grow flex-col p-6">
+                <span className="font-label text-secondary mb-2 text-xs tracking-wider uppercase">
+                  Odontología
+                </span>
+                <h3 className="text-on-surface mb-1 font-serif text-lg">
+                  Filipina Cuello Mao
+                </h3>
+                <p className="text-on-surface-variant font-body mb-4 font-semibold">
+                  $32.00
+                </p>
+                <div className="mb-6 flex gap-2">
+                  <span className="bg-surface-container text-secondary flex h-6 w-6 items-center justify-center rounded-full text-[10px]">
+                    M
+                  </span>
+                  <span className="bg-surface-container text-secondary flex h-6 w-6 items-center justify-center rounded-full text-[10px]">
+                    L
+                  </span>
+                  <span className="bg-surface-container text-secondary flex h-6 w-6 items-center justify-center rounded-full text-[10px]">
+                    XL
+                  </span>
+                </div>
+                <button className="bg-primary font-body mt-auto flex w-full items-center justify-center gap-2 rounded-md py-3 text-sm font-semibold text-white opacity-90 transition-opacity group-hover:opacity-100">
+                  <span className="material-symbols-outlined text-sm">
+                    shopping_cart
+                  </span>{" "}
+                  Agregar al carrito
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. WHY CONFECCIONES LISS */}
+      <section className="bg-surface-container-low border-surface-variant/50 border-t border-b px-8 py-24">
+        <div className="mx-auto max-w-screen-xl">
+          <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+            <div className="flex flex-col items-center text-center">
+              <div className="bg-primary mb-6 flex h-16 w-16 items-center justify-center rounded-full text-white">
+                <span className="material-symbols-outlined text-3xl">cut</span>
+              </div>
+              <h3 className="text-primary mb-3 font-serif text-xl">
+                Confección artesanal
+              </h3>
+              <p className="text-on-surface-variant font-body text-sm">
+                Corte y costura detallada para un ajuste perfecto y duradero.
+              </p>
+            </div>
+
+            <div className="flex flex-col items-center text-center">
+              <div className="bg-primary mb-6 flex h-16 w-16 items-center justify-center rounded-full text-white">
+                <span className="material-symbols-outlined text-3xl">
+                  texture
+                </span>
+              </div>
+              <h3 className="text-primary mb-3 font-serif text-xl">
+                Telas certificadas
+              </h3>
+              <p className="text-on-surface-variant font-body text-sm">
+                Materiales resistentes a fluidos y desgaste por lavados
+                frecuentes.
+              </p>
+            </div>
+
+            <div className="flex flex-col items-center text-center">
+              <div className="bg-primary mb-6 flex h-16 w-16 items-center justify-center rounded-full text-white">
+                <span className="material-symbols-outlined text-3xl">
+                  styler
+                </span>
+              </div>
+              <h3 className="text-primary mb-3 font-serif text-xl">Bordados</h3>
+              <p className="text-on-surface-variant font-body text-sm">
+                Personalización con el logo de tu clínica, hospital o
+                universidad.
+              </p>
+            </div>
+
+            <div className="flex flex-col items-center text-center">
+              <div className="bg-primary mb-6 flex h-16 w-16 items-center justify-center rounded-full text-white">
+                <span className="material-symbols-outlined text-3xl">
+                  local_shipping
+                </span>
+              </div>
+              <h3 className="text-primary mb-3 font-serif text-xl">
+                Entrega oriental
+              </h3>
+              <p className="text-on-surface-variant font-body text-sm">
+                Cobertura rápida y segura en toda la zona oriental del país.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. CATALOGS SECTION */}
+      <section className="bg-surface px-8 py-20">
+        <div className="mx-auto max-w-screen-2xl">
+          <h2 className="text-primary mb-12 text-center font-serif text-4xl">
+            Catálogos Especializados
+          </h2>
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            {/* Card 1 */}
+            <div className="group ambient-shadow relative h-64 cursor-pointer overflow-hidden rounded-xl">
+              <div className="bg-primary/40 group-hover:bg-primary/30 absolute inset-0 z-10 transition-colors"></div>
+              <div className="bg-surface-container-high absolute inset-0 flex items-center justify-center">
+                <span className="material-symbols-outlined text-outline/30 text-6xl">
+                  image
+                </span>
+              </div>
+              <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-6 text-center text-white">
+                <span className="material-symbols-outlined mb-4 text-4xl">
+                  medical_information
+                </span>
+                <h3 className="mb-2 font-serif text-2xl font-bold">
                   Sector Salud
                 </h3>
-                <p className="text-on-surface-variant mb-12 flex-grow leading-relaxed">
-                  Médicos, enfermeras, odontología y más.
+                <p className="font-body text-sm opacity-90">
+                  Uniformes para médicos, enfermería y clínicas.
                 </p>
-                <Link
-                  href={"/catalogo/salud" as any}
-                  className="bg-primary text-on-primary hover:bg-primary-fixed hover:text-on-primary-fixed block w-full rounded-md py-3 text-center font-medium transition-colors"
-                >
-                  Explorar
-                </Link>
               </div>
+            </div>
 
-              {/* Card 2: Universidades */}
-              <div className="bg-surface-container-lowest group hover:border-t-primary flex h-full flex-col rounded-lg border-t-4 border-transparent p-10 shadow-[0_12px_32px_rgba(25,28,30,0.06)] transition-all hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(25,28,30,0.1)]">
-                <div className="bg-primary/5 text-primary group-hover:bg-primary group-hover:text-on-primary mb-8 flex h-16 w-16 items-center justify-center rounded-full transition-colors">
-                  <span
-                    className="material-symbols-outlined text-3xl"
-                    style={{ fontVariationSettings: "'FILL' 0" }}
-                  >
-                    school
-                  </span>
-                </div>
-                <h3 className="text-primary mb-4 text-2xl font-bold tracking-tight">
+            {/* Card 2 */}
+            <div className="group ambient-shadow relative h-64 cursor-pointer overflow-hidden rounded-xl">
+              <div className="bg-primary/40 group-hover:bg-primary/30 absolute inset-0 z-10 transition-colors"></div>
+              <div className="bg-surface-container-high absolute inset-0 flex items-center justify-center">
+                <span className="material-symbols-outlined text-outline/30 text-6xl">
+                  image
+                </span>
+              </div>
+              <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-6 text-center text-white">
+                <span className="material-symbols-outlined mb-4 text-4xl">
+                  school
+                </span>
+                <h3 className="mb-2 font-serif text-2xl font-bold">
                   Universidades
                 </h3>
-                <p className="text-on-surface-variant mb-12 flex-grow leading-relaxed">
-                  Uniformes para estudiantes del sector salud y laboratorios.
+                <p className="font-body text-sm opacity-90">
+                  Uniformes para facultades de salud y ciencias.
                 </p>
-                <Link
-                  href={"/catalogo/escolar" as any}
-                  className="bg-primary text-on-primary hover:bg-primary-fixed hover:text-on-primary-fixed block w-full rounded-md py-3 text-center font-medium transition-colors"
-                >
-                  Explorar
-                </Link>
-              </div>
-
-              {/* Card 3: Escuelas */}
-              <div className="bg-surface-container-lowest group hover:border-t-primary flex h-full flex-col rounded-lg border-t-4 border-transparent p-10 shadow-[0_12px_32px_rgba(25,28,30,0.06)] transition-all hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(25,28,30,0.1)]">
-                <div className="bg-primary/5 text-primary group-hover:bg-primary group-hover:text-on-primary mb-8 flex h-16 w-16 items-center justify-center rounded-full transition-colors">
-                  <span
-                    className="material-symbols-outlined text-3xl"
-                    style={{ fontVariationSettings: "'FILL' 0" }}
-                  >
-                    domain
-                  </span>
-                </div>
-                <h3 className="text-primary mb-4 text-2xl font-bold tracking-tight">
-                  Escuelas y Colegios
-                </h3>
-                <p className="text-on-surface-variant mb-12 flex-grow leading-relaxed">
-                  Uniformes y ropa escolar institucional.
-                </p>
-                <Link
-                  href={"/catalogo/escolar" as any}
-                  className="bg-primary text-on-primary hover:bg-primary-fixed hover:text-on-primary-fixed block w-full rounded-md py-3 text-center font-medium transition-colors"
-                >
-                  Explorar
-                </Link>
-              </div>
-
-              {/* Card 4: Corporativos */}
-              <div className="bg-surface-container-lowest group hover:border-t-primary flex h-full flex-col rounded-lg border-t-4 border-transparent p-10 shadow-[0_12px_32px_rgba(25,28,30,0.06)] transition-all hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(25,28,30,0.1)]">
-                <div className="bg-primary/5 text-primary group-hover:bg-primary group-hover:text-on-primary mb-8 flex h-16 w-16 items-center justify-center rounded-full transition-colors">
-                  <span
-                    className="material-symbols-outlined text-3xl"
-                    style={{ fontVariationSettings: "'FILL' 0" }}
-                  >
-                    work
-                  </span>
-                </div>
-                <h3 className="text-primary mb-4 text-2xl font-bold tracking-tight">
-                  Empresas y Talleres
-                </h3>
-                <p className="text-on-surface-variant mb-12 flex-grow leading-relaxed">
-                  Uniformes corporativos y laborales de alta durabilidad.
-                </p>
-                <Link
-                  href={"/catalogo/corporativo" as any}
-                  className="bg-primary text-on-primary hover:bg-primary-fixed hover:text-on-primary-fixed block w-full rounded-md py-3 text-center font-medium transition-colors"
-                >
-                  Explorar
-                </Link>
               </div>
             </div>
 
-            {/* Centered Bottom Card */}
-            <div className="mt-8 flex justify-center">
-              <div className="bg-surface-container-low hover:border-t-primary w-full rounded-lg border-t-4 border-transparent p-10 text-center shadow-sm transition-all hover:-translate-y-1 md:w-2/3 lg:w-1/2">
-                <div className="bg-surface-container-lowest text-primary mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full shadow-sm">
-                  <span
-                    className="material-symbols-outlined text-3xl"
-                    style={{ fontVariationSettings: "'FILL' 0" }}
-                  >
-                    content_cut
-                  </span>
-                </div>
-                <h3 className="text-primary mb-3 text-xl font-bold tracking-tight">
-                  No sé qué necesito
-                </h3>
-                <p className="text-on-surface-variant mb-8 leading-relaxed">
-                  Te ayudamos a encontrarlo. Asesoría personalizada para tu
-                  proyecto.
+            {/* Card 3 */}
+            <div className="group ambient-shadow relative h-64 cursor-pointer overflow-hidden rounded-xl">
+              <div className="bg-primary/40 group-hover:bg-primary/30 absolute inset-0 z-10 transition-colors"></div>
+              <div className="bg-surface-container-high absolute inset-0 flex items-center justify-center">
+                <span className="material-symbols-outlined text-outline/30 text-6xl">
+                  image
+                </span>
+              </div>
+              <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-6 text-center text-white">
+                <span className="material-symbols-outlined mb-4 text-4xl">
+                  business
+                </span>
+                <h3 className="mb-2 font-serif text-2xl font-bold">Empresas</h3>
+                <p className="font-body text-sm opacity-90">
+                  Dotaciones corporativas y uniformes de trabajo.
                 </p>
-                <Link
-                  href="/contacto"
-                  className="text-primary border-outline-variant/50 hover:bg-surface-container-lowest inline-block rounded-md border bg-transparent px-8 py-3 font-medium transition-colors"
-                >
-                  Contactar
-                </Link>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Primera vez aquí Section */}
-        <section className="border-outline-variant/30 border-y bg-[#f0f4ff] px-8 py-16">
-          <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-12 lg:flex-row">
-            {/* Left Side: Steps */}
-            <div className="w-full lg:w-2/3">
-              <h2 className="text-primary mb-8 text-2xl font-bold tracking-tight">
-                ¿Primera vez aquí?
-              </h2>
-              <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-                {/* Step 1 */}
-                <div className="flex items-start gap-4">
-                  <div className="text-primary flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-white shadow-sm">
-                    <span className="material-symbols-outlined">category</span>
-                  </div>
-                  <div>
-                    <h4 className="text-primary mb-1 font-bold">
-                      Elige tu categoría
-                    </h4>
-                    <p className="text-on-surface-variant text-sm">
-                      Encuentra el estilo perfecto.
-                    </p>
-                  </div>
+      {/* 8. POPULAR PRODUCTS */}
+      <section className="bg-surface-container-low px-8 py-20">
+        <div className="mx-auto max-w-screen-2xl">
+          <div className="mb-12 flex items-end justify-between">
+            <h2 className="text-primary font-serif text-4xl">Más Vendidos</h2>
+          </div>
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            {/* Prod 1 */}
+            <div className="group ambient-shadow border-surface-variant flex flex-col overflow-hidden rounded-xl border bg-white">
+              <div className="bg-surface-container relative flex aspect-[4/3] items-center justify-center p-4">
+                <span className="bg-secondary absolute top-4 left-4 flex items-center gap-1 rounded px-2 py-1 text-xs font-bold text-white">
+                  <span className="material-symbols-outlined text-[12px]">
+                    local_fire_department
+                  </span>{" "}
+                  Popular
+                </span>
+                <div className="bg-surface-container-high border-outline-variant/30 flex h-full w-full items-center justify-center rounded border">
+                  <span className="material-symbols-outlined text-outline text-4xl">
+                    image
+                  </span>
                 </div>
-                {/* Step 2 */}
-                <div className="flex items-start gap-4">
-                  <div className="text-primary flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-white shadow-sm">
-                    <span className="material-symbols-outlined">
-                      straighten
-                    </span>
-                  </div>
-                  <div>
-                    <h4 className="text-primary mb-1 font-bold">
-                      Personaliza tu talla
-                    </h4>
-                    <p className="text-on-surface-variant text-sm">
-                      Ajuste ideal para ti.
-                    </p>
-                  </div>
+              </div>
+              <div className="flex flex-grow flex-col p-5">
+                <h3 className="text-on-surface mb-1 font-serif text-lg">
+                  Gorro Quirúrgico Estampado
+                </h3>
+                <p className="text-on-surface-variant font-body font-semibold">
+                  $12.00
+                </p>
+              </div>
+            </div>
+
+            {/* Prod 2 */}
+            <div className="group ambient-shadow border-surface-variant flex flex-col overflow-hidden rounded-xl border bg-white">
+              <div className="bg-surface-container relative flex aspect-[4/3] items-center justify-center p-4">
+                <span className="bg-secondary absolute top-4 left-4 flex items-center gap-1 rounded px-2 py-1 text-xs font-bold text-white">
+                  <span className="material-symbols-outlined text-[12px]">
+                    local_fire_department
+                  </span>{" "}
+                  Popular
+                </span>
+                <div className="bg-surface-container-high border-outline-variant/30 flex h-full w-full items-center justify-center rounded border">
+                  <span className="material-symbols-outlined text-outline text-4xl">
+                    image
+                  </span>
                 </div>
-                {/* Step 3 */}
-                <div className="flex items-start gap-4">
-                  <div className="text-primary flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-white shadow-sm">
-                    <span className="material-symbols-outlined">
-                      local_shipping
-                    </span>
-                  </div>
-                  <div>
-                    <h4 className="text-primary mb-1 font-bold">
-                      Recibe en tu puerta
-                    </h4>
-                    <p className="text-on-surface-variant text-sm">
-                      Envío rápido y seguro.
-                    </p>
-                  </div>
+              </div>
+              <div className="flex flex-grow flex-col p-5">
+                <h3 className="text-on-surface mb-1 font-serif text-lg">
+                  Pantalón Cargo &quot;Resilience&quot;
+                </h3>
+                <p className="text-on-surface-variant font-body font-semibold">
+                  $25.00
+                </p>
+              </div>
+            </div>
+
+            {/* Prod 3 */}
+            <div className="group ambient-shadow border-surface-variant flex flex-col overflow-hidden rounded-xl border bg-white">
+              <div className="bg-surface-container relative flex aspect-[4/3] items-center justify-center p-4">
+                <span className="bg-secondary absolute top-4 left-4 flex items-center gap-1 rounded px-2 py-1 text-xs font-bold text-white">
+                  <span className="material-symbols-outlined text-[12px]">
+                    local_fire_department
+                  </span>{" "}
+                  Popular
+                </span>
+                <div className="bg-surface-container-high border-outline-variant/30 flex h-full w-full items-center justify-center rounded border">
+                  <span className="material-symbols-outlined text-outline text-4xl">
+                    image
+                  </span>
+                </div>
+              </div>
+              <div className="flex flex-grow flex-col p-5">
+                <h3 className="text-on-surface mb-1 font-serif text-lg">
+                  Chaqueta Médica Antifluido
+                </h3>
+                <p className="text-on-surface-variant font-body font-semibold">
+                  $40.00
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 9. PROCESS SECTION */}
+      <section className="bg-primary px-8 py-24 text-white">
+        <div className="mx-auto max-w-screen-2xl">
+          <div className="mb-16 text-center">
+            <h2 className="mb-4 font-serif text-4xl">
+              ¿Cómo funciona un pedido a medida?
+            </h2>
+            <p className="text-primary-container mx-auto max-w-2xl text-lg">
+              Un proceso sencillo para asegurar que tu uniforme sea perfecto
+              para ti.
+            </p>
+          </div>
+          <div className="relative grid grid-cols-1 gap-8 md:grid-cols-4">
+            {/* Line connector for desktop */}
+            <div className="bg-primary-container/30 absolute top-12 right-[10%] left-[10%] z-0 hidden h-0.5 md:block"></div>
+
+            <div className="relative z-10 flex flex-col items-center text-center">
+              <div className="text-primary ambient-shadow mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-white font-serif text-3xl font-bold">
+                1
+              </div>
+              <h3 className="mb-2 font-serif text-xl">Elige el modelo</h3>
+              <p className="text-primary-container text-sm">
+                Explora nuestro catálogo o trae tu propio diseño.
+              </p>
+            </div>
+            <div className="relative z-10 flex flex-col items-center text-center">
+              <div className="text-primary ambient-shadow mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-white font-serif text-3xl font-bold">
+                2
+              </div>
+              <h3 className="mb-2 font-serif text-xl">Selecciona la tela</h3>
+              <p className="text-primary-container text-sm">
+                Antifluidos, spandex, o algodón. Tenemos opciones para cada
+                necesidad.
+              </p>
+            </div>
+            <div className="relative z-10 flex flex-col items-center text-center">
+              <div className="text-primary ambient-shadow mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-white font-serif text-3xl font-bold">
+                3
+              </div>
+              <h3 className="mb-2 font-serif text-xl">Toma de medidas</h3>
+              <p className="text-primary-container text-sm">
+                Ajustamos el patrón a tu cuerpo para una comodidad total.
+              </p>
+            </div>
+            <div className="relative z-10 flex flex-col items-center text-center">
+              <div className="text-primary ambient-shadow mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-white font-serif text-3xl font-bold">
+                4
+              </div>
+              <h3 className="mb-2 font-serif text-xl">Entrega</h3>
+              <p className="text-primary-container text-sm">
+                Recibe tu uniforme listo para usar en tu lugar de trabajo.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 10. TESTIMONIALS */}
+      <section className="bg-[#f4f5f7] px-8 py-24">
+        <div className="mx-auto max-w-screen-2xl">
+          <h2 className="text-primary mb-16 text-center font-serif text-4xl">
+            Lo que dicen nuestros clientes
+          </h2>
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            <div className="ambient-shadow rounded-xl bg-white p-8">
+              <div className="text-tertiary mb-4 flex gap-1">
+                <span className="material-symbols-outlined">star</span>
+                <span className="material-symbols-outlined">star</span>
+                <span className="material-symbols-outlined">star</span>
+                <span className="material-symbols-outlined">star</span>
+                <span className="material-symbols-outlined">star</span>
+              </div>
+              <p className="text-on-surface-variant font-body mb-6 italic">
+                &quot;La calidad de la tela es excelente y el bordado de mi logo
+                quedó perfecto. Totalmente recomendados en San Miguel.&quot;
+              </p>
+              <div className="flex items-center gap-4">
+                <div className="bg-surface-container text-secondary flex h-12 w-12 items-center justify-center rounded-full font-bold">
+                  M
+                </div>
+                <div>
+                  <h4 className="text-on-surface font-serif font-bold">
+                    Dra. María Hernández
+                  </h4>
+                  <span className="text-secondary text-xs">
+                    Doctora General
+                  </span>
                 </div>
               </div>
             </div>
 
-            {/* Right Side: Call to Action */}
-            <div className="flex w-full flex-col items-start text-center lg:w-1/3 lg:items-end lg:text-right">
-              <Link
-                href={"/onboarding/bienvenida" as any}
-                className="mb-4 block w-full rounded-md bg-[#143067] px-8 py-4 font-medium text-white shadow-[0_12px_32px_rgba(25,28,30,0.06)] transition-opacity hover:opacity-90 sm:w-auto"
-              >
-                Crea tu cuenta gratis
-              </Link>
-              <Link
-                href="/inicio"
-                className="text-primary hover:text-primary-container block w-full px-2 text-center text-sm font-medium hover:underline sm:w-auto lg:text-right"
-              >
-                Ver catálogo sin cuenta
-              </Link>
+            <div className="ambient-shadow rounded-xl bg-white p-8">
+              <div className="text-tertiary mb-4 flex gap-1">
+                <span className="material-symbols-outlined">star</span>
+                <span className="material-symbols-outlined">star</span>
+                <span className="material-symbols-outlined">star</span>
+                <span className="material-symbols-outlined">star</span>
+                <span className="material-symbols-outlined">star</span>
+              </div>
+              <p className="text-on-surface-variant font-body mb-6 italic">
+                &quot;Los uniformes para nuestro grupo de prácticas clínicas
+                quedaron a la medida. El servicio al cliente fue muy
+                atento.&quot;
+              </p>
+              <div className="flex items-center gap-4">
+                <div className="bg-surface-container text-secondary flex h-12 w-12 items-center justify-center rounded-full font-bold">
+                  C
+                </div>
+                <div>
+                  <h4 className="text-on-surface font-serif font-bold">
+                    Carlos R.
+                  </h4>
+                  <span className="text-secondary text-xs">Estudiante UES</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="ambient-shadow rounded-xl bg-white p-8">
+              <div className="text-tertiary mb-4 flex gap-1">
+                <span className="material-symbols-outlined">star</span>
+                <span className="material-symbols-outlined">star</span>
+                <span className="material-symbols-outlined">star</span>
+                <span className="material-symbols-outlined">star</span>
+                <span className="material-symbols-outlined">star_half</span>
+              </div>
+              <p className="text-on-surface-variant font-body mb-6 italic">
+                &quot;Excelente opción para renovar mis filipinas. Son muy
+                cómodas para turnos largos y la tela no se decolora
+                fácilmente.&quot;
+              </p>
+              <div className="flex items-center gap-4">
+                <div className="bg-surface-container text-secondary flex h-12 w-12 items-center justify-center rounded-full font-bold">
+                  L
+                </div>
+                <div>
+                  <h4 className="text-on-surface font-serif font-bold">
+                    Lic. Laura Gómez
+                  </h4>
+                  <span className="text-secondary text-xs">Enfermera</span>
+                </div>
+              </div>
             </div>
           </div>
-        </section>
-      </main>
-    </div>
+        </div>
+      </section>
+
+      {/* 11. UNIVERSITY LOGOS */}
+      <section className="border-surface-variant/50 border-b bg-white px-8 py-12">
+        <div className="mx-auto max-w-screen-xl">
+          <p className="font-label text-secondary mb-8 text-center text-sm tracking-widest uppercase">
+            Confeccionamos uniformes para estudiantes de:
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-8 opacity-60 grayscale transition-all duration-500 hover:grayscale-0 md:gap-16">
+            <span className="font-serif text-xl font-bold">UES Oriental</span>
+            <span className="font-serif text-xl font-bold">UGB</span>
+            <span className="font-serif text-xl font-bold">Andrés Bello</span>
+            <span className="font-serif text-xl font-bold">UNIVO</span>
+            <span className="font-serif text-xl font-bold">UMA</span>
+            <span className="font-serif text-xl font-bold">IEPROES</span>
+          </div>
+        </div>
+      </section>
+
+      {/* 12. INSTITUTIONAL BANNER */}
+      <section className="bg-primary px-8 py-20 text-white">
+        <div className="mx-auto flex max-w-screen-xl flex-col items-center justify-between gap-8 md:flex-row">
+          <div className="md:w-2/3">
+            <h2 className="mb-4 font-serif text-3xl md:text-4xl">
+              ¿Necesitas dotación para tu clínica o grupo de estudiantes?
+            </h2>
+            <p className="text-primary-container text-lg">
+              Ofrecemos descuentos especiales por volumen, toma de medidas en
+              tus instalaciones y bordado institucional.
+            </p>
+          </div>
+          <div className="justify-md-end flex md:w-1/3">
+            <button className="text-primary font-body hover:bg-surface-container w-full rounded-md bg-white px-8 py-4 font-bold transition-colors md:w-auto">
+              Solicitar cotización
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* 13. BLOG PREVIEW */}
+      <section className="bg-surface px-8 py-20">
+        <div className="mx-auto max-w-screen-2xl">
+          <div className="mb-12 flex items-end justify-between">
+            <h2 className="text-primary font-serif text-4xl">Nuestro Blog</h2>
+            <Link
+              href="/blog"
+              className="text-primary font-body flex items-center gap-1 text-sm font-semibold tracking-wider uppercase hover:underline"
+            >
+              Ver todos{" "}
+              <span className="material-symbols-outlined text-[18px]">
+                arrow_forward
+              </span>
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            <article className="ambient-shadow border-surface-variant flex flex-col overflow-hidden rounded-xl border bg-white">
+              <div className="bg-surface-container-high flex h-48 items-center justify-center">
+                <span className="material-symbols-outlined text-outline text-4xl">
+                  image
+                </span>
+              </div>
+              <div className="flex flex-grow flex-col p-6">
+                <span className="text-secondary mb-2 text-xs">
+                  15 Octubre, 2024
+                </span>
+                <h3 className="text-on-surface mb-3 font-serif text-xl">
+                  ¿Cómo elegir la tela ideal para tu scrub?
+                </h3>
+                <p className="text-on-surface-variant mb-4 text-sm">
+                  Conoce las diferencias entre antifluido, spandex y algodón
+                  para encontrar tu comodidad ideal.
+                </p>
+                <Link
+                  href="/blog/como-elegir-tela"
+                  className="text-primary mt-auto text-sm font-semibold hover:underline"
+                >
+                  Leer artículo
+                </Link>
+              </div>
+            </article>
+
+            <article className="ambient-shadow border-surface-variant flex flex-col overflow-hidden rounded-xl border bg-white">
+              <div className="bg-surface-container-high flex h-48 items-center justify-center">
+                <span className="material-symbols-outlined text-outline text-4xl">
+                  image
+                </span>
+              </div>
+              <div className="flex flex-grow flex-col p-6">
+                <span className="text-secondary mb-2 text-xs">
+                  02 Septiembre, 2024
+                </span>
+                <h3 className="text-on-surface mb-3 font-serif text-xl">
+                  Cuidados esenciales para prolongar la vida de tu uniforme
+                </h3>
+                <p className="text-on-surface-variant mb-4 text-sm">
+                  Tips de lavado y planchado para mantener el color y la
+                  integridad de las telas certificadas.
+                </p>
+                <Link
+                  href="/blog/cuidados-esenciales"
+                  className="text-primary mt-auto text-sm font-semibold hover:underline"
+                >
+                  Leer artículo
+                </Link>
+              </div>
+            </article>
+
+            <article className="ambient-shadow border-surface-variant flex flex-col overflow-hidden rounded-xl border bg-white">
+              <div className="bg-surface-container-high flex h-48 items-center justify-center">
+                <span className="material-symbols-outlined text-outline text-4xl">
+                  image
+                </span>
+              </div>
+              <div className="flex flex-grow flex-col p-6">
+                <span className="text-secondary mb-2 text-xs">
+                  18 Agosto, 2024
+                </span>
+                <h3 className="text-on-surface mb-3 font-serif text-xl">
+                  Tendencias en colores de uniformes médicos 2024
+                </h3>
+                <p className="text-on-surface-variant mb-4 text-sm">
+                  Descubre cuáles son los colores que transmiten más
+                  profesionalismo y calma a tus pacientes.
+                </p>
+                <Link
+                  href="/blog/tendencias-colores"
+                  className="text-primary mt-auto text-sm font-semibold hover:underline"
+                >
+                  Leer artículo
+                </Link>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
