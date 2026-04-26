@@ -1,4 +1,20 @@
 import { socialLinks } from "@/lib/seo-data";
+import {
+  SiFacebook,
+  SiGooglemaps,
+  SiInstagram,
+  SiTiktok,
+  SiYoutube,
+} from "react-icons/si";
+import type { IconType } from "react-icons";
+
+const socialIconMap: Record<string, { Icon: IconType; color: string }> = {
+  Facebook: { Icon: SiFacebook, color: "#1877F2" },
+  Instagram: { Icon: SiInstagram, color: "#E1306C" },
+  TikTok: { Icon: SiTiktok, color: "#000000" },
+  YouTube: { Icon: SiYoutube, color: "#FF0000" },
+  "Google Maps": { Icon: SiGooglemaps, color: "#4285F4" },
+};
 
 export function NapContacto() {
   return (
@@ -107,21 +123,25 @@ export function NapContacto() {
             Síguenos en redes sociales para ver nuestros trabajos más recientes:
           </p>
           <div className="flex justify-center gap-4">
-            {socialLinks.map((s) => (
-              <a
-                key={s.red}
-                href={s.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Seguir Confecciones Liss en ${s.red}`}
-                title={`Confecciones Liss en ${s.red}`}
-                className="bg-surface-container-high text-on-surface hover:bg-primary hover:text-on-primary flex h-10 w-10 items-center justify-center rounded-full transition-colors"
-              >
-                <span className="material-symbols-outlined text-sm">
-                  {s.icon}
-                </span>
-              </a>
-            ))}
+            {socialLinks.map((s) => {
+              const entry = socialIconMap[s.red];
+              if (!entry) return null;
+              const { Icon, color } = entry;
+              return (
+                <a
+                  key={s.red}
+                  href={s.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Seguir Confecciones Liss en ${s.red}`}
+                  title={`Confecciones Liss en ${s.red}`}
+                  className="flex h-10 w-10 items-center justify-center rounded-full transition-transform hover:scale-110"
+                  style={{ color }}
+                >
+                  <Icon className="text-2xl" aria-hidden="true" />
+                </a>
+              );
+            })}
           </div>
         </div>
       </div>
