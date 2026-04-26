@@ -39,7 +39,7 @@ export default function HomePage() {
               <span className="material-symbols-outlined text-[16px]">
                 verified
               </span>
-              Taller artesanal en San Miguel, El Salvador
+              Confección profesional a la medida
             </div>
             <h1 className="text-primary mb-6 font-serif text-5xl leading-[1.1] tracking-tight lg:text-7xl">
               Scrubs y Uniformes
@@ -48,7 +48,7 @@ export default function HomePage() {
               <span className="text-secondary">en San Miguel</span>
             </h1>
             <p className="text-on-surface-variant font-body mb-8 max-w-lg text-lg leading-relaxed lg:text-xl">
-              Confección artesanal de scrubs médicos en tela Sincatex y Lino
+              Confección profesional de scrubs médicos en tela Sincatex y Lino
               Oxford. Uniformes para UNIVO, UNAB, UGB, colegios y empresas.
               Bordados, sublimación y envío a todo El Salvador.{" "}
               <strong>Desde $35 USD.</strong>
