@@ -11,11 +11,11 @@ export function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <Image
-            src="/logo.svg"
+            src="/logo-blanco.webp"
             alt="Confecciones Liss Logo"
             width={180}
-            height={40}
-            className="h-10 w-auto"
+            height={180}
+            className="h-12 w-auto"
             priority
           />
         </Link>

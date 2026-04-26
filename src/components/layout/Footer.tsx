@@ -1,6 +1,12 @@
 import { siteConfig } from "@/config/site";
 import Image from "next/image";
-import { SiFacebook, SiInstagram, SiTiktok, SiYoutube } from "react-icons/si";
+import {
+  SiFacebook,
+  SiGooglemaps,
+  SiInstagram,
+  SiTiktok,
+  SiYoutube,
+} from "react-icons/si";
 
 export function Footer() {
   return (
@@ -9,11 +15,11 @@ export function Footer() {
         <div>
           <div className="mb-6 flex items-center gap-2">
             <Image
-              src="/logo.svg"
+              src="/logo-blanco.webp"
               alt="Confecciones Liss"
               width={200}
-              height={50}
-              className="h-10 w-auto brightness-0 invert"
+              height={200}
+              className="h-16 w-auto"
             />
           </div>
           <p className="text-primary-container mb-6 max-w-xs text-sm">
@@ -62,18 +68,14 @@ export function Footer() {
               <SiYoutube className="text-2xl" aria-hidden="true" />
             </a>
             <a
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
+              className="flex h-10 w-10 items-center justify-center transition-transform hover:scale-110"
               href={siteConfig.links.googleMaps}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Ver en Google Maps"
+              style={{ color: "#4285F4" }}
             >
-              <span
-                className="material-symbols-outlined text-sm"
-                aria-hidden="true"
-              >
-                map
-              </span>
+              <SiGooglemaps className="text-2xl" aria-hidden="true" />
             </a>
           </div>
         </div>
