@@ -66,12 +66,12 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex w-full gap-4 lg:w-auto">
               <a
                 href="https://confeccionesliss.axkar.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-gradient font-body ambient-shadow rounded-md px-8 py-4 font-semibold text-white transition-opacity hover:opacity-90"
+                className="btn-gradient font-body ambient-shadow flex-1 rounded-md px-4 py-4 text-center font-semibold text-white transition-opacity hover:opacity-90"
               >
                 Comprar
               </a>
@@ -79,7 +79,7 @@ export default function HomePage() {
                 href="https://maps.app.goo.gl/XSs2vgjLG8uvJGoQ7"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border-outline text-primary hover:bg-surface-variant/50 rounded-md border bg-transparent px-8 py-4 font-serif font-medium transition-colors"
+                className="border-outline text-primary hover:bg-surface-variant/50 flex-1 rounded-md border bg-transparent px-4 py-4 text-center font-serif font-medium transition-colors"
               >
                 Cómo llegar al taller
               </a>
