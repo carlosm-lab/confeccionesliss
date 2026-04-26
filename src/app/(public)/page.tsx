@@ -92,7 +92,7 @@ export default function HomePage() {
                 width={800}
                 height={800}
                 alt="Scrubs médicos a la medida confeccionados en San Miguel El Salvador por Confecciones Liss"
-                className="h-full w-full object-cover object-center"
+                className="h-full w-full object-contain object-center"
                 src="/images/uniformes/portada.webp"
                 priority
               />

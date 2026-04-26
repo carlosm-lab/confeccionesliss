@@ -1,6 +1,6 @@
 import { siteConfig } from "@/config/site";
 import Image from "next/image";
-import { FaFacebook, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
+import { SiFacebook, SiInstagram, SiTiktok, SiYoutube } from "react-icons/si";
 
 export function Footer() {
   return (
@@ -22,40 +22,44 @@ export function Footer() {
           </p>
           <div className="flex gap-4">
             <a
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
+              className="flex h-10 w-10 items-center justify-center transition-transform hover:scale-110"
               href={siteConfig.links.instagram}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Seguir en Instagram"
+              style={{ color: "#E1306C" }}
             >
-              <FaInstagram className="text-lg" aria-hidden="true" />
+              <SiInstagram className="text-2xl" aria-hidden="true" />
             </a>
             <a
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
+              className="flex h-10 w-10 items-center justify-center transition-transform hover:scale-110"
               href={siteConfig.links.facebook}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Seguir en Facebook"
+              style={{ color: "#1877F2" }}
             >
-              <FaFacebook className="text-lg" aria-hidden="true" />
+              <SiFacebook className="text-2xl" aria-hidden="true" />
             </a>
             <a
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
+              className="flex h-10 w-10 items-center justify-center transition-transform hover:scale-110"
               href={siteConfig.links.tiktok}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Seguir en TikTok"
+              style={{ color: "#FFFFFF" }}
             >
-              <FaTiktok className="text-lg" aria-hidden="true" />
+              <SiTiktok className="text-2xl" aria-hidden="true" />
             </a>
             <a
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
+              className="flex h-10 w-10 items-center justify-center transition-transform hover:scale-110"
               href={siteConfig.links.youtube}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Seguir en YouTube"
+              style={{ color: "#FF0000" }}
             >
-              <FaYoutube className="text-lg" aria-hidden="true" />
+              <SiYoutube className="text-2xl" aria-hidden="true" />
             </a>
             <a
               className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"

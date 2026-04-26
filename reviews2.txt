@@ -1,0 +1,14 @@
+<USER_REQUEST>
+Elimina el modal que aparece en el top de la pagina, el que dice: 🎓 Descuentos para grupos universitarios — Escríbenos por WhatsApp.
+
+elimina el apartado de catalogos especializados.
+
+En novedades pon los uniformes que te deje en C:\Users\usuar\Desktop\Uniformes
+
+cada carpeta tiene el uniforme de la universidad o institucion del nombre de la carpeta, optimiza las imagenes a formato webp y ponas ahi, haz que las imagenes se muestren en su formato original que no haya recortes. en als etiquetas pon las sigas de la unoversidad. en el titulo solo pon uniformes de la [universidad] por ejemplo "Uniformes de la UNIVO" en el precio ponle 39.50 a todos. tallas pon todas desde la s hasta la xxl. 
+
+elimina el apartado de mas vendidos
+
+En reseñas pon
+
+<truncated 1868 bytes>
