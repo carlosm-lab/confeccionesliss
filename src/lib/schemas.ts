@@ -5,7 +5,7 @@ export const schemaLocalBusiness = {
   name: "Confecciones Liss",
   alternateName: ["Confeccion Liss", "Confecciones Liss San Miguel"],
   description:
-    "Taller artesanal de confección de scrubs médicos, uniformes universitarios, escolares y corporativos a la medida en San Miguel, El Salvador. Bordados, sublimación y personalización. Envíos a todo El Salvador con pago al recibir.",
+    "Confección profesional a la medida de scrubs médicos, uniformes universitarios, escolares y corporativos en San Miguel, El Salvador. Bordados, sublimación y personalización. Envíos a todo El Salvador con pago al recibir.",
   url: "https://www.confeccionesliss.com",
   logo: "https://www.confeccionesliss.com/logo.svg",
   image: "https://www.confeccionesliss.com/og.jpg",

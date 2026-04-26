@@ -1,4 +1,6 @@
 import { siteConfig } from "@/config/site";
+import Image from "next/image";
+import { FaFacebook, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 
 export function Footer() {
   return (
@@ -6,19 +8,17 @@ export function Footer() {
       <div className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-12 px-8 py-16 md:grid-cols-2">
         <div>
           <div className="mb-6 flex items-center gap-2">
-            <span
-              className="material-symbols-outlined text-white"
-              data-icon="content_cut"
-            >
-              content_cut
-            </span>
-            <span className="font-serif text-2xl font-bold italic">
-              Confecciones Liss
-            </span>
+            <Image
+              src="/logo.svg"
+              alt="Confecciones Liss"
+              width={200}
+              height={50}
+              className="h-10 w-auto brightness-0 invert"
+            />
           </div>
           <p className="text-primary-container mb-6 max-w-xs text-sm">
-            Taller artesanal de scrubs médicos y uniformes a la medida en San
-            Miguel, El Salvador. Envíos a todo el país con pago al recibir.
+            Confección profesional a la medida de scrubs médicos y uniformes en
+            San Miguel, El Salvador. Envíos a todo el país con pago al recibir.
           </p>
           <div className="flex gap-4">
             <a
@@ -28,12 +28,7 @@ export function Footer() {
               rel="noopener noreferrer"
               aria-label="Seguir en Instagram"
             >
-              <span
-                className="material-symbols-outlined text-sm"
-                aria-hidden="true"
-              >
-                photo_camera
-              </span>
+              <FaInstagram className="text-lg" aria-hidden="true" />
             </a>
             <a
               className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
@@ -42,12 +37,7 @@ export function Footer() {
               rel="noopener noreferrer"
               aria-label="Seguir en Facebook"
             >
-              <span
-                className="material-symbols-outlined text-sm"
-                aria-hidden="true"
-              >
-                facebook
-              </span>
+              <FaFacebook className="text-lg" aria-hidden="true" />
             </a>
             <a
               className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
@@ -56,12 +46,7 @@ export function Footer() {
               rel="noopener noreferrer"
               aria-label="Seguir en TikTok"
             >
-              <span
-                className="material-symbols-outlined text-sm"
-                aria-hidden="true"
-              >
-                videocam
-              </span>
+              <FaTiktok className="text-lg" aria-hidden="true" />
             </a>
             <a
               className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
@@ -70,12 +55,7 @@ export function Footer() {
               rel="noopener noreferrer"
               aria-label="Seguir en YouTube"
             >
-              <span
-                className="material-symbols-outlined text-sm"
-                aria-hidden="true"
-              >
-                play_circle
-              </span>
+              <FaYoutube className="text-lg" aria-hidden="true" />
             </a>
             <a
               className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"

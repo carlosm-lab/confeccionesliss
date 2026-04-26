@@ -73,7 +73,7 @@ export default function HomePage() {
                 rel="noopener noreferrer"
                 className="btn-gradient font-body ambient-shadow rounded-md px-8 py-4 font-semibold text-white transition-opacity hover:opacity-90"
               >
-                Pedir por WhatsApp — 7331-7181
+                Comprar
               </a>
               <a
                 href="https://maps.app.goo.gl/XSs2vgjLG8uvJGoQ7"
@@ -110,12 +110,20 @@ export default function HomePage() {
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
             {[
               {
+                cat: "UES",
+                name: "Uniformes de la UES",
+                price: "$39.50",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                img: "/images/uniformes/ues.webp",
+                alt: "Uniformes de la UES",
+              },
+              {
                 cat: "IEPROES",
-                name: "Uniformes de la IEPROES",
+                name: "Uniformes de IEPROES",
                 price: "$39.50",
                 sizes: ["S", "M", "L", "XL", "XXL"],
                 img: "/images/uniformes/ieproes.webp",
-                alt: "Uniformes de la IEPROES",
+                alt: "Uniformes de IEPROES",
               },
               {
                 cat: "UGB",
@@ -203,7 +211,7 @@ export default function HomePage() {
                     <span className="material-symbols-outlined text-sm">
                       chat
                     </span>{" "}
-                    Consultar por WhatsApp
+                    Comprar
                   </a>
                 </div>
               </div>

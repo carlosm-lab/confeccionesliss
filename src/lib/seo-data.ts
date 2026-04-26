@@ -171,25 +171,28 @@ export const faqItems = [
 
 export const testimonials = [
   {
-    nombre: "Dra. María Hernández",
-    cargo: "Médico general — Hospital Nacional San Miguel",
+    nombre: "Juan Carlos Garcia",
+    cargo: "Enfermería",
     texto:
-      "Los scrubs de Confecciones Liss son los mejores que he tenido. La tela Sincatex es fresca y resistente, perfecta para turnos largos. El bordado quedó profesional. Totalmente recomendados.",
+      "Pedí uniformes para un grupo de compañeras de enfermería y todo salió perfecto todos los scrubs quedaron bien hechos, en las medidas exactas de cada una, y los entregaron en el tiempo acordado ña atención por WhatsApp fue rápida y clara durante todo el proceso. ademas la señora me recuerda a mi abuelita :)",
     stars: 5,
+    enlace: "https://share.google/45wqfJwWUEBMLeKSA",
   },
   {
-    nombre: "Carlos R.",
-    cargo: "Estudiante de Medicina — UNIVO",
+    nombre: "José Antonio dias",
+    cargo: "Cliente particular",
     texto:
-      "Pedí mis uniformes de rotación clínica y quedaron exactamente como los piden en la universidad. El precio es justo y me los entregaron a tiempo. Volvería a comprar.",
+      "Excelente taller de uniformes médicos y scrubs en San Miguel, la atención rápida por WhatsApp, precios justos y lo más importante es que hacen los uniformes a la medida de cada persona. Yo tengo una talla difícil de encontrar y aquí no fue ningún problema ademas ni me cobraron demas por talla extra.",
     stars: 5,
+    enlace: "https://share.google/BgOrs6SYsdNadJogs",
   },
   {
-    nombre: "Lic. Laura Gómez",
-    cargo: "Enfermera — Clínica privada San Miguel",
+    nombre: "Kairo Boutique",
+    cargo: "Cliente comercial",
     texto:
-      "Excelente servicio y calidad. Las filipinas son muy cómodas para mis guardias y la tela no se decolora fácilmente con los lavados. Ya pedí para todas mis compañeras.",
+      "Mandamos a hacer los uniformes de la tienda en Confecciones Liss y la verdad es que quedamos muy satisfechos, precios comodos, nos hicieron descuento por mayoreo, en fin, encantados.",
     stars: 5,
+    enlace: "https://share.google/ffVaegduSiB3hRcir",
   },
 ];
 

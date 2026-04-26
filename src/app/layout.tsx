@@ -29,7 +29,7 @@ export const metadata = {
   openGraph: {
     title: "Confecciones Liss | Scrubs y Uniformes en San Miguel El Salvador",
     description:
-      "Taller artesanal en San Miguel. Scrubs, uniformes universitarios, escolares y corporativos a la medida. Pago al recibir.",
+      "Confección profesional a la medida en San Miguel. Scrubs, uniformes universitarios, escolares y corporativos a la medida. Pago al recibir.",
     url: siteConfig.url,
     siteName: siteConfig.name,
     images: [
