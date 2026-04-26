@@ -32,22 +32,22 @@ export default function HomePage() {
       />
 
       {/* ═══ HERO ═══ */}
-      <section className="bg-surface-container-low relative overflow-hidden px-8 pt-5 pb-28">
+      <section className="bg-surface-container-low relative overflow-hidden px-8 pt-5 pb-16 lg:pb-28">
         <div className="mx-auto flex max-w-screen-2xl flex-col items-center gap-16 lg:flex-row lg:pr-24 lg:pl-12">
           <div className="z-10 flex w-full flex-col items-start lg:w-[55%]">
-            <div className="bg-tertiary/10 text-tertiary mb-6 flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold tracking-widest uppercase">
+            <div className="bg-tertiary/10 text-tertiary mb-4 flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold tracking-widest uppercase lg:mb-6">
               <span className="material-symbols-outlined text-[16px]">
                 verified
               </span>
               Confección profesional a la medida
             </div>
-            <h1 className="text-primary mb-6 font-serif text-5xl leading-[1.1] tracking-tight lg:text-7xl">
+            <h1 className="text-primary mb-4 font-serif text-[2rem] leading-[1.15] tracking-tight md:text-5xl lg:mb-6 lg:text-7xl lg:leading-[1.1]">
               Scrubs y Uniformes
-              <br />a la Medida
-              <br />
+              <br className="hidden lg:inline" /> a la Medida{" "}
+              <br className="hidden lg:inline" />
               <span className="text-secondary">en San Miguel</span>
             </h1>
-            <p className="text-on-surface-variant font-body mb-8 max-w-lg text-lg leading-relaxed lg:text-xl">
+            <p className="text-on-surface-variant font-body mb-6 max-w-lg text-base leading-relaxed md:text-lg lg:mb-8 lg:text-xl">
               Confección profesional de scrubs médicos en tela Sincatex y Lino
               Oxford. Uniformes para UNIVO, UNAB, UGB, colegios y empresas.
               Bordados, sublimación y envío a todo El Salvador.{" "}
