@@ -52,7 +52,7 @@ export function NapContacto() {
               <p>
                 <strong className="text-on-surface">WhatsApp:</strong>{" "}
                 <a
-                  href="https://wa.me/50373317181"
+                  href="https://confeccionesliss.axkar.com/"
                   className="text-primary hover:underline"
                 >
                   +503 7331-7181

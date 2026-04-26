@@ -2,21 +2,22 @@
 
 import Link from "next/link";
 
+import Image from "next/image";
+
 export function Navbar() {
   return (
     <header className="text-primary sticky top-0 z-50 bg-white/90 shadow-sm backdrop-blur-md">
       <div className="mx-auto flex w-full max-w-screen-2xl items-center justify-between px-8 py-4">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <span
-            className="material-symbols-outlined text-primary"
-            data-icon="content_cut"
-          >
-            content_cut
-          </span>
-          <span className="font-serif text-2xl font-bold italic">
-            Confecciones Liss
-          </span>
+          <Image
+            src="/logo.svg"
+            alt="Confecciones Liss Logo"
+            width={180}
+            height={40}
+            className="h-10 w-auto"
+            priority
+          />
         </Link>
 
         {/* Trailing Icons */}

@@ -46,7 +46,7 @@ export function UniversidadesCoverage() {
             uniformes.
           </p>
           <a
-            href="https://wa.me/50373317181?text=Hola,%20necesito%20uniformes%20para%20mi%20universidad"
+            href="https://confeccionesliss.axkar.com/"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-primary text-on-primary inline-block rounded-md px-8 py-3 font-semibold transition-opacity hover:opacity-90"

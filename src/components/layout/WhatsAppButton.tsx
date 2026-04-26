@@ -3,7 +3,7 @@ import Link from "next/link";
 export function WhatsAppButton() {
   return (
     <Link
-      href="https://wa.me/50370000000"
+      href="https://confeccionesliss.axkar.com/"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Contactar por WhatsApp"

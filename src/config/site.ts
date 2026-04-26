@@ -8,8 +8,7 @@ export const siteConfig = {
   keywords:
     "scrubs El Salvador, uniformes médicos San Miguel, confección a medida San Miguel, uniformes universitarios zona oriental, UNIVO uniformes, UGB uniformes, UNAB uniformes, scrubs Sincatex El Salvador, taller uniformes San Miguel",
   links: {
-    whatsapp:
-      "https://wa.me/50373317181?text=Hola%20Confecciones%20Liss,%20quisiera%20consultar%20sobre%20uniformes",
+    whatsapp: "https://confeccionesliss.axkar.com/",
     facebook: "https://www.facebook.com/confeccionliss/",
     instagram: "https://www.instagram.com/confeccionliss/",
     tiktok: "https://www.tiktok.com/@confeccionessliss",

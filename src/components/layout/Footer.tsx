@@ -114,7 +114,10 @@ export function Footer() {
               >
                 phone
               </span>{" "}
-              <a href="https://wa.me/50373317181" className="hover:underline">
+              <a
+                href="https://confeccionesliss.axkar.com/"
+                className="hover:underline"
+              >
                 +503 7331-7181
               </a>
             </li>

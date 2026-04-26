@@ -55,7 +55,7 @@ export function ServiciosPrincipales() {
                   ))}
                 </ul>
                 <a
-                  href={`https://wa.me/50373317181?text=${s.waText}`}
+                  href={`https://confeccionesliss.axkar.com/`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-primary text-on-primary mt-auto rounded-md py-3 text-center text-sm font-semibold transition-opacity hover:opacity-90"

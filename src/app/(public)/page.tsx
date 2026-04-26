@@ -68,7 +68,7 @@ export default function HomePage() {
             </div>
             <div className="flex flex-wrap gap-4">
               <a
-                href="https://wa.me/50373317181?text=Hola%20Confecciones%20Liss,%20quisiera%20consultar%20sobre%20uniformes"
+                href="https://confeccionesliss.axkar.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-gradient font-body ambient-shadow rounded-md px-8 py-4 font-semibold text-white transition-opacity hover:opacity-90"
@@ -110,36 +110,44 @@ export default function HomePage() {
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
             {[
               {
-                cat: "Enfermería",
-                name: 'Set "Precision" Azul Marino',
-                price: "$45.00",
-                sizes: ["S", "M", "L"],
-                img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAchu4owugaejCs4BMo2xGoxy7qsqP18zTQW-ksYQ2RWsOEVeWVCdsfHpn0lEgaxeXrMmj8uV8I6V4ee6ikie_qtd5BBZ0Xg7VQbe7cBJKbpPt8vVx_MyyZ1TSFmYMQdLZMYk-JB7ewnfWxXM9U_Mzh4So5AeoT-fysb5R9Gmp-vDmFpQHr0QeQ-hTBhzJIhnNPgtvwLUux8BNfxZ_nay8OrukMWHcBHovbjUjdebNO8Ks9V7OlnsPOGBkoIyciurbGMlOMoj9uQv_p",
-                alt: "Scrub set Precision azul marino para enfermería",
+                cat: "IEPROES",
+                name: "Uniformes de la IEPROES",
+                price: "$39.50",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                img: "/images/uniformes/ieproes.webp",
+                alt: "Uniformes de la IEPROES",
               },
               {
-                cat: "Médicos",
-                name: 'Bata Blanca "Atelier"',
-                price: "$35.00",
-                sizes: ["M", "L"],
-                img: "https://lh3.googleusercontent.com/aida-public/AB6AXuB1dg_pqLOX2A6RX3FBs0wyZsaArck0ViXc4-ogvtrFGI8cd12D3xVp-Eg9fq0nVWP5ceV0FVwM8LfliiArsjazrSimOSza6kQSoB0i7wXuOjOvit6w60LsedI-e7HaF-ymeJY2iSNMHLXiiKTYQgCsucrDBR1BRoAsakNyxpC3FrnxR4JaB8u6MQYqMcop1_dew887jS107mDxdLRAy9CXcatWoo5eWJKT6zx1Kr2fT_vdwLmEA2s_EDFEEKz3ccx5gpGr0Z203u_A",
-                alt: "Bata blanca médica Atelier",
+                cat: "UGB",
+                name: "Uniformes de la UGB",
+                price: "$39.50",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                img: "/images/uniformes/ugb.webp",
+                alt: "Uniformes de la UGB",
               },
               {
-                cat: "Estudiantes",
-                name: "Scrub Básico UES",
-                price: "$28.00",
-                sizes: ["S", "M"],
-                img: undefined as string | undefined,
-                alt: undefined as string | undefined,
+                cat: "UMA",
+                name: "Uniformes de la UMA",
+                price: "$39.50",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                img: "/images/uniformes/uma.webp",
+                alt: "Uniformes de la UMA",
               },
               {
-                cat: "Odontología",
-                name: "Filipina Cuello Mao",
-                price: "$32.00",
-                sizes: ["M", "L", "XL"],
-                img: undefined as string | undefined,
-                alt: undefined as string | undefined,
+                cat: "UNAB",
+                name: "Uniformes de la UNAB",
+                price: "$39.50",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                img: "/images/uniformes/unab.webp",
+                alt: "Uniformes de la UNAB",
+              },
+              {
+                cat: "UNIVO",
+                name: "Uniformes de la UNIVO",
+                price: "$39.50",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                img: "/images/uniformes/univo.webp",
+                alt: "Uniformes de la UNIVO",
               },
             ].map((p) => (
               <div
@@ -155,7 +163,7 @@ export default function HomePage() {
                       width={800}
                       height={800}
                       alt={p.alt ?? p.name}
-                      className="h-full w-full rounded object-cover"
+                      className="h-full w-full rounded object-contain"
                       src={p.img}
                     />
                   ) : (
@@ -187,7 +195,7 @@ export default function HomePage() {
                     ))}
                   </div>
                   <a
-                    href="https://wa.me/50373317181?text=Hola,%20me%20interesa%20el%20producto%20"
+                    href="https://confeccionesliss.axkar.com/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-primary font-body mt-auto flex w-full items-center justify-center gap-2 rounded-md py-3 text-sm font-semibold text-white opacity-90 transition-opacity group-hover:opacity-100"
@@ -230,98 +238,6 @@ export default function HomePage() {
                 <p className="text-on-surface-variant font-body text-sm">
                   {w.desc}
                 </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ CATÁLOGOS (existing design) ═══ */}
-      <section className="bg-surface px-8 py-20">
-        <div className="mx-auto max-w-screen-2xl">
-          <h2 className="text-primary mb-12 text-center font-serif text-4xl">
-            Catálogos Especializados
-          </h2>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            {[
-              {
-                icon: "medical_information",
-                title: "Sector Salud",
-                desc: "Uniformes para médicos, enfermería y clínicas.",
-              },
-              {
-                icon: "school",
-                title: "Universidades",
-                desc: "Uniformes para facultades de salud y ciencias.",
-              },
-              {
-                icon: "business",
-                title: "Empresas",
-                desc: "Dotaciones corporativas y uniformes de trabajo.",
-              },
-            ].map((c) => (
-              <div
-                key={c.title}
-                className="group ambient-shadow relative h-64 cursor-pointer overflow-hidden rounded-xl"
-              >
-                <div className="bg-primary/40 group-hover:bg-primary/30 absolute inset-0 z-10 transition-colors" />
-                <div className="bg-surface-container-high absolute inset-0 flex items-center justify-center">
-                  <span className="material-symbols-outlined text-outline/30 text-6xl">
-                    image
-                  </span>
-                </div>
-                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-6 text-center text-white">
-                  <span className="material-symbols-outlined mb-4 text-4xl">
-                    {c.icon}
-                  </span>
-                  <h3 className="mb-2 font-serif text-2xl font-bold">
-                    {c.title}
-                  </h3>
-                  <p className="font-body text-sm opacity-90">{c.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ MÁS VENDIDOS (existing design) ═══ */}
-      <section className="bg-surface-container-low px-8 py-20">
-        <div className="mx-auto max-w-screen-2xl">
-          <div className="mb-12 flex items-end justify-between">
-            <h2 className="text-primary font-serif text-4xl">Más Vendidos</h2>
-          </div>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            {[
-              { name: "Gorro Quirúrgico Estampado", price: "$12.00" },
-              { name: 'Pantalón Cargo "Resilience"', price: "$25.00" },
-              { name: "Chaqueta Médica Antifluido", price: "$40.00" },
-            ].map((p) => (
-              <div
-                key={p.name}
-                className="group ambient-shadow border-surface-variant flex flex-col overflow-hidden rounded-xl border bg-white"
-              >
-                <div className="bg-surface-container relative flex aspect-[4/3] items-center justify-center p-4">
-                  <span className="bg-secondary absolute top-4 left-4 flex items-center gap-1 rounded px-2 py-1 text-xs font-bold text-white">
-                    <span className="material-symbols-outlined text-[12px]">
-                      local_fire_department
-                    </span>{" "}
-                    Popular
-                  </span>
-                  <div className="bg-surface-container-high border-outline-variant/30 flex h-full w-full items-center justify-center rounded border">
-                    <span className="material-symbols-outlined text-outline text-4xl">
-                      image
-                    </span>
-                  </div>
-                </div>
-                <div className="flex flex-grow flex-col p-5">
-                  <h3 className="text-on-surface mb-1 font-serif text-lg">
-                    {p.name}
-                  </h3>
-                  <p className="text-on-surface-variant font-body font-semibold">
-                    {p.price}
-                  </p>
-                </div>
               </div>
             ))}
           </div>
@@ -445,7 +361,7 @@ export default function HomePage() {
           </div>
           <div className="justify-md-end flex md:w-1/3">
             <a
-              href="https://wa.me/50373317181?text=Hola,%20soy%20de%20una%20institución%20y%20necesito%20uniformes%20en%20cantidad"
+              href="https://confeccionesliss.axkar.com/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary font-body hover:bg-surface-container w-full rounded-md bg-white px-8 py-4 text-center font-bold transition-colors md:w-auto"
