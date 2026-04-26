@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
@@ -53,26 +53,29 @@ export default function BienvenidaPage() {
     },
   });
 
+  const hasPersisted = useRef(false);
+
   useEffect(() => {
-    // Only execute once when component mounts
-    if (user) {
-      execute({
-        nombre: user.nombre,
-        apellidos: user.apellidos,
-        telefono: user.telefono,
-        talla: user.talla,
-        genero: user.genero,
-        departamento: user.departamento,
-        municipio: user.municipio,
-        direccion: user.direccion,
-        tipo_perfil: user.rol,
-        institucion: user.institucion,
-        tipo_compra: user.tipoCompra,
-        colores_favoritos: user.coloresFavoritos,
-        notificaciones: user.notificaciones,
-      });
-    }
-    // We intentionally omit `execute` from deps to avoid re-running if user state somehow updates
+    // Guard: only execute once (StrictMode double-fires effects)
+    if (hasPersisted.current) return;
+    if (!user?.nombre) return; // Don't persist empty/incomplete profiles
+
+    hasPersisted.current = true;
+    execute({
+      nombre: user.nombre,
+      apellidos: user.apellidos,
+      telefono: user.telefono,
+      talla: user.talla,
+      genero: user.genero,
+      departamento: user.departamento,
+      municipio: user.municipio,
+      direccion: user.direccion,
+      tipo_perfil: user.rol,
+      institucion: user.institucion,
+      tipo_compra: user.tipoCompra,
+      colores_favoritos: user.coloresFavoritos,
+      notificaciones: user.notificaciones,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

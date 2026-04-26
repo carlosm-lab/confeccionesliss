@@ -13,8 +13,8 @@ export default function ActualizarPasswordPage() {
   const { execute, status, result } = useAction(updatePasswordAction, {
     onSuccess: (data) => {
       if (data.data?.success) {
-        // Redirigir al usuario al home o a su perfil
-        router.push("/onboarding/perfil");
+        // Middleware decides: /cuenta if onboarding done, /onboarding/perfil otherwise
+        router.push("/cuenta");
       }
     },
   });

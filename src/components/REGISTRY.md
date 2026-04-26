@@ -27,3 +27,22 @@ import { ComponentName } from "@/components/ComponentName";
 ## Registered Components
 
 _(Add new components below this line)_
+
+### `<GoogleIcon />`
+
+**Path:** `src/components/ui/icons/GoogleIcon.tsx`
+**Description:** Google "G" logo icon extracted from inline SVG. Used in OAuth login/register buttons.
+
+**Props:**
+
+- `className` (`string`): Optional CSS class override. Defaults to `"h-5 w-5"`.
+
+**Example Usage:**
+
+```tsx
+import { GoogleIcon } from "@/components/ui/icons/GoogleIcon";
+
+<GoogleIcon className="h-6 w-6" />;
+```
+
+---
