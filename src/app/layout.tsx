@@ -19,14 +19,17 @@ import { siteConfig } from "@/config/site";
 
 export const metadata = {
   title: {
-    default: siteConfig.name,
+    default:
+      "Confecciones Liss | Scrubs y Uniformes a la Medida en San Miguel, El Salvador",
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  keywords: siteConfig.keywords,
   metadataBase: new URL(siteConfig.url),
   openGraph: {
-    title: siteConfig.name,
-    description: siteConfig.description,
+    title: "Confecciones Liss | Scrubs y Uniformes en San Miguel El Salvador",
+    description:
+      "Taller artesanal en San Miguel. Scrubs, uniformes universitarios, escolares y corporativos a la medida. Pago al recibir.",
     url: siteConfig.url,
     siteName: siteConfig.name,
     images: [
@@ -34,7 +37,7 @@ export const metadata = {
         url: siteConfig.ogImage,
       },
     ],
-    locale: "es_ES",
+    locale: "es_SV",
     type: "website",
   },
   robots: {

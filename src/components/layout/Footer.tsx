@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { siteConfig } from "@/config/site";
 
 export function Footer() {
   return (
@@ -17,13 +17,13 @@ export function Footer() {
             </span>
           </div>
           <p className="text-primary-container mb-6 max-w-xs text-sm">
-            Tailored with surgical precision in San Miguel. Uniformes que
-            reflejan tu profesionalismo.
+            Taller artesanal de scrubs médicos y uniformes a la medida en San
+            Miguel, El Salvador. Envíos a todo el país con pago al recibir.
           </p>
           <div className="flex gap-4">
-            <Link
+            <a
               className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
-              href="https://instagram.com"
+              href={siteConfig.links.instagram}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Seguir en Instagram"
@@ -34,10 +34,10 @@ export function Footer() {
               >
                 photo_camera
               </span>
-            </Link>
-            <Link
+            </a>
+            <a
               className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
-              href="https://facebook.com"
+              href={siteConfig.links.facebook}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Seguir en Facebook"
@@ -48,7 +48,49 @@ export function Footer() {
               >
                 facebook
               </span>
-            </Link>
+            </a>
+            <a
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
+              href={siteConfig.links.tiktok}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Seguir en TikTok"
+            >
+              <span
+                className="material-symbols-outlined text-sm"
+                aria-hidden="true"
+              >
+                videocam
+              </span>
+            </a>
+            <a
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
+              href={siteConfig.links.youtube}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Seguir en YouTube"
+            >
+              <span
+                className="material-symbols-outlined text-sm"
+                aria-hidden="true"
+              >
+                play_circle
+              </span>
+            </a>
+            <a
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
+              href={siteConfig.links.googleMaps}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Ver en Google Maps"
+            >
+              <span
+                className="material-symbols-outlined text-sm"
+                aria-hidden="true"
+              >
+                map
+              </span>
+            </a>
           </div>
         </div>
 
@@ -62,7 +104,8 @@ export function Footer() {
               >
                 location_on
               </span>{" "}
-              San Miguel, El Salvador
+              Barrio La Merced, 5A Calle Poniente &amp; 1A Avenida Sur, San
+              Miguel, El Salvador
             </li>
             <li className="flex items-center gap-2">
               <span
@@ -71,7 +114,9 @@ export function Footer() {
               >
                 phone
               </span>{" "}
-              +503 7000-0000
+              <a href="https://wa.me/50373317181" className="hover:underline">
+                +503 7331-7181
+              </a>
             </li>
             <li className="flex items-center gap-2">
               <span
@@ -80,7 +125,16 @@ export function Footer() {
               >
                 mail
               </span>{" "}
-              contacto@confeccionesliss.com
+              confeccionesliss.contacto@gmail.com
+            </li>
+            <li className="flex items-center gap-2">
+              <span
+                className="material-symbols-outlined text-[18px]"
+                aria-hidden="true"
+              >
+                schedule
+              </span>{" "}
+              Lun–Sáb 8:00 AM – 5:00 PM
             </li>
           </ul>
         </div>
