@@ -32,7 +32,7 @@ export default function HomePage() {
       />
 
       {/* ═══ HERO ═══ */}
-      <section className="bg-surface-container-low relative overflow-hidden px-8 pt-20 pb-28">
+      <section className="bg-surface-container-low relative overflow-hidden px-8 pt-5 pb-28">
         <div className="mx-auto flex max-w-screen-2xl flex-col items-center gap-16 lg:flex-row lg:pr-24 lg:pl-12">
           <div className="z-10 flex w-full flex-col items-start lg:w-[55%]">
             <div className="bg-tertiary/10 text-tertiary mb-6 flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold tracking-widest uppercase">
