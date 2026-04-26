@@ -68,7 +68,6 @@ export const viewport = {
 };
 
 import { Providers } from "@/providers";
-import { ConstructionModal } from "@/components/ui/ConstructionModal";
 
 export default function RootLayout({
   children,
@@ -89,10 +88,7 @@ export default function RootLayout({
         />
       </head>
       <body className="flex min-h-screen flex-col antialiased">
-        <Providers>
-          <ConstructionModal />
-          {children}
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
