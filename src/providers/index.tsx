@@ -3,8 +3,6 @@
 import * as React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "./theme-provider";
-import { MSWProvider } from "@/mocks/MSWProvider";
-import { AuthProvider } from "./AuthProvider";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = React.useState(
@@ -26,9 +24,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         enableSystem
         disableTransitionOnChange
       >
-        <AuthProvider>
-          <MSWProvider>{children}</MSWProvider>
-        </AuthProvider>
+        {children}
       </ThemeProvider>
     </QueryClientProvider>
   );
