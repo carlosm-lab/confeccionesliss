@@ -15,11 +15,11 @@ export function Footer() {
         <div>
           <div className="mb-6 flex items-center gap-2">
             <Image
-              src="/logo-blanco.webp"
+              src="/logo.svg"
               alt="Confecciones Liss"
               width={200}
               height={200}
-              className="h-16 w-auto"
+              className="h-16 w-auto brightness-0 invert"
             />
           </div>
           <p className="text-primary-container mb-6 max-w-xs text-sm">
