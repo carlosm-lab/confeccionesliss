@@ -1,11 +1,8 @@
-import Link from "next/link";
 import Image from "next/image";
-import { LobbyModal } from "@/components/ui/LobbyModal";
 
 export default function HomePage() {
   return (
     <>
-      <LobbyModal />
       {/* 3. HERO */}
       <section className="bg-surface-container-low relative overflow-hidden px-8 pt-20 pb-28">
         <div className="mx-auto flex max-w-screen-2xl flex-col items-center gap-16 lg:flex-row lg:pr-24 lg:pl-12">
@@ -51,20 +48,17 @@ export default function HomePage() {
             </div>
             {/* CTAs */}
             <div className="flex flex-wrap gap-4">
-              <Link
-                href="/catalogo/salud"
-                className="btn-gradient font-body ambient-shadow rounded-md px-8 py-4 font-semibold text-white transition-opacity hover:opacity-90"
-              >
+              <button className="btn-gradient font-body ambient-shadow rounded-md px-8 py-4 font-semibold text-white transition-opacity hover:opacity-90">
                 Ver catálogo
-              </Link>
-              <Link
+              </button>
+              <a
                 href="https://wa.me/50370000000"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="border-outline text-primary hover:bg-surface-variant/50 rounded-md border bg-transparent px-8 py-4 font-serif font-medium transition-colors"
               >
                 Pedir por WhatsApp
-              </Link>
+              </a>
             </div>
           </div>
           {/* Right: Image (45%) */}
@@ -83,92 +77,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. CATEGORY ROW (Chips with icons) */}
-      <section className="bg-surface border-surface-variant/30 border-b py-8">
-        <div className="mx-auto max-w-screen-2xl px-8">
-          <div className="scrollbar-hide no-scrollbar relative flex snap-x gap-3 overflow-x-auto pb-4">
-            <Link
-              href="/catalogo/salud"
-              className="bg-primary font-label flex shrink-0 snap-start items-center gap-2 rounded-full px-6 py-2 text-sm font-medium text-white"
-            >
-              <span className="material-symbols-outlined text-sm">
-                grid_view
-              </span>{" "}
-              Todos
-            </Link>
-            <Link
-              href="/catalogo/salud?filter=medicos"
-              className="bg-surface-container-high text-on-surface font-label hover:bg-surface-variant flex shrink-0 snap-start items-center gap-2 rounded-full px-6 py-2 text-sm font-medium transition-colors"
-            >
-              <span className="material-symbols-outlined text-sm">
-                medical_services
-              </span>{" "}
-              Médicos
-            </Link>
-            <Link
-              href="/catalogo/salud?filter=enfermeria"
-              className="bg-surface-container-high text-on-surface font-label hover:bg-surface-variant flex shrink-0 snap-start items-center gap-2 rounded-full px-6 py-2 text-sm font-medium transition-colors"
-            >
-              <span className="material-symbols-outlined text-sm">healing</span>{" "}
-              Enfermería
-            </Link>
-            <Link
-              href="/catalogo/salud?filter=odontologia"
-              className="bg-surface-container-high text-on-surface font-label hover:bg-surface-variant flex shrink-0 snap-start items-center gap-2 rounded-full px-6 py-2 text-sm font-medium transition-colors"
-            >
-              <span className="material-symbols-outlined text-sm">
-                dentistry
-              </span>{" "}
-              Odontología
-            </Link>
-            <Link
-              href="/catalogo/salud?filter=fisioterapia"
-              className="bg-surface-container-high text-on-surface font-label hover:bg-surface-variant flex shrink-0 snap-start items-center gap-2 rounded-full px-6 py-2 text-sm font-medium transition-colors"
-            >
-              <span className="material-symbols-outlined text-sm">
-                physical_therapy
-              </span>{" "}
-              Fisioterapia
-            </Link>
-            <Link
-              href={"/catalogo/escolar" as any}
-              className="bg-surface-container-high text-on-surface font-label hover:bg-surface-variant flex shrink-0 snap-start items-center gap-2 rounded-full px-6 py-2 text-sm font-medium transition-colors"
-            >
-              <span className="material-symbols-outlined text-sm">school</span>{" "}
-              Estudiantes
-            </Link>
-            <Link
-              href="/catalogo/salud"
-              className="bg-surface-container-high text-on-surface font-label hover:bg-surface-variant flex shrink-0 snap-start items-center gap-2 rounded-full px-6 py-2 text-sm font-medium transition-colors"
-            >
-              <span className="material-symbols-outlined text-sm">biotech</span>{" "}
-              Lab Clínico
-            </Link>
-            <Link
-              href={"/catalogo/corporativo" as any}
-              className="bg-surface-container-high text-on-surface font-label hover:bg-surface-variant flex shrink-0 snap-start items-center gap-2 rounded-full px-6 py-2 text-sm font-medium transition-colors"
-            >
-              <span className="material-symbols-outlined text-sm">domain</span>{" "}
-              Empresas
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* 5. NOVEDADES */}
       <section className="bg-surface px-8 py-20">
         <div className="mx-auto max-w-screen-2xl">
           <div className="mb-12 flex items-end justify-between lg:pr-12">
             <h2 className="text-primary font-serif text-4xl">Novedades</h2>
-            <Link
-              href="/novedades"
-              className="text-primary font-body flex items-center gap-1 text-sm font-semibold tracking-wider uppercase hover:underline"
-            >
-              Ver todas{" "}
-              <span className="material-symbols-outlined text-[18px]">
-                arrow_forward
-              </span>
-            </Link>
           </div>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
             {/* Product Card 1 */}
@@ -768,103 +681,6 @@ export default function HomePage() {
             <button className="text-primary font-body hover:bg-surface-container w-full rounded-md bg-white px-8 py-4 font-bold transition-colors md:w-auto">
               Solicitar cotización
             </button>
-          </div>
-        </div>
-      </section>
-
-      {/* 13. BLOG PREVIEW */}
-      <section className="bg-surface px-8 py-20">
-        <div className="mx-auto max-w-screen-2xl">
-          <div className="mb-12 flex items-end justify-between">
-            <h2 className="text-primary font-serif text-4xl">Nuestro Blog</h2>
-            <Link
-              href="/blog"
-              className="text-primary font-body flex items-center gap-1 text-sm font-semibold tracking-wider uppercase hover:underline"
-            >
-              Ver todos{" "}
-              <span className="material-symbols-outlined text-[18px]">
-                arrow_forward
-              </span>
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            <article className="ambient-shadow border-surface-variant flex flex-col overflow-hidden rounded-xl border bg-white">
-              <div className="bg-surface-container-high flex h-48 items-center justify-center">
-                <span className="material-symbols-outlined text-outline text-4xl">
-                  image
-                </span>
-              </div>
-              <div className="flex flex-grow flex-col p-6">
-                <span className="text-secondary mb-2 text-xs">
-                  15 Octubre, 2024
-                </span>
-                <h3 className="text-on-surface mb-3 font-serif text-xl">
-                  ¿Cómo elegir la tela ideal para tu scrub?
-                </h3>
-                <p className="text-on-surface-variant mb-4 text-sm">
-                  Conoce las diferencias entre antifluido, spandex y algodón
-                  para encontrar tu comodidad ideal.
-                </p>
-                <Link
-                  href="/blog/como-elegir-tela"
-                  className="text-primary mt-auto text-sm font-semibold hover:underline"
-                >
-                  Leer artículo
-                </Link>
-              </div>
-            </article>
-
-            <article className="ambient-shadow border-surface-variant flex flex-col overflow-hidden rounded-xl border bg-white">
-              <div className="bg-surface-container-high flex h-48 items-center justify-center">
-                <span className="material-symbols-outlined text-outline text-4xl">
-                  image
-                </span>
-              </div>
-              <div className="flex flex-grow flex-col p-6">
-                <span className="text-secondary mb-2 text-xs">
-                  02 Septiembre, 2024
-                </span>
-                <h3 className="text-on-surface mb-3 font-serif text-xl">
-                  Cuidados esenciales para prolongar la vida de tu uniforme
-                </h3>
-                <p className="text-on-surface-variant mb-4 text-sm">
-                  Tips de lavado y planchado para mantener el color y la
-                  integridad de las telas certificadas.
-                </p>
-                <Link
-                  href="/blog/cuidados-esenciales"
-                  className="text-primary mt-auto text-sm font-semibold hover:underline"
-                >
-                  Leer artículo
-                </Link>
-              </div>
-            </article>
-
-            <article className="ambient-shadow border-surface-variant flex flex-col overflow-hidden rounded-xl border bg-white">
-              <div className="bg-surface-container-high flex h-48 items-center justify-center">
-                <span className="material-symbols-outlined text-outline text-4xl">
-                  image
-                </span>
-              </div>
-              <div className="flex flex-grow flex-col p-6">
-                <span className="text-secondary mb-2 text-xs">
-                  18 Agosto, 2024
-                </span>
-                <h3 className="text-on-surface mb-3 font-serif text-xl">
-                  Tendencias en colores de uniformes médicos 2024
-                </h3>
-                <p className="text-on-surface-variant mb-4 text-sm">
-                  Descubre cuáles son los colores que transmiten más
-                  profesionalismo y calma a tus pacientes.
-                </p>
-                <Link
-                  href="/blog/tendencias-colores"
-                  className="text-primary mt-auto text-sm font-semibold hover:underline"
-                >
-                  Leer artículo
-                </Link>
-              </div>
-            </article>
           </div>
         </div>
       </section>
