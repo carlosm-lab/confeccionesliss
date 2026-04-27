@@ -59,7 +59,7 @@ export default function HomePage() {
                   key={b.text}
                   className="text-secondary flex items-center gap-2 text-sm font-medium"
                 >
-                  <span className="material-symbols-outlined text-primary-container">
+                  <span className="material-symbols-outlined text-primary">
                     {b.icon}
                   </span>
                   {b.text}
