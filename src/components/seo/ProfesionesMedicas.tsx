@@ -4,7 +4,7 @@ export function ProfesionesMedicas() {
   return (
     <section
       aria-labelledby="profesiones-heading"
-      className="bg-surface px-8 py-16"
+      className="bg-surface px-5 py-14 md:px-8 md:py-16"
     >
       <div className="mx-auto max-w-screen-xl">
         <h2

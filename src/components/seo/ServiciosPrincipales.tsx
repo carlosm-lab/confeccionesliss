@@ -5,7 +5,7 @@ export function ServiciosPrincipales() {
   return (
     <section
       aria-labelledby="servicios-heading"
-      className="bg-surface px-8 py-20"
+      className="bg-surface px-5 py-14 md:px-8 md:py-20"
     >
       <div className="mx-auto max-w-screen-2xl">
         <div className="mb-12 flex flex-col items-start md:items-center">
@@ -14,15 +14,15 @@ export function ServiciosPrincipales() {
               ¿Qué fabricamos?
             </span>
           </div>
-          <h2
-            id="servicios-heading"
-            className="text-primary text-left font-serif text-3xl leading-[1.15] tracking-tight text-balance md:text-center md:text-4xl lg:text-5xl"
-          >
-            Confección profesional de uniformes a la medida en El Salvador
+          <h2 id="servicios-heading" className="section-title">
+            Uniformes a la medida
+            <span className="text-secondary mt-1 block font-sans text-base font-normal md:inline md:text-xl">
+              en El Salvador
+            </span>
           </h2>
           <div className="bg-tertiary mt-6 h-1 w-16 rounded-full"></div>
         </div>
-        <p className="text-on-surface-variant mb-12 max-w-2xl text-left text-base leading-relaxed md:mx-auto md:text-center">
+        <p className="text-on-surface-variant mb-10 max-w-2xl text-sm leading-relaxed md:mx-auto md:text-center md:text-base">
           Somos el único taller de{" "}
           <strong>scrubs a la medida en la zona oriental</strong> de El
           Salvador. Atendemos médicos, enfermeras, estudiantes, empresas y

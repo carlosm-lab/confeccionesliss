@@ -32,17 +32,14 @@ export default function HomePage() {
       />
 
       {/* ═══ HERO ═══ */}
-      <section className="bg-surface-container-low relative overflow-hidden px-8 pt-5 pb-16 lg:pb-28">
+      <section className="bg-surface-container-low relative overflow-hidden px-5 pt-5 pb-14 md:px-8 lg:pb-28">
         <div className="mx-auto flex max-w-screen-2xl flex-col items-center gap-16 lg:flex-row lg:pr-24 lg:pl-12">
           <div className="z-10 flex w-full flex-col items-start lg:w-[55%]">
             <div className="bg-tertiary/10 text-tertiary mb-4 flex w-fit items-center gap-2 rounded-full px-3 py-1 text-xs font-bold tracking-widest uppercase lg:mb-6">
               <span className="material-symbols-outlined text-[16px]">
                 verified
               </span>
-              <span className="sm:hidden">Confección a la medida</span>
-              <span className="hidden sm:inline">
-                Confección profesional a la medida
-              </span>
+              Confección a la medida
             </div>
             <h1 className="text-primary mb-4 font-serif text-[2rem] leading-[1.15] tracking-tight md:text-5xl lg:mb-6 lg:text-7xl lg:leading-[1.1]">
               Scrubs y Uniformes
@@ -56,7 +53,7 @@ export default function HomePage() {
               Bordados, sublimación y envío a todo El Salvador.{" "}
               <strong>Desde $35 USD.</strong>
             </p>
-            <div className="mb-10 flex flex-wrap gap-4">
+            <div className="mb-10 grid grid-cols-2 gap-x-4 gap-y-3 md:flex md:flex-wrap md:gap-4">
               {heroTrustBadges.map((b) => (
                 <div
                   key={b.text}
@@ -69,7 +66,7 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-            <div className="flex w-full gap-4">
+            <div className="flex w-full flex-col gap-3 sm:flex-row sm:gap-4">
               <a
                 href="https://confeccionesliss.axkar.com/"
                 target="_blank"
@@ -105,12 +102,12 @@ export default function HomePage() {
       </section>
 
       {/* ═══ NOVEDADES (existing design) ═══ */}
-      <section className="bg-surface px-8 py-20">
+      <section className="bg-surface px-5 py-14 md:px-8 md:py-20">
         <div className="mx-auto max-w-screen-2xl">
           <div className="mb-12 flex items-end justify-between lg:pr-12">
             <h2 className="text-primary font-serif text-4xl">Novedades</h2>
           </div>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-4 md:gap-8 lg:grid-cols-4">
             {[
               {
                 cat: "UES",
@@ -185,7 +182,7 @@ export default function HomePage() {
                     </div>
                   )}
                 </div>
-                <div className="flex flex-grow flex-col p-6">
+                <div className="flex flex-grow flex-col p-4 md:p-6">
                   <span className="font-label text-secondary mb-2 text-xs tracking-wider uppercase">
                     {p.cat}
                   </span>
@@ -227,21 +224,24 @@ export default function HomePage() {
       <ServiciosPrincipales />
 
       {/* ═══ ¿POR QUÉ ELEGIRNOS? (updated content) ═══ */}
-      <section className="bg-surface-container-low border-surface-variant/50 border-t border-b px-8 py-24">
+      <section className="bg-surface-container-low border-surface-variant/50 border-t border-b px-5 py-14 md:px-8 md:py-24">
         <div className="mx-auto max-w-screen-xl">
           <div className="mb-12 flex flex-col items-start md:mb-16 md:items-center">
-            <h2 className="text-primary text-left font-serif text-3xl leading-[1.15] tracking-tight text-balance md:text-center md:text-4xl lg:text-5xl">
-              ¿Por qué elegir Confecciones Liss en San Miguel?
+            <h2 className="section-title">
+              ¿Por qué elegirnos?
+              <span className="text-secondary mt-1 block font-sans text-base font-normal md:inline md:text-xl">
+                — Confecciones Liss, San Miguel
+              </span>
             </h2>
             <div className="bg-tertiary mt-6 h-1 w-16 rounded-full"></div>
           </div>
-          <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-12 lg:grid-cols-4 lg:gap-8">
             {whyItems.map((w) => (
               <div
                 key={w.title}
-                className="flex flex-col items-center text-center"
+                className="flex flex-col items-start text-left md:items-center md:text-center"
               >
-                <div className="bg-primary mb-6 flex h-16 w-16 items-center justify-center rounded-full text-white">
+                <div className="bg-primary mb-4 flex h-12 w-12 items-center justify-center rounded-full text-white md:mb-6 md:h-16 md:w-16">
                   <span className="material-symbols-outlined text-3xl">
                     {w.icon}
                   </span>
@@ -262,11 +262,13 @@ export default function HomePage() {
       <UniversidadesCoverage />
 
       {/* ═══ PROCESO DE PEDIDO (updated content) ═══ */}
-      <section className="bg-primary px-8 py-24 text-white">
+      <section className="bg-primary px-5 py-14 text-white md:px-8 md:py-24">
         <div className="mx-auto max-w-screen-2xl">
           <div className="mb-12 flex flex-col items-start md:mb-16 md:items-center">
-            <h2 className="mb-4 text-left font-serif text-3xl leading-[1.15] tracking-tight text-balance md:text-center md:text-4xl lg:text-5xl">
-              ¿Cómo pedir tus uniformes en Confecciones Liss?
+            <h2 className="section-title mb-4 !text-white">
+              ¿Cómo pedir
+              <br className="md:hidden" />
+              tus uniformes?
             </h2>
             <div className="bg-primary-container mt-2 mb-6 h-1 w-16 rounded-full"></div>
             <p className="text-primary-container max-w-2xl text-left text-base leading-relaxed md:mx-auto md:text-center md:text-lg">
@@ -274,14 +276,14 @@ export default function HomePage() {
               complicaciones.
             </p>
           </div>
-          <div className="relative grid grid-cols-1 gap-8 md:grid-cols-4">
+          <div className="relative grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
             <div className="bg-primary-container/30 absolute top-12 right-[10%] left-[10%] z-0 hidden h-0.5 md:block" />
             {processSteps.map((s) => (
               <div
                 key={s.n}
                 className="relative z-10 flex flex-col items-center text-center"
               >
-                <div className="text-primary ambient-shadow mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-white font-serif text-3xl font-bold">
+                <div className="text-primary ambient-shadow mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white font-serif text-2xl font-bold md:mb-6 md:h-24 md:w-24 md:text-3xl">
                   {s.n}
                 </div>
                 <h3 className="mb-2 font-serif text-xl">{s.title}</h3>
@@ -298,23 +300,25 @@ export default function HomePage() {
       {/* ═══ TESTIMONIOS (updated content) ═══ */}
       <section
         aria-labelledby="testimonios-heading"
-        className="bg-[#f4f5f7] px-8 py-24"
+        className="bg-[#f4f5f7] px-5 py-14 md:px-8 md:py-24"
       >
         <div className="mx-auto max-w-screen-2xl">
           <div className="mb-12 flex flex-col items-start md:mb-16 md:items-center">
-            <h2
-              id="testimonios-heading"
-              className="text-primary text-left font-serif text-3xl leading-[1.15] tracking-tight text-balance md:text-center md:text-4xl lg:text-5xl"
-            >
-              Lo que dicen nuestros clientes en San Miguel y todo El Salvador
+            <h2 id="testimonios-heading" className="section-title">
+              Lo que dicen
+              <br className="md:hidden" />
+              nuestros clientes
             </h2>
+            <p className="text-on-surface-variant mt-3 text-sm md:text-center md:text-base">
+              Opiniones reales de clientes en San Miguel y todo El Salvador
+            </p>
             <div className="bg-tertiary mt-6 h-1 w-16 rounded-full"></div>
           </div>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             {testimonials.map((t) => (
               <article
                 key={t.nombre}
-                className="ambient-shadow rounded-xl bg-white p-8"
+                className="ambient-shadow rounded-xl bg-white p-5 md:p-8"
               >
                 <div
                   className="text-tertiary mb-4 flex gap-1"
@@ -361,13 +365,13 @@ export default function HomePage() {
       {/* ═══ CTA INSTITUCIONAL (updated content) ═══ */}
       <section
         aria-labelledby="institucional-heading"
-        className="bg-primary px-8 py-20 text-white"
+        className="bg-primary px-5 py-14 text-white md:px-8 md:py-20"
       >
         <div className="mx-auto flex max-w-screen-xl flex-col items-center justify-between gap-8 md:flex-row">
           <div className="md:w-2/3">
             <h2
               id="institucional-heading"
-              className="mb-4 font-serif text-3xl md:text-4xl"
+              className="mb-4 font-serif text-2xl leading-tight md:text-3xl lg:text-4xl"
             >
               ¿Necesitas uniformes para tu clínica, hospital, colegio o empresa?
             </h2>

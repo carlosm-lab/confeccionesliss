@@ -2,7 +2,7 @@ export function KeywordsSeoFooter() {
   return (
     <section
       aria-label="Información adicional sobre servicios en El Salvador"
-      className="bg-surface-container-low border-surface-variant border-t px-8 py-10"
+      className="bg-surface-container-low border-surface-variant border-t px-5 py-8 md:px-8 md:py-10"
     >
       <div className="mx-auto max-w-screen-xl">
         <h2 className="text-on-surface-variant mb-6 font-serif text-lg">

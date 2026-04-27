@@ -158,6 +158,28 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  .section-title {
+    font-family: "Noto Serif", serif;
+    color: var(--color-primary);
+    font-size: 1.625rem;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  @media (min-width: 768px) {
+    .section-title {
+      font-size: 2.25rem;
+      text-align: center;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section-title {
+      font-size: 3rem;
+    }
+  }
 }
 
 @layer base {

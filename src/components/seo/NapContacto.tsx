@@ -20,7 +20,7 @@ export function NapContacto() {
   return (
     <section
       aria-labelledby="contacto-heading"
-      className="bg-surface-container-lowest px-8 py-16"
+      className="bg-surface-container-lowest px-5 py-14 md:px-8 md:py-16"
     >
       <div className="mx-auto max-w-screen-xl">
         <h2

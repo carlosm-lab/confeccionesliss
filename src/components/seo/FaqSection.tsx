@@ -2,12 +2,12 @@ import { faqItems } from "@/lib/seo-data";
 
 export function FaqSection() {
   return (
-    <section aria-labelledby="faq-heading" className="bg-surface px-8 py-20">
+    <section
+      aria-labelledby="faq-heading"
+      className="bg-surface px-5 py-14 md:px-8 md:py-20"
+    >
       <div className="mx-auto max-w-screen-xl">
-        <h2
-          id="faq-heading"
-          className="text-primary mb-4 text-center font-serif text-3xl"
-        >
+        <h2 id="faq-heading" className="section-title mb-4">
           Preguntas frecuentes sobre uniformes en El Salvador
         </h2>
         <p className="text-on-surface-variant mb-12 text-center text-sm">

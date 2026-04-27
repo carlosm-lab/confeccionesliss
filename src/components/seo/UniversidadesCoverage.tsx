@@ -4,15 +4,15 @@ export function UniversidadesCoverage() {
   return (
     <section
       aria-labelledby="universidades-heading"
-      className="bg-surface px-8 py-20"
+      className="bg-surface px-5 py-14 md:px-8 md:py-20"
     >
       <div className="mx-auto max-w-screen-xl">
         <div className="mb-10 flex flex-col items-start md:mb-12 md:items-center">
-          <h2
-            id="universidades-heading"
-            className="text-primary text-left font-serif text-3xl leading-[1.15] tracking-tight text-balance md:text-center md:text-4xl lg:text-5xl"
-          >
-            Uniformes para todas las universidades de la zona oriental
+          <h2 id="universidades-heading" className="section-title">
+            Uniformes universitarios
+            <span className="text-secondary mt-1 block font-sans text-base font-normal md:inline md:text-xl">
+              para toda la zona oriental
+            </span>
           </h2>
           <div className="bg-tertiary mt-6 h-1 w-16 rounded-full"></div>
         </div>
