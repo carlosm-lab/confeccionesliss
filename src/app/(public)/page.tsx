@@ -39,7 +39,7 @@ export default function HomePage() {
               <span className="material-symbols-outlined text-[16px]">
                 verified
               </span>
-              Confección a la medida
+              Confección profesional a la medida
             </div>
             <h1 className="text-primary mb-4 font-serif text-[2rem] leading-[1.15] tracking-tight md:text-5xl lg:mb-6 lg:text-7xl lg:leading-[1.1]">
               Scrubs y Uniformes
@@ -228,10 +228,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-screen-xl">
           <div className="mb-12 flex flex-col items-start md:mb-16 md:items-center">
             <h2 className="section-title">
-              ¿Por qué elegirnos?
-              <span className="text-secondary mt-1 block font-sans text-base font-normal md:inline md:text-xl">
-                — Confecciones Liss, San Miguel
-              </span>
+              ¿Por qué elegir Confecciones Liss en San Miguel?
             </h2>
             <div className="bg-tertiary mt-6 h-1 w-16 rounded-full"></div>
           </div>
@@ -266,9 +263,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-screen-2xl">
           <div className="mb-12 flex flex-col items-start md:mb-16 md:items-center">
             <h2 className="section-title mb-4 !text-white">
-              ¿Cómo pedir
-              <br className="md:hidden" />
-              tus uniformes?
+              ¿Cómo pedir tus uniformes en Confecciones Liss?
             </h2>
             <div className="bg-primary-container mt-2 mb-6 h-1 w-16 rounded-full"></div>
             <p className="text-primary-container max-w-2xl text-left text-base leading-relaxed md:mx-auto md:text-center md:text-lg">
@@ -305,13 +300,8 @@ export default function HomePage() {
         <div className="mx-auto max-w-screen-2xl">
           <div className="mb-12 flex flex-col items-start md:mb-16 md:items-center">
             <h2 id="testimonios-heading" className="section-title">
-              Lo que dicen
-              <br className="md:hidden" />
-              nuestros clientes
+              Lo que dicen nuestros clientes en San Miguel y todo El Salvador
             </h2>
-            <p className="text-on-surface-variant mt-3 text-sm md:text-center md:text-base">
-              Opiniones reales de clientes en San Miguel y todo El Salvador
-            </p>
             <div className="bg-tertiary mt-6 h-1 w-16 rounded-full"></div>
           </div>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">

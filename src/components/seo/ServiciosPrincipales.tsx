@@ -15,10 +15,7 @@ export function ServiciosPrincipales() {
             </span>
           </div>
           <h2 id="servicios-heading" className="section-title">
-            Uniformes a la medida
-            <span className="text-secondary mt-1 block font-sans text-base font-normal md:inline md:text-xl">
-              en El Salvador
-            </span>
+            Confección profesional de uniformes a la medida en El Salvador
           </h2>
           <div className="bg-tertiary mt-6 h-1 w-16 rounded-full"></div>
         </div>
