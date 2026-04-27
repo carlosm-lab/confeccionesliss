@@ -17,7 +17,7 @@ export function ServiciosPrincipales() {
           id="servicios-heading"
           className="text-primary mb-4 text-center font-serif text-3xl lg:text-4xl"
         >
-          Confección artesanal de uniformes en El Salvador
+          Confección profesional de uniformes a la medida en El Salvador
         </h2>
         <p className="text-on-surface-variant mx-auto mb-12 max-w-2xl text-center">
           Somos el único taller de{" "}

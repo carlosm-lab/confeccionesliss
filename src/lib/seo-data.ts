@@ -23,8 +23,7 @@ export const services = [
     ],
     cta: "Cotizar scrubs médicos",
     waText: "Hola,%20quisiera%20cotizar%20scrubs%20médicos",
-    imgSrc:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAchu4owugaejCs4BMo2xGoxy7qsqP18zTQW-ksYQ2RWsOEVeWVCdsfHpn0lEgaxeXrMmj8uV8I6V4ee6ikie_qtd5BBZ0Xg7VQbe7cBJKbpPt8vVx_MyyZ1TSFmYMQdLZMYk-JB7ewnfWxXM9U_Mzh4So5AeoT-fysb5R9Gmp-vDmFpQHr0QeQ-hTBhzJIhnNPgtvwLUux8BNfxZ_nay8OrukMWHcBHovbjUjdebNO8Ks9V7OlnsPOGBkoIyciurbGMlOMoj9uQv_p",
+    imgSrc: "/images/categorias/scrubs.webp",
     imgAlt:
       "Scrubs médicos confeccionados a la medida en tela Sincatex - San Miguel El Salvador",
   },
@@ -42,8 +41,7 @@ export const services = [
     ],
     cta: "Cotizar uniformes universitarios",
     waText: "Hola,%20necesito%20uniformes%20universitarios",
-    imgSrc:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuANzcCZJbsb17DCLkZLsOeD-dCcw_uZOZN0v-JXT4_3cLKRIKKvo9I6OpOPSWnDUrqnrgQCUrXwp7PCiIybtliezeJP7njyekGrXKqPgUmV4yjPvlKU98beeuZ8e5jcyYWhTPLjPpi0-mJhciI6W4OOAj_M3HtIITniEytjHQFoVySdDVcQGVKdNrRIwskC0urjI0bDyqLA1OevBor1lG0RxThgv02tA16VsWJhOZ4Bn1RrQan0pKk_JPEOIWABjPdVrPh3Xd9BBio",
+    imgSrc: "/images/categorias/universitarios.webp",
     imgAlt:
       "Uniformes universitarios para UNIVO, UNAB, UGB, UMA, IEPROES en San Miguel El Salvador",
   },
@@ -60,8 +58,7 @@ export const services = [
     ],
     cta: "Cotizar ahora",
     waText: "Hola,%20necesito%20uniformes%20escolares%20o%20corporativos",
-    imgSrc:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuBxAD87IX8vat5M6yx31yQDZQtsvxI5dU4zkRoj_yOAl9nFNvWTfj5LB5OqM88Nm7RS-BFgtNYQCVZPXYzgo8QfN38jhBpJwioWeuTk3rA0ZbWqCZLD9X9T1z63gfn4O9Dk9GumuMnp9WH5Q_GlsWrDn6X-_NU-5dDfvjNelluFVeUzvjy4iZYKlA2fUO95M3sRhS7f57lkRTgNe2IYVIZcOpXGsH5tab7dAsfUA-xMjbxfRWXrq7fvl7Iod6PISuvpoRDCkI_koYOr",
+    imgSrc: "/images/categorias/escolares.webp",
     imgAlt:
       "Uniformes escolares corporativos y bordados en San Miguel El Salvador",
   },
