@@ -271,18 +271,20 @@ export default function HomePage() {
               complicaciones.
             </p>
           </div>
-          <div className="relative grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
+          <div className="relative grid grid-cols-1 gap-6 md:grid-cols-4 md:gap-8">
             <div className="bg-primary-container/30 absolute top-12 right-[10%] left-[10%] z-0 hidden h-0.5 md:block" />
             {processSteps.map((s) => (
               <div
                 key={s.n}
-                className="relative z-10 flex flex-col items-center text-center"
+                className="relative z-10 flex flex-row items-center gap-4 text-left md:flex-col md:gap-0 md:text-center"
               >
-                <div className="text-primary ambient-shadow mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white font-serif text-2xl font-bold md:mb-6 md:h-24 md:w-24 md:text-3xl">
+                <div className="text-primary ambient-shadow flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-white font-serif text-2xl font-bold md:mb-6 md:h-24 md:w-24 md:text-3xl">
                   {s.n}
                 </div>
-                <h3 className="mb-2 font-serif text-xl">{s.title}</h3>
-                <p className="text-primary-container text-sm">{s.desc}</p>
+                <div>
+                  <h3 className="mb-1 font-serif text-xl md:mb-2">{s.title}</h3>
+                  <p className="text-primary-container text-sm">{s.desc}</p>
+                </div>
               </div>
             ))}
           </div>
