@@ -35,11 +35,14 @@ export default function HomePage() {
       <section className="bg-surface-container-low relative overflow-hidden px-8 pt-5 pb-16 lg:pb-28">
         <div className="mx-auto flex max-w-screen-2xl flex-col items-center gap-16 lg:flex-row lg:pr-24 lg:pl-12">
           <div className="z-10 flex w-full flex-col items-start lg:w-[55%]">
-            <div className="bg-tertiary/10 text-tertiary mb-4 flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold tracking-widest uppercase lg:mb-6">
+            <div className="bg-tertiary/10 text-tertiary mb-4 flex w-fit items-center gap-2 rounded-full px-3 py-1 text-xs font-bold tracking-widest uppercase lg:mb-6">
               <span className="material-symbols-outlined text-[16px]">
                 verified
               </span>
-              Confección profesional a la medida
+              <span className="sm:hidden">Confección a la medida</span>
+              <span className="hidden sm:inline">
+                Confección profesional a la medida
+              </span>
             </div>
             <h1 className="text-primary mb-4 font-serif text-[2rem] leading-[1.15] tracking-tight md:text-5xl lg:mb-6 lg:text-7xl lg:leading-[1.1]">
               Scrubs y Uniformes
@@ -226,7 +229,7 @@ export default function HomePage() {
       {/* ═══ ¿POR QUÉ ELEGIRNOS? (updated content) ═══ */}
       <section className="bg-surface-container-low border-surface-variant/50 border-t border-b px-8 py-24">
         <div className="mx-auto max-w-screen-xl">
-          <h2 className="text-primary mb-16 text-center font-serif text-3xl">
+          <h2 className="text-primary mb-12 text-center font-serif text-[28px] leading-tight tracking-tight text-balance md:mb-16 md:text-3xl lg:text-4xl">
             ¿Por qué elegir Confecciones Liss en San Miguel?
           </h2>
           <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
@@ -258,8 +261,8 @@ export default function HomePage() {
       {/* ═══ PROCESO DE PEDIDO (updated content) ═══ */}
       <section className="bg-primary px-8 py-24 text-white">
         <div className="mx-auto max-w-screen-2xl">
-          <div className="mb-16 text-center">
-            <h2 className="mb-4 font-serif text-4xl">
+          <div className="mb-12 text-center md:mb-16">
+            <h2 className="mb-4 font-serif text-[28px] leading-tight tracking-tight text-balance md:text-4xl">
               ¿Cómo pedir tus uniformes en Confecciones Liss?
             </h2>
             <p className="text-primary-container mx-auto max-w-2xl text-lg">
@@ -296,7 +299,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-screen-2xl">
           <h2
             id="testimonios-heading"
-            className="text-primary mb-16 text-center font-serif text-3xl"
+            className="text-primary mb-12 text-center font-serif text-[28px] leading-tight tracking-tight text-balance md:mb-16 md:text-3xl lg:text-4xl"
           >
             Lo que dicen nuestros clientes en San Miguel y todo El Salvador
           </h2>

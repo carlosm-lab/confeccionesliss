@@ -9,7 +9,7 @@ export function UniversidadesCoverage() {
       <div className="mx-auto max-w-screen-xl">
         <h2
           id="universidades-heading"
-          className="text-primary mb-4 text-center font-serif text-3xl lg:text-4xl"
+          className="text-primary mb-6 text-center font-serif text-[28px] leading-tight tracking-tight text-balance md:mb-8 md:text-3xl lg:text-4xl"
         >
           Uniformes para todas las universidades de la zona oriental
         </h2>
