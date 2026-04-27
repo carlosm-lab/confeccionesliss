@@ -166,7 +166,6 @@
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: -0.01em;
-    text-wrap: balance;
   }
 
   @media (min-width: 768px) {
