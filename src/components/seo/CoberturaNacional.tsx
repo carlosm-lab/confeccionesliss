@@ -39,7 +39,7 @@ export function CoberturaNacional() {
           </h3>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             <div>
-              <h4 className="text-primary-container mb-2 text-sm font-bold tracking-wide uppercase">
+              <h4 className="text-primary mb-2 text-sm font-bold tracking-wide uppercase">
                 San Miguel (Oficina central)
               </h4>
               <MuniList
@@ -48,7 +48,7 @@ export function CoberturaNacional() {
               />
             </div>
             <div>
-              <h4 className="text-primary-container mb-2 text-sm font-bold tracking-wide uppercase">
+              <h4 className="text-primary mb-2 text-sm font-bold tracking-wide uppercase">
                 Usulután
               </h4>
               <MuniList
@@ -57,13 +57,13 @@ export function CoberturaNacional() {
               />
             </div>
             <div>
-              <h4 className="text-primary-container mb-2 text-sm font-bold tracking-wide uppercase">
+              <h4 className="text-primary mb-2 text-sm font-bold tracking-wide uppercase">
                 La Unión
               </h4>
               <MuniList items={geoZonaOriental.laUnion} prefix="Scrubs en" />
             </div>
             <div>
-              <h4 className="text-primary-container mb-2 text-sm font-bold tracking-wide uppercase">
+              <h4 className="text-primary mb-2 text-sm font-bold tracking-wide uppercase">
                 Morazán
               </h4>
               <MuniList items={geoZonaOriental.morazan} prefix="Uniformes en" />
@@ -78,7 +78,7 @@ export function CoberturaNacional() {
           </h3>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-5">
             <div>
-              <h4 className="text-primary-container mb-2 text-sm font-bold tracking-wide uppercase">
+              <h4 className="text-primary mb-2 text-sm font-bold tracking-wide uppercase">
                 San Salvador
               </h4>
               <MuniList
@@ -87,19 +87,19 @@ export function CoberturaNacional() {
               />
             </div>
             <div>
-              <h4 className="text-primary-container mb-2 text-sm font-bold tracking-wide uppercase">
+              <h4 className="text-primary mb-2 text-sm font-bold tracking-wide uppercase">
                 La Libertad
               </h4>
               <MuniList items={geoRestoPais.laLibertad} prefix="Scrubs en" />
             </div>
             <div>
-              <h4 className="text-primary-container mb-2 text-sm font-bold tracking-wide uppercase">
+              <h4 className="text-primary mb-2 text-sm font-bold tracking-wide uppercase">
                 Santa Ana
               </h4>
               <MuniList items={geoRestoPais.santaAna} prefix="Uniformes en" />
             </div>
             <div>
-              <h4 className="text-primary-container mb-2 text-sm font-bold tracking-wide uppercase">
+              <h4 className="text-primary mb-2 text-sm font-bold tracking-wide uppercase">
                 Sonsonate / La Paz
               </h4>
               <MuniList
@@ -108,7 +108,7 @@ export function CoberturaNacional() {
               />
             </div>
             <div>
-              <h4 className="text-primary-container mb-2 text-sm font-bold tracking-wide uppercase">
+              <h4 className="text-primary mb-2 text-sm font-bold tracking-wide uppercase">
                 Resto del país
               </h4>
               <MuniList

@@ -10,7 +10,7 @@ export function ServiciosPrincipales() {
       <div className="mx-auto max-w-screen-2xl">
         <div className="mb-12 flex flex-col items-center">
           <div className="mb-4">
-            <span className="bg-primary-container/10 text-primary-container rounded-full px-4 py-1 text-xs font-bold tracking-widest uppercase">
+            <span className="bg-primary/10 text-primary rounded-full px-4 py-1 text-xs font-bold tracking-widest uppercase">
               ¿Qué fabricamos?
             </span>
           </div>

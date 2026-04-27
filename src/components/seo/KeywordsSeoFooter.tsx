@@ -79,7 +79,7 @@ export function KeywordsSeoFooter() {
         </div>
 
         {/* KEYWORDS NATURALES ADICIONALES */}
-        <div className="text-on-surface-variant/60 mt-6 text-xs leading-loose">
+        <div className="text-secondary mt-6 text-xs leading-loose">
           <p>
             Servicios disponibles en: uniformes médicos El Salvador • scrubs El
             Salvador • uniformes sanitarios El Salvador • ropa médica El
