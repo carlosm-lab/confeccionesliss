@@ -32,77 +32,70 @@ export default function HomePage() {
       />
 
       {/* ═══ HERO ═══ */}
-      <section className="bg-surface-container-low relative overflow-hidden px-5 pt-10 pb-14 md:px-8 lg:pt-16 lg:pb-28">
-        <div className="mx-auto flex max-w-screen-2xl flex-col gap-10 lg:pr-24 lg:pl-12">
-          {/* Header Area (Above Grid) */}
-          <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+      <section className="bg-surface-container-low relative overflow-hidden px-5 pt-5 pb-14 md:px-8 lg:pb-28">
+        <div className="mx-auto flex max-w-screen-2xl flex-col items-center gap-16 lg:flex-row lg:pr-24 lg:pl-12">
+          <div className="z-10 flex w-full flex-col items-start lg:w-[55%]">
             <div className="bg-tertiary/10 text-tertiary mb-4 flex w-fit items-center gap-2 rounded-full px-3 py-1 text-xs font-bold tracking-widest uppercase lg:mb-6">
               <span className="material-symbols-outlined text-[16px]">
                 verified
               </span>
               Confección profesional a la medida
             </div>
-            <h1 className="text-primary font-serif text-[2rem] leading-[1.15] tracking-tight md:text-5xl lg:text-7xl lg:leading-[1.1]">
-              Scrubs y Uniformes a la Medida{" "}
+            <h1 className="text-primary mb-4 font-serif text-[2rem] leading-[1.15] tracking-tight md:text-5xl lg:mb-6 lg:text-7xl lg:leading-[1.1]">
+              Scrubs y Uniformes
+              <br className="hidden lg:inline" /> a la Medida{" "}
+              <br className="hidden lg:inline" />
               <span className="text-secondary">en San Miguel</span>
             </h1>
-          </div>
-
-          {/* Grid Area (Text and Photo) */}
-          <div className="flex flex-col items-center gap-16 lg:flex-row lg:items-start">
-            <div className="z-10 flex w-full flex-col items-center text-center lg:w-[55%] lg:items-start lg:text-left">
-              <p className="text-on-surface-variant font-body mb-6 max-w-lg text-base leading-relaxed md:text-lg lg:mb-8 lg:text-xl">
-                Confección profesional de scrubs médicos en tela Sincatex y Lino
-                Oxford. Uniformes para UNIVO, UNAB, UGB, colegios y empresas.
-                Bordados, sublimación y envío a todo El Salvador.{" "}
-                <strong>Desde $35 USD.</strong>
-              </p>
-              <div className="mb-10 grid grid-cols-2 gap-x-4 gap-y-3 md:flex md:flex-wrap md:justify-center md:gap-4 lg:justify-start">
-                {heroTrustBadges.map((b) => (
-                  <div
-                    key={b.text}
-                    className="text-secondary flex items-center gap-2 text-sm font-medium"
-                  >
-                    <span className="material-symbols-outlined text-primary">
-                      {b.icon}
-                    </span>
-                    {b.text}
-                  </div>
-                ))}
-              </div>
-              <div className="flex w-full flex-col gap-3 sm:flex-row sm:justify-center sm:gap-4 lg:justify-start">
-                <a
-                  href="https://confeccionesliss.axkar.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-gradient font-body ambient-shadow max-w-xs flex-1 rounded-md py-4 text-center font-semibold whitespace-nowrap text-white transition-opacity hover:opacity-90"
+            <p className="text-on-surface-variant font-body mb-6 max-w-lg text-base leading-relaxed md:text-lg lg:mb-8 lg:text-xl">
+              Confección profesional de scrubs médicos en tela Sincatex y Lino
+              Oxford. Uniformes para UNIVO, UNAB, UGB, colegios y empresas.
+              Bordados, sublimación y envío a todo El Salvador.{" "}
+              <strong>Desde $35 USD.</strong>
+            </p>
+            <div className="mb-10 grid grid-cols-2 gap-x-4 gap-y-3 md:flex md:flex-wrap md:gap-4">
+              {heroTrustBadges.map((b) => (
+                <div
+                  key={b.text}
+                  className="text-secondary flex items-center gap-2 text-sm font-medium"
                 >
-                  Comprar
-                </a>
-                <a
-                  href="https://maps.app.goo.gl/XSs2vgjLG8uvJGoQ7"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="border-outline text-primary hover:bg-surface-variant/50 max-w-xs flex-1 rounded-md border bg-transparent py-4 text-center font-serif font-medium whitespace-nowrap transition-colors"
-                >
-                  Cómo llegar
-                </a>
-              </div>
+                  <span className="material-symbols-outlined text-primary">
+                    {b.icon}
+                  </span>
+                  {b.text}
+                </div>
+              ))}
             </div>
-
-            {/* Image Area */}
-            <div className="relative w-full lg:w-[45%]">
-              <div className="bg-primary-container absolute inset-0 translate-x-6 translate-y-6 transform rounded-tr-[100px] rounded-bl-[100px] opacity-20" />
-              <div className="ambient-shadow bg-surface-container-highest relative z-10 aspect-[4/5] overflow-hidden rounded-tl-xl rounded-br-xl">
-                <Image
-                  width={800}
-                  height={800}
-                  alt="Scrubs médicos a la medida confeccionados en San Miguel El Salvador por Confecciones Liss"
-                  className="h-full w-full object-contain object-center"
-                  src="/images/uniformes/portada.webp"
-                  priority
-                />
-              </div>
+            <div className="flex w-full flex-col gap-3 sm:flex-row sm:gap-4">
+              <a
+                href="https://confeccionesliss.axkar.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-gradient font-body ambient-shadow flex-1 rounded-md py-4 text-center font-semibold whitespace-nowrap text-white transition-opacity hover:opacity-90"
+              >
+                Comprar
+              </a>
+              <a
+                href="https://maps.app.goo.gl/XSs2vgjLG8uvJGoQ7"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border-outline text-primary hover:bg-surface-variant/50 flex-1 rounded-md border bg-transparent py-4 text-center font-serif font-medium whitespace-nowrap transition-colors"
+              >
+                Cómo llegar
+              </a>
+            </div>
+          </div>
+          <div className="relative w-full lg:w-[45%]">
+            <div className="bg-primary-container absolute inset-0 translate-x-6 translate-y-6 transform rounded-tr-[100px] rounded-bl-[100px] opacity-20" />
+            <div className="ambient-shadow bg-surface-container-highest relative z-10 aspect-[4/5] overflow-hidden rounded-tl-xl rounded-br-xl">
+              <Image
+                width={800}
+                height={800}
+                alt="Scrubs médicos a la medida confeccionados en San Miguel El Salvador por Confecciones Liss"
+                className="h-full w-full object-contain object-center"
+                src="/images/uniformes/portada.webp"
+                priority
+              />
             </div>
           </div>
         </div>
