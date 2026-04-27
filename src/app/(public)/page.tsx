@@ -229,9 +229,12 @@ export default function HomePage() {
       {/* ═══ ¿POR QUÉ ELEGIRNOS? (updated content) ═══ */}
       <section className="bg-surface-container-low border-surface-variant/50 border-t border-b px-8 py-24">
         <div className="mx-auto max-w-screen-xl">
-          <h2 className="text-primary mb-12 text-center font-serif text-[28px] leading-tight tracking-tight text-balance md:mb-16 md:text-3xl lg:text-4xl">
-            ¿Por qué elegir Confecciones Liss en San Miguel?
-          </h2>
+          <div className="mb-12 flex flex-col items-start md:mb-16 md:items-center">
+            <h2 className="text-primary text-left font-serif text-3xl leading-[1.15] tracking-tight text-balance md:text-center md:text-4xl lg:text-5xl">
+              ¿Por qué elegir Confecciones Liss en San Miguel?
+            </h2>
+            <div className="bg-tertiary mt-6 h-1 w-16 rounded-full"></div>
+          </div>
           <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
             {whyItems.map((w) => (
               <div
@@ -261,11 +264,12 @@ export default function HomePage() {
       {/* ═══ PROCESO DE PEDIDO (updated content) ═══ */}
       <section className="bg-primary px-8 py-24 text-white">
         <div className="mx-auto max-w-screen-2xl">
-          <div className="mb-12 text-center md:mb-16">
-            <h2 className="mb-4 font-serif text-[28px] leading-tight tracking-tight text-balance md:text-4xl">
+          <div className="mb-12 flex flex-col items-start md:mb-16 md:items-center">
+            <h2 className="mb-4 text-left font-serif text-3xl leading-[1.15] tracking-tight text-balance md:text-center md:text-4xl lg:text-5xl">
               ¿Cómo pedir tus uniformes en Confecciones Liss?
             </h2>
-            <p className="text-primary-container mx-auto max-w-2xl text-lg">
+            <div className="bg-primary-container mt-2 mb-6 h-1 w-16 rounded-full"></div>
+            <p className="text-primary-container max-w-2xl text-left text-base leading-relaxed md:mx-auto md:text-center md:text-lg">
               Un proceso sencillo para que recibas tu uniforme perfecto sin
               complicaciones.
             </p>
@@ -297,12 +301,15 @@ export default function HomePage() {
         className="bg-[#f4f5f7] px-8 py-24"
       >
         <div className="mx-auto max-w-screen-2xl">
-          <h2
-            id="testimonios-heading"
-            className="text-primary mb-12 text-center font-serif text-[28px] leading-tight tracking-tight text-balance md:mb-16 md:text-3xl lg:text-4xl"
-          >
-            Lo que dicen nuestros clientes en San Miguel y todo El Salvador
-          </h2>
+          <div className="mb-12 flex flex-col items-start md:mb-16 md:items-center">
+            <h2
+              id="testimonios-heading"
+              className="text-primary text-left font-serif text-3xl leading-[1.15] tracking-tight text-balance md:text-center md:text-4xl lg:text-5xl"
+            >
+              Lo que dicen nuestros clientes en San Miguel y todo El Salvador
+            </h2>
+            <div className="bg-tertiary mt-6 h-1 w-16 rounded-full"></div>
+          </div>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             {testimonials.map((t) => (
               <article
