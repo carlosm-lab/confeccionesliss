@@ -10,7 +10,7 @@ export function FaqSection() {
         <h2 id="faq-heading" className="section-title mb-4">
           Preguntas frecuentes sobre uniformes en El Salvador
         </h2>
-        <p className="text-on-surface-variant mb-12 text-center text-sm">
+        <p className="text-on-surface-variant mb-12 w-full text-left text-sm md:text-center">
           Todo lo que necesitas saber antes de pedir tus uniformes en
           Confecciones Liss.
         </p>

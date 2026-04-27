@@ -26,7 +26,7 @@ export function CoberturaNacional() {
         >
           Enviamos uniformes y scrubs a todo El Salvador
         </h2>
-        <p className="text-on-surface-variant mb-10 text-center text-sm">
+        <p className="text-on-surface-variant mb-10 w-full text-left text-sm md:text-center">
           Desde nuestro taller en <strong>San Miguel</strong>, enviamos con pago
           al recibir a cualquier municipio de los 14 departamentos de El
           Salvador. Confecciones Liss llega hasta ti.

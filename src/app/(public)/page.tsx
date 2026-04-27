@@ -226,7 +226,7 @@ export default function HomePage() {
       {/* ═══ ¿POR QUÉ ELEGIRNOS? (updated content) ═══ */}
       <section className="bg-surface-container-low border-surface-variant/50 border-t border-b px-5 py-14 md:px-8 md:py-24">
         <div className="mx-auto max-w-screen-xl">
-          <div className="mb-12 flex flex-col items-start md:mb-16 md:items-center">
+          <div className="mb-12 flex flex-col items-center">
             <h2 className="section-title">
               ¿Por qué elegir Confecciones Liss en San Miguel?
             </h2>
@@ -261,12 +261,12 @@ export default function HomePage() {
       {/* ═══ PROCESO DE PEDIDO (updated content) ═══ */}
       <section className="bg-primary px-5 py-14 text-white md:px-8 md:py-24">
         <div className="mx-auto max-w-screen-2xl">
-          <div className="mb-12 flex flex-col items-start md:mb-16 md:items-center">
+          <div className="mb-12 flex flex-col items-center">
             <h2 className="section-title mb-4 !text-white">
               ¿Cómo pedir tus uniformes en Confecciones Liss?
             </h2>
             <div className="bg-primary-container mt-2 mb-6 h-1 w-16 rounded-full"></div>
-            <p className="text-primary-container max-w-2xl text-left text-base leading-relaxed md:mx-auto md:text-center md:text-lg">
+            <p className="text-primary-container w-full text-left text-base leading-relaxed md:mx-auto md:text-center md:text-lg">
               Un proceso sencillo para que recibas tu uniforme perfecto sin
               complicaciones.
             </p>
@@ -298,7 +298,7 @@ export default function HomePage() {
         className="bg-[#f4f5f7] px-5 py-14 md:px-8 md:py-24"
       >
         <div className="mx-auto max-w-screen-2xl">
-          <div className="mb-12 flex flex-col items-start md:mb-16 md:items-center">
+          <div className="mb-12 flex flex-col items-center">
             <h2 id="testimonios-heading" className="section-title">
               Lo que dicen nuestros clientes en San Miguel y todo El Salvador
             </h2>

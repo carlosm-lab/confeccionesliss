@@ -7,13 +7,13 @@ export function UniversidadesCoverage() {
       className="bg-surface px-5 py-14 md:px-8 md:py-20"
     >
       <div className="mx-auto max-w-screen-xl">
-        <div className="mb-10 flex flex-col items-start md:mb-12 md:items-center">
+        <div className="mb-10 flex flex-col items-center">
           <h2 id="universidades-heading" className="section-title">
             Uniformes para todas las universidades de la zona oriental
           </h2>
           <div className="bg-tertiary mt-6 h-1 w-16 rounded-full"></div>
         </div>
-        <p className="text-on-surface-variant mb-12 max-w-2xl text-left text-base leading-relaxed md:mx-auto md:text-center">
+        <p className="text-on-surface-variant mb-12 w-full max-w-2xl text-left text-base leading-relaxed md:mx-auto md:text-center">
           Si estudias en alguna de estas instituciones, tenemos los uniformes de
           tu carrera. Trabajamos con las especificaciones exactas de cada
           universidad.
