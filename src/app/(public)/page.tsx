@@ -43,7 +43,7 @@ export default function HomePage() {
               Confección profesional a la medida
             </div>
             <h1 className="text-primary font-serif text-[2rem] leading-[1.15] tracking-tight md:text-5xl lg:text-7xl lg:leading-[1.1]">
-              Scrubs y Uniformes a la Medida <br className="hidden lg:inline" />
+              Scrubs y Uniformes a la Medida{" "}
               <span className="text-secondary">en San Miguel</span>
             </h1>
           </div>
