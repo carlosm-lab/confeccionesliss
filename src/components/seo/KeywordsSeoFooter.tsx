@@ -77,33 +77,6 @@ export function KeywordsSeoFooter() {
             ofrecemos precios especiales por volumen.
           </p>
         </div>
-
-        {/* KEYWORDS NATURALES ADICIONALES */}
-        <div className="text-secondary mt-6 text-xs leading-loose">
-          <p>
-            Servicios disponibles en: uniformes médicos El Salvador • scrubs El
-            Salvador • uniformes sanitarios El Salvador • ropa médica El
-            Salvador • filipinas médicas San Miguel • batas médicas El Salvador
-            • confección de uniformes San Miguel • taller de costura San Miguel
-            • modista San Miguel El Salvador • bordados San Miguel • sublimación
-            uniformes El Salvador • uniformes UNIVO San Miguel • uniformes UGB
-            San Miguel • uniformes UNAB San Miguel • uniformes UMA El Salvador •
-            uniformes IEPROES San Miguel • scrubs tela Sincatex El Salvador •
-            scrubs Lino Oxford El Salvador • uniformes enfermería El Salvador •
-            uniformes odontología El Salvador • uniformes laboratorio clínico El
-            Salvador • uniformes fisioterapia El Salvador • donde comprar scrubs
-            en San Miguel • scrubs baratos El Salvador • uniformes médicos
-            baratos El Salvador • uniformes universitarios baratos San Miguel •
-            confección a la medida El Salvador • uniformes con pago al recibir
-            El Salvador • uniformes San Jorge San Miguel • uniformes Moncagua El
-            Salvador • uniformes Usulután • uniformes La Unión El Salvador •
-            uniformes Santa Rosa de Lima • uniformes Jucuapa • uniformes Berlín
-            Usulután • uniformes San Francisco Gotera • scrubs San Salvador •
-            uniformes médicos Santa Ana • uniformes Chinameca • uniformes Ciudad
-            Barrios • uniformes Santiago de María • uniformes Puerto El Triunfo
-            • uniformes El Tránsito San Miguel
-          </p>
-        </div>
       </div>
     </section>
   );

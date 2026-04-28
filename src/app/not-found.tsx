@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { siteConfig } from "@/config/site";
 
 export default function NotFound() {
   return (
@@ -54,12 +55,14 @@ export default function NotFound() {
             >
               Volver al inicio
             </Link>
-            <Link
+            <a
               className="border-outline-variant/20 text-primary-container hover:bg-surface-container-low rounded-md border-[1.5px] bg-transparent px-8 py-3 text-center font-medium transition-colors"
-              href="/catalogo/salud"
+              href={siteConfig.links.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Ver catálogo
-            </Link>
+              Escríbenos por WhatsApp
+            </a>
           </div>
 
           {/* Search Bar */}
@@ -75,54 +78,35 @@ export default function NotFound() {
           </div>
         </div>
 
-        {/* Quick Links */}
+        {/* Quick Links — Only existing pages/external links */}
         <section className="mt-24 mb-12 w-full">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             <Link
               className="group bg-surface-container-lowest hover:bg-surface-container-high relative flex items-start gap-4 overflow-hidden rounded-xl p-6 transition-all duration-300"
-              href="/catalogo/salud"
+              href="/"
             >
               <div className="bg-primary-fixed/30 group-hover:bg-primary-fixed/50 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full transition-colors">
                 <span className="material-symbols-outlined text-primary">
-                  stethoscope
+                  home
                 </span>
               </div>
               <div>
                 <h3 className="text-primary group-hover:text-primary-container mb-1 text-lg font-bold tracking-tight transition-colors">
-                  Catálogo Sector Salud
+                  Página principal
                 </h3>
                 <span className="text-secondary flex items-center gap-1 text-sm font-medium transition-transform group-hover:translate-x-1">
-                  Explorar{" "}
+                  Ir al inicio{" "}
                   <span className="material-symbols-outlined text-[16px]">
                     arrow_forward
                   </span>
                 </span>
               </div>
             </Link>
-            <Link
+            <a
               className="group bg-surface-container-lowest hover:bg-surface-container-high relative flex items-start gap-4 overflow-hidden rounded-xl p-6 transition-all duration-300"
-              href="/novedades"
-            >
-              <div className="bg-primary-fixed/30 group-hover:bg-primary-fixed/50 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full transition-colors">
-                <span className="material-symbols-outlined text-primary">
-                  star
-                </span>
-              </div>
-              <div>
-                <h3 className="text-primary group-hover:text-primary-container mb-1 text-lg font-bold tracking-tight transition-colors">
-                  Novedades
-                </h3>
-                <span className="text-secondary flex items-center gap-1 text-sm font-medium transition-transform group-hover:translate-x-1">
-                  Ver lo último{" "}
-                  <span className="material-symbols-outlined text-[16px]">
-                    arrow_forward
-                  </span>
-                </span>
-              </div>
-            </Link>
-            <Link
-              className="group bg-surface-container-lowest hover:bg-surface-container-high relative flex items-start gap-4 overflow-hidden rounded-xl p-6 transition-all duration-300"
-              href="/contacto"
+              href={siteConfig.links.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <div className="bg-primary-fixed/30 group-hover:bg-primary-fixed/50 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full transition-colors">
                 <span className="material-symbols-outlined text-primary">
@@ -131,7 +115,7 @@ export default function NotFound() {
               </div>
               <div>
                 <h3 className="text-primary group-hover:text-primary-container mb-1 text-lg font-bold tracking-tight transition-colors">
-                  Contacto
+                  Contacto WhatsApp
                 </h3>
                 <span className="text-secondary flex items-center gap-1 text-sm font-medium transition-transform group-hover:translate-x-1">
                   Escríbenos{" "}
@@ -140,7 +124,30 @@ export default function NotFound() {
                   </span>
                 </span>
               </div>
-            </Link>
+            </a>
+            <a
+              className="group bg-surface-container-lowest hover:bg-surface-container-high relative flex items-start gap-4 overflow-hidden rounded-xl p-6 transition-all duration-300"
+              href={siteConfig.links.googleMaps}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="bg-primary-fixed/30 group-hover:bg-primary-fixed/50 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full transition-colors">
+                <span className="material-symbols-outlined text-primary">
+                  location_on
+                </span>
+              </div>
+              <div>
+                <h3 className="text-primary group-hover:text-primary-container mb-1 text-lg font-bold tracking-tight transition-colors">
+                  Ubicación
+                </h3>
+                <span className="text-secondary flex items-center gap-1 text-sm font-medium transition-transform group-hover:translate-x-1">
+                  Ver en Google Maps{" "}
+                  <span className="material-symbols-outlined text-[16px]">
+                    arrow_forward
+                  </span>
+                </span>
+              </div>
+            </a>
           </div>
         </section>
       </main>

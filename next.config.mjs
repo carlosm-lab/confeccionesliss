@@ -1,5 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/(.*)",
+        destination: "https://www.confeccionesliss.com/$1",
+        permanent: true,
+        has: [{ type: "host", value: "confeccionesliss.com" }],
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
