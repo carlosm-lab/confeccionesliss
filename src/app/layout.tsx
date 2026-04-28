@@ -32,11 +32,7 @@ export const metadata = {
       "Confección profesional a la medida en San Miguel. Scrubs, uniformes universitarios, escolares y corporativos a la medida. Pago al recibir.",
     url: siteConfig.url,
     siteName: siteConfig.name,
-    images: [
-      {
-        url: siteConfig.ogImage,
-      },
-    ],
+
     locale: "es_SV",
     type: "website",
   },
@@ -55,7 +51,7 @@ export const metadata = {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
-    images: [siteConfig.ogImage],
+
     creator: siteConfig.twitterHandle,
   },
   icons: {
