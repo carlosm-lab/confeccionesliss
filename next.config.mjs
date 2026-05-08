@@ -23,6 +23,11 @@ const nextConfig = {
         permanent: true,
         has: [{ type: "host", value: "confeccionesliss.com" }],
       },
+      {
+        source: "/producto/:id",
+        destination: "/catalogo/salud/:id",
+        permanent: true,
+      },
     ];
   },
   images: {

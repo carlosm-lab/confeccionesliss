@@ -4,10 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
+import type { Sector } from "@/data/types";
+import { siteConfig } from "@/config/site";
 
 interface ProductCardProps {
   id: string;
   nombre: string;
+  sector: Sector;
   precio: number;
   precioAnterior?: number | null;
   categoria: string;
@@ -25,11 +28,12 @@ interface ProductCardProps {
   className?: string;
 }
 
-const WHATSAPP_BASE = "https://confeccionesliss.axkar.com/";
+const WHATSAPP_BASE = siteConfig.links.whatsapp;
 
 export function ProductCard({
   id,
   nombre,
+  sector,
   precio,
   precioAnterior,
   categoria,
@@ -72,7 +76,7 @@ export function ProductCard({
 
   return (
     <Link
-      href={`/producto/${id}`}
+      href={`/catalogo/${sector}/${id}`}
       className={cn(
         "group hover:border-primary/20 focus-visible:ring-primary relative flex h-full flex-col overflow-hidden rounded-xl border border-transparent bg-white shadow-sm transition-all hover:shadow-md focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none",
         className

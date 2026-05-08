@@ -331,6 +331,7 @@ export default function CatalogoCorporativoPage() {
                   <ProductCard
                     key={p.id}
                     id={p.id}
+                    sector="corporativo"
                     nombre={p.nombre}
                     precio={p.precio}
                     precioAnterior={p.precioAnterior ?? null}

@@ -312,6 +312,7 @@ export default function CatalogoSaludPage() {
                   <ProductCard
                     key={product.id}
                     id={product.id}
+                    sector="salud"
                     nombre={product.nombre}
                     precio={product.precio}
                     precioAnterior={product.precioAnterior}

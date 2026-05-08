@@ -284,6 +284,7 @@ export default function CatalogoEscolarPage() {
                   <ProductCard
                     key={p.id}
                     id={p.id}
+                    sector="escolar"
                     nombre={p.nombre}
                     precio={p.precio}
                     categoria={p.categoria}

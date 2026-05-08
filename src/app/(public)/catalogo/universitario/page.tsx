@@ -275,6 +275,7 @@ export default function CatalogoUniversitarioPage() {
                   <ProductCard
                     key={p.id}
                     id={p.id}
+                    sector="universitario"
                     nombre={p.nombre}
                     precio={p.precio}
                     categoria={p.categoria}
