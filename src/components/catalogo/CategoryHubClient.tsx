@@ -51,42 +51,42 @@ function CategoryCard({
       </div>
 
       {/* Information Panel - Sólido, altamente legible, contraste AAA */}
-      <div className="flex flex-1 flex-col justify-between p-4 sm:p-5">
+      <div className="flex flex-1 flex-col justify-between p-5">
         <div>
           {/* Badge & Product Count */}
           <div className="mb-2.5 flex items-center justify-between gap-2">
-            <div className="text-secondary flex items-center gap-1">
+            <div className="text-secondary flex items-center gap-1.5">
               <span
-                className="material-symbols-outlined text-[13px] sm:text-[16px]"
+                className="material-symbols-outlined text-[16px]"
                 aria-hidden="true"
               >
                 {config.icon}
               </span>
-              <span className="text-[9px] font-bold tracking-wider text-gray-400 uppercase sm:text-[10px]">
+              <span className="text-[10px] font-bold tracking-wider text-gray-400 uppercase">
                 {config.subtitle}
               </span>
             </div>
-            <span className="bg-surface-container text-primary rounded-full px-2 py-0.5 text-[9px] font-semibold sm:px-2.5 sm:text-[10px]">
+            <span className="bg-surface-container text-primary rounded-full px-2.5 py-0.5 text-[10px] font-semibold">
               {productCount} {productCount === 1 ? "prenda" : "prendas"}
             </span>
           </div>
 
           {/* Title */}
-          <h2 className="text-primary group-hover:text-tertiary xs:text-base font-serif text-sm leading-tight font-bold transition-colors sm:text-lg md:text-xl">
+          <h2 className="text-primary group-hover:text-tertiary font-serif text-lg leading-tight font-bold transition-colors sm:text-xl">
             {config.subtitle}
           </h2>
 
           {/* Description / Tagline */}
-          <p className="text-on-surface-variant mt-1.5 line-clamp-2 text-[11px] leading-snug transition-all sm:mt-2 sm:text-xs sm:leading-relaxed md:text-sm">
+          <p className="text-on-surface-variant mt-2 line-clamp-2 text-xs leading-relaxed sm:text-sm">
             {config.hubTagline}
           </p>
         </div>
 
         {/* Action Button Link */}
-        <div className="text-primary group-hover:text-tertiary mt-4 flex items-center gap-1 text-[10px] font-bold tracking-wider uppercase transition-colors sm:mt-5 sm:text-xs">
+        <div className="text-primary group-hover:text-tertiary mt-5 flex items-center gap-1 text-xs font-bold tracking-wider uppercase transition-colors">
           <span>Explorar colección</span>
           <span
-            className="material-symbols-outlined text-[12px] transition-transform duration-300 group-hover:translate-x-1 sm:text-[14px]"
+            className="material-symbols-outlined text-[14px] transition-transform duration-300 group-hover:translate-x-1"
             aria-hidden="true"
           >
             arrow_forward
@@ -121,8 +121,8 @@ export function CategoryHubClient() {
             </p>
           </div>
 
-          {/* Grid: 2 col mobile, 3 col tablet, 4 col desktop */}
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4 lg:gap-8">
+          {/* Grid auto-responsivo con ancho mínimo de 280px */}
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-6 lg:gap-8">
             {SECTOR_ORDER.map((sector) => (
               <CategoryCard
                 key={sector}
