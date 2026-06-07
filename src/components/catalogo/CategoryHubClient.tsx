@@ -5,7 +5,6 @@ import Link from "next/link";
 import { CATEGORIES } from "@/data/categories";
 import { ALL_PRODUCTS } from "@/data/products";
 import type { Sector } from "@/data/types";
-import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { useMemo } from "react";
 
@@ -32,63 +31,62 @@ function CategoryCard({
     <Link
       href={`/catalogo/${sector}`}
       className={cn(
-        "group relative flex flex-col justify-end overflow-hidden rounded-2xl",
-        "min-h-[260px] sm:min-h-[300px] lg:min-h-[340px]",
-        "shadow-sm transition-all duration-300",
-        "hover:-translate-y-1 hover:shadow-xl",
+        "group border-primary/35 flex flex-col overflow-hidden rounded-2xl border bg-white transition-all duration-300",
+        "shadow-[0_8px_24px_-6px_rgba(20,48,103,0.18),0_4px_10px_-4px_rgba(20,48,103,0.12)]",
+        "hover:border-primary/55 hover:-translate-y-1 hover:shadow-[0_16px_36px_-8px_rgba(20,48,103,0.24),0_6px_16px_-4px_rgba(20,48,103,0.18)]",
         "focus-visible:ring-primary focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
       )}
       aria-label={`Ver catálogo de ${config.subtitle}: ${config.hubTagline}`}
     >
-      {/* Background Image */}
-      <div className="absolute inset-0">
+      {/* Category Image - Visual focus without text overlays */}
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-gray-50">
         <Image
           src={config.hubImage}
-          alt={`Categoría ${config.subtitle} — ${config.hubTagline}`}
+          alt={`Colección de ${config.subtitle}`}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-105"
+          className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-103"
+          priority={sector === "scrubs" || sector === "universitario"}
         />
       </div>
 
-      {/* Gradient Overlay */}
-      <div
-        className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"
-        aria-hidden="true"
-      />
+      {/* Information Panel - Sólido, altamente legible, contraste AAA */}
+      <div className="flex flex-1 flex-col justify-between p-5">
+        <div>
+          {/* Badge & Product Count */}
+          <div className="mb-2.5 flex items-center justify-between gap-2">
+            <div className="text-secondary flex items-center gap-1.5">
+              <span
+                className="material-symbols-outlined text-[16px]"
+                aria-hidden="true"
+              >
+                {config.icon}
+              </span>
+              <span className="text-[10px] font-bold tracking-wider text-gray-400 uppercase">
+                {config.subtitle}
+              </span>
+            </div>
+            <span className="bg-surface-container text-primary rounded-full px-2.5 py-0.5 text-[10px] font-semibold">
+              {productCount} {productCount === 1 ? "prenda" : "prendas"}
+            </span>
+          </div>
 
-      {/* Content */}
-      <div className="relative z-10 flex flex-col gap-2 p-5 sm:p-6">
-        {/* Icon + Subtitle */}
-        <div className="flex items-center gap-2">
-          <span
-            className="material-symbols-outlined text-xl text-white/80"
-            aria-hidden="true"
-          >
-            {config.icon}
-          </span>
-          <span className="text-[11px] font-semibold tracking-[0.15em] text-white/70 uppercase">
+          {/* Title */}
+          <h2 className="text-primary group-hover:text-tertiary font-serif text-lg leading-tight font-bold transition-colors sm:text-xl">
             {config.subtitle}
-          </span>
+          </h2>
+
+          {/* Description / Tagline */}
+          <p className="text-on-surface-variant mt-2 line-clamp-2 text-xs leading-relaxed sm:text-sm">
+            {config.hubTagline}
+          </p>
         </div>
 
-        {/* Title */}
-        <h2 className="font-serif text-xl leading-tight font-bold text-white sm:text-2xl">
-          {config.subtitle}
-        </h2>
-
-        {/* Tagline */}
-        <p className="text-sm leading-snug text-white/80">
-          {config.hubTagline}
-        </p>
-
-        {/* Product count + CTA arrow */}
-        <div className="mt-1 flex items-center justify-between">
-          <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
-            {productCount} {productCount === 1 ? "producto" : "productos"}
-          </span>
+        {/* Action Button Link */}
+        <div className="text-primary group-hover:text-tertiary mt-5 flex items-center gap-1 text-xs font-bold tracking-wider uppercase transition-colors">
+          <span>Explorar colección</span>
           <span
-            className="material-symbols-outlined text-xl text-white/60 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-white"
+            className="material-symbols-outlined text-[14px] transition-transform duration-300 group-hover:translate-x-1"
             aria-hidden="true"
           >
             arrow_forward
@@ -115,7 +113,7 @@ export function CategoryHubClient() {
       <section className="bg-surface px-5 py-10 md:px-8 md:py-14">
         <div className="mx-auto max-w-screen-2xl">
           {/* Section header */}
-          <div className="mb-8 flex flex-col items-center text-center md:mb-10">
+          <div className="mb-8 flex flex-col items-center text-center md:mb-12">
             <h1 className="section-title">Nuestro Catálogo</h1>
             <p className="text-on-surface-variant mt-3 max-w-xl text-sm leading-relaxed md:text-base">
               Selecciona la categoría que necesitas y explora productos
@@ -124,7 +122,7 @@ export function CategoryHubClient() {
           </div>
 
           {/* Grid: 1 col mobile, 2 col tablet, 3 col desktop */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:gap-8">
             {SECTOR_ORDER.map((sector) => (
               <CategoryCard
                 key={sector}
@@ -161,30 +159,6 @@ export function CategoryHubClient() {
               <span className="font-medium">{item.text}</span>
             </div>
           ))}
-        </div>
-      </section>
-
-      {/* CTA Banner */}
-      <section className="bg-primary px-5 py-10 text-white md:px-8">
-        <div className="mx-auto flex max-w-screen-2xl flex-col items-center justify-between gap-6 md:flex-row">
-          <div>
-            <h2 className="font-headline text-xl font-bold md:text-2xl">
-              ¿No encuentras lo que buscas?
-            </h2>
-            <p className="text-sm text-white/70">
-              Confeccionamos uniformes a la medida. Cuéntanos tu proyecto y te
-              damos una cotización en minutos.
-            </p>
-          </div>
-          <a
-            href={siteConfig.links.whatsappDirect}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-primary shrink-0 rounded-lg bg-white px-8 py-3 font-semibold transition-colors hover:bg-gray-100"
-          >
-            Cotizar por WhatsApp
-            <span className="sr-only"> (se abre en nueva ventana)</span>
-          </a>
         </div>
       </section>
     </>
