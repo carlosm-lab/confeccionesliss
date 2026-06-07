@@ -151,13 +151,11 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 - **Props:** No recibe props (consume `CATEGORIES` y `ALL_PRODUCTS` directamente).
 - **Ejemplo:** `<CategoryHubClient />`
 
-### SearchDropdown
+### SearchModal
 
-- **Ruta:** `src/components/catalogo/SearchDropdown.tsx`
-- **Descripción:** Dropdown de resultados de búsqueda inteligente. Muestra hasta 2 categorías y 5 productos que coinciden con la query del usuario. Integrado en el `TypewriterSearch` del Navbar.
+- **Ruta:** `src/components/layout/SearchModal.tsx`
+- **Descripción:** Modal de búsqueda global a pantalla completa con backdrop blur. Muestra chips de categoría cuando el input está vacío, y filtra `ALL_PRODUCTS` en tiempo real cuando el usuario escribe ≥2 caracteres. Resultados horizontales con thumbnail, nombre, categoría, precio y flecha. Incluye "Ver todos los resultados" si hay más de 6 coincidencias. Bloqueo de scroll del body, auto-focus, cierre con Escape o click fuera.
 - **Props:**
-  - `query: string` — Texto de búsqueda actual.
-  - `isOpen: boolean` — Si el dropdown está visible.
-  - `onClose: () => void` — Callback para cerrar el dropdown.
-  - `activeIndex: number` — Índice del item activo para navegación con teclado.
-- **Ejemplo:** `<SearchDropdown query="scrub" isOpen={true} onClose={() => {}} activeIndex={-1} />`
+  - `isOpen: boolean` — Si el modal está visible.
+  - `onClose: () => void` — Callback para cerrar el modal.
+- **Ejemplo:** `<SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />`
