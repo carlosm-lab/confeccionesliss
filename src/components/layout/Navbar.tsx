@@ -45,7 +45,7 @@ function TypewriterSearch({
   const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [activeIndex, setActiveIndex] = useState(-1);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLFormElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -158,10 +158,25 @@ function TypewriterSearch({
     [showDropdown, activeIndex, inputValue, router, closeDropdown]
   );
 
+  const handleSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      if (inputValue.trim()) {
+        router.push(`/catalogo?q=${encodeURIComponent(inputValue.trim())}`);
+        closeDropdown();
+        inputRef.current?.blur();
+      }
+    },
+    [inputValue, router, closeDropdown]
+  );
+
   return (
-    <div
+    <form
       className={cn("relative flex items-center", className)}
       ref={containerRef}
+      onSubmit={handleSubmit}
+      role="search"
+      aria-label="Buscar productos"
     >
       <input
         ref={inputRef}
@@ -207,7 +222,7 @@ function TypewriterSearch({
         onClose={closeDropdown}
         activeIndex={activeIndex}
       />
-    </div>
+    </form>
   );
 }
 

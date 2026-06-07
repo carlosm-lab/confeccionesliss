@@ -34,73 +34,97 @@ export default function HomePage() {
       />
 
       {/* ═══ HERO ═══ */}
-      <section className="bg-surface-container-low relative overflow-hidden px-5 pt-5 pb-14 md:px-8 lg:pb-28">
-        <div className="mx-auto flex max-w-screen-2xl flex-col items-center gap-8 lg:flex-row lg:items-center lg:gap-16">
+      <section className="bg-surface-container-low relative overflow-hidden px-5 pt-4 pb-14 md:px-8 md:pt-6 lg:pb-28">
+        <div className="mx-auto flex max-w-screen-2xl flex-col items-start gap-8 lg:flex-row lg:items-start lg:gap-16">
           <div className="z-10 flex w-full flex-col items-start lg:min-w-0 lg:flex-1">
-            <div className="bg-tertiary/10 text-tertiary mb-4 flex w-fit items-center gap-2 rounded-full px-3 py-1 text-xs font-bold tracking-widest uppercase lg:mb-6">
+            <div className="bg-tertiary/10 text-tertiary mb-2 flex w-fit items-center gap-2 self-center rounded-full px-3 py-1 text-xs font-bold tracking-widest uppercase lg:mb-3 lg:self-start">
               <span className="material-symbols-outlined text-[16px]">
                 verified
               </span>
               Confección profesional a la medida
             </div>
-            <h1 className="text-primary mb-4 font-serif text-3xl leading-[1.15] tracking-tight sm:text-4xl md:text-5xl lg:mb-6 lg:text-5xl xl:text-6xl xl:leading-[1.1]">
-              Scrubs y Uniformes
-              <br className="hidden lg:inline" /> a la Medida{" "}
-              <br className="hidden lg:inline" />
-              <span className="text-secondary">en San Miguel</span>
+            <h1 className="text-primary mb-6 w-full text-center font-serif text-3xl leading-[1.15] tracking-tight sm:text-4xl md:mb-10 md:flex md:flex-col md:items-center md:text-5xl lg:mb-6 lg:block lg:text-left lg:text-5xl xl:text-6xl xl:leading-[1.1]">
+              <span className="text-center lg:text-left">
+                Scrubs y Uniformes a la Medida{" "}
+              </span>
+              <span className="text-secondary font-serif md:mt-2 md:flex md:w-full md:items-center md:justify-center md:gap-4 lg:mt-0 lg:inline lg:gap-0">
+                {/* LÍNEA DECORATIVA IZQUIERDA (Solo Tablet) */}
+                <span className="hidden md:flex md:flex-1 md:items-center md:gap-2 lg:hidden">
+                  <span className="to-secondary/30 h-[1.5px] flex-1 bg-gradient-to-r from-transparent" />
+                  <span className="bg-secondary/50 h-1.5 w-1.5 shrink-0 rotate-45" />
+                </span>
+
+                <span className="shrink-0">en San Miguel</span>
+
+                {/* LÍNEA DECORATIVA DERECHA (Solo Tablet) */}
+                <span className="hidden md:flex md:flex-1 md:items-center md:gap-2 lg:hidden">
+                  <span className="bg-secondary/50 h-1.5 w-1.5 shrink-0 rotate-45" />
+                  <span className="from-secondary/30 h-[1.5px] flex-1 bg-gradient-to-r to-transparent" />
+                </span>
+              </span>
             </h1>
 
-            {/* IMAGEN HERO - VERSIÓN MÓVIL (Intercalada después del título) */}
-            <div className="relative mb-8 w-full max-w-sm self-center lg:hidden">
-              <div className="relative z-10 aspect-[4/5] w-full overflow-hidden rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
-                <div className="pointer-events-none absolute inset-3 z-20 rounded-xl border-[2px] border-dashed border-white/90" />
-                <Image
-                  width={800}
-                  height={800}
-                  alt="Scrubs médicos a la medida confeccionados en San Miguel El Salvador por Confecciones Liss"
-                  className="h-full w-full object-cover object-center"
-                  src="/images/uniformes/portada.webp"
-                  priority
-                />
-              </div>
-            </div>
-
-            <p className="text-on-surface-variant font-body mb-6 max-w-lg text-base leading-relaxed md:text-lg lg:mb-8 lg:text-xl">
-              Confección profesional de scrubs médicos en tela Sincatex y Lino
-              Oxford. Uniformes para UNIVO, UNAB, UGB, colegios y empresas.
-              Bordados, sublimación y envío a todo El Salvador.{" "}
-              <strong>Desde $35 USD.</strong>
-            </p>
-            <div className="mb-10 grid grid-cols-2 gap-x-4 gap-y-3 md:flex md:flex-wrap md:gap-4">
-              {heroTrustBadges.map((b) => (
-                <div
-                  key={b.text}
-                  className="text-secondary flex items-center gap-2 text-sm font-medium"
-                >
-                  <span className="material-symbols-outlined text-primary">
-                    {b.icon}
-                  </span>
-                  {b.text}
+            {/* Contenedor inferior de contenido (Móvil / Tablet) */}
+            <div className="flex w-full flex-col gap-6 md:grid md:grid-cols-2 md:items-stretch md:gap-12 lg:flex lg:flex-col lg:gap-0">
+              {/* IMAGEN HERO - VERSIÓN MÓVIL */}
+              <div className="relative w-full max-w-sm self-center md:order-2 md:h-full md:max-w-none md:self-stretch lg:hidden">
+                <div className="relative z-10 aspect-[4/5] w-full overflow-hidden rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] md:aspect-auto md:h-full">
+                  <div className="pointer-events-none absolute inset-3 z-20 rounded-xl border-[2px] border-dashed border-white/90" />
+                  <Image
+                    width={800}
+                    height={800}
+                    alt="Scrubs médicos a la medida confeccionados en San Miguel El Salvador por Confecciones Liss"
+                    className="h-full w-full object-cover object-center"
+                    src="/images/uniformes/portada.webp"
+                    priority
+                  />
                 </div>
-              ))}
-            </div>
-            <div className="flex w-full flex-col gap-3 sm:max-w-md sm:flex-row sm:gap-4 lg:max-w-none">
-              <a
-                href={siteConfig.links.whatsappDirect}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-gradient font-body ambient-shadow w-full rounded-md px-8 py-4 text-center font-semibold whitespace-nowrap text-white transition-opacity hover:opacity-90 sm:w-auto"
-              >
-                Comprar
-              </a>
-              <a
-                href="https://maps.app.goo.gl/XSs2vgjLG8uvJGoQ7"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border-outline text-primary hover:bg-surface-variant/50 w-full rounded-md border bg-transparent px-8 py-4 text-center font-serif font-medium whitespace-nowrap transition-colors sm:w-auto"
-              >
-                Cómo llegar
-              </a>
+              </div>
+
+              {/* COLUMNA DE TEXTO Y ACCIONES */}
+              <div className="flex w-full flex-col items-start md:order-1 md:justify-center">
+                <p className="text-on-surface-variant font-body mb-6 w-full text-base leading-relaxed md:text-lg lg:mb-6 lg:text-xl">
+                  Confección profesional de scrubs médicos en tela Sincatex y
+                  Lino Oxford. Uniformes para UNIVO, UNAB, UGB, colegios y
+                  empresas. Bordados, sublimación y envío a todo El Salvador.{" "}
+                  <strong>Desde $35 USD.</strong>
+                </p>
+                <div className="mb-8 grid w-full grid-cols-2 gap-x-3 gap-y-2.5 md:grid-cols-1 lg:grid-cols-2">
+                  {heroTrustBadges.map((b) => (
+                    <div
+                      key={b.text}
+                      className="border-primary/5 text-secondary flex w-full items-center gap-2 rounded-full border bg-white/60 px-2.5 py-1.5 text-xs font-medium shadow-xs backdrop-blur-xs sm:text-sm"
+                    >
+                      <span className="bg-primary/10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+                        <span className="material-symbols-outlined text-primary text-[14px] font-bold">
+                          {b.icon}
+                        </span>
+                      </span>
+                      <span className="leading-tight font-semibold text-gray-700">
+                        {b.text}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex w-full flex-col gap-3 sm:flex-row sm:gap-4">
+                  <a
+                    href={siteConfig.links.whatsappDirect}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-gradient font-body ambient-shadow flex h-12 w-full items-center justify-center rounded-md px-12 text-center text-base font-semibold whitespace-nowrap text-white transition-opacity hover:opacity-90 sm:flex-1"
+                  >
+                    Comprar
+                  </a>
+                  <a
+                    href="https://maps.app.goo.gl/XSs2vgjLG8uvJGoQ7"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="border-outline text-primary hover:bg-surface-variant/50 flex h-12 w-full items-center justify-center rounded-md border bg-transparent px-12 text-center font-serif text-base font-medium whitespace-nowrap transition-colors sm:flex-1"
+                  >
+                    Cómo llegar
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
           {/* IMAGEN HERO - VERSIÓN DESKTOP */}

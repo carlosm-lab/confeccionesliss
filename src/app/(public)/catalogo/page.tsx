@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ALL_PRODUCTS } from "@/data/products";
 import { CategoryHubClient } from "@/components/catalogo/CategoryHubClient";
+import { UnifiedCatalogClient } from "@/components/catalogo/UnifiedCatalogClient";
 import { siteConfig } from "@/config/site";
 import { CATEGORIES } from "@/data/categories";
 import type { Sector } from "@/data/types";
@@ -29,7 +30,17 @@ const SECTOR_ORDER: Sector[] = [
   "accesorios",
 ];
 
-export default function CatalogoPage() {
+interface CatalogoPageProps {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}
+
+export default async function CatalogoPage({
+  searchParams,
+}: CatalogoPageProps) {
+  const resolvedParams = await searchParams;
+  const hasSearchQuery =
+    typeof resolvedParams.q === "string" && resolvedParams.q.trim().length > 0;
+
   // Build ItemList JSON-LD for category hub
   const categoryListItems = SECTOR_ORDER.map((sector, i) => ({
     "@type": "ListItem",
@@ -40,7 +51,12 @@ export default function CatalogoPage() {
 
   return (
     <>
-      <CategoryHubClient />
+      {/* Conditional rendering: search results vs category hub */}
+      {hasSearchQuery ? (
+        <UnifiedCatalogClient products={ALL_PRODUCTS} />
+      ) : (
+        <CategoryHubClient />
+      )}
 
       {/* JSON-LD: ItemList of categories */}
       <script
