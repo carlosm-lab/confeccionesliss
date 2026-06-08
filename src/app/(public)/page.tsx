@@ -34,8 +34,8 @@ export default function HomePage() {
       />
 
       {/* ═══ HERO ═══ */}
-      <section className="bg-surface-container-low relative overflow-hidden px-5 pt-4 pb-14 md:px-8 md:pt-6 lg:pb-28">
-        <div className="mx-auto flex max-w-screen-2xl flex-col items-start gap-8 lg:flex-row lg:items-start lg:gap-16">
+      <section className="bg-surface-container-low relative flex min-h-[calc(100dvh-56px)] flex-col overflow-x-hidden px-5 pt-4 pb-10 md:px-8 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:pb-4">
+        <div className="mx-auto flex h-full w-full max-w-screen-2xl flex-col items-start gap-8 lg:flex-row lg:items-center lg:gap-16">
           <div className="z-10 flex w-full flex-col items-start lg:min-w-0 lg:flex-1">
             <div className="bg-tertiary/10 text-tertiary mb-2 flex w-fit items-center gap-2 self-center rounded-full px-3 py-1 text-xs font-bold tracking-widest uppercase lg:mb-3 lg:self-start">
               <span className="material-symbols-outlined text-[16px]">
@@ -68,13 +68,13 @@ export default function HomePage() {
             <div className="flex w-full flex-col gap-6 md:grid md:grid-cols-2 md:items-stretch md:gap-12 lg:flex lg:flex-col lg:gap-0">
               {/* IMAGEN HERO - VERSIÓN MÓVIL */}
               <div className="relative w-full max-w-sm self-center md:order-2 md:h-full md:max-w-none md:self-stretch lg:hidden">
-                <div className="relative z-10 aspect-[4/5] w-full overflow-hidden rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] md:aspect-auto md:h-full">
-                  <div className="pointer-events-none absolute inset-3 z-20 rounded-xl border-[2px] border-dashed border-white/90" />
+                <div className="border-primary/35 relative z-10 aspect-[4/5] w-full overflow-hidden rounded-2xl border bg-white p-1 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:aspect-auto md:h-full">
+                  <div className="border-primary/60 pointer-events-none absolute inset-3 z-20 rounded-xl border-[2px] border-dashed" />
                   <Image
                     width={800}
                     height={800}
                     alt="Scrubs médicos a la medida confeccionados en San Miguel El Salvador por Confecciones Liss"
-                    className="h-full w-full object-cover object-center"
+                    className="h-full w-full rounded-xl object-contain object-center"
                     src="/images/uniformes/portada.webp"
                     priority
                   />
@@ -128,17 +128,21 @@ export default function HomePage() {
             </div>
           </div>
           {/* IMAGEN HERO - VERSIÓN DESKTOP */}
-          <div className="relative hidden w-full lg:block lg:w-[40%]">
-            <div className="relative z-10 aspect-[4/5] w-full overflow-hidden rounded-2xl shadow-[0_10px_40px_rgb(0,0,0,0.12)]">
-              <div className="pointer-events-none absolute inset-4 z-20 rounded-xl border-[2px] border-dashed border-white/90" />
-              <Image
-                width={800}
-                height={800}
-                alt="Scrubs médicos a la medida confeccionados en San Miguel El Salvador por Confecciones Liss"
-                className="h-full w-full object-cover object-center"
-                src="/images/uniformes/portada.webp"
-                priority
-              />
+          {/* Imagen desktop: h-full llena el alto del hero, object-contain preserva relación de aspecto */}
+          <div className="hidden h-full lg:flex lg:w-[40%] lg:items-center">
+            <div className="border-primary/35 relative h-full w-full rounded-2xl border bg-white shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <div className="border-primary/60 pointer-events-none absolute inset-4 z-20 rounded-xl border-[2px] border-dashed" />
+              {/* inset-1 = 4px de margen, rounded-xl = esquinas redondeadas en la imagen */}
+              <div className="absolute inset-1 overflow-hidden rounded-xl">
+                <Image
+                  fill
+                  alt="Scrubs médicos a la medida confeccionados en San Miguel El Salvador por Confecciones Liss"
+                  className="object-contain object-center"
+                  src="/images/uniformes/portada.webp"
+                  sizes="40vw"
+                  priority
+                />
+              </div>
             </div>
           </div>
         </div>
