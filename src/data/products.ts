@@ -405,6 +405,158 @@ const ACCESORIOS_PRODUCTS: Product[] = [
 ];
 
 // ═══════════════════════════════════════════════
+// LENCERIA — Productos Muestra
+// ═══════════════════════════════════════════════
+const LENCERIA_PRODUCTS: Product[] = [
+  {
+    id: "lenceria-encaje-blanca",
+    nombre: "Conjunto de Lencería Blanca de Encaje",
+    precio: 25.0,
+    categoria: "Damas",
+    tipo: "mujer",
+    sector: "lenceria",
+    imagen: null,
+    tallas: ["S", "M", "L"],
+    showBadge: true,
+    badgeText: "Exclusivo",
+    descripcionCorta:
+      "Conjunto de lencería blanca para dama, confeccionado con encaje elástico ultra suave.",
+    descripcion:
+      "Disfruta de la comodidad y elegancia de nuestro conjunto de encaje blanco. Diseñado con costuras planas e hipoalergénicas para máxima suavidad.",
+  },
+  {
+    id: "boxer-algodon-blanco",
+    nombre: "Bóxer de Algodón Premium Blanco",
+    precio: 12.0,
+    categoria: "Caballeros",
+    tipo: "hombre",
+    sector: "lenceria",
+    imagen: null,
+    tallas: ["M", "L", "XL"],
+  },
+];
+
+// ═══════════════════════════════════════════════
+// SUBLIMACION — Productos Muestra
+// ═══════════════════════════════════════════════
+const SUBLIMACION_PRODUCTS: Product[] = [
+  {
+    id: "taza-sublimada-personalizada",
+    nombre: "Taza de Cerámica Sublimada Personalizada",
+    precio: 6.0,
+    categoria: "Artículos",
+    tipo: "articulos",
+    sector: "sublimacion",
+    imagen: null,
+    tallas: [],
+    showBadge: true,
+    badgeText: "A pedido",
+    descripcionCorta:
+      "Taza de cerámica de 11oz sublimada con tintas de alta duración y colores vibrantes.",
+  },
+  {
+    id: "camiseta-sublimada-promocional",
+    nombre: "Camiseta Poliéster Sublimada Promocional",
+    precio: 15.0,
+    categoria: "Prendas",
+    tipo: "prendas",
+    sector: "sublimacion",
+    imagen: null,
+    tallas: ["S", "M", "L", "XL"],
+  },
+];
+
+// ═══════════════════════════════════════════════
+// ROPA Y CALZADO — Productos Muestra
+// ═══════════════════════════════════════════════
+const ROPA_CALZADO_PRODUCTS: Product[] = [
+  {
+    id: "calzado-deportivo-casual",
+    nombre: "Calzado Deportivo Casual 'Urban'",
+    precio: 45.0,
+    categoria: "Zapatos",
+    tipo: "zapatos",
+    sector: "ropa-calzado",
+    imagen: null,
+    tallas: ["38", "39", "40", "41", "42"],
+    showBadge: true,
+    badgeText: "Estilo",
+    descripcionCorta:
+      "Zapatos deportivos de lona y suela vulcanizada, sumamente cómodos y listos para el uso diario.",
+  },
+  {
+    id: "blusa-casual-algodon",
+    nombre: "Blusa Casual de Algodón Fresco",
+    precio: 18.0,
+    categoria: "Ropa",
+    tipo: "ropa",
+    sector: "ropa-calzado",
+    imagen: null,
+    tallas: ["S", "M", "L"],
+  },
+];
+
+// ═══════════════════════════════════════════════
+// TOPS — Productos Muestra
+// ═══════════════════════════════════════════════
+const TOPS_PRODUCTS: Product[] = [
+  {
+    id: "crop-top-ribbed-moderno",
+    nombre: "Crop Top de Rib Acanalado",
+    precio: 14.0,
+    categoria: "Crop Tops",
+    tipo: "crop-tops",
+    sector: "tops",
+    imagen: null,
+    tallas: ["XS", "S", "M"],
+    showBadge: true,
+    badgeText: "Tendencia",
+    descripcionCorta:
+      "Crop top de rib acanalado grueso, cuello redondo y excelente ajuste al cuerpo.",
+  },
+  {
+    id: "top-halter-algodon",
+    nombre: "Top Halter de Algodón Suave",
+    precio: 12.0,
+    categoria: "Tops Casuales",
+    tipo: "tops-casuales",
+    sector: "tops",
+    imagen: null,
+    tallas: ["S", "M", "L"],
+  },
+];
+
+// ═══════════════════════════════════════════════
+// LIMPIAPIPAS — Productos Muestra
+// ═══════════════════════════════════════════════
+const LIMPIAPIPAS_PRODUCTS: Product[] = [
+  {
+    id: "ramo-rosas-limpiapipas",
+    nombre: "Ramo de Rosas Eternas de Limpiapipas",
+    precio: 20.0,
+    categoria: "Ramos",
+    tipo: "ramos",
+    sector: "limpiapipas",
+    imagen: null,
+    tallas: [],
+    showBadge: true,
+    badgeText: "Hecho a mano",
+    descripcionCorta:
+      "Hermoso ramo de 6 rosas eternas tejidas artesanalmente a mano con limpiapipas premium.",
+  },
+  {
+    id: "girasol-limpiapipas-individual",
+    nombre: "Girasol de Limpiapipas Individual",
+    precio: 5.0,
+    categoria: "Flores",
+    tipo: "flores",
+    sector: "limpiapipas",
+    imagen: null,
+    tallas: [],
+  },
+];
+
+// ═══════════════════════════════════════════════
 export const ALL_PRODUCTS: Product[] = [
   ...SCRUBS_PRODUCTS,
   ...CORPORATIVO_PRODUCTS,
@@ -412,4 +564,9 @@ export const ALL_PRODUCTS: Product[] = [
   ...UNIVERSITARIO_PRODUCTS,
   ...DEPORTIVO_PRODUCTS,
   ...ACCESORIOS_PRODUCTS,
+  ...LENCERIA_PRODUCTS,
+  ...SUBLIMACION_PRODUCTS,
+  ...ROPA_CALZADO_PRODUCTS,
+  ...TOPS_PRODUCTS,
+  ...LIMPIAPIPAS_PRODUCTS,
 ];

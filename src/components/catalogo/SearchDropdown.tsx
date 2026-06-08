@@ -16,6 +16,11 @@ const SECTOR_LABELS: Record<Sector, string> = {
   corporativo: "Corporativo",
   deportivo: "Deportivo",
   accesorios: "Accesorios",
+  lenceria: "Lencería",
+  sublimacion: "Sublimación",
+  "ropa-calzado": "Ropa y Calzado",
+  tops: "Crop Tops y Tops",
+  limpiapipas: "Limpiapipas",
 };
 
 const SECTORS_LIST: Sector[] = [
@@ -25,6 +30,11 @@ const SECTORS_LIST: Sector[] = [
   "corporativo",
   "deportivo",
   "accesorios",
+  "lenceria",
+  "sublimacion",
+  "ropa-calzado",
+  "tops",
+  "limpiapipas",
 ];
 
 interface SearchDropdownProps {

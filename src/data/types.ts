@@ -9,7 +9,12 @@ export type Sector =
   | "escolar"
   | "corporativo"
   | "deportivo"
-  | "accesorios";
+  | "accesorios"
+  | "lenceria"
+  | "sublimacion"
+  | "ropa-calzado"
+  | "tops"
+  | "limpiapipas";
 
 /** Color disponible para un producto */
 export interface ProductColor {

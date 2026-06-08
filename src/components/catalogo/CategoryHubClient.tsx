@@ -16,6 +16,11 @@ const SECTOR_ORDER: Sector[] = [
   "corporativo",
   "deportivo",
   "accesorios",
+  "lenceria",
+  "sublimacion",
+  "ropa-calzado",
+  "tops",
+  "limpiapipas",
 ];
 
 function CategoryCard({
