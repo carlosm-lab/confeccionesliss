@@ -31,7 +31,7 @@ function CategoryCard({
     <Link
       href={`/catalogo/${sector}`}
       className={cn(
-        "group border-primary/35 @container mx-auto flex w-full max-w-[340px] flex-col overflow-hidden rounded-2xl border bg-white transition-all duration-300 sm:max-w-none",
+        "group border-primary/35 @container mx-auto flex w-full max-w-md flex-col overflow-hidden rounded-2xl border bg-white transition-all duration-300 lg:max-w-none",
         "shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]",
         "hover:border-primary/55 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]",
         "focus-visible:ring-primary focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
@@ -51,42 +51,42 @@ function CategoryCard({
       </div>
 
       {/* Information Panel - Sólido, altamente legible, contraste AAA */}
-      <div className="flex flex-1 flex-col justify-between p-3.5 @[280px]:p-4 @[320px]:p-5">
+      <div className="flex flex-1 flex-col justify-between p-3 @[280px]:p-3.5 @[320px]:p-4">
         <div>
           {/* Badge & Product Count */}
-          <div className="mb-2.5 flex items-center justify-between gap-2">
+          <div className="mb-1.5 flex items-center justify-between gap-2 @[280px]:mb-2">
             <div className="text-secondary flex items-center gap-1">
               <span
-                className="material-symbols-outlined text-[13px] @[280px]:text-[16px]"
+                className="material-symbols-outlined text-[12px] @[280px]:text-[14px] @[320px]:text-[16px]"
                 aria-hidden="true"
               >
                 {config.icon}
               </span>
-              <span className="text-[9px] font-bold tracking-wider text-gray-400 uppercase @[280px]:text-[10px]">
+              <span className="text-[8px] font-bold tracking-wider text-gray-400 uppercase @[280px]:text-[9px] @[320px]:text-[10px]">
                 {config.subtitle}
               </span>
             </div>
-            <span className="bg-surface-container text-primary rounded-full px-2 py-0.5 text-[9px] font-semibold @[280px]:px-2.5 @[280px]:text-[10px]">
+            <span className="bg-surface-container text-primary rounded-full px-1.5 py-0.5 text-[8px] font-semibold @[280px]:px-2 @[280px]:text-[9px] @[320px]:text-[10px]">
               {productCount} {productCount === 1 ? "prenda" : "prendas"}
             </span>
           </div>
 
           {/* Title */}
-          <h2 className="text-primary group-hover:text-tertiary font-serif text-sm leading-tight font-bold transition-colors @[250px]:text-base @[300px]:text-lg @[340px]:text-xl">
+          <h2 className="text-primary group-hover:text-tertiary font-serif text-[13px] leading-tight font-bold transition-colors @[250px]:text-[14px] @[280px]:text-[15px] @[320px]:text-[17px] @[360px]:text-[19px]">
             {config.subtitle}
           </h2>
 
           {/* Description / Tagline */}
-          <p className="text-on-surface-variant mt-1 line-clamp-1 text-[10px] leading-snug transition-all @[280px]:text-[11px] @[320px]:mt-2 @[320px]:line-clamp-2 @[320px]:text-xs @[360px]:text-sm">
+          <p className="text-on-surface-variant mt-0.5 line-clamp-1 text-[9px] leading-snug transition-all @[280px]:text-[10px] @[320px]:mt-1 @[320px]:line-clamp-2 @[320px]:text-[11px] @[360px]:text-[12px]">
             {config.hubTagline}
           </p>
         </div>
 
         {/* Action Button Link */}
-        <div className="text-primary group-hover:text-tertiary mt-3 flex items-center gap-1 text-[9px] font-bold tracking-wider uppercase transition-colors @[300px]:mt-4 @[300px]:text-[10px] @[340px]:mt-5 @[340px]:text-xs">
+        <div className="text-primary group-hover:text-tertiary mt-2.5 flex items-center gap-1 text-[8px] font-bold tracking-wider uppercase transition-colors @[280px]:mt-3 @[320px]:mt-3.5 @[320px]:text-[9px] @[360px]:text-[10px]">
           <span>Explorar colección</span>
           <span
-            className="material-symbols-outlined text-[11px] transition-transform duration-300 group-hover:translate-x-1 @[300px]:text-[13px]"
+            className="material-symbols-outlined text-[10px] transition-transform duration-300 group-hover:translate-x-1 @[280px]:text-[12px] @[320px]:text-[14px]"
             aria-hidden="true"
           >
             arrow_forward
@@ -121,8 +121,8 @@ export function CategoryHubClient() {
             </p>
           </div>
 
-          {/* Grid responsivo: 1 col móvil, 2 col tablet, 4 col desktop */}
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+          {/* Grid responsivo: fluido con auto-fill en móvil/tablet y 4 columnas en desktop */}
+          <div className="category-grid">
             {SECTOR_ORDER.map((sector) => (
               <CategoryCard
                 key={sector}
