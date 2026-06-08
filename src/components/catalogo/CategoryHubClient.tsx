@@ -63,31 +63,26 @@ function CategoryCard({
 
       {/* Information Panel - Sólido, altamente legible, contraste AAA */}
       <div className="p-3 @[280px]:p-3.5 @[320px]:p-4">
-        {/* Badge & Product Count */}
-        <div className="mb-1.5 flex items-center justify-between gap-2 @[280px]:mb-2">
-          <div className="text-secondary flex items-center gap-1">
+        {/* Title, Icon & Product Count */}
+        <div className="mb-2 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-1.5">
             <span
-              className="material-symbols-outlined text-[12px] @[280px]:text-[14px] @[320px]:text-[16px]"
+              className="material-symbols-outlined text-primary group-hover:text-tertiary text-[13px] transition-colors duration-300 @[280px]:text-[15px] @[320px]:text-[17px]"
               aria-hidden="true"
             >
               {config.icon}
             </span>
-            <span className="text-[8px] font-bold tracking-wider text-gray-400 uppercase @[280px]:text-[9px] @[320px]:text-[10px]">
+            <h2 className="text-primary group-hover:text-tertiary text-[11px] font-extrabold tracking-wider uppercase transition-colors duration-300 @[280px]:text-[12.5px] @[320px]:text-[14px] @[360px]:text-[15px]">
               {config.subtitle}
-            </span>
+            </h2>
           </div>
           <span className="bg-surface-container text-primary rounded-full px-1.5 py-0.5 text-[8px] font-semibold @[280px]:px-2 @[280px]:text-[9px] @[320px]:text-[10px]">
             {productCount} {productCount === 1 ? "prenda" : "prendas"}
           </span>
         </div>
 
-        {/* Title */}
-        <h2 className="text-primary group-hover:text-tertiary font-serif text-[13px] leading-tight font-bold transition-colors @[250px]:text-[14px] @[280px]:text-[15px] @[320px]:text-[17px] @[360px]:text-[19px]">
-          {config.subtitle}
-        </h2>
-
         {/* Description / Tagline */}
-        <p className="text-on-surface-variant mt-0.5 line-clamp-1 text-[9px] leading-snug transition-all @[280px]:text-[10px] @[320px]:mt-1 @[320px]:line-clamp-2 @[320px]:text-[11px] @[360px]:text-[12px]">
+        <p className="text-on-surface-variant mt-1 line-clamp-2 text-[9px] leading-snug transition-all @[280px]:text-[10px] @[320px]:text-[11px] @[360px]:text-[12px]">
           {config.hubTagline}
         </p>
       </div>
