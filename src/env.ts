@@ -20,7 +20,7 @@ export const env = createEnv({
       .default("contacto@confeccionesliss.com"),
     NEXT_PUBLIC_TURNSTILE_SITE_KEY: z.string().optional(),
     NEXT_PUBLIC_SITE_URL: z.string().url().default("http://localhost:3000"),
-    NEXT_PUBLIC_HOME_ONLY: z.enum(["true", "false"]).default("false"),
+    NEXT_PUBLIC_HOME_ONLY: z.enum(["true", "false"]).default("true"),
   },
   experimental__runtimeEnv: {
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
