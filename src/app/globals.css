@@ -262,12 +262,10 @@
   animation: blink 1s step-end infinite;
 }
 
-/* 1.5px solid white text outline for float links contrast */
+/* Soft multi-layered white glow overlay for floating links readability */
 .contrast-text-shadow {
   text-shadow:
-    -1.5px -1.5px 0 #ffffff,
-    1.5px -1.5px 0 #ffffff,
-    -1.5px 1.5px 0 #ffffff,
-    1.5px 1.5px 0 #ffffff,
-    0px 2px 4px rgba(255, 255, 255, 0.95);
+    0 0 4px rgba(255, 255, 255, 1),
+    0 0 8px rgba(255, 255, 255, 0.95),
+    0 0 16px rgba(255, 255, 255, 0.9);
 }
