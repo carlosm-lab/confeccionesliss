@@ -29,6 +29,6 @@ export const config = {
      * - logo.png, icon.png, apple-icon.png (static public files)
      * - any files with extensions like .png, .jpg, .webp, .svg
      */
-    "/((?!api|_next/static|_next/image|favicon.ico|logo.png|icon.png|apple-icon.png|.*\\.png|.*\\.jpg|.*\\.webp|.*\\.svg|.*\\.css|.*\\.js).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|logo.png|icon.png|apple-icon.png|.*\\.png|.*\\.jpg|.*\\.webp|.*\\.svg|.*\\.css|.*\\.js|.*\\.xml|.*\\.txt).*)",
   ],
 };
