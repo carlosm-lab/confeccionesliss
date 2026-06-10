@@ -144,7 +144,12 @@ export function Navbar() {
                 </span>
                 <span className="sr-only">Líder en tu diseño</span>
                 <span
-                  className="block text-[8px] font-semibold tracking-[0.25em] text-gray-500 uppercase sm:text-[9px] md:text-[10px]"
+                  className="block w-full text-[8px] font-semibold text-gray-500 uppercase sm:text-[9px] md:text-[10px]"
+                  style={{
+                    textAlign: "justify",
+                    textAlignLast: "justify",
+                    textJustify: "inter-character",
+                  }}
                   aria-hidden="true"
                 >
                   LÍDER EN TU DISEÑO
