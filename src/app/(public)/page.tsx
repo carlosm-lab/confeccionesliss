@@ -114,7 +114,7 @@ export default function HomePage() {
                     href="/catalogo"
                     className="btn-gradient font-body ambient-shadow flex h-12 w-full items-center justify-center rounded-md px-12 text-center text-base font-semibold whitespace-nowrap text-white transition-opacity hover:opacity-90 sm:flex-1"
                   >
-                    Comprar
+                    Catálogo
                   </Link>
                   <a
                     href="https://maps.app.goo.gl/XSs2vgjLG8uvJGoQ7"
