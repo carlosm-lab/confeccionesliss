@@ -10,6 +10,14 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 - **Descripción:** Barra de navegación principal con logo, enlaces de catálogo (Salud, Universitario, Escolar, Corporativo), búsqueda y menú hamburguesa para mobile.
 - **Props:** No recibe props.
 
+### MobileBottomNav
+
+- **Ruta:** `src/components/layout/MobileBottomNav.tsx`
+- **Descripción:** Barra de navegación inferior curvada y animada para dispositivos móviles. Dibuja un notch cóncavo mediante una curva Bezier cúbica sobre la pestaña activa y una burbuja flotante que se desplaza horizontalmente.
+- **Props:**
+  - `onSearchOpen?: () => void` — Callback para abrir el modal de búsqueda global.
+- **Ejemplo:** `<MobileBottomNav onSearchOpen={() => setIsSearchOpen(true)} />`
+
 ### Footer
 
 - **Ruta:** `src/components/layout/Footer.tsx`
