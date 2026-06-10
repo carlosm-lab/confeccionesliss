@@ -93,6 +93,13 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
   - `onPageChange?: (page: number) => void` — Callback de cambio de página.
   - `className?: string` — Clases CSS adicionales.
 
+### ShareButton
+
+- **Ruta:** `src/components/ui/ShareButton.tsx`
+- **Descripción:** Botón de compartir interactivo ("use client") que utiliza la API nativa de Web Share (navigator.share) en dispositivos compatibles, y copia el enlace al portapapeles con confirmación visual como fallback.
+- **Props:** No recibe props.
+- **Ejemplo:** `<ShareButton />`
+
 ## Catálogo Components
 
 ### CatalogHero

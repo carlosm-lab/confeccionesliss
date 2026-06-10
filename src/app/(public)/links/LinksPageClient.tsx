@@ -2,6 +2,7 @@
 // Los links son <a> puros: el navegador maneja el deep-link nativo.
 
 import Image from "next/image";
+import { ShareButton } from "@/components/ui/ShareButton";
 
 interface LinkItem {
   id: string;
@@ -137,27 +138,66 @@ export function LinksPageClient() {
     <div
       style={{
         display: "flex",
-        minHeight: "100svh",
         flexDirection: "column",
         alignItems: "center",
         background: "linear-gradient(180deg, #fbf8fe 0%, #efecf6 100%)",
+        backgroundAttachment: "fixed",
         padding: "0",
         margin: "0",
         fontFamily: "inherit",
       }}
     >
-      <main
-        id="links-main"
-        style={{
-          width: "100%",
-          maxWidth: "480px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          padding: "3rem 1.25rem 5rem",
-          boxSizing: "border-box",
+      {/* Overrides and Responsive styles */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            /* Cancel layout padding bottom on links page to prevent white gap */
+            #main-content {
+              padding-bottom: 0 !important;
+            }
+
+            /* Default mobile styling */
+            #links-main {
+              width: 100%;
+              max-width: 480px;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              padding: 2rem 1.25rem 2rem !important;
+              box-sizing: border-box;
+              margin: 0 auto !important;
+              background-color: transparent !important;
+              border: none !important;
+              box-shadow: none !important;
+            }
+
+            .desktop-dashed-border {
+              display: none;
+            }
+
+            /* Tablet/Desktop card container */
+            @media (min-width: 540px) {
+              #links-main {
+                background-color: #ffffff !important;
+                border: 1px solid rgba(20, 48, 103, 0.35) !important;
+                border-radius: 1rem !important;
+                box-shadow: 0 0 25px 6px rgba(20, 48, 103, 0.15), 0 0 10px 2px rgba(20, 48, 103, 0.1) !important;
+                padding: 2rem 2.5rem !important;
+                margin-top: 2rem !important;
+                margin-bottom: 2rem !important;
+                position: relative !important;
+              }
+              .desktop-dashed-border {
+                display: block !important;
+              }
+            }
+          `,
         }}
-      >
+      />
+
+      <main id="links-main">
+        {/* Marco de bordes punteados (solo en Desktop, igual al del Hero) */}
+        <div className="desktop-dashed-border border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
         {/* Profile Section */}
         <section
           style={{
@@ -211,18 +251,29 @@ export function LinksPageClient() {
             </div>
           </div>
 
-          <h1
+          <div
             style={{
-              fontSize: "1.75rem",
-              fontWeight: 800,
-              letterSpacing: "-0.02em",
-              color: "#32323b",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "0.5rem",
               margin: "0 0 0.5rem",
-              lineHeight: 1.2,
             }}
           >
-            Confecciones Liss
-          </h1>
+            <h1
+              style={{
+                fontSize: "1.75rem",
+                fontWeight: 800,
+                letterSpacing: "-0.02em",
+                color: "#32323b",
+                margin: 0,
+                lineHeight: 1.2,
+              }}
+            >
+              Confecciones Liss
+            </h1>
+            <ShareButton />
+          </div>
           <p
             style={{
               color: "#5f5e68",
