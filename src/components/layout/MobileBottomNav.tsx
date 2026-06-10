@@ -3,45 +3,43 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
 import { env } from "@/env";
 
 /* ─────────────────────────────────────────────
    Geometry (all values in px)
-   The nav container is SVG_H tall and fixed at
-   the bottom. The bar occupies the lower BAR_H
-   portion; the upper OVERFLOW portion holds the
-   floating bubble above the bar.
+   Container = SVG_H tall, fixed at bottom.
+   BAR_H  = visible dark bar height
+   OVERFLOW = space above bar for floating bubble
 ───────────────────────────────────────────── */
-const BAR_H = 58; // visible dark bar height
-const OVERFLOW = 52; // space above bar (for bubble)
-const SVG_H = BAR_H + OVERFLOW; // 110 – total nav container height
-const BAR_Y = OVERFLOW; // y of bar top in SVG space
+const BAR_H = 62;
+const OVERFLOW = 56;
+const SVG_H = BAR_H + OVERFLOW; // 118 — total nav container height
+const BAR_Y = OVERFLOW; // y where bar starts in SVG space
 
-const BUBBLE_D = 50; // bubble diameter
-const BUBBLE_R = BUBBLE_D / 2; // 25
+const BUBBLE_D = 54; // bubble diameter
+const BUBBLE_R = BUBBLE_D / 2; // 27
 
-// Notch geometry (concave dip in bar top at active tab)
-const NOTCH_DEPTH = 12; // how far notch dips into bar (aesthetic)
-const CURVE_HW = 60; // half-width of the smooth curve zone
-const BEZIER = CURVE_HW * 0.55; // cubic bezier tangent length
+// Notch geometry — concave dip centered on active tab
+const NOTCH_DEPTH = 30; // depth the curve dips into the bar
+const CURVE_HW = 72; // half-width of the smooth curve zone
+const BEZIER = CURVE_HW * 0.6; // cubic bezier tangent
 
 const NUM_TABS = 5;
 
-/* Build the SVG <path d="…"> for the bar with the curved notch. */
+/* Build the SVG path for the bar with the concave notch */
 function buildPath(w: number, cx: number): string {
   const notchY = BAR_Y + NOTCH_DEPTH;
-  const lx = cx - CURVE_HW; // left edge of curve
-  const rx = cx + CURVE_HW; // right edge of curve
+  const lx = cx - CURVE_HW;
+  const rx = cx + CURVE_HW;
 
   return [
     `M 0 ${SVG_H}`,
     `L 0 ${BAR_Y}`,
     `L ${lx} ${BAR_Y}`,
-    // left arc into notch
-    `C ${lx + BEZIER} ${BAR_Y} ${cx - BUBBLE_R - 4} ${notchY} ${cx} ${notchY}`,
-    // right arc out of notch
-    `C ${cx + BUBBLE_R + 4} ${notchY} ${rx - BEZIER} ${BAR_Y} ${rx} ${BAR_Y}`,
+    // left S-curve into notch center
+    `C ${lx + BEZIER} ${BAR_Y} ${cx - BUBBLE_R - 6} ${notchY} ${cx} ${notchY}`,
+    // right S-curve out of notch center
+    `C ${cx + BUBBLE_R + 6} ${notchY} ${rx - BEZIER} ${BAR_Y} ${rx} ${BAR_Y}`,
     `L ${w} ${BAR_Y}`,
     `L ${w} ${SVG_H}`,
     `Z`,
@@ -51,16 +49,12 @@ function buildPath(w: number, cx: number): string {
 const ITEMS = [
   { href: "/", icon: "home", label: "Inicio" },
   { href: "/catalogo", icon: "storefront", label: "Catálogo" },
-  { href: "/buscar", icon: "search", label: "Buscar", isSearch: true },
-  { href: "/contacto", icon: "mail", label: "Contacto" },
   { href: "/carrito", icon: "shopping_cart", label: "Carrito" },
+  { href: "/contacto", icon: "mail", label: "Contacto" },
+  { href: "/mi-cuenta", icon: "person", label: "Perfil" },
 ];
 
-interface MobileBottomNavProps {
-  onSearchOpen?: () => void;
-}
-
-export function MobileBottomNav({ onSearchOpen }: MobileBottomNavProps) {
+export function MobileBottomNav() {
   const pathname = usePathname();
   const containerRef = useRef<HTMLElement>(null);
   const [navW, setNavW] = useState(0);
@@ -81,20 +75,17 @@ export function MobileBottomNav({ onSearchOpen }: MobileBottomNavProps) {
   if (isHomeOnly) return null;
 
   /* Determine active tab index */
-  let activeIdx = ITEMS.findIndex((item) => {
-    if (item.isSearch) return false;
-    return item.href === "/"
-      ? pathname === "/"
-      : pathname.startsWith(item.href);
-  });
+  let activeIdx = ITEMS.findIndex((item) =>
+    item.href === "/" ? pathname === "/" : pathname.startsWith(item.href)
+  );
   if (activeIdx === -1) activeIdx = 0;
 
   const tabW = navW / NUM_TABS;
-  const cx = (activeIdx + 0.5) * tabW; // center x of active tab
+  const cx = (activeIdx + 0.5) * tabW;
   const pathD = ready ? buildPath(navW, cx) : "";
 
-  /* Bubble CSS position inside the nav container */
-  const bubbleTop = OVERFLOW - BUBBLE_D - 2; // 2px margin above bar
+  /* Bubble position inside the nav container */
+  const bubbleTop = OVERFLOW - BUBBLE_D - 2; // 2px margin above bar top
   const bubbleLeft = cx - BUBBLE_R;
 
   return (
@@ -102,7 +93,7 @@ export function MobileBottomNav({ onSearchOpen }: MobileBottomNavProps) {
       ref={containerRef}
       className="fixed right-0 bottom-0 left-0 z-50 overflow-visible sm:hidden"
       style={{ height: SVG_H }}
-      aria-label="Navegación principal"
+      aria-label="Navegación principal móvil"
     >
       {/* ── SVG bar with animated curved notch ── */}
       {ready && (
@@ -115,33 +106,35 @@ export function MobileBottomNav({ onSearchOpen }: MobileBottomNavProps) {
           xmlns="http://www.w3.org/2000/svg"
           style={{
             filter:
-              "drop-shadow(0 -3px 10px rgba(20,48,103,0.18)) drop-shadow(0 -1px 4px rgba(20,48,103,0.12))",
+              "drop-shadow(0 -4px 12px rgba(20,48,103,0.22)) drop-shadow(0 -1px 4px rgba(20,48,103,0.14))",
           }}
         >
           <path
             d={pathD}
-            fill="hsl(var(--primary))"
+            /* ⚠ Use var(--color-primary) — NOT hsl(var(--primary)) which is undefined */
+            fill="var(--color-primary)"
             style={{
-              /* CSS `d` transitions work in Chrome/Firefox ≥ v100 */
-              transition: "d 0.35s cubic-bezier(0.4,0,0.2,1)",
+              /* CSS `d` transitions: Chrome ≥ v116, Firefox ≥ v117 */
+              transition: "d 0.38s cubic-bezier(0.4,0,0.2,1)",
             }}
           />
         </svg>
       )}
 
-      {/* ── Floating bubble (active icon) ── */}
+      {/* ── Floating bubble (active tab indicator) ── */}
       {ready && (
         <span
           aria-hidden="true"
-          className="bg-primary pointer-events-none absolute flex items-center justify-center rounded-full"
+          className="pointer-events-none absolute flex items-center justify-center rounded-full"
           style={{
             width: BUBBLE_D,
             height: BUBBLE_D,
             top: bubbleTop,
             left: bubbleLeft,
-            transition: "left 0.35s cubic-bezier(0.4,0,0.2,1)",
+            background: "var(--color-primary)",
+            transition: "left 0.38s cubic-bezier(0.4,0,0.2,1)",
             boxShadow:
-              "0 6px 20px rgba(20,48,103,0.5), 0 2px 8px rgba(20,48,103,0.3)",
+              "0 6px 22px rgba(20,48,103,0.55), 0 2px 8px rgba(20,48,103,0.35)",
           }}
         >
           <span
@@ -160,46 +153,33 @@ export function MobileBottomNav({ onSearchOpen }: MobileBottomNavProps) {
       >
         {ITEMS.map((item, idx) => {
           const isActive = idx === activeIdx;
-          const sharedCls = cn(
-            "flex flex-1 items-center justify-center h-full transition-opacity duration-200",
-            isActive ? "opacity-0 pointer-events-none" : "opacity-100"
-          );
+          const iconCls =
+            "material-symbols-outlined text-white/60 transition-opacity duration-200";
 
           return (
             <li key={item.href} className="flex flex-1">
-              {item.isSearch ? (
-                <button
-                  type="button"
-                  onClick={onSearchOpen}
-                  aria-label={item.label}
-                  className={cn(sharedCls, "w-full")}
-                  tabIndex={isActive ? -1 : 0}
+              <Link
+                href={item.href}
+                aria-label={item.label}
+                aria-current={isActive ? "page" : undefined}
+                tabIndex={isActive ? -1 : 0}
+                className="flex h-full w-full flex-col items-center justify-center gap-0.5"
+                style={{
+                  opacity: isActive ? 0 : 1,
+                  pointerEvents: isActive ? "none" : "auto",
+                }}
+              >
+                <span
+                  className={iconCls}
+                  style={{ fontSize: 22 }}
+                  aria-hidden="true"
                 >
-                  <span
-                    className="material-symbols-outlined text-white/65"
-                    style={{ fontSize: 22 }}
-                    aria-hidden="true"
-                  >
-                    {item.icon}
-                  </span>
-                </button>
-              ) : (
-                <Link
-                  href={item.href}
-                  aria-label={item.label}
-                  aria-current={isActive ? "page" : undefined}
-                  tabIndex={isActive ? -1 : 0}
-                  className={sharedCls}
-                >
-                  <span
-                    className="material-symbols-outlined text-white/65"
-                    style={{ fontSize: 22 }}
-                    aria-hidden="true"
-                  >
-                    {item.icon}
-                  </span>
-                </Link>
-              )}
+                  {item.icon}
+                </span>
+                <span className="text-[9px] font-medium tracking-wide text-white/60">
+                  {item.label}
+                </span>
+              </Link>
             </li>
           );
         })}

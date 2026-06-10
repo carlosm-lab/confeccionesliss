@@ -182,12 +182,12 @@ export function Navbar() {
                 </span>
               </button>
 
-              {/* Search bar trigger — icon only (sm→md, 640–768px). Hidden on mobile (bottom nav handles it) */}
+              {/* Search bar trigger — icon only (all mobile up to md). Visible on mobile now that profile is in bottom nav */}
               <button
                 type="button"
                 onClick={openSearch}
                 aria-label="Abrir buscador"
-                className="border-primary/10 hidden size-10 items-center justify-center rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)] sm:flex md:hidden"
+                className="border-primary/10 flex size-10 items-center justify-center rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)] md:hidden"
               >
                 <span
                   className="material-symbols-outlined text-primary text-[22px]"
@@ -223,10 +223,10 @@ export function Navbar() {
                 </span>
               </button>
 
-              {/* Avatar — visible on all sizes */}
+              {/* Avatar — hidden on mobile (profile moved to bottom nav) */}
               <button
                 aria-label="Mi cuenta"
-                className="border-primary/10 flex size-10 items-center justify-center overflow-hidden rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-90 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)]"
+                className="border-primary/10 hidden size-10 items-center justify-center overflow-hidden rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-90 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)] sm:flex"
               >
                 <span
                   className="material-symbols-outlined text-primary text-[24px]"
