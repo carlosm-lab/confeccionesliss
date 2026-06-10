@@ -151,36 +151,6 @@ export function Navbar() {
                 </span>
               </div>
             </Link>
-
-            {/* Desktop Nav */}
-            {!isHomeOnly && (
-              <nav
-                className="hidden items-center gap-1 lg:flex"
-                aria-label="Navegación principal"
-              >
-                {navLinks.map((link) => {
-                  const isActive =
-                    link.href === "/"
-                      ? pathname === "/"
-                      : pathname.startsWith(link.href);
-
-                  return (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className={cn(
-                        "rounded-full px-4 py-2 text-sm font-medium transition-colors",
-                        isActive
-                          ? "bg-primary text-on-primary shadow-sm"
-                          : "hover:bg-primary/5 hover:text-primary text-gray-700"
-                      )}
-                    >
-                      {link.label}
-                    </Link>
-                  );
-                })}
-              </nav>
-            )}
           </div>
 
           {/* ── Right side: Actions ── */}
