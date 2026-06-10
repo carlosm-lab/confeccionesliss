@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -90,6 +90,7 @@ export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const pathname = usePathname();
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const isHomeOnly = env.NEXT_PUBLIC_HOME_ONLY === "true";
   const navLinks = isHomeOnly
@@ -102,6 +103,21 @@ export function Navbar() {
     closeMenu();
   };
   const closeSearch = () => setIsSearchOpen(false);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMenuOpen]);
 
   return (
     <>
@@ -169,7 +185,10 @@ export function Navbar() {
 
           {/* ── Right side: Actions ── */}
           {!isHomeOnly && (
-            <div className="hidden items-center gap-3 lg:flex">
+            <div
+              ref={menuRef}
+              className="relative hidden items-center gap-3 lg:flex"
+            >
               {/* Search bar trigger (visual button styled as search bar) */}
               <button
                 type="button"
@@ -226,6 +245,81 @@ export function Navbar() {
                   person
                 </span>
               </button>
+
+              {/* Menu Button (Desktop) */}
+              <button
+                type="button"
+                aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
+                aria-expanded={isMenuOpen}
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="border-primary/10 text-primary flex size-10 items-center justify-center rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)]"
+              >
+                <span
+                  className="material-symbols-outlined text-[24px]"
+                  aria-hidden="true"
+                >
+                  {isMenuOpen ? "close" : "menu"}
+                </span>
+              </button>
+
+              {/* Desktop dropdown menu */}
+              {isMenuOpen && (
+                <div className="border-primary/10 animate-in fade-in slide-in-from-top-2 absolute top-12 right-0 z-50 w-64 rounded-2xl border bg-white/95 p-4 shadow-[0_10px_25px_-5px_rgba(20,48,103,0.15),0_8px_16px_-6px_rgba(20,48,103,0.1)] backdrop-blur-md duration-200">
+                  <ul className="space-y-1">
+                    {navLinks.map((link) => {
+                      const isActive =
+                        link.href === "/"
+                          ? pathname === "/"
+                          : pathname.startsWith(link.href);
+
+                      return (
+                        <li key={link.href}>
+                          <Link
+                            href={link.href}
+                            onClick={closeMenu}
+                            className={cn(
+                              "flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all",
+                              isActive
+                                ? "bg-primary text-on-primary shadow-sm"
+                                : "hover:bg-primary/5 hover:text-primary text-gray-700"
+                            )}
+                          >
+                            <span
+                              className="material-symbols-outlined text-[18px]"
+                              aria-hidden="true"
+                            >
+                              {link.mobileIcon}
+                            </span>
+                            {link.label}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                    {/* Divider */}
+                    <li className="my-2 border-t border-gray-100" />
+                    {/* Links Page */}
+                    <li>
+                      <Link
+                        href="/links"
+                        onClick={closeMenu}
+                        className={cn(
+                          "hover:bg-primary/5 hover:text-primary flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-gray-700 transition-all",
+                          pathname === "/links" &&
+                            "bg-primary text-on-primary shadow-sm"
+                        )}
+                      >
+                        <span
+                          className="material-symbols-outlined text-[18px]"
+                          aria-hidden="true"
+                        >
+                          alternate_email
+                        </span>
+                        Mis Enlaces / Redes
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              )}
             </div>
           )}
 
@@ -235,10 +329,13 @@ export function Navbar() {
               type="button"
               aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
               aria-expanded={isMenuOpen}
-              className="text-primary flex items-center lg:hidden"
+              className="border-primary/10 text-primary flex size-10 items-center justify-center rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)] lg:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              <span className="material-symbols-outlined" aria-hidden="true">
+              <span
+                className="material-symbols-outlined text-[24px]"
+                aria-hidden="true"
+              >
                 {isMenuOpen ? "close" : "menu"}
               </span>
             </button>
