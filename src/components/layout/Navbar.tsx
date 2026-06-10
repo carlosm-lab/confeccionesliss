@@ -106,11 +106,7 @@ export function Navbar() {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        window.innerWidth >= 640 &&
-        menuRef.current &&
-        !menuRef.current.contains(event.target as Node)
-      ) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsMenuOpen(false);
       }
     };
@@ -142,7 +138,7 @@ export function Navbar() {
                 className="h-12 w-auto"
                 priority
               />
-              <div className="flex flex-col">
+              <div className="hidden flex-col sm:flex">
                 <span className="text-primary font-serif text-base leading-tight font-bold sm:text-lg md:text-xl">
                   Confecciones Liss
                 </span>
@@ -166,7 +162,7 @@ export function Navbar() {
           {!isHomeOnly && (
             <div
               ref={menuRef}
-              className="relative hidden items-center gap-3 sm:flex"
+              className="relative flex items-center gap-2.5 sm:gap-3"
             >
               {/* Search bar trigger — full bar (md+, 768px+) */}
               <button
@@ -316,145 +312,7 @@ export function Navbar() {
               )}
             </div>
           )}
-
-          {/* Mobile menu button — visible below sm (640px) */}
-          {!isHomeOnly && (
-            <button
-              type="button"
-              aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
-              aria-expanded={isMenuOpen}
-              className="border-primary/10 text-primary flex size-10 items-center justify-center rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)] sm:hidden"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              <span
-                className="material-symbols-outlined text-[24px]"
-                aria-hidden="true"
-              >
-                {isMenuOpen ? "close" : "menu"}
-              </span>
-            </button>
-          )}
         </div>
-
-        {/* Mobile menu */}
-        {isMenuOpen && (
-          <nav
-            className="border-t border-gray-100 bg-white px-5 py-4 sm:hidden"
-            aria-label="Navegación móvil"
-          >
-            {/* Search mobile trigger */}
-            <button
-              type="button"
-              onClick={openSearch}
-              aria-label="Abrir buscador"
-              className="border-primary/10 mb-4 flex w-full cursor-pointer items-center gap-2.5 rounded-full border bg-white px-4 py-2.5 shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)]"
-            >
-              <span
-                className="material-symbols-outlined text-primary text-[20px]"
-                aria-hidden="true"
-              >
-                search
-              </span>
-              <span className="flex-1 text-left">
-                <TypewriterPlaceholder />
-              </span>
-            </button>
-
-            <ul className="space-y-1">
-              {navLinks.map((link) => {
-                const isActive =
-                  link.href === "/"
-                    ? pathname === "/"
-                    : pathname.startsWith(link.href);
-
-                return (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      onClick={closeMenu}
-                      className={cn(
-                        "flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all",
-                        isActive
-                          ? "bg-primary text-on-primary shadow-sm"
-                          : "hover:bg-primary/5 hover:text-primary text-gray-700"
-                      )}
-                    >
-                      <span
-                        className="material-symbols-outlined text-[18px]"
-                        aria-hidden="true"
-                      >
-                        {link.mobileIcon}
-                      </span>
-                      {link.label}
-                    </Link>
-                  </li>
-                );
-              })}
-              {/* Divider */}
-              <li className="my-2 border-t border-gray-100" />
-              {/* Links Page */}
-              <li>
-                <Link
-                  href="/links"
-                  onClick={closeMenu}
-                  className={cn(
-                    "hover:bg-primary/5 hover:text-primary flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-gray-700 transition-all",
-                    pathname === "/links" &&
-                      "bg-primary text-on-primary shadow-sm"
-                  )}
-                >
-                  <span
-                    className="material-symbols-outlined text-[18px]"
-                    aria-hidden="true"
-                  >
-                    alternate_email
-                  </span>
-                  Mis Enlaces / Redes
-                </Link>
-              </li>
-            </ul>
-
-            {/* Mobile action row */}
-            <div className="mt-4 flex items-center justify-around border-t border-gray-100 pt-4">
-              <button
-                aria-label="Favoritos"
-                className="flex flex-col items-center gap-1 text-gray-500"
-              >
-                <span
-                  className="material-symbols-outlined text-[22px]"
-                  aria-hidden="true"
-                >
-                  favorite_border
-                </span>
-                <span className="text-[10px] font-medium">Favoritos</span>
-              </button>
-              <button
-                aria-label="Carrito"
-                className="flex flex-col items-center gap-1 text-gray-500"
-              >
-                <span
-                  className="material-symbols-outlined text-[22px]"
-                  aria-hidden="true"
-                >
-                  shopping_cart
-                </span>
-                <span className="text-[10px] font-medium">Carrito</span>
-              </button>
-              <button
-                aria-label="Mi cuenta"
-                className="flex flex-col items-center gap-1 text-gray-500"
-              >
-                <span
-                  className="material-symbols-outlined text-[22px]"
-                  aria-hidden="true"
-                >
-                  person
-                </span>
-                <span className="text-[10px] font-medium">Cuenta</span>
-              </button>
-            </div>
-          </nav>
-        )}
       </header>
 
       {/* ── Global Search Modal ── */}
