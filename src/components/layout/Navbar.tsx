@@ -144,7 +144,7 @@ export function Navbar() {
                 </span>
                 <span className="sr-only">Líder en tu diseño</span>
                 <span
-                  className="hidden text-[9px] font-medium tracking-[0.3em] text-gray-500 uppercase sm:block"
+                  className="block text-[8px] font-medium tracking-[0.2em] text-gray-500 uppercase sm:text-[9px] sm:tracking-[0.3em]"
                   aria-hidden="true"
                 >
                   LÍDER EN TU DISEÑO
