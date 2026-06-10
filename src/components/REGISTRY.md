@@ -13,10 +13,10 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 ### MobileBottomNav
 
 - **Ruta:** `src/components/layout/MobileBottomNav.tsx`
-- **Descripción:** Barra de navegación inferior curvada y animada para dispositivos móviles. Dibuja un notch cóncavo mediante una curva Bezier cúbica sobre la pestaña activa y una burbuja flotante que se desplaza horizontalmente.
-- **Props:**
-  - `onSearchOpen?: () => void` — Callback para abrir el modal de búsqueda global.
-- **Ejemplo:** `<MobileBottomNav onSearchOpen={() => setIsSearchOpen(true)} />`
+- **Descripción:** Barra de navegación inferior curvada y animada para dispositivos móviles. Dibuja un notch cóncavo (30px de profundidad) mediante curvas Bezier cúbicas centradas sobre la pestaña activa, con una burbuja flotante que se desliza horizontalmente con transición CSS. 5 tabs: Inicio, Catálogo, Carrito, Contacto, Perfil.
+- **Props:** No recibe props. (El search se maneja en Navbar; el Perfil navega a `/mi-cuenta`.)
+- **Color:** Usa `var(--color-primary)` (#143067 navy) directamente en el fill SVG y en el background del bubble.
+- **Ejemplo:** `<MobileBottomNav />`
 
 ### Footer
 
