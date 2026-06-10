@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { schemaLocalBusiness, schemaFAQ } from "@/lib/schemas";
 import {
   heroTrustBadges,
@@ -109,14 +110,12 @@ export default function HomePage() {
                   ))}
                 </div>
                 <div className="flex w-full flex-col gap-3 sm:flex-row sm:gap-4">
-                  <a
-                    href={siteConfig.links.whatsappDirect}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    href="/catalogo"
                     className="btn-gradient font-body ambient-shadow flex h-12 w-full items-center justify-center rounded-md px-12 text-center text-base font-semibold whitespace-nowrap text-white transition-opacity hover:opacity-90 sm:flex-1"
                   >
                     Comprar
-                  </a>
+                  </Link>
                   <a
                     href="https://maps.app.goo.gl/XSs2vgjLG8uvJGoQ7"
                     target="_blank"
