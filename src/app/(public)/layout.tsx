@@ -16,7 +16,7 @@ export default function PublicLayout({
         Saltar al contenido
       </a>
       <Navbar />
-      <main id="main-content" className="flex-grow pb-16 sm:pb-0">
+      <main id="main-content" className="flex-grow pb-20 sm:pb-0">
         {children}
       </main>
       <Footer />
