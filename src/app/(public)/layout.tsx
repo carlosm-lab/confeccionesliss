@@ -1,11 +1,18 @@
+"use client";
+
+import { useState } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
+import { SearchModal } from "@/components/layout/SearchModal";
 
 export default function PublicLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
   return (
     <>
       <a
@@ -15,10 +22,19 @@ export default function PublicLayout({
         Saltar al contenido
       </a>
       <Navbar />
-      <main id="main-content" className="flex-grow">
+      <main id="main-content" className="flex-grow pb-[64px] sm:pb-0">
         {children}
       </main>
       <Footer />
+
+      {/* Mobile bottom nav — only renders on < sm viewports */}
+      <MobileBottomNav onSearchOpen={() => setIsSearchOpen(true)} />
+
+      {/* Shared search modal triggered from bottom nav on mobile */}
+      <SearchModal
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+      />
     </>
   );
 }

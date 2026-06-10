@@ -182,12 +182,12 @@ export function Navbar() {
                 </span>
               </button>
 
-              {/* Search bar trigger — icon only (sm→md, 640–768px) */}
+              {/* Search bar trigger — icon only (sm→md, 640–768px). Hidden on mobile (bottom nav handles it) */}
               <button
                 type="button"
                 onClick={openSearch}
                 aria-label="Abrir buscador"
-                className="border-primary/10 flex size-10 items-center justify-center rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)] md:hidden"
+                className="border-primary/10 hidden size-10 items-center justify-center rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)] sm:flex md:hidden"
               >
                 <span
                   className="material-symbols-outlined text-primary text-[22px]"
@@ -197,7 +197,7 @@ export function Navbar() {
                 </span>
               </button>
 
-              {/* Favorites */}
+              {/* Favorites — visible on all sizes */}
               <button
                 aria-label="Favoritos"
                 className="border-primary/10 text-primary flex size-10 items-center justify-center rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)]"
@@ -210,10 +210,10 @@ export function Navbar() {
                 </span>
               </button>
 
-              {/* Cart */}
+              {/* Cart — hidden on mobile (bottom nav handles it) */}
               <button
                 aria-label="Carrito de compras"
-                className="border-primary/10 text-primary flex size-10 items-center justify-center rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)]"
+                className="border-primary/10 text-primary hidden size-10 items-center justify-center rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)] sm:flex"
               >
                 <span
                   className="material-symbols-outlined text-[22px]"
@@ -223,7 +223,7 @@ export function Navbar() {
                 </span>
               </button>
 
-              {/* Avatar */}
+              {/* Avatar — visible on all sizes */}
               <button
                 aria-label="Mi cuenta"
                 className="border-primary/10 flex size-10 items-center justify-center overflow-hidden rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-90 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)]"
@@ -236,7 +236,7 @@ export function Navbar() {
                 </span>
               </button>
 
-              {/* Menu Button (Desktop) */}
+              {/* Menu Button — visible on all sizes */}
               <button
                 type="button"
                 aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
