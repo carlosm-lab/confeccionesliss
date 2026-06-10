@@ -91,6 +91,14 @@ export function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const pathname = usePathname();
   const menuRef = useRef<HTMLDivElement>(null);
+  const [scrollVisible, setScrollVisible] = useState(true);
+  /*
+   * lastScrollY: initialized to window.scrollY so browser scroll-restoration
+   * on fresh load doesn't falsely trigger "scrolling down" and hide the bar.
+   */
+  const lastScrollY = useRef(
+    typeof window !== "undefined" ? window.scrollY : 0
+  );
 
   const isHomeOnly = env.NEXT_PUBLIC_HOME_ONLY === "true";
   const navLinks = isHomeOnly
@@ -105,6 +113,15 @@ export function Navbar() {
   const closeSearch = () => setIsSearchOpen(false);
 
   useEffect(() => {
+    // ── Hydration heartbeat ───────────────────────────────────────────────────
+    // Signals to the inline watchdog script in layout.tsx that React has mounted
+    // successfully. This prevents the watchdog from triggering a false-positive
+    // reload on a healthy page.
+    try {
+      sessionStorage.setItem("__liss_alive__", "1");
+      localStorage.setItem("__liss_was_alive__", "1");
+    } catch (_) {}
+
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsMenuOpen(false);
@@ -119,9 +136,71 @@ export function Navbar() {
     };
   }, [isMenuOpen]);
 
+  useEffect(() => {
+    /*
+     * INITIALISATION WINDOW & SCROLL HYSTERESIS
+     * ─────────────────────────────────────────
+     * 1. 1500 ms ready-state delay to absorb browser session restore / smooth scroll restoration
+     *    and Next.js hydration completely.
+     * 2. Jump guard: single-event scroll jumps > 100px reset baseline and ensure bars stay visible.
+     * 3. 10px hysteresis threshold to filter out tiny adjustments & layout shift jitter.
+     */
+    let ready = false;
+    lastScrollY.current = window.scrollY;
+
+    const readyTimer = setTimeout(() => {
+      lastScrollY.current = window.scrollY;
+      ready = true;
+    }, 1500);
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (!ready) {
+        lastScrollY.current = currentScrollY;
+        return;
+      }
+
+      // Safe bounds near the top: always keep visible
+      if (currentScrollY <= 10) {
+        setScrollVisible(true);
+        lastScrollY.current = currentScrollY;
+        return;
+      }
+
+      const delta = currentScrollY - lastScrollY.current;
+
+      // Detect browser scroll restoration or page jumps (> 100px in one frame)
+      if (Math.abs(delta) > 100) {
+        lastScrollY.current = currentScrollY;
+        setScrollVisible(true);
+        return;
+      }
+
+      // 10px hysteresis threshold to filter out tiny adjustments & layout shift jitter
+      if (delta > 10) {
+        setScrollVisible(false);
+        lastScrollY.current = currentScrollY;
+      } else if (delta < -10) {
+        setScrollVisible(true);
+        lastScrollY.current = currentScrollY;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      clearTimeout(readyTimer);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <>
-      <header className="sticky top-0 z-50 bg-white/90 shadow-sm backdrop-blur-md">
+      <header
+        className={cn(
+          "nav-scroll-hide sticky top-0 z-50 bg-white/90 shadow-sm backdrop-blur-md",
+          !scrollVisible && "nav-scroll-hidden-top"
+        )}
+      >
         <div className="mx-auto flex w-full max-w-screen-2xl items-center justify-between px-5 py-[2px] md:px-8">
           <div className="flex items-center gap-6 lg:gap-10">
             {/* Logo */}

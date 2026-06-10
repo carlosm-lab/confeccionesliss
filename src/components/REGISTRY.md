@@ -13,9 +13,13 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 ### MobileBottomNav
 
 - **Ruta:** `src/components/layout/MobileBottomNav.tsx`
-- **Descripción:** Barra de navegación inferior curvada y animada para dispositivos móviles. Dibuja un notch cóncavo (30px de profundidad) mediante curvas Bezier cúbicas centradas sobre la pestaña activa, con una burbuja flotante que se desliza horizontalmente con transición CSS. 5 tabs: Inicio, Catálogo, Carrito, Contacto, Perfil.
-- **Props:** No recibe props. (El search se maneja en Navbar; el Perfil navega a `/mi-cuenta`.)
-- **Color:** Usa `var(--color-primary)` (#143067 navy) directamente en el fill SVG y en el background del bubble.
+- **Descripción:** Barra de navegación inferior móvil con notch cóncavo animado (inspirado en `CurvedBottomNavigationView` de Android). 5 tabs fijos. Arquitectura limpia basada en: ① burbuja FAB flotante con animación sink/rise, ② path SVG principal con notch cóncavo animado, ③ path SVG superior con borde 3D blanco y sombra/brillo blanco para garantizar un contraste perfecto y evitar que desaparezca en fondos del mismo color. `activeIdx` se deriva directamente del pathname.
+- **Props:** No recibe props.
+- **Tabs:** Catálogo `/catalogo`, Carrito `/carrito`, Inicio `/`, Contacto `/contacto`, Perfil `/mi-cuenta`
+- **Animación bubble:** sink (top REST→SUNK, primeros 50%) + slide horizontal (duración completa) + rise (SUNK→REST, últimos 50%). Icono FAB aparece al inicio de la fase rise (delay = ANIM_DURATION × 0.5).
+- **Animación tabs:** icono activo `opacity 0, y +8`, inactivo `opacity 1, y 0` — Framer Motion transiciona entre estados automáticamente (efecto rise/sink del source/destination).
+- **Geometría notch:** `CURVE_HALF=56` (mínimo geométrico para no cortar la burbuja), `NOTCH_Y=62` (2px bajo el borde inferior de la burbuja). `CTRL_X_SPREAD=34`.
+- **Mejoras de contraste:** Utiliza un trazado de borde superior SVG (`stroke="rgba(255,255,255,0.4)"`) y sombra blanca (`drop-shadow` de brillo blanco) que brinda separación visual 3D sobre cualquier color de fondo, más un borde blanco semitransparente en la burbuja.
 - **Ejemplo:** `<MobileBottomNav />`
 
 ### Footer

@@ -263,8 +263,9 @@ export function LinksPageClient() {
                 padding: "0.75rem 1rem",
                 background: "#ffffff",
                 borderRadius: "3rem",
-                boxShadow: "0 2px 12px rgba(50,50,59,0.06)",
-                border: "1px solid rgba(50,50,59,0.06)",
+                boxShadow:
+                  "0 0 25px 6px rgba(20,48,103,0.12),0 0 10px 2px rgba(20,48,103,0.08)",
+                border: "1px solid rgba(20,48,103,0.18)",
                 textDecoration: "none",
                 color: "inherit",
                 boxSizing: "border-box",

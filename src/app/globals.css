@@ -313,3 +313,16 @@
     0px 0px 4px #ffffff,
     0px 0px 8px rgba(255, 255, 255, 0.95);
 }
+
+/* Scroll hide classes for mobile and tablet header & footer */
+@media (max-width: 1023.98px) {
+  .nav-scroll-hide {
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+  .nav-scroll-hidden-top {
+    transform: translateY(-100%) !important;
+  }
+  .nav-scroll-hidden-bottom {
+    transform: translateY(100%) !important;
+  }
+}

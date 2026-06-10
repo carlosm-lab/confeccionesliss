@@ -40,6 +40,9 @@ yarn-error.log*
 KI.md
 CLAUDE.md
 
+# Prototype / reference repos (embedded git repos)
+/curved-bottom-navigation-src
+
 # vercel
 .vercel
 

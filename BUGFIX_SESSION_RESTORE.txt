@@ -1,0 +1,261 @@
+================================================================================
+  BUGFIX: PÁGINA ZOMBIE AL RESTAURAR SESIÓN DEL NAVEGADOR
+  Proyecto: Confecciones Liss — Next.js 15 (App Router)
+  Fecha de resolución: 2026-06-10
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+1. DESCRIPCIÓN DEL PROBLEMA
+────────────────────────────────────────────────────────────────────────────────
+
+Al cerrar el navegador completamente (Chrome/Edge) y volver a abrirlo, la sesión
+se restauraba pero la página quedaba en un estado "zombie" o "vista offline":
+
+  - Los botones de la navbar (Buscar, Menú, Favoritos) no respondían a clics.
+  - El menú desplegable no se abría/cerraba.
+  - La burbuja de navegación del MobileBottomNav desaparecía.
+  - La página se veía visualmente correcta (HTML presente) pero era completamente
+    no interactiva.
+  - Solución manual: presionar F5 restauraba todo inmediatamente.
+
+El problema NO ocurría:
+  - En la carga inicial limpia.
+  - Navegando entre páginas dentro de la misma sesión.
+  - Al recargar con F5.
+
+Solo ocurría al RESTAURAR la sesión tras un cierre completo del navegador.
+
+────────────────────────────────────────────────────────────────────────────────
+2. CAUSA RAÍZ
+────────────────────────────────────────────────────────────────────────────────
+
+El problema tenía múltiples causas posibles que se solapaban:
+
+  A) BFCACHE (Back/Forward Cache):
+     El navegador guarda un snapshot congelado de la página para navegación
+     rápida atrás/adelante. Si la pestaña se restaura desde bfcache, el evento
+     "pageshow" dispara con `event.persisted = true`. En ese estado, React está
+     completamente congelado: los listeners de eventos no existen.
+
+  B) DISCO CACHÉ SIN REVALIDACIÓN DE RED:
+     Chrome/Edge puede restaurar pestañas sirviendo el HTML desde su caché de
+     disco interno SIN hacer una petición de red al servidor. Esto ocurre incluso
+     si el usuario NO está offline. El HTML cargado es el del estado previo de
+     la sesión, y React no se rehidrata sobre ese DOM restaurado.
+
+  C) SERVICE WORKERS RESIDUALES:
+     Si algún proyecto anterior corrió en localhost:3000 con un Service Worker
+     (PWA, CRA con Workbox, next-pwa, etc.), ese SW queda registrado para el
+     origen localhost:3000 e intercepta TODAS las peticiones, incluyendo las de
+     este proyecto. El SW sirve su propio caché, ignorando por completo los
+     headers HTTP de Cache-Control del servidor. El HTML servido por el SW puede
+     ser una versión antigua que no incluye el runtime de React correcto.
+
+  D) FALLO SILENCIOSO DE HIDRATACIÓN DE REACT:
+     En cualquiera de los escenarios anteriores, React intenta hidratarse sobre
+     un DOM que no coincide con lo que el servidor habría enviado en ese momento.
+     React puede fallar silenciosamente (sin lanzar error visible) y dejar la
+     página sin listeners de eventos.
+
+  E) HEADERS HTTP AUSENTES EN DESARROLLO:
+     El next.config.mjs original tenía:
+       `if (process.env.NODE_ENV === "development") return [];`
+     Esto significaba que en desarrollo NO se enviaba ningún header Cache-Control.
+     El navegador era libre de cachear la página agresivamente.
+
+────────────────────────────────────────────────────────────────────────────────
+3. SOLUCIONES PROBADAS (FALLIDAS)
+────────────────────────────────────────────────────────────────────────────────
+
+  INTENTO 1 — isMounted flag en MobileBottomNav.tsx
+  --------------------------------------------------
+  Se añadió un estado `isMounted` para evitar mismatch de hidratación en el
+  servidor vs cliente para la burbuja SVG animada.
+  RESULTADO: La burbuja se mostraba correctamente en carga normal, pero el
+  problema de restauración de sesión persistía completamente.
+
+  INTENTO 2 — Ventana de seguridad de 1500ms en listeners de scroll
+  -----------------------------------------------------------------
+  Se amplió la ventana de inicialización del listener de scroll a 1500ms para
+  absorber el "scroll de restauración" del navegador y evitar que la barra se
+  ocultara por error durante la hidratación.
+  RESULTADO: No tenía relación con el problema real. El problema persistía.
+
+  INTENTO 3 — Limpieza de history.state en layout.tsx
+  ----------------------------------------------------
+  Se añadió un script en <head> que limpiaba el history.state si no tenía las
+  propiedades esperadas de Next.js (`url`, `as`, `__N`).
+  RESULTADO: Irrelevante para el problema real. No funcionó.
+
+  INTENTO 4 — Meta tags http-equiv de caché
+  -----------------------------------------
+  Se añadieron en layout.tsx:
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+  RESULTADO: Los navegadores modernos (Chrome, Firefox, Edge) ignoran estas
+  meta tags para decisiones de caché HTTP. Son vestigios de HTTP/1.0 y no
+  tienen efecto real. El problema persistía.
+
+  INTENTO 5 — pageshow + window.location.reload() en Navbar y MobileBottomNav
+  -----------------------------------------------------------------------------
+  Se añadieron listeners del evento `pageshow` en ambos componentes React, que
+  llamaban a `window.location.reload()` si `event.persisted` era true.
+  RESULTADO: Solo cubre el caso de bfcache (`persisted = true`). Los casos de
+  restauración desde disco caché interno de Chrome no disparan `persisted = true`,
+  por lo que este mecanismo no los detectaba. El problema persistía para
+  restauraciones que no eran bfcache.
+
+  INTENTO 6 — Purga de Service Workers SIN prevención de loop
+  ------------------------------------------------------------
+  Se añadió un script en layout.tsx que llamaba a
+  `navigator.serviceWorker.getRegistrations()` y hacía `unregister()` + reload.
+  RESULTADO: Causaba un loop de recargas infinito porque el flag para prevenir
+  el loop se seteaba DESPUÉS del reload (en el callback de la Promise), lo que
+  significaba que en la página recargada el flag aún no estaba presente y se
+  volvía a disparar la purga y el reload indefinidamente. Se revirtió.
+
+  INTENTO 7 — sessionStorage como detector de sesión nueva
+  --------------------------------------------------------
+  Se usó sessionStorage para marcar "esta sesión ya está activa". Si el flag
+  no existía, se asumía que era una sesión nueva y se hacía reload.
+  RESULTADO: sessionStorage es idéntico (vacío) tanto en primera visita como
+  en restauración de sesión, por lo que no hay forma de diferenciarlos con este
+  mecanismo solo. No funcionó correctamente.
+
+────────────────────────────────────────────────────────────────────────────────
+4. SOLUCIÓN FINAL (4 CAPAS INDEPENDIENTES)
+────────────────────────────────────────────────────────────────────────────────
+
+La solución final combina 4 mecanismos independientes. Cada uno cubre un
+escenario diferente de "página zombie". Si cualquiera detecta la condición,
+fuerza un reload limpio.
+
+  ── CAPA 0: Headers HTTP reales de no-cache (next.config.mjs) ───────────────
+  
+  Se eliminó el `if (NODE_ENV === "development") return []` que impedía que
+  los headers se enviaran en desarrollo. Ahora se envían siempre:
+  
+    Cache-Control: no-cache, must-revalidate
+    Pragma: no-cache
+    Surrogate-Control: no-store
+    Expires: 0
+  
+  Aplicados a todas las rutas HTML (excluyendo assets estáticos de _next/).
+  Esto instruye al navegador a siempre revalidar con el servidor antes de usar
+  cualquier versión cacheada del HTML.
+  
+  ARCHIVO: next.config.mjs
+
+  ── CAPA 1: Purga de Service Workers con prevención de loop ─────────────────
+  
+  Script en <head> de layout.tsx. Al inicio de cada sesión (sessionStorage
+  vacío = browser recién abierto), verifica si hay SWs registrados en el origen.
+  Si los hay, los desregistra, limpia todos los caches de CacheStorage, y
+  recarga. El flag se setea ANTES de llamar a reload() para evitar loops:
+  
+    sessionStorage.setItem(SW_KEY, '1');  // ← PRIMERO el flag
+    // ... unregister + clear caches ...
+    window.location.reload();             // ← DESPUÉS el reload
+  
+  sessionStorage sobrevive a location.reload() pero se borra al cerrar el
+  browser, garantizando exactamente una limpieza por apertura del navegador.
+  
+  ARCHIVO: src/app/layout.tsx
+
+  ── CAPA 2: Detección de caché de disco via PerformanceNavigationTiming ──────
+  
+  Tras el evento `load`, verifica la entrada de navegación de Performance API:
+  
+    performance.getEntriesByType('navigation')[0]
+  
+  Si `transferSize === 0` y `encodedBodySize > 0`, significa que el HTML fue
+  servido desde caché de disco sin hacer ninguna petición de red al servidor.
+  En ese caso, fuerza un reload. Esta condición cubre la restauración de sesión
+  de Chrome que bypasea los headers HTTP de Cache-Control.
+  
+  ARCHIVO: src/app/layout.tsx
+
+  ── CAPA 3: bfcache guard (pageshow event) ───────────────────────────────────
+  
+  Listener del evento `pageshow` en el script de <head> de layout.tsx. Si
+  `event.persisted === true`, la página viene del bfcache (congelada), React
+  está muerto, y se fuerza reload inmediato.
+  
+  NOTA: Este listener está en el script de <head> (ejecutado antes de React),
+  no en componentes React (que estarían muertos si el bfcache es el problema).
+  
+  ARCHIVO: src/app/layout.tsx
+
+  ── CAPA 4: Watchdog de hidratación de React (la más robusta) ───────────────
+  
+  Este mecanismo cubre CUALQUIER causa de fallo de hidratación de React,
+  independientemente del mecanismo de restauración del navegador.
+  
+  Funcionamiento:
+  
+  1. localStorage.__liss_was_alive__ = '1'
+     Se setea en Navbar.tsx → useEffect (React en cliente, confirmando que
+     React montó correctamente). localStorage persiste entre cierres del browser.
+  
+  2. sessionStorage.__liss_alive__ = '1'
+     Se setea en el mismo useEffect. sessionStorage se borra al cerrar el browser.
+  
+  3. Script en <head> de layout.tsx:
+     - Lee localStorage.__liss_was_alive__ (¿React alguna vez montó?)
+     - Lee sessionStorage.__liss_alive__ (¿React ya montó en ESTA sesión?)
+     - Si wasAlive=true pero isAliveNow=false → React montó antes pero no en
+       esta sesión todavía → inicia temporizador de 5 segundos.
+     - Si tras 5 segundos sessionStorage.__liss_alive__ sigue vacío → React
+       nunca montó → la página es zombie → fuerza window.location.reload().
+     - Si React monta (useEffect corre) → setea el flag → watchdog detecta que
+       está vivo → NO recarga.
+  
+  ARCHIVOS: src/app/layout.tsx (watchdog) + src/components/layout/Navbar.tsx
+            (heartbeat en useEffect)
+
+────────────────────────────────────────────────────────────────────────────────
+5. ARCHIVOS MODIFICADOS
+────────────────────────────────────────────────────────────────────────────────
+
+  next.config.mjs
+    - Eliminado: `if (NODE_ENV === "development") return []`
+    - Añadido: headers Cache-Control, Pragma, Surrogate-Control, Expires
+      aplicados en TODOS los entornos para rutas HTML.
+
+  src/app/layout.tsx
+    - Eliminado: meta tags http-equiv (ineficaces en navegadores modernos)
+    - Eliminado: script de limpieza de history.state
+    - Eliminado: purga de SW sin prevención de loop (causaba loops infinitos)
+    - Añadido: Script con 4 capas de protección:
+        · SW purge con flag-antes-de-reload
+        · PerformanceNavigationTiming.transferSize check
+        · pageshow bfcache guard
+        · Hydration watchdog con timeout de 5s
+
+  src/components/layout/Navbar.tsx
+    - Añadido en useEffect: heartbeat de hidratación
+        sessionStorage.setItem("__liss_alive__", "1")
+        localStorage.setItem("__liss_was_alive__", "1")
+    - Eliminado: listener pageshow duplicado (centralizado en layout.tsx)
+
+  src/components/layout/MobileBottomNav.tsx
+    - Eliminado: listener pageshow duplicado (centralizado en layout.tsx)
+
+────────────────────────────────────────────────────────────────────────────────
+6. LECCIÓN APRENDIDA
+────────────────────────────────────────────────────────────────────────────────
+
+Los headers HTTP de Cache-Control son necesarios pero NO suficientes para
+prevenir páginas zombie en restauración de sesión, porque:
+
+  1. Chrome puede restaurar desde su snapshot interno (no HTTP cache).
+  2. Service Workers interceptan ANTES de que los headers HTTP sean relevantes.
+  3. El bfcache no hace una petición de red nueva en absoluto.
+  4. React puede fallar en hidratarse silenciosamente sin lanzar errores.
+
+La única solución robusta es una estrategia de defensa en profundidad
+(defense-in-depth) que combine múltiples mecanismos de detección, cada uno
+independiente del otro.
+
+================================================================================
