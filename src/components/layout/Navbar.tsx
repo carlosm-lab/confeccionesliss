@@ -139,12 +139,12 @@ export function Navbar() {
                 priority
               />
               <div className="flex flex-col">
-                <span className="text-primary font-serif text-lg leading-tight font-bold md:text-xl">
+                <span className="text-primary font-serif text-base leading-tight font-bold sm:text-lg md:text-xl">
                   Confecciones Liss
                 </span>
                 <span className="sr-only">Líder en tu diseño</span>
                 <span
-                  className="text-[10px] font-medium tracking-[0.35em] text-gray-500 uppercase"
+                  className="hidden text-[9px] font-medium tracking-[0.3em] text-gray-500 uppercase sm:block"
                   aria-hidden="true"
                 >
                   LÍDER EN TU DISEÑO
@@ -157,14 +157,14 @@ export function Navbar() {
           {!isHomeOnly && (
             <div
               ref={menuRef}
-              className="relative hidden items-center gap-3 lg:flex"
+              className="relative hidden items-center gap-3 md:flex"
             >
-              {/* Search bar trigger (visual button styled as search bar) */}
+              {/* Search bar trigger - Desktop version (full bar) */}
               <button
                 type="button"
                 onClick={openSearch}
                 aria-label="Abrir buscador"
-                className="border-primary/10 flex cursor-pointer items-center gap-2.5 rounded-full border bg-white px-4 py-2 shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)]"
+                className="border-primary/10 hidden cursor-pointer items-center gap-2.5 rounded-full border bg-white px-4 py-2 shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)] lg:flex"
               >
                 <span
                   className="material-symbols-outlined text-primary text-[20px]"
@@ -174,6 +174,21 @@ export function Navbar() {
                 </span>
                 <span className="w-44 xl:w-56">
                   <TypewriterPlaceholder />
+                </span>
+              </button>
+
+              {/* Search bar trigger - Tablet version (icon button) */}
+              <button
+                type="button"
+                onClick={openSearch}
+                aria-label="Abrir buscador"
+                className="border-primary/10 flex size-10 items-center justify-center rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)] md:flex lg:hidden"
+              >
+                <span
+                  className="material-symbols-outlined text-primary text-[22px]"
+                  aria-hidden="true"
+                >
+                  search
                 </span>
               </button>
 
@@ -299,7 +314,7 @@ export function Navbar() {
               type="button"
               aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
               aria-expanded={isMenuOpen}
-              className="border-primary/10 text-primary flex size-10 items-center justify-center rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)] lg:hidden"
+              className="border-primary/10 text-primary flex size-10 items-center justify-center rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)] md:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               <span
@@ -315,7 +330,7 @@ export function Navbar() {
         {/* Mobile menu */}
         {isMenuOpen && (
           <nav
-            className="border-t border-gray-100 bg-white px-5 py-4 lg:hidden"
+            className="border-t border-gray-100 bg-white px-5 py-4 md:hidden"
             aria-label="Navegación móvil"
           >
             {/* Search mobile trigger */}
