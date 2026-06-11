@@ -249,7 +249,7 @@ function UnifiedCatalogInner({ products }: UnifiedCatalogClientProps) {
   return (
     <>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-[#143067] via-[#1a3d7c] to-[#0d2147] px-5 py-12 text-white md:px-8 md:py-16">
+      <section className="bg-gradient-to-br from-[#143067] via-[#1a3d7c] to-[#0d2147] px-8 py-12 text-white md:py-16">
         <div className="mx-auto max-w-screen-2xl">
           <Breadcrumb
             items={breadcrumbItems}
@@ -305,7 +305,7 @@ function UnifiedCatalogInner({ products }: UnifiedCatalogClientProps) {
       />
 
       {/* Content */}
-      <section className="bg-surface px-5 py-10 md:px-8 md:py-16">
+      <section className="bg-surface px-8 py-10 md:py-16">
         <div className="mx-auto flex max-w-screen-2xl gap-6 xl:gap-8">
           {/* Sidebar (desktop) */}
           <div className="hidden w-56 shrink-0 xl:block xl:w-64">
@@ -458,7 +458,7 @@ function UnifiedCatalogInner({ products }: UnifiedCatalogClientProps) {
       </section>
 
       {/* CTA Banner */}
-      <section className="bg-primary px-5 py-10 text-white md:px-8">
+      <section className="bg-primary px-8 py-10 text-white">
         <div className="mx-auto flex max-w-screen-2xl flex-col items-center justify-between gap-6 md:flex-row">
           <div>
             <h2 className="font-headline text-xl font-bold md:text-2xl">

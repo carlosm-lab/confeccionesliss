@@ -131,7 +131,7 @@ export default async function ServiceArticlePage({
       )}
 
       {/* Hero */}
-      <section className={`${config.heroGradient} px-5 py-12 md:px-8 md:py-20`}>
+      <section className={`${config.heroGradient} px-8 py-12 md:py-20`}>
         <div className="mx-auto max-w-screen-2xl">
           <nav className="mb-6 text-sm text-white/70" aria-label="Breadcrumb">
             <ol className="flex items-center gap-1">
@@ -194,8 +194,8 @@ export default async function ServiceArticlePage({
       </section>
 
       {/* Artículo principal */}
-      <article className="bg-surface px-5 py-10 md:px-8 md:py-16">
-        <div className="mx-auto max-w-screen-md">
+      <article className="bg-surface px-8 py-10 md:py-16">
+        <div className="mx-auto max-w-screen-2xl">
           {config.sections.map((section, i) => (
             <section key={i} className="mb-10 last:mb-0">
               <h2 className="text-on-surface mb-4 font-serif text-xl font-bold md:text-2xl">
@@ -211,8 +211,8 @@ export default async function ServiceArticlePage({
 
       {/* FAQ */}
       {config.faqs.length > 0 && (
-        <section className="bg-surface-container-low border-t border-gray-200 px-5 py-10 md:px-8 md:py-16">
-          <div className="mx-auto max-w-screen-md">
+        <section className="bg-surface-container-low border-t border-gray-200 px-8 py-10 md:py-16">
+          <div className="mx-auto max-w-screen-2xl">
             <h2 className="text-on-surface mb-8 font-serif text-xl font-bold md:text-2xl">
               Preguntas frecuentes
             </h2>
@@ -236,7 +236,7 @@ export default async function ServiceArticlePage({
       )}
 
       {/* CTA Banner */}
-      <section className="bg-primary px-5 py-10 text-white md:px-8">
+      <section className="bg-primary px-8 py-10 text-white">
         <div className="mx-auto flex max-w-screen-2xl flex-col items-center justify-between gap-6 md:flex-row">
           <div>
             <h2 className="font-headline text-xl font-bold md:text-2xl">
@@ -259,7 +259,7 @@ export default async function ServiceArticlePage({
       </section>
 
       {/* Otros servicios */}
-      <section className="bg-surface px-5 py-10 md:px-8">
+      <section className="bg-surface px-8 py-10">
         <div className="mx-auto max-w-screen-2xl">
           <h2 className="text-on-surface mb-6 font-serif text-lg font-bold">
             Otros servicios que ofrecemos

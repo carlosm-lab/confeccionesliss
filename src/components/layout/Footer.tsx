@@ -10,8 +10,8 @@ import {
 
 export function Footer() {
   return (
-    <footer className="bg-primary mt-auto font-sans text-white">
-      <div className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-8 px-5 py-10 md:grid-cols-2 md:gap-12 md:px-8 md:py-14">
+    <footer className="bg-primary mt-auto px-8 font-sans text-white">
+      <div className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-8 py-10 md:grid-cols-2 md:gap-12 md:py-14">
         <div>
           <div className="mb-6 flex items-center gap-2">
             <Image
@@ -131,7 +131,7 @@ export function Footer() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="text-primary-container mx-auto flex w-full max-w-screen-2xl items-center justify-center px-8 py-6 text-xs">
+        <div className="text-primary-container mx-auto flex w-full max-w-screen-2xl items-center justify-center py-6 text-xs">
           <p>
             © {new Date().getFullYear()} Confecciones Liss. Todos los derechos
             reservados.
