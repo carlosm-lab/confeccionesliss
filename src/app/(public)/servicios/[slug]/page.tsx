@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SERVICE_PAGES } from "@/data/services";
 import { siteConfig } from "@/config/site";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 export function generateStaticParams() {
   return SERVICE_PAGES.map((page) => ({ slug: page.slug }));
@@ -130,46 +131,36 @@ export default async function ServiceArticlePage({
         />
       )}
 
-      {/* Hero */}
-      <section className={`${config.heroGradient} px-8 py-12 md:py-20`}>
+      {/* Hero — solid brand primary for all services */}
+      <section className="bg-primary text-on-primary px-5 py-16 md:px-8 md:py-28">
         <div className="mx-auto max-w-screen-2xl">
-          <nav className="mb-6 text-sm text-white/70" aria-label="Breadcrumb">
-            <ol className="flex items-center gap-1">
-              <li>
-                <Link href="/" className="hover:text-white">
-                  Inicio
-                </Link>
-              </li>
-              <li aria-hidden="true">/</li>
-              <li>
-                <Link href="/servicios" className="hover:text-white">
-                  Servicios
-                </Link>
-              </li>
-              <li aria-hidden="true">/</li>
-              <li>
-                <span className="text-white/90">{config.navLabel}</span>
-              </li>
-            </ol>
-          </nav>
+          <Breadcrumb
+            items={[
+              { label: "Inicio", href: "/" },
+              { label: "Servicios", href: "/servicios" },
+              { label: config.navLabel },
+            ]}
+            variant="light"
+            className="animate-fade-in-up mb-6"
+          />
 
-          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
-              <div className="mb-2 flex items-center gap-2">
+              <div className="mb-3 flex items-center gap-2.5">
                 <span
                   className="material-symbols-outlined text-2xl"
                   aria-hidden="true"
                 >
                   {config.navIcon}
                 </span>
-                <span className="text-sm font-medium tracking-widest uppercase opacity-80">
+                <span className="text-sm font-medium tracking-widest uppercase opacity-75">
                   {config.subtitle}
                 </span>
               </div>
-              <h1 className="font-serif text-3xl font-bold md:text-4xl">
+              <h1 className="font-serif text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
                 {config.title}
               </h1>
-              <p className="mt-3 max-w-2xl text-sm leading-relaxed opacity-80 md:text-base">
+              <p className="mt-4 max-w-2xl text-sm leading-relaxed opacity-75 md:text-base">
                 {config.description}
               </p>
             </div>
@@ -177,7 +168,7 @@ export default async function ServiceArticlePage({
               {config.heroFeatures.map((b) => (
                 <div
                   key={b.text}
-                  className="flex items-center gap-2 rounded-lg bg-white/10 p-3 backdrop-blur-sm"
+                  className="bg-on-primary/10 flex items-center gap-2 rounded-lg p-3"
                 >
                   <span
                     className="material-symbols-outlined text-white"
@@ -194,8 +185,8 @@ export default async function ServiceArticlePage({
       </section>
 
       {/* Artículo principal */}
-      <article className="bg-surface px-8 py-10 md:py-16">
-        <div className="mx-auto max-w-screen-2xl">
+      <article className="bg-surface px-5 py-10 md:px-8 md:py-16">
+        <div className="mx-auto max-w-screen-md">
           {config.sections.map((section, i) => (
             <section key={i} className="mb-10 last:mb-0">
               <h2 className="text-on-surface mb-4 font-serif text-xl font-bold md:text-2xl">
@@ -211,8 +202,8 @@ export default async function ServiceArticlePage({
 
       {/* FAQ */}
       {config.faqs.length > 0 && (
-        <section className="bg-surface-container-low border-t border-gray-200 px-8 py-10 md:py-16">
-          <div className="mx-auto max-w-screen-2xl">
+        <section className="bg-surface-container-low border-t border-gray-200 px-5 py-10 md:px-8 md:py-16">
+          <div className="mx-auto max-w-screen-md">
             <h2 className="text-on-surface mb-8 font-serif text-xl font-bold md:text-2xl">
               Preguntas frecuentes
             </h2>
@@ -236,13 +227,13 @@ export default async function ServiceArticlePage({
       )}
 
       {/* CTA Banner */}
-      <section className="bg-primary px-8 py-10 text-white">
+      <section className="bg-primary px-5 py-12 text-white md:px-8">
         <div className="mx-auto flex max-w-screen-2xl flex-col items-center justify-between gap-6 md:flex-row">
           <div>
             <h2 className="font-headline text-xl font-bold md:text-2xl">
               {config.ctaBanner.title}
             </h2>
-            <p className="text-sm text-white/70">
+            <p className="mt-1 text-sm text-white/70">
               {config.ctaBanner.description}
             </p>
           </div>
@@ -250,7 +241,7 @@ export default async function ServiceArticlePage({
             href={config.ctaBanner.ctaHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary shrink-0 rounded-lg bg-white px-8 py-3 font-semibold transition-colors hover:bg-gray-100"
+            className="text-primary shrink-0 rounded-lg bg-white px-8 py-3 font-semibold transition-[transform,background-color] duration-200 [transition-timing-function:var(--ease-out-expo)] hover:bg-gray-50 active:scale-[0.97]"
           >
             {config.ctaBanner.ctaText}
             <span className="sr-only"> (se abre en nueva ventana)</span>
@@ -259,7 +250,7 @@ export default async function ServiceArticlePage({
       </section>
 
       {/* Otros servicios */}
-      <section className="bg-surface px-8 py-10">
+      <section className="bg-surface px-5 pt-12 pb-20 md:px-8 md:pt-12">
         <div className="mx-auto max-w-screen-2xl">
           <h2 className="text-on-surface mb-6 font-serif text-lg font-bold">
             Otros servicios que ofrecemos
@@ -269,7 +260,7 @@ export default async function ServiceArticlePage({
               <Link
                 key={page.slug}
                 href={`/servicios/${page.slug}`}
-                className="group flex flex-col items-center gap-2 rounded-xl border border-gray-100 bg-white p-4 text-center shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                className="group border-outline-variant/30 flex flex-col items-center gap-2 rounded-xl border bg-white p-4 text-center shadow-sm transition-[transform,box-shadow] duration-300 [transition-timing-function:var(--ease-out-expo)] hover:-translate-y-0.5 hover:shadow-md active:scale-[0.97]"
               >
                 <span
                   className="material-symbols-outlined text-primary text-2xl"

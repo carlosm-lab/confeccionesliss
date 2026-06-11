@@ -7,6 +7,7 @@ import { ALL_PRODUCTS } from "@/data/products";
 import type { Sector } from "@/data/types";
 import { cn } from "@/lib/utils";
 import { useMemo } from "react";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 /** Ordered list of sectors for the hub grid */
 const SECTOR_ORDER: Sector[] = [
@@ -54,13 +55,13 @@ function CategoryCard({
           priority={sector === "scrubs" || sector === "universitario"}
         />
 
-        {/* Floating Action Link (Text Only) */}
-        <div className="text-primary contrast-text-shadow group-hover:text-tertiary absolute top-3 right-3 z-20 flex items-center transition-colors">
+        {/* Indicador visual de navegación (estático en móvil/tablet, con animación sutil en desktop) */}
+        <div className="bg-primary absolute top-3 right-3 z-20 flex h-7 w-7 items-center justify-center rounded-full text-white shadow-md transition-all duration-300 lg:translate-x-1.5 lg:opacity-0 lg:group-hover:translate-x-0 lg:group-hover:opacity-100">
           <span
-            className="material-symbols-outlined animate-slide-arrow text-[14px] @[280px]:text-[16px] @[320px]:text-[18px]"
+            className="material-symbols-outlined text-[15px] font-semibold @[280px]:text-[17px]"
             aria-hidden="true"
           >
-            arrow_forward
+            open_in_new
           </span>
         </div>
       </div>
@@ -106,20 +107,32 @@ export function CategoryHubClient() {
 
   return (
     <>
-      {/* Category Grid */}
-      <section className="bg-surface px-5 py-10 md:px-8 md:py-14">
+      {/* Page header — breadcrumb + h1 + description */}
+      <section className="bg-surface px-5 pt-6 pb-0 md:px-8">
         <div className="mx-auto max-w-screen-2xl">
-          {/* Section header */}
-          <div className="mb-8 flex flex-col items-start text-left md:mb-12">
-            <h1 className="section-title text-left">
-              ¿Qué deseas comprar hoy?
-            </h1>
-            <p className="text-on-surface-variant mt-3 max-w-xl text-left text-sm leading-relaxed md:text-base">
-              Selecciona la categoría que necesitas y explora productos
-              diseñados para tu profesión, institución o equipo. 🥰
-            </p>
-          </div>
+          <Breadcrumb
+            items={[{ label: "Inicio", href: "/" }, { label: "Catálogo" }]}
+            className="animate-fade-in-up mb-6"
+          />
+          <h1
+            className="animate-fade-in-up section-title"
+            style={{ animationDelay: "100ms", textAlign: "left" }}
+          >
+            ¿Qué deseas comprar hoy?
+          </h1>
+          <p
+            className="animate-fade-in-up text-on-surface-variant mt-4 max-w-xl text-left text-sm leading-relaxed md:text-base"
+            style={{ animationDelay: "200ms" }}
+          >
+            Selecciona la categoría que necesitas y explora productos diseñados
+            para tu profesión, institución o equipo. 🥰
+          </p>
+        </div>
+      </section>
 
+      {/* Category Grid */}
+      <section className="bg-surface px-5 pt-12 pb-16 md:px-8 md:pb-24">
+        <div className="mx-auto max-w-screen-2xl">
           {/* Grid responsivo: 1 col móvil, 2 col tablet vertical, 3 col tablet horizontal, 4 col desktop */}
           <div className="grid grid-cols-1 gap-6 min-[480px]:grid-cols-2 md:grid-cols-3 md:gap-8 xl:grid-cols-4">
             {SECTOR_ORDER.map((sector) => (
@@ -135,7 +148,7 @@ export function CategoryHubClient() {
 
       {/* Trust Strip */}
       <section
-        className="bg-surface-container-low border-t border-gray-200 px-5 py-8 md:px-8"
+        className="bg-surface-container-low border-t border-gray-200 px-5 pt-8 pb-20 md:px-8 md:pt-8"
         aria-label="Garantías del servicio"
       >
         <div className="mx-auto grid max-w-screen-2xl grid-cols-2 gap-5 md:grid-cols-4">

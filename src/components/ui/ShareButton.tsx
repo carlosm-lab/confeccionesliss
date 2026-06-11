@@ -97,7 +97,8 @@ export function ShareButton() {
             alignItems: "center",
             gap: "0.5rem",
             border: "1px solid rgba(255, 255, 255, 0.1)",
-            animation: "fadeInUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+            animation:
+              "toastFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards",
           }}
         >
           <span
@@ -118,7 +119,7 @@ export function ShareButton() {
       <style
         dangerouslySetInnerHTML={{
           __html: `
-            @keyframes fadeInUp {
+            @keyframes toastFadeIn {
               from {
                 opacity: 0;
                 transform: translate(-50%, 16px);

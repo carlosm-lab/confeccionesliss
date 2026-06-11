@@ -260,7 +260,7 @@ export function CatalogSubPageClient({
       )}
 
       {/* CTA Banner */}
-      <section className="bg-primary px-5 py-10 text-white md:px-8">
+      <section className="bg-primary px-5 pt-10 pb-20 text-white md:px-8">
         <div className="mx-auto flex max-w-screen-2xl flex-col items-center justify-between gap-6 md:flex-row">
           <div>
             <h2 className="font-headline text-xl font-bold md:text-2xl">

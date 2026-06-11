@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 export const metadata: Metadata = {
   title: "Contacto | Confecciones Liss",
@@ -235,7 +236,7 @@ export default function ContactoPage() {
         }}
       />
 
-      <main className="relative overflow-hidden px-8">
+      <main className="relative overflow-hidden px-5 pb-20 md:px-8">
         {/* Subtle topographic background */}
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.035]"
@@ -248,30 +249,22 @@ export default function ContactoPage() {
 
         <div className="relative mx-auto max-w-screen-2xl">
           {/* ── Header ──────────────────────────────────────────── */}
-          <section className="flex flex-col items-center pt-6 pb-10 text-center md:items-start md:pt-8 md:pb-14 md:text-left">
-            <nav aria-label="Breadcrumb" className="mb-4 text-sm text-gray-400">
-              <ol className="flex items-center justify-center gap-1.5 md:justify-start">
-                <li>
-                  <Link
-                    href="/"
-                    className="transition-colors hover:text-gray-700"
-                  >
-                    Inicio
-                  </Link>
-                </li>
-                <li aria-hidden="true" className="select-none">
-                  ›
-                </li>
-                <li aria-current="page" className="text-gray-600">
-                  Contacto
-                </li>
-              </ol>
-            </nav>
+          <section className="flex flex-col items-center pt-6 pb-0 text-center md:items-start md:text-left">
+            <Breadcrumb
+              items={[{ label: "Inicio", href: "/" }, { label: "Contacto" }]}
+              className="animate-fade-in-up mb-6 justify-center md:justify-start"
+            />
 
-            <h1 className="text-primary font-serif text-3xl font-bold md:text-4xl lg:text-5xl">
+            <h1
+              className="animate-fade-in-up text-primary font-serif text-3xl font-bold md:text-4xl lg:text-5xl"
+              style={{ animationDelay: "100ms" }}
+            >
               Contáctanos
             </h1>
-            <p className="mt-3 max-w-xl text-base leading-relaxed text-gray-500 md:text-lg">
+            <p
+              className="animate-fade-in-up mt-4 max-w-xl text-base leading-relaxed text-gray-500 md:text-lg"
+              style={{ animationDelay: "200ms" }}
+            >
               Estamos listos para ayudarte con tu pedido.
               <br className="hidden sm:block" />
               Escríbenos, llámanos o visítanos en nuestro taller en San Miguel.
@@ -279,7 +272,7 @@ export default function ContactoPage() {
           </section>
 
           {/* ── Main content grid ──────────────────────────────── */}
-          <section className="mb-6 grid gap-6 lg:grid-cols-5">
+          <section className="mt-12 mb-6 grid gap-6 lg:grid-cols-5">
             {/* Contact info card */}
             <div className="group border-primary/35 hover:border-primary/55 relative rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] md:p-8 lg:col-span-2">
               <h2 className="text-primary mb-6 font-serif text-xl font-bold md:text-2xl">
@@ -364,7 +357,7 @@ export default function ContactoPage() {
           </section>
 
           {/* ── Bottom: Social + How to get there ──────────────── */}
-          <section className="grid gap-x-8 gap-y-6 pb-12 md:pb-16 lg:grid-cols-2 lg:gap-y-4">
+          <section className="grid gap-x-8 gap-y-6 lg:grid-cols-2 lg:gap-y-4">
             {/* Title */}
             <div className="lg:col-start-1 lg:row-start-1">
               <h2 className="text-primary mb-2 font-serif text-lg font-bold lg:mb-0">

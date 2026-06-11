@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function CarritoPage() {
   return (
-    <section className="px-8 py-16">
+    <section className="px-5 pt-16 pb-20 md:px-8">
       <div className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-screen-2xl flex-col items-center justify-center text-center">
         {/* Icon */}
         <div className="bg-primary/10 mb-8 flex h-24 w-24 items-center justify-center rounded-full">

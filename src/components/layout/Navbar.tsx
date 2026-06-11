@@ -197,11 +197,11 @@ export function Navbar() {
     <>
       <header
         className={cn(
-          "nav-scroll-hide sticky top-0 z-50 bg-white/90 px-8 shadow-sm backdrop-blur-md",
+          "nav-scroll-hide sticky top-0 z-50 bg-white/90 shadow-sm backdrop-blur-md",
           !scrollVisible && "nav-scroll-hidden-top"
         )}
       >
-        <div className="mx-auto flex w-full max-w-screen-2xl items-center justify-between py-[2px]">
+        <div className="mx-auto flex w-full max-w-screen-2xl items-center justify-between px-5 py-[2px] md:px-8">
           <div className="flex items-center gap-6 lg:gap-10">
             {/* Logo */}
             <Link

@@ -7,7 +7,7 @@ export function ServiciosPrincipales() {
   return (
     <section
       aria-labelledby="servicios-heading"
-      className="bg-surface px-8 py-14 md:py-20"
+      className="bg-surface px-5 py-14 md:px-8 md:py-20"
     >
       <div className="mx-auto max-w-screen-2xl">
         <div className="mb-12 flex flex-col items-center">

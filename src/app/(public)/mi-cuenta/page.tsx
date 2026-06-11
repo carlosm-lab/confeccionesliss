@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function MiCuentaPage() {
   return (
-    <section className="px-8 py-16">
+    <section className="px-5 pt-16 pb-20 md:px-8">
       <div className="mx-auto flex min-h-[60vh] max-w-screen-2xl flex-col items-center justify-center gap-6 text-center">
         <span
           className="material-symbols-outlined text-primary text-6xl"

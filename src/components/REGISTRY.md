@@ -33,11 +33,12 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 ### Breadcrumb
 
 - **Ruta:** `src/components/ui/Breadcrumb.tsx`
-- **Descripción:** Navegación jerárquica reutilizable con soporte para ítems dinámicos. Cada ítem puede ser un enlace o el elemento activo actual.
+- **Descripción:** Navegación jerárquica reutilizable con soporte para ítems dinámicos. Cada ítem puede ser un enlace o el elemento activo actual. Soporta variante clara para fondos oscuros (cumpliendo con la relación de contraste WCAG 2.2 AA).
 - **Props:**
   - `items: { label: string; href?: string }[]` — Lista de ítems del breadcrumb.
   - `className?: string` — Clases CSS adicionales.
-- **Ejemplo:** `<Breadcrumb items={[{ label: "Inicio", href: "/" }, { label: "Catálogo" }]} />`
+  - `variant?: "default" | "light"` — Variante de estilo visual ("default" para fondo claro, "light" con colores blancos/semitransparentes para fondos oscuros).
+- **Ejemplo:** `<Breadcrumb items={[{ label: "Inicio", href: "/" }, { label: "Catálogo" }]} variant="default" />`
 
 ### Badge
 

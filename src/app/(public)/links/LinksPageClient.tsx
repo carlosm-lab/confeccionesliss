@@ -3,6 +3,7 @@
 
 import Image from "next/image";
 import { ShareButton } from "@/components/ui/ShareButton";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 interface LinkItem {
   id: string;
@@ -136,15 +137,10 @@ const socialLinks: LinkItem[] = [
 export function LinksPageClient() {
   return (
     <div
+      className="relative overflow-hidden"
       style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        background: "linear-gradient(180deg, #fbf8fe 0%, #efecf6 100%)",
-        backgroundAttachment: "fixed",
-        padding: "0",
-        margin: "0",
-        fontFamily: "inherit",
+        minHeight: "100svh",
+        background: "linear-gradient(to bottom, #fbf8fe, #efecf6)",
       }}
     >
       {/* Overrides and Responsive styles */}
@@ -163,12 +159,13 @@ export function LinksPageClient() {
               display: flex;
               flex-direction: column;
               align-items: center;
-              padding: 2rem 1.25rem 2rem !important;
+              padding: 1.5rem 1.25rem 5rem !important;
               box-sizing: border-box;
               margin: 0 auto !important;
               background-color: transparent !important;
               border: none !important;
               box-shadow: none !important;
+              position: relative !important;
             }
 
             .desktop-dashed-border {
@@ -183,8 +180,8 @@ export function LinksPageClient() {
                 border-radius: 1rem !important;
                 box-shadow: 0 0 25px 6px rgba(20, 48, 103, 0.15), 0 0 10px 2px rgba(20, 48, 103, 0.1) !important;
                 padding: 2rem 2.5rem !important;
-                margin-top: 2rem !important;
-                margin-bottom: 2rem !important;
+                margin-top: 0.5rem !important;
+                margin-bottom: 5rem !important;
                 position: relative !important;
               }
               .desktop-dashed-border {
@@ -195,7 +192,16 @@ export function LinksPageClient() {
         }}
       />
 
-      <main id="links-main">
+      <div className="px-5 pt-6 pb-2 md:px-8">
+        <div className="relative mx-auto max-w-screen-2xl">
+          <Breadcrumb
+            items={[{ label: "Inicio", href: "/" }, { label: "Enlaces" }]}
+            className="animate-fade-in-up mb-4"
+          />
+        </div>
+      </div>
+
+      <div id="links-main">
         {/* Marco de bordes punteados (solo en Desktop, igual al del Hero) */}
         <div className="desktop-dashed-border border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
         {/* Profile Section */}
@@ -256,8 +262,8 @@ export function LinksPageClient() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: "0.5rem",
-              margin: "0 0 0.5rem",
+              gap: "0.625rem",
+              marginBottom: "0.5rem",
             }}
           >
             <h1
@@ -408,7 +414,7 @@ export function LinksPageClient() {
             </a>
           ))}
         </nav>
-      </main>
+      </div>
     </div>
   );
 }

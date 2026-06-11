@@ -147,9 +147,12 @@ export default async function ProductDetailPage({
         }}
       />
 
-      <main className="px-8 py-8">
+      <main className="px-5 pt-8 pb-20 md:px-8 md:pt-8">
         <div className="mx-auto max-w-screen-2xl">
-          <Breadcrumb items={breadcrumbItems} />
+          <Breadcrumb
+            items={breadcrumbItems}
+            className="animate-fade-in-up mb-6"
+          />
 
           <div className="mt-8 grid gap-10 lg:grid-cols-2">
             {/* Imagen */}

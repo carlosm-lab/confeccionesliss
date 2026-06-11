@@ -35,7 +35,7 @@ export default function HomePage() {
       />
 
       {/* ═══ HERO ═══ */}
-      <section className="bg-surface-container-low relative flex min-h-[calc(100dvh-56px)] flex-col overflow-x-hidden px-8 pt-4 pb-10 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:pb-4">
+      <section className="bg-surface-container-low relative flex min-h-[calc(100dvh-56px)] flex-col overflow-x-hidden px-5 pt-4 pb-10 md:px-8 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:pb-4">
         <div className="mx-auto flex h-full w-full max-w-screen-2xl flex-col items-start gap-8 lg:flex-row lg:items-center lg:gap-16">
           <div className="z-10 flex w-full flex-col items-start lg:min-w-0 lg:flex-1">
             <div className="bg-tertiary/10 text-tertiary mb-2 flex w-fit items-center gap-2 self-center rounded-full px-3 py-1 text-xs font-bold tracking-widest uppercase lg:mb-3 lg:self-start">
@@ -149,7 +149,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══ NOVEDADES (using shared ProductCard) ═══ */}
-      <section className="bg-surface px-8 py-14 md:py-20">
+      <section className="bg-surface px-5 py-14 md:px-8 md:py-20">
         <div className="mx-auto max-w-screen-2xl">
           <div className="mb-12 flex items-end justify-between lg:pr-12">
             <h2 className="text-primary font-serif text-4xl">
@@ -241,7 +241,7 @@ export default function HomePage() {
       <ServiciosPrincipales />
 
       {/* ═══ ¿POR QUÉ ELEGIRNOS? (updated content) ═══ */}
-      <section className="bg-surface-container-low border-surface-variant/50 border-t border-b px-8 py-14 md:py-24">
+      <section className="bg-surface-container-low border-surface-variant/50 border-t border-b px-5 py-14 md:px-8 md:py-24">
         <div className="mx-auto max-w-screen-2xl">
           <div className="mb-12 flex flex-col items-center">
             <h2 className="section-title">
@@ -276,7 +276,7 @@ export default function HomePage() {
       <UniversidadesCoverage />
 
       {/* ═══ PROCESO DE PEDIDO (updated content) ═══ */}
-      <section className="bg-primary px-8 py-14 text-white md:py-24">
+      <section className="bg-primary px-5 py-14 text-white md:px-8 md:py-24">
         <div className="mx-auto max-w-screen-2xl">
           <div className="mb-12 flex flex-col items-center">
             <h2 className="section-title mb-4 text-white">
@@ -314,7 +314,7 @@ export default function HomePage() {
       {/* ═══ TESTIMONIOS (updated content) ═══ */}
       <section
         aria-labelledby="testimonios-heading"
-        className="bg-[#f4f5f7] px-8 py-14 md:py-24"
+        className="bg-[#f4f5f7] px-5 py-14 md:px-8 md:py-24"
       >
         <div className="mx-auto max-w-screen-2xl">
           <div className="mb-12 flex flex-col items-center">
@@ -374,7 +374,7 @@ export default function HomePage() {
       {/* ═══ CTA INSTITUCIONAL (updated content) ═══ */}
       <section
         aria-labelledby="institucional-heading"
-        className="bg-primary px-8 py-14 text-white md:py-20"
+        className="bg-primary px-5 py-14 text-white md:px-8 md:py-20"
       >
         <div className="mx-auto flex max-w-screen-2xl flex-col items-center justify-between gap-8 md:flex-row">
           <div className="md:w-2/3">

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // TYPES
@@ -648,36 +649,28 @@ export function UpdatesPageClient() {
       </a>
 
       {/* ── HEADER ── */}
-      <section className="bg-surface px-8 pt-8 pb-10">
+      <section className="bg-surface px-5 pt-6 pb-0 md:px-8">
         <div className="mx-auto max-w-screen-2xl">
           {/* Breadcrumb */}
-          <nav aria-label="Migas de pan" className="mb-4 text-sm text-gray-400">
-            <ol className="flex items-center gap-1.5">
-              <li>
-                <Link
-                  href="/"
-                  className="transition-colors hover:text-gray-700"
-                >
-                  Confecciones Liss
-                </Link>
-              </li>
-              <li aria-hidden="true" className="text-gray-450 select-none">
-                ›
-              </li>
-              <li aria-current="page" className="font-semibold text-gray-600">
-                Updates
-              </li>
-            </ol>
-          </nav>
+          <Breadcrumb
+            items={[{ label: "Inicio", href: "/" }, { label: "Updates" }]}
+            className="animate-fade-in-up mb-6"
+          />
 
           {/* Title */}
           <h1
-            className="text-primary mb-3 text-3xl leading-tight font-bold sm:text-4xl lg:text-5xl"
-            style={{ fontFamily: "var(--font-headline)" }}
+            className="animate-fade-in-up text-primary mb-3 text-3xl leading-tight font-bold sm:text-4xl lg:text-5xl"
+            style={{
+              fontFamily: "var(--font-headline)",
+              animationDelay: "100ms",
+            }}
           >
             Historial de cambios
           </h1>
-          <p className="max-w-2xl text-base leading-relaxed text-gray-500 md:text-lg">
+          <p
+            className="animate-fade-in-up max-w-2xl text-base leading-relaxed text-gray-500 md:text-lg"
+            style={{ animationDelay: "200ms" }}
+          >
             Registro público de todas las mejoras, correcciones y decisiones
             técnicas del sitio.{" "}
             <strong className="text-gray-800">
@@ -689,7 +682,7 @@ export function UpdatesPageClient() {
       </section>
 
       {/* ── CONTENT BODY ── */}
-      <section className="bg-surface px-8 pb-24">
+      <section className="bg-surface px-5 pt-12 pb-20 md:px-8">
         <div className="mx-auto max-w-screen-2xl">
           <div className="flex flex-col gap-8 lg:flex-row lg:gap-10">
             {/* 📌 LEFT SIDEBAR (Stats + Filters) 📌 */}
