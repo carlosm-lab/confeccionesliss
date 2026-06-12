@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { SERVICE_PAGES } from "@/data/services";
 import { siteConfig } from "@/config/site";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
@@ -66,35 +67,49 @@ export default function ServiciosPage() {
                 </span>
               </div>
 
-              {/* Brand blue header */}
-              <div className="bg-primary flex min-h-[5.5rem] items-center gap-3 px-6 py-5 text-white transition-colors duration-300">
+              {/* Brand white header */}
+              <div className="text-primary flex min-h-[5.5rem] items-center gap-3 bg-white px-6 py-5 transition-colors duration-300">
                 <span
                   className="material-symbols-outlined shrink-0 text-2xl transition-transform duration-300 [transition-timing-function:var(--ease-out-expo)] group-hover:scale-110"
                   aria-hidden="true"
                 >
                   {page.navIcon}
                 </span>
-                <h2 className="pr-9 font-serif text-base leading-snug font-bold transition-colors duration-300 group-hover:text-white/95">
+                <h2 className="group-hover:text-primary/95 pr-9 font-serif text-base leading-snug font-bold transition-colors duration-300">
                   {page.title}
                 </h2>
               </div>
 
-              {/* Description & CTA */}
-              <div className="flex flex-1 flex-col p-6">
-                <p className="mb-2 flex-1 text-sm leading-relaxed text-gray-600 lg:mb-6">
-                  {page.cardDescription}
-                </p>
+              {/* Body: imagen de fondo + texto superpuesto */}
+              <div className="relative flex flex-1 flex-col overflow-hidden">
+                {/* Imagen de fondo */}
+                <Image
+                  src={page.cardImage}
+                  alt={`Imagen representativa del servicio de ${page.navLabel}`}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-500 [transition-timing-function:var(--ease-out-expo)] group-hover:scale-105"
+                />
+                {/* Overlay oscuro para contraste del texto */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/75 to-black/30" />
 
-                {/* CTA */}
-                <span className="text-primary mt-auto hidden items-center gap-1.5 text-sm font-semibold transition-colors duration-300 lg:inline-flex">
-                  Leer más
-                  <span
-                    className="material-symbols-outlined text-sm transition-transform duration-300 [transition-timing-function:var(--ease-out-expo)] group-hover:translate-x-1.5"
-                    aria-hidden="true"
-                  >
-                    arrow_forward
+                {/* Texto encima de la imagen */}
+                <div className="relative z-10 flex flex-1 flex-col justify-end p-6">
+                  <p className="mb-2 flex-1 text-sm leading-relaxed text-white lg:mb-4">
+                    {page.cardDescription}
+                  </p>
+
+                  {/* CTA */}
+                  <span className="mt-auto hidden items-center gap-1.5 text-sm font-semibold text-white transition-colors duration-300 lg:inline-flex">
+                    Leer más
+                    <span
+                      className="material-symbols-outlined text-sm transition-transform duration-300 [transition-timing-function:var(--ease-out-expo)] group-hover:translate-x-1.5"
+                      aria-hidden="true"
+                    >
+                      arrow_forward
+                    </span>
                   </span>
-                </span>
+                </div>
               </div>
             </Link>
           ))}

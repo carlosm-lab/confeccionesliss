@@ -27,6 +27,8 @@ interface ServicePage {
     ctaText: string;
     ctaHref: string;
   };
+  /** Imagen de portada para la tarjeta del listado */
+  cardImage: string;
   /** Secciones del artículo informativo */
   sections: ServiceSection[];
   /** Preguntas frecuentes del servicio (FAQ Schema) */
@@ -52,6 +54,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     cardDescription:
       "Bordado computarizado industrial de alta precisión para escudos, logotipos y nombres sobre polos, gorras, mochilas y prendas armadas.",
     heroGradient: "bg-indigo-900 text-white",
+    cardImage: "/images/servicios/bordados.png",
     heroFeatures: [
       { icon: "precision_manufacturing", text: "Alta precisión" },
       { icon: "speed", text: "Entregas rápidas" },
@@ -115,6 +118,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     cardDescription:
       "Impresión textil mediante calor para prendas deportivas. Tinta permanente de alta resolución que no se cuartea ni pierde color.",
     heroGradient: "bg-purple-900 text-white",
+    cardImage: "/images/servicios/sublimacion.png",
     heroFeatures: [
       { icon: "brush", text: "Colores vibrantes" },
       { icon: "wash", text: "No se decolora" },
@@ -177,6 +181,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     cardDescription:
       "Confección a medida en nuestro taller. Tomamos 12 medidas anatómicas para crear una prenda con un entalle profesional incomparable.",
     heroGradient: "bg-pink-900 text-white",
+    cardImage: "/images/servicios/confeccion.png",
     heroFeatures: [
       { icon: "accessibility", text: "Tallas inclusivas" },
       { icon: "cut", text: "Entalle perfecto" },
@@ -239,6 +244,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     cardDescription:
       "Trae tu propia tela y la confeccionamos con patrones profesionales, cobrando únicamente la mano de obra. Una opción económica y flexible.",
     heroGradient: "bg-amber-900 text-white",
+    cardImage: "/images/servicios/mano-obra.png",
     heroFeatures: [
       { icon: "savings", text: "Súper económico" },
       { icon: "design_services", text: "Tus propios diseños" },
@@ -302,6 +308,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     cardDescription:
       "Confección de ropa casual y de fiesta a medida. Replicamos vestidos, faldas y conjuntos a partir de fotos de referencia.",
     heroGradient: "bg-fuchsia-900 text-white",
+    cardImage: "/images/servicios/ropa-general.png",
     heroFeatures: [
       { icon: "styler", text: "Diseño libre" },
       { icon: "imagesmode", text: "Copiamos de fotos" },
