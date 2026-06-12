@@ -86,7 +86,7 @@ const CHANGELOG: VersionGroup[] = [
         title: "Corrección de la página 404 para Google Search Console",
         description:
           "Se convirtió not-found.tsx de Client Component a Server Component para permitir la exportación de metadata SEO. Anteriormente, GSC reportaba que la página 404 no se encontraba porque Next.js emitía HTTP 200 (en vez de 404) y no incluía meta tags. Se agregó metadata con título y robots, se actualizaron canonicals autorreferenciadas en todas las páginas, y se bloquearon rutas inactivas en robots.txt y sitemap.",
-        commit: "pendiente",
+        commit: "4a4d426",
       },
       {
         id: "e-101",
