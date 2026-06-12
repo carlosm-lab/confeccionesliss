@@ -58,7 +58,7 @@ export default function ServiciosPage() {
               style={{ animationDelay: `${index * 75 + 300}ms` }}
             >
               {/* Indicador visual de navegación (siempre visible) */}
-              <div className="text-primary absolute top-4 right-4 z-20 flex h-7 w-7 items-center justify-center rounded-full bg-white shadow-md transition-all duration-300">
+              <div className="bg-primary absolute top-4 right-4 z-20 flex h-7 w-7 items-center justify-center rounded-full text-white shadow-md transition-all duration-300">
                 <span
                   className="material-symbols-outlined text-[15px] font-semibold"
                   aria-hidden="true"
@@ -90,8 +90,8 @@ export default function ServiciosPage() {
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover transition-transform duration-500 [transition-timing-function:var(--ease-out-expo)] group-hover:scale-105"
                 />
-                {/* Overlay oscuro para contraste del texto */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/75 to-black/30" />
+                {/* Overlay azul para contraste del texto */}
+                <div className="from-primary/95 via-primary/75 to-primary/30 absolute inset-0 bg-gradient-to-t" />
 
                 {/* Texto encima de la imagen */}
                 <div className="relative z-10 flex flex-1 flex-col justify-end p-6">

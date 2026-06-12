@@ -7,17 +7,6 @@ export default function PublicNotFound() {
       <div className="mx-auto flex h-full w-full max-w-screen-2xl flex-col items-start gap-8 lg:flex-row lg:items-center lg:gap-16">
         {/* Left Side: Info */}
         <div className="z-10 flex w-full flex-col items-start lg:min-w-0 lg:flex-1">
-          {/* Icon Badge */}
-          <div className="bg-primary/10 text-primary mb-2 flex w-fit items-center gap-2 self-center rounded-full px-3 py-1 text-xs font-bold tracking-widest uppercase lg:mb-3 lg:self-start">
-            <span
-              className="material-symbols-outlined text-[16px]"
-              aria-hidden="true"
-            >
-              content_cut
-            </span>
-            Página no encontrada
-          </div>
-
           {/* Title */}
           <h1 className="text-primary mb-6 w-full text-center font-serif text-3xl leading-[1.15] tracking-tight sm:text-4xl md:mb-10 md:flex md:flex-col md:items-center md:text-5xl lg:mb-6 lg:block lg:text-left lg:text-5xl xl:text-6xl xl:leading-[1.1]">
             ¡Esta página se perdió en el taller!
@@ -26,9 +15,9 @@ export default function PublicNotFound() {
           {/* Responsive container for description / mobile 404 */}
           <div className="flex w-full flex-col gap-6 md:grid md:grid-cols-2 md:items-stretch md:gap-12 lg:flex lg:flex-col lg:gap-0">
             {/* Mobile / Tablet 404 */}
-            <div className="relative flex w-full max-w-sm items-center justify-center self-center py-4 md:order-2 md:h-full md:max-w-none md:self-stretch lg:hidden">
+            <div className="relative flex w-full items-center justify-center self-center py-4 select-none md:order-2 md:h-full md:max-w-none md:self-stretch lg:hidden">
               <span
-                className="text-[25vw] leading-none font-black tracking-tighter"
+                className="font-sans text-[25vw] leading-none font-black tracking-tighter md:text-[18vw]"
                 style={{
                   WebkitTextStroke: "3px var(--color-primary)",
                   color: "transparent",
@@ -53,9 +42,9 @@ export default function PublicNotFound() {
         </div>
 
         {/* Desktop 404 */}
-        <div className="hidden h-full select-none lg:flex lg:w-[40%] lg:items-center lg:justify-center">
+        <div className="hidden h-full select-none lg:flex lg:w-[45%] lg:items-center lg:justify-center">
           <span
-            className="text-[15vw] leading-none font-black tracking-tighter"
+            className="font-sans text-[15vw] leading-none font-black tracking-tighter"
             style={{
               WebkitTextStroke: "3px var(--color-primary)",
               color: "transparent",
