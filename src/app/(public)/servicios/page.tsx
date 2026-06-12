@@ -57,8 +57,8 @@ export default function ServiciosPage() {
               className="group border-primary/35 animate-fade-in-up hover:border-primary/55 focus-visible:ring-primary relative flex h-full flex-col overflow-hidden rounded-2xl border bg-white shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
               style={{ animationDelay: `${index * 75 + 300}ms` }}
             >
-              {/* Indicador visual de navegación (estático en móvil/tablet, con animación sutil en desktop) */}
-              <div className="text-primary absolute top-4 right-4 z-20 flex h-7 w-7 items-center justify-center rounded-full bg-white shadow-md transition-all duration-300 lg:translate-x-1.5 lg:opacity-0 lg:group-hover:translate-x-0 lg:group-hover:opacity-100">
+              {/* Indicador visual de navegación (siempre visible) */}
+              <div className="text-primary absolute top-4 right-4 z-20 flex h-7 w-7 items-center justify-center rounded-full bg-white shadow-md transition-all duration-300">
                 <span
                   className="material-symbols-outlined text-[15px] font-semibold"
                   aria-hidden="true"

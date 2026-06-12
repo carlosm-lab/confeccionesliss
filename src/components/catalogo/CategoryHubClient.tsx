@@ -55,8 +55,8 @@ function CategoryCard({
           priority={sector === "scrubs" || sector === "universitario"}
         />
 
-        {/* Indicador visual de navegación (estático en móvil/tablet, con animación sutil en desktop) */}
-        <div className="bg-primary absolute top-3 right-3 z-20 flex h-7 w-7 items-center justify-center rounded-full text-white shadow-md transition-all duration-300 lg:translate-x-1.5 lg:opacity-0 lg:group-hover:translate-x-0 lg:group-hover:opacity-100">
+        {/* Indicador visual de navegación (siempre visible) */}
+        <div className="bg-primary absolute top-3 right-3 z-20 flex h-7 w-7 items-center justify-center rounded-full text-white shadow-md transition-all duration-300">
           <span
             className="material-symbols-outlined text-[15px] font-semibold @[280px]:text-[17px]"
             aria-hidden="true"
