@@ -49,12 +49,12 @@ export default function ServiciosPage() {
 
       {/* Grid de servicios */}
       <section className="bg-surface px-5 pt-12 pb-20 md:px-8">
-        <div className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-6 min-[480px]:grid-cols-2 md:grid-cols-3 md:gap-8 xl:grid-cols-4">
           {SERVICE_PAGES.map((page, index) => (
             <Link
               key={page.slug}
               href={`/servicios/${page.slug}`}
-              className="group border-primary/35 animate-fade-in-up hover:border-primary/55 focus-visible:ring-primary relative flex h-full flex-col overflow-hidden rounded-2xl border bg-white shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+              className="group border-primary/35 animate-fade-in-up hover:border-primary/55 focus-visible:ring-primary @container relative mx-auto flex h-full w-full max-w-md flex-col overflow-hidden rounded-2xl border bg-white shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none lg:max-w-none"
               style={{ animationDelay: `${index * 75 + 300}ms` }}
             >
               {/* Indicador visual de navegación (siempre visible) */}
@@ -116,7 +116,7 @@ export default function ServiciosPage() {
 
           {/* Tarjeta de Proyecto Especial (Dashed Border CTA) */}
           <div
-            className="group border-primary/45 animate-fade-in-up hover:border-primary/65 relative flex h-full flex-col overflow-hidden rounded-2xl border-2 border-dashed bg-white shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]"
+            className="group border-primary/45 animate-fade-in-up hover:border-primary/65 @container relative mx-auto flex h-full w-full max-w-md flex-col overflow-hidden rounded-2xl border-2 border-dashed bg-white shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] lg:max-w-none"
             style={{ animationDelay: `${5 * 75 + 300}ms` }}
           >
             {/* Header: fondo suave, bordes punteados */}
