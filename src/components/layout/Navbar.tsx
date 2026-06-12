@@ -103,11 +103,13 @@ export function Navbar() {
   const isHomeOnly = env.NEXT_PUBLIC_HOME_ONLY === "true";
 
   /* Routes blocked in production (middleware redirects these to /) */
-  const BLOCKED_ROUTES = ["/catalogo", "/servicios"];
+  const BLOCKED_ROUTES = ["/servicios"];
 
   const navLinks = isHomeOnly
     ? NAV_LINKS.filter((link) => link.href === "/")
-    : NAV_LINKS.filter((link) => !BLOCKED_ROUTES.includes(link.href));
+    : process.env.NODE_ENV === "production"
+      ? NAV_LINKS.filter((link) => !BLOCKED_ROUTES.includes(link.href))
+      : NAV_LINKS;
 
   const closeMenu = () => setIsMenuOpen(false);
   const openSearch = () => {

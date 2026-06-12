@@ -84,16 +84,6 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
   - `onToggleFavorite?: () => void` — Callback favorito.
   - `className?: string` — Clases CSS adicionales.
 
-### Pagination
-
-- **Ruta:** `src/components/ui/Pagination.tsx`
-- **Descripción:** Componente de paginación accesible con soporte para elipsis y aria labels.
-- **Props:**
-  - `currentPage: number` — Página actual.
-  - `totalPages: number` — Total de páginas.
-  - `onPageChange?: (page: number) => void` — Callback de cambio de página.
-  - `className?: string` — Clases CSS adicionales.
-
 ### ShareButton
 
 - **Ruta:** `src/components/ui/ShareButton.tsx`
@@ -102,53 +92,6 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 - **Ejemplo:** `<ShareButton />`
 
 ## Catálogo Components
-
-### CatalogHero
-
-- **Ruta:** `src/components/catalogo/CatalogHero.tsx`
-- **Descripción:** Hero section reutilizable para las categorías del catálogo con título, subtítulo, descripción e ícono.
-- **Props:**
-  - `title: string` — Título principal.
-  - `subtitle?: string` — Subtítulo con badge.
-  - `description: string` — Descripción.
-  - `icon?: string` — Ícono Material Symbols.
-  - `bgClassName?: string` — Clase de fondo CSS.
-  - `children?: ReactNode` — Contenido adicional.
-
-### FilterSidebar
-
-- **Ruta:** `src/components/catalogo/FilterSidebar.tsx`
-- **Descripción:** Sidebar de filtros colapsable con checkboxes agrupados por categoría.
-- **Props:**
-  - `groups: FilterGroup[]` — Grupos de filtros con opciones.
-  - `onFilterChange?: (group: string, values: string[]) => void` — Callback de cambio.
-  - `className?: string` — Clases CSS adicionales.
-
-### VolumePricingCard
-
-- **Ruta:** `src/components/catalogo/VolumePricingCard.tsx`
-- **Descripción:** Tabla de precios por volumen con soporte para highlight de mejor tier.
-- **Props:**
-  - `title?: string` — Título de la tabla.
-  - `description?: string` — Descripción.
-  - `tiers: { range: string; discount: string; highlight?: boolean }[]` — Niveles de precio.
-  - `className?: string` — Clases CSS adicionales.
-
-### ProcessSteps
-
-- **Ruta:** `src/components/catalogo/ProcessSteps.tsx`
-- **Descripción:** Timeline visual del proceso de pedido con pasos numerados y conectores.
-- **Props:**
-  - `title?: string` — Título de la sección.
-  - `steps: { number: number; title: string; description: string; icon?: string }[]` — Pasos.
-  - `className?: string` — Clases CSS adicionales.
-
-### QuoteForm
-
-- **Ruta:** `src/components/catalogo/QuoteForm.tsx`
-- **Descripción:** Formulario de cotización corporativa con campos de nombre, empresa, email, teléfono, cantidad y mensaje.
-- **Props:**
-  - `className?: string` — Clases CSS adicionales.
 
 ## SEO Components
 

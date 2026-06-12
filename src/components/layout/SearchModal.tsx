@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { ALL_PRODUCTS } from "@/data/products";
 import { CATEGORIES } from "@/data/categories";
 import type { Sector } from "@/data/types";
+import { siteConfig } from "@/config/site";
 
 /* ─── Sector order for category chips ─── */
 const SECTOR_ORDER: Sector[] = [
@@ -87,17 +88,19 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
   /* ── Navigation handlers ── */
   const navigateToProduct = useCallback(
-    (sector: string, id: string) => {
+    (product: (typeof ALL_PRODUCTS)[number]) => {
       onClose();
-      router.push(`/catalogo/${sector}/${id}`);
+      const message = encodeURIComponent(
+        `¡Hola! Me interesa el producto: ${product.nombre} ($${product.precio.toFixed(2)}). ¿Está disponible?`
+      );
+      window.open(
+        `${siteConfig.links.whatsappDirect}?text=${message}`,
+        "_blank",
+        "noopener,noreferrer"
+      );
     },
-    [onClose, router]
+    [onClose]
   );
-
-  const navigateToAllResults = useCallback(() => {
-    onClose();
-    router.push(`/catalogo?query=${encodeURIComponent(query.trim())}`);
-  }, [onClose, router, query]);
 
   const handleChipClick = useCallback((label: string) => {
     setQuery(label);
@@ -207,20 +210,6 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   {allMatches.length}{" "}
                   {allMatches.length === 1 ? "resultado" : "resultados"}
                 </p>
-                {hasMoreResults && (
-                  <button
-                    onClick={navigateToAllResults}
-                    className="text-primary hover:text-primary/80 flex items-center gap-1 text-xs font-semibold transition-colors"
-                  >
-                    Ver todos los resultados
-                    <span
-                      className="material-symbols-outlined text-sm"
-                      aria-hidden="true"
-                    >
-                      arrow_forward
-                    </span>
-                  </button>
-                )}
               </div>
 
               {/* Results grid */}
@@ -228,9 +217,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                 {visibleResults.map((product) => (
                   <button
                     key={product.id}
-                    onClick={() =>
-                      navigateToProduct(product.sector, product.id)
-                    }
+                    onClick={() => navigateToProduct(product)}
                     className="group flex w-full items-center gap-3.5 rounded-xl px-2 py-2.5 text-left transition-colors hover:bg-gray-50"
                   >
                     {/* Thumbnail */}

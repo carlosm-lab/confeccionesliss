@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Sector } from "@/data/types";
@@ -23,10 +22,6 @@ interface ProductCardProps {
   isFavorited?: boolean;
   pricePrefix?: string;
   priceSuffix?: string;
-  /** Override the sector slug in the product URL (e.g., sub-page slug) */
-  catalogSlug?: string;
-  /** Base path for the product URL. Defaults to "/catalogo" */
-  basePath?: string;
   onAddToCart?: () => void;
   onToggleFavorite?: () => void;
   className?: string;
@@ -48,8 +43,6 @@ export function ProductCard({
   isFavorited = false,
   pricePrefix,
   priceSuffix,
-  catalogSlug,
-  basePath = "/catalogo",
   onAddToCart,
   onToggleFavorite,
   className,
@@ -79,10 +72,9 @@ export function ProductCard({
   }
 
   return (
-    <Link
-      href={`${basePath}/${catalogSlug || sector}/${id}`}
+    <div
       className={cn(
-        "group hover:border-primary/20 focus-visible:ring-primary relative flex h-full flex-col overflow-hidden rounded-xl border border-transparent bg-white shadow-sm transition-all hover:shadow-md focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none",
+        "group hover:border-primary/20 relative flex h-full flex-col overflow-hidden rounded-xl border border-transparent bg-white shadow-sm transition-all hover:shadow-md focus-visible:outline-none",
         className
       )}
     >
@@ -199,7 +191,6 @@ export function ProductCard({
           </div>
         )}
 
-        {/* Botón Agregar */}
         <button
           type="button"
           onClick={handleAddToCart}
@@ -210,6 +201,6 @@ export function ProductCard({
           <span className="sr-only">: {nombre}</span>
         </button>
       </div>
-    </Link>
+    </div>
   );
 }

@@ -7,7 +7,7 @@ import { env } from "@/env";
  * These pages are not ready for public access yet.
  * The middleware redirects them back to home.
  */
-const BLOCKED_ROUTES = ["/catalogo", "/servicios"];
+const BLOCKED_ROUTES = ["/servicios"];
 
 export function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
@@ -21,14 +21,16 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // ── Selective blocking: redirect BLOCKED_ROUTES to home ──
-  const isBlocked = BLOCKED_ROUTES.some(
-    (route) => url.pathname === route || url.pathname.startsWith(`${route}/`)
-  );
+  // ── Selective blocking: redirect BLOCKED_ROUTES to home only in production ──
+  if (env.NODE_ENV === "production") {
+    const isBlocked = BLOCKED_ROUTES.some(
+      (route) => url.pathname === route || url.pathname.startsWith(`${route}/`)
+    );
 
-  if (isBlocked) {
-    url.pathname = "/";
-    return NextResponse.redirect(url, 307);
+    if (isBlocked) {
+      url.pathname = "/";
+      return NextResponse.redirect(url, 307);
+    }
   }
 
   return NextResponse.next();
