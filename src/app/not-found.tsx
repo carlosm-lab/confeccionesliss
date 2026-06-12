@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
@@ -18,7 +17,7 @@ export default function NotFound() {
         {/* Giant Decorative 404 */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center overflow-hidden opacity-[0.03] select-none"
+          className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center overflow-hidden opacity-[0.15] select-none"
         >
           <span
             className="text-[30vw] leading-none font-black tracking-tighter"
@@ -40,18 +39,9 @@ export default function NotFound() {
             ¡Esta página se perdió en el taller!
           </h1>
 
-          <p className="text-on-surface-variant mb-10 max-w-md text-lg leading-relaxed md:text-xl">
+          <p className="text-on-surface-variant max-w-md text-lg leading-relaxed md:text-xl">
             La página que buscas no existe o fue movida.
           </p>
-
-          <div className="flex w-full flex-col justify-center gap-4 sm:w-auto sm:flex-row">
-            <Link
-              className="bg-primary hover:bg-primary/95 rounded-xl px-8 py-3.5 text-center font-semibold text-white shadow-md transition-all duration-200 active:scale-[0.98]"
-              href="/"
-            >
-              Volver al inicio
-            </Link>
-          </div>
         </div>
       </main>
 
