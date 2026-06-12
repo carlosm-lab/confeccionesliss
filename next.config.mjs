@@ -48,12 +48,22 @@ const nextConfig = {
       },
       {
         source: "/producto/:id",
-        destination: "/catalogo/scrubs/:id",
+        destination: "/catalogo",
         permanent: true,
       },
       {
         source: "/catalogo/salud/:path*",
-        destination: "/catalogo/scrubs/:path*",
+        destination: "/catalogo",
+        permanent: true,
+      },
+      {
+        source: "/catalogo/:slug+",
+        destination: "/catalogo",
+        permanent: true,
+      },
+      {
+        source: "/servicios/:slug+",
+        destination: "/servicios",
         permanent: true,
       },
     ];
