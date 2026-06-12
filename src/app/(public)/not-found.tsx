@@ -1,6 +1,6 @@
 export default function PublicNotFound() {
   return (
-    <section className="relative mx-auto flex w-full max-w-screen-2xl flex-grow flex-col items-center justify-center px-5 py-12 md:px-8 lg:py-24">
+    <section className="relative mx-auto flex min-h-[calc(100dvh-80px)] w-full max-w-screen-2xl flex-col items-center justify-center px-5 py-8 md:px-8 lg:h-[calc(100dvh-80px)]">
       <div className="flex w-full flex-col items-center gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
         {/* Left Side: Info */}
         <div className="z-10 flex w-full flex-col items-center text-center lg:flex-1 lg:items-start lg:text-left">
@@ -29,7 +29,13 @@ export default function PublicNotFound() {
 
         {/* Right Side: Giant 404 */}
         <div className="flex w-full items-center justify-center select-none lg:flex-1">
-          <span className="text-primary font-serif text-[10rem] leading-none font-black tracking-tighter sm:text-[12rem] lg:text-[15rem]">
+          <span
+            className="text-[25vw] leading-none font-black tracking-tighter lg:text-[15vw]"
+            style={{
+              WebkitTextStroke: "3px var(--color-primary)",
+              color: "transparent",
+            }}
+          >
             404
           </span>
         </div>
