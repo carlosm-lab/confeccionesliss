@@ -105,7 +105,7 @@ export function ProductDetailClient({
         {/* ── Left column: Sticky image gallery ───────────────────────────── */}
         <div className="flex w-full min-w-0 flex-col-reverse items-start gap-5 md:flex-row md:gap-8 lg:sticky lg:top-24 lg:gap-7">
           {/* Thumbnail strip: below on mobile, left column on tablet/desktop */}
-          <div className="no-scrollbar flex w-full min-w-0 shrink-0 flex-row gap-4 overflow-x-auto pb-2 md:max-h-[500px] md:w-28 md:flex-col md:overflow-y-auto md:pb-0 lg:max-h-[600px] lg:w-24 lg:flex-col lg:overflow-y-auto lg:pb-0">
+          <div className="no-scrollbar flex w-full min-w-0 shrink-0 flex-row gap-4 overflow-x-auto pb-2 md:w-28 md:flex-col md:pb-0 lg:w-24">
             {images.map((img, i) => (
               <button
                 key={`img-${i}`}
