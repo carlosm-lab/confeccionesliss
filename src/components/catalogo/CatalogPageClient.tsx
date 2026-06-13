@@ -57,7 +57,7 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
         const next = { ...prev };
         for (const [key, val] of Object.entries(next)) {
           if (val && val.length > 1) {
-            next[key] = [val[0]];
+            next[key] = [];
           }
         }
         return next;
