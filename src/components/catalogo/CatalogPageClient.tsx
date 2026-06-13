@@ -11,7 +11,7 @@
  * - Estado vacío elegante
  */
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { ALL_PRODUCTS } from "@/data/products";
 import { FilterSidebar, type ActiveFilters } from "./FilterSidebar";
 import { MobileFilterDrawer, type SortOption } from "./MobileFilterDrawer";
@@ -49,6 +49,20 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
   const [onSaleOnly, setOnSaleOnly] = useState(false);
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
   const [isMultiSelect, setIsMultiSelect] = useState(false);
+  const [isSortOpen, setIsSortOpen] = useState(false);
+  const sortRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (sortRef.current && !sortRef.current.contains(event.target as Node)) {
+        setIsSortOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   function handleSetIsMultiSelect(multi: boolean) {
     setIsMultiSelect(multi);
@@ -215,24 +229,116 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
               Mostrando {rangeStart}–{rangeEnd} de {totalCount}{" "}
               {totalCount === 1 ? "prenda" : "prendas"}
             </p>
-            <div className="flex items-center gap-[var(--space-sm)]">
-              <label
-                htmlFor="catalog-sort"
-                className="font-medium whitespace-nowrap text-[var(--text-sm)] text-slate-700"
-              >
+            <div
+              className="relative flex items-center gap-[var(--space-sm)]"
+              ref={sortRef}
+            >
+              <span className="font-medium whitespace-nowrap text-[var(--text-sm)] text-slate-700">
                 Ordenar por:
-              </label>
-              <select
-                id="catalog-sort"
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as SortOption)}
-                className="form-select text-primary cursor-pointer border-none bg-transparent font-bold text-[var(--text-sm)] focus:ring-0"
-              >
-                <option value="best-selling">Recomendados</option>
-                <option value="newest">Más Nuevos</option>
-                <option value="price-low">Precio: Menor a Mayor</option>
-                <option value="price-high">Precio: Mayor a Menor</option>
-              </select>
+              </span>
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setIsSortOpen((v) => !v)}
+                  className="group flex cursor-pointer items-center gap-1 font-bold text-[var(--color-primary)] text-[var(--text-sm)] outline-none"
+                >
+                  <span>
+                    {sortBy === "best-selling" && "Recomendados"}
+                    {sortBy === "newest" && "Más Nuevos"}
+                    {sortBy === "price-low" && "Precio: Menor a Mayor"}
+                    {sortBy === "price-high" && "Precio: Mayor a Menor"}
+                  </span>
+                  <span
+                    className={`material-symbols-outlined transition-transform duration-200 ${
+                      isSortOpen ? "rotate-180" : ""
+                    }`}
+                    style={{ fontSize: "18px" }}
+                  >
+                    expand_more
+                  </span>
+                </button>
+
+                {isSortOpen && (
+                  <div className="animate-in fade-in slide-in-from-top-2 absolute right-0 z-50 mt-2 w-56 origin-top-right rounded-2xl border border-slate-100 bg-white p-1.5 shadow-[0_10px_25px_rgba(20,48,103,0.12)] ring-1 ring-black/5 duration-150">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSortBy("best-selling");
+                        setIsSortOpen(false);
+                      }}
+                      className={`flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-sm font-semibold transition-all ${
+                        sortBy === "best-selling"
+                          ? "bg-[rgba(20,48,103,0.06)] text-[var(--color-primary)]"
+                          : "text-slate-700 hover:bg-slate-50"
+                      }`}
+                    >
+                      <span>Recomendados</span>
+                      {sortBy === "best-selling" && (
+                        <span className="material-symbols-outlined text-[16px]">
+                          check
+                        </span>
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSortBy("newest");
+                        setIsSortOpen(false);
+                      }}
+                      className={`flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-sm font-semibold transition-all ${
+                        sortBy === "newest"
+                          ? "bg-[rgba(20,48,103,0.06)] text-[var(--color-primary)]"
+                          : "text-slate-700 hover:bg-slate-50"
+                      }`}
+                    >
+                      <span>Más Nuevos</span>
+                      {sortBy === "newest" && (
+                        <span className="material-symbols-outlined text-[16px]">
+                          check
+                        </span>
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSortBy("price-low");
+                        setIsSortOpen(false);
+                      }}
+                      className={`flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-sm font-semibold transition-all ${
+                        sortBy === "price-low"
+                          ? "bg-[rgba(20,48,103,0.06)] text-[var(--color-primary)]"
+                          : "text-slate-700 hover:bg-slate-50"
+                      }`}
+                    >
+                      <span>Precio: Menor a Mayor</span>
+                      {sortBy === "price-low" && (
+                        <span className="material-symbols-outlined text-[16px]">
+                          check
+                        </span>
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSortBy("price-high");
+                        setIsSortOpen(false);
+                      }}
+                      className={`flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left text-sm font-semibold transition-all ${
+                        sortBy === "price-high"
+                          ? "bg-[rgba(20,48,103,0.06)] text-[var(--color-primary)]"
+                          : "text-slate-700 hover:bg-slate-50"
+                      }`}
+                    >
+                      <span>Precio: Mayor a Menor</span>
+                      {sortBy === "price-high" && (
+                        <span className="material-symbols-outlined text-[16px]">
+                          check
+                        </span>
+                      )}
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
