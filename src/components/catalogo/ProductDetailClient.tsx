@@ -99,7 +99,7 @@ export function ProductDetailClient({
   const placeholderCount = Math.max(0, 4 - images.length);
 
   return (
-    <div className="mx-auto max-w-screen-2xl flex-1 px-5 py-[var(--space-lg)] md:px-8">
+    <div className="mx-auto flex min-h-[calc(100dvh-56px)] w-full max-w-screen-2xl flex-1 flex-col px-5 py-[var(--space-lg)] md:px-8">
       {/* ── Main product grid ─────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 items-start gap-10 md:grid-cols-2 lg:grid-cols-[45%_1fr] lg:gap-12">
         {/* ── Left column: Sticky image gallery ───────────────────────────── */}

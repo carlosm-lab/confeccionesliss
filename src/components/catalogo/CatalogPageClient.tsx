@@ -188,7 +188,7 @@ export function CatalogPageClient({ sector, config }: CatalogPageClientProps) {
   const rangeEnd = Math.min(currentPage * ITEMS_PER_PAGE, totalCount);
 
   return (
-    <div className="relative w-full">
+    <div className="relative flex min-h-[calc(100dvh-56px)] w-full flex-col">
       {/* Breadcrumbs full width above layout */}
       <div className="mx-auto w-full max-w-screen-2xl px-5 pt-6 md:px-8 lg:absolute lg:top-0 lg:right-0 lg:left-0 lg:z-10">
         <Breadcrumb
