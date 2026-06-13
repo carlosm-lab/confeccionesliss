@@ -80,10 +80,10 @@ export default async function ProductDetailPage({
     notFound();
   }
 
-  // Related products: same sector, different product, up to 4
+  // Related products: same sector, different product, up to 5
   const relatedProducts = ALL_PRODUCTS.filter(
     (p) => p.sector === sector && p.id !== id
-  ).slice(0, 4);
+  ).slice(0, 5);
 
   const PAGE_URL = `${siteConfig.url}/catalogo/${sector}/${id}`;
   const description =
