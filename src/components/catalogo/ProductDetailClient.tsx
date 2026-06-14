@@ -103,9 +103,9 @@ export function ProductDetailClient({
       {/* ── Main product grid ─────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[45%_1fr] lg:gap-12">
         {/* ── Left column: Sticky image gallery ───────────────────────────── */}
-        <div className="flex w-full min-w-0 flex-col-reverse items-start gap-5 md:grid md:grid-cols-[1fr_4.2fr] md:gap-8 lg:sticky lg:top-24 lg:grid-cols-[1fr_1px_4.3fr] lg:gap-7">
+        <div className="flex w-full min-w-0 flex-col-reverse items-start gap-5 md:grid md:grid-cols-[calc(20%-12.16px)_calc(80%-19.84px)] md:gap-8 lg:sticky lg:top-24 lg:grid-cols-[calc(20%-17.16px)_1px_calc(80%-39.84px)] lg:gap-7">
           {/* Thumbnail strip: below on mobile, left column on tablet/desktop */}
-          <div className="no-scrollbar flex w-full min-w-0 shrink-0 flex-row gap-4 overflow-x-auto pb-2 md:w-full md:flex-col md:gap-3 md:pb-0 lg:gap-2">
+          <div className="no-scrollbar flex w-full min-w-0 shrink-0 flex-row gap-4 overflow-x-auto pb-2 md:w-full md:flex-col md:gap-3 md:pb-0">
             {images.map((img, i) => (
               <button
                 key={`img-${i}`}
