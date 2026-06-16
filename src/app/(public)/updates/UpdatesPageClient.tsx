@@ -121,6 +121,64 @@ const CHANGELOG: VersionGroup[] = [
         description:
           "Se corrigió un fallo de tipo TypeScript ('Cannot find name ch') originado por una condición ternaria incorrecta en el mapeo de los canales de información en contacto/page.tsx.",
       },
+      {
+        id: "e-118",
+        date: "2026-06-13",
+        category: "fix",
+        title: "Corrección de salto de línea en el toast de confirmación",
+        description:
+          "Se agregó la propiedad CSS 'white-space: nowrap' al contenedor de notificaciones en ShareButton y ProductDetailClient para evitar saltos de línea y garantizar la presentación en una sola línea de la confirmación de copia del enlace.",
+      },
+    ],
+  },
+  {
+    version: "v0.9.5",
+    label:
+      "Lanzamiento de Catálogo Completo · Filtros Multi-Select · Vista de Detalle",
+    dateRange: "12 – 13 de junio de 2026",
+    entries: [
+      {
+        id: "e-114",
+        date: "2026-06-13",
+        category: "feat",
+        title: "Estructura del catálogo y vista de detalle de producto",
+        description:
+          "Se crearon las páginas del catálogo (/catalogo, /catalogo/[sector]) y la vista detallada del producto (/catalogo/[sector]/[id]). Se implementó la galería de imágenes interactiva en proporción 4:5, el panel de personalización de compra (talla, color, bordado y cantidad) y la integración de envío de pedido directo a WhatsApp. Se añadió una sección de productos relacionados que muestra hasta 5 tarjetas en pantallas grandes.",
+        commit: "48f02d0",
+        note: "Agrupa commits 48f02d0, 8de00fd, 2344a7a, 353c919 y 06ae62f.",
+      },
+      {
+        id: "e-115",
+        date: "2026-06-13",
+        category: "feat",
+        title:
+          "Filtros con soporte multi-select y menú de ordenamiento personalizado",
+        description:
+          "Se implementó un sistema de filtrado con soporte para selección múltiple en el panel lateral (FilterSidebar) y en el panel desplegable móvil (MobileFilterDrawer). Se integraron opciones de combinación lógica de filtros, un botón para limpiar selecciones y la opción unificada de filtro 'Todos'. Asimismo, se reemplazó el selector de ordenamiento nativo por un menú desplegable personalizado para ordenar por precio y nombre.",
+        commit: "f3eabb1",
+        note: "Agrupa commits f3eabb1, f09009b, e38a9b1 y 887ed4b.",
+      },
+      {
+        id: "e-116",
+        date: "2026-06-13",
+        category: "style",
+        title:
+          "Ajuste de relaciones de aspecto y alineación de galería en catálogo",
+        description:
+          "Se optimizaron los anchos y espaciados de las miniaturas en la galería del detalle de producto. Se implementó una fórmula de proporción de columnas para alinear la altura de la galería con la información del producto y se eliminó la restricción de altura máxima en las miniaturas.",
+        commit: "b17a382",
+        note: "Agrupa commits b17a382, ff25ea8, be2a259, d8639e9 y ee7cecd.",
+      },
+      {
+        id: "e-117",
+        date: "2026-06-12",
+        category: "chore",
+        title: "Eliminación de rutas inactivas y componentes obsoletos",
+        description:
+          "Se removieron las antiguas subrutas y componentes estáticos de filtros del catálogo y servicios que quedaron sin uso tras la reestructuración. Se vació la lista global de productos para prepararla para la base de datos de producción y se unificó la alineación móvil de la cabecera en Contacto.",
+        commit: "9e98e0d",
+        note: "Agrupa commits 9e98e0d, fa50fa7, 931cc26 y cdfa4cc.",
+      },
     ],
   },
   {
@@ -864,7 +922,7 @@ export function UpdatesPageClient() {
                     },
                     {
                       label: "Commits",
-                      value: "80+",
+                      value: "160+",
                       icon: "terminal",
                       colorClass:
                         "bg-[#143067]/5 text-[#143067] border-[#143067]/10",
