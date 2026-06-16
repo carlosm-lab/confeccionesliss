@@ -17,19 +17,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ];
   }
 
-  // Páginas públicas activas (excluyendo servicios que está bloqueada)
+  // Páginas públicas activas (excluye /catalogo y /servicios, bloqueadas en producción)
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: siteConfig.url,
       lastModified: now,
       changeFrequency: "weekly",
       priority: 1,
-    },
-    {
-      url: `${siteConfig.url}/catalogo`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.9,
     },
     {
       url: `${siteConfig.url}/contacto`,
