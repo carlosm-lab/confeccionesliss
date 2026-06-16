@@ -3,10 +3,9 @@ import { siteConfig } from "@/config/site";
 import { LinksPageClient } from "./LinksPageClient";
 
 const PAGE_URL = `${siteConfig.url}/links`;
-const PAGE_TITLE =
-  "Redes Sociales y Enlaces Oficiales de Confecciones Liss — Contacto Directo.";
+const PAGE_TITLE = "Redes Sociales Oficiales | Confecciones Liss";
 const PAGE_DESCRIPTION =
-  "Accede a los enlaces oficiales de Confecciones Liss: WhatsApp de ventas, Instagram, Facebook, TikTok y ubicación de nuestro taller en San Miguel.";
+  "Síguenos en Instagram, Facebook, TikTok, YouTube, Threads y más. Todos los perfiles y canales oficiales de Confecciones Liss en un solo lugar.";
 
 export const metadata: Metadata = {
   title: {
@@ -14,7 +13,7 @@ export const metadata: Metadata = {
   },
   description: PAGE_DESCRIPTION,
   keywords:
-    "Confecciones Liss, contacto, WhatsApp de ventas, redes sociales oficiales, Instagram Confecciones Liss, TikTok Confecciones Liss, Facebook Confecciones Liss, ubicación taller San Miguel",
+    "redes sociales Confecciones Liss, Instagram Confecciones Liss, Facebook Confecciones Liss, TikTok Confecciones Liss, YouTube Confecciones Liss, Threads, perfiles oficiales, síguenos",
   alternates: {
     canonical: PAGE_URL,
   },

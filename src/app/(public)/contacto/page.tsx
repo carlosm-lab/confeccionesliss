@@ -4,9 +4,9 @@ import { siteConfig } from "@/config/site";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 const PAGE_URL = `${siteConfig.url}/contacto`;
-const PAGE_TITLE = "Contacto | Confecciones Liss";
+const PAGE_TITLE = "Taller y Contacto en San Miguel | Confecciones Liss";
 const PAGE_DESCRIPTION =
-  "Contáctanos en San Miguel, El Salvador. WhatsApp +503 7331-7181, correo confeccionesliss.contacto@gmail.com. Lun–Sáb 8:00 AM – 5:00 PM. Barrio La Merced.";
+  "Visítanos en Barrio La Merced, San Miguel, El Salvador. WhatsApp +503 7331-7181 · correo confeccionesliss.contacto@gmail.com. Atención Lun–Sáb 8:00 AM – 5:00 PM.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
