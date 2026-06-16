@@ -1,0 +1,107 @@
+# Reporte de Auditoría — Sistema Open Graph
+## Proyecto: Confecciones Liss (Next.js 16 / App Router)
+
+Este reporte describe los problemas encontrados en el sistema de generación de imágenes Open Graph del proyecto. Está redactado para que un agente de IA lo interprete y aplique las correcciones necesarias. No contiene código de solución; sólo describe con precisión qué archivos están afectados, qué hace cada uno mal y cuál es el comportamiento esperado tras la corrección.
+
+---
+
+## Contexto del sistema actual
+
+El proyecto usa Next.js con App Router. La convención de Next.js para generar imágenes OG dinámicas consiste en colocar un archivo llamado `opengraph-image.tsx` junto a un `page.tsx` o `layout.tsx`. Next.js detecta ese archivo automáticamente, genera la imagen en el servidor usando `ImageResponse` de `next/og`, e inyecta la etiqueta `og:image` correspondiente en el `<head>` de la ruta. La imagen se puede colocar a nivel de ruta raíz (como fallback global), a nivel de grupo de rutas (para que todas las subrutas hereden) o a nivel de página individual (para personalización específica).
+
+En este proyecto existen los siguientes archivos relevantes para el sistema OG:
+
+- `src/app/(public)/opengraph-image.tsx` — genera la imagen de la home con la foto de portada de uniformes y el bloque de texto de la marca.
+- `src/app/(public)/twitter-image.tsx` — duplicado exacto del anterior, para Twitter/X.
+- `src/app/(public)/links/opengraph-image.tsx` — genera una imagen personalizada para la página `/links`. Este es el único que funciona correctamente.
+- Todas las demás rutas del grupo `(public)` — `/catalogo`, `/catalogo/[sector]`, `/catalogo/[sector]/[id]`, `/contacto`, `/servicios`, `/updates` — no tienen ningún archivo `opengraph-image.tsx` propio.
+
+---
+
+## Problema 1 — Las subpáginas no tienen imagen OG y heredan una imagen incorrecta
+
+**Archivos afectados:** todas las rutas bajo `src/app/(public)/` excepto `/links`.
+
+**Descripción del problema:** Cuando Next.js no encuentra un `opengraph-image.tsx` en la carpeta de una ruta, sube por el árbol de directorios hasta encontrar uno. El archivo `src/app/(public)/opengraph-image.tsx` está al nivel del grupo `(public)`, por lo que actúa como fallback para todas las subrutas de ese grupo. Esto significa que `/catalogo/universitario/scrub-univo`, `/contacto`, `/servicios` y `/updates` están mostrando la misma imagen que la home: una imagen genérica con la foto de portada de uniformes y el texto "Scrubs y Uniformes a la Medida en San Miguel". Esa imagen no tiene ninguna relación con el contenido de esas páginas.
+
+**Comportamiento esperado:** Cada ruta del catálogo de productos debería generar su propia imagen con el nombre del producto, su precio y su fotografía. Las páginas de sección del catálogo deberían generar una imagen que refleje la categoría correspondiente. Las páginas de contenido como `/contacto` o `/updates` deberían tener al menos una imagen genérica de la marca que sea diferente a la de la home, o en su defecto una imagen específica para esa sección.
+
+---
+
+## Problema 2 — El archivo `opengraph-image.tsx` de la ruta raíz usa `sharp` y `readFile` de Node.js, que son incompatibles con el Edge Runtime
+
+**Archivos afectados:**
+- `src/app/(public)/opengraph-image.tsx`
+- `src/app/(public)/twitter-image.tsx`
+
+**Descripción del problema:** Ambos archivos contienen el siguiente patrón: importan `sharp` desde el paquete `sharp`, importan `readFile` desde `node:fs/promises`, y luego en la función `Image()` leen físicamente un archivo `.webp` del disco usando `readFile(join(process.cwd(), 'public/images/uniformes/portada.webp'))`, lo procesan con `sharp` para convertirlo a PNG, y lo codifican en base64 para pasarlo a `ImageResponse`.
+
+Este enfoque tiene dos problemas graves. El primero es que `sharp` es una dependencia nativa de Node.js que no está disponible en el Edge Runtime de Vercel, que es donde Next.js ejecuta estos archivos por defecto en producción. El segundo es que `readFile` de `node:fs` tampoco está disponible en Edge Runtime. Si el proyecto se despliega en Vercel con la configuración estándar, estas funciones fallarán silenciosamente o lanzarán un error en tiempo de ejecución, lo que puede resultar en que la imagen OG no se genere en absoluto.
+
+El paquete `sharp` está listado en las `devDependencies` del `package.json`, no en las `dependencies`, lo que confirma que no está pensado para producción y que su presencia en estos archivos es un error de implementación.
+
+**Comportamiento esperado:** La obtención de imágenes para usar dentro de `ImageResponse` debería hacerse mediante `fetch()` apuntando a la URL pública del recurso, usando `process.env.NEXT_PUBLIC_SITE_URL` como base. El resultado se convierte a `ArrayBuffer` con `res.arrayBuffer()` y luego a base64 con `Buffer.from(buffer).toString('base64')`. Este método es compatible con Edge Runtime y no requiere ninguna dependencia nativa.
+
+---
+
+## Problema 3 — Las páginas de productos usan `og:image` con rutas relativas en el objeto `metadata`
+
+**Archivos afectados:**
+- `src/app/(public)/catalogo/[sector]/[id]/page.tsx`
+
+**Descripción del problema:** La función `generateMetadata` de esta página construye el objeto `openGraph` con `images: [{ url: product.imagen, alt: product.imageAlt ?? product.nombre }]`. El campo `product.imagen` en la mayoría de los productos del catálogo contiene una ruta relativa como `/images/uniformes/univo.webp` o `/images/productos/scrub-san-miguel.png`. Las redes sociales (Facebook, WhatsApp, LinkedIn, Twitter/X) requieren que el valor de `og:image` sea una URL absoluta con protocolo y dominio. Una ruta relativa es ignorada por los scrapers de redes sociales, lo que resulta en que la tarjeta de previsualización aparece sin imagen incluso cuando la imagen existe en el servidor.
+
+La instancia de `siteConfig.url` está disponible en ese mismo archivo y es `https://www.confeccionesliss.com`. El valor de `product.imagen` debería concatenarse con esa URL base cuando la ruta sea relativa, antes de pasarla al campo `url` del objeto `images`.
+
+**Comportamiento esperado:** Todas las URLs de `og:image` que se construyan en `metadata` deben ser absolutas. La lógica de construcción debe detectar si el valor de `product.imagen` comienza con `http` y, si no lo hace, debe prefijarle `siteConfig.url`.
+
+---
+
+## Problema 4 — Las páginas de sección del catálogo y otras páginas no tienen `og:image` en absoluto
+
+**Archivos afectados:**
+- `src/app/(public)/catalogo/page.tsx`
+- `src/app/(public)/catalogo/[sector]/page.tsx`
+- `src/app/(public)/contacto/page.tsx`
+- `src/app/(public)/servicios/page.tsx`
+- `src/app/(public)/updates/page.tsx`
+- `src/app/(public)/links/page.tsx`
+
+**Descripción del problema:** Revisando el objeto `metadata.openGraph` de cada una de estas páginas, ninguna incluye una propiedad `images`. Esto significa que, aunque Next.js puede heredar el `opengraph-image.tsx` del grupo `(public)` como imagen fallback, la imagen que se muestra es la genérica de la home y no refleja el contenido real de la página.
+
+La página `/links/page.tsx` es una excepción parcial: tiene un archivo `opengraph-image.tsx` propio que funciona correctamente, pero su `metadata.openGraph` tampoco tiene `images`, lo que puede generar inconsistencias dependiendo de cómo distintas redes sociales resuelvan la imagen.
+
+**Comportamiento esperado:** Cada una de estas páginas debería al minimum incluir en su `metadata.openGraph` un campo `images` apuntando a una imagen estática relevante con URL absoluta, como una imagen de la categoría correspondiente. La solución más robusta sería crear un archivo `opengraph-image.tsx` en cada una de las carpetas de estas rutas, especialmente para `/catalogo/[sector]` donde la imagen puede variar según el sector.
+
+---
+
+## Problema 5 — `twitter-image.tsx` es un duplicado exacto de `opengraph-image.tsx` y hereda todos sus problemas
+
+**Archivos afectados:**
+- `src/app/(public)/twitter-image.tsx`
+
+**Descripción del problema:** El contenido de este archivo es línea por línea idéntico al de `opengraph-image.tsx`. Tiene el mismo problema con `sharp` y `readFile`. Adicionalmente, el tamaño exportado es `1200×630`, que es el correcto para Twitter con tarjeta `summary_large_image`, pero la inconsistencia de implementación entre ambos archivos sugiere que fueron copiados sin revisión.
+
+**Comportamiento esperado:** En Next.js, si `opengraph-image.tsx` y `twitter-image.tsx` tienen el mismo contenido, es válido usar solo `opengraph-image.tsx` y omitir el segundo, ya que Twitter lo usará como fallback. Si se quiere mantener `twitter-image.tsx` separado, debe aplicársele el mismo fix que a `opengraph-image.tsx` respecto a la eliminación de `sharp` y `readFile`.
+
+---
+
+## Resumen de prioridades para el agente que aplique las correcciones
+
+Las correcciones deben aplicarse en el siguiente orden de prioridad, de mayor a menor impacto:
+
+El primer cambio es eliminar el uso de `sharp` y `readFile` en `opengraph-image.tsx` y `twitter-image.tsx` del grupo `(public)`. Esto es bloqueante: si el Edge Runtime falla al generar estas imágenes, el resto del sistema OG no tiene sentido.
+
+El segundo cambio es crear un archivo `opengraph-image.tsx` en la carpeta de la ruta dinámica de producto `src/app/(public)/catalogo/[sector]/[id]/`. Esta es la ruta con más impacto SEO y de compartir, porque es donde los usuarios comparten productos individuales en redes sociales. La imagen debe usar los datos del producto (nombre, precio, descripción corta, fotografía) para generar una tarjeta personalizada.
+
+El tercer cambio es corregir el campo `images` dentro de `generateMetadata` en la página de producto para que la URL sea absoluta.
+
+El cuarto cambio es crear un archivo `opengraph-image.tsx` en `src/app/(public)/catalogo/[sector]/` para que las páginas de categoría tengan imágenes específicas en lugar de heredar la de la home.
+
+El quinto cambio es revisar todas las páginas listadas en el Problema 4 y añadir al menos un campo `images` con URL absoluta en su `metadata.openGraph`.
+
+---
+
+## Nota sobre caché de redes sociales
+
+Una vez aplicadas las correcciones y desplegado el proyecto, las imágenes OG no se actualizarán automáticamente en las previsualizaciones que ya fueron cacheadas por las redes sociales. Para forzar el re-scraping es necesario usar las herramientas de debug oficiales: el Sharing Debugger de Meta en `developers.facebook.com/tools/debug` para Facebook y WhatsApp, el Post Inspector de LinkedIn en `linkedin.com/post-inspector`, y el Card Validator de Twitter en `cards-dev.twitter.com/validator`. Cada URL debe pegarse individualmente en estas herramientas después del deploy para que el cache se invalide.

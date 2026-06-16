@@ -1,6 +1,5 @@
 import { ImageResponse } from "next/og";
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
+import { getImageBuffer } from "@/lib/og-helper";
 
 export const alt =
   "Confecciones Liss — Todos nuestros canales de contacto y redes sociales";
@@ -13,8 +12,8 @@ export const size = {
 export const contentType = "image/png";
 
 export default async function Image() {
-  const logoBuffer = await readFile(join(process.cwd(), "public/logo.png"));
-  const logoSrc = `data:image/png;base64,${logoBuffer.toString("base64")}`;
+  const logoBuffer = await getImageBuffer("/logo.png");
+  const logoSrc = `data:image/png;base64,${Buffer.from(logoBuffer).toString("base64")}`;
 
   const links = [
     "WhatsApp",

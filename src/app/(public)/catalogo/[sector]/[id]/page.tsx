@@ -31,6 +31,8 @@ export async function generateMetadata({
   const description =
     product.descripcionCorta ?? product.descripcion ?? product.categoria;
 
+  const ogImageUrl = `${siteConfig.url}/catalogo/${sector}/${id}/opengraph-image`;
+
   return {
     title: `${product.nombre} | ${CATEGORIES[sector as Sector]?.subtitle ?? "Catálogo"}`,
     description,
@@ -42,22 +44,21 @@ export async function generateMetadata({
       siteName: siteConfig.name,
       locale: "es_SV",
       type: "website",
-      ...(product.imagen
-        ? {
-            images: [
-              {
-                url: product.imagen,
-                alt: product.imageAlt ?? product.nombre,
-              },
-            ],
-          }
-        : {}),
+      images: [
+        {
+          url: ogImageUrl,
+          alt: product.imageAlt ?? product.nombre,
+          width: 1200,
+          height: 630,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: product.nombre,
       description,
       creator: siteConfig.twitterHandle,
+      images: [ogImageUrl],
     },
     robots: {
       index: true,
@@ -89,6 +90,12 @@ export default async function ProductDetailPage({
   const description =
     product.descripcionCorta ?? product.descripcion ?? product.categoria;
 
+  const productImageAbsolute = product.imagen
+    ? product.imagen.startsWith("http")
+      ? product.imagen
+      : `${siteConfig.url}${product.imagen}`
+    : undefined;
+
   return (
     <>
       <ProductDetailClient
@@ -106,7 +113,7 @@ export default async function ProductDetailPage({
             "@type": "Product",
             name: product.nombre,
             description,
-            image: product.imagen ?? undefined,
+            image: productImageAbsolute,
             url: PAGE_URL,
             offers: {
               "@type": "Offer",
