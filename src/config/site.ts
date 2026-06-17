@@ -3,7 +3,7 @@ import { env } from "@/env";
 export const siteConfig = {
   name: "Confecciones Liss",
   description:
-    "Taller de confección a la medida en San Miguel, El Salvador. Scrubs médicos, uniformes universitarios para UNIVO, UNAB, UGB. Envíos nacionales. Desde $35.",
+    "Taller de confección a la medida en San Miguel, El Salvador. Scrubs médicos y uniformes universitarios para IEPROES, UNIVO, UNAB, UGB, UES, UMA y más.",
   url: "https://www.confeccionesliss.com",
 
   twitterHandle: "@confeccionliss",
