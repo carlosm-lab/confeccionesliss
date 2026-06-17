@@ -219,35 +219,50 @@ export function CartProvider({ children }: { children: ReactNode }) {
       const supabase = getSupabaseClient();
       supabase
         .from("user_carts")
-        .upsert({
-          user_id: user.id,
-          cart_items: debouncedCartItems,
-          updated_at: new Date().toISOString(),
-        })
-        .then(({ error }: { error: { message?: string } | null }) => {
-          if (error) {
-            // Supabase devuelve {} (objeto vacío) cuando la tabla no existe,
-            // RLS bloquea la query, o hay un error de red sin respuesta.
-            // En ese caso NO hacemos rollback ni mostramos toast —
-            // el carrito se mantiene en localStorage correctamente.
-            const isEmptyError =
-              typeof error === "object" && Object.keys(error).length === 0;
+        .upsert(
+          {
+            user_id: user.id,
+            cart_items: debouncedCartItems,
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: "user_id" }
+        )
+        .then(
+          ({
+            error,
+          }: {
+            error: { message?: string; code?: string } | null;
+          }) => {
+            if (error) {
+              // Supabase devuelve {} (objeto vacío) cuando la tabla no existe,
+              // RLS bloquea la query, o hay un error de red sin respuesta.
+              // En ese caso NO hacemos rollback ni mostramos toast —
+              // el carrito se mantiene en localStorage correctamente.
+              const isEmptyError =
+                typeof error === "object" && Object.keys(error).length === 0;
 
-            if (isEmptyError) {
-              logger.warn(
-                "Cart sync silently blocked (RLS / missing table). Cart is local-only."
-              );
-              // Actualizar ref para evitar re-intentos en bucle
-              lastSyncedCartRef.current = debouncedCartItems;
+              // Código 23505 = duplicate key. Sucede si onConflict no se
+              // resuelve a nivel de PostgREST (ej: falta un índice UNIQUE).
+              // No hacemos rollback — el carrito sigue en localStorage.
+              const isDuplicateKeyError =
+                (error as { code?: string })?.code === "23505";
+
+              if (isEmptyError || isDuplicateKeyError) {
+                logger.warn(
+                  "Cart sync silently blocked (RLS / missing table / duplicate key). Cart is local-only."
+                );
+                // Actualizar ref para evitar re-intentos en bucle
+                lastSyncedCartRef.current = debouncedCartItems;
+              } else {
+                logger.error("Error syncing cart to DB:", error);
+                toast.error("Error al guardar el carrito. Revise su conexión.");
+                setCartItems(lastSyncedCartRef.current);
+              }
             } else {
-              logger.error("Error syncing cart to DB:", error);
-              toast.error("Error al guardar el carrito. Revise su conexión.");
-              setCartItems(lastSyncedCartRef.current);
+              lastSyncedCartRef.current = debouncedCartItems;
             }
-          } else {
-            lastSyncedCartRef.current = debouncedCartItems;
           }
-        });
+        );
     }
   }, [debouncedCartItems, user]);
 
