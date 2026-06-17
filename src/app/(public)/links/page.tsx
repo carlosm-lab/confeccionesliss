@@ -5,7 +5,7 @@ import { LinksPageClient } from "./LinksPageClient";
 const PAGE_URL = `${siteConfig.url}/links`;
 const PAGE_TITLE = "Redes Sociales Oficiales | Confecciones Liss";
 const PAGE_DESCRIPTION =
-  "Síguenos en Instagram, Facebook, TikTok, YouTube, Threads y más. Todos los perfiles y canales oficiales de Confecciones Liss en un solo lugar.";
+  "Síguenos en Instagram, Facebook, TikTok, YouTube, Threads, LinkedIn y Pinterest. Todos los perfiles y canales oficiales de Confecciones Liss en un solo lugar.";
 
 export const metadata: Metadata = {
   title: {

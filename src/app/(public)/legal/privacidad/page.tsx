@@ -13,7 +13,7 @@ import {
 export const metadata: Metadata = {
   title: "Política de Privacidad y Protección de Datos",
   description:
-    "Política de privacidad y manejo de datos personales de Confecciones Liss. Información sobre recopilación, uso, almacenamiento y protección de tu información.",
+    "Política de privacidad de Confecciones Liss. Cómo recopilamos, usamos y protegemos tus datos personales, incluido almacenamiento, derechos y seguridad de tu información.",
   alternates: { canonical: `${siteConfig.url}/legal/privacidad` },
 };
 

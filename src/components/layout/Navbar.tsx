@@ -202,6 +202,7 @@ export function Navbar() {
   return (
     <>
       <header
+        data-nosnippet
         className={cn(
           "nav-scroll-hide sticky top-0 z-50 bg-white/90 shadow-sm backdrop-blur-md",
           !scrollVisible && "nav-scroll-hidden-top"
@@ -217,7 +218,7 @@ export function Navbar() {
             >
               <Image
                 src="/logo.png"
-                alt="Confecciones Liss Logo"
+                alt="Confecciones Liss"
                 width={180}
                 height={180}
                 className="h-12 w-auto"

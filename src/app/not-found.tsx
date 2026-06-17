@@ -4,7 +4,7 @@ import { Footer } from "@/components/layout/Footer";
 import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 
 export const metadata: Metadata = {
-  title: "404 — Página no encontrada | Confecciones Liss",
+  title: { absolute: "404 — Página no encontrada | Confecciones Liss" },
   description:
     "La página que buscas no existe. Vuelve al inicio de Confecciones Liss para encontrar scrubs, uniformes y servicios de confección en San Miguel.",
   robots: { index: false, follow: true },

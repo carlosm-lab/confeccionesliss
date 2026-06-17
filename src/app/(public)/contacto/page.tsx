@@ -7,7 +7,7 @@ const PAGE_URL = `${siteConfig.url}/contacto`;
 const PAGE_TITLE =
   "Contacto y ubicación del taller en San Miguel | Confecciones Liss";
 const PAGE_DESCRIPTION =
-  "Estamos listos para ayudarte con tu pedido. Escríbenos, llámanos o visítanos.";
+  "Cotiza scrubs médicos y uniformes en Confecciones Liss, San Miguel. Escríbenos al WhatsApp 7331-7181, envíanos un correo o visítanos en Barrio La Merced. Respondemos de inmediato.";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },

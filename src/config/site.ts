@@ -3,7 +3,7 @@ import { env } from "@/env";
 export const siteConfig = {
   name: "Confecciones Liss",
   description:
-    "Taller de confección en San Miguel El Salvador. Fabricamos scrubs médicos en Sincatex, uniformes universitarios para UNIVO, UNAB, UGB, UMA, IEPROES, uniformes escolares y corporativos. A la medida. Envíos a todo El Salvador. Pago al recibir. Desde $35. WhatsApp: 7331-7181.",
+    "Scrubs médicos y uniformes a la medida en San Miguel, El Salvador. Para UNIVO, UNAB, UGB y más instituciones. Tela Sincatex anti-fluidos. Desde $35, pago al recibir.",
   url: "https://www.confeccionesliss.com",
 
   twitterHandle: "@confeccionliss",
