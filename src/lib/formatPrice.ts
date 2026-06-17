@@ -4,10 +4,11 @@
 // Centralizado aquí para que un cambio de moneda/locale
 // afecte a toda la app. Usa Intl.NumberFormat nativo.
 // ──────────────────────────────────────────────────────────────
+import { LOCALE_CURRENCY, LOCALE_LANG } from "@/lib/constants";
 
-const formatter = new Intl.NumberFormat("es-SV", {
+const formatter = new Intl.NumberFormat(LOCALE_LANG, {
   style: "currency",
-  currency: "USD",
+  currency: LOCALE_CURRENCY,
 });
 
 /**

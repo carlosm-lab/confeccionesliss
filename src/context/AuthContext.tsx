@@ -30,6 +30,11 @@ interface AuthContextValue {
   loading: boolean;
   signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
+  // ── Auth Modal contextual ─────────────────────────────────────
+  // null = cerrado, string = contexto ('cart', 'favorites', 'contact', 'generic')
+  authModalContext: string | null;
+  showAuthModal: (context?: string) => void;
+  hideAuthModal: () => void;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -113,6 +118,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   });
 
   const currentUserIdRef = useRef<string | null>(null);
+
+  // ── Auth Modal ──────────────────────────────────────────────────
+  const [authModalContext, setAuthModalContext] = useState<string | null>(null);
+
+  const showAuthModal = useCallback((context = "generic") => {
+    setAuthModalContext(context);
+  }, []);
+
+  const hideAuthModal = useCallback(() => {
+    setAuthModalContext(null);
+  }, []);
 
   const fetchProfile = useCallback(async (userId: string) => {
     if (!userId) {
@@ -350,6 +366,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         loading: loading || profileLoading,
         signInWithGoogle,
         signOut,
+        authModalContext,
+        showAuthModal,
+        hideAuthModal,
       }}
     >
       {children}

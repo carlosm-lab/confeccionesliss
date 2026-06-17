@@ -15,19 +15,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/config/site";
+import { useCart } from "@/context/CartContext";
+import type { CartProduct } from "@/context/CartContext";
+import { useFavorites } from "@/context/FavoritesContext";
+import { useAuth } from "@/context/AuthContext";
 import type { Product } from "@/data/types";
 
 interface CatalogProductCardProps {
   product: Product;
+  // Props opcionales para compatibilidad hacia atrás (ahora se usan los contextos directamente)
   isFavorited?: boolean;
   onToggleFavorite?: (id: string) => void;
 }
 
-export function CatalogProductCard({
-  product,
-  isFavorited = false,
-  onToggleFavorite,
-}: CatalogProductCardProps) {
+export function CatalogProductCard({ product }: CatalogProductCardProps) {
   const {
     id,
     nombre,
@@ -42,23 +43,37 @@ export function CatalogProductCard({
     priceSuffix,
   } = product;
 
+  // Contextos reales
+  const { addToCart, setIsCartOpen } = useCart();
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const { user, showAuthModal } = useAuth();
+
+  const isFavorited = isFavorite(id);
+
   function handleToggleFavorite(e: React.MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
-    onToggleFavorite?.(id);
+    if (!user) {
+      showAuthModal("favorites");
+      return;
+    }
+    toggleFavorite(id);
   }
 
   function handleAddToCart(e: React.MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
-    const text = encodeURIComponent(
-      `¡Hola! Me interesa este producto: *${nombre}* ($${precio.toFixed(2)}). ¿Está disponible?`
-    );
-    window.open(
-      `${siteConfig.links.whatsappDirect}?text=${text}`,
-      "_blank",
-      "noopener,noreferrer"
-    );
+    // Construir un CartProduct desde el Product local
+    addToCart({
+      id,
+      name: nombre,
+      price: precio,
+      old_price: precioAnterior ?? null,
+      image_path: imagen,
+      slug: `${sector}/${id}`,
+    });
+    // Abrir el drawer para que el usuario vea el item agregado
+    setIsCartOpen(true);
   }
 
   const hasDiscount = precioAnterior != null && precioAnterior > precio;

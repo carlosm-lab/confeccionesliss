@@ -1,0 +1,508 @@
+"use client";
+// ──────────────────────────────────────────────────────────────
+// CONTEXTO DEL CARRITO — Confecciones Liss
+// ──────────────────────────────────────────────────────────────
+// El corazón de la lógica de ventas. Maneja:
+//   - Persistencia en localStorage (guest-first, sin tabla de carritos)
+//   - Sincronización con Supabase (user_carts) cuando hay usuario logueado
+//   - Revalidación de precios cada 60 segundos
+//   - Sync multi-pestaña via StorageEvent
+//   - Expiración automática del carrito (7 días de inactividad)
+//
+// ESTRATEGIA "GUEST-FIRST":
+// El carrito vive en localStorage siempre. Si el usuario se loguea:
+//   - Carrito local vacío → se hidrata desde DB
+//   - Carrito local CON items → SOBREESCRIBE la DB
+// Esto prioriza la experiencia del guest que agrega productos
+// antes de loguearse (el caso más común en este tipo de tienda).
+//
+// REVALIDACIÓN DE PRECIOS:
+// Cada 60 segundos (si el carrito tiene items y la pestaña es visible),
+// se consulta Supabase para verificar que los precios sean correctos
+// y que los productos sigan activos. Si un producto fue desactivado
+// por el admin, se elimina del carrito con una notificación.
+// ──────────────────────────────────────────────────────────────
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  ReactNode,
+} from "react";
+import { toast } from "react-hot-toast";
+import { getSupabaseClient } from "@/lib/supabaseClient";
+import { useAuth } from "./AuthContext";
+import { logger } from "@/lib/logger";
+import { useDebounce } from "@/hooks/useDebounce";
+import {
+  PRODUCT_SELECT_COLUMNS,
+  MAX_CART_QUANTITY,
+  MAX_TOTAL_ITEMS,
+  STORAGE_CART_KEY,
+  STORAGE_CART_TIMESTAMP_KEY,
+  STORAGE_CART_EXPIRED_KEY,
+} from "@/lib/constants";
+
+// ── Tipos ─────────────────────────────────────────────────────
+
+export interface CartProduct {
+  id: string;
+  name: string;
+  price: number;
+  old_price?: number | null;
+  image_path?: string | null;
+  images?: string[] | null;
+  slug?: string | null;
+  offer_ends_at?: string | null;
+  offer_starts_at?: string | null;
+  is_active?: boolean;
+}
+
+export interface CartItem {
+  id: string; // UUID local de la línea del carrito
+  product: CartProduct;
+  quantity: number;
+  color: string | null;
+  note: string;
+}
+
+interface CartContextValue {
+  cartItems: CartItem[];
+  addToCart: (
+    product: CartProduct,
+    quantity?: number,
+    color?: string | null,
+    note?: string
+  ) => void;
+  removeFromCart: (itemId: string) => void;
+  updateQuantity: (itemId: string, quantity: number) => void;
+  clearCart: () => void;
+  cartTotal: number;
+  cartCount: number;
+  isCartOpen: boolean;
+  setIsCartOpen: (open: boolean) => void;
+  refreshCartPrices: () => Promise<void>;
+  isRefreshingPrices: boolean;
+  arePricesStale: boolean;
+  consecutiveRefreshFailures: number;
+}
+
+const CartContext = createContext<CartContextValue | undefined>(undefined);
+
+export const useCart = () => {
+  const ctx = useContext(CartContext);
+  if (!ctx) throw new Error("useCart must be used within CartProvider");
+  return ctx;
+};
+
+export function CartProvider({ children }: { children: ReactNode }) {
+  const { user } = useAuth();
+
+  // ── Inicialización desde localStorage ────────────────────────
+  // Incluye expiración de 7 días de inactividad.
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_CART_KEY);
+      const timestamp = localStorage.getItem(STORAGE_CART_TIMESTAMP_KEY);
+
+      // Expiración de 7 días
+      if (saved && timestamp) {
+        const now = Date.now();
+        const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
+
+        if (now - parseInt(timestamp, 10) > SEVEN_DAYS) {
+          localStorage.removeItem(STORAGE_CART_KEY);
+          localStorage.removeItem(STORAGE_CART_TIMESTAMP_KEY);
+          localStorage.setItem(STORAGE_CART_EXPIRED_KEY, "true");
+          return [];
+        }
+        return JSON.parse(saved) as CartItem[];
+      }
+
+      return saved ? (JSON.parse(saved) as CartItem[]) : [];
+    } catch (e) {
+      logger.error(
+        "Error parsing cart from localStorage, cleaning up corrupted data:",
+        e
+      );
+      try {
+        localStorage.removeItem(STORAGE_CART_KEY);
+        localStorage.removeItem(STORAGE_CART_TIMESTAMP_KEY);
+      } catch (cleanupErr) {
+        logger.error("Error cleaning up localStorage:", cleanupErr);
+      }
+      return [];
+    }
+  });
+
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isRefreshingPrices, setIsRefreshingPrices] = useState(false);
+  const [consecutiveRefreshFailures, setConsecutiveRefreshFailures] =
+    useState(0);
+  const [lastSuccessfulRefresh, setLastSuccessfulRefresh] = useState(
+    Date.now()
+  );
+
+  // Debounce de 1.5s para sincronización con DB
+  const debouncedCartItems = useDebounce(cartItems, 1500);
+  const cartItemsRef = useRef<CartItem[]>(cartItems);
+
+  useEffect(() => {
+    cartItemsRef.current = cartItems;
+  }, [cartItems]);
+
+  // ── Sync multi-pestaña ────────────────────────────────────────
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === STORAGE_CART_KEY) {
+        try {
+          const newCart = e.newValue
+            ? (JSON.parse(e.newValue) as CartItem[])
+            : [];
+          setCartItems(newCart);
+        } catch (err) {
+          logger.error("Error parsing cart from storage event:", err);
+        }
+      }
+    };
+    window.addEventListener("storage", handleStorageChange);
+
+    // Toast si el carrito expiró (flag del init)
+    if (localStorage.getItem(STORAGE_CART_EXPIRED_KEY) === "true") {
+      setTimeout(() => {
+        toast("Tu carrito ha expirado por inactividad.", {
+          icon: "🕒",
+          duration: 4000,
+        });
+        localStorage.removeItem(STORAGE_CART_EXPIRED_KEY);
+      }, 1000);
+    }
+
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
+  // ── Persistencia en localStorage ──────────────────────────────
+  useEffect(() => {
+    localStorage.setItem(STORAGE_CART_KEY, JSON.stringify(cartItems));
+    if (cartItems.length === 0) {
+      localStorage.removeItem(STORAGE_CART_TIMESTAMP_KEY);
+    }
+  }, [cartItems]);
+
+  const lastSyncedCartRef = useRef<CartItem[]>(cartItems);
+
+  // ── Sync a Supabase (usuario logueado) ───────────────────────
+  // Upsert con debounce de 1.5s. Si falla, hace rollback optimista.
+  useEffect(() => {
+    if (user && debouncedCartItems.length >= 0) {
+      if (
+        JSON.stringify(debouncedCartItems) ===
+        JSON.stringify(lastSyncedCartRef.current)
+      )
+        return;
+
+      const supabase = getSupabaseClient();
+      supabase
+        .from("user_carts")
+        .upsert({
+          user_id: user.id,
+          cart_items: debouncedCartItems,
+          updated_at: new Date().toISOString(),
+        })
+        .then(({ error }) => {
+          if (error) {
+            logger.error("Error syncing cart to DB:", error);
+            toast.error("Error al guardar el carrito. Revise su conexión.");
+            setCartItems(lastSyncedCartRef.current);
+          } else {
+            lastSyncedCartRef.current = debouncedCartItems;
+          }
+        });
+    }
+  }, [debouncedCartItems, user]);
+
+  // ── Hidratación desde DB al login ─────────────────────────────
+  // Guest-First: carrito local gana. Si está vacío, carga desde DB.
+  useEffect(() => {
+    let isMounted = true;
+
+    const syncAndRevalidate = async () => {
+      const supabase = getSupabaseClient();
+
+      // Caso 1: Usuario logueado + carrito local vacío → hidratar desde DB
+      if (user && cartItemsRef.current.length === 0) {
+        const { data, error } = await supabase
+          .from("user_carts")
+          .select("cart_items")
+          .eq("user_id", user.id)
+          .single();
+
+        if (!error && data?.cart_items && data.cart_items.length > 0) {
+          if (cartItemsRef.current.length === 0 && isMounted) {
+            const ids = [
+              ...new Set(
+                (data.cart_items as CartItem[]).map((i) => i.product.id)
+              ),
+            ];
+            const pRes = await supabase
+              .from("products")
+              .select(PRODUCT_SELECT_COLUMNS)
+              .in("id", ids);
+
+            if (pRes.data) {
+              const pMap = Object.fromEntries(
+                pRes.data.map((p: CartProduct) => [p.id, p])
+              );
+              const validated = (data.cart_items as CartItem[])
+                .filter((i) => pMap[i.product.id]?.is_active)
+                .map((i) => {
+                  const fresh = pMap[i.product.id];
+                  return {
+                    ...i,
+                    product: {
+                      ...i.product,
+                      name: fresh.name,
+                      price: fresh.price,
+                      old_price: fresh.old_price,
+                      offer_ends_at: fresh.offer_ends_at,
+                      offer_starts_at: fresh.offer_starts_at,
+                      image_path: fresh.image_path,
+                      images: fresh.images,
+                      slug: fresh.slug,
+                    },
+                  };
+                });
+              if (isMounted && cartItemsRef.current.length === 0) {
+                setCartItems(validated);
+                lastSyncedCartRef.current = validated;
+              }
+            } else if (isMounted && cartItemsRef.current.length === 0) {
+              setCartItems(data.cart_items as CartItem[]);
+              lastSyncedCartRef.current = data.cart_items as CartItem[];
+            }
+            return;
+          }
+        }
+      }
+
+      // Caso 2: Hay items locales → revalidar precios
+      if (cartItemsRef.current.length > 0 && isMounted) {
+        refreshCartPrices();
+      }
+    };
+
+    syncAndRevalidate();
+
+    return () => {
+      isMounted = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  // ── Revalidación de precios ───────────────────────────────────
+  const refreshCartPrices = useCallback(async () => {
+    if (document.hidden) return;
+
+    const currentCart = cartItemsRef.current;
+    if (currentCart.length === 0) return;
+
+    setIsRefreshingPrices(true);
+    try {
+      const supabase = getSupabaseClient();
+      const idsChecked = [...new Set(currentCart.map((i) => i.product.id))];
+      const { data, error } = await supabase
+        .from("products")
+        .select(PRODUCT_SELECT_COLUMNS)
+        .in("id", idsChecked);
+
+      if (error) throw error;
+      if (!data) return;
+
+      const productMap = Object.fromEntries(
+        data.map((p: CartProduct) => [p.id, p])
+      );
+
+      let itemsRemoved = false;
+      const nextCart = currentCart
+        .filter((item) => {
+          if (!idsChecked.includes(item.product.id)) return true;
+          const fresh = productMap[item.product.id];
+          if (!fresh || !fresh.is_active) {
+            itemsRemoved = true;
+            return false;
+          }
+          return true;
+        })
+        .map((item) => {
+          if (!idsChecked.includes(item.product.id)) return item;
+          const fresh = productMap[item.product.id];
+          if (fresh) {
+            return {
+              ...item,
+              product: {
+                ...item.product,
+                name: fresh.name,
+                price: fresh.price,
+                old_price: fresh.old_price,
+                offer_ends_at: fresh.offer_ends_at,
+                offer_starts_at: fresh.offer_starts_at,
+                image_path: fresh.image_path,
+                images: fresh.images,
+                slug: fresh.slug,
+              },
+            };
+          }
+          return item;
+        });
+
+      if (itemsRemoved) {
+        toast("Un producto en tu carrito se ha agotado o desactivado.", {
+          icon: "⚠️",
+          duration: 5000,
+        });
+      }
+
+      setCartItems(nextCart);
+      setConsecutiveRefreshFailures(0);
+      setLastSuccessfulRefresh(Date.now());
+    } catch (err) {
+      logger.error("Error refreshing cart prices:", err);
+      setConsecutiveRefreshFailures((prev) => prev + 1);
+    } finally {
+      setIsRefreshingPrices(false);
+    }
+  }, []);
+
+  // ── Polling de revalidación cada 60s ─────────────────────────
+  useEffect(() => {
+    if (cartItems.length === 0) return;
+    const interval = setInterval(refreshCartPrices, 60000);
+    return () => clearInterval(interval);
+  }, [cartItems.length, refreshCartPrices]);
+
+  // ── API del carrito ───────────────────────────────────────────
+  const addToCart = (
+    product: CartProduct,
+    quantity = 1,
+    color: string | null = null,
+    note = ""
+  ) => {
+    setCartItems((prev) => {
+      const existing = prev.find(
+        (item) =>
+          item.product.id === product.id &&
+          item.color === color &&
+          item.note === note
+      );
+
+      if (existing) {
+        if (existing.quantity + quantity > MAX_CART_QUANTITY) {
+          toast.error(
+            `Límite máximo por producto: ${MAX_CART_QUANTITY} unidades`
+          );
+          return prev;
+        }
+        return prev.map((item) =>
+          item.id === existing.id
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        );
+      }
+
+      if (quantity > MAX_CART_QUANTITY) {
+        toast.error(
+          `Límite máximo por producto: ${MAX_CART_QUANTITY} unidades`
+        );
+        return prev;
+      }
+
+      if (prev.length >= MAX_TOTAL_ITEMS) {
+        toast.error(
+          `Límite máximo en el carrito: ${MAX_TOTAL_ITEMS} productos diferentes`
+        );
+        return prev;
+      }
+
+      const newItem: CartItem = {
+        id: crypto.randomUUID(),
+        product,
+        quantity,
+        color,
+        note,
+      };
+
+      return [...prev, newItem];
+    });
+
+    // Timestamp de actividad (para expiración de 7 días)
+    localStorage.setItem(STORAGE_CART_TIMESTAMP_KEY, Date.now().toString());
+
+    toast.success(`${quantity}x ${product.name} agregado al carrito`, {
+      id: "cart-add-toast",
+      icon: "🛍️",
+    });
+  };
+
+  const removeFromCart = (itemId: string) => {
+    setCartItems((prev) => prev.filter((item) => item.id !== itemId));
+  };
+
+  const updateQuantity = (itemId: string, quantity: number) => {
+    if (quantity < 1) {
+      removeFromCart(itemId);
+      return;
+    }
+    if (quantity > MAX_CART_QUANTITY) {
+      toast.error(
+        `Límite máximo por producto es ${MAX_CART_QUANTITY} unidades`
+      );
+      return;
+    }
+    setCartItems((prev) =>
+      prev.map((item) => {
+        if (item.id === itemId) {
+          return { ...item, quantity };
+        }
+        return item;
+      })
+    );
+  };
+
+  const clearCart = () => setCartItems([]);
+
+  const cartTotal = cartItems.reduce(
+    (total, item) => total + item.product.price * item.quantity,
+    0
+  );
+  const cartCount = cartItems.reduce((count, item) => count + item.quantity, 0);
+
+  // Precios se consideran stale si: 3+ fallos consecutivos
+  // O más de 5 minutos sin refresh exitoso.
+  const arePricesStale =
+    consecutiveRefreshFailures >= 3 ||
+    Date.now() - lastSuccessfulRefresh > 5 * 60 * 1000;
+
+  return (
+    <CartContext.Provider
+      value={{
+        cartItems,
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+        clearCart,
+        cartTotal,
+        cartCount,
+        isCartOpen,
+        setIsCartOpen,
+        refreshCartPrices,
+        isRefreshingPrices,
+        arePricesStale,
+        consecutiveRefreshFailures,
+      }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
+}

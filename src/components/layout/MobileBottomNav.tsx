@@ -2,10 +2,12 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { env } from "@/env";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
 
 /* ─── Layout constants ──────────────────────────────────────────────────────
  *  Y values are CSS pixels (viewBox height = SVG_H px → no Y distortion).
@@ -88,10 +90,14 @@ const ITEMS = [
 
 export function MobileBottomNav() {
   const pathname = usePathname();
+  const router = useRouter();
   const [scrollVisible, setScrollVisible] = useState(true);
   const lastScrollY = useRef(0);
   const [isMounted, setIsMounted] = useState(false);
   const isHomeOnly = env.NEXT_PUBLIC_HOME_ONLY === "true";
+
+  const { cartCount, setIsCartOpen } = useCart();
+  const { user, showAuthModal } = useAuth();
 
   /* In production, these routes are blocked by middleware — hide from nav */
   const PROD_BLOCKED = ["/catalogo", "/servicios", "/carrito", "/mi-cuenta"];
@@ -299,6 +305,20 @@ export function MobileBottomNav() {
       >
         {visibleItems.map((item, idx) => {
           const isActive = idx === activeIdx;
+          const isCartTab = item.href === "/carrito";
+          const isProfileTab = item.href === "/mi-cuenta";
+
+          // El tab de carrito abre el drawer; el de perfil requiere auth
+          const handleTabClick = (e: React.MouseEvent) => {
+            if (isCartTab) {
+              e.preventDefault();
+              setIsCartOpen(true);
+            } else if (isProfileTab && !user) {
+              e.preventDefault();
+              showAuthModal("generic");
+            }
+          };
+
           return (
             <li
               key={item.href}
@@ -309,25 +329,34 @@ export function MobileBottomNav() {
                 aria-label={item.label}
                 aria-current={isActive ? "page" : undefined}
                 tabIndex={isActive ? -1 : 0}
+                onClick={handleTabClick}
                 className="group relative flex h-12 w-14 flex-col items-center justify-center rounded-xl transition-all duration-300 active:scale-95"
               >
                 <span className="absolute inset-0 -z-10 rounded-xl bg-white/0 transition-all duration-200 group-hover:bg-white/10 group-active:bg-white/15" />
-                <motion.span
-                  className="material-symbols-outlined text-white"
-                  animate={{ opacity: isActive ? 0 : 1, y: isActive ? 8 : 0 }}
-                  transition={{
-                    duration: ANIM_DURATION * 0.75,
-                    ease: [0.4, 0, 0.2, 1],
-                  }}
-                  style={{
-                    fontSize: 21,
-                    lineHeight: 1,
-                    fontVariationSettings: "'FILL' 0, 'wght' 300",
-                  }}
-                  aria-hidden="true"
-                >
-                  {item.icon}
-                </motion.span>
+                <span className="relative">
+                  <motion.span
+                    className="material-symbols-outlined text-white"
+                    animate={{ opacity: isActive ? 0 : 1, y: isActive ? 8 : 0 }}
+                    transition={{
+                      duration: ANIM_DURATION * 0.75,
+                      ease: [0.4, 0, 0.2, 1],
+                    }}
+                    style={{
+                      fontSize: 21,
+                      lineHeight: 1,
+                      fontVariationSettings: "'FILL' 0, 'wght' 300",
+                    }}
+                    aria-hidden="true"
+                  >
+                    {item.icon}
+                  </motion.span>
+                  {/* Badge de count del carrito */}
+                  {isCartTab && cartCount > 0 && (
+                    <span className="text-primary absolute -top-2 -right-3 flex h-4 min-w-4 items-center justify-center rounded-full bg-white px-[3px] text-[9px] font-black">
+                      {cartCount > 99 ? "99+" : cartCount}
+                    </span>
+                  )}
+                </span>
                 <motion.span
                   className="text-[8px] font-bold tracking-widest uppercase"
                   animate={{ opacity: isActive ? 0 : 1, y: isActive ? 8 : 0 }}

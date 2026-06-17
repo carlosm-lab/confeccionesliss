@@ -3,9 +3,13 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { SearchModal } from "@/components/layout/SearchModal";
+import { FavoritesModal } from "@/components/cart/FavoritesModal";
+import { useCart } from "@/context/CartContext";
+import { useFavorites } from "@/context/FavoritesContext";
+import { useAuth } from "@/context/AuthContext";
 import { env } from "@/env";
 
 interface NavLink {
@@ -89,9 +93,19 @@ function TypewriterPlaceholder() {
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isFavoritesOpen, setIsFavoritesOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const menuRef = useRef<HTMLDivElement>(null);
   const [scrollVisible, setScrollVisible] = useState(true);
+
+  // Contexts
+  const { cartCount, setIsCartOpen } = useCart();
+  const { favorites } = useFavorites();
+  const { user, showAuthModal } = useAuth();
+
+  const isHomeOnly = env.NEXT_PUBLIC_HOME_ONLY === "true";
+
   /*
    * lastScrollY: initialized to window.scrollY so browser scroll-restoration
    * on fresh load doesn't falsely trigger "scrolling down" and hide the bar.
@@ -100,9 +114,6 @@ export function Navbar() {
     typeof window !== "undefined" ? window.scrollY : 0
   );
 
-  const isHomeOnly = env.NEXT_PUBLIC_HOME_ONLY === "true";
-
-  /* Routes blocked in production (middleware redirects these to /) */
   const BLOCKED_ROUTES = ["/servicios", "/catalogo", "/carrito", "/mi-cuenta"];
 
   const navLinks = isHomeOnly
@@ -117,6 +128,25 @@ export function Navbar() {
     closeMenu();
   };
   const closeSearch = () => setIsSearchOpen(false);
+
+  const handleCartClick = () => {
+    closeMenu();
+    setIsCartOpen(true);
+  };
+
+  const handleFavoritesClick = () => {
+    closeMenu();
+    setIsFavoritesOpen(true);
+  };
+
+  const handleAvatarClick = () => {
+    closeMenu();
+    if (user) {
+      router.push("/mi-cuenta");
+    } else {
+      showAuthModal("generic");
+    }
+  };
 
   useEffect(() => {
     // ── Hydration heartbeat ───────────────────────────────────────────────────
@@ -285,21 +315,32 @@ export function Navbar() {
 
               {/* Favorites — visible on all sizes */}
               <button
-                aria-label="Favoritos"
-                className="border-primary/10 text-primary flex size-10 items-center justify-center rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)]"
+                aria-label={`Favoritos${favorites.length > 0 ? ` (${favorites.length})` : ""}`}
+                onClick={handleFavoritesClick}
+                className="border-primary/10 text-primary relative flex size-10 items-center justify-center rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)]"
               >
                 <span
                   className="material-symbols-outlined text-[22px]"
                   aria-hidden="true"
+                  style={{
+                    fontVariationSettings:
+                      favorites.length > 0 ? "'FILL' 1" : "'FILL' 0",
+                  }}
                 >
-                  favorite_border
+                  favorite
                 </span>
+                {favorites.length > 0 && (
+                  <span className="bg-primary absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full px-[3px] text-[9px] font-black text-white">
+                    {favorites.length > 99 ? "99+" : favorites.length}
+                  </span>
+                )}
               </button>
 
               {/* Cart — hidden on mobile (bottom nav handles it) */}
               <button
-                aria-label="Carrito de compras"
-                className="border-primary/10 text-primary hidden size-10 items-center justify-center rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)] sm:flex"
+                aria-label={`Carrito de compras${cartCount > 0 ? ` (${cartCount})` : ""}`}
+                onClick={handleCartClick}
+                className="border-primary/10 text-primary relative hidden size-10 items-center justify-center rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)] sm:flex"
               >
                 <span
                   className="material-symbols-outlined text-[22px]"
@@ -307,19 +348,36 @@ export function Navbar() {
                 >
                   shopping_cart
                 </span>
+                {cartCount > 0 && (
+                  <span className="bg-primary absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full px-[3px] text-[9px] font-black text-white">
+                    {cartCount > 99 ? "99+" : cartCount}
+                  </span>
+                )}
               </button>
 
               {/* Avatar — hidden on mobile (profile moved to bottom nav) */}
               <button
-                aria-label="Mi cuenta"
+                aria-label={
+                  user ? `Mi cuenta (${user.email})` : "Iniciar sesión"
+                }
+                onClick={handleAvatarClick}
                 className="border-primary/10 hidden size-10 items-center justify-center overflow-hidden rounded-xl border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-90 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)] sm:flex"
               >
-                <span
-                  className="material-symbols-outlined text-primary text-[24px]"
-                  aria-hidden="true"
-                >
-                  person
-                </span>
+                {user?.user_metadata?.avatar_url ? (
+                  <img
+                    src={user.user_metadata.avatar_url as string}
+                    alt="Avatar"
+                    className="h-full w-full object-cover"
+                    referrerPolicy="no-referrer"
+                  />
+                ) : (
+                  <span
+                    className="material-symbols-outlined text-primary text-[24px]"
+                    aria-hidden="true"
+                  >
+                    {user ? "account_circle" : "person"}
+                  </span>
+                )}
               </button>
 
               {/* Menu Button — visible on all sizes */}
@@ -423,6 +481,12 @@ export function Navbar() {
 
       {/* ── Global Search Modal ── */}
       <SearchModal isOpen={isSearchOpen} onClose={closeSearch} />
+
+      {/* ── Favorites Modal ── */}
+      <FavoritesModal
+        isOpen={isFavoritesOpen}
+        onClose={() => setIsFavoritesOpen(false)}
+      />
     </>
   );
 }

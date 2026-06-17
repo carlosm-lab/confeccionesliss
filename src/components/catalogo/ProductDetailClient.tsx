@@ -18,6 +18,9 @@ import Link from "next/link";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { CatalogProductCard } from "./CatalogProductCard";
 import { siteConfig } from "@/config/site";
+import { useFavorites } from "@/context/FavoritesContext";
+import { useAuth } from "@/context/AuthContext";
+import { useCart } from "@/context/CartContext";
 import type { Product, CategoryConfig } from "@/data/types";
 
 interface ProductDetailClientProps {
@@ -38,22 +41,42 @@ export function ProductDetailClient({
   const [mainImg, setMainImg] = useState<string>(images[0] ?? "");
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [customNote, setCustomNote] = useState("");
-  const [isFavorited, setIsFavorited] = useState(false);
   const [showToast, setShowToast] = useState(false);
+
+  // Contexts reales
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const { user, showAuthModal } = useAuth();
+  const { addToCart, setIsCartOpen } = useCart();
+  const isFavorited = isFavorite(product.id);
+
+  const handleToggleFavorite = () => {
+    if (!user) {
+      showAuthModal("favorites");
+      return;
+    }
+    toggleFavorite(product.id);
+  };
 
   const hasDiscount =
     product.precioAnterior != null && product.precioAnterior > product.precio;
 
   function handleAddToCart() {
     const noteText = customNote ? `\nNota: ${customNote}` : "";
-    const text = encodeURIComponent(
-      `¡Hola! Me interesa este producto:\n*${product.nombre}*\nPrecio: $${product.precio.toFixed(2)}${noteText}\n¿Está disponible?`
+    // Agregar al carrito y abrir drawer
+    addToCart(
+      {
+        id: product.id,
+        name: product.nombre,
+        price: product.precio,
+        old_price: product.precioAnterior ?? null,
+        image_path: product.imagen,
+        slug: `${product.sector}/${product.id}`,
+      },
+      1,
+      null,
+      noteText
     );
-    window.open(
-      `${siteConfig.links.whatsappDirect}?text=${text}`,
-      "_blank",
-      "noopener,noreferrer"
-    );
+    setIsCartOpen(true);
   }
 
   const handleCopy = async () => {
@@ -193,7 +216,7 @@ export function ProductDetailClient({
             {/* Favorite button overlay */}
             <button
               type="button"
-              onClick={() => setIsFavorited((v) => !v)}
+              onClick={handleToggleFavorite}
               className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow-md backdrop-blur-md transition-all hover:scale-110 active:scale-95"
               aria-label={
                 isFavorited ? "Quitar de favoritos" : "Añadir a favoritos"
@@ -376,8 +399,8 @@ export function ProductDetailClient({
                 onClick={handleAddToCart}
                 className="bg-primary hover:bg-primary/90 flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl py-3.5 font-bold text-white shadow-md transition hover:shadow-lg active:scale-[0.97]"
               >
-                <span className="material-symbols-outlined">shopping_bag</span>
-                Consultar por WhatsApp
+                <span className="material-symbols-outlined">shopping_cart</span>
+                Agregar al Carrito
               </button>
               <button
                 type="button"

@@ -210,3 +210,69 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 - **Descripción:** Renderizado visual puro del hub `/legal` (hero + grid de tarjetas de documentos). Usado como fondo estático en las páginas de artículos legales para que el blur-overlay del `LegalArticleReader` muestre el hub detrás, creando la ilusión de un modal flotante. En las páginas de artículos se usa con `aria-hidden="true"` y `pointer-events-none hidden lg:block` para que solo sea visible en desktop (donde existe el overlay) y sea invisible para lectores de pantalla.
 - **Props:** No recibe props.
 - **Ejemplo:** `<div aria-hidden="true" className="pointer-events-none hidden select-none lg:block"><LegalHubBackground /></div>`
+
+---
+
+## Cart, Favorites & Login Components
+
+> Migrados desde `C:\Users\usuar\Desktop\pages` (Vite SPA) el 2026-06-17.
+> Toda la lógica de negocio vive en los contextos. Los componentes solo consumen los contextos.
+
+### CartDrawer
+
+- **Ruta:** `src/components/cart/CartDrawer.tsx`
+- **Descripción:** Drawer deslizante desde la derecha que muestra los items del carrito. Maneja 4 vistas: vacío, items, confirmación, pedido enviado. Revalida precios al abrirse. Integra `generate_whatsapp_message` RPC de Supabase para generar el mensaje de pedido de forma segura en el servidor. Usa `react-focus-lock` para accesibilidad.
+- **Props:** No recibe props (todo el estado viene de `useCart()`).
+- **Estado interno:** `showConfirm`, `orderSent`, `isGeneratingMessage`
+- **Hooks usados:** `useCart`, `useBodyScrollLock`
+- **Dependencias:** `CartContext`, `whatsapp.ts`, `formatPrice`, `react-focus-lock`, `react-hot-toast`
+- **Ejemplo:** `<CartDrawer />` (montado en `GlobalModals`, se monta una sola vez por layout)
+
+### FavoritesModal
+
+- **Ruta:** `src/components/cart/FavoritesModal.tsx`
+- **Descripción:** Modal centrado que muestra la lista de productos favoritos del usuario. Carga los datos de Supabase `products` filtrando por los IDs en `favorites`. Muestra spinner, estado vacío y lista de productos con link directo al detalle.
+- **Props:**
+  - `isOpen: boolean` — Controla visibilidad
+  - `onClose: () => void` — Callback al cerrar
+- **Hooks usados:** `useFavorites`, `useAuth`, `useBodyScrollLock`, `useModal`
+- **Dependencias:** `FavoritesContext`, `AuthContext`, `getSupabaseClient`, `formatPrice`, `react-focus-lock`
+- **Ejemplo:** `<FavoritesModal isOpen={isFavoritesOpen} onClose={() => setIsFavoritesOpen(false)} />`
+
+### LoginModal
+
+- **Ruta:** `src/components/cart/LoginModal.tsx`
+- **Descripción:** Modal de login con Google OAuth. El mensaje e icono cambian según el contexto que disparó el modal. Soporta 4 contextos: `cart`, `favorites`, `contact`, `generic`.
+- **Props:**
+  - `isOpen: boolean` — Controla visibilidad
+  - `onClose: () => void` — Callback al cerrar
+  - `context?: string` — Contexto que disparó el modal (default: `"generic"`)
+- **Hooks usados:** `useAuth`, `useBodyScrollLock`, `useModal`
+- **Dependencias:** `AuthContext`, `react-focus-lock`
+- **Ejemplo:** `<LoginModal isOpen={authModalContext !== null} onClose={hideAuthModal} context={authModalContext ?? "generic"} />`
+
+### GlobalModals
+
+- **Ruta:** `src/components/layout/GlobalModals.tsx`
+- **Descripción:** Client Component wrapper que renderiza `CartDrawer` y `LoginModal` en un solo lugar. Se monta en `(public)/layout.tsx` para que estén disponibles en todas las páginas.
+- **Props:** No recibe props.
+- **Ejemplo:** `<GlobalModals />` (montado en `(public)/layout.tsx`)
+
+---
+
+## Context Providers
+
+### CartContext / CartProvider
+
+- **Ruta:** `src/context/CartContext.tsx`
+- **Descripción:** Contexto del carrito con estrategia guest-first. Persistencia en localStorage con expiración de 7 días. Sincronización con Supabase `user_carts`. Revalidación de precios cada 60s. Sync multi-pestaña.
+- **Hook:** `useCart()` — Retorna `{ cartItems, addToCart, removeFromCart, updateQuantity, clearCart, cartTotal, cartCount, isCartOpen, setIsCartOpen, refreshCartPrices, isRefreshingPrices, arePricesStale }`
+- **Tipos exportados:** `CartProduct`, `CartItem`
+- **Registro en:** `src/providers/index.tsx`
+
+### FavoritesContext / FavoritesProvider
+
+- **Ruta:** `src/context/FavoritesContext.tsx`
+- **Descripción:** Contexto de favoritos con persistencia dual localStorage + Supabase. Merge al login. Optimistic updates con rollback. O(1) lookup via `Set`.
+- **Hook:** `useFavorites()` — Retorna `{ favorites, toggleFavorite, isFavorite }`
+- **Registro en:** `src/providers/index.tsx`
