@@ -43,13 +43,19 @@ export function Breadcrumb({
                 chevron_right
               </span>
             )}
-            {item.href && index < items.length - 1 ? (
+            {item.href ? (
               <Link
                 href={item.href}
                 className={cn(
                   "transition-colors",
-                  isLight ? "hover:text-white" : "hover:text-primary"
+                  isLight ? "hover:text-white" : "hover:text-primary",
+                  index === items.length - 1
+                    ? isLight
+                      ? "font-medium text-white"
+                      : "text-primary font-medium"
+                    : ""
                 )}
+                aria-current={index === items.length - 1 ? "page" : undefined}
               >
                 {item.label}
               </Link>

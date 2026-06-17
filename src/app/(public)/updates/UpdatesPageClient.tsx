@@ -134,7 +134,7 @@ const CHANGELOG: VersionGroup[] = [
       {
         id: "e-124",
         date: "2026-06-17",
-        category: "content",
+        category: "chore",
         title: "Términos: eliminación de secciones de precios y pagos",
         description:
           "Se eliminaron las Secciones 4 ('Precios, disponibilidad y naturaleza informativa del catálogo') y 5 ('Pagos y modalidades de pago') en preparación para una política exclusiva de pagos. Se limpiaron referencias a precios/pagos en las Secciones 2 y 11. Las secciones 6–17 se renumeraron a 4–15. La meta-description se actualizó a 150 caracteres. El tiempo de lectura se ajustó de 18 a 16 minutos.",

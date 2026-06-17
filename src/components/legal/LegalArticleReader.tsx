@@ -212,57 +212,50 @@ export default function LegalArticleReader({
         if (e.key === "Escape") handleClose();
       }}
     >
-      {/* Paper sheet — flex column: non-scrolling button strip + scrollable body */}
+      {/* Wrapper — relative so the button can be absolute-positioned over the paper */}
       <div
-        role="article"
-        className="relative mx-3 w-full bg-white"
-        style={{
-          maxWidth: 850,
-          maxHeight: "98vh",
-          /* Flex column: header row (button) never scrolls; body scrolls independently */
-          display: "flex",
-          flexDirection: "column",
-          borderRadius: 4,
-          boxShadow: "0 25px 60px -12px rgba(0,0,0,0.55)",
-          borderTop: "1px solid #E2E8F0",
-          borderBottom: "1px solid #E2E8F0",
-        }}
+        className="relative mx-3 w-full"
+        style={{ maxWidth: 850, maxHeight: "98vh" }}
       >
-        {/* ── Close button strip ──────────────────────────────────────────────
-            padding: 12px 12px 0 → button is 12px from TOP edge and 12px from
-            RIGHT edge of the paper. Symmetric corners, no float, no sticky,
-            no overlap with scrolling content ever. */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            padding: "12px 12px 0",
-            flexShrink: 0,
-          }}
+        {/* ── Floating close button ─────────────────────────────────────────
+            position:absolute keeps it anchored to the paper corner without
+            scrolling and without any extra structural element (no white bar).
+            top:12px + right:12px = 12 px from both the top and right edges
+            of the paper → perfectly symmetric from the page border. */}
+        <button
+          onClick={handleClose}
+          aria-label="Cerrar y volver a documentos legales"
+          className="absolute z-10 flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-md transition-all duration-300 hover:rotate-90 hover:border-red-200 hover:bg-red-50 hover:text-red-500 hover:shadow-red-100"
+          style={{ top: 12, right: 12 }}
         >
-          <button
-            onClick={handleClose}
-            aria-label="Cerrar y volver a documentos legales"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-md transition-all duration-300 hover:rotate-90 hover:border-red-200 hover:bg-red-50 hover:text-red-500 hover:shadow-red-100"
-          >
-            <IconClose />
-          </button>
-        </div>
+          <IconClose />
+        </button>
 
-        {/* ── Scrollable body ──────────────────────────────────────────────── */}
+        {/* ── Scrollable paper sheet ───────────────────────────────────────
+            paddingTop:64px = 12px (gap above btn) + 40px (btn height) + 12px
+            (breathing room) → first content always starts below the button. */}
         <div
+          role="article"
+          className="w-full bg-white"
           style={{
+            maxHeight: "98vh",
             overflowY: "auto",
             overflowX: "hidden",
             overscrollBehavior: "contain",
+            borderRadius: 4,
+            boxShadow: "0 25px 60px -12px rgba(0,0,0,0.55)",
+            borderTop: "1px solid #E2E8F0",
+            borderBottom: "1px solid #E2E8F0",
             scrollbarWidth: "thin",
             scrollbarColor: "#CBD5E1 transparent",
-            flex: 1,
-            padding: "8px 40px 60px",
+            paddingTop: "64px",
+            paddingRight: "40px",
+            paddingBottom: "60px",
+            paddingLeft: "40px",
           }}
         >
-          {/* Breadcrumbs — same position as all other public pages */}
-          <div className="pt-3 pb-2">
+          {/* Breadcrumbs */}
+          <div className="pb-2">
             <Breadcrumb items={breadcrumbItems} className="justify-start" />
           </div>
 
