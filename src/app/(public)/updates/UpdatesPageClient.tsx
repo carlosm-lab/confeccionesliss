@@ -109,6 +109,48 @@ const CHANGELOG: VersionGroup[] = [
           "Se rediseñó LegalArticleReader.tsx para ofrecer dos experiencias distintas según el dispositivo. En desktop (lg+) se conserva el lector modal con overlay oscuro, reduciendo el padding vertical en un 75% (de 20px a 5px) y agregando migas de pan en la misma posición que todas las demás páginas. En móvil y tablet (< lg) se elimina el overlay y se renderiza el contenido directamente como una página normal con: barra de navegación superior sticky (botón de regreso + título + enlace 'Ver todos'), migas de pan, y estructura semántica completa article > header + sections. Se agregaron también schemas JSON-LD Article + BreadcrumbList en las páginas de privacidad y términos.",
         note: "Commit de esta sesión, incluye cambios en 5 archivos.",
       },
+      {
+        id: "e-122",
+        date: "2026-06-17",
+        category: "fix",
+        title:
+          "Lector legal desktop: reducción correcta del espacio externo vertical",
+        description:
+          "Se corrigió la implementación errónea del pedido anterior: el ajuste del 75% debía reducir el gap EXTERNO (entre la pantalla y el paper), no el padding interno. Se cambió maxHeight de 92vh a 98vh (gap externo: 4vh → 1vh cada lado), se restauró el padding interno a 20px 40px y se eliminó la barra de navegación móvil residual. El layout móvil ahora va directamente de div.lg:hidden al article con migas de pan.",
+        commit: "643c231",
+        note: "Corrección de regresión introducida en e-121. Solo afecta LegalArticleReader.tsx.",
+      },
+      {
+        id: "e-123",
+        date: "2026-06-17",
+        category: "fix",
+        title:
+          "Migas de pan sin página actual · Numeración romana en secciones",
+        description:
+          "Las migas de pan ahora muestran solo el camino hasta el padre (Inicio › Legal), sin incluir la página actual. Los BreadcrumbList JSON-LD conservan los 3 niveles para SEO. Se reemplazaron los números arábigos por romanos (I–XVII) y se corrigió la alineación del badge: height cambiado de 2rem a 1.35em (= lineHeight del h2) para alineación perfecta independientemente del wrapping del título.",
+        commit: "2803f08",
+        note: "Afecta LegalContent.tsx y LegalArticleReader.tsx.",
+      },
+      {
+        id: "e-124",
+        date: "2026-06-17",
+        category: "content",
+        title: "Términos: eliminación de secciones de precios y pagos",
+        description:
+          "Se eliminaron las Secciones 4 ('Precios, disponibilidad y naturaleza informativa del catálogo') y 5 ('Pagos y modalidades de pago') en preparación para una política exclusiva de pagos. Se limpiaron referencias a precios/pagos en las Secciones 2 y 11. Las secciones 6–17 se renumeraron a 4–15. La meta-description se actualizó a 150 caracteres. El tiempo de lectura se ajustó de 18 a 16 minutos.",
+        commit: "pendiente",
+        note: "Afecta únicamente terminos/page.tsx.",
+      },
+      {
+        id: "e-125",
+        date: "2026-06-17",
+        category: "fix",
+        title: "Botón cerrar: márgenes simétricos en esquina superior derecha",
+        description:
+          "El botón X de cierre tenía margen insuficiente respecto al texto y margen superior asimétrico. Cambios: top-2.5 → top-2 (8px, coincide con el gap ~8px al scrollbar), eliminado -mt-1, agregado ml-3 (12px de separación entre botón y texto adyacente), eliminado sm:-mr-10 que posicionaba el botón sobre el scrollbar.",
+        commit: "pendiente",
+        note: "Afecta únicamente LegalArticleReader.tsx.",
+      },
     ],
   },
   {

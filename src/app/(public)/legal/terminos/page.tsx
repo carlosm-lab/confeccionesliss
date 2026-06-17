@@ -14,7 +14,7 @@ import {
 export const metadata: Metadata = {
   title: "Términos y Condiciones del Servicio en Línea",
   description:
-    "Términos y condiciones de uso de Confecciones Liss. Lee sobre los derechos del usuario, precios, responsabilidades y las reglas vigentes del servicio.",
+    "Términos y condiciones de uso de Confecciones Liss. Lee sobre los derechos del usuario, responsabilidades y las reglas vigentes del servicio en línea.",
   alternates: { canonical: `${siteConfig.url}/legal/terminos` },
 };
 
@@ -30,7 +30,7 @@ export default function TerminosPage() {
           url: PAGE_URL,
           name: "Términos y Condiciones del Servicio en Línea | Confecciones Liss",
           description:
-            "Términos y condiciones de uso de Confecciones Liss. Lee sobre los derechos del usuario, precios, responsabilidades y las reglas vigentes del servicio.",
+            "Términos y condiciones de uso de Confecciones Liss. Lee sobre los derechos del usuario, responsabilidades y las reglas vigentes del servicio en línea.",
         }),
         "@type": "Article",
         author: { "@id": `${siteConfig.url}/#business` },
@@ -55,7 +55,7 @@ export default function TerminosPage() {
       <LegalArticleReader
         title="Términos y Condiciones de Uso"
         date="15 Jun, 2025"
-        readingTime={18}
+        readingTime={16}
       >
         <Section n={1} title="Aceptación de los términos">
           <P>
@@ -84,17 +84,16 @@ export default function TerminosPage() {
             Confecciones Liss opera como una plataforma de catálogo y confección
             de prendas en línea cuyo propósito es exhibir productos disponibles
             y facilitar el contacto entre compradores y la administración del
-            negocio. La plataforma no procesa pagos, no gestiona inventario en
-            tiempo real, no garantiza disponibilidad inmediata de ningún
-            producto, y no constituye por sí misma un contrato de compraventa.
+            negocio. La plataforma no gestiona inventario en tiempo real, no
+            garantiza disponibilidad inmediata de ningún producto, y no
+            constituye por sí misma un contrato de compraventa.
           </P>
           <P>
             Todo el proceso de compra — desde la confirmación de disponibilidad
-            hasta el acuerdo sobre el precio final, la modalidad de pago y
-            cualquier otro aspecto de la transacción — se realiza directamente
-            entre el comprador y la administración a través de WhatsApp u otros
-            canales de comunicación directa. La plataforma web actúa únicamente
-            como puente inicial que facilita ese contacto.
+            hasta el acuerdo sobre los detalles de la transacción — se realiza
+            directamente entre el comprador y la administración a través de
+            WhatsApp u otros canales de comunicación directa. La plataforma web
+            actúa únicamente como puente inicial que facilita ese contacto.
           </P>
           <P>
             El operador se reserva el derecho de modificar, suspender,
@@ -125,46 +124,6 @@ export default function TerminosPage() {
 
         <Section
           n={4}
-          title="Precios, disponibilidad y naturaleza informativa del catálogo"
-        >
-          <P>
-            Los precios mostrados en el catálogo tienen carácter exclusivamente
-            informativo y referencial. En ningún caso constituyen una oferta
-            contractual vinculante ni garantizan que el producto esté disponible
-            al precio indicado. Los precios están sujetos a cambios sin previo
-            aviso y la administración se reserva el derecho de modificarlos en
-            cualquier momento y por cualquier razón.
-          </P>
-          <P>
-            La disponibilidad de los productos tampoco está garantizada por la
-            plataforma. La disponibilidad real de cada producto debe confirmarse
-            directamente con la administración a través de WhatsApp antes de
-            asumir que la adquisición es posible. Ninguna de estas
-            circunstancias genera derecho a reclamación alguna contra el
-            operador.
-          </P>
-        </Section>
-        <Hr />
-
-        <Section n={5} title="Pagos y modalidades de pago">
-          <P>
-            Esta plataforma no procesa pagos de ningún tipo. No existe
-            integración con pasarelas de pago, sistemas de tarjetas de crédito o
-            débito, billeteras digitales ni ningún otro mecanismo de pago
-            automatizado. La plataforma no almacena, no solicita y no transmite
-            información financiera de ninguna naturaleza.
-          </P>
-          <P>
-            La modalidad de pago aplicable a cada transacción se acuerda
-            directamente entre el comprador y la administración a través de
-            WhatsApp. El operador de la plataforma no es parte en ninguna
-            transacción financiera que ocurra entre el comprador y el negocio.
-          </P>
-        </Section>
-        <Hr />
-
-        <Section
-          n={6}
           title="Cuentas de usuario y responsabilidades del titular"
         >
           <P>
@@ -185,7 +144,7 @@ export default function TerminosPage() {
         </Section>
         <Hr />
 
-        <Section n={7} title="Conducta del usuario y usos prohibidos">
+        <Section n={5} title="Conducta del usuario y usos prohibidos">
           <P>
             El usuario se compromete a utilizar la plataforma de conformidad con
             estos términos y con la legislación salvadoreña aplicable. Está
@@ -205,7 +164,7 @@ export default function TerminosPage() {
         <Hr />
 
         <Section
-          n={8}
+          n={6}
           title="Propiedad intelectual y contenido de la plataforma"
         >
           <P>
@@ -229,7 +188,7 @@ export default function TerminosPage() {
         <Hr />
 
         <Section
-          n={9}
+          n={7}
           title="Exoneración de responsabilidad por el contenido del catálogo"
         >
           <P>
@@ -250,7 +209,7 @@ export default function TerminosPage() {
         <Hr />
 
         <Section
-          n={10}
+          n={8}
           title="Limitación de responsabilidad del operador de la plataforma"
         >
           <P>
@@ -266,25 +225,21 @@ export default function TerminosPage() {
         </Section>
         <Hr />
 
-        <Section
-          n={11}
-          title="Exoneración de responsabilidad del desarrollador"
-        >
+        <Section n={9} title="Exoneración de responsabilidad del desarrollador">
           <P>
             El desarrollador del sistema actúa en calidad de prestador de
             servicios técnicos y no tiene participación en las decisiones
-            comerciales del negocio, en la determinación de precios, en la
-            gestión del inventario, ni en ningún otro aspecto operativo de
-            Confecciones Liss. El usuario reconoce que el desarrollador es un
-            tercero ajeno a cualquier relación comercial entre el usuario y el
-            negocio, y renuncia expresamente a cualquier reclamación contra el
-            desarrollador.
+            comerciales del negocio, en la gestión del inventario, ni en ningún
+            otro aspecto operativo de Confecciones Liss. El usuario reconoce que
+            el desarrollador es un tercero ajeno a cualquier relación comercial
+            entre el usuario y el negocio, y renuncia expresamente a cualquier
+            reclamación contra el desarrollador.
           </P>
         </Section>
         <Hr />
 
         <Section
-          n={12}
+          n={10}
           title="Servicios de terceros e infraestructura tecnológica"
         >
           <P>
@@ -300,7 +255,7 @@ export default function TerminosPage() {
         </Section>
         <Hr />
 
-        <Section n={13} title="Indemnización por parte del usuario">
+        <Section n={11} title="Indemnización por parte del usuario">
           <P>
             El usuario se compromete a indemnizar y mantener indemne al operador
             de la plataforma y al desarrollador del sistema frente a cualquier
@@ -312,7 +267,7 @@ export default function TerminosPage() {
         </Section>
         <Hr />
 
-        <Section n={14} title="Modificaciones a los términos y condiciones">
+        <Section n={12} title="Modificaciones a los términos y condiciones">
           <P>
             El operador se reserva el derecho de modificar, actualizar o
             reemplazar los presentes términos en cualquier momento y sin
@@ -324,7 +279,7 @@ export default function TerminosPage() {
         </Section>
         <Hr />
 
-        <Section n={15} title="Suspensión y terminación del servicio">
+        <Section n={13} title="Suspensión y terminación del servicio">
           <P>
             El operador se reserva el derecho de suspender o terminar el acceso
             de cualquier usuario a la plataforma, con o sin previo aviso, por
@@ -341,7 +296,7 @@ export default function TerminosPage() {
         </Section>
         <Hr />
 
-        <Section n={16} title="Resolución de disputas y jurisdicción aplicable">
+        <Section n={14} title="Resolución de disputas y jurisdicción aplicable">
           <P>
             Cualquier disputa que surja de estos términos o del uso de la
             plataforma se resolverá en primera instancia mediante negociación
@@ -353,7 +308,7 @@ export default function TerminosPage() {
         </Section>
         <Hr />
 
-        <Section n={17} title="Divisibilidad y acuerdo completo">
+        <Section n={15} title="Divisibilidad y acuerdo completo">
           <P>
             Si alguna disposición de estos términos fuera declarada inválida o
             inaplicable por un tribunal competente, las restantes disposiciones
