@@ -275,9 +275,9 @@ export default function LegalArticleReader({
         <div
           style={{
             paddingTop: "12px",
-            paddingRight: "60px",
+            paddingRight: "64px",
             paddingBottom: "60px",
-            paddingLeft: "60px",
+            paddingLeft: "64px",
           }}
         >
           {/* Breadcrumbs */}
