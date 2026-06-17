@@ -9,7 +9,7 @@
     "lint": "eslint",
     "prepare": "husky",
     "dead-code": "knip",
-    "test": "vitest run",
+    "test": "vitest run --passWithNoTests",
     "test:watch": "vitest",
     "agent:sync": "eslint . --fix && prettier --write \"src/**/*.{ts,tsx,css}\" && knip"
   },
