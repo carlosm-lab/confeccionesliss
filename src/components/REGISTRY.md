@@ -188,3 +188,25 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 - **Descripción:** Componente contenedor para la página de enlaces ("link in bio"). Muestra la información de perfil, avatar del logo y una lista responsiva de 13 botones que apuntan a WhatsApp y redes sociales. Está optimizado para evitar el crasheo por falta de memoria en dispositivos móviles al no poseer el atributo `target="_blank"`.
 - **Props:** No recibe props.
 - **Ejemplo:** `<LinksPageClient />`
+
+## Legal Components
+
+### LegalArticleReader
+
+- **Ruta:** `src/components/legal/LegalArticleReader.tsx`
+- **Descripción:** Modal de lectura de documentos legales. En desktop (`lg+`) muestra un overlay `position:fixed` sobre la página con blur de fondo, papel blanco scrollable y botón de cierre absoluto. En mobile muestra el artículo como página normal sin overlay. Bloquea el scroll del body en mobile. Cierra con ESC o clic en el overlay.
+- **Props:**
+  - `title: string` — Título del artículo.
+  - `category?: string` — Etiqueta de categoría (default: `"DOCUMENTOS LEGALES"`).
+  - `date: string` — Fecha de publicación formateada.
+  - `readingTime: number` — Tiempo estimado de lectura en minutos.
+  - `children: ReactNode` — Contenido del artículo (secciones de `LegalContent`).
+- **Layout desktop:** `position:relative` paper → botón `position:absolute top:20 right:20` → div scrollable `overflow-y:auto` con `paddingLeft:72px paddingRight:72px`.
+- **Ejemplo:** `<LegalArticleReader title="Política de Privacidad" date="15 Jun, 2025" readingTime={14}>{children}</LegalArticleReader>`
+
+### LegalHubBackground
+
+- **Ruta:** `src/components/legal/LegalHubBackground.tsx`
+- **Descripción:** Renderizado visual puro del hub `/legal` (hero + grid de tarjetas de documentos). Usado como fondo estático en las páginas de artículos legales para que el blur-overlay del `LegalArticleReader` muestre el hub detrás, creando la ilusión de un modal flotante. En las páginas de artículos se usa con `aria-hidden="true"` y `pointer-events-none hidden lg:block` para que solo sea visible en desktop (donde existe el overlay) y sea invisible para lectores de pantalla.
+- **Props:** No recibe props.
+- **Ejemplo:** `<div aria-hidden="true" className="pointer-events-none hidden select-none lg:block"><LegalHubBackground /></div>`
