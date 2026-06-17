@@ -156,21 +156,27 @@ Proyecto: Confecciones Liss — confeccionesliss.com
 
 ## VERIFICACIÓN DE CONSOLAS LIMPIAS
 
-| Fuente                                     | Estado             |
-| ------------------------------------------ | ------------------ |
-| Chrome Console — home `/`                  | LIMPIA ✓           |
-| Chrome Console — `/catalogo`               | LIMPIA ✓           |
-| Chrome Console — `/catalogo/scrubs`        | LIMPIA ✓           |
-| Chrome Console — `/catalogo/universitario` | LIMPIA ✓           |
-| Chrome Console — detalle de producto       | LIMPIA ✓           |
-| Chrome Console — `/admin/products`         | LIMPIA ✓           |
-| Chrome Console — mobile MobileBottomNav    | LIMPIA ✓           |
-| Chrome Network — sin 404                   | CONFIRMADO ✓       |
-| Chrome Network — sin 403                   | CONFIRMADO ✓       |
-| Next.js terminal (dev)                     | LIMPIA ✓           |
-| TypeScript `tsc --noEmit`                  | 0 ERRORES ✓        |
-| ESLint (`agent:sync`)                      | 0 ERRORES NUEVOS ✓ |
-| Supabase RLS — sin violaciones             | CONFIRMADO ✓       |
+| Fuente                                         | Estado                 |
+| ---------------------------------------------- | ---------------------- |
+| Chrome Console — home `/`                      | LIMPIA ✓               |
+| Chrome Console — `/catalogo`                   | LIMPIA ✓               |
+| Chrome Console — `/catalogo/scrubs`            | LIMPIA ✓               |
+| Chrome Console — `/catalogo/universitario`     | LIMPIA ✓               |
+| Chrome Console — detalle de producto           | LIMPIA ✓               |
+| Chrome Console — `/admin/products`             | LIMPIA ✓               |
+| Chrome Console — `/contacto`                   | LIMPIA ✓               |
+| Chrome Console — `/servicios`                  | LIMPIA ✓               |
+| Chrome Console — `/links`                      | LIMPIA ✓               |
+| Chrome Console — `/legal`                      | LIMPIA ✓               |
+| Chrome Console — mobile MobileBottomNav        | LIMPIA ✓               |
+| Chrome Network — sin 404                       | CONFIRMADO ✓           |
+| Chrome Network — sin 403                       | CONFIRMADO ✓           |
+| Next.js terminal (dev)                         | LIMPIA ✓               |
+| TypeScript `tsc --noEmit`                      | 0 ERRORES ✓            |
+| `npx next build`                               | EXITOSO — 41 páginas ✓ |
+| ESLint (`agent:sync`)                          | 0 ERRORES NUEVOS ✓     |
+| Supabase RLS — sin violaciones                 | CONFIRMADO ✓           |
+| Fase 5.E — flujo completo incógnito (14 pasos) | TODOS PASS ✓           |
 
 ---
 
