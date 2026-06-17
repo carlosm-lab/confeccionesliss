@@ -151,7 +151,14 @@ export default function ProductTable({
                         fill
                         className="object-cover"
                         sizes="48px"
-                        unoptimized={product.image_path.startsWith("blob:")}
+                        unoptimized={
+                          product.image_path.startsWith("blob:") ||
+                          (!product.image_path.includes(".supabase.co") &&
+                            !product.image_path.includes(
+                              "lh3.googleusercontent.com"
+                            ) &&
+                            !product.image_path.startsWith("/"))
+                        }
                       />
                     ) : (
                       <span className="material-symbols-outlined text-slate-400">

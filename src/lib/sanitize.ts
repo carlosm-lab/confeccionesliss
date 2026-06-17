@@ -26,11 +26,8 @@ export const sanitizeUrl = (url: unknown): string => {
 
     const host = parsed.hostname.toLowerCase();
     const isWhitelisted =
-      host === "images.unsplash.com" ||
       host === "lh3.googleusercontent.com" ||
       host.endsWith(".googleusercontent.com") ||
-      host === "via.placeholder.com" ||
-      host === "placehold.co" ||
       host === "confeccionesliss.com" ||
       host.endsWith(".confeccionesliss.com") ||
       host.endsWith(".supabase.co") ||

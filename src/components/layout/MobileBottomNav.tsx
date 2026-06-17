@@ -280,6 +280,7 @@ export function MobileBottomNav() {
         <motion.path
           d={pathD}
           fill="var(--color-primary)"
+          initial={{ d: pathD }}
           animate={{ d: pathD }}
           transition={{ duration: ANIM_DURATION, ease: [0.4, 0, 0.2, 1] }}
         />
@@ -289,6 +290,7 @@ export function MobileBottomNav() {
           stroke="#ffffff"
           strokeWidth={1}
           vectorEffect="non-scaling-stroke"
+          initial={{ d: topBorderPathD }}
           animate={{ d: topBorderPathD }}
           transition={{ duration: ANIM_DURATION, ease: [0.4, 0, 0.2, 1] }}
         />

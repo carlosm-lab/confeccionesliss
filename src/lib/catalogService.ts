@@ -110,21 +110,64 @@ export async function getProductsBySector(
 ): Promise<DbProduct[]> {
   const supabase = createServerClient();
 
-  // El sector puede venir directamente de `sector` o desde categories.catalog
-  // Buscamos primero por sector directo, luego por category join
-  const { data, error } = await supabase
+  // PostgREST no soporta filtros sobre tablas relacionadas en .or()
+  // Estrategia: dos queries separadas, una por sector directo
+  // y otra por category_id (de categorías cuyo catalog coincide).
+
+  // Query 1: productos con sector directo
+  const { data: byDirect, error: err1 } = await supabase
     .from("products")
     .select(PRODUCT_SELECT)
     .eq("is_active", true)
-    .or(`sector.eq.${sector},categories.catalog.eq.${sector}`)
+    .eq("sector", sector)
     .order("created_at", { ascending: false });
 
-  if (error) {
-    console.error("[catalogService] getProductsBySector error:", error);
-    return [];
+  if (err1) {
+    console.error("[catalogService] getProductsBySector (direct) error:", err1);
   }
 
-  return (data ?? []) as unknown as DbProduct[];
+  // Query 2: obtener los category_ids del catalog que coincida
+  const { data: catData, error: err2 } = await supabase
+    .from("categories")
+    .select("id")
+    .eq("catalog", sector);
+
+  if (err2) {
+    console.error(
+      "[catalogService] getProductsBySector (categories) error:",
+      err2
+    );
+  }
+
+  let byCategory: DbProduct[] = [];
+  const categoryIds = (catData ?? []).map((c: { id: string }) => c.id);
+
+  if (categoryIds.length > 0) {
+    const { data: byCat, error: err3 } = await supabase
+      .from("products")
+      .select(PRODUCT_SELECT)
+      .eq("is_active", true)
+      .in("category_id", categoryIds)
+      .order("created_at", { ascending: false });
+
+    if (err3) {
+      console.error(
+        "[catalogService] getProductsBySector (by category) error:",
+        err3
+      );
+    }
+    byCategory = (byCat ?? []) as unknown as DbProduct[];
+  }
+
+  // Combinar y deduplicar por id
+  const directList = (byDirect ?? []) as unknown as DbProduct[];
+  const seen = new Set<string>(directList.map((p) => p.id));
+  const merged = [...directList, ...byCategory.filter((p) => !seen.has(p.id))];
+
+  // Ordenar por created_at descendente
+  merged.sort((a, b) => (b.created_at ?? "").localeCompare(a.created_at ?? ""));
+
+  return merged;
 }
 
 // ── Obtener un producto por slug ──────────────────────────────
@@ -209,21 +252,49 @@ export async function getRelatedProducts(
 ): Promise<DbProduct[]> {
   const supabase = createServerClient();
 
-  const { data, error } = await supabase
+  // Query 1: por sector directo
+  const { data: byDirect, error: err1 } = await supabase
     .from("products")
     .select(PRODUCT_SELECT)
     .eq("is_active", true)
-    .or(`sector.eq.${sector},categories.catalog.eq.${sector}`)
+    .eq("sector", sector)
     .neq("slug", excludeSlug)
     .order("created_at", { ascending: false })
     .limit(limit);
 
-  if (error) {
-    console.error("[catalogService] getRelatedProducts error:", error);
-    return [];
+  if (err1) {
+    console.error("[catalogService] getRelatedProducts (direct) error:", err1);
   }
 
-  return (data ?? []) as unknown as DbProduct[];
+  const directList = (byDirect ?? []) as unknown as DbProduct[];
+  if (directList.length >= limit) return directList.slice(0, limit);
+
+  // Query 2: por category_id del catalog
+  const { data: catData } = await supabase
+    .from("categories")
+    .select("id")
+    .eq("catalog", sector);
+
+  const categoryIds = (catData ?? []).map((c: { id: string }) => c.id);
+
+  if (categoryIds.length > 0) {
+    const seen = new Set<string>(directList.map((p) => p.id));
+    const { data: byCat } = await supabase
+      .from("products")
+      .select(PRODUCT_SELECT)
+      .eq("is_active", true)
+      .in("category_id", categoryIds)
+      .neq("slug", excludeSlug)
+      .order("created_at", { ascending: false })
+      .limit(limit);
+
+    const byCatList = ((byCat ?? []) as unknown as DbProduct[]).filter(
+      (p) => !seen.has(p.id)
+    );
+    return [...directList, ...byCatList].slice(0, limit);
+  }
+
+  return directList.slice(0, limit);
 }
 
 // ── Obtener slug + sector de todos los productos activos (para sitemap) ───────

@@ -250,7 +250,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
           .from("user_carts")
           .select("cart_items")
           .eq("user_id", user.id)
-          .single();
+          .maybeSingle();
 
         if (!error && data?.cart_items && data.cart_items.length > 0) {
           if (cartItemsRef.current.length === 0 && isMounted) {

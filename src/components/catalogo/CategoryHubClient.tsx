@@ -50,7 +50,12 @@ function CategoryCard({
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-103"
-          priority={sector === "scrubs" || sector === "universitario"}
+          priority={
+            sector === "scrubs" ||
+            sector === "universitario" ||
+            sector === "escolar" ||
+            sector === "corporativo"
+          }
         />
 
         <div className="bg-primary absolute top-3 right-3 z-20 flex h-7 w-7 items-center justify-center rounded-full text-white shadow-md transition-all duration-300">
