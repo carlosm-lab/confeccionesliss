@@ -290,7 +290,7 @@ export function CartDrawer() {
                   <button
                     onClick={handleWhatsAppOrder}
                     disabled={isGeneratingMessage || cartItems.length === 0}
-                    className="flex w-full items-center justify-center gap-[var(--space-xs)] rounded-xl bg-[#25D366] py-[var(--space-md)] font-bold text-white shadow-md shadow-[#25D366]/20 transition-colors hover:bg-[#1DA851] disabled:cursor-not-allowed disabled:opacity-70"
+                    className="flex w-full items-center justify-center gap-[var(--space-xs)] rounded-xl bg-[var(--color-whatsapp)] py-[var(--space-md)] font-bold text-white shadow-[var(--color-whatsapp)]/20 shadow-md transition-colors hover:bg-[var(--color-whatsapp-hover)] disabled:cursor-not-allowed disabled:opacity-70"
                   >
                     <span
                       className="material-symbols-outlined"
@@ -487,7 +487,7 @@ export function CartDrawer() {
                 data-testid="checkout-button"
                 onClick={() => setShowConfirm(true)}
                 disabled={isRefreshingPrices || arePricesStale}
-                className={`flex w-full items-center justify-center gap-[var(--space-xs)] rounded-xl bg-[#25D366] py-[var(--space-md)] font-bold text-white shadow-md shadow-[#25D366]/20 transition-colors hover:bg-[#1DA851] ${
+                className={`flex w-full items-center justify-center gap-[var(--space-xs)] rounded-xl bg-[var(--color-whatsapp)] py-[var(--space-md)] font-bold text-white shadow-[var(--color-whatsapp)]/20 shadow-md transition-colors hover:bg-[var(--color-whatsapp-hover)] ${
                   isRefreshingPrices || arePricesStale
                     ? "cursor-not-allowed opacity-50"
                     : ""

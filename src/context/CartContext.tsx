@@ -102,7 +102,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   // ── Inicialización desde localStorage ────────────────────────
   // Incluye expiración de 7 días de inactividad.
+  // GUARD SSR: el lazy initializer corre en el servidor (Next.js SSR)
+  // donde localStorage no existe. Retornar [] en SSR y dejar que el
+  // useEffect de persistencia hidrate el estado en el cliente.
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    if (typeof window === "undefined") return [];
     try {
       const saved = localStorage.getItem(STORAGE_CART_KEY);
       const timestamp = localStorage.getItem(STORAGE_CART_TIMESTAMP_KEY);

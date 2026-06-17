@@ -50,6 +50,10 @@
   --color-brand-accent: #b43024;
   --color-secondary-fixed: #dae2ff;
 
+  /* Third-party brand colors (no cambiar sin verificar con el proveedor) */
+  --color-whatsapp: #25d366; /* WhatsApp green — brand oficial */
+  --color-whatsapp-hover: #1da851; /* WhatsApp green hover — brand oficial */
+
   /* Fonts */
   --font-headline: "Noto Serif", serif;
   --font-serif: "Noto Serif", serif;

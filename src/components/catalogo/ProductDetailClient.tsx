@@ -21,6 +21,7 @@ import { siteConfig } from "@/config/site";
 import { useFavorites } from "@/context/FavoritesContext";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
+import { logger } from "@/lib/logger";
 import type { Product, CategoryConfig } from "@/data/types";
 
 interface ProductDetailClientProps {
@@ -92,7 +93,7 @@ export function ProductDetailClient({
         }, 2500);
         return;
       } catch (err) {
-        console.error("Failed to copy link via clipboard API:", err);
+        logger.error("Failed to copy link via clipboard API:", err);
       }
     }
 
@@ -114,7 +115,7 @@ export function ProductDetailClient({
         throw new Error("execCommand copy returned false");
       }
     } catch (fallbackErr) {
-      console.error("Fallback copy failed:", fallbackErr);
+      logger.error("Fallback copy failed:", fallbackErr);
     }
   };
 

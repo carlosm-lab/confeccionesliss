@@ -1,13 +1,11 @@
 "use client";
-import type { Metadata } from "next";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/formatPrice";
 
-// Nota: metadata no puede exportarse desde un Client Component.
-// Para SEO de esta ruta se debe mover metadata a un layout o un
-// Server Component wrapper si se requiere en el futuro.
+// Nota: metadata debe ir en un Server Component wrapper o en el layout.
+// Esta página es un Client Component, por lo que usa el metadata de layout.
 
 export default function CarritoPage() {
   const { cartItems, cartTotal, setIsCartOpen, removeFromCart } = useCart();

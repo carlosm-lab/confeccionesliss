@@ -135,6 +135,7 @@
 | `src/app/(public)/layout.tsx`                     | Import GlobalModals                                          |
 | `src/app/(public)/mi-cuenta/page.tsx`             | Usa MiCuentaPageClient                                       |
 | `src/app/(public)/carrito/page.tsx`               | Resumen real del carrito                                     |
+| `src/lib/formatPrice.ts`                          | Imports LOCALE_CURRENCY y LOCALE_LANG desde constants        |
 | `src/components/REGISTRY.md`                      | Documentados 4 nuevos componentes + 2 contexts               |
 | `package.json`                                    | react-hot-toast, react-focus-lock                            |
 
