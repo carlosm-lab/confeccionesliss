@@ -18,6 +18,7 @@ import { generateSlug } from "@/lib/slug";
 import type { Category } from "@/hooks/useCategories";
 import type { Product } from "@/lib/productUtils";
 import { CATALOGS } from "@/config/catalogs";
+import { CustomSelect } from "@/components/ui/CustomSelect";
 
 interface ProductModalProps {
   isOpen: boolean;
@@ -224,6 +225,18 @@ export default function ProductModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    // Validate catalog & category (formerly enforced by HTML5 required on <select>)
+    if (!formData.catalog) {
+      showToast("Por favor selecciona un catálogo.");
+      setIsSubmitting(false);
+      return;
+    }
+    if (!formData.category) {
+      showToast("Por favor selecciona una categoría.");
+      setIsSubmitting(false);
+      return;
+    }
 
     if (
       formData.old_price &&
@@ -562,33 +575,21 @@ export default function ProductModal({
                 >
                   Catálogo
                 </label>
-                <select
+                <CustomSelect
                   id="product-catalog"
-                  name="catalog"
+                  options={CATALOGS.filter((cat) =>
+                    categories.some((c) => c.catalog === cat.value)
+                  ).map((cat) => ({ value: cat.value, label: cat.label }))}
                   value={formData.catalog}
-                  onChange={(e) => {
-                    const nextCatalog = e.target.value;
-                    // Al cambiar catálogo, resetear la categoría para forzar selección consciente
+                  onChange={(nextCatalog) =>
                     setFormData((prev) => ({
                       ...prev,
                       catalog: nextCatalog,
                       category: "",
-                    }));
-                  }}
-                  required
-                  className="focus:ring-primary/20 focus:border-primary w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 transition-all outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
-                >
-                  <option value="" disabled>
-                    Seleccionar catálogo...
-                  </option>
-                  {CATALOGS.filter((cat) =>
-                    categories.some((c) => c.catalog === cat.value)
-                  ).map((cat) => (
-                    <option key={cat.value} value={cat.value}>
-                      {cat.label}
-                    </option>
-                  ))}
-                </select>
+                    }))
+                  }
+                  placeholder="Seleccionar catálogo..."
+                />
               </div>
 
               {/* Categoría — filtrada por el catálogo seleccionado */}
@@ -599,28 +600,22 @@ export default function ProductModal({
                 >
                   Categoría
                 </label>
-                <select
+                <CustomSelect
                   id="product-category"
-                  name="category"
-                  value={formData.category}
-                  onChange={handleChange}
-                  required
-                  disabled={!formData.catalog}
-                  className="focus:ring-primary/20 focus:border-primary w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 transition-all outline-none focus:ring-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/10 dark:bg-white/5 dark:text-white"
-                >
-                  <option value="" disabled>
-                    {formData.catalog
-                      ? "Seleccionar categoría..."
-                      : "Primero selecciona un catálogo"}
-                  </option>
-                  {categories
+                  options={categories
                     .filter((cat) => cat.catalog === formData.catalog)
-                    .map((cat) => (
-                      <option key={cat.id} value={cat.slug}>
-                        {cat.name}
-                      </option>
-                    ))}
-                </select>
+                    .map((cat) => ({ value: cat.slug, label: cat.name }))}
+                  value={formData.category}
+                  onChange={(v) =>
+                    setFormData((prev) => ({ ...prev, category: v }))
+                  }
+                  placeholder={
+                    formData.catalog
+                      ? "Seleccionar categoría..."
+                      : "Primero selecciona un catálogo"
+                  }
+                  disabled={!formData.catalog}
+                />
               </div>
 
               {/* Multi-Image Upload */}

@@ -6,6 +6,7 @@ import { generateSlug } from "@/lib/slug";
 import { useConfirm } from "@/context/ConfirmContext";
 import { invalidateCategoryCache } from "@/hooks/useCategories";
 import { CATALOGS } from "@/config/catalogs";
+import { CustomSelect } from "@/components/ui/CustomSelect";
 
 interface Category {
   id: string;
@@ -78,6 +79,11 @@ export default function AdminCategoriesPage() {
     setIsSaving(true);
     try {
       const supabase = getSupabaseClient();
+      if (!currentCat.catalog) {
+        showToast("Por favor selecciona un catálogo", false);
+        setIsSaving(false);
+        return;
+      }
       const payload = {
         name: currentCat.name,
         slug: currentCat.slug,
@@ -231,27 +237,21 @@ export default function AdminCategoriesPage() {
                 >
                   Catálogo <span className="text-red-500">*</span>
                 </label>
-                <select
+                <CustomSelect
                   id="cat-catalog"
-                  required
+                  options={CATALOGS.map((c) => ({
+                    value: c.value,
+                    label: c.label,
+                  }))}
                   value={currentCat.catalog || ""}
-                  onChange={(e) =>
+                  onChange={(value) =>
                     setCurrentCat((prev) => ({
                       ...prev,
-                      catalog: e.target.value || null,
+                      catalog: value || null,
                     }))
                   }
-                  className={inputClass}
-                >
-                  <option value="" disabled>
-                    Seleccionar catálogo…
-                  </option>
-                  {CATALOGS.map((c) => (
-                    <option key={c.value} value={c.value}>
-                      {c.label}
-                    </option>
-                  ))}
-                </select>
+                  placeholder="Seleccionar catálogo…"
+                />
                 <p className="mt-1 text-xs text-slate-500">
                   Define en cuál sección del sitio aparece esta categoría.
                 </p>

@@ -11,6 +11,7 @@ import { collectProductImageFiles } from "@/lib/storageUtils";
 import type { Product } from "@/lib/productUtils";
 import type { Category } from "@/hooks/useCategories";
 import { CATALOGS } from "@/config/catalogs";
+import { CustomSelect } from "@/components/ui/CustomSelect";
 
 const PAGE_SIZE = 25;
 
@@ -289,59 +290,34 @@ export default function AdminProductsPage() {
         </div>
 
         {/* Catalog Filter */}
-        <div className="relative w-full md:w-56">
-          <span className="pointer-events-none absolute top-1/2 left-3 flex -translate-y-1/2 items-center leading-[0] text-slate-400">
-            <span className="material-symbols-outlined text-[20px] leading-[0]">
-              layers
-            </span>
-          </span>
-          <select
-            value={filterCatalog}
-            onChange={(e) => {
-              setFilterCatalog(e.target.value);
-              setFilterCategory("");
-            }}
-            className="focus:ring-primary/20 w-full cursor-pointer appearance-none rounded-xl border border-slate-200 bg-slate-50 py-2.5 pr-9 pl-10 text-sm text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
-          >
-            <option value="">Todos los catálogos</option>
-            {CATALOGS.map((c) => (
-              <option key={c.value} value={c.value}>
-                {c.label}
-              </option>
-            ))}
-          </select>
-          <span className="pointer-events-none absolute top-1/2 right-3 flex -translate-y-1/2 items-center leading-[0] text-slate-400">
-            <span className="material-symbols-outlined text-[18px] leading-[0]">
-              expand_more
-            </span>
-          </span>
-        </div>
+        <CustomSelect
+          leadingIcon="layers"
+          options={[
+            { value: "", label: "Todos los catálogos" },
+            ...CATALOGS.map((c) => ({ value: c.value, label: c.label })),
+          ]}
+          value={filterCatalog}
+          onChange={(value) => {
+            setFilterCatalog(value);
+            setFilterCategory("");
+          }}
+          className="w-full md:w-56"
+        />
 
         {/* Category Filter */}
-        <div className="relative w-full md:w-64">
-          <span className="pointer-events-none absolute top-1/2 left-3 flex -translate-y-1/2 items-center leading-[0] text-slate-400">
-            <span className="material-symbols-outlined text-[20px] leading-[0]">
-              filter_list
-            </span>
-          </span>
-          <select
-            value={filterCategory}
-            onChange={(e) => setFilterCategory(e.target.value)}
-            className="focus:ring-primary/20 w-full cursor-pointer appearance-none rounded-xl border border-slate-200 bg-slate-50 py-2.5 pr-9 pl-10 text-sm text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
-          >
-            <option value="">Todas las subcategorías</option>
-            {filteredCategoryOptions.map((cat) => (
-              <option key={cat.id} value={cat.slug}>
-                {cat.name}
-              </option>
-            ))}
-          </select>
-          <span className="pointer-events-none absolute top-1/2 right-3 flex -translate-y-1/2 items-center leading-[0] text-slate-400">
-            <span className="material-symbols-outlined text-[18px] leading-[0]">
-              expand_more
-            </span>
-          </span>
-        </div>
+        <CustomSelect
+          leadingIcon="filter_list"
+          options={[
+            { value: "", label: "Todas las subcategorías" },
+            ...filteredCategoryOptions.map((cat) => ({
+              value: cat.slug,
+              label: cat.name,
+            })),
+          ]}
+          value={filterCategory}
+          onChange={(value) => setFilterCategory(value)}
+          className="w-full md:w-64"
+        />
 
         {/* On Sale Filter */}
         <div className="flex shrink-0 items-center gap-2 px-1 md:ml-auto">
