@@ -75,6 +75,43 @@ const ALL_CATEGORIES: ChangeCategory[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 const CHANGELOG: VersionGroup[] = [
   {
+    version: "v1.1",
+    label: "SEO Avanzado · Consolidación de Schemas · Lector Legal Responsivo",
+    dateRange: "17 de junio de 2026",
+    entries: [
+      {
+        id: "e-119",
+        date: "2026-06-17",
+        category: "seo",
+        title: "Nueva descripción home con universidades (IEPROES, UES, UMA…)",
+        description:
+          "Se actualizó la meta-description de la página de inicio a exactamente 150 caracteres, integrando el listado completo de universidades atendidas: IEPROES, UNIVO, UNAB, UGB, UES, UMA y más. Se actualizaron en paralelo los keywords de site.ts y los arrays de universidades en seo-data.ts y schemas.ts para mantener coherencia total.",
+        commit: "21591b5",
+        note: "Agrupa también commit a06d164 (auditoría y sincronización de todos los metadatos y schemas).",
+      },
+      {
+        id: "e-120",
+        date: "2026-06-17",
+        category: "refactor",
+        title: "Consolidación JSON-LD en patrón @graph global por página",
+        description:
+          "Se reestructuró la arquitectura de schemas JSON-LD siguiendo las guías oficiales de Google Search Central. Se eliminó la duplicidad de LocalBusiness/ClothingStore que existía simultáneamente en layout.tsx, home/page.tsx y contacto/page.tsx. Se estableció un único @graph global en layout.tsx con ClothingStore + WebSite (habilita Google Sitelinks). Cada página ahora emite solo sus schemas específicos: WebPage, BreadcrumbList, FAQPage, ContactPage, etc. Se crearon los helpers buildWebPageSchema() y buildBreadcrumbSchema() en schemas.ts para uso consistente en todo el proyecto.",
+        commit: "cd48b80",
+        note: "Agrupa también commit a06d164 (schemas sync). Elimina ~230 líneas de código duplicado.",
+      },
+      {
+        id: "e-121",
+        date: "2026-06-17",
+        category: "style",
+        title:
+          "Lector legal responsivo: modal en desktop, página directa en móvil",
+        description:
+          "Se rediseñó LegalArticleReader.tsx para ofrecer dos experiencias distintas según el dispositivo. En desktop (lg+) se conserva el lector modal con overlay oscuro, reduciendo el padding vertical en un 75% (de 20px a 5px) y agregando migas de pan en la misma posición que todas las demás páginas. En móvil y tablet (< lg) se elimina el overlay y se renderiza el contenido directamente como una página normal con: barra de navegación superior sticky (botón de regreso + título + enlace 'Ver todos'), migas de pan, y estructura semántica completa article > header + sections. Se agregaron también schemas JSON-LD Article + BreadcrumbList en las páginas de privacidad y términos.",
+        note: "Commit de esta sesión, incluye cambios en 5 archivos.",
+      },
+    ],
+  },
+  {
     version: "v1.0",
     label:
       "Integración de Animaciones · Grid de Novedades · Ajuste de Imágenes",
