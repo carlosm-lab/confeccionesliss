@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
+import { buildWebPageSchema, buildBreadcrumbSchema } from "@/lib/schemas";
 
 const PAGE_URL = `${siteConfig.url}/contacto`;
 const PAGE_TITLE =
@@ -193,55 +194,21 @@ const CONTACT_CHANNELS = [
 /* ── Page ──────────────────────────────────────────────────────────── */
 
 export default function ContactoPage() {
-  const localBusinessSchema = {
+  const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "@id": `${siteConfig.url}/#business`,
-    name: siteConfig.name,
-    description: siteConfig.description,
-    url: siteConfig.url,
-    telephone: siteConfig.phone,
-    email: siteConfig.email,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: siteConfig.address.street,
-      addressLocality: siteConfig.address.city,
-      addressCountry: "SV",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: siteConfig.geo.lat,
-      longitude: siteConfig.geo.lng,
-    },
-    openingHours: "Mo-Sa 08:00-17:00",
-    priceRange: "$$",
-    image: `${siteConfig.url}/logo.png`,
-    sameAs: [
-      siteConfig.links.facebook,
-      siteConfig.links.instagram,
-      siteConfig.links.tiktok,
-      siteConfig.links.youtube,
-      siteConfig.links.threads,
-      siteConfig.links.twitter,
-    ],
-  };
-
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
+    "@graph": [
       {
-        "@type": "ListItem",
-        position: 1,
-        name: "Inicio",
-        item: siteConfig.url,
+        ...buildWebPageSchema({
+          url: PAGE_URL,
+          name: PAGE_TITLE,
+          description: PAGE_DESCRIPTION,
+        }),
+        "@type": "ContactPage",
       },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Contacto",
-        item: `${siteConfig.url}/contacto`,
-      },
+      buildBreadcrumbSchema([
+        { name: "Inicio", item: siteConfig.url },
+        { name: "Contacto", item: PAGE_URL },
+      ]),
     ],
   };
 
@@ -250,13 +217,7 @@ export default function ContactoPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(localBusinessSchema).replace(/</g, "\\u003c"),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbSchema).replace(/</g, "\\u003c"),
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
         }}
       />
 

@@ -1,6 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { schemaLocalBusiness, schemaFAQ } from "@/lib/schemas";
+import {
+  schemaFAQ,
+  buildWebPageSchema,
+  buildBreadcrumbSchema,
+} from "@/lib/schemas";
 import {
   heroTrustBadges,
   whyItems,
@@ -24,13 +28,18 @@ export default function HomePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(schemaLocalBusiness).replace(/</g, "\\u003c"),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(schemaFAQ).replace(/</g, "\\u003c"),
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              buildWebPageSchema({
+                url: siteConfig.url,
+                name: "Scrubs y Uniformes Médicos en San Miguel Sv | Desde $35 · Confecciones Liss",
+                description: siteConfig.description,
+              }),
+              buildBreadcrumbSchema([{ name: "Inicio", item: siteConfig.url }]),
+              schemaFAQ,
+            ],
+          }).replace(/</g, "\\u003c"),
         }}
       />
 

@@ -165,48 +165,121 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "TailoringShop",
-              name: siteConfig.name,
-              description: siteConfig.description,
-              url: siteConfig.url,
-              telephone: siteConfig.phone,
-              email: siteConfig.email,
-              address: {
-                "@type": "PostalAddress",
-                streetAddress: siteConfig.address.street,
-                addressLocality: siteConfig.address.city,
-                addressCountry: "SV",
-              },
-              geo: {
-                "@type": "GeoCoordinates",
-                latitude: siteConfig.geo.lat,
-                longitude: siteConfig.geo.lng,
-              },
-              openingHoursSpecification: {
-                "@type": "OpeningHoursSpecification",
-                dayOfWeek: [
-                  "Monday",
-                  "Tuesday",
-                  "Wednesday",
-                  "Thursday",
-                  "Friday",
-                  "Saturday",
-                ],
-                opens: "08:00",
-                closes: "17:00",
-              },
-              sameAs: [
-                siteConfig.links.facebook,
-                siteConfig.links.instagram,
-                siteConfig.links.tiktok,
-                siteConfig.links.youtube,
-                siteConfig.links.threads,
-                siteConfig.links.twitter,
-                siteConfig.links.linkedin,
-                siteConfig.links.pinterest,
+              "@graph": [
+                {
+                  "@type": "ClothingStore",
+                  "@id": `${siteConfig.url}/#business`,
+                  name: siteConfig.name,
+                  alternateName: [
+                    "Confeccion Liss",
+                    "Confecciones Liss San Miguel",
+                  ],
+                  description: siteConfig.description,
+                  url: siteConfig.url,
+                  logo: {
+                    "@type": "ImageObject",
+                    url: `${siteConfig.url}/logo.svg`,
+                  },
+                  image: `${siteConfig.url}/opengraph-image`,
+                  telephone: siteConfig.phone,
+                  email: siteConfig.email,
+                  priceRange: "$$",
+                  currenciesAccepted: "USD",
+                  paymentAccepted: "Cash, Bank Transfer",
+                  openingHours: ["Mo-Sa 08:00-17:00"],
+                  hasMap: siteConfig.links.googleMaps,
+                  address: {
+                    "@type": "PostalAddress",
+                    streetAddress: siteConfig.address.full,
+                    addressLocality: siteConfig.address.city,
+                    addressRegion: "San Miguel",
+                    addressCountry: "SV",
+                    postalCode: "3100",
+                  },
+                  geo: {
+                    "@type": "GeoCoordinates",
+                    latitude: siteConfig.geo.lat,
+                    longitude: siteConfig.geo.lng,
+                  },
+                  areaServed: [
+                    { "@type": "Country", name: "El Salvador" },
+                    { "@type": "AdministrativeArea", name: "San Miguel" },
+                    { "@type": "AdministrativeArea", name: "Usulután" },
+                    { "@type": "AdministrativeArea", name: "La Unión" },
+                    { "@type": "AdministrativeArea", name: "Morazán" },
+                  ],
+                  sameAs: [
+                    siteConfig.links.facebook,
+                    siteConfig.links.instagram,
+                    siteConfig.links.tiktok,
+                    siteConfig.links.youtube,
+                    siteConfig.links.threads,
+                    siteConfig.links.twitter,
+                    siteConfig.links.googleMaps,
+                  ],
+                  offers: {
+                    "@type": "Offer",
+                    priceCurrency: "USD",
+                    price: "35.00",
+                    priceSpecification: {
+                      "@type": "PriceSpecification",
+                      minPrice: "35.00",
+                      priceCurrency: "USD",
+                    },
+                  },
+                  hasOfferCatalog: {
+                    "@type": "OfferCatalog",
+                    name: "Servicios de Confección",
+                    itemListElement: [
+                      {
+                        "@type": "Offer",
+                        itemOffered: {
+                          "@type": "Service",
+                          name: "Scrubs médicos a la medida en tela Sincatex",
+                        },
+                      },
+                      {
+                        "@type": "Offer",
+                        itemOffered: {
+                          "@type": "Service",
+                          name: "Uniformes universitarios para IEPROES, UNIVO, UNAB, UGB, UES, UMA y más",
+                        },
+                      },
+                      {
+                        "@type": "Offer",
+                        itemOffered: {
+                          "@type": "Service",
+                          name: "Uniformes escolares para colegios y escuelas",
+                        },
+                      },
+                      {
+                        "@type": "Offer",
+                        itemOffered: {
+                          "@type": "Service",
+                          name: "Uniformes corporativos con bordado de logo",
+                        },
+                      },
+                      {
+                        "@type": "Offer",
+                        itemOffered: {
+                          "@type": "Service",
+                          name: "Bordados y sublimación en cualquier prenda",
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": `${siteConfig.url}/#website`,
+                  url: siteConfig.url,
+                  name: siteConfig.name,
+                  description: siteConfig.description,
+                  inLanguage: "es-SV",
+                  publisher: { "@id": `${siteConfig.url}/#business` },
+                },
               ],
-              priceRange: "$$",
-            }),
+            }).replace(/</g, "\\u003c"),
           }}
         />
       </head>

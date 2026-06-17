@@ -1,133 +1,42 @@
-export const schemaLocalBusiness = {
-  "@context": "https://schema.org",
-  "@type": "ClothingStore",
-  "@id": "https://www.confeccionesliss.com/#business",
-  name: "Confecciones Liss",
-  alternateName: ["Confeccion Liss", "Confecciones Liss San Miguel"],
-  description:
-    "Taller de confección a la medida en San Miguel, El Salvador. Fabricamos scrubs médicos en Sincatex y Lino Oxford, uniformes universitarios para IEPROES, UNIVO, UNAB, UGB, UES, UMA y más, uniformes escolares y corporativos. Bordados, sublimación y personalización. Envíos a todo El Salvador con pago al recibir.",
-  url: "https://www.confeccionesliss.com",
-  logo: "https://www.confeccionesliss.com/logo.svg",
-  image: "https://www.confeccionesliss.com/opengraph-image",
-  telephone: "+50373317181",
-  email: "confeccionesliss.contacto@gmail.com",
-  priceRange: "$$",
-  currenciesAccepted: "USD",
-  paymentAccepted: "Cash, PayPal, Bank Transfer",
-  openingHours: ["Mo-Sa 08:00-17:00"],
-  hasMap: "https://maps.app.goo.gl/XSs2vgjLG8uvJGoQ7",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Barrio La Merced, 5A Calle Poniente & 1A Avenida Sur",
-    addressLocality: "San Miguel",
-    addressRegion: "San Miguel",
-    addressCountry: "SV",
-    postalCode: "3100",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: 13.4833,
-    longitude: -88.1833,
-  },
-  areaServed: [
-    { "@type": "Country", name: "El Salvador" },
-    { "@type": "AdministrativeArea", name: "San Miguel" },
-    { "@type": "AdministrativeArea", name: "Usulután" },
-    { "@type": "AdministrativeArea", name: "La Unión" },
-    { "@type": "AdministrativeArea", name: "Morazán" },
-    { "@type": "City", name: "San Miguel" },
-    { "@type": "City", name: "San Salvador" },
-    { "@type": "City", name: "Santa Ana" },
-    { "@type": "City", name: "Usulután" },
-  ],
-  sameAs: [
-    "https://www.facebook.com/confeccionliss/",
-    "https://www.instagram.com/confeccionliss/",
-    "https://www.tiktok.com/@confeccionessliss",
-    "https://twitter.com/confeccion_liss",
-    "https://www.youtube.com/@confeccionliss",
-    "https://maps.app.goo.gl/XSs2vgjLG8uvJGoQ7",
-  ],
-  offers: {
-    "@type": "Offer",
-    priceCurrency: "USD",
-    price: "35.00",
-    priceSpecification: {
-      "@type": "PriceSpecification",
-      minPrice: "35.00",
-      priceCurrency: "USD",
-    },
-  },
-  hasOfferCatalog: {
-    "@type": "OfferCatalog",
-    name: "Servicios de Confección",
-    itemListElement: [
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Scrubs médicos a la medida en tela Sincatex",
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Uniformes universitarios para IEPROES, UNIVO, UNAB, UGB, UES, UMA y más",
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Uniformes escolares para colegios y escuelas",
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Uniformes corporativos con bordado de logo",
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Ropa deportiva personalizada",
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Bordados sobre cualquier prenda",
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Sublimación y personalización de prendas",
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Ropa para damas, caballeros y niños",
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: { "@type": "Service", name: "Crop tops a la medida" },
-      },
-    ],
-  },
-};
+import { siteConfig } from "@/config/site";
+
+/** Helper: generates a WebPage schema for any public page */
+export function buildWebPageSchema({
+  url,
+  name,
+  description,
+}: {
+  url: string;
+  name: string;
+  description: string;
+}) {
+  return {
+    "@type": "WebPage",
+    "@id": `${url}#webpage`,
+    url,
+    name,
+    description,
+    inLanguage: "es-SV",
+    isPartOf: { "@id": `${siteConfig.url}/#website` },
+  };
+}
+
+/** Helper: generates a BreadcrumbList schema */
+export function buildBreadcrumbSchema(
+  items: Array<{ name: string; item?: string }>
+) {
+  return {
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((crumb, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: crumb.name,
+      ...(crumb.item ? { item: crumb.item } : {}),
+    })),
+  };
+}
 
 export const schemaFAQ = {
-  "@context": "https://schema.org",
   "@type": "FAQPage",
   mainEntity: [
     {
