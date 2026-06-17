@@ -70,7 +70,7 @@ export function Section({ n, title, children }: SectionProps) {
             justifyContent: "center",
             minWidth: "2rem",
             width: "auto",
-            height: "1.35em",
+            height: "1.485rem",
             paddingLeft: "0.35rem",
             paddingRight: "0.35rem",
             borderRadius: "0.375rem",

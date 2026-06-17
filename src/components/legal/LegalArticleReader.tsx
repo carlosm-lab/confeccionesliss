@@ -123,13 +123,13 @@ export default function LegalArticleReader({
       <article
         itemScope
         itemType="https://schema.org/Article"
-        className="mx-auto max-w-2xl px-4 pt-5 pb-20 sm:px-6"
+        className="mx-auto max-w-2xl px-4 pt-5 pb-20 sm:max-w-none sm:px-5 md:px-8"
       >
         {/* Breadcrumbs — same position as all other public pages */}
         <Breadcrumb items={breadcrumbItems} className="mb-5 justify-start" />
 
         {/* Article header */}
-        <header className="mb-8 border-b border-slate-200 pb-6">
+        <header className="mb-8 border-b border-slate-200 pb-6 text-center">
           <span
             className="mb-3 inline-block rounded-md bg-blue-50 px-3 py-1 text-[11px] font-bold tracking-widest text-blue-600 uppercase"
             itemProp="articleSection"
@@ -145,7 +145,7 @@ export default function LegalArticleReader({
             {title}
           </h1>
 
-          <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500">
+          <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-slate-500">
             <time
               dateTime="2025-06-15"
               itemProp="datePublished"
@@ -212,90 +212,108 @@ export default function LegalArticleReader({
         if (e.key === "Escape") handleClose();
       }}
     >
-      {/* Paper sheet — scrollable */}
+      {/* Paper sheet — flex column: non-scrolling button strip + scrollable body */}
       <div
         role="article"
         className="relative mx-3 w-full bg-white"
         style={{
           maxWidth: 850,
-          /* External vertical gap reduced 75 %:
-             Original maxHeight 92vh → gap = (100-92)/2 = 4vh each side.
-             New maxHeight 98vh → gap = (100-98)/2 = 1vh each side. */
           maxHeight: "98vh",
-          overflowY: "auto",
-          overflowX: "hidden",
-          overscrollBehavior: "contain",
+          /* Flex column: header row (button) never scrolls; body scrolls independently */
+          display: "flex",
+          flexDirection: "column",
           borderRadius: 4,
           boxShadow: "0 25px 60px -12px rgba(0,0,0,0.55)",
           borderTop: "1px solid #E2E8F0",
           borderBottom: "1px solid #E2E8F0",
-          scrollbarWidth: "thin",
-          scrollbarColor: "#CBD5E1 transparent",
-          /* Internal padding restored to original — only external gap was requested */
-          padding: "20px 40px",
         }}
       >
-        {/* Close button — sticky top right */}
-        <button
-          onClick={handleClose}
-          aria-label="Cerrar y volver a documentos legales"
-          className="sticky top-2 z-10 float-right -mr-8 ml-3 flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-md transition-all duration-300 hover:rotate-90 hover:border-red-200 hover:bg-red-50 hover:text-red-500 hover:shadow-red-100"
-        >
-          <IconClose />
-        </button>
-
-        {/* Breadcrumbs — same position as all other public pages */}
-        <div className="pt-3 pb-2">
-          <Breadcrumb items={breadcrumbItems} className="justify-start" />
-        </div>
-
-        {/* Article header */}
-        <header className="mb-8 border-b border-slate-200 pt-3 pb-6 text-center">
-          <span className="mb-3 inline-block rounded-md bg-blue-50 px-3 py-1 text-[11px] font-bold tracking-widest text-blue-600 uppercase">
-            {category}
-          </span>
-
-          <h1
-            className="mb-4 text-3xl leading-tight font-extrabold text-slate-900 sm:text-4xl"
-            style={{ fontFamily: "'Inter', sans-serif" }}
-          >
-            {title}
-          </h1>
-
-          <div className="flex items-center justify-center gap-5 text-sm text-slate-500">
-            <span className="flex items-center gap-1.5">
-              <IconCal />
-              {date}
-            </span>
-            <span className="flex items-center gap-1.5">
-              <IconClock />
-              {readingTime} min lectura
-            </span>
-          </div>
-        </header>
-
-        {/* Article content */}
+        {/* ── Close button strip ──────────────────────────────────────────────
+            padding: 12px 12px 0 → button is 12px from TOP edge and 12px from
+            RIGHT edge of the paper. Symmetric corners, no float, no sticky,
+            no overlap with scrolling content ever. */}
         <div
-          className="space-y-6 text-slate-600"
           style={{
-            fontSize: "1.05rem",
-            lineHeight: 1.75,
-            fontFamily: "'Georgia', 'Times New Roman', serif",
+            display: "flex",
+            justifyContent: "flex-end",
+            padding: "12px 12px 0",
+            flexShrink: 0,
           }}
         >
-          {children}
+          <button
+            onClick={handleClose}
+            aria-label="Cerrar y volver a documentos legales"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-md transition-all duration-300 hover:rotate-90 hover:border-red-200 hover:bg-red-50 hover:text-red-500 hover:shadow-red-100"
+          >
+            <IconClose />
+          </button>
         </div>
 
-        {/* Footer nav */}
-        <footer className="mt-12 border-t border-slate-100 pt-6 text-center">
-          <Link
-            href="/legal"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 transition-colors hover:text-blue-800"
+        {/* ── Scrollable body ──────────────────────────────────────────────── */}
+        <div
+          style={{
+            overflowY: "auto",
+            overflowX: "hidden",
+            overscrollBehavior: "contain",
+            scrollbarWidth: "thin",
+            scrollbarColor: "#CBD5E1 transparent",
+            flex: 1,
+            padding: "8px 40px 60px",
+          }}
+        >
+          {/* Breadcrumbs — same position as all other public pages */}
+          <div className="pt-3 pb-2">
+            <Breadcrumb items={breadcrumbItems} className="justify-start" />
+          </div>
+
+          {/* Article header */}
+          <header className="mb-8 border-b border-slate-200 pt-3 pb-6 text-center">
+            <span className="mb-3 inline-block rounded-md bg-blue-50 px-3 py-1 text-[11px] font-bold tracking-widest text-blue-600 uppercase">
+              {category}
+            </span>
+
+            <h1
+              className="mb-4 text-3xl leading-tight font-extrabold text-slate-900 sm:text-4xl"
+              style={{ fontFamily: "'Inter', sans-serif" }}
+            >
+              {title}
+            </h1>
+
+            <div className="flex items-center justify-center gap-5 text-sm text-slate-500">
+              <span className="flex items-center gap-1.5">
+                <IconCal />
+                {date}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <IconClock />
+                {readingTime} min lectura
+              </span>
+            </div>
+          </header>
+
+          {/* Article content */}
+          <div
+            className="space-y-6 text-slate-600"
+            style={{
+              fontSize: "1.05rem",
+              lineHeight: 1.75,
+              fontFamily: "'Georgia', 'Times New Roman', serif",
+            }}
           >
-            <IconBack />
-            Volver a documentos legales
-          </Link>
-        </footer>
+            {children}
+          </div>
+
+          {/* Footer nav */}
+          <footer className="mt-12 border-t border-slate-100 pt-6 text-center">
+            <Link
+              href="/legal"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 transition-colors hover:text-blue-800"
+            >
+              <IconBack />
+              Volver a documentos legales
+            </Link>
+          </footer>
+        </div>
       </div>
     </div>
   );

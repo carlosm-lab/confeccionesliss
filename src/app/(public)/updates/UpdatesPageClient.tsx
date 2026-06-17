@@ -148,8 +148,51 @@ const CHANGELOG: VersionGroup[] = [
         title: "Botón cerrar: márgenes simétricos en esquina superior derecha",
         description:
           "El botón X de cierre tenía margen insuficiente respecto al texto y margen superior asimétrico. Cambios: top-2.5 → top-2 (8px, coincide con el gap ~8px al scrollbar), eliminado -mt-1, agregado ml-3 (12px de separación entre botón y texto adyacente), eliminado sm:-mr-10 que posicionaba el botón sobre el scrollbar.",
+        commit: "d4945a5",
+        note: "Agrupa también e-124 (eliminación secciones precios/pagos terminos).",
+      },
+      {
+        id: "e-126",
+        date: "2026-06-17",
+        category: "fix",
+        title: "Numeración romana: corrección de altura del badge (em→rem)",
+        description:
+          "Raíz del bug: height:'1.35em' se resolvía relativo al fontSize del propio badge (0.7rem), dando 0.945rem, mucho menor que el lineHeight del h2 (1.485rem). El centro del badge quedaba 0.27rem por encima del centro de la primera línea del título. Fix: height cambiado a '1.485rem' (valor explícito = 1.35 × fontSize del h2 1.1rem), eliminando toda ambigüedad de contexto em. Aplica en todas las versiones (desktop, tablet, móvil). Solo afecta LegalContent.tsx.",
         commit: "pendiente",
-        note: "Afecta únicamente LegalArticleReader.tsx.",
+        note: "Fix definitivo de alineación badge. Sin impacto en ninguna otra página.",
+      },
+      {
+        id: "e-127",
+        date: "2026-06-17",
+        category: "style",
+        title:
+          "Lector móvil/tablet: header centrado (pildora, h1, fecha, tiempo)",
+        description:
+          "En la vista de lectura móvil/tablet, el header del artículo legal (pildora de categoría 'Documentos Legales', h1 título, fecha y tiempo de lectura) estaba alineado a la izquierda. Se añadió text-center al header y justify-center al flex de fecha/tiempo. El cambio está estrictamente dentro del bloque lg:hidden y no afecta el layout desktop que ya tenía centrado el header. Solo afecta LegalArticleReader.tsx.",
+        commit: "pendiente",
+        note: "Sin impacto en ninguna otra página ni sección.",
+      },
+      {
+        id: "e-128",
+        date: "2026-06-17",
+        category: "fix",
+        title:
+          "Lector tablet: márgenes laterales igualados al estándar de la app",
+        description:
+          "En tablet (sm–lg), el article de lectura legal tenía max-w-2xl centrado, generando márgenes de hasta 48–176px por lado versus el estándar de 20–32px del resto de la app. Fix: se agregó sm:max-w-none sm:px-5 md:px-8 para suprimir la restricción de ancho solo en tablet y aplicar el padding estándar. El comportamiento móvil (<640px) y desktop (>lg) no cambia. Solo afecta LegalArticleReader.tsx.",
+        commit: "pendiente",
+        note: "Sin impacto en ninguna otra página ni sección.",
+      },
+      {
+        id: "e-129",
+        date: "2026-06-17",
+        category: "fix",
+        title:
+          "Botón cerrar desktop: solución definitiva con layout flex-column",
+        description:
+          "Root cause: float:right + position:sticky son incompatibles. Al activarse sticky, el elemento pierde el efecto float, causando que el texto se renderice encima del botón. Solución: el papel del lector desktop se reestructuró como display:flex; flex-direction:column. Una franja superior no-scrolleable contiene el botón con padding:'12px 12px 0' (12px desde el borde superior Y 12px desde el borde derecho del papel, simétrico). El cuerpo con overflow-y:auto ocupa el flex:1 restante. El botón nunca más toca el texto. Se eliminaron float-right, sticky, -mr-8, ml-3 del botón. Solo afecta LegalArticleReader.tsx.",
+        commit: "pendiente",
+        note: "Solución definitiva. Elimina 4 iteraciones previas de parches sobre el mismo bug.",
       },
     ],
   },
