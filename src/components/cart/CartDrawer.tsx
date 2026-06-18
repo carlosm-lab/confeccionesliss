@@ -498,7 +498,7 @@ export function CartDrawer() {
 
                 {/* Preview costo */}
                 {selectedDept && selectedMunicipality && (
-                  <div className="rounded-xl bg-[var(--color-whatsapp)]/6 p-3.5 text-sm">
+                  <div className="rounded-xl bg-[var(--color-primary-container)]/30 p-3.5 text-sm">
                     <p className="font-semibold text-[var(--color-on-surface)]">
                       Envío a {selectedMunicipality}
                     </p>
@@ -724,12 +724,12 @@ export function CartDrawer() {
                 </span>
               </div>
 
-              {/* CTA */}
+              {/* CTA — brand primary, NOT WhatsApp green */}
               <button
                 data-testid="checkout-button"
                 onClick={() => setStep("shipping")}
                 disabled={isRefreshingPrices}
-                className={`group flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-whatsapp)] py-3.5 text-sm font-bold text-white shadow-[0_4px_14px_rgba(37,211,102,0.18)] transition-all duration-200 hover:bg-[var(--color-whatsapp-hover)] hover:shadow-[0_6px_20px_rgba(37,211,102,0.28)] active:scale-[0.98] ${
+                className={`group flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-primary)] py-3.5 text-sm font-bold text-[var(--color-on-primary)] shadow-[0_4px_14px_rgba(20,48,103,0.15)] transition-all duration-200 hover:bg-[var(--color-on-primary-container)] hover:shadow-[0_6px_20px_rgba(20,48,103,0.22)] active:scale-[0.98] ${
                   isRefreshingPrices ? "cursor-not-allowed opacity-50" : ""
                 }`}
               >
