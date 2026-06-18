@@ -594,13 +594,13 @@ export function CartDrawer() {
                               <button
                                 onClick={() => removeFromCart(item.id)}
                                 aria-label="Eliminar producto"
-                                className="shrink-0 rounded-md p-0.5 text-[var(--color-outline-variant)] opacity-0 transition-all duration-200 group-hover/item:opacity-100 hover:text-[var(--color-tertiary)] active:scale-90"
+                                className="shrink-0 rounded-md p-1 text-[var(--color-outline)] transition-all duration-200 hover:bg-[var(--color-tertiary)]/8 hover:text-[var(--color-tertiary)] active:scale-90"
                               >
                                 <span
                                   className="material-symbols-outlined"
-                                  style={{ fontSize: "16px" }}
+                                  style={{ fontSize: "18px" }}
                                 >
-                                  close
+                                  delete
                                 </span>
                               </button>
                             </div>
