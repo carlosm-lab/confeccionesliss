@@ -222,7 +222,7 @@ export function CartDrawer() {
       {/* Drawer — refined panel */}
       <div
         data-testid="cart-drawer"
-        className={`fixed top-0 right-0 z-50 flex h-[100dvh] w-full max-w-[25rem] flex-col bg-white transition-transform duration-500 ease-[var(--ease-out-expo)] ${
+        className={`fixed top-0 right-0 z-50 flex h-[100dvh] w-full flex-col bg-white transition-transform duration-500 ease-[var(--ease-out-expo)] sm:max-w-[25rem] ${
           isCartOpen ? "translate-x-0" : "translate-x-full"
         }`}
         style={{
@@ -623,7 +623,7 @@ export function CartDrawer() {
                                 }
                                 aria-label="Disminuir cantidad"
                                 disabled={item.quantity <= 1}
-                                className="flex h-7 w-7 items-center justify-center rounded-full text-[var(--color-secondary)] transition-all duration-150 hover:text-[var(--color-primary)] active:scale-90 disabled:opacity-20"
+                                className="flex h-9 w-9 items-center justify-center rounded-full text-[var(--color-secondary)] transition-all duration-150 hover:text-[var(--color-primary)] active:scale-90 disabled:opacity-20"
                               >
                                 <span
                                   className="material-symbols-outlined"
@@ -632,7 +632,7 @@ export function CartDrawer() {
                                   remove
                                 </span>
                               </button>
-                              <span className="w-6 text-center text-[12px] font-bold text-[var(--color-on-surface)] tabular-nums">
+                              <span className="w-7 text-center text-[13px] font-bold text-[var(--color-on-surface)] tabular-nums">
                                 {item.quantity}
                               </span>
                               <button
@@ -640,7 +640,7 @@ export function CartDrawer() {
                                   updateQuantity(item.id, item.quantity + 1)
                                 }
                                 aria-label="Aumentar cantidad"
-                                className="flex h-7 w-7 items-center justify-center rounded-full text-[var(--color-secondary)] transition-all duration-150 hover:text-[var(--color-primary)] active:scale-90"
+                                className="flex h-9 w-9 items-center justify-center rounded-full text-[var(--color-secondary)] transition-all duration-150 hover:text-[var(--color-primary)] active:scale-90"
                               >
                                 <span
                                   className="material-symbols-outlined"
