@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import { siteConfig } from "@/config/site";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/formatPrice";
@@ -11,7 +12,18 @@ import { formatPrice } from "@/lib/formatPrice";
 export default function CarritoPage() {
   const { cartItems, cartTotal, setIsCartOpen, removeFromCart } = useCart();
 
-  if (cartItems.length === 0) {
+  // Guard de hidratación: cartItems viene de localStorage.
+  // En SSR el servidor siempre ve [] (ver CartContext línea 151).
+  // Sin este guard, React lanza hydration mismatch cuando el carrito
+  // tiene items (el servidor renderiza la rama "vacío", el cliente la
+  // rama "con items"). Patrón idéntico al usado en Navbar.tsx L110-114.
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional hydration guard (same pattern as Navbar.tsx L112)
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted || cartItems.length === 0) {
     return (
       <section className="px-5 pt-16 pb-20 md:px-8">
         <div className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-screen-2xl flex-col items-center justify-center text-center">

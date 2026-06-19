@@ -15,6 +15,10 @@
 | ----------------------------------------------- | ------------------------------------ |
 | Estado General del Sistema                      | ✅ FUNCIONAL                         |
 | Rutas protegidas (seguridad)                    | ✅ PASS                              |
+| Indicador                                       | Resultado                            |
+| -----------                                     | -----------                          |
+| Estado General del Sistema                      | ✅ FUNCIONAL                         |
+| Rutas protegidas (seguridad)                    | ✅ PASS                              |
 | Login/Logout Admin                              | ✅ PASS                              |
 | Login/Logout Usuario Regular                    | ✅ PASS                              |
 | CRUD Productos (UI)                             | ✅ PASS                              |
@@ -28,9 +32,10 @@
 | Carrito (usuario no logueado)                   | ✅ PASS (modal correcto)             |
 | Favoritos (usuario no logueado)                 | ✅ PASS (modal correcto)             |
 | Calculadora de envío                            | ✅ PASS                              |
+| **Hydration mismatch /carrito**                 | **🔴 → ✅ ENCONTRADO Y CORREGIDO**   |
 | Next.js Build (`next build`)                    | ✅ EXITOSO — Sin errores ni warnings |
 | Parches silenciosos en código                   | ✅ NINGUNO ENCONTRADO                |
-| Errores críticos de consola                     | ✅ NINGUNO                           |
+| Errores críticos de consola                     | ✅ LIMPIA tras corrección            |
 | Regresiones de diseño                           | ✅ NINGUNA                           |
 
 ---
