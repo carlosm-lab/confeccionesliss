@@ -12,7 +12,7 @@ import { env } from "@/env";
  */
 const BLOCKED_ROUTES = ["/servicios", "/mi-cuenta"];
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const url = request.nextUrl.clone();
 
   // ── HOME_ONLY mode: block everything except / and /links ──
