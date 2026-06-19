@@ -351,8 +351,8 @@ export function MobileBottomNav() {
                   >
                     {item.icon}
                   </motion.span>
-                  {/* Badge de count del carrito */}
-                  {isCartTab && cartCount > 0 && (
+                  {/* Badge de count del carrito — sólo después de montar para evitar hydration mismatch */}
+                  {isCartTab && isMounted && cartCount > 0 && (
                     <span className="text-primary absolute -top-2 -right-3 flex h-4 min-w-4 items-center justify-center rounded-full bg-white px-[3px] text-[9px] font-black">
                       {cartCount > 99 ? "99+" : cartCount}
                     </span>
