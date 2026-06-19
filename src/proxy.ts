@@ -5,7 +5,7 @@ import { env } from "@/env";
 /**
  * Routes that are blocked in production even when HOME_ONLY is disabled.
  * These pages are not ready for public access yet.
- * The middleware redirects them back to home.
+ * The proxy redirects them back to home.
  *
  * NOTE: /catalogo and /carrito have been removed — the catalog is now
  * fully dynamic (Supabase) and ready for production.
@@ -39,7 +39,7 @@ export function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-// Run middleware on all routes except static assets, media, and API endpoints
+// Run proxy on all routes except static assets, media, and API endpoints
 export const config = {
   matcher: [
     /*
