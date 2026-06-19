@@ -329,7 +329,7 @@ export function ProductDetailClient({
           <div className="relative aspect-[4/5] w-full self-start overflow-hidden rounded-2xl bg-white">
             <button
               type="button"
-              className="block h-full w-full cursor-zoom-in"
+              className="relative block h-full w-full cursor-zoom-in"
               onClick={() => setIsImageModalOpen(true)}
               aria-label="Ver imagen ampliada"
             >
@@ -338,6 +338,7 @@ export function ProductDetailClient({
                   src={mainImg}
                   alt={product.name ?? "Producto"}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 55vw, 45vw"
                   className="object-cover object-center"
                   priority
                   unoptimized={
