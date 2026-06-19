@@ -14,12 +14,20 @@ const nextConfig = {
       { key: 'Surrogate-Control', value: 'no-store' },
     ];
 
-    const securityHeaders = isDev ? [] : [
+    // SEC-006 fix: headers aplicados SIEMPRE (dev + prod)
+    // X-Frame-Options, X-Content-Type-Options y Referrer-Policy son seguros en dev.
+    // X-XSS-Protection es heredado pero inofensivo.
+    // HSTS excluido de dev (HSTS en localhost rompe el ambiente local).
+    // CSP excluido de dev (interferencia con HMR de Next.js).
+    const alwaysOnHeaders = [
       { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
       { key: 'X-Content-Type-Options', value: 'nosniff' },
       { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-      { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' },
       { key: 'X-XSS-Protection', value: '1; mode=block' },
+    ];
+
+    const securityHeaders = isDev ? [] : [
+      { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' },
       {
         key: 'Content-Security-Policy',
         value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' data: https://lh3.googleusercontent.com; font-src 'self' data: https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' ws: wss: https://cvbdqsxjfrbwovzpydng.supabase.co https://cvbdqsxjfrbwovzpydng.supabase.in; frame-src 'self' https://challenges.cloudflare.com https://www.google.com;",
@@ -34,7 +42,7 @@ const nextConfig = {
       {
         // Apply no-cache headers to all HTML page routes (not static assets)
         source: '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:png|jpg|jpeg|gif|webp|svg|ico|woff2?|ttf|eot|otf|css|js|map)).*)',
-        headers: [...commonHeaders, ...securityHeaders],
+        headers: [...commonHeaders, ...alwaysOnHeaders, ...securityHeaders],
       },
     ];
   },

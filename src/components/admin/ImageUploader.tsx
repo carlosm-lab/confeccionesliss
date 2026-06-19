@@ -106,6 +106,15 @@ export default function ImageUploader({
       return;
     }
 
+    // SEC-007: validar tamaño antes de subir (5MB = límite del bucket Supabase)
+    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+    if (file.size > MAX_FILE_SIZE) {
+      setError(
+        `La imagen es demasiado grande (${(file.size / 1024 / 1024).toFixed(1)}MB). Máximo: 5MB.`
+      );
+      return;
+    }
+
     setIsUploading(true);
     setUploadProgress(10);
 

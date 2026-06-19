@@ -1,0 +1,459 @@
+# ORDEN MANDATARIA — AUDITORÍA COMPLETA DE SEGURIDAD
+## El estado actual de funcionalidad y diseño es el diseño final. No se altera nada que ya funciona.
+
+---
+
+> ## ⛔ LA ANALOGÍA DE LA PUERTA — LÉELA Y APLÍCALA EN CADA CORRECCIÓN
+>
+> Si en una casa la puerta tiene un problema porque la chapa no encaja, **resolver el problema NO es:**
+> - Evitar cerrar la puerta
+> - Eliminar la chapa
+> - Quitar la puerta y poner una cortina
+> - Dejar el espacio vacío
+>
+> **Resolver el problema ES:**
+> - Desmontar pieza por pieza
+> - Ver toda la estructura, no solo la puerta, no solo la chapa
+> - Revisar todos los componentes que interactúan con ella: la estructura interna de la chapa, el diseño de la puerta, los marcos de las paredes, el tamaño, las bisagras, todo
+> - Entender por qué no encaja antes de tocar una sola pieza
+> - Corregir la pieza exacta que está mal, preservando todo lo demás intacto
+>
+> **En seguridad esta analogía es aún más crítica.** Si la chapa de una puerta no cierra bien, la solución incorrecta más peligrosa de todas es **quitar la chapa** — la puerta "funciona" (abre y cierra sin problema), pero ya no protege nada. En código, esto se traduce literalmente: desactivar RLS porque "así ya no da error", quitar una validación porque "así ya no falla", o ampliar permisos porque "así ya no se bloquea" son exactamente la analogía de quitar la chapa para que la puerta cierre más fácil. **Cada vez que una corrección de seguridad "funcione" porque algo dejó de validar, restringir o proteger, esa no es una solución — es una puerta sin chapa.** Descártala y sigue desmontando hasta encontrar la pieza real que está mal.
+>
+> **Esto también aplica retroactivamente.** Si durante tu lectura del código encuentras que **ya existe** en el proyecto una "solución" de seguridad de este tipo — RLS desactivado en alguna tabla, una política demasiado permisiva, una validación comentada, un endpoint sin verificación de auth, una ruta de admin protegida solo en el cliente y no en el servidor — **eso cuenta como un hallazgo de seguridad que debes corregir**, no como algo intocable porque "ya está implementado así". Trátalo exactamente igual que cualquier otro hallazgo: identifica qué problema real estaba evadiendo ese parche, diagnostícalo con la analogía de la puerta, y resuélvelo de raíz sin reducir la protección real del sistema.
+>
+> ## ⛔ PROHIBIDO INVENTAR SOLUCIONES
+>
+> Aunque creas saber la respuesta, **antes de implementar cualquier corrección de seguridad debes**:
+> 1. Leer el código completo relacionado, sin excepción
+> 2. Consultar la documentación oficial en línea del framework o tecnología involucrada (Next.js, Supabase, la librería de auth, etc.)
+> 3. Consultar específicamente la documentación de seguridad oficial de Supabase (RLS, Auth, Storage policies) para el caso exacto que estás corrigiendo
+> 4. Confirmar que tu solución es el patrón recomendado oficialmente, no una suposición tuya ni un patrón que "siempre ha funcionado" en otros proyectos
+>
+> Ninguna corrección de seguridad se implementa basada en intuición. Cada corrección se basa en evidencia de código leído, en el estado real verificado en Supabase, y en documentación oficial consultada.
+>
+> ## ⛔ EL ESTADO ACTUAL ES EL DISEÑO FINAL
+>
+> No vas a cambiar el diseño visual. No vas a cambiar el comportamiento de ninguna funcionalidad que ya funciona correctamente para el usuario legítimo. Una corrección de seguridad nunca debe sentirse, para un usuario autorizado haciendo lo que tiene permitido hacer, como una pérdida de funcionalidad. Tu trabajo es cerrar lo que está expuesto sin tocar lo que ya protege correctamente ni lo que ya funciona bien para quien debe tener acceso.
+
+---
+
+## Roles que debes asumir simultáneamente
+
+Durante esta tarea actúas como tres roles a la vez, sin bajar el nivel de exigencia de ninguno:
+
+1. **Tester de seguridad (pentester de caja blanca)** — intentas activamente vulnerar el sistema desde cada ángulo posible, como lo haría un atacante real, pero con acceso completo al código fuente.
+2. **Ingeniero de seguridad** — diagnosticas con profundidad técnica real, lees código y documentación oficial antes de actuar.
+3. **Auditor** — documentas con evidencia cada hallazgo, cada corrección, y verificas que no haya regresiones funcionales ni nuevas brechas.
+
+---
+
+## Accesos disponibles
+
+Tienes control y acceso total sobre las siguientes herramientas. Úsalas activamente durante toda la tarea, no solo de forma referencial.
+
+- **Supabase vía MCP** — acceso completo: lectura y escritura de tablas, ejecución de queries SQL, gestión de políticas RLS, Storage, Auth, y consulta de logs directamente desde el MCP.
+- **Supabase Dashboard vía navegador** — `https://supabase.com/dashboard/project/cvbdqsxjfrbwovzpydng` — úsalo para todo lo que requiera inspección visual: Table Editor, SQL Editor, Logs, Auth → Users, Storage, Database → Roles, y la configuración completa de RLS Policies. Cuando el MCP no sea suficiente o necesites confirmar visualmente algo, entra directamente al dashboard.
+- **Repositorio de desarrollo** — `https://github.com/carlosm-lab/confecciones-test` — acceso tanto al repositorio **local** como al **remoto** en GitHub. Usa git con normalidad para inspeccionar historial, ramas, diffs (un cambio de seguridad introducido o revertido puede estar en el historial), y para hacer push de los commits requeridos en este prompt.
+
+Combina estas tres fuentes según lo que necesites: el código fuente local te dice qué debería estar pasando, Supabase (vía MCP y dashboard) te dice qué hay realmente configurado y qué tan protegido está en la práctica, y el repositorio remoto te permite rastrear cuándo se introdujo una configuración insegura si lo necesitas para entender el contexto.
+
+---
+
+## Credenciales de prueba
+
+```
+Usuario regular:  carlosmolina.privado@gmail.com
+Administrador:    carlosmolina.contact@gmail.com
+```
+
+**Ambas cuentas ya están registradas y disponibles en el navegador.** Úsalas para probar el sistema desde la perspectiva de cada rol, y también para intentar activamente **salirte** del alcance de cada rol (por ejemplo: usuario regular intentando alcanzar datos o acciones de admin).
+
+---
+
+## Fase 0 — Preparación: conocimiento total antes de tocar nada
+
+### 0.A — Identifica el stack tecnológico y de seguridad exacto
+
+```bash
+cat package.json
+```
+
+Documenta versión exacta de: Next.js, React, Supabase client (`@supabase/supabase-js`, `@supabase/ssr` o similar), librería de auth, librería de validación de formularios/inputs, y cualquier middleware de seguridad existente.
+
+### 0.B — Localiza la documentación oficial de seguridad de cada tecnología
+
+Ten lista la documentación oficial que vas a consultar cuando aparezca cada hallazgo:
+
+- Next.js → documentación oficial sobre Server Actions, Route Handlers, Middleware, y manejo seguro de datos entre servidor y cliente (la versión exacta del proyecto)
+- Supabase → documentación oficial de Row Level Security, Auth (incluyendo JWT, sesiones, refresh tokens), Storage policies, y mejores prácticas de seguridad de Supabase
+- React → documentación oficial sobre XSS, `dangerouslySetInnerHTML`, y sanitización
+- OWASP → como referencia general para clasificar y priorizar hallazgos (OWASP Top 10, especialmente para aplicaciones web modernas)
+
+> Cuando un hallazgo involucre alguna de estas tecnologías, **busca y lee la documentación oficial actual antes de proponer una corrección.** No confíes en patrones genéricos de seguridad que "siempre funcionan" — verifica contra la documentación de la versión exacta instalada y contra las recomendaciones específicas de Supabase para RLS.
+
+### 0.C — Inventario completo del proyecto
+
+```bash
+find . -type f | grep -v node_modules | grep -v .git | grep -v .next | sort
+```
+
+Documenta la estructura completa. Esta es la base de tu auditoría de seguridad.
+
+### 0.D — Prepara las herramientas de captura
+
+- Abre Chrome DevTools y déjalo abierto durante **toda** la sesión, con "Preserve log" activo en Console y Network.
+- Ten visible la terminal donde corre el servidor de desarrollo de Next.js para capturar sus avisos en tiempo real.
+- Ten acceso abierto al Dashboard de Supabase (`https://supabase.com/dashboard/project/cvbdqsxjfrbwovzpydng`) → Logs, Auth, Database, Storage, y ten listo el MCP de Supabase para consultas directas durante toda la auditoría.
+- Ten lista una herramienta para inspeccionar y modificar requests manualmente (DevTools → Network → Edit and Resend, o equivalente) para las pruebas de manipulación de requests.
+
+---
+
+## Fase 1 — Auditoría exhaustiva por superficie de ataque
+
+Vas a recorrer el sistema completo evaluando **cada superficie de ataque posible**, en los mismos cuatro estados de usuario que en el testing funcional, pero ahora con intención adversarial activa.
+
+Para cada hallazgo, documenta:
+
+```
+HALLAZGO: [ruta/endpoint/componente]
+ESTADO PROBADO: [deslogueado / usuario logueado / admin logueado / admin deslogueado / cross-rol]
+─────────────────────────────────────────────
+Vector probado:
+  [qué intentaste exactamente]
+Resultado esperado (comportamiento seguro):
+  [qué debería pasar]
+Resultado real observado:
+  [qué pasó realmente]
+¿Es una vulnerabilidad?
+  [SÍ / NO — justifica]
+Severidad:
+  [CRÍTICA / ALTA / MEDIA / BAJA / INFORMATIVA]
+Evidencia:
+  [request, response, código, screenshot conceptual, o log de Supabase]
+```
+
+---
+
+### 1.A — Autenticación
+
+- [ ] Login con credenciales correctas: ¿el token/sesión se establece correctamente y de forma segura (httpOnly cookie vs localStorage)?
+- [ ] Login con credenciales incorrectas: ¿el mensaje de error revela si el usuario existe o no (enumeración de usuarios)?
+- [ ] Login con SQL injection básico en los campos (`' OR '1'='1`, etc.) → ¿algún comportamiento anómalo?
+- [ ] Login con payloads de XSS en los campos → ¿se reflejan sin escapar en algún lugar de la respuesta o la UI?
+- [ ] Fuerza bruta: ¿hay rate limiting en el endpoint de login? Intenta varios intentos fallidos consecutivos y documenta si hay bloqueo, captcha, o ningún límite.
+- [ ] ¿Las contraseñas se transmiten siempre sobre HTTPS y nunca aparecen en logs, en la URL, o en el almacenamiento del cliente en texto plano?
+- [ ] Registro de usuario (si existe): ¿permite contraseñas extremadamente débiles? ¿hay alguna validación mínima de complejidad?
+- [ ] Recuperación de contraseña (si existe): ¿el flujo es seguro? ¿el token de recuperación expira? ¿es de un solo uso? ¿se puede adivinar o enumerar?
+- [ ] Logout: ¿invalida realmente la sesión del lado del servidor, o solo borra el token del cliente dejando la sesión viva en el backend?
+- [ ] Sesión expirada o token inválido: ¿el sistema lo maneja correctamente, o permite continuar operando con un token vencido?
+- [ ] ¿Es posible registrarse o iniciar sesión con un email que ya pertenece a otro usuario, generando confusión de cuentas?
+
+### 1.B — Autorización y control de acceso
+
+Esta es la sección más crítica. Prueba activamente **escalar privilegios** y **acceder a recursos ajenos**.
+
+- [ ] **IDOR (Insecure Direct Object Reference):** estando logueado como usuario regular, intenta acceder por URL directa a recursos que no son tuyos (por ejemplo: `/perfil/[id-de-otro-usuario]`, `/ordenes/[id-de-orden-ajena]`, llamadas a API con un `id` que no te pertenece). Documenta cada intento y su resultado.
+- [ ] **Escalación vertical:** estando logueado como usuario regular, intenta acceder a cada ruta y cada endpoint de admin identificado en el código (no solo por UI — también llamadas directas a la API/route handlers de admin). Documenta cada uno.
+- [ ] **Escalación vertical desde deslogueado:** repite el intento anterior sin sesión alguna.
+- [ ] **Manipulación de rol en el cliente:** inspecciona si el rol del usuario (admin/regular) se determina o se confía en algún dato controlable desde el cliente (localStorage, cookie no firmada, parámetro de la URL, body de un request) en lugar de verificarse siempre contra el servidor/base de datos.
+- [ ] **Bypass de middleware:** si existe un middleware que protege rutas de admin, intenta acceder a los endpoints de API subyacentes directamente, sin pasar por la ruta protegida por el middleware, para confirmar si la protección también existe a nivel de API o solo a nivel de navegación de UI.
+- [ ] **Acciones de admin vía API directa:** con sesión de usuario regular o sin sesión, intenta ejecutar directamente (vía fetch manual, Postman, o editar y reenviar un request en DevTools) las llamadas que el panel de admin hace para crear, editar o eliminar productos, categorías, usuarios u órdenes. Documenta si el servidor las rechaza correctamente o las ejecuta.
+
+### 1.C — Row Level Security (RLS) de Supabase — auditoría exhaustiva, tabla por tabla
+
+Para **cada tabla** del proyecto, sin excepción, usando el MCP y el SQL Editor del Dashboard:
+
+- [ ] ¿RLS está habilitado? → Si está deshabilitado en cualquier tabla con datos no estrictamente públicos: **hallazgo crítico**.
+- [ ] Lista cada política existente en la tabla (`SELECT`, `INSERT`, `UPDATE`, `DELETE`) y su definición exacta (la expresión `USING` y `WITH CHECK`).
+- [ ] Ejecuta queries de prueba directamente vía SQL Editor o MCP simulando:
+  - Usuario anónimo (`anon` role, sin `auth.uid()`)
+  - Usuario autenticado específico (un `auth.uid()` de prueba)
+  - Intentando leer/escribir/borrar filas que no le pertenecen a ese usuario
+- [ ] Para cada política, confirma explícitamente: ¿el resultado real de la query coincide exactamente con lo que la política *debería* permitir, ni más ni menos?
+- [ ] ¿Existe alguna política con `USING (true)` o equivalente demasiado permisivo en una tabla que no debería ser de lectura/escritura pública?
+- [ ] ¿Las políticas de `INSERT` validan que el usuario solo pueda insertar registros asociados a su propio `auth.uid()` cuando corresponde (por ejemplo, no puede crear una orden a nombre de otro usuario)?
+- [ ] ¿Las políticas de `UPDATE`/`DELETE` tienen la misma cobertura — un usuario no puede modificar ni borrar registros de otro?
+- [ ] ¿Las tablas administrativas (productos, categorías, configuración del sitio) están protegidas para que solo el rol admin pueda escribir, mientras el público solo puede leer lo necesario?
+- [ ] ¿Cómo determina exactamente una política si el usuario es admin? Verifica que esa determinación se base en una fuente confiable (una tabla de roles consultada en la propia política, un claim verificado del JWT) y no en algo manipulable.
+
+### 1.D — Autenticación y autorización vía Service Role / claves
+
+- [ ] Busca en **todo** el código fuente (cliente y servidor) cualquier uso de `SUPABASE_SERVICE_ROLE_KEY` o equivalente.
+- [ ] Confirma que esa clave **nunca** está expuesta en código que se envía al navegador (sin prefijo `NEXT_PUBLIC_`, no embebida en ningún bundle de cliente, no logueada en consola del navegador).
+- [ ] Si se usa Service Role en algún Route Handler o Server Action, confirma que ese endpoint tiene su propia verificación de autenticación/autorización explícita en el servidor antes de usar la clave — el Service Role bypassa RLS, así que el control de acceso recae completamente en la lógica del servidor en ese punto.
+- [ ] Revisa el archivo `.env.example` o equivalente: ¿documenta claramente cuáles variables son secretas y cuáles públicas?
+- [ ] ¿El archivo `.env` o `.env.local` real está correctamente excluido en `.gitignore`? Verifica también el historial de git por si alguna vez se subió accidentalmente:
+
+```bash
+git log --all --full-history -- .env .env.local
+```
+
+### 1.E — Storage de Supabase
+
+- [ ] Lista los buckets existentes. ¿Cuáles son públicos y cuáles privados? ¿Esa configuración es la correcta para el contenido que almacenan?
+- [ ] ¿Las policies de storage permiten que cualquier usuario (incluso anónimo) suba archivos sin restricción? ¿Hay validación de tipo de archivo y tamaño?
+- [ ] Intenta acceder directamente por URL a un archivo de un bucket que debería ser privado, sin sesión o con sesión de otro usuario.
+- [ ] ¿Es posible subir un archivo con un nombre que sobreescriba uno existente de otro usuario o de un producto ajeno?
+- [ ] ¿Es posible subir archivos ejecutables o con extensiones peligrosas (`.html`, `.js`, `.svg` con script embebido) donde se esperan solo imágenes?
+
+### 1.F — Inputs, validación y sanitización (XSS, inyección)
+
+Recorre **cada formulario y cada input** del sistema en los cuatro estados de usuario:
+
+- [ ] Prueba `<script>alert(1)</script>` y variantes (`<img src=x onerror=alert(1)>`, etc.) en cada campo de texto libre (nombre, dirección, comentarios, descripción de producto si el admin lo permite, búsqueda).
+- [ ] ¿Algún payload se ejecuta o se renderiza sin escapar en cualquier punto donde ese dato se vuelva a mostrar (perfil, panel de admin, listado, notificaciones)?
+- [ ] Revisa el código en busca de `dangerouslySetInnerHTML` — para cada uso, confirma si el contenido insertado está sanitizado y de dónde proviene exactamente ese contenido.
+- [ ] Prueba inputs extremadamente largos en cada campo → ¿hay validación de longitud máxima, tanto en cliente como en servidor?
+- [ ] Prueba caracteres especiales y de control en campos numéricos (precio, cantidad, stock) → ¿el servidor valida el tipo, o confía en la validación del cliente?
+- [ ] Prueba valores negativos o cero en cantidad/precio donde no deberían ser válidos (por ejemplo, cantidad negativa en el carrito, precio negativo en un producto).
+- [ ] Revisa cada query a Supabase en el código: ¿se construyen con el query builder oficial (parametrizado) en todos los casos, o existe en algún punto concatenación manual de strings hacia SQL crudo?
+
+### 1.G — Carrito, favoritos y lógica de negocio expuesta al cliente
+
+- [ ] ¿El precio de los productos en el carrito se calcula y valida en el servidor al momento de cualquier operación sensible (checkout), o el cliente puede enviar un precio manipulado?
+- [ ] Intenta, vía DevTools → Network → Edit and Resend, modificar el precio o la cantidad en el payload de un request de agregar al carrito o de checkout, y observa si el servidor lo acepta tal cual o lo recalcula/valida.
+- [ ] ¿Es posible agregar al carrito un producto marcado como oculto/inactivo/borrador manipulando directamente el ID en el request?
+- [ ] ¿Es posible aplicar una promoción/descuento expirado o no válido manipulando el request?
+- [ ] ¿El stock se valida en el servidor antes de confirmar una operación, o solo se valida visualmente en el cliente?
+
+### 1.H — Cabeceras de seguridad y configuración general
+
+- [ ] Inspecciona las cabeceras HTTP de respuesta del sitio (`Content-Security-Policy`, `X-Frame-Options`, `Strict-Transport-Security`, `X-Content-Type-Options`, etc.). Documenta cuáles existen y cuáles faltan.
+- [ ] ¿El sitio es vulnerable a Clickjacking (se puede embeber en un iframe de otro origen)?
+- [ ] ¿Las cookies de sesión tienen los flags `HttpOnly`, `Secure`, y `SameSite` configurados correctamente?
+- [ ] ¿Los mensajes de error que ve el usuario final exponen detalles internos (stack traces, rutas del sistema de archivos, nombres de tablas, versiones de librerías)?
+- [ ] Revisa `next.config.js` en busca de configuraciones de seguridad relevantes (headers personalizados, CORS, `images.domains`, etc.).
+
+---
+
+## Fase 2 — Captura y consolidación de hallazgos
+
+Después de completar la Fase 1 completa, consolida todo lo capturado en un **Registro Maestro de Hallazgos de Seguridad**:
+
+```
+SEC-001
+  Categoría:         [Auth / Autorización / RLS / Storage / Inputs / Lógica de negocio / Cabeceras / Otro]
+  Estado probado:    [dónde y bajo qué rol]
+  Vector exacto:     [pasos exactos para reproducir]
+  Severidad:         [CRÍTICA / ALTA / MEDIA / BAJA / INFORMATIVA]
+  Evidencia:         [código, request/response, resultado de query SQL, log de Supabase]
+  Impacto si se explota: [qué podría hacer un atacante real con esto]
+```
+
+Clasifica la severidad con criterio consistente:
+
+- **CRÍTICA:** acceso no autorizado a datos de otros usuarios, escalación a admin, RLS deshabilitado en tabla sensible, Service Role expuesta al cliente, bypass total de autenticación.
+- **ALTA:** IDOR limitado, validación de autorización solo en cliente sin respaldo en servidor, manipulación de precios/lógica de negocio aceptada por el servidor.
+- **MEDIA:** falta de rate limiting, mensajes de error que filtran información, cabeceras de seguridad ausentes, validaciones de input incompletas sin impacto directo demostrado todavía.
+- **BAJA / INFORMATIVA:** buenas prácticas no implementadas sin vector de explotación claro y directo en este momento.
+
+No omitas ningún hallazgo por parecer menor. La clasificación de severidad existe para priorizar el orden de corrección, no para decidir qué documentar.
+
+---
+
+## Fase 3 — Diagnóstico bajo la analogía de la puerta (por cada hallazgo)
+
+Para **cada entrada** del Registro Maestro, en orden de severidad (CRÍTICA primero), aplica este protocolo completo. No hay atajos.
+
+### Paso 1 — Desmonta toda la estructura, no solo la pieza visible
+
+No corrijas el síntoma superficial. Lee:
+
+1. El archivo exacto donde está la lógica vulnerable.
+2. **Todos** los archivos que ese archivo importa.
+3. **Todos** los archivos que importan al archivo en cuestión.
+4. La política RLS real involucrada (verificada en Supabase vía MCP o Dashboard, nunca asumida desde el código).
+5. El flujo completo cliente → servidor → base de datos para esa operación específica.
+6. Si el hallazgo es de autorización, identifica **todos** los puntos de entrada a esa misma operación (UI, API directa, Server Action) — una corrección que solo cubra uno de los caminos no es una corrección completa.
+
+```bash
+grep -r "from.*[nombre-del-archivo]" --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" . | grep -v node_modules
+```
+
+### Paso 2 — Consulta la documentación oficial antes de proponer nada
+
+- Identifica qué tecnología(s) están involucradas en este hallazgo específico.
+- Busca y lee la documentación oficial de seguridad correspondiente (Supabase RLS, Next.js Server Actions/Route Handlers, OWASP para el tipo de vulnerabilidad).
+- Confirma: ¿la documentación recomienda explícitamente un patrón para este caso? ¿Hay un ejemplo oficial de cómo proteger este escenario exacto?
+
+### Paso 3 — Identifica la causa raíz real, no el síntoma
+
+```
+CAUSA RAÍZ:
+  Archivo:                  [ruta exacta]
+  Línea(s):                 [número exacto]
+  Código exacto:             [copia el fragmento]
+  Configuración de Supabase relevante: [policy/tabla/config exacta, verificada en vivo]
+  Por qué existe la brecha:  [explicación técnica basada en lo leído]
+  Documentación consultada:  [fuente exacta y qué dice sobre este caso]
+```
+
+### Paso 4 — Verifica que la solución NO sea "quitar la chapa"
+
+Antes de aceptar cualquier solución candidata, pregúntate explícitamente:
+
+- [ ] ¿Esta solución reduce una protección existente en lugar de corregir lo que falla? → Si SÍ: **rechazada**.
+- [ ] ¿Esta solución desactiva o relaja RLS, una validación, o un check de autorización para que el error deje de aparecer? → Si SÍ: **rechazada**.
+- [ ] ¿Esta solución oculta el problema con un try/catch que silencia el error sin resolver la causa? → Si SÍ: **rechazada**.
+- [ ] ¿Esta solución resuelve solo uno de los caminos de entrada identificados en el Paso 1.6, dejando otros caminos igual de expuestos? → Si SÍ: **incompleta, amplíala**.
+- [ ] ¿Esta solución cambia el comportamiento funcional para un usuario legítimo haciendo algo permitido? → Si SÍ: **rechazada**, busca una que proteja sin restringir lo legítimo.
+- [ ] ¿Esta solución está respaldada por la documentación oficial consultada en el Paso 2? → Si NO: vuelve a leer documentación.
+
+Solo si la solución pasa estos seis filtros, continúa.
+
+### Paso 5 — Análisis de impacto antes de modificar
+
+```
+ARCHIVOS A MODIFICAR:
+  [lista exacta]
+
+CAMBIOS EN SUPABASE NECESARIOS (si aplica):
+  [política RLS nueva/modificada, exactamente qué USING/WITH CHECK]
+
+ARCHIVOS Y FLUJOS AFECTADOS (no se modifican, pero se ven impactados):
+  [lista exacta]
+
+¿QUÉ FUNCIONALIDAD LEGÍTIMA PODRÍA VERSE AFECTADA?
+  [descripción explícita — esta corrección no debe romper el uso normal del sistema]
+```
+
+---
+
+## Fase 4 — Implementación de la corrección
+
+- Modifica **únicamente** lo necesario para cerrar la brecha de seguridad identificada.
+- Si la corrección es una política RLS, escríbela con el mínimo privilegio necesario — ni más restrictiva de lo que rompe funcionalidad legítima, ni más permisiva de lo necesario.
+- Cero cambios estéticos no solicitados. Cero refactorizaciones. Cero cambios de comportamiento para el uso legítimo del sistema.
+
+### Verificación inmediata después de cada corrección:
+
+- [ ] Repite exactamente el vector de ataque documentado en el hallazgo → ya no funciona.
+- [ ] El uso legítimo correspondiente (el mismo flujo pero por un usuario autorizado haciendo lo que le corresponde) sigue funcionando exactamente igual que antes.
+- [ ] Cada archivo y flujo afectado (listado en la Fase 3, Paso 5) fue revisado y sigue funcionando.
+- [ ] No se introdujo ningún error nuevo en Chrome Console, Network, terminal de Next.js, o Supabase Logs.
+- [ ] Si se modificó una política RLS, se volvió a probar con SQL Editor o MCP simulando los mismos roles del Paso 1.C para confirmar que el acceso autorizado sigue funcionando y el no autorizado sigue bloqueado.
+
+Actualiza el Registro Maestro marcando esa entrada como RESUELTO con la evidencia del antes y el después.
+
+**Repite la Fase 3 y Fase 4 completas para cada hallazgo del registro, en orden de severidad. Sin excepciones, sin saltos.**
+
+---
+
+## Fase 5 — Segunda pasada completa: re-auditoría total
+
+Una vez corregidos todos los hallazgos del registro, **repite la Fase 1 completa**, en los cuatro estados, sobre cada superficie de ataque. Esta no es una verificación superficial — es el mismo nivel de exhaustividad que la primera pasada.
+
+El objetivo de esta segunda pasada es detectar:
+
+- Si alguna corrección introdujo una regresión funcional nueva.
+- Si algún hallazgo fue marcado como resuelto pero en realidad el vector sigue siendo explotable por otro camino.
+- Si las correcciones de un hallazgo abrieron, sin intención, una brecha distinta en otro punto del sistema.
+
+Si esta segunda pasada encuentra **algún** hallazgo nuevo o persistente, vuelve a la Fase 2 con esos hallazgos y repite el ciclo completo. No hay límite de iteraciones — se repite hasta que una pasada completa no encuentre ningún hallazgo nuevo de ninguna severidad.
+
+---
+
+## Fase 6 — Verificación final y registro
+
+### 6.A — Checklist de seguridad consolidada
+
+- [ ] RLS habilitado y verificado en cada tabla, con políticas mínimas necesarias confirmadas vía SQL Editor/MCP simulando cada rol.
+- [ ] Ningún endpoint de admin accesible sin verificación de servidor, ni por UI ni por llamada directa a la API.
+- [ ] Ninguna clave secreta (`SERVICE_ROLE_KEY` u otras) expuesta al cliente, ni en el código ni en el historial de git.
+- [ ] Ninguna lógica de negocio crítica (precio, stock, promociones) confiada únicamente al cliente.
+- [ ] Storage con policies y configuración pública/privada correctas, verificadas tabla por bucket.
+- [ ] Inputs sanitizados y validados tanto en cliente como en servidor en cada punto probado.
+- [ ] Cabeceras de seguridad revisadas y, donde correspondía, agregadas sin romper funcionalidad existente.
+- [ ] Ningún parche de seguridad preexistente que ocultara, deshabilitara o relajara protección quedó sin corregir de raíz.
+
+### 6.B — Checklist de integridad funcional ("diseño final" intacto)
+
+- [ ] El diseño visual de cada página es idéntico al estado previo a esta intervención.
+- [ ] Ningún flujo legítimo (login, carrito, favoritos, checkout, panel de admin para el admin real) perdió funcionalidad.
+- [ ] Ninguna corrección de seguridad se sintió, para un usuario autorizado, como una restricción nueva sobre algo que antes podía hacer legítimamente.
+
+### 6.C — Checklist de consolas y logs
+
+- [ ] Chrome Console: cero errores, cero warnings no justificados, en los cuatro estados de usuario.
+- [ ] Chrome Network: cero requests con status 4xx/5xx inesperados.
+- [ ] Terminal Next.js: cero errores.
+- [ ] `npx next build`: completa sin errores.
+- [ ] Supabase Logs: cero errores inesperados, y las violaciones de RLS que **sí deben ocurrir** (intentos de acceso no autorizado durante tus propias pruebas) están presentes como evidencia de que la protección funciona, no como error a corregir.
+
+### 6.D — Registro final
+
+Genera `/updates/AUDITORIA_SEGURIDAD_TOTAL_[fecha].md`:
+
+```markdown
+# Auditoría completa de seguridad
+
+## Alcance probado
+- Estados de usuario: deslogueado, usuario logueado, admin logueado, admin deslogueado, cross-rol
+- Superficies cubiertas: Auth, Autorización/IDOR, RLS (tabla por tabla), Storage, Inputs/XSS, lógica de negocio, cabeceras HTTP
+
+## Hallazgos encontrados (registro maestro completo)
+[lista completa con severidad y resolución, una entrada por hallazgo, formato de la Fase 2]
+
+## Causas raíz y correcciones aplicadas
+[por cada hallazgo, el diagnóstico de la Fase 3 y la corrección de la Fase 4, incluyendo antes/después de cada política RLS modificada]
+
+## Documentación oficial consultada
+[lista de cada fuente consultada y para qué hallazgo]
+
+## Verificación de "no quitar la chapa"
+[confirma explícitamente que ninguna corrección redujo protección existente ni rompió funcionalidad legítima]
+
+## Hallazgos retroactivos (parches de seguridad preexistentes corregidos)
+[lista de cada caso encontrado ya implementado como parche inseguro, con su corrección de raíz — o "ninguno encontrado"]
+
+## Segunda pasada (re-auditoría)
+- Hallazgos nuevos encontrados: [N]
+- Hallazgos persistentes encontrados: [N]
+- Iteraciones totales necesarias: [N]
+
+## Estado final
+- RLS verificado tabla por tabla: ✓
+- Sin claves secretas expuestas: ✓
+- Sin endpoints de admin desprotegidos: ✓
+- Sin lógica de negocio crítica confiada al cliente: ✓
+- Consolas limpias: ✓
+- Funcionalidad legítima intacta: ✓
+```
+
+Luego:
+
+```bash
+git add .
+git commit -m "fix(security): auditoría completa de seguridad — cierre de brechas sin regresiones
+
+- Auditado: Auth, Autorización/IDOR, RLS tabla por tabla, Storage, Inputs, lógica de negocio, cabeceras
+- [N] hallazgos encontrados y corregidos con causa raíz documentada
+- [N] hallazgos críticos/altos resueltos de raíz, sin reducir protección existente
+- Cero cambios al diseño o funcionalidad legítima existente
+- Cero regresiones funcionales introducidas por las correcciones
+- Consolas y logs verificados limpios"
+
+git push origin desarrollo
+```
+
+---
+
+## Definición inamovible de "auditoría completada"
+
+- [ ] Las cuatro pasadas de testing adversarial (deslogueado, usuario, admin logueado, admin deslogueado) se completaron en su totalidad, incluyendo intentos explícitos de cross-rol
+- [ ] Cada tabla de Supabase fue auditada individualmente con RLS verificado por consulta real, no por inspección visual únicamente
+- [ ] Cada endpoint de admin fue probado tanto por UI como por llamada directa a la API
+- [ ] Se buscó explícitamente exposición de claves secretas en código y en historial de git
+- [ ] Cada hallazgo fue diagnosticado con la analogía de la puerta — causa raíz real, nunca "quitar la chapa"
+- [ ] Cada corrección fue validada contra documentación oficial antes de implementarse
+- [ ] Se identificaron y corrigieron de raíz los parches de seguridad preexistentes en el código
+- [ ] Ninguna corrección redujo una protección existente
+- [ ] Ninguna corrección rompió funcionalidad legítima para usuarios autorizados
+- [ ] Ninguna corrección alteró el diseño visual existente
+- [ ] La segunda pasada completa de re-auditoría no encontró ningún hallazgo nuevo ni persistente
+- [ ] Las consolas y logs están limpios, con la única excepción esperada de los intentos de acceso no autorizado generados por las propias pruebas
+- [ ] El registro en `/updates/` está completo
+- [ ] El commit está hecho en `desarrollo`
+
+**Si falta un solo punto: la auditoría no está terminada. No declares éxito. Continúa.**

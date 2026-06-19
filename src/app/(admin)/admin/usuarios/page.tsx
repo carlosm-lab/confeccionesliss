@@ -111,10 +111,14 @@ export default function AdminUsuariosPage() {
     setActionLoading(user.id + "-role");
     try {
       const supabase = getSupabaseClient();
-      const { error } = await supabase
-        .from("profiles")
-        .update({ role: newRole })
-        .eq("id", user.id);
+      // SEC-002 fix: usar admin_set_user_role RPC que sincroniza TANTO
+      // profiles.role (BD) COMO auth.users.raw_app_meta_data (JWT).
+      // Antes: solo actualizaba profiles.role, el JWT no se refrescaba
+      // hasta expirar → un admin degradado seguía con acceso por la duración del JWT.
+      const { error } = await supabase.rpc("admin_set_user_role", {
+        target_user_id: user.id,
+        new_role: newRole,
+      });
       if (error) throw error;
       toast.success(
         newRole === "admin"
