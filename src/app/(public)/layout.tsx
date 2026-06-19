@@ -1,7 +1,9 @@
+import { Suspense } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { GlobalModals } from "@/components/layout/GlobalModals";
+import { CartAutoOpen } from "@/components/cart/CartAutoOpen";
 
 export default function PublicLayout({
   children,
@@ -27,6 +29,11 @@ export default function PublicLayout({
 
       {/* Global modals: CartDrawer + LoginModal — se montan una sola vez */}
       <GlobalModals />
+
+      {/* Abre el CartDrawer cuando la URL contiene ?open_cart=1 (desde /carrito redirect) */}
+      <Suspense fallback={null}>
+        <CartAutoOpen />
+      </Suspense>
     </>
   );
 }
