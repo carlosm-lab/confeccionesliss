@@ -326,10 +326,10 @@ export function ProductDetailClient({
           <div className="hidden h-full w-px bg-slate-100 lg:block" />
 
           {/* Main image */}
-          <div className="relative w-full overflow-hidden rounded-2xl bg-white">
+          <div className="relative aspect-[4/5] w-full self-start overflow-hidden rounded-2xl bg-white">
             <button
               type="button"
-              className="block w-full cursor-zoom-in"
+              className="block h-full w-full cursor-zoom-in"
               onClick={() => setIsImageModalOpen(true)}
               aria-label="Ver imagen ampliada"
             >
@@ -337,9 +337,8 @@ export function ProductDetailClient({
                 <Image
                   src={mainImg}
                   alt={product.name ?? "Producto"}
-                  width={600}
-                  height={750}
-                  className="h-full w-full object-cover object-center"
+                  fill
+                  className="object-cover object-center"
                   priority
                   unoptimized={
                     mainImg.startsWith("http") &&
@@ -347,7 +346,7 @@ export function ProductDetailClient({
                   }
                 />
               ) : (
-                <div className="flex aspect-[4/5] w-full items-center justify-center bg-slate-100 text-slate-300">
+                <div className="flex h-full w-full items-center justify-center bg-slate-100 text-slate-300">
                   <span className="material-symbols-outlined text-6xl">
                     image
                   </span>
