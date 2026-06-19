@@ -56,13 +56,6 @@ const nextConfig = {
         destination: "/servicios",
         permanent: true,
       },
-      {
-        // /carrito no existe como página — el carrito vive en el CartDrawer global.
-        // Redirect permanente para que Google descarte esta ruta limpiamente.
-        source: "/carrito",
-        destination: "/",
-        permanent: true,
-      },
     ];
   },
   images: {
