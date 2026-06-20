@@ -45,6 +45,7 @@ import {
   STORAGE_CART_EXPIRED_KEY,
 } from "@/lib/constants";
 import type { ShippingInfo } from "@/lib/shipping";
+import { useGuestNotification } from "./GuestNotificationContext";
 
 // ── Tipos ─────────────────────────────────────────────────────
 
@@ -141,6 +142,7 @@ function generateId(): string {
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
+  const { pushNotification } = useGuestNotification();
 
   // ── Inicialización desde localStorage ────────────────────────
   // Incluye expiración de 7 días de inactividad.
@@ -564,6 +566,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     // Timestamp de actividad (para expiración de 7 días)
     localStorage.setItem(STORAGE_CART_TIMESTAMP_KEY, Date.now().toString());
+
+    // Notificación guest — solo para usuarios no autenticados
+    if (!user) {
+      pushNotification("cart");
+    }
 
     toast.success(`${quantity}x ${product.name} agregado al carrito`, {
       id: "cart-add-toast",

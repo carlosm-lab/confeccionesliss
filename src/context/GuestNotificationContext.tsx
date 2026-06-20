@@ -3,14 +3,13 @@
 /**
  * GuestNotificationContext
  * ─────────────────────────────────────────────────────────────
- * Maneja el estado de la campana de notificaciones para usuarios
- * guest (no autenticados).
+ * Maneja las notificaciones de la campana para usuarios guest.
  *
  * LÓGICA:
- * - Se activa cuando un guest agrega un artículo a favoritos
- * - Persiste en localStorage para sobrevivir recargas de página
- * - Se desactiva silenciosamente cuando el usuario inicia sesión
- * - Usuarios autenticados nunca ven la campana activa
+ * - Acepta notificaciones tipadas: "favorite" | "cart"
+ * - Cada tipo genera un único item (se actualiza si ya existe, no duplica)
+ * - Persiste en localStorage con timestamp real
+ * - Se limpia al iniciar sesión
  * ─────────────────────────────────────────────────────────────
  */
 
@@ -23,16 +22,64 @@ import {
   ReactNode,
 } from "react";
 
-const STORAGE_KEY = "liss_guest_notification_active";
+// ── Tipos ──────────────────────────────────────────────────────
+
+export type GuestNotifType = "favorite" | "cart";
+
+export interface GuestNotification {
+  id: GuestNotifType; // uno por tipo — actúa como clave única
+  type: GuestNotifType;
+  title: string;
+  message: string;
+  createdAt: number; // timestamp unix ms
+  updatedAt: number; // se actualiza con cada nuevo evento del mismo tipo
+  count: number;     // cuántas veces se activó (para "3 productos en carrito")
+}
 
 interface GuestNotificationContextValue {
-  /** Si la campana debe mostrarse activa (con pulso y badge) */
+  notifications: GuestNotification[];
+  /** true si hay al menos una notificación */
   isActive: boolean;
-  /** Activa la campana — llamado cuando un guest agrega un favorito */
-  activate: () => void;
-  /** Desactiva la campana — llamado al iniciar sesión */
+  /** Registra o actualiza una notificación del tipo dado */
+  pushNotification: (type: GuestNotifType) => void;
+  /** Elimina todas las notificaciones */
   dismiss: () => void;
+  /** Activa la campana (alias legacy para favoritos — compatible con FavoritesContext) */
+  activate: () => void;
 }
+
+// ── Persistencia ───────────────────────────────────────────────
+
+const STORAGE_KEY = "liss_guest_notifications_v2";
+
+const NOTIF_DEFAULTS: Record<GuestNotifType, { title: string; message: string }> = {
+  favorite: {
+    title: "Favoritos guardados",
+    message: "Inicia sesión para sincronizarlos en todos tus dispositivos.",
+  },
+  cart: {
+    title: "Artículos en el carrito",
+    message: "Inicia sesión para guardar tu carrito y acceder desde cualquier dispositivo.",
+  },
+};
+
+function loadFromStorage(): GuestNotification[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return [];
+    return JSON.parse(raw) as GuestNotification[];
+  } catch {
+    return [];
+  }
+}
+
+function saveToStorage(notifications: GuestNotification[]) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(notifications));
+  } catch { /* noop */ }
+}
+
+// ── Context ────────────────────────────────────────────────────
 
 const GuestNotificationContext = createContext<
   GuestNotificationContextValue | undefined
@@ -53,33 +100,67 @@ export function GuestNotificationProvider({
 }: {
   children: ReactNode;
 }) {
-  const [isActive, setIsActive] = useState(false);
+  const [notifications, setNotifications] = useState<GuestNotification[]>([]);
 
-  // Restaurar estado desde localStorage al montar
+  // Hidratar desde localStorage al montar
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      if (stored === "1") setIsActive(true);
-    } catch (_) {}
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setNotifications(loadFromStorage());
   }, []);
 
-  const activate = useCallback(() => {
-    setIsActive(true);
-    try {
-      localStorage.setItem(STORAGE_KEY, "1");
-    } catch (_) {}
+  const pushNotification = useCallback((type: GuestNotifType) => {
+    setNotifications((prev) => {
+      const defaults = NOTIF_DEFAULTS[type];
+      const now = Date.now();
+      const existing = prev.find((n) => n.id === type);
+
+      let next: GuestNotification[];
+      if (existing) {
+        // Actualizar el existente — incrementar count y timestamp
+        next = prev.map((n) =>
+          n.id === type
+            ? { ...n, updatedAt: now, count: n.count + 1 }
+            : n
+        );
+      } else {
+        // Crear nueva notificación
+        const notif: GuestNotification = {
+          id: type,
+          type,
+          title: defaults.title,
+          message: defaults.message,
+          createdAt: now,
+          updatedAt: now,
+          count: 1,
+        };
+        next = [...prev, notif];
+      }
+
+      saveToStorage(next);
+      return next;
+    });
   }, []);
+
+  // Alias legacy: activate() → pushNotification("favorite")
+  const activate = useCallback(() => {
+    pushNotification("favorite");
+  }, [pushNotification]);
 
   const dismiss = useCallback(() => {
-    setIsActive(false);
+    setNotifications([]);
     try {
       localStorage.removeItem(STORAGE_KEY);
-    } catch (_) {}
+      // También limpiar la clave legacy si existe
+      localStorage.removeItem("liss_guest_notification_active");
+    } catch { /* noop */ }
   }, []);
 
+  const isActive = notifications.length > 0;
+
   return (
-    <GuestNotificationContext.Provider value={{ isActive, activate, dismiss }}>
+    <GuestNotificationContext.Provider
+      value={{ notifications, isActive, pushNotification, activate, dismiss }}
+    >
       {children}
     </GuestNotificationContext.Provider>
   );
