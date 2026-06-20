@@ -292,7 +292,7 @@ export default function AdminUsuariosPage() {
           ) : (
             <div className="divide-y divide-slate-100 dark:divide-white/5">
               {/* Table Header */}
-              <div className="hidden border-b border-slate-100 bg-slate-50/80 px-5 py-3 text-xs font-bold tracking-wider text-slate-500 uppercase sm:grid sm:grid-cols-[1fr_110px_120px_120px] sm:gap-4 dark:border-white/5 dark:bg-white/5">
+              <div className="hidden border-b border-slate-100 bg-slate-50/80 px-5 py-3 text-xs font-bold tracking-wider text-slate-500 uppercase sm:grid sm:grid-cols-[1fr_110px_110px_200px] sm:gap-4 dark:border-white/5 dark:bg-white/5">
                 <span>Usuario</span>
                 <span className="text-center">Rol</span>
                 <span className="text-center">Registrado</span>
@@ -309,7 +309,7 @@ export default function AdminUsuariosPage() {
                 return (
                   <div
                     key={user.id}
-                    className="flex flex-col gap-3 px-5 py-4 transition-colors hover:bg-slate-50 sm:grid sm:grid-cols-[1fr_110px_120px_120px] sm:items-center sm:gap-4 dark:hover:bg-white/5"
+                    className="flex flex-col gap-3 px-5 py-4 transition-colors hover:bg-slate-50 sm:grid sm:grid-cols-[1fr_110px_110px_200px] sm:items-center sm:gap-4 dark:hover:bg-white/5"
                   >
                     {/* User Info */}
                     <div className="flex items-center gap-3">
