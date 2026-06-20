@@ -1,52 +1,63 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+/**
+ * proxy.ts — Middleware único de Next.js (Confecciones Liss)
+ * ──────────────────────────────────────────────────────────────
+ * Este archivo reemplaza middleware.ts. Next.js solo admite uno de los dos.
+ *
+ * Responsabilidades:
+ * 1. HOME_ONLY mode: bloquear todo excepto / y /links
+ * 2. BLOCKED_ROUTES: bloquear rutas no listas en producción
+ * 3. SEC-002: Protección server-side de rutas /admin
+ *    - Patrón oficial Supabase SSR: https://supabase.com/docs/guides/auth/server-side/creating-a-client
+ *    - Usa getUser() (valida contra Supabase Auth Server, no confía en cookies sin verificar)
+ *    - Verifica app_metadata.role del JWT (inmutable por el usuario)
+ */
+
 import { createServerClient } from "@supabase/ssr";
+import { NextResponse, type NextRequest } from "next/server";
 import { env } from "@/env";
 
 /**
- * Routes that are blocked in production even when HOME_ONLY is disabled.
- * These pages are not ready for public access yet.
- * The proxy redirects them back to home.
- *
- * NOTE: /catalogo and /carrito have been removed — the catalog is now
- * fully dynamic (Supabase) and ready for production.
+ * Rutas bloqueadas en producción (no listas para acceso público aún).
  */
 const BLOCKED_ROUTES = ["/servicios", "/mi-cuenta"];
 
 export async function proxy(request: NextRequest) {
   const url = request.nextUrl.clone();
+  const pathname = request.nextUrl.pathname;
 
-  // ── HOME_ONLY mode: block everything except / and /links ──
+  // ── 1. HOME_ONLY mode ────────────────────────────────────────
   if (env.NEXT_PUBLIC_HOME_ONLY === "true") {
-    if (url.pathname !== "/" && url.pathname !== "/links") {
+    if (pathname !== "/" && pathname !== "/links") {
       url.pathname = "/";
       return NextResponse.redirect(url, 307);
     }
     return NextResponse.next();
   }
 
-  // ── Selective blocking: redirect BLOCKED_ROUTES to home only in production ──
+  // ── 2. BLOCKED_ROUTES (solo en producción) ───────────────────
   if (env.NODE_ENV === "production") {
     const isBlocked = BLOCKED_ROUTES.some(
-      (route) => url.pathname === route || url.pathname.startsWith(`${route}/`)
+      (route) => pathname === route || pathname.startsWith(`${route}/`)
     );
-
     if (isBlocked) {
       url.pathname = "/";
       return NextResponse.redirect(url, 307);
     }
   }
 
-  // ── SEC-002: Protección de rutas /admin a nivel de servidor ──────────────
-  // Sin esta verificación, las rutas /admin solo estaban protegidas en el cliente.
-  // Patrón oficial: https://supabase.com/docs/guides/auth/server-side/nextjs
-  // La verificación de rol usa app_metadata.role del JWT — fuente de verdad
-  // inmutable por el propio usuario (solo modificable vía Service Role / Dashboard).
-  if (
-    request.nextUrl.pathname.startsWith("/admin") &&
-    !request.nextUrl.pathname.startsWith("/admin/login")
-  ) {
-    let response = NextResponse.next({ request });
+  // ── 3. SEC-002: Protección server-side de /admin ─────────────
+  const isAdminLoginPage = pathname === "/admin/login";
+  const isAdminRoute = pathname.startsWith("/admin");
+
+  if (isAdminRoute) {
+    /**
+     * Crear cliente Supabase SSR con el patrón correcto de cookies:
+     * - supabaseResponse se recrea en setAll() para que las cookies actualizadas
+     *   (token refresh) se propaguen correctamente al browser.
+     * - CRÍTICO: retornar siempre supabaseResponse al final, nunca NextResponse.next() nuevo,
+     *   o se pierden las cookies de sesión.
+     */
+    let supabaseResponse = NextResponse.next({ request });
 
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -57,54 +68,70 @@ export async function proxy(request: NextRequest) {
             return request.cookies.getAll();
           },
           setAll(cookiesToSet) {
+            // Paso 1: actualizar request para que Server Components lean el token nuevo
             cookiesToSet.forEach(({ name, value }) =>
               request.cookies.set(name, value)
             );
-            response = NextResponse.next({ request });
+            // Paso 2: recrear response con la request actualizada
+            supabaseResponse = NextResponse.next({ request });
+            // Paso 3: setear cookies en la response para persistencia en browser
             cookiesToSet.forEach(({ name, value, options }) =>
-              response.cookies.set(name, value, options)
+              supabaseResponse.cookies.set(name, value, options)
             );
           },
         },
       }
     );
 
-    // getUser() valida el JWT contra Supabase Auth Server — no confía en cookies sin validar
+    /**
+     * CRÍTICO: usar getUser(), NO getSession().
+     * getSession() puede retornar datos de cookies sin validar contra el servidor.
+     * getUser() refresca el token si está próximo a expirar y valida con Supabase Auth.
+     * Ver: https://supabase.com/docs/guides/auth/server-side/creating-a-client#middleware
+     */
     const {
       data: { user },
     } = await supabase.auth.getUser();
 
-    // Sin sesión → redirigir al login
-    if (!user) {
-      const loginUrl = new URL("/admin/login", request.url);
-      loginUrl.searchParams.set("redirectTo", request.nextUrl.pathname);
-      return NextResponse.redirect(loginUrl);
+    if (!isAdminLoginPage) {
+      // Sin sesión → login
+      if (!user) {
+        const loginUrl = request.nextUrl.clone();
+        loginUrl.pathname = "/admin/login";
+        loginUrl.searchParams.set("redirectTo", pathname);
+        return NextResponse.redirect(loginUrl);
+      }
+
+      // Con sesión pero sin rol admin → home
+      // app_metadata.role viene del JWT — inmutable por el usuario
+      if (user.app_metadata?.role !== "admin") {
+        const homeUrl = request.nextUrl.clone();
+        homeUrl.pathname = "/";
+        return NextResponse.redirect(homeUrl);
+      }
     }
 
-    // Con sesión pero sin rol admin → redirigir al inicio
-    // Verificación via app_metadata.role del JWT — NO manipulable por el usuario
-    const userRole = user.app_metadata?.role;
-    if (userRole !== "admin") {
-      return NextResponse.redirect(new URL("/", request.url));
+    // En /admin/login ya autenticado como admin → redirigir directo al dashboard
+    if (isAdminLoginPage && user?.app_metadata?.role === "admin") {
+      const adminUrl = request.nextUrl.clone();
+      adminUrl.pathname = "/admin";
+      return NextResponse.redirect(adminUrl);
     }
 
-    return response;
+    // Retornar supabaseResponse (no NextResponse.next() nuevo) para preservar cookies
+    return supabaseResponse;
   }
 
   return NextResponse.next();
 }
 
-// Run proxy on all routes except static assets, media, and API endpoints
 export const config = {
   matcher: [
     /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - logo.png, icon.png, apple-icon.png (static public files)
-     * - any files with extensions like .png, .jpg, .webp, .svg
+     * Ejecutar en todas las rutas EXCEPTO archivos estáticos y de imagen:
+     * - _next/static, _next/image
+     * - favicon, logo, icon, apple-icon
+     * - Archivos con extensiones de asset (png, jpg, webp, svg, css, js, xml, txt)
      */
     "/((?!api|_next/static|_next/image|favicon.ico|logo.png|icon.png|apple-icon.png|.*\\.png|.*\\.jpg|.*\\.webp|.*\\.svg|.*\\.css|.*\\.js|.*\\.xml|.*\\.txt).*)",
   ],
