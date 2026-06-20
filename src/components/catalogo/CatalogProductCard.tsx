@@ -11,7 +11,6 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/context/CartContext";
 import { useFavorites } from "@/context/FavoritesContext";
-import { useAuth } from "@/context/AuthContext";
 import {
   getProductMainImage,
   isProductOnSale,
@@ -40,17 +39,12 @@ export function CatalogProductCard({
   // Contextos reales
   const { addToCart, setIsCartOpen } = useCart();
   const { isFavorite, toggleFavorite } = useFavorites();
-  const { user, showAuthModal } = useAuth();
 
   const isFavorited = isFavorite(product.id);
 
   function handleToggleFavorite(e: React.MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
-    if (!user) {
-      showAuthModal("favorites");
-      return;
-    }
     toggleFavorite(product.id);
   }
 

@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useFavorites } from "@/context/FavoritesContext";
-import { useAuth } from "@/context/AuthContext";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import { formatPrice } from "@/lib/formatPrice";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
@@ -32,7 +31,6 @@ interface FavoritesModalProps {
 
 export function FavoritesModal({ isOpen, onClose }: FavoritesModalProps) {
   const { favorites, toggleFavorite } = useFavorites();
-  const { user, showAuthModal } = useAuth();
   const [products, setProducts] = useState<FavoriteProduct[]>([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -196,10 +194,6 @@ export function FavoritesModal({ isOpen, onClose }: FavoritesModalProps) {
                             onClick={(e) => {
                               e.preventDefault();
                               e.stopPropagation();
-                              if (!user) {
-                                showAuthModal("favorites");
-                                return;
-                              }
                               toggleFavorite(product.id);
                             }}
                             className="absolute top-1/2 right-4 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 shadow-sm backdrop-blur-sm transition-transform hover:scale-110 active:scale-95"
