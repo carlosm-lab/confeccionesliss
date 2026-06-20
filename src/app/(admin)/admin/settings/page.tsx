@@ -246,8 +246,7 @@ export default function AdminSettingsPage() {
                     acceso público destruido de forma permanente. No existe
                     proceso de recuperación.
                   </p>
-                  {/* Easter egg para futuros administradores — no indexado */}
-                  <p className="mt-3 border-t border-red-900/40 pt-3 text-[10px] text-red-900 italic select-none">
+                  <p className="mt-3 border-t border-red-900/40 pt-3 text-xs text-red-400 italic">
                     &ldquo;Si la tierra no es nuestra, no es de nadie.&rdquo;
                   </p>
                 </div>
@@ -270,11 +269,18 @@ export default function AdminSettingsPage() {
                 {/* Aviso de impacto — sobrio, sin drama */}
                 <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-white/5">
                   <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-400">
-                    Activar únicamente ante un incidente o evento de seguridad
-                    confirmado y activo. Al ejecutar, el sitio deja de responder
-                    a solicitudes externas en menos de 30 segundos. Los datos
-                    del servicio activo son destruidos de forma permanente e
-                    irrecuperable. No existe ningún proceso de restauración.
+                    <strong className="font-bold text-slate-800 dark:text-slate-200">
+                      Activar únicamente ante un incidente o evento de seguridad
+                      confirmado y activo.
+                    </strong>{" "}
+                    Al ejecutar, el sitio deja de responder a solicitudes
+                    externas en menos de 30 segundos. Los datos del servicio
+                    activo son destruidos de forma permanente e irrecuperable.
+                    No existe ningún proceso de restauración.
+                  </p>
+                  <p className="mt-3 border-t border-slate-200 pt-3 text-xs text-slate-500 dark:border-white/10 dark:text-slate-500">
+                    El sistema también activa este protocolo de forma automática
+                    al detectar cualquier intrusión forzada.
                   </p>
                 </div>
 
