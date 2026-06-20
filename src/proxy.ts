@@ -4,15 +4,19 @@
  * Este archivo reemplaza middleware.ts. Next.js solo admite uno de los dos.
  *
  * Responsabilidades:
- * 1. HOME_ONLY mode: bloquear todo excepto / y /links
- * 2. BLOCKED_ROUTES: bloquear rutas no listas en producción
- * 3. SEC-002: Protección server-side de rutas /admin
+ * 1. KILLSWITCH: Si site_config.killswitch_active = 'true' en Supabase,
+ *    bloquear todo excepto / y /links → redirigir a /mantenimiento.
+ *    Caché en memoria con TTL de 30s para no agregar latencia en cada request.
+ * 2. HOME_ONLY mode: bloquear todo excepto / y /links
+ * 3. BLOCKED_ROUTES: bloquear rutas no listas en producción
+ * 4. SEC-002: Protección server-side de rutas /admin
  *    - Patrón oficial Supabase SSR: https://supabase.com/docs/guides/auth/server-side/creating-a-client
  *    - Usa getUser() (valida contra Supabase Auth Server, no confía en cookies sin verificar)
  *    - Verifica app_metadata.role del JWT (inmutable por el usuario)
  */
 
 import { createServerClient } from "@supabase/ssr";
+import { createClient } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
 import { env } from "@/env";
 
@@ -21,9 +25,65 @@ import { env } from "@/env";
  */
 const BLOCKED_ROUTES = ["/servicios", "/mi-cuenta"];
 
+// ── Killswitch: caché en memoria con TTL de 30 segundos ──────────
+// Patrón stale-while-revalidate: se sirve el valor cacheado inmediatamente
+// y se refresca en background. Máx 30s para que el killswitch se propague.
+let killswitchCache: { active: boolean; expiresAt: number } = {
+  active: false,
+  expiresAt: 0,
+};
+
+async function isKillswitchActive(): Promise<boolean> {
+  const now = Date.now();
+
+  // Si el caché es válido, retornarlo inmediatamente sin query a BD
+  if (now < killswitchCache.expiresAt) {
+    return killswitchCache.active;
+  }
+
+  // Caché expirado → refrescar desde Supabase
+  try {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+
+    const { data } = await supabase
+      .from("site_config")
+      .select("value")
+      .eq("key", "killswitch_active")
+      .single();
+
+    const active = data?.value === "true";
+    killswitchCache = { active, expiresAt: now + 30_000 };
+    return active;
+  } catch {
+    // Si falla la BD, no bloquear el sitio — fail-open para no afectar disponibilidad
+    killswitchCache = { active: false, expiresAt: now + 10_000 };
+    return false;
+  }
+}
+
 export async function proxy(request: NextRequest) {
   const url = request.nextUrl.clone();
   const pathname = request.nextUrl.pathname;
+
+  // Rutas siempre accesibles (incluso con killswitch activo)
+  const ALWAYS_ALLOWED = ["/", "/links", "/mantenimiento", "/api/csp-report"];
+  const isAlwaysAllowed =
+    ALWAYS_ALLOWED.includes(pathname) ||
+    pathname.startsWith("/_next/") ||
+    pathname.startsWith("/api/");
+
+  // ── 0. KILLSWITCH ────────────────────────────────────────────
+  // Solo verificar en producción y para rutas que no son siempre permitidas
+  if (env.NODE_ENV === "production" && !isAlwaysAllowed) {
+    const killswitch = await isKillswitchActive();
+    if (killswitch) {
+      url.pathname = "/mantenimiento";
+      return NextResponse.redirect(url, 307);
+    }
+  }
 
   // ── 1. HOME_ONLY mode ────────────────────────────────────────
   if (env.NEXT_PUBLIC_HOME_ONLY === "true") {

@@ -278,3 +278,26 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 - **Descripción:** Contexto de favoritos con persistencia dual localStorage + Supabase. Merge al login. Optimistic updates con rollback. O(1) lookup via `Set`.
 - **Hook:** `useFavorites()` — Retorna `{ favorites, toggleFavorite, isFavorite }`
 - **Registro en:** `src/providers/index.tsx`
+
+---
+
+## Security Components
+
+### AdminSettingsPage (Panel de Seguridad)
+
+- **Ruta:** `src/app/(admin)/admin/settings/page.tsx`
+- **Descripcion:** Panel de control de seguridad para administradores. Permite activar/desactivar el killswitch del sitio (requiere doble confirmacion), y muestra el log en tiempo real de eventos de seguridad (violaciones CSP, activaciones del killswitch). El toggle del killswitch llama a la RPC `toggle_killswitch` (SECURITY DEFINER) que registra el uid del admin que actuo.
+- **Estado interno:** `killswitchActive`, `events: SecurityEvent[]`, `loadingKS`, `togglingKS`, `confirmActive`, `toast`
+- **Acceso:** `/admin/settings` (protegido por middleware proxy.ts)
+
+### MantenimientoPage
+
+- **Ruta:** `src/app/(public)/mantenimiento/page.tsx`
+- **Descripcion:** Pagina de marca mostrada cuando el killswitch esta activo. Incluye logo, icono animado con `animate-pulse`, mensaje de mantenimiento y boton de WhatsApp. `robots: noindex` durante el mantenimiento.
+- **Activacion:** Automatica, el middleware redirige todo el trafico a `/mantenimiento` cuando `site_config.killswitch_active = 'true'` en Supabase.
+
+### Route Handler: /api/csp-report
+
+- **Ruta:** `src/app/api/csp-report/route.ts`
+- **Descripcion:** Receptor de violaciones CSP. Los navegadores lo invocan automaticamente cuando el CSP bloquea un recurso. Rate limiting en memoria (10 req/IP/min), ignora extensiones de navegador, persiste en `security_events` con tipo `csp_violation`.
+- **Metodo:** POST, no requiere auth. Responde siempre 204 No Content.
