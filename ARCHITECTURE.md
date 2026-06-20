@@ -18,6 +18,20 @@ This document tracks important architectural decisions made during the project l
 
 _ (Add new decisions below this line)_
 
+**Date:** 2026-06-20
+**Decision:** SEC-001 — NULL-safe authorization check en funciones SECURITY DEFINER
+**Context:** Las funciones `admin_delete_user`, `admin_set_user_role`, `get_dashboard_data`, `get_users_list` usaban el operador `<>` para verificar el rol de admin. En PL/pgSQL, `IF NULL <> 'admin' THEN` evalúa la condición como NULL (no TRUE ni FALSE), lo que hace que el bloque `RAISE EXCEPTION` no se ejecute. Combinado con un GRANT a `PUBLIC`, esto significaba que un usuario anónimo podía ejecutar funciones de admin privilegiadas.
+**Decision:** (1) REVOKE EXECUTE de `PUBLIC` y `anon` en las 4 funciones admin. (2) GRANT EXECUTE solo a `authenticated`. (3) Cambiar todos los chequeos de autorización de `<> 'admin'` a `IS DISTINCT FROM 'admin'` — el operador `IS DISTINCT FROM` es NULL-safe: `NULL IS DISTINCT FROM 'admin' = TRUE`. (4) Agregar `SET search_path = ''` a cada función para prevenir search_path injection.
+**Consequences:** (1) Los usuarios anónimos ya no pueden llamar a ninguna función admin aunque conozcan la URL del endpoint RPC. (2) Los usuarios autenticados sin rol admin son rechazados correctamente (antes podían pasar el chequeo). (3) Siempre usar `IS DISTINCT FROM` en lugar de `<>` cuando se compara con valores que podrían ser NULL en funciones PL/pgSQL de Supabase. (4) Después de `CREATE OR REPLACE FUNCTION`, los grants se resetean — siempre re-otorgar explícitamente.
+
+---
+
+**Date:** 2026-06-20
+**Decision:** SEC-002 — Middleware server-side para protección de rutas `/admin/*`
+**Context:** Las rutas del panel admin (`/admin/*`) estaban protegidas únicamente por client-side guards en el layout (`useAuth()` + `useEffect`), lo que producía: (1) un "flash" de UI del admin antes del redirect, (2) entrega del bundle JS de admin a todos los visitantes, y (3) ninguna validación antes de que los Server Components iniciaran peticiones de datos.
+**Decision:** Crear `src/middleware.ts` usando el patrón oficial de Supabase SSR (`createServerClient` con gestión de cookies). El middleware llama `supabase.auth.getUser()` (validado en el servidor de Auth, NO `getSession()` que solo verifica cookies sin validar con el servidor) y redirige a `/admin/login` si no hay sesión, o a `/` si hay sesión pero el `app_metadata.role` no es `'admin'`. El `app_metadata` es inmutable por el usuario final — solo puede modificarlo el servidor mediante `admin_set_user_role`.
+**Consequences:** (1) Cualquier acceso a `/admin/*` sin sesión válida de admin resulta en redirect 307 instantáneo, sin ejecutar ningún Server Component. (2) No usar `process.env` via `@/env` (t3-oss) en el middleware — el Edge Runtime no soporta ese módulo. Usar `process.env.NEXT_PUBLIC_*` directamente. (3) El middleware también maneja el refresh automático de tokens expirados via `setAll` cookies — es crítico retornar siempre `supabaseResponse` (no `NextResponse.next()`) para propagar las cookies actualizadas.
+
 **Date:** 2026-04-23
 **Decision:** Patrón Server Actions con Zod y next-safe-action
 **Context:** Se usa `next-safe-action` combinado con esquemas `Zod` estrictos ubicados en `src/schemas/` para validar toda la información que entra al sistema (Auth, Profiles, Products, Orders).
