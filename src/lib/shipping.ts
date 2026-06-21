@@ -346,7 +346,6 @@ export const DEPARTMENTS: Department[] = [
       "San Ramón",
       "Santa Cruz Analquito",
       "Santa Cruz Michapa",
-      "Suchitoto",
       "Tejutepeque",
     ],
   },
