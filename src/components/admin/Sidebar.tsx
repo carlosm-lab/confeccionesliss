@@ -95,6 +95,15 @@ export default function AdminSidebar() {
             <p className="text-[10px] text-slate-400">Administrador</p>
           </div>
         </div>
+        <Link
+          href="/"
+          className="mb-1 flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-white"
+        >
+          <span className="material-symbols-outlined text-[20px]">
+            storefront
+          </span>
+          Ir a la tienda
+        </Link>
         <button
           onClick={signOut}
           className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-red-500 transition-colors hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-500/10"

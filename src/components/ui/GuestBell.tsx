@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
@@ -229,18 +229,18 @@ export function GuestBell() {
     (n) => n.type === "push_permission" && !n.read
   );
 
-  // ── Modal via Portal ───────────────────────────────────────────
+  // -- Modal via Portal ---
   const modal = isOpen
     ? createPortal(
         <div
-          className="fixed inset-0 z-[200] flex items-start justify-end"
+          className="fixed inset-0 z-[200] flex items-end justify-center sm:items-start sm:justify-end"
           role="dialog"
           aria-label="Centro de notificaciones"
           aria-modal="true"
         >
           {/* Backdrop */}
           <div
-            className="absolute inset-0 bg-black/20 backdrop-blur-[2px]"
+            className="absolute inset-0 bg-black/30 backdrop-blur-[2px] sm:bg-black/20"
             onClick={() => setIsOpen(false)}
             aria-hidden="true"
           />
@@ -249,13 +249,26 @@ export function GuestBell() {
           <div
             ref={panelRef}
             className={cn(
-              "relative z-10 mt-14 mr-4 flex w-full max-w-[360px] flex-col",
-              "rounded-2xl border border-slate-200/80 bg-white shadow-[0_24px_80px_-12px_rgba(0,0,0,0.22),0_8px_32px_-8px_rgba(0,0,0,0.12)]",
-              "animate-in fade-in slide-in-from-top-3 duration-200",
+              // Mobile: bottom sheet full width, rounded top only
+              "relative z-10 flex w-full flex-col",
+              "rounded-t-2xl rounded-b-none sm:rounded-2xl",
+              "border border-slate-200/80 bg-white",
+              "shadow-[0_-8px_40px_-4px_rgba(0,0,0,0.18)] sm:shadow-[0_24px_80px_-12px_rgba(0,0,0,0.22),0_8px_32px_-8px_rgba(0,0,0,0.12)]",
+              // Desktop: top-right dropdown
+              "sm:mt-14 sm:mr-4 sm:max-w-[360px]",
+              // Animation: slide up on mobile, slide down on desktop
+              "animate-in fade-in slide-in-from-bottom-4 sm:slide-in-from-bottom-0 sm:slide-in-from-top-3 duration-300 sm:duration-200",
               "overflow-hidden"
             )}
-            style={{ maxHeight: "min(600px, calc(100vh - 80px))" }}
+            style={{
+              maxHeight: "min(90dvh, 92vh)",
+            }}
           >
+            {/* Drag handle — solo mobile */}
+            <div className="flex shrink-0 justify-center pt-3 pb-1 sm:hidden">
+              <div className="h-1 w-10 rounded-full bg-slate-300" />
+            </div>
+
             {/* Header */}
             <div className="flex shrink-0 items-center justify-between border-b border-slate-100 px-5 py-4">
               <div className="flex items-center gap-2.5">
