@@ -110,6 +110,33 @@ export function GuestBell() {
   const [isSubscribing, setIsSubscribing] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
 
+  // Swipe-to-dismiss (mobile)
+  const [dragY, setDragY] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const touchStartY = useRef(0);
+
+  const handleDragStart = (e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
+    setIsDragging(true);
+  };
+
+  const handleDragMove = (e: React.TouchEvent) => {
+    const delta = e.touches[0].clientY - touchStartY.current;
+    if (delta > 0) setDragY(delta);
+  };
+
+  const handleDragEnd = () => {
+    setIsDragging(false);
+    if (dragY > 100) {
+      // Umbral superado: cerrar con animacion
+      setIsOpen(false);
+      setDragY(0);
+    } else {
+      // Bajo el umbral: volver a posicion original
+      setDragY(0);
+    }
+  };
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -262,10 +289,20 @@ export function GuestBell() {
             )}
             style={{
               maxHeight: "min(90dvh, 92vh)",
+              transform: `translateY(${dragY}px)`,
+              transition: isDragging
+                ? "none"
+                : "transform 0.35s cubic-bezier(0.32,0.72,0,1), opacity 0.35s ease",
+              opacity: Math.max(0, 1 - dragY / 350),
             }}
           >
-            {/* Drag handle — solo mobile */}
-            <div className="flex shrink-0 justify-center pt-3 pb-1 sm:hidden">
+            {/* Drag handle — solo mobile: captura el gesto de swipe */}
+            <div
+              className="flex shrink-0 touch-none justify-center pt-3 pb-1 sm:hidden"
+              onTouchStart={handleDragStart}
+              onTouchMove={handleDragMove}
+              onTouchEnd={handleDragEnd}
+            >
               <div className="h-1 w-10 rounded-full bg-slate-300" />
             </div>
 
