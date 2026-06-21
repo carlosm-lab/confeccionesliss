@@ -156,6 +156,13 @@ export function GuestBell() {
     null
   );
 
+  // Block info modal (when hint condition not met)
+  const [blockInfo, setBlockInfo] = useState<{
+    message: string;
+    actionLabel: string;
+    onAction: () => void;
+  } | null>(null);
+
   // Swipe-to-dismiss (mobile)
   const [dragY, setDragY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -168,6 +175,7 @@ export function GuestBell() {
     setExpandedNotif(null);
     setActiveTab("unread");
     setDeleteTarget(null);
+    setBlockInfo(null);
   }, []);
 
   const handleDragStart = (e: React.TouchEvent) => {
@@ -231,16 +239,82 @@ export function GuestBell() {
     setIsSubscribing(false);
   }, [subscribeToPush]);
 
-  /** Click on trash icon — always shows confirmation modal */
+  /**
+   * Verifica si la notificación condicional ya cumplió su condición.
+   * - allowed: true  → mostrar modal de confirmación normal
+   * - allowed: false → mostrar modal explicativo con botón de acción
+   */
+  const canDelete = useCallback(
+    (
+      notif: AppNotification
+    ):
+      | { allowed: true }
+      | {
+          allowed: false;
+          message: string;
+          actionLabel: string;
+          onAction: () => void;
+        } => {
+      if (notif.type === "push_permission") {
+        if (
+          pushPermissionStatus === "default" ||
+          pushPermissionStatus === "unsupported"
+        ) {
+          return {
+            allowed: false,
+            message:
+              "Esta notificación te recuerda activar las alertas de la tienda. Responde primero la solicitud de permisos de notificaciones para poder eliminarla.",
+            actionLabel: "Activar alertas",
+            onAction: () => {
+              void handleSubscribePush();
+            },
+          };
+        }
+        return { allowed: true };
+      }
+      if (
+        notif.type === "auth_hint" ||
+        notif.type === "favorites_hint" ||
+        notif.type === "cart_hint"
+      ) {
+        if (!user) {
+          return {
+            allowed: false,
+            message:
+              "Esta notificación te invita a iniciar sesión para disfrutar de todas las funciones. Inicia sesión primero para poder eliminarla.",
+            actionLabel: "Iniciar sesión",
+            onAction: () => {
+              closePanel();
+              showAuthModal("generic");
+            },
+          };
+        }
+        return { allowed: true };
+      }
+      return { allowed: true };
+    },
+    [pushPermissionStatus, user, handleSubscribePush, closePanel, showAuthModal]
+  );
+
+  /** Click en papelera: si no cumple condición → bloqueo; si la cumple → confirmar */
   const handleTrashClick = useCallback(
     (e: React.MouseEvent | React.KeyboardEvent, notif: AppNotification) => {
       e.stopPropagation();
-      setDeleteTarget(notif);
+      const result = canDelete(notif);
+      if (!result.allowed) {
+        setBlockInfo({
+          message: result.message,
+          actionLabel: result.actionLabel,
+          onAction: result.onAction,
+        });
+      } else {
+        setDeleteTarget(notif);
+      }
     },
-    []
+    [canDelete]
   );
 
-  /** Confirm deletion */
+  /** Confirmar eliminación */
   const handleDeleteConfirm = useCallback(() => {
     if (!deleteTarget) return;
     if (expandedNotif?.id === deleteTarget.id) setExpandedNotif(null);
@@ -554,15 +628,27 @@ export function GuestBell() {
             </div>
           </div>
 
-          {/* \u2500\u2500 Delete Confirmation Modal \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */}
+          {/* ── Confirmación de eliminación ───────────────────── */}
           {deleteTarget && (
             <ConfirmModal
-              title="\u00bfEliminar notificaci\u00f3n?"
-              message={`Se eliminar\u00e1 "${deleteTarget.title}" de forma permanente.`}
+              title="¿Eliminar notificación?"
+              message={`Se eliminará "${deleteTarget.title}" de forma permanente.`}
               confirmLabel="Eliminar"
               confirmClass="bg-red-500 hover:bg-red-600 text-white"
               onConfirm={handleDeleteConfirm}
-              onCancel={closePanel}
+              onCancel={() => setDeleteTarget(null)}
+            />
+          )}
+
+          {/* ── Modal de bloqueo (condición no cumplida) ─────── */}
+          {blockInfo && (
+            <ConfirmModal
+              title="No puedes eliminar esto aún"
+              message={blockInfo.message}
+              confirmLabel={blockInfo.actionLabel}
+              confirmClass="bg-primary hover:bg-primary/90 text-white"
+              onConfirm={blockInfo.onAction}
+              onCancel={() => setBlockInfo(null)}
             />
           )}
         </div>,
