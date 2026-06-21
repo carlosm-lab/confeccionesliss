@@ -96,7 +96,9 @@ function createServerClient() {
 }
 
 // ── Selects reutilizables ─────────────────────────────────
-const PRODUCT_SELECT = `
+// EXPORTADO — úsalo en cualquier query que necesite todos los campos de un producto.
+// Si agregas una columna nueva a la DB, agrégala AQUÍ y se propagará automáticamente.
+export const PRODUCT_SELECT = `
   id, name, description, short_description, price, old_price,
   offer_ends_at, offer_starts_at, offer_terms, category, category_id, tags,
   image_path, images, is_active, slug, sector, badge_text,

@@ -10,6 +10,10 @@ import { useConfirm } from "@/context/ConfirmContext";
 import { collectProductImageFiles } from "@/lib/storageUtils";
 import type { Product } from "@/lib/productUtils";
 import { env } from "@/env";
+// ── PRODUCT_SELECT centraliza todos los campos del producto ─────────────
+// Importar desde catalogService garantiza que el admin siempre fetche
+// los mismos campos que el catálogo público. NUNCA duplicar este string.
+import { PRODUCT_SELECT } from "@/lib/catalogService";
 
 import type { Category } from "@/hooks/useCategories";
 import { CATALOGS } from "@/config/catalogs";
@@ -75,18 +79,7 @@ export default function AdminProductsPage() {
 
         let query = supabase
           .from("products")
-          .select(
-            `
-        id, name, description, price, old_price,
-        offer_starts_at, offer_ends_at, offer_terms,
-        sector, category, tags, image_path, images, is_active, slug, created_at,
-        category_id,
-        badge_text, price_suffix, tallas, material,
-        wholesale_price, wholesale_min_qty, labor_price,
-        categories(name, catalog)
-      `,
-            { count: "exact" }
-          )
+          .select(PRODUCT_SELECT, { count: "exact" })
           .order("created_at", { ascending: false });
 
         if (debouncedSearchTerm) {
