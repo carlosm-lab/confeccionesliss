@@ -96,30 +96,62 @@ export function ProductDetailClient({
   const isALaMedida = selectedSize === "A la medida";
   const selectedSizeBasePrice =
     selectedSize && priceBySize ? (priceBySize[selectedSize] ?? null) : null;
-  // Precio de oferta de la talla seleccionada (si existe y la oferta está activa)
-  const selectedSizeOfferPrice =
-    onSale && selectedSize && offerBySize
-      ? (offerBySize[selectedSize] ?? null)
-      : null;
-  // Precio efectivo: precio de oferta si existe, si no precio base
+
+  // Precio de oferta de la talla seleccionada:
+  // lee offer_by_size directamente y solo lo aplica si es MENOR al precio base (no depende de onSale)
+  const selectedSizeOfferPrice: number | null = (() => {
+    if (!selectedSize || !offerBySize) return null;
+    const offerP = offerBySize[selectedSize] ?? null;
+    if (offerP === null) return null;
+    const baseP = selectedSizeBasePrice;
+    // Solo es oferta válida si el precio de oferta es menor al base
+    return baseP !== null && offerP < baseP ? offerP : null;
+  })();
+
+  // Precio de oferta global mínimo válido (para el "Desde" cuando no hay talla seleccionada)
+  // Solo cuenta pares donde offer_by_size[talla] < price_by_size[talla]
+  const globalMinOfferPrice: number | null = (() => {
+    if (!offerBySize || !priceBySize) return null;
+    const validOffers = Object.entries(offerBySize)
+      .filter(([talla, offerP]) => {
+        const baseP = priceBySize[talla];
+        return baseP !== undefined && offerP < baseP;
+      })
+      .map(([, offerP]) => offerP);
+    return validOffers.length > 0 ? Math.min(...validOffers) : null;
+  })();
+
+  // Precio mínimo base (para el "Desde" cuando no hay talla seleccionada)
+  const globalMinBasePrice =
+    priceBySize && Object.keys(priceBySize).length > 0
+      ? Math.min(...Object.values(priceBySize))
+      : Number(product.price);
+
+  // Precio efectivo: precio de oferta si existe y es válido, si no precio base
   const effectivePrice =
     selectedSizeOfferPrice !== null
       ? selectedSizeOfferPrice
       : selectedSizeBasePrice !== null
         ? selectedSizeBasePrice
         : Number(product.price);
+
   // Precio para el carrito
   const cartPrice = effectivePrice;
+
   // Precio anterior a mostrar tachado:
-  // - Si hay oferta por talla: mostrar el precio base de esa talla
-  // - Si hay old_price global (legacy): mostrar ese
-  // - Si no: null
-  const displayOldPrice: number | null =
+  // - Si hay oferta válida por talla seleccionada: mostrar el precio base de esa talla
+  // - Si hay old_price global (legacy) mayor al efectivo: mostrarlo
+  // GUARDIA: nunca mostrar tachado si es <= al precio efectivo
+  const rawDisplayOldPrice: number | null =
     selectedSizeOfferPrice !== null && selectedSizeBasePrice !== null
       ? selectedSizeBasePrice
       : product.old_price
         ? Number(product.old_price)
         : null;
+  const displayOldPrice: number | null =
+    rawDisplayOldPrice !== null && rawDisplayOldPrice > effectivePrice
+      ? rawDisplayOldPrice
+      : null;
 
   // Contexts
   const { isFavorite, toggleFavorite } = useFavorites();
@@ -145,17 +177,14 @@ export function ProductDetailClient({
   const placeholderCount = Math.max(0, 4 - allImages.length);
 
   // ── Carrito ───────────────────────────────────────────────────
+  // PUNTO 3: Agregar nunca redirige a WhatsApp, sin importar la talla.
+  // La talla "A la medida" se agrega normalmente al carrito igual que cualquier otra.
   function handleAddToCart() {
     if (tallas.length > 0 && !selectedSize) {
       toast.error(
         "Por favor selecciona una talla antes de agregar al carrito.",
         { id: "no-size-toast", duration: 3000 }
       );
-      return;
-    }
-
-    if (isALaMedida) {
-      handleCotizar();
       return;
     }
 
@@ -178,6 +207,17 @@ export function ProductDetailClient({
       noteText
     );
     setIsCartOpen(true);
+  }
+
+  // ── Pedir ahora (PUNTO 2) ─────────────────────────────────────
+  // Reutiliza exactamente handleCotizar (buildQuoteUrl) — mismo mecanismo
+  // que el flujo de cotización por WhatsApp ya implementado.
+  // Agrega el producto al carrito Y abre WhatsApp inmediatamente.
+  function handlePedirAhora() {
+    // Primero agregar al carrito (para mantener registro)
+    handleAddToCart();
+    // Inmediatamente disparar el flujo de WhatsApp
+    handleCotizar();
   }
 
   // ── Compartir ─────────────────────────────────────────────────
@@ -356,13 +396,8 @@ export function ProductDetailClient({
             ]}
           />
 
-          {/* Title + badge */}
+          {/* Título */}
           <div>
-            {product.badge_text && (
-              <span className="bg-primary/10 text-primary mb-2 inline-block rounded-full px-3 py-0.5 text-xs font-bold">
-                {product.badge_text}
-              </span>
-            )}
             <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
               {product.name}
             </h1>
@@ -491,6 +526,7 @@ export function ProductDetailClient({
             <div className="flex flex-col gap-1">
               {isALaMedida ? (
                 /* A la medida: sin precio fijo, deriva a WhatsApp */
+                /* PUNTO 4: texto actualizado */
                 <div className="flex items-center gap-2 rounded-xl border border-green-100 bg-green-50 px-3 py-2.5 text-xs font-medium text-green-700">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -502,54 +538,41 @@ export function ProductDetailClient({
                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                   </svg>
                   <span>
-                    Esta talla se cotiza por WhatsApp. Usa el botón{" "}
-                    <strong>Cotizar</strong> para consultar.
+                    Los precios por servicio a la medida se cotizan por
+                    WhatsApp.
                   </span>
                 </div>
               ) : (
                 <div className="flex items-end gap-3">
                   {selectedSizeBasePrice !== null ? (
+                    /* Talla seleccionada — muestra precio efectivo */
                     <p className="text-2xl font-bold text-gray-900">
                       ${effectivePrice.toFixed(2)}
-                      {product.price_suffix && (
-                        <span className="ml-1 text-sm font-normal text-slate-500">
-                          {product.price_suffix}
-                        </span>
-                      )}
                     </p>
                   ) : tallas.length > 0 && !selectedSize ? (
-                    /* Aun no seleccionaron talla — mostrar rango "Desde" */
+                    /* Sin talla seleccionada — "Desde" precio mínimo (oferta o base) */
                     <p className="text-2xl font-bold text-gray-900">
-                      {priceBySize && Object.keys(priceBySize).length > 0 ? (
-                        <>
-                          Desde $
-                          {Math.min(...Object.values(priceBySize)).toFixed(2)}
-                        </>
-                      ) : (
-                        `$${Number(product.price).toFixed(2)}`
-                      )}
-                      {product.price_suffix && (
-                        <span className="ml-1 text-sm font-normal text-slate-500">
-                          {product.price_suffix}
-                        </span>
-                      )}
+                      Desde $
+                      {(globalMinOfferPrice ?? globalMinBasePrice).toFixed(2)}
                     </p>
                   ) : (
                     /* Producto sin tallas — precio global */
                     <p className="text-2xl font-bold text-gray-900">
                       ${Number(product.price).toFixed(2)}
-                      {product.price_suffix && (
-                        <span className="ml-1 text-sm font-normal text-slate-500">
-                          {product.price_suffix}
-                        </span>
-                      )}
                     </p>
                   )}
-                  {onSale && displayOldPrice && (
+                  {/* Precio tachado:
+                      - Sin talla: globalMinBasePrice tachado cuando hay oferta mínima
+                      - Con talla: displayOldPrice (precio base de esa talla) */}
+                  {!selectedSize && globalMinOfferPrice !== null ? (
+                    <p className="text-lg font-medium text-slate-400 line-through">
+                      ${globalMinBasePrice.toFixed(2)}
+                    </p>
+                  ) : displayOldPrice ? (
                     <p className="text-lg font-medium text-slate-400 line-through">
                       ${displayOldPrice.toFixed(2)}
                     </p>
-                  )}
+                  ) : null}
                 </div>
               )}
               {product.material && (
@@ -560,69 +583,78 @@ export function ProductDetailClient({
               )}
             </div>
 
-            {/* Offer expiration / scheduled notice */}
-            {onSale && offerEndsAt && !isOfferScheduled && (
-              <div className="flex items-center gap-2 rounded-xl border border-red-100 bg-red-50 px-3 py-2.5 text-xs font-medium text-red-700">
-                <span
-                  className="material-symbols-outlined shrink-0"
-                  style={{ fontSize: "16px" }}
-                >
-                  timer
-                </span>
-                <span>
-                  Oferta válida hasta el{" "}
-                  <strong>
-                    {offerEndsAt.toLocaleDateString("es-SV", {
-                      day: "2-digit",
-                      month: "long",
-                      year: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </strong>
-                </span>
-              </div>
-            )}
-            {isOfferScheduled && offerStartsAt && (
-              <div className="flex items-center gap-2 rounded-xl border border-blue-100 bg-blue-50 px-3 py-2.5 text-xs font-medium text-blue-700">
-                <span
-                  className="material-symbols-outlined shrink-0"
-                  style={{ fontSize: "16px" }}
-                >
-                  schedule
-                </span>
-                <span>
-                  La oferta comienza el{" "}
-                  <strong>
-                    {offerStartsAt.toLocaleDateString("es-SV", {
-                      day: "2-digit",
-                      month: "long",
-                      year: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </strong>
-                </span>
-              </div>
-            )}
+            {/* PUNTO 6: Sección unificada de oferta — tiempo restante + términos en una sola tarjeta */}
+            {(onSale && offerEndsAt && !isOfferScheduled) ||
+            isOfferScheduled ||
+            offerTerms ? (
+              <div className="overflow-hidden rounded-xl border border-red-100 bg-red-50">
+                {/* Contador de tiempo activo */}
+                {onSale && offerEndsAt && !isOfferScheduled && (
+                  <div className="flex items-center gap-2 px-3 py-2.5 text-xs font-medium text-red-700">
+                    <span
+                      className="material-symbols-outlined shrink-0"
+                      style={{ fontSize: "16px" }}
+                    >
+                      timer
+                    </span>
+                    <span>
+                      Oferta válida hasta el{" "}
+                      <strong>
+                        {offerEndsAt.toLocaleDateString("es-SV", {
+                          day: "2-digit",
+                          month: "long",
+                          year: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </strong>
+                    </span>
+                  </div>
+                )}
 
-            {/* Offer terms warning */}
-            {offerTerms && (
-              <details className="group rounded-xl border border-amber-200 bg-amber-50 p-3">
-                <summary className="flex cursor-pointer list-none items-center gap-2 text-sm font-semibold text-amber-700">
-                  <span className="material-symbols-outlined text-[18px] text-amber-500">
-                    warning
-                  </span>
-                  <span>Esta oferta tiene términos especiales</span>
-                  <span className="material-symbols-outlined ml-auto text-[18px] transition-transform group-open:rotate-180">
-                    expand_more
-                  </span>
-                </summary>
-                <p className="mt-2 text-xs leading-relaxed text-amber-700">
-                  {offerTerms}
-                </p>
-              </details>
-            )}
+                {/* Oferta programada (azul) */}
+                {isOfferScheduled && offerStartsAt && (
+                  <div className="flex items-center gap-2 rounded-xl border border-blue-100 bg-blue-50 px-3 py-2.5 text-xs font-medium text-blue-700">
+                    <span
+                      className="material-symbols-outlined shrink-0"
+                      style={{ fontSize: "16px" }}
+                    >
+                      schedule
+                    </span>
+                    <span>
+                      La oferta comienza el{" "}
+                      <strong>
+                        {offerStartsAt.toLocaleDateString("es-SV", {
+                          day: "2-digit",
+                          month: "long",
+                          year: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </strong>
+                    </span>
+                  </div>
+                )}
+
+                {/* Términos de la oferta — desplegable dentro de la misma tarjeta */}
+                {offerTerms && (
+                  <details className="group border-t border-red-100">
+                    <summary className="flex cursor-pointer list-none items-center gap-2 px-3 py-2.5 text-xs font-semibold text-amber-700 transition-colors hover:bg-amber-50/60">
+                      <span className="material-symbols-outlined text-[16px] text-amber-500">
+                        warning
+                      </span>
+                      <span>Esta oferta tiene términos especiales</span>
+                      <span className="material-symbols-outlined ml-auto text-[16px] transition-transform group-open:rotate-180">
+                        expand_more
+                      </span>
+                    </summary>
+                    <p className="px-3 pb-3 text-xs leading-relaxed text-amber-700">
+                      {offerTerms}
+                    </p>
+                  </details>
+                )}
+              </div>
+            ) : null}
 
             {/* Personalization accordion */}
             <details className="group cursor-pointer">
@@ -650,9 +682,10 @@ export function ProductDetailClient({
               </div>
             </details>
 
-            {/* Actions — 3 buttons */}
+            {/* PUNTOS 1, 2, 7 — Nuevo orden: Agregar → Pedir ahora → Compartir */}
+            {/* Botón verde reemplazado por azul de marca (--color-primary / bg-primary) */}
             <div className="flex gap-3">
-              {/* Add to cart */}
+              {/* Agregar al carrito */}
               <button
                 type="button"
                 onClick={handleAddToCart}
@@ -662,25 +695,12 @@ export function ProductDetailClient({
                 Agregar
               </button>
 
-              {/* Share */}
+              {/* Pedir ahora — reutiliza el mismo flujo de handleCotizar (buildQuoteUrl/WhatsApp) */}
               <button
                 type="button"
-                onClick={handleCopy}
-                className="flex w-12 shrink-0 cursor-pointer items-center justify-center rounded-full bg-slate-100 text-slate-700 transition hover:bg-slate-200 active:scale-[0.95] dark:bg-transparent dark:text-slate-300 dark:hover:bg-white/10"
-                title="Compartir"
-                aria-label="Compartir este producto"
-              >
-                <span className="material-symbols-outlined text-primary">
-                  share
-                </span>
-              </button>
-
-              {/* Cotizar por WhatsApp */}
-              <button
-                type="button"
-                onClick={handleCotizar}
-                className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl bg-green-600 py-3.5 font-bold text-white shadow-md transition hover:bg-green-700 hover:shadow-lg active:scale-[0.97]"
-                title="Cotizar por WhatsApp"
+                onClick={handlePedirAhora}
+                className="bg-primary hover:bg-primary/90 flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl py-3.5 font-bold text-white shadow-md transition hover:shadow-lg active:scale-[0.97]"
+                title="Pedir ahora por WhatsApp"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -691,7 +711,20 @@ export function ProductDetailClient({
                 >
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                 </svg>
-                Cotizar
+                Pedir ahora
+              </button>
+
+              {/* Compartir — al final, según el nuevo orden */}
+              <button
+                type="button"
+                onClick={handleCopy}
+                className="flex w-12 shrink-0 cursor-pointer items-center justify-center rounded-full bg-slate-100 text-slate-700 transition hover:bg-slate-200 active:scale-[0.95] dark:bg-transparent dark:text-slate-300 dark:hover:bg-white/10"
+                title="Compartir"
+                aria-label="Compartir este producto"
+              >
+                <span className="material-symbols-outlined text-primary">
+                  share
+                </span>
               </button>
             </div>
           </div>

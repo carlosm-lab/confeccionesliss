@@ -42,8 +42,6 @@ export interface Product {
   categories?: { name: string; catalog?: string } | null;
   // Campos del catálogo público
   sector?: string | null;
-  badge_text?: string | null;
-  price_suffix?: string | null;
   tallas?: string[] | null;
   colores?: { name: string; hex: string }[] | null;
   material?: string | null;

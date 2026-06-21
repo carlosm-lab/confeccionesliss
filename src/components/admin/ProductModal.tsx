@@ -55,9 +55,6 @@ interface FormData {
   images: string[];
   is_active: boolean;
   slug: string;
-  // Campos del catálogo público
-  badge_text: string;
-  price_suffix: string;
   tallas: string[];
   /** Precio por talla — mapa { talla: precioString } editable en el admin */
   price_by_size: Record<string, string>;
@@ -123,8 +120,6 @@ export default function ProductModal({
     images: [],
     is_active: true,
     slug: "",
-    badge_text: "",
-    price_suffix: "",
     tallas: [],
     price_by_size: {},
     offer_by_size: {},
@@ -201,8 +196,6 @@ export default function ProductModal({
             : [],
         is_active: product.is_active ?? true,
         slug: product.slug || "",
-        badge_text: product.badge_text || "",
-        price_suffix: product.price_suffix || "",
         tallas: Array.isArray(product.tallas) ? product.tallas : [],
         // Convertir price_by_size existente a mapa de strings para el form
         price_by_size: (() => {
@@ -264,8 +257,6 @@ export default function ProductModal({
         images: [],
         is_active: true,
         slug: "",
-        badge_text: "",
-        price_suffix: "",
         tallas: [],
         price_by_size: {},
         offer_by_size: {},
@@ -492,9 +483,6 @@ export default function ProductModal({
       offer_starts_at: offerStartsAt,
       category_id:
         categories.find((c) => c.slug === formData.category)?.id || null,
-      // Campos del catálogo público
-      badge_text: formData.badge_text || null,
-      price_suffix: formData.price_suffix || null,
       tallas: formData.tallas.length > 0 ? formData.tallas : [],
       colores: formData.colores.length > 0 ? formData.colores : [],
       material: formData.material || null,
@@ -654,6 +642,126 @@ export default function ProductModal({
                 </div>
               </div>
 
+              {/* Precio por talla + oferta opcional por talla */}
+              {formData.tallas.length > 0 && (
+                <div className="space-y-4 rounded-xl border border-indigo-200 bg-indigo-50 p-4 md:col-span-2 dark:border-indigo-500/20 dark:bg-indigo-500/5">
+                  <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400">
+                    <span
+                      className="material-symbols-outlined"
+                      style={{ fontSize: "20px" }}
+                    >
+                      sell
+                    </span>
+                    <h4 className="text-sm font-bold">Precio por Talla</h4>
+                    <span className="ml-auto text-[10px] font-normal text-slate-400">
+                      Obligatorio (excepto A la medida)
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    Asigna un precio a cada talla. En &ldquo;Oferta&rdquo;
+                    puedes ingresar un precio menor opcional — solo las tallas
+                    con oferta mostrarán precio tachado.{" "}
+                    <strong>&ldquo;A la medida&rdquo;</strong> siempre se cotiza
+                    por WhatsApp.
+                  </p>
+
+                  {/* Cabecera de columnas */}
+                  <div className="grid grid-cols-2 gap-x-3 gap-y-0 sm:grid-cols-3">
+                    {formData.tallas
+                      .filter((t) => t !== "A la medida")
+                      .map((talla) => (
+                        <div key={talla} className="mb-3">
+                          <p className="mb-1 text-xs font-bold text-indigo-700 dark:text-indigo-400">
+                            Talla {talla}
+                          </p>
+                          {/* Precio base */}
+                          <label
+                            htmlFor={`price-size-${talla}`}
+                            className="mb-0.5 block text-[10px] font-medium text-slate-500"
+                          >
+                            Precio base ($)
+                          </label>
+                          <input
+                            id={`price-size-${talla}`}
+                            type="number"
+                            step="0.01"
+                            min="0"
+                            value={formData.price_by_size[talla] ?? ""}
+                            onChange={(e) =>
+                              setFormData((prev) => ({
+                                ...prev,
+                                price_by_size: {
+                                  ...prev.price_by_size,
+                                  [talla]: e.target.value,
+                                },
+                              }))
+                            }
+                            placeholder="0.00"
+                            onWheel={(e) =>
+                              (e.target as HTMLInputElement).blur()
+                            }
+                            className="focus:ring-primary/20 focus:border-primary w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 transition-all outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                          />
+                          {/* Oferta opcional */}
+                          <label
+                            htmlFor={`offer-size-${talla}`}
+                            className="mt-1 mb-0.5 flex items-center gap-1 text-[10px] font-medium text-amber-600 dark:text-amber-400"
+                          >
+                            <span
+                              className="material-symbols-outlined"
+                              style={{ fontSize: "11px" }}
+                            >
+                              local_offer
+                            </span>
+                            Precio oferta ($)
+                            <span className="font-normal text-slate-400">
+                              — opcional
+                            </span>
+                          </label>
+                          <input
+                            id={`offer-size-${talla}`}
+                            type="number"
+                            step="0.01"
+                            min="0"
+                            value={formData.offer_by_size[talla] ?? ""}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setFormData((prev) => {
+                                const newObs = { ...prev.offer_by_size };
+                                if (val === "") {
+                                  delete newObs[talla];
+                                } else {
+                                  newObs[talla] = val;
+                                }
+                                return { ...prev, offer_by_size: newObs };
+                              });
+                            }}
+                            placeholder=""
+                            onWheel={(e) =>
+                              (e.target as HTMLInputElement).blur()
+                            }
+                            className="w-full rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-slate-900 transition-all outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 dark:border-amber-500/20 dark:bg-amber-500/5 dark:text-white"
+                          />
+                        </div>
+                      ))}
+                  </div>
+
+                  {formData.tallas.includes("A la medida") && (
+                    <p className="flex items-center gap-1.5 text-[11px] text-indigo-600 dark:text-indigo-400">
+                      <span
+                        className="material-symbols-outlined"
+                        style={{ fontSize: "14px" }}
+                      >
+                        info
+                      </span>
+                      &ldquo;A la medida&rdquo; no tiene precio fijo — se cotiza
+                      exclusivamente por WhatsApp.
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {/* Configuración de Oferta — aparece cuando hay al menos una talla con oferta */}
               {Object.keys(formData.offer_by_size).length > 0 && (
                 <div className="space-y-4 rounded-xl border border-amber-200 bg-amber-50 p-4 md:col-span-2 dark:border-amber-500/20 dark:bg-amber-500/5">
                   <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400">
@@ -789,125 +897,6 @@ export default function ProductModal({
                       guardar.
                     </p>
                   </div>
-                </div>
-              )}
-
-              {/* Precio por talla + oferta opcional por talla */}
-              {formData.tallas.length > 0 && (
-                <div className="space-y-4 rounded-xl border border-indigo-200 bg-indigo-50 p-4 md:col-span-2 dark:border-indigo-500/20 dark:bg-indigo-500/5">
-                  <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400">
-                    <span
-                      className="material-symbols-outlined"
-                      style={{ fontSize: "20px" }}
-                    >
-                      sell
-                    </span>
-                    <h4 className="text-sm font-bold">Precio por Talla</h4>
-                    <span className="ml-auto text-[10px] font-normal text-slate-400">
-                      Obligatorio (excepto A la medida)
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                    Asigna un precio a cada talla. En &ldquo;Oferta&rdquo;
-                    puedes ingresar un precio menor opcional — solo las tallas
-                    con oferta mostrarán precio tachado.{" "}
-                    <strong>&ldquo;A la medida&rdquo;</strong> siempre se cotiza
-                    por WhatsApp.
-                  </p>
-
-                  {/* Cabecera de columnas */}
-                  <div className="grid grid-cols-2 gap-x-3 gap-y-0 sm:grid-cols-3">
-                    {formData.tallas
-                      .filter((t) => t !== "A la medida")
-                      .map((talla) => (
-                        <div key={talla} className="mb-3">
-                          <p className="mb-1 text-xs font-bold text-indigo-700 dark:text-indigo-400">
-                            Talla {talla}
-                          </p>
-                          {/* Precio base */}
-                          <label
-                            htmlFor={`price-size-${talla}`}
-                            className="mb-0.5 block text-[10px] font-medium text-slate-500"
-                          >
-                            Precio base ($)
-                          </label>
-                          <input
-                            id={`price-size-${talla}`}
-                            type="number"
-                            step="0.01"
-                            min="0"
-                            value={formData.price_by_size[talla] ?? ""}
-                            onChange={(e) =>
-                              setFormData((prev) => ({
-                                ...prev,
-                                price_by_size: {
-                                  ...prev.price_by_size,
-                                  [talla]: e.target.value,
-                                },
-                              }))
-                            }
-                            placeholder="0.00"
-                            onWheel={(e) =>
-                              (e.target as HTMLInputElement).blur()
-                            }
-                            className="focus:ring-primary/20 focus:border-primary w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 transition-all outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
-                          />
-                          {/* Oferta opcional */}
-                          <label
-                            htmlFor={`offer-size-${talla}`}
-                            className="mt-1 mb-0.5 flex items-center gap-1 text-[10px] font-medium text-amber-600 dark:text-amber-400"
-                          >
-                            <span
-                              className="material-symbols-outlined"
-                              style={{ fontSize: "11px" }}
-                            >
-                              local_offer
-                            </span>
-                            Precio oferta ($)
-                            <span className="font-normal text-slate-400">
-                              — opcional
-                            </span>
-                          </label>
-                          <input
-                            id={`offer-size-${talla}`}
-                            type="number"
-                            step="0.01"
-                            min="0"
-                            value={formData.offer_by_size[talla] ?? ""}
-                            onChange={(e) => {
-                              const val = e.target.value;
-                              setFormData((prev) => {
-                                const newObs = { ...prev.offer_by_size };
-                                if (val === "") {
-                                  delete newObs[talla];
-                                } else {
-                                  newObs[talla] = val;
-                                }
-                                return { ...prev, offer_by_size: newObs };
-                              });
-                            }}
-                            placeholder="Vacío = sin oferta"
-                            onWheel={(e) =>
-                              (e.target as HTMLInputElement).blur()
-                            }
-                            className="w-full rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-slate-900 transition-all outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 dark:border-amber-500/20 dark:bg-amber-500/5 dark:text-white"
-                          />
-                        </div>
-                      ))}
-                  </div>
-
-                  {formData.tallas.includes("A la medida") && (
-                    <p className="flex items-center gap-1.5 text-[11px] text-indigo-600 dark:text-indigo-400">
-                      <span
-                        className="material-symbols-outlined"
-                        style={{ fontSize: "14px" }}
-                      >
-                        info
-                      </span>
-                      &ldquo;A la medida&rdquo; no tiene precio fijo — se cotiza
-                      exclusivamente por WhatsApp.
-                    </p>
-                  )}
                 </div>
               )}
 
@@ -1067,42 +1056,6 @@ export default function ProductModal({
                   Datos del Catálogo Público
                 </p>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  {/* Badge text */}
-                  <div>
-                    <label
-                      htmlFor="product-badge-text"
-                      className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
-                    >
-                      Badge / Etiqueta Visual
-                    </label>
-                    <input
-                      id="product-badge-text"
-                      name="badge_text"
-                      value={formData.badge_text}
-                      onChange={handleChange}
-                      placeholder="Ej: Nuevo, Popular, Premium"
-                      maxLength={30}
-                      className="focus:ring-primary/20 focus:border-primary w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
-                    />
-                  </div>
-                  {/* Price suffix */}
-                  <div>
-                    <label
-                      htmlFor="product-price-suffix"
-                      className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
-                    >
-                      Sufijo de Precio
-                    </label>
-                    <input
-                      id="product-price-suffix"
-                      name="price_suffix"
-                      value={formData.price_suffix}
-                      onChange={handleChange}
-                      placeholder="Ej: /unidad, /set, c/u"
-                      maxLength={20}
-                      className="focus:ring-primary/20 focus:border-primary w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
-                    />
-                  </div>
                   {/* Material */}
                   <div className="sm:col-span-2">
                     <label

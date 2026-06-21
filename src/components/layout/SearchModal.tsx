@@ -144,7 +144,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           .from("products")
           .select(
             `id, name, description, short_description, price, old_price,
-             image_path, images, slug, sector, category, badge_text,
+             image_path, images, slug, sector, category,
              categories(name, catalog)`
           )
           .eq("is_active", true)
@@ -403,11 +403,6 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                         </p>
                         <p className="text-primary mt-0.5 text-sm font-bold">
                           ${price.toFixed(2)}
-                          {product.price_suffix && (
-                            <span className="ml-0.5 text-xs font-normal text-slate-400">
-                              {product.price_suffix}
-                            </span>
-                          )}
                         </p>
                       </div>
 

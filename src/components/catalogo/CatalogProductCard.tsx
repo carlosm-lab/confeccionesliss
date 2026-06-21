@@ -9,7 +9,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { useCart } from "@/context/CartContext";
 import { useFavorites } from "@/context/FavoritesContext";
 import {
   getProductMainImage,
@@ -40,28 +39,42 @@ export function CatalogProductCard({
     product as { offer_by_size?: Record<string, number> | null }
   ).offer_by_size;
 
-  // Precio a mostrar en la card: precio de oferta mínimo (si hay oferta activa) o precio base mínimo
+  // Precio base mínimo (de price_by_size o global)
   const minBasePrice =
     priceBySize && Object.keys(priceBySize).length > 0
       ? Math.min(...Object.values(priceBySize))
       : Number(product.price);
+
+  // Precio de oferta mínimo — lee offer_by_size directamente, independiente de onSale
+  // Solo cuenta como oferta si el precio de oferta es MENOR al precio base de esa talla
+  const validOfferEntries =
+    offerBySize && priceBySize
+      ? Object.entries(offerBySize).filter(([talla, offerP]) => {
+          const baseP = priceBySize[talla];
+          return baseP !== undefined && offerP < baseP;
+        })
+      : [];
   const minOfferPrice =
-    onSale && offerBySize && Object.keys(offerBySize).length > 0
-      ? Math.min(...Object.values(offerBySize))
+    validOfferEntries.length > 0
+      ? Math.min(...validOfferEntries.map(([, p]) => p))
       : null;
+
   const displayPrice = minOfferPrice !== null ? minOfferPrice : minBasePrice;
   const hasMultiplePrices = priceBySize && Object.keys(priceBySize).length > 1;
   const price = displayPrice;
-  // Precio tachado: precio base mínimo si hay oferta por talla, sino old_price global (legacy)
-  const oldPrice =
+
+  // Precio tachado: el precio base mínimo cuando hay oferta válida
+  // GUARDIA: solo mostrar si es estrictamente MAYOR al precio mostrado
+  const rawOldPrice =
     minOfferPrice !== null
       ? minBasePrice
       : product.old_price
         ? Number(product.old_price)
         : null;
+  const oldPrice =
+    rawOldPrice !== null && rawOldPrice > displayPrice ? rawOldPrice : null;
 
   // Contextos reales
-  const { addToCart, setIsCartOpen } = useCart();
   const { isFavorite, toggleFavorite } = useFavorites();
 
   const isFavorited = isFavorite(product.id);
@@ -70,20 +83,6 @@ export function CatalogProductCard({
     e.preventDefault();
     e.stopPropagation();
     toggleFavorite(product.id);
-  }
-
-  function handleAddToCart(e: React.MouseEvent) {
-    e.preventDefault();
-    e.stopPropagation();
-    addToCart({
-      id: product.id,
-      name: product.name,
-      price: price,
-      old_price: oldPrice,
-      image_path: imagen,
-      slug: `${sector}/${slug}`,
-    });
-    setIsCartOpen(true);
   }
 
   return (
@@ -99,19 +98,6 @@ export function CatalogProductCard({
             style={{ fontSize: "clamp(0.5rem, 0.8vw, 0.625rem)" }}
           >
             ¡Oferta!
-          </span>
-        )}
-        {product.badge_text && !onSale && (
-          <span
-            className={cn(
-              "rounded px-[var(--space-xs)] py-[0.25rem] font-black tracking-widest uppercase shadow-sm select-none",
-              product.badge_text === "Premium"
-                ? "bg-slate-900 text-white"
-                : "bg-primary text-white"
-            )}
-            style={{ fontSize: "clamp(0.5rem, 0.8vw, 0.625rem)" }}
-          >
-            {product.badge_text}
           </span>
         )}
       </div>
@@ -177,26 +163,12 @@ export function CatalogProductCard({
         <div className="mt-auto flex flex-wrap items-center gap-1 pt-1 select-none">
           <span className="text-primary pointer-events-none text-base font-bold">
             {hasMultiplePrices ? "Desde " : ""}${price.toFixed(2)}
-            {product.price_suffix && (
-              <span className="ml-0.5 text-xs font-normal text-slate-500">
-                {product.price_suffix}
-              </span>
-            )}
           </span>
           {onSale && oldPrice && (
             <span className="pointer-events-none text-xs text-slate-400 line-through decoration-slate-400/50">
               ${oldPrice.toFixed(2)}
             </span>
           )}
-          <button
-            onClick={handleAddToCart}
-            className="hover:bg-primary text-primary relative z-[20] ml-auto flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 transition-all hover:text-white active:scale-90"
-            aria-label="Añadir al carrito"
-          >
-            <span className="material-symbols-outlined text-[18px]">
-              add_shopping_cart
-            </span>
-          </button>
         </div>
       </div>
 

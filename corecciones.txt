@@ -1,52 +1,74 @@
-# ORDEN MANDATARIA — CORRECCIÓN: PRECIO DUPLICADO Y OFERTA POR TALLA INDEPENDIENTE
+# ORDEN MANDATARIA — REORDENAMIENTO DE BOTONES, LÓGICA DE CARRITO/WHATSAPP Y AJUSTES DE UI
 ## Auditoría del 100% del código antes de tocar una sola línea. Cero alteraciones a lo que no se pide cambiar.
-
----
-
-> ## ⛔ CONTEXTO: ESTO ES UNA CORRECCIÓN SOBRE UNA IMPLEMENTACIÓN PREVIA INCOMPLETA
->
-> Ya se implementó "Precio por Talla" (visible en la captura de referencia: `screencapture-localhost-3000-admin-products-2026-06-21-01_24_24.png`, bloque morado "Precio por Talla" con Talla XS, S, M, L, XL, XXL, 3XL). Esa implementación **quedó incompleta**: dejó vivo el campo viejo "Precio ($)" (visible junto a "Precio Anterior (Oferta)") sin eliminarlo, resultando en **dos fuentes de precio simultáneas y contradictorias** para el mismo producto. Además, "Precio Anterior (Oferta)" sigue siendo un único campo global, cuando el requisito real es que **cada talla pueda tener su propia oferta independiente**, activable solo en las tallas que correspondan.
->
-> Esta tarea corrige esos dos huecos. No es una implementación nueva desde cero — es terminar correctamente lo que quedó a medias, sin volver a tocar nada de lo que ya quedó bien hecho (el bloque "Precio por Talla" en sí, el comportamiento de "A la medida" sin precio, la eliminación de Precios Especiales, la eliminación de Calcular Envío, y la sección "SEO del Producto" que se ve correctamente implementada en la misma captura).
 
 ---
 
 > ## ⛔ EL ESTADO ACTUAL ES EL DISEÑO FINAL, SALVO LO EXPLÍCITAMENTE LISTADO AQUÍ
 >
-> Todo lo visible en la captura de referencia que no esté en la lista de cambios de abajo permanece exactamente igual: Nombre, URL/Slug, Descripción, Descripción Corta, Configuración de Oferta (términos, duración, programar inicio — esto es la configuración general de la oferta, no el precio en sí, no se toca), Catálogo, Categoría, Imágenes, Datos del Catálogo Público completo (Badge, Sufijo de Precio, Material, Tallas Disponibles, Características, Colores), Etiquetas, Producto Activo, y la sección SEO del Producto completa. Ni diseño, ni estilos, ni posición, ni comportamiento de ninguna de esas secciones cambia.
+> Captura de referencia: `screencapture-localhost-3000-catalogo-universitario-uniforme-de-enfermeria-de-ieproes-2026-06-21-02_19_20.png`. Todo lo que no esté explícitamente en la lista de cambios de abajo permanece exactamente igual: galería de imágenes y miniaturas (**explícitamente prohibido tocar esta sección**, ver punto 5), breadcrumb, título, descripción larga del producto, selector de talla con su texto ya corregido, colores disponibles, lista de bordados/incluye, badge "Oferta", precio "Desde $35.00 / $38.00" con el modelo de precio por talla ya implementado, sección "¿Necesitas personalizar tu pedido?", y todo el footer. Ni diseño, ni estilos, ni comportamiento de esas partes cambia salvo donde se indique explícitamente.
 
 ---
 
 ## Lista exacta de cambios a implementar
 
-1. **Eliminar el campo "Precio ($)" duplicado.** El campo individual de precio que aparece junto a "Precio Anterior (Oferta)" (el que hoy muestra `35`) debe eliminarse del formulario por completo. El único precio base de cada talla vive en el bloque "Precio por Talla". No debe quedar ningún campo de precio global suelto fuera de ese bloque.
+### 1. Reordenar los botones de acción
 
-2. **Precio de oferta por talla, independiente.** "Precio Anterior (Oferta)" deja de ser un campo único global. Cada talla dentro del bloque "Precio por Talla" debe poder tener su **propio precio de oferta opcional**, independiente de las demás. Esto significa que el admin debe poder, por ejemplo, poner oferta solo en la talla M, dejando XS, S, L, XL, XXL y 3XL con su precio normal sin oferta, o poner ofertas distintas en distintas tallas si así lo decide.
+Orden actual: `Agregar` (azul) → ícono compartir → `Cotizar` (verde).
+Orden nuevo: **`Agregar` → `Pedir ahora` (WhatsApp) → compartir**.
 
-> El campo "Precio Anterior (Oferta)" global que hoy existe junto al "Precio ($)" duplicado se elimina junto con el precio duplicado, ya que su función pasa a vivir dentro de cada talla del bloque "Precio por Talla".
+### 2. Lógica de "Pedir ahora"
+
+El botón `Pedir ahora` reemplaza al actual `Cotizar`/flujo de WhatsApp en su posición, pero su lógica debe ser: **abre el mismo onboarding/flujo que ya usa el carrito para ir a WhatsApp** — es decir, agrega el producto (con la talla y configuración seleccionada) de la misma forma que lo haría `Agregar`, pero en lugar de quedarse en la página permitiendo seguir navegando, **inmediatamente** lleva al flujo de WhatsApp que el carrito ya tiene implementado (el mismo mecanismo de "enviar pedido por WhatsApp" que existe hoy para el carrito, reutilizado aquí, no uno nuevo).
+
+`Agregar` mantiene su comportamiento actual: agrega el producto al carrito y el usuario permanece en la página para seguir navegando.
+
+### 3. Excepción para "A la medida"
+
+Si la talla seleccionada es **"A la medida"**, el botón de carrito (`Agregar`) **nunca** dispara el flujo de WhatsApp — siempre agrega al carrito de forma normal, igual que con cualquier otra talla. (Aclaración importante: el botón que sí lleva a WhatsApp para cotizar "A la medida" sigue siendo el flujo correspondiente a ese caso ya implementado — confirma en la auditoría cuál es ese mecanismo actual para "A la medida" y no lo rompas; el punto 3 se refiere específicamente a que el botón de **agregar al carrito** no debe redirigir a WhatsApp por el solo hecho de que la talla sea "A la medida".)
+
+### 4. Cambio de texto
+
+El texto actual: *"Esta talla se cotiza por WhatsApp. Usa el botón cotizar para consultar"* (el que aparece al seleccionar "A la medida", visible en una implementación previa relacionada a precio por talla) debe cambiar a: **"Los precios por servicio a la medida se cotizan por WhatsApp"**.
+
+### 5. Reordenar la sección de descripción/información del producto (sin tocar la galería)
+
+**Prohibido tocar**: la columna de imágenes (imagen principal + miniaturas) a la izquierda de la página. Esa sección queda exactamente igual, en su posición, tamaño y comportamiento actuales.
+
+**Sí se reordena**: la columna derecha completa (breadcrumb, título, descripción, selector de talla, colores, bordados/incluye, badge, tarjeta de precio con sus subsecciones). Reorganiza esta columna en un orden lógico de lectura para un usuario que está decidiendo si comprar: por ejemplo, identificación del producto (breadcrumb, título) → descripción → especificaciones de selección (talla, color) → qué incluye (bordados) → información de precio y oferta → acciones (botones). Antes de reordenar, audita cómo está estructurado hoy el componente (Fase 1) y propone el orden lógico basado en jerarquía de decisión de compra, sin inventar contenido nuevo ni eliminar ninguna sección existente — solo se reordena su posición vertical.
+
+### 6. Unificar tiempo restante de oferta y términos de la oferta en una sola sección
+
+Actualmente son dos bloques visualmente separados: el bloque rojo "Oferta válida hasta el [fecha]" y el bloque amarillo "Esta oferta tiene términos especiales" (desplegable). Deben fusionarse en **una sola sección/tarjeta** que contenga ambas piezas de información, sin perder ninguna de las dos (ni el contador de tiempo, ni el desplegable con los términos), pero presentadas como una unidad coherente en vez de dos avisos separados.
+
+### 7. Cambiar el color del botón verde
+
+El botón verde actual (hoy en la posición de "Cotizar", pasará a ser parte del nuevo orden de botones) debe dejar de ser verde. Usa un color de la paleta de marca ya existente en el proyecto (revisa qué colores usa el resto de la UI — el azul marino institucional visible en el header, el logo, y el botón "Agregar" actual son los candidatos naturales; no inventes un color nuevo fuera de la paleta ya establecida del proyecto).
+
+### 8. Restringir "agregar al carrito" únicamente a la vista de detalle de producto
+
+Actualmente es posible agregar productos al carrito desde la tarjeta de producto en vistas de listado (catálogo) y también, según se indica, desde el Home. Esto debe eliminarse: **la única forma de agregar un producto al carrito es desde la vista de detalle de producto** (la página individual de cada producto, como la de la captura). Cualquier botón o ícono de "agregar al carrito" presente en tarjetas de producto del catálogo, del Home, de resultados de búsqueda, o de cualquier otro listado, debe eliminarse de esos lugares.
+
+> Aclaración: esto no afecta a favoritos (el corazón) ni a la navegación hacia el detalle del producto al hacer click en la tarjeta — solo afecta específicamente al botón/ícono de agregar al carrito en vistas de tarjeta/listado.
 
 ---
 
-> ## ⛔ LA ANALOGÍA DE LA PUERTA — POR QUÉ ESTO NO ES "BORRAR UN INPUT"
+> ## ⛔ LA ANALOGÍA DE LA PUERTA
 >
-> El precio duplicado que quedó vivo no es solo un campo visual de más: es muy probable que el código todavía **lea de esa columna vieja en algún lugar** — en la tarjeta de producto del catálogo, en el carrito, en el checkout, en cualquier cálculo de totales — mientras que otras partes ya leen de la estructura nueva de "Precio por Talla". Esa es exactamente la situación de una puerta con dos chapas distintas instaladas a la vez, donde cada una cierra un mecanismo diferente: parece que "ya se arregló" porque una de las dos funciona, pero la estructura real está rota por duplicidad y cualquier punto del sistema que siga usando la chapa vieja seguiro mostrando o calculando datos incorrectos o inconsistentes.
+> Esto es una casa con ocho cambios pedidos a la vez, varios de los cuales tocan piezas que comparten estructura entre sí: el botón "Pedir ahora" debe reutilizar el mecanismo de WhatsApp que **ya existe** en el carrito — no se construye un mecanismo nuevo paralelo, porque eso sería instalar una segunda chapa cuando ya hay una que funciona. Para reutilizarlo correctamente hay que desmontar primero cómo está armado ese flujo hoy: ¿es una función exportada que se puede invocar desde cualquier componente? ¿Depende de que el ítem ya esté en el estado del carrito antes de poder dispararlo? ¿Genera el mensaje de WhatsApp a partir de los ítems del carrito completo, o puede generarlo para un solo producto fuera del carrito?
 >
-> No basta con quitar el input del formulario. Hay que encontrar **cada lugar** que todavía lee el precio global viejo y migrarlo a leer el nuevo modelo por talla, y hay que confirmar que la columna vieja en Supabase se elimina (no se deja huérfana) una vez que nada la usa.
+> El punto 8 (eliminar agregar-al-carrito de las tarjetas) es el más delicado de todos: si el componente de "botón agregar al carrito" es compartido entre la tarjeta de listado y la vista de detalle, no se elimina el componente — se elimina su uso en las tarjetas, dejándolo intacto en el detalle. Eliminar el componente completo rompería la vista de detalle, que es justamente donde el agregar-al-carrito debe seguir funcionando.
 >
-> Lo mismo aplica al precio de oferta: si "Precio Anterior (Oferta)" global todavía se usa en algún cálculo de descuento, badge de "Oferta", o en la vista pública para mostrar el precio tachado, ese cálculo debe migrar a leer la oferta específica de la talla seleccionada, no el valor global.
->
-> **Si tu instinto es "quito el input del JSX y ya quedó", eso es quitar la chapa de adorno y dejar la chapa real rota por dentro.** Hay que auditar cada consumidor del precio antes de tocar nada.
+> **Si tu instinto en cualquiera de estos ocho puntos es "lo hago rápido sin revisar qué más usa esa misma pieza", vas a romper algo que no se pidió tocar.** Desmonta cada pieza compartida antes de modificarla.
 
 ---
 
 > ## ⛔ PROHIBIDO INVENTAR. PROHIBIDO ASUMIR
 >
-> No asumas que el campo de precio global ya no se usa en ningún lado solo porque visualmente "se ve raro tener dos". Verifícalo leyendo el código real. No asumas cómo está estructurado hoy el bloque "Precio por Talla" en la base de datos (¿`jsonb`? ¿tabla relacional?) — léelo del schema real antes de diseñar cómo le agregas el campo de oferta por talla.
+> No asumas cómo está implementado hoy el flujo de WhatsApp del carrito — léelo completo antes de decidir cómo reutilizarlo. No asumas cuál es "el color de marca correcto" — verifícalo en el código (variables de tema, tailwind config, design tokens) y en lo que ya se usa consistentemente en el header/logo/botones existentes, no elijas un color a ojo. No asumas en qué componente vive el botón de agregar al carrito de las tarjetas — encuéntralo leyendo el código del catálogo y del Home.
 >
 > Antes de implementar:
-> 1. Lee el código completo relacionado a precio, precio por talla, oferta, carrito, checkout y catálogo, sin excepción — y el resto del proyecto según el protocolo de la Fase 1.
-> 2. Verifica en vivo (MCP o Dashboard de Supabase) el schema real de la tabla de productos para confirmar exactamente cómo quedó estructurado "Precio por Talla" tras la implementación previa, y si la columna de precio global y la de "Precio Anterior (Oferta)" global siguen existiendo.
-> 3. Diseña la extensión del modelo de "Precio por Talla" para que cada talla pueda tener un precio de oferta opcional, siguiendo el mismo patrón de estructura de datos ya usado para el precio base por talla (consistencia: si el precio base es `jsonb` tipo `{"S": 35, "M": 35}`, la oferta por talla debería seguir un patrón equivalente y coherente, no una estructura completamente distinta).
+> 1. Lee el código completo del flujo de WhatsApp del carrito, del componente de botones de la vista de detalle, del componente de tarjeta de producto usado en catálogo y Home, y de cualquier archivo de tema/diseño (tailwind config, CSS variables), sin excepción.
+> 2. Si el proyecto usa Tailwind, consulta la documentación oficial de Tailwind sobre cómo extender o referenciar colores del tema de forma consistente, en vez de hardcodear un hex nuevo.
 
 ---
 
@@ -60,136 +82,142 @@ find . -type f | grep -v node_modules | grep -v .git | grep -v .next | sort
 
 ## Fase 1 — Auditoría del 100% del código
 
-Lee **cada archivo** del inventario, sin excepción. El objetivo es encontrar cada consumidor del precio global viejo y del precio de oferta global viejo, en cualquier parte del sistema, no solo en el formulario de admin.
+Lee **cada archivo** del inventario, sin excepción. Algunos de estos ocho cambios parecen solo de UI, pero tocan lógica de carrito, WhatsApp, y componentes compartidos entre páginas — la auditoría completa es la que evita romper algo no pedido.
 
 ### Bloques de lectura obligatorios
 
-**Bloque A — Schema real actual en Supabase (verificar en vivo, no asumir):**
+**Bloque A — Componente de la vista de detalle de producto:**
+- Lee el componente completo que renderiza la página de la captura de referencia.
+- Localiza exactamente el JSX de los tres botones actuales (`Agregar`, ícono compartir, `Cotizar`) y su orden.
+- Localiza el handler exacto de cada botón: ¿qué función dispara `Agregar`? ¿qué función dispara el botón verde actual?
+- Localiza el bloque de "Oferta válida hasta..." y el bloque de "Esta oferta tiene términos especiales" como elementos JSX separados, para entender cómo fusionarlos.
+- Localiza el texto exacto a cambiar del punto 4 y confirma en qué condición se renderiza (cuando la talla seleccionada es "A la medida").
+- Mapea la estructura completa de la columna derecha (todo lo que no es la galería) para poder reordenarla en la Fase de diseño.
 
-```sql
-select column_name, data_type, is_nullable, column_default
-from information_schema.columns
-where table_name = 'products';
-```
-
-Documenta explícitamente:
-- ¿Sigue existiendo la columna de precio global (la que alimenta el campo "Precio ($)" duplicado)? Nombre exacto.
-- ¿Sigue existiendo la columna de "Precio Anterior (Oferta)" global? Nombre exacto.
-- ¿Cómo está estructurada exactamente la columna/estructura de "Precio por Talla" implementada previamente? Tipo de dato exacto, forma exacta del JSON si es `jsonb`.
-
-**Bloque B — Cada lugar que lee el precio global viejo:**
+**Bloque B — El flujo de WhatsApp del carrito (esto es crítico, léelo completo):**
 
 ```bash
-grep -rniE "\b(price|precio)\b" --include="*.ts" --include="*.tsx" . | grep -v node_modules
+grep -rniE "(whatsapp|wa\.me|onboarding)" --include="*.ts" --include="*.tsx" . | grep -v node_modules
 ```
 
-Para cada resultado, documenta si lee la columna de precio global vieja o ya lee la estructura de "Precio por Talla":
+Para cada resultado, documenta:
+- ¿Dónde vive la función que arma el mensaje de WhatsApp a partir de los ítems del carrito?
+- ¿Es una función pura que recibe un ítem o lista de ítems y devuelve una URL/mensaje, o está acoplada directamente al estado completo del carrito de forma que no se puede invocar para un solo producto fuera del carrito?
+- ¿El "onboarding" mencionado es un modal, un paso intermedio, una pantalla de confirmación? Documenta su componente exacto y cómo se dispara hoy (típicamente desde el carrito, ¿con qué botón?).
+- ¿Qué datos exactos necesita ese flujo para funcionar (talla, cantidad, producto, precio)?
 
-- Formulario de admin (creación y edición — confirma si son el mismo componente).
-- Tarjeta de producto en el catálogo/listado.
-- Carrito (al agregar un ítem, ¿de dónde toma el precio?).
-- Checkout / cálculo de totales en el servidor.
-- Cualquier reporte o dashboard de admin.
-- Notificaciones automáticas que mencionen el precio.
-- Tipo/interface `Product` en TypeScript — confirma si el campo de precio global sigue declarado ahí.
-- Cualquier schema de validación (Zod/similar).
-
-**Bloque C — Cada lugar que lee "Precio Anterior (Oferta)" global viejo:**
+**Bloque C — Lógica de "A la medida" ya implementada:**
 
 ```bash
-grep -rniE "(precio[_ ]?anterior|previous[_ ]?price|original[_ ]?price|compare[_ ]?at)" --include="*.ts" --include="*.tsx" . | grep -v node_modules
+grep -rniE "(a[_ ]?la[_ ]?medida|custom[_ ]?size)" --include="*.ts" --include="*.tsx" . | grep -v node_modules
 ```
 
-Documenta cada uso: dónde se calcula el porcentaje de descuento mostrado, dónde se decide si se muestra el badge "Oferta", dónde se renderiza el precio tachado en la vista pública (la captura del producto público mostraba `$35.00` junto a `$39.50` tachado — identifica exactamente ese componente).
+Documenta el mecanismo actual: ¿qué pasa hoy exactamente cuando se selecciona "A la medida" y se interactúa con cada botón? Esto es necesario para no romperlo al implementar los puntos 2 y 3.
 
-**Bloque D — El bloque "Precio por Talla" tal como quedó implementado:**
-
-- Lee el componente completo del formulario de admin donde vive hoy el bloque "Precio por Talla".
-- Lee la lógica de guardado: ¿cómo arma el payload que se envía a Supabase para ese bloque?
-- Lee cómo la página pública de detalle de producto consume hoy ese precio por talla (esto ya debería estar andando correctamente según el pedido anterior — confírmalo, no lo reimplementes).
-
-**Bloque E — Cualquier otro consumidor del tipo Producto:**
+**Bloque D — Componente de tarjeta de producto (catálogo, Home, búsqueda):**
 
 ```bash
-grep -rln "Product\b" --include="*.ts" --include="*.tsx" . | grep -v node_modules
+grep -rln "ProductCard\|TarjetaProducto\|product-card" --include="*.ts" --include="*.tsx" . | grep -v node_modules
 ```
 
-Lee cada resultado no cubierto en los bloques anteriores.
+Si ese patrón de nombre no aplica, busca de forma más amplia:
+
+```bash
+grep -rniE "(agregar al carrito|add to cart|addToCart)" --include="*.ts" --include="*.tsx" . | grep -v node_modules
+```
+
+Para cada resultado, documenta:
+- ¿En qué componente vive? ¿Es el mismo componente que se usa en catálogo, Home, y vista de detalle, o son componentes separados?
+- Si es un componente compartido entre tarjeta y detalle: ¿cómo se diferenciaría su renderizado condicional para mostrar el botón solo en detalle?
+- Confirma específicamente si el Home tiene su propia instancia de tarjetas con botón de agregar (puede ser un componente distinto al de catálogo) — revisa el componente de Home completo.
+
+**Bloque E — Paleta de colores / design tokens del proyecto:**
+
+```bash
+cat tailwind.config.* 2>/dev/null
+grep -rn "bg-green\|#16a34a\|#22c55e\|green-" --include="*.tsx" --include="*.ts" --include="*.css" . | grep -v node_modules
+```
+
+Documenta:
+- Qué colores de marca están definidos (probablemente azul marino, dado el header/logo de la captura).
+- Dónde más en el proyecto se usa ese azul marino de forma consistente (header, botón "Agregar" actual) para confirmar cuál es el color correcto a aplicar en el botón verde.
+
+**Bloque F — Cualquier otro consumidor relacionado:**
+
+Lee cualquier archivo adicional que aparezca relacionado a carrito, favoritos, o tarjetas de producto que no haya sido cubierto en los bloques anteriores.
 
 ---
 
-## Fase 2 — Diseño de la corrección
-
-Con la Fase 1 completa, define con precisión antes de escribir código:
+## Fase 2 — Diseño de la solución (sin escribir código todavía)
 
 ```
-¿LA COLUMNA DE PRECIO GLOBAL VIEJA TIENE ALGÚN CONSUMIDOR ACTIVO FUERA DEL FORMULARIO?
-  [Lista cada uno encontrado en el Bloque B. Cada uno debe migrarse para leer del
-   precio por talla en su lugar antes de poder eliminar la columna vieja con seguridad.]
+¿CÓMO SE REUTILIZA EL FLUJO DE WHATSAPP DEL CARRITO PARA "PEDIR AHORA"?
+  [Define exactamente: la función/mecanismo encontrado en el Bloque B, invocada
+   con el producto y talla actuales de la vista de detalle, sin pasar primero
+   por el estado persistente del carrito si la función ya soporta eso, o
+   agregando el ítem al estado del carrito momentáneamente y disparando el
+   mismo flujo si esa es la única forma de reutilizarlo sin duplicar lógica.
+   Justifica la decisión con lo encontrado en el código real.]
 
-¿LA COLUMNA DE OFERTA GLOBAL VIEJA TIENE ALGÚN CONSUMIDOR ACTIVO FUERA DEL FORMULARIO?
-  [Lista cada uno encontrado en el Bloque C. Mismo tratamiento.]
+¿CÓMO QUEDA LA LÓGICA EXACTA DE "AGREGAR" PARA "A LA MEDIDA"?
+  [Confirma: igual que cualquier otra talla, agrega al carrito y permite seguir
+   navegando, sin redirección a WhatsApp. El mecanismo de cotización por
+   WhatsApp para "A la medida" sigue siendo el que ya existe (documentado en
+   el Bloque C), intacto.]
 
-ESTRUCTURA DE DATOS ELEGIDA PARA OFERTA POR TALLA:
-  [Define la extensión exacta de la estructura de "Precio por Talla" para incluir
-   oferta opcional por talla. Ejemplo de patrón coherente si el precio base es
-   jsonb {"S": 35, "M": 35}: la oferta podría vivir en una estructura paralela
-   {"M": 30} donde solo aparecen las tallas que tienen oferta activa, o anidada
-   {"S": {"precio": 35, "oferta": null}, "M": {"precio": 35, "oferta": 30}} —
-   decide la que sea más simple de migrar desde la estructura actual real
-   encontrada en el Bloque A, y documenta la decisión con su razón.]
+NUEVO ORDEN PROPUESTO PARA LA COLUMNA DERECHA (sin tocar la galería):
+  [Lista el orden de secciones propuesto, basado en lo mapeado en el Bloque A,
+   justificando brevemente la jerarquía de lectura elegida.]
 
-¿CÓMO SE DETERMINA SI UNA TALLA ESPECÍFICA "TIENE OFERTA ACTIVA"
-EN LA VISTA PÚBLICA?
-  [Debe usar la misma "Configuración de Oferta" global ya existente (términos,
-   duración, programación) como el interruptor de SI hay oferta vigente en el
-   tiempo, combinado con SI esa talla específica tiene un precio de oferta
-   definido, para decidir si se muestra el precio tachado en esa talla. No
-   dupliques la lógica de fechas/duración de oferta — reutiliza la que ya
-   existe en "Configuración de Oferta", solo el monto del descuento pasa a
-   ser por talla.]
+DISEÑO DE LA SECCIÓN UNIFICADA DE OFERTA (tiempo + términos):
+  [Define cómo se fusionan visualmente el bloque rojo del contador y el bloque
+   amarillo de términos en una sola tarjeta/sección, preservando ambos
+   contenidos íntegros — confirma que reutilizas los estilos ya existentes
+   de esos dos bloques en vez de inventar uno nuevo desde cero.]
 
-¿QUÉ PASA CON LOS PRODUCTOS EXISTENTES QUE YA TENÍAN PRECIO POR TALLA
-IMPLEMENTADO PERO SIN OFERTA POR TALLA?
-  [Definir: al migrar, cada talla queda sin oferta (null) por defecto, y el
-   admin la asigna manualmente si quiere, talla por talla, desde ahora.]
+COLOR ELEGIDO PARA REEMPLAZAR EL VERDE:
+  [El color de marca confirmado en el Bloque E, con su variable/clase exacta
+   tal como se usa en otros botones del proyecto — no un hex nuevo.]
+
+LISTA DE ARCHIVOS DONDE SE ELIMINA EL BOTÓN DE AGREGAR AL CARRITO DE TARJETA:
+  [Lista exacta de cada componente de tarjeta en catálogo, Home, búsqueda, u
+   otro listado, confirmando si el componente es compartido con el detalle
+   (en cuyo caso solo se condiciona su renderizado) o exclusivo de listado
+   (en cuyo caso se elimina directamente esa parte del componente).]
 ```
+
+No avances a la Fase 3 sin completar este bloque con evidencia real del código leído.
 
 ---
 
 ## Fase 3 — Análisis de impacto antes de modificar (checklist obligatorio)
 
-- [ ] ¿Cada consumidor del precio global viejo, listado en la Fase 2, fue identificado con su archivo exacto y el cambio necesario para migrarlo a precio por talla?
-- [ ] ¿Cada consumidor de la oferta global vieja, listado en la Fase 2, fue identificado con su archivo exacto y el cambio necesario?
-- [ ] ¿El carrito guarda el precio (y la oferta, si aplica) al momento de agregar el ítem? Si SÍ: confirma que tomará el precio/oferta de la talla específica seleccionada en ese momento.
-- [ ] ¿El checkout recalcula el precio en el servidor? Si SÍ: el recálculo debe usar el precio (con oferta si corresponde) de la talla exacta que el cliente seleccionó, validado contra la estructura real en Supabase, no contra un valor enviado sin verificar por el cliente.
-- [ ] ¿Eliminar las columnas viejas de precio global y oferta global de Supabase rompe alguna política RLS, trigger, o constraint? Verifica antes de migrar.
-- [ ] ¿El tipo `Product` en TypeScript, al perder los campos de precio/oferta global y ganar la oferta por talla, rompe la compilación de algún archivo no identificado en la Fase 1? Vuelve a correr la búsqueda después de definir el tipo nuevo.
+- [ ] ¿El mecanismo de WhatsApp reutilizado para "Pedir ahora" requiere que el ítem ya esté en el carrito? Si SÍ: confirma que agregar momentáneamente y disparar el flujo no dejará el ítem duplicado o en un estado inconsistente si el usuario cancela el flujo de WhatsApp a mitad de camino.
+- [ ] ¿Eliminar el botón de agregar al carrito de las tarjetas de listado afecta algún test, alguna métrica de analytics, o algún otro consumidor de ese handler que no sea visual?
+- [ ] ¿El componente de tarjeta de producto es el mismo en catálogo y en Home? Si es el mismo componente: la condición para ocultar el botón debe aplicar en ambos lugares automáticamente sin necesitar cambios duplicados; si son componentes distintos, ambos deben modificarse de forma consistente.
+- [ ] ¿El cambio de color del botón verde a azul marino genera algún problema de contraste o legibilidad del texto/ícono dentro del botón? Verifica visualmente tras el cambio.
+- [ ] ¿Reordenar la columna derecha rompe algún `key` de React, alguna animación de entrada, o alguna referencia de posición (`ref`, scroll-to) que dependa del orden actual?
+- [ ] ¿Fusionar los bloques de oferta y términos afecta algún estado local que controle la apertura/cierre del desplegable de términos? Confirma que ese estado se preserva funcionando igual dentro de la sección unificada.
 
 ---
 
 ## Fase 4 — Implementación, en este orden, verificando consola limpia después de cada paso
 
-1. **Migración de Supabase:**
-   - Extender la estructura de "Precio por Talla" para incluir oferta opcional por talla, según lo decidido en la Fase 2.
-   - Migrar cualquier dato útil que aún viva en la columna de oferta global vieja, si corresponde según lo decidido (o confirmar que se descarta sin más, documentándolo).
-   - Eliminar la columna de precio global vieja.
-   - Eliminar la columna de "Precio Anterior (Oferta)" global vieja.
-   - Verificar con MCP o SQL Editor que la migración corrió correctamente sobre los datos reales.
+1. **Color del botón** (punto 7): cambia el color del botón que pasará a ser "Pedir ahora" del verde actual al azul marino de marca, usando la clase/variable ya existente.
 
-2. **Tipo/interface de `Product` actualizado:** sin los campos de precio/oferta global, con la nueva estructura de oferta por talla añadida junto al precio por talla existente.
+2. **Reordenar los tres botones** (punto 1): `Agregar` → `Pedir ahora` → ícono compartir, ajustando únicamente el orden en el JSX, sin tocar estilos individuales de cada botón salvo el color del punto anterior.
 
-3. **Schema de validación (si existe):** actualizado en consecuencia.
+3. **Lógica de "Pedir ahora"** (punto 2): implementa el handler que reutiliza el flujo de WhatsApp del carrito, según lo diseñado en la Fase 2.
 
-4. **Formulario de admin (creación):**
-   - Elimina por completo el input "Precio ($)" duplicado.
-   - Elimina por completo el input "Precio Anterior (Oferta)" global.
-   - Dentro del bloque "Precio por Talla", agrega junto a cada input de precio de talla un campo opcional de "Precio Oferta" para esa misma talla, manteniendo el mismo patrón visual ya usado en ese bloque (igual estilo a "Talla XS ($)", por ejemplo "Talla XS Oferta ($) — opcional").
-   - Conserva intacta la nota informativa existente sobre "A la medida" sin precio fijo, ajustándola si es necesario para aclarar que tampoco aplica oferta a esa opción.
+4. **Excepción "A la medida" en `Agregar`** (punto 3): confirma/ajusta el handler de `Agregar` para que nunca redirija a WhatsApp, independientemente de la talla seleccionada.
 
-5. **Formulario de admin (edición), si es un componente distinto:** mismo tratamiento, consistente con creación.
+5. **Cambio de texto** (punto 4): actualiza el string exacto.
 
-6. **Cada consumidor identificado en la Fase 2** (catálogo/listado, carrito, checkout, página pública de detalle de producto, cualquier reporte o notificación): migrado para leer el precio y la oferta desde la nueva estructura por talla, eliminando cualquier referencia a las columnas globales viejas.
+6. **Fusión de bloques de oferta** (punto 6): combina el contador y los términos en una sola sección visual, preservando ambos contenidos y su comportamiento (el desplegable sigue funcionando igual).
+
+7. **Reordenamiento de la columna derecha** (punto 5): aplica el nuevo orden diseñado en la Fase 2, sin tocar la columna de galería.
+
+8. **Eliminación del botón de agregar al carrito en tarjetas** (punto 8): aplica los cambios en cada archivo listado en la Fase 2, verificando después de cada uno que el catálogo y el Home siguen funcionando (navegación al detalle, favoritos) salvo por la ausencia del botón de carrito.
 
 No avances al siguiente paso sin haber verificado que el anterior no rompió nada de lo existente.
 
@@ -197,29 +225,26 @@ No avances al siguiente paso sin haber verificado que el anterior no rompió nad
 
 ## Fase 5 — Verificación final (con DevTools abierto en cada prueba)
 
-- [ ] El formulario de admin (creación y edición) ya no muestra ningún campo de precio fuera del bloque "Precio por Talla".
-- [ ] El formulario de admin ya no muestra el campo "Precio Anterior (Oferta)" global.
-- [ ] Dentro de "Precio por Talla", cada talla tiene su propio campo de precio y su propio campo de oferta opcional.
-- [ ] Asignar oferta solo a una talla específica (ejemplo: solo a M) y guardar: el producto se guarda correctamente.
-- [ ] En la vista pública: al seleccionar la talla M (con oferta asignada), se muestra el precio tachado y el precio de oferta correctos para esa talla.
-- [ ] En la vista pública: al seleccionar una talla sin oferta asignada (ejemplo: S), se muestra solo el precio normal de esa talla, sin precio tachado ni badge de oferta para esa talla específica.
-- [ ] El badge "Oferta" / "OFERTA" en la imagen del producto y en el catálogo: se comporta de forma coherente con que la oferta ahora es por talla (define y confirma con el admin real cómo debe verse cuando solo algunas tallas tienen oferta — como mínimo, no debe ser engañoso mostrando "Oferta" si la talla por defecto seleccionada no la tiene).
-- [ ] El contador "Oferta válida hasta..." sigue funcionando con la misma "Configuración de Oferta" general (fecha/duración), sin haberse duplicado ni roto.
-- [ ] El carrito: agregar al carrito una talla con oferta guarda el precio de oferta correcto; agregar una talla sin oferta guarda el precio normal correcto.
-- [ ] El checkout: el total calculado en el servidor corresponde al precio (con o sin oferta según la talla) correcto, sin posibilidad de que el cliente manipule el precio enviado.
-- [ ] El catálogo/listado de productos: el precio mostrado en cada tarjeta sigue siendo coherente (por ejemplo "Desde $X.XX") considerando que ahora puede haber tallas con y sin oferta simultáneamente.
-- [ ] No queda ninguna referencia en el código a las columnas de precio global o de oferta global eliminadas (confirma con un grep final que ya no aparecen):
-
-```bash
-grep -rniE "\b(price|precio)\b" --include="*.ts" --include="*.tsx" . | grep -v node_modules
-```
-
-- [ ] El resto del formulario de admin (Configuración de Oferta general, Catálogo, Categoría, Imágenes, Datos del Catálogo Público, Etiquetas, Producto Activo, SEO del Producto) se ve exactamente igual que en la captura de referencia, sin ninguna alteración.
+- [ ] Los tres botones aparecen en el orden: `Agregar` → `Pedir ahora` → compartir.
+- [ ] El botón antes verde ya no es verde — es el azul de marca, con buen contraste de texto/ícono.
+- [ ] Click en `Agregar` con una talla normal (no "A la medida"): el producto se agrega al carrito, el usuario permanece en la página.
+- [ ] Click en `Pedir ahora` con una talla normal: se dispara el mismo flujo/onboarding de WhatsApp que ya usa el carrito, con el producto y talla correctos.
+- [ ] Selecciona "A la medida" y haz click en `Agregar`: el producto se agrega al carrito normalmente, **no** se dispara WhatsApp.
+- [ ] Selecciona "A la medida": el texto visible dice exactamente "Los precios por servicio a la medida se cotizan por WhatsApp".
+- [ ] El mecanismo de cotización por WhatsApp específico para "A la medida" (el que ya existía antes de este cambio) sigue funcionando igual que antes.
+- [ ] La columna de galería de imágenes (imagen principal + miniaturas) se ve y funciona exactamente igual que en la captura de referencia, sin ningún cambio.
+- [ ] La columna derecha está reordenada de forma lógica, con todas las secciones presentes (ninguna se perdió), solo en un orden distinto.
+- [ ] La sección de oferta (tiempo restante + términos) ahora es una sola unidad visual, con el contador y el desplegable de términos ambos funcionando correctamente.
+- [ ] En el catálogo: las tarjetas de producto ya no muestran ningún botón/ícono de agregar al carrito.
+- [ ] En el Home: las tarjetas de producto (si existen ahí) ya no muestran ningún botón/ícono de agregar al carrito.
+- [ ] En el catálogo y en el Home: el ícono de favoritos en las tarjetas sigue funcionando igual que antes.
+- [ ] En el catálogo y en el Home: hacer click en la tarjeta sigue navegando correctamente a la vista de detalle del producto.
+- [ ] En la vista de detalle de producto: el botón `Agregar` sigue funcionando con normalidad (es el único lugar donde debe ser posible agregar al carrito).
 - [ ] Chrome Console: cero errores, cero warnings nuevos.
 - [ ] Chrome Network: cero requests fallidos.
 - [ ] Terminal Next.js: cero errores.
 - [ ] `npx next build`: sin errores.
-- [ ] Supabase Logs: cero errores en operaciones de creación/edición/lectura de producto y en checkout.
+- [ ] Supabase Logs (si alguna de estas acciones toca Supabase): sin errores.
 
 Si cualquier punto falla, **no implementes más cambios encima** — vuelve a la fase correspondiente con la nueva información.
 
@@ -227,39 +252,40 @@ Si cualquier punto falla, **no implementes más cambios encima** — vuelve a la
 
 ## Fase 6 — Registro y commit
 
-Genera `/updates/FIX_precio_duplicado_oferta_por_talla_[fecha].md`:
+Genera `/updates/FEATURE_reordenamiento_ui_whatsapp_carrito_[fecha].md`:
 
 ```markdown
-# Fix: precio duplicado eliminado, oferta independiente por talla
-
-## Contexto
-Corrección sobre la implementación previa de "Precio por Talla", que dejó vivo
-un campo de precio global duplicado y no permitía oferta independiente por talla.
+# Feature: reordenamiento de botones, lógica WhatsApp/carrito y ajustes de UI en detalle de producto
 
 ## Auditoría previa
-- Archivos leídos en la Fase 1: [conteo total]
-- Consumidores del precio global viejo encontrados: [lista]
-- Consumidores de la oferta global vieja encontrados: [lista]
+- Archivos leídos en la Fase 1: [conteo total, confirmando 100% del inventario]
+- Mecanismo de WhatsApp del carrito identificado en: [archivo]
+- Componente(s) de tarjeta de producto identificado(s) en: [archivos]
+- Color de marca confirmado: [clase/variable exacta]
 
-## Modelo de datos
-- Estructura de "Precio por Talla" antes de esta corrección: [descripción]
-- Estructura nueva, con oferta por talla incluida: [descripción]
-- Migración aplicada: [SQL exacto]
-- Columnas eliminadas: precio global, precio anterior/oferta global [nombres reales]
+## Cambios implementados
+1. Orden de botones: Agregar → Pedir ahora → compartir — ✓
+2. Lógica de Pedir ahora reutilizando el flujo de WhatsApp del carrito — ✓
+3. Excepción "A la medida" en Agregar (nunca redirige a WhatsApp) — ✓
+4. Texto actualizado a "Los precios por servicio a la medida se cotizan por WhatsApp" — ✓
+5. Columna derecha reordenada de forma lógica, galería intacta — ✓
+6. Bloques de tiempo de oferta y términos unificados en una sola sección — ✓
+7. Color del botón cambiado de verde a azul de marca — ✓
+8. Botón de agregar al carrito eliminado de tarjetas en catálogo y Home — ✓
 
 ## Archivos modificados
 - [ruta]: [descripción exacta del cambio]
 
 ## Verificación de diseño preservado
-- Comparado contra la captura de referencia: confirmado sin alteración de secciones no listadas
+- Galería de imágenes: sin alteración, confirmado contra la captura de referencia
+- Favoritos en tarjetas: funcionando igual que antes
+- Navegación tarjeta → detalle: funcionando igual que antes
 
 ## Verificación funcional
-- Campo de precio duplicado eliminado: ✓
-- Campo de oferta global eliminado: ✓
-- Oferta asignable de forma independiente por talla: ✓
-- Vista pública refleja oferta solo en las tallas que la tienen: ✓
-- Carrito y checkout usan el precio/oferta correcto por talla: ✓
-- Grep final sin referencias a columnas eliminadas: ✓
+- Pedir ahora dispara el mismo onboarding de WhatsApp del carrito: ✓
+- Agregar con "A la medida" nunca va a WhatsApp: ✓
+- Cotización por WhatsApp de "A la medida" (mecanismo previo) intacta: ✓
+- Carrito solo agregable desde vista de detalle: ✓
 
 ## Consolas
 - Chrome Console: limpia ✓
@@ -272,31 +298,40 @@ Luego:
 
 ```bash
 git add .
-git commit -m "fix: elimina precio duplicado, agrega oferta independiente por talla
+git commit -m "feat: reordena botones de detalle, reutiliza flujo WhatsApp del carrito, ajustes de UI
 
-- Auditado el 100% del código antes de implementar
-- Eliminado el campo de precio global duplicado del formulario y de Supabase
-- Eliminado el campo de oferta global, reemplazado por oferta opcional por talla
-- Migrados todos los consumidores (catálogo, carrito, checkout, vista pública) al nuevo modelo
-- Sin regresiones verificadas en el resto del formulario ni en consolas"
+- Orden de botones: Agregar → Pedir ahora → compartir
+- Pedir ahora reutiliza el mismo onboarding de WhatsApp ya implementado en el carrito
+- Agregar nunca redirige a WhatsApp, incluso con talla A la medida
+- Texto de A la medida actualizado
+- Columna de información reordenada de forma lógica, galería sin alteración
+- Sección de oferta (tiempo + términos) unificada en una sola tarjeta
+- Color del botón actualizado a la paleta de marca, eliminado el verde
+- Agregar al carrito ahora exclusivo de la vista de detalle, eliminado de tarjetas de listado
+- Sin regresiones verificadas en favoritos, navegación, ni en consolas"
 
 git push origin desarrollo
 ```
 
 ---
 
-## Definición inamovible de "corrección completada"
+## Definición inamovible de "implementación completada"
 
-- [ ] Se auditó el 100% del código del proyecto, no solo el formulario de admin
-- [ ] El campo de precio global duplicado fue eliminado del formulario y de Supabase
-- [ ] El campo de oferta global fue eliminado del formulario y de Supabase
-- [ ] Cada talla en "Precio por Talla" puede tener su propio precio de oferta opcional e independiente
-- [ ] Es posible asignar oferta solo a tallas específicas, dejando otras sin oferta, y se guarda y muestra correctamente
-- [ ] Ningún consumidor del sistema (catálogo, carrito, checkout, vista pública, reportes) sigue leyendo de las columnas globales eliminadas — verificado con grep final
-- [ ] El resto del formulario y de la vista pública permanece exactamente igual al estado de la captura de referencia
+- [ ] Se auditó el 100% del código del proyecto, no solo los archivos directamente relacionados a estos ocho cambios
+- [ ] Los tres botones están en el orden correcto: Agregar → Pedir ahora → compartir
+- [ ] Pedir ahora reutiliza el flujo de WhatsApp existente del carrito, sin duplicar lógica
+- [ ] Agregar nunca redirige a WhatsApp, en ningún caso, incluyendo "A la medida"
+- [ ] El texto de "A la medida" es exactamente el nuevo texto pedido
+- [ ] La galería de imágenes no fue tocada en absoluto
+- [ ] La columna de información fue reordenada de forma lógica, sin perder ninguna sección
+- [ ] El bloque de tiempo de oferta y el de términos están unificados en una sola sección, ambos funcionando
+- [ ] El botón verde ya no existe, reemplazado por el color de marca correcto
+- [ ] El botón de agregar al carrito ya no aparece en ninguna tarjeta de listado (catálogo, Home, búsqueda u otros)
+- [ ] El botón de agregar al carrito sigue funcionando correctamente, exclusivamente, en la vista de detalle de producto
+- [ ] Favoritos y navegación desde las tarjetas siguen funcionando igual que antes
 - [ ] Cero regresiones en ningún flujo existente
 - [ ] Consolas (Chrome Console, Network, Next.js terminal, Supabase Logs) limpias
 - [ ] Registro completo en `/updates/`
 - [ ] Commit hecho en `desarrollo`
 
-**Si falta un solo punto: la corrección no está terminada. No declares éxito. Continúa.** 
+**Si falta un solo punto: la implementación no está terminada. No declares éxito. Continúa.**

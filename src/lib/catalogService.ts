@@ -29,8 +29,6 @@ export interface DbProduct {
   is_active: boolean;
   slug: string | null;
   sector: string | null; // catálogo/sector (scrubs, escolar, etc.)
-  badge_text: string | null; // "Nuevo", "Popular", "Oferta"
-  price_suffix: string | null; // "/unid." etc.
   tallas: string[] | null; // ["S","M","L","XL"]
   colores: { name: string; hex: string }[] | null;
   material: string | null;
@@ -110,8 +108,8 @@ function createServerClient() {
 export const PRODUCT_SELECT = `
   id, name, description, short_description, price, old_price,
   offer_ends_at, offer_starts_at, offer_terms, category, category_id, tags,
-  image_path, images, is_active, slug, sector, badge_text,
-  price_suffix, tallas, colores, material, caracteristicas,
+  image_path, images, is_active, slug, sector,
+  tallas, colores, material, caracteristicas,
   price_by_size, offer_by_size,
   seo_title, seo_description, seo_keywords, seo_robots, seo_publisher,
   created_at, updated_at,
