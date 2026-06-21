@@ -928,11 +928,11 @@ function ConfirmModal({
 }: ConfirmModalProps) {
   return (
     <div
-      className="absolute inset-0 z-20 flex items-center justify-center bg-white/70 p-6 backdrop-blur-sm"
+      className="absolute inset-0 z-20 flex items-center justify-center bg-white/70 px-8 py-6 backdrop-blur-sm"
       role="alertdialog"
       aria-modal="true"
     >
-      <div className="w-full max-w-sm rounded-2xl border border-slate-200 bg-white p-5 shadow-xl">
+      <div className="w-full max-w-[264px] rounded-2xl border border-slate-200 bg-white p-5 shadow-xl">
         <h3 className="text-sm font-bold text-slate-900">{title}</h3>
         <p className="mt-2 text-xs leading-relaxed text-slate-500">{message}</p>
         <div className="mt-4 flex gap-2">
