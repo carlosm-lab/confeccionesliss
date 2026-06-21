@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect, useRef, useMemo, useTransition } from "react";
 import Image from "next/image";
@@ -129,6 +129,29 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
     router.push(`/catalogo/${sector}`);
   }
 
+  // Swipe-up-to-close (mobile) — el modal esta en la parte superior
+  const [dragY, setDragY] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const touchStartY = useRef(0);
+
+  const onDragStart = (e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
+    setIsDragging(true);
+  };
+  const onDragMove = (e: React.TouchEvent) => {
+    const delta = e.touches[0].clientY - touchStartY.current;
+    if (delta < 0) setDragY(delta); // solo hacia arriba
+  };
+  const onDragEnd = () => {
+    setIsDragging(false);
+    if (dragY < -90) {
+      setDragY(0);
+      onClose();
+    } else {
+      setDragY(0);
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -146,7 +169,16 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
         aria-label="Cerrar buscador"
         tabIndex={-1}
       />
-      <div className="relative z-10 mx-4 flex w-full max-w-2xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
+      <div
+        className="relative z-10 mx-4 flex w-full max-w-2xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl"
+        style={{
+          transform: `translateY(${dragY}px)`,
+          transition: isDragging
+            ? "none"
+            : "transform 0.3s cubic-bezier(0.32,0.72,0,1), opacity 0.3s ease",
+          opacity: Math.max(0, 1 + dragY / 200),
+        }}
+      >
         {/* ── Search Input Header ── */}
         <div className="flex items-center gap-3 border-b border-gray-100 px-5 py-4">
           <span
@@ -347,6 +379,16 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
             Esc
           </kbd>{" "}
           para cerrar
+        </div>
+
+        {/* Drag handle — fondo del panel, solo mobile */}
+        <div
+          className="flex touch-none justify-center py-2 sm:hidden"
+          onTouchStart={onDragStart}
+          onTouchMove={onDragMove}
+          onTouchEnd={onDragEnd}
+        >
+          <div className="h-1 w-10 rounded-full bg-slate-300" />
         </div>
       </div>
     </div>
