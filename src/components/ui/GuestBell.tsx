@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
@@ -111,7 +111,6 @@ export function GuestBell() {
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
@@ -137,11 +136,23 @@ export function GuestBell() {
     return () => document.removeEventListener("keydown", handler);
   }, [isOpen]);
 
+  // Auto-marcar notificaciones informativas como leidas al abrir el panel
+  useEffect(() => {
+    if (!isOpen) return;
+    notifications
+      .filter(
+        (n) =>
+          !n.read && !HINT_TYPES.includes(n.type as AppNotification["type"])
+      )
+      .forEach((n) => markRead(n.id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
+
   const handleOpen = () => {
     setIsOpen(true);
   };
 
-  // Tipos que solo se marcan como leídos en acciones específicas (login, ver oferta)
+  // Tipos que solo se marcan como leidos en acciones especificas (login, ver oferta)
   const HINT_TYPES: AppNotification["type"][] = [
     "push_permission",
     "favorites_hint",
@@ -150,13 +161,40 @@ export function GuestBell() {
   ];
 
   const handleNotifClick = (notif: AppNotification) => {
-    const isHint = HINT_TYPES.includes(notif.type);
-    // Las hints solo se marcan leídas al hacer login, no al hacer click
-    if (!isHint && !notif.read) markRead(notif.id);
-    if (notif.target_url) {
-      router.push(notif.target_url);
+    // 1. Hints de auth → abrir login modal
+    if (
+      notif.type === "favorites_hint" ||
+      notif.type === "cart_hint" ||
+      notif.type === "auth_hint"
+    ) {
       setIsOpen(false);
+      showAuthModal("generic");
+      return;
     }
+
+    // 2. Push permission → solicitar permiso del navegador
+    if (notif.type === "push_permission") {
+      setIsOpen(false);
+      void handleSubscribePush();
+      return;
+    }
+
+    // 3. Notificaciones de BD: marcar leida y navegar
+    if (!notif.read) markRead(notif.id);
+    setIsOpen(false);
+
+    if (notif.target_url) {
+      // URL especifica (producto/oferta concreta)
+      router.push(notif.target_url);
+    } else if (
+      notif.type === "new_product" ||
+      notif.type === "new_offer" ||
+      notif.type === "manual"
+    ) {
+      // Sin URL especifica → ir al catalogo
+      router.push("/catalogo");
+    }
+    // info sin target_url: ya se marco leida al abrir, no navega
   };
 
   const handleLoginClick = () => {
@@ -277,21 +315,39 @@ export function GuestBell() {
                   </div>
                 </div>
               ) : (
-                <ul className="divide-y divide-slate-100">
+                <ul className="flex flex-col gap-3 p-3">
                   {visibleNotifs.map((notif) => {
                     const cfg = NOTIF_CONFIG[notif.type] ?? NOTIF_CONFIG.info;
+                    const isHintUnread =
+                      !notif.read &&
+                      (notif.type === "favorites_hint" ||
+                        notif.type === "cart_hint" ||
+                        notif.type === "auth_hint");
+                    const isPushUnread =
+                      !notif.read &&
+                      notif.type === "push_permission" &&
+                      pushPermissionStatus !== "granted" &&
+                      pushPermissionStatus !== "denied";
+
                     return (
                       <li key={notif.id}>
-                        <button
-                          type="button"
+                        <div
+                          role="button"
+                          tabIndex={0}
                           onClick={() => handleNotifClick(notif)}
+                          onKeyDown={(e) =>
+                            (e.key === "Enter" || e.key === " ") &&
+                            handleNotifClick(notif)
+                          }
                           className={cn(
-                            "relative w-full px-5 py-4 text-left transition-colors hover:bg-slate-50/80",
-                            !notif.read && "bg-blue-50/40"
+                            "group relative w-full cursor-pointer rounded-xl border border-dashed px-4 py-3 text-left transition-colors",
+                            notif.read
+                              ? "border-slate-200 hover:bg-slate-50/60"
+                              : "border-slate-300 bg-blue-50/30 hover:bg-blue-50/50"
                           )}
                         >
                           <div className="flex items-start gap-3">
-                            {/* Ícono */}
+                            {/* Icono */}
                             <div
                               className={cn(
                                 "mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ring-1",
@@ -330,68 +386,40 @@ export function GuestBell() {
                                       "mt-0.5 h-2 w-2 shrink-0 rounded-full",
                                       cfg.dotColor
                                     )}
-                                    aria-label="No leído"
+                                    aria-label="No leido"
                                   />
                                 )}
                               </div>
                               <p className="mt-0.5 text-[11px] leading-relaxed text-slate-400">
                                 {notif.message}
                               </p>
-                              <p className="mt-1.5 text-[10px] font-medium text-slate-300">
-                                {timeAgo(notif.created_at)}
-                              </p>
+                              {/* Fila inferior: hora + CTA alineados */}
+                              <div className="mt-1.5 flex items-center justify-between gap-2">
+                                <p className="text-[10px] font-medium text-slate-300">
+                                  {timeAgo(notif.created_at)}
+                                </p>
+                                {isHintUnread && (
+                                  <span className="text-primary/70 group-hover:text-primary text-[10px] font-medium">
+                                    Iniciar sesion &rarr;
+                                  </span>
+                                )}
+                                {isPushUnread && (
+                                  <span className="text-primary/70 text-[10px] font-medium">
+                                    {isSubscribing
+                                      ? "Activando..."
+                                      : "Activar alertas →"}
+                                  </span>
+                                )}
+                              </div>
                             </div>
                           </div>
-                        </button>
+                        </div>
                       </li>
                     );
                   })}
                 </ul>
               )}
             </div>
-
-            {/* Footer — Web Push CTA */}
-            {hasPushHint &&
-              pushPermissionStatus !== "granted" &&
-              pushPermissionStatus !== "denied" && (
-                <div className="shrink-0 border-t border-slate-100 p-3">
-                  <button
-                    onClick={handleSubscribePush}
-                    disabled={isSubscribing}
-                    className="btn-gradient flex h-10 w-full items-center justify-center gap-2 rounded-xl text-xs font-bold tracking-wide text-white transition-all hover:opacity-90 active:scale-[0.98] disabled:opacity-60"
-                  >
-                    <span
-                      className="material-symbols-outlined text-[16px]"
-                      aria-hidden="true"
-                    >
-                      {isSubscribing
-                        ? "hourglass_empty"
-                        : "notifications_active"}
-                    </span>
-                    {isSubscribing
-                      ? "Activando..."
-                      : "Activar alertas exclusivas"}
-                  </button>
-                </div>
-              )}
-
-            {/* Footer — Login CTA para hints de carrito/favoritos */}
-            {hasAuthHint && !hasPushHint && (
-              <div className="shrink-0 border-t border-slate-100 p-3">
-                <button
-                  onClick={handleLoginClick}
-                  className="btn-gradient flex h-10 w-full items-center justify-center gap-2 rounded-xl text-xs font-bold tracking-wide text-white transition-all hover:opacity-90 active:scale-[0.98]"
-                >
-                  <span
-                    className="material-symbols-outlined text-[16px]"
-                    aria-hidden="true"
-                  >
-                    login
-                  </span>
-                  Iniciar sesión · Sincronizar entre dispositivos
-                </button>
-              </div>
-            )}
           </div>
         </div>,
         document.body
