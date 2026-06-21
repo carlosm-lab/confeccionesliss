@@ -100,6 +100,29 @@ export function Navbar() {
   const menuRef = useRef<HTMLDivElement>(null);
   const [scrollVisible, setScrollVisible] = useState(true);
 
+  // Swipe-up-to-close for mobile menu
+  const [menuDragY, setMenuDragY] = useState(0);
+  const [isMenuDragging, setIsMenuDragging] = useState(false);
+  const menuTouchStartY = useRef(0);
+
+  const onMenuDragStart = (e: React.TouchEvent) => {
+    menuTouchStartY.current = e.touches[0].clientY;
+    setIsMenuDragging(true);
+  };
+  const onMenuDragMove = (e: React.TouchEvent) => {
+    const delta = e.touches[0].clientY - menuTouchStartY.current;
+    if (delta < 0) setMenuDragY(delta); // solo hacia arriba
+  };
+  const onMenuDragEnd = () => {
+    setIsMenuDragging(false);
+    if (menuDragY < -60) {
+      setMenuDragY(0);
+      closeMenu();
+    } else {
+      setMenuDragY(0);
+    }
+  };
+
   // Contexts
   const { cartCount, setIsCartOpen } = useCart();
   const { favorites } = useFavorites();
@@ -410,9 +433,21 @@ export function Navbar() {
                 </span>
               </button>
 
-              {/* Desktop dropdown menu */}
+              {/* Mobile dropdown menu */}
               {isMenuOpen && (
-                <div className="border-primary/10 animate-in fade-in slide-in-from-top-2 absolute top-12 right-0 z-50 w-64 rounded-2xl border bg-white/95 p-4 shadow-[0_10px_25px_-5px_rgba(20,48,103,0.15),0_8px_16px_-6px_rgba(20,48,103,0.1)] backdrop-blur-md duration-200">
+                <div
+                  onTouchStart={onMenuDragStart}
+                  onTouchMove={onMenuDragMove}
+                  onTouchEnd={onMenuDragEnd}
+                  style={{
+                    transform: `translateY(${menuDragY}px)`,
+                    transition: isMenuDragging
+                      ? "none"
+                      : "transform 0.3s cubic-bezier(0.32,0.72,0,1), opacity 0.3s ease",
+                    opacity: Math.max(0, 1 + menuDragY / 120),
+                  }}
+                  className="border-primary/10 animate-in fade-in slide-in-from-top-2 absolute top-12 right-0 z-50 w-64 rounded-2xl border bg-white/95 p-4 shadow-[0_10px_25px_-5px_rgba(20,48,103,0.15),0_8px_16px_-6px_rgba(20,48,103,0.1)] backdrop-blur-md duration-200"
+                >
                   <ul className="space-y-1">
                     {navLinks.map((link) => {
                       const isActive =

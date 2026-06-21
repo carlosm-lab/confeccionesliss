@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -73,31 +73,69 @@ export function FavoritesModal({ isOpen, onClose }: FavoritesModalProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, favorites]);
 
+  // Swipe-down-to-close (mobile bottom sheet)
+  const [dragY, setDragY] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const touchStartY = useRef(0);
+
+  const handleDragStart = (e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
+    setIsDragging(true);
+  };
+  const handleDragMove = (e: React.TouchEvent) => {
+    const delta = e.touches[0].clientY - touchStartY.current;
+    if (delta > 0) setDragY(delta);
+  };
+  const handleDragEnd = () => {
+    setIsDragging(false);
+    if (dragY > 100) {
+      setDragY(0);
+      onClose();
+    } else {
+      setDragY(0);
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
     <>
-      {/* Backdrop — div con onClick para cerrar al hacer click fuera */}
+      {/* Backdrop */}
       <div
-        className="animate-in fade-in fixed inset-0 z-[100] flex w-full cursor-default items-center justify-center bg-slate-900/60 p-4 backdrop-blur-sm duration-200"
+        className="animate-in fade-in fixed inset-0 z-[100] flex w-full cursor-default items-end justify-center bg-slate-900/60 backdrop-blur-sm duration-200 sm:items-center sm:p-4"
         onClick={onClose}
         aria-hidden="true"
       >
-        {/* presentation div stops click propagation so clicking inside the dialog doesn't close it */}
         <div
           role="presentation"
           onClick={(e) => e.stopPropagation()}
           onKeyDown={(e) => e.stopPropagation()}
-          className="flex max-h-[90vh] w-full max-w-2xl"
+          className="flex w-full max-w-2xl sm:max-h-[90vh]"
         >
           <div
             ref={modalRef}
             role="dialog"
             aria-modal="true"
             aria-labelledby="favorites-modal-title"
-            className="flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-3xl bg-white shadow-2xl"
+            className="flex w-full max-w-2xl flex-col overflow-hidden rounded-t-3xl bg-white shadow-2xl sm:max-h-[90vh] sm:rounded-3xl"
+            style={{
+              transform: `translateY(${dragY}px)`,
+              transition: isDragging
+                ? "none"
+                : "transform 0.35s cubic-bezier(0.32,0.72,0,1), opacity 0.35s ease",
+              opacity: Math.max(0, 1 - dragY / 350),
+            }}
           >
             <FocusLock returnFocus className="flex h-full w-full flex-col">
+              {/* Drag handle - mobile only */}
+              <div
+                className="flex shrink-0 touch-none justify-center pt-3 pb-1 sm:hidden"
+                onTouchStart={handleDragStart}
+                onTouchMove={handleDragMove}
+                onTouchEnd={handleDragEnd}
+              >
+                <div className="h-1 w-10 rounded-full bg-slate-300" />
+              </div>
               {/* Header */}
               <div className="flex items-center justify-between border-b border-gray-100 p-6">
                 <h2

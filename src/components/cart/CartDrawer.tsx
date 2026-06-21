@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
@@ -75,7 +75,49 @@ export function CartDrawer() {
   const closeDrawer = useCallback(() => {
     setStep("cart");
     setIsCartOpen(false);
+    setDragX(0);
   }, [setIsCartOpen]);
+
+  // ── Swipe-right-to-close (mobile only) ────────────────────────
+  const [dragX, setDragX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const touchStartX = useRef(0);
+  const touchStartY = useRef(0);
+  const swipeAxis = useRef<"h" | "v" | null>(null);
+
+  // Reset drag when drawer closes externally
+  useEffect(() => {
+    if (!isCartOpen) setDragX(0);
+  }, [isCartOpen]);
+
+  const onDragStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+    swipeAxis.current = null;
+  };
+
+  const onDragMove = (e: React.TouchEvent) => {
+    const dx = e.touches[0].clientX - touchStartX.current;
+    const dy = Math.abs(e.touches[0].clientY - touchStartY.current);
+    // Lock axis on first significant movement
+    if (!swipeAxis.current && (Math.abs(dx) > 6 || dy > 6)) {
+      swipeAxis.current = Math.abs(dx) > dy ? "h" : "v";
+    }
+    if (swipeAxis.current === "h" && dx > 0) {
+      setIsDragging(true);
+      setDragX(dx);
+    }
+  };
+
+  const onDragEnd = () => {
+    setIsDragging(false);
+    if (dragX > 120) {
+      closeDrawer();
+    } else {
+      setDragX(0);
+    }
+    swipeAxis.current = null;
+  };
 
   useEffect(() => {
     if (!isCartOpen) return;
@@ -233,10 +275,16 @@ export function CartDrawer() {
       {/* ── Drawer panel ─────────────────────────────────── */}
       <div
         data-testid="cart-drawer"
-        className={`fixed top-0 right-0 z-50 flex h-[100dvh] w-full flex-col bg-[var(--color-surface)] transition-transform duration-500 ease-[var(--ease-out-expo)] sm:max-w-[26rem] ${
-          isCartOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        onTouchStart={onDragStart}
+        onTouchMove={onDragMove}
+        onTouchEnd={onDragEnd}
+        className="fixed top-0 right-0 z-50 flex h-[100dvh] w-full flex-col bg-[var(--color-surface)] sm:max-w-[26rem]"
         style={{
+          transform: isCartOpen ? `translateX(${dragX}px)` : `translateX(100%)`,
+          transition: isDragging
+            ? "none"
+            : "transform 0.5s cubic-bezier(0.16,1,0.3,1), opacity 0.35s ease",
+          opacity: Math.max(0, 1 - dragX / 500),
           boxShadow: isCartOpen
             ? "-16px 0 48px rgba(20, 48, 103, 0.07), -2px 0 12px rgba(20, 48, 103, 0.03)"
             : "none",
