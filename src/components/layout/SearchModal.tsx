@@ -13,7 +13,69 @@ import {
   type DbProduct,
 } from "@/lib/catalogService";
 
-/* ─── Sector order for category chips ─── */
+/* ─── Typewriter placeholder ─── */
+const SEARCH_PHRASES = [
+  "Scrubs médicos...",
+  "Uniformes UNIVO...",
+  "Bordados personalizados...",
+  "Uniformes escolares...",
+  "Sublimación deportiva...",
+  "Confección a la medida...",
+  "Pantalones de vestir...",
+];
+
+function TypewriterPlaceholder() {
+  const [text, setText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [loopNum, setLoopNum] = useState(0);
+  const [typingSpeed, setTypingSpeed] = useState(100);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+    const i = loopNum % SEARCH_PHRASES.length;
+    const fullText = SEARCH_PHRASES[i];
+    const handleType = () => {
+      setText((cur) =>
+        isDeleting
+          ? fullText.substring(0, cur.length - 1)
+          : fullText.substring(0, cur.length + 1)
+      );
+      setTypingSpeed(isDeleting ? 30 : 60);
+      if (!isDeleting && text === fullText) {
+        setTypingSpeed(2000);
+        setIsDeleting(true);
+      } else if (isDeleting && text === "") {
+        setIsDeleting(false);
+        setLoopNum((p) => p + 1);
+        setTypingSpeed(500);
+      }
+    };
+    const timer = setTimeout(handleType, typingSpeed);
+    return () => clearTimeout(timer);
+  }, [text, isDeleting, loopNum, typingSpeed, mounted]);
+
+  return (
+    <div
+      className="pointer-events-none flex min-w-0 items-center overflow-hidden text-base whitespace-nowrap text-gray-400"
+      aria-hidden="true"
+    >
+      <span className="truncate">
+        {mounted ? text : "¿Qué estás buscando?"}
+      </span>
+      {mounted && (
+        <span className="bg-primary animate-blink ml-[2px] inline-block h-[20px] w-[1.5px] shrink-0" />
+      )}
+    </div>
+  );
+}
+
+/* ─── Sector order ─── */
 const SECTOR_ORDER: Sector[] = [
   "scrubs",
   "universitario",
@@ -36,19 +98,16 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const [, startTransition] = useTransition();
   const router = useRouter();
 
-  /* ── Lock body scroll + auto-focus + reset query ── */
+  /* ── Lock body scroll + reset query (sin auto-focus: el teclado abre solo cuando el usuario toca el input) ── */
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
-      // Reset state asynchronously to avoid react-hooks/set-state-in-effect
       const resetTimer = setTimeout(() => {
         setQuery("");
         setResults([]);
       }, 0);
-      const focusTimer = setTimeout(() => inputRef.current?.focus(), 50);
       return () => {
         clearTimeout(resetTimer);
-        clearTimeout(focusTimer);
         document.body.style.overflow = "";
       };
     }
@@ -187,15 +246,22 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           >
             {isLoading ? "sync" : "search"}
           </span>
-          <input
-            ref={inputRef}
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="¿Qué estás buscando?"
-            className="min-w-0 flex-1 text-base text-gray-800 outline-none placeholder:text-gray-400"
-            aria-label="Buscar productos, categorías o servicios"
-          />
+          <div className="relative min-w-0 flex-1">
+            <input
+              ref={inputRef}
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className="w-full text-base text-gray-800 outline-none"
+              aria-label="Buscar productos, categorías o servicios"
+            />
+            {/* Typewriter placeholder — visible solo cuando el input está vacío */}
+            {query === "" && (
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center">
+                <TypewriterPlaceholder />
+              </div>
+            )}
+          </div>
           <button
             onClick={onClose}
             className="text-primary/60 hover:bg-primary/5 flex size-8 shrink-0 items-center justify-center rounded-full transition-colors"
