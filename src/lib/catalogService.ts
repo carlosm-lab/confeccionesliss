@@ -31,6 +31,8 @@ export interface DbProduct {
   sector: string | null; // catálogo/sector (scrubs, escolar, etc.)
   tallas: string[] | null; // ["S","M","L","XL"]
   colores: { name: string; hex: string }[] | null;
+  /** Etiqueta editable para la sección de colores en la ficha pública */
+  colores_label: string | null;
   material: string | null;
   caracteristicas: string[] | null;
   created_at: string | null;
@@ -109,7 +111,7 @@ export const PRODUCT_SELECT = `
   id, name, description, short_description, price, old_price,
   offer_ends_at, offer_starts_at, offer_terms, category, category_id, tags,
   image_path, images, is_active, slug, sector,
-  tallas, colores, material, caracteristicas,
+  tallas, colores, colores_label, material, caracteristicas,
   price_by_size, offer_by_size,
   seo_title, seo_description, seo_keywords, seo_robots, seo_publisher,
   created_at, updated_at,

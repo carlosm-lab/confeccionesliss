@@ -62,6 +62,8 @@ interface FormData {
   offer_by_size: Record<string, string>;
   /** Colores disponibles — array de { name, hex } */
   colores: { name: string; hex: string }[];
+  /** Etiqueta editable para la sección de colores */
+  colores_label: string;
   material: string;
   /** Características del producto — lista de strings para bullets con check */
   caracteristicas: string[];
@@ -124,6 +126,7 @@ export default function ProductModal({
     price_by_size: {},
     offer_by_size: {},
     colores: [],
+    colores_label: "",
     material: "",
     caracteristicas: [],
     offer_terms: "",
@@ -218,6 +221,8 @@ export default function ProductModal({
           );
         })(),
         colores: Array.isArray(product.colores) ? product.colores : [],
+        colores_label:
+          (product as { colores_label?: string | null }).colores_label || "",
         material: product.material || "",
         caracteristicas: Array.isArray(product.caracteristicas)
           ? product.caracteristicas
@@ -261,6 +266,7 @@ export default function ProductModal({
         price_by_size: {},
         offer_by_size: {},
         colores: [],
+        colores_label: "",
         material: "",
         caracteristicas: [],
         offer_terms: "",
@@ -485,6 +491,7 @@ export default function ProductModal({
         categories.find((c) => c.slug === formData.category)?.id || null,
       tallas: formData.tallas.length > 0 ? formData.tallas : [],
       colores: formData.colores.length > 0 ? formData.colores : [],
+      colores_label: formData.colores_label?.trim() || null,
       material: formData.material || null,
       caracteristicas:
         formData.caracteristicas.length > 0 ? formData.caracteristicas : [],
@@ -605,7 +612,10 @@ export default function ProductModal({
                     htmlFor="product-description"
                     className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300"
                   >
-                    Descripción
+                    Descripción{" "}
+                    <span className="ml-1 font-normal text-slate-400">
+                      (descripción larga, aparece en la ficha del producto)
+                    </span>
                   </label>
                   <textarea
                     id="product-description"
@@ -624,7 +634,8 @@ export default function ProductModal({
                   >
                     Descripción Corta{" "}
                     <span className="ml-1 font-normal text-slate-400">
-                      (aparece debajo del título en la ficha del producto)
+                      (aparece debajo de la descripción, en mayúsculas y
+                      negrita)
                     </span>
                   </label>
                   <input
@@ -1230,6 +1241,16 @@ export default function ProductModal({
                         (se muestran como círculos de color en la ficha)
                       </span>
                     </span>
+                    {/* Etiqueta editable de la sección de colores */}
+                    <input
+                      id="colores-label"
+                      name="colores_label"
+                      value={formData.colores_label}
+                      onChange={handleChange}
+                      placeholder="Ej: Colores disponibles, Variantes, Tonos..."
+                      maxLength={80}
+                      className="focus:ring-primary/20 focus:border-primary mb-3 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 transition-all outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                    />
                     <div className="flex gap-2">
                       <input
                         type="text"

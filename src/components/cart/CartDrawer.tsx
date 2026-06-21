@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import Image from "next/image";
@@ -128,9 +128,10 @@ export function CartDrawer() {
     return () => document.removeEventListener("keydown", handleEsc);
   }, [isCartOpen, closeDrawer]);
 
-  // safeCartItems evita mismatch de hidratación: usa [] en SSR, el array real después de montar
+  // Items con price=0 son productos "A la medida" sin precio fijo — se excluyen del subtotal
   const subtotal = safeCartItems.reduce((total, item) => {
-    return total + (item.product.price || 0) * item.quantity;
+    if (!item.product.price) return total; // A la medida: precio=0, no suma
+    return total + item.product.price * item.quantity;
   }, 0);
 
   const shippingCost = shippingInfo?.cost ?? 0;
@@ -387,7 +388,11 @@ export function CartDrawer() {
                           {item.quantity}× {item.product.name}
                         </span>
                         <span className="shrink-0 font-semibold text-[var(--color-on-surface)] tabular-nums">
-                          {formatPrice(item.product.price * item.quantity)}
+                          {item.product.price === 0 ? (
+                            <span className="text-amber-600">A cotizar</span>
+                          ) : (
+                            formatPrice(item.product.price * item.quantity)
+                          )}
                         </span>
                       </div>
                     ))}
@@ -713,8 +718,16 @@ export function CartDrawer() {
                             </div>
 
                             {/* Price */}
-                            <p className="text-[15px] font-bold text-[var(--color-primary)] tabular-nums">
-                              {formatPrice(item.product.price)}
+                            <p className="text-[15px] font-bold tabular-nums">
+                              {item.product.price === 0 ? (
+                                <span className="text-amber-600">
+                                  A cotizar
+                                </span>
+                              ) : (
+                                <span className="text-[var(--color-primary)]">
+                                  {formatPrice(item.product.price)}
+                                </span>
+                              )}
                             </p>
                           </div>
                         </div>

@@ -177,8 +177,6 @@ export function ProductDetailClient({
   const placeholderCount = Math.max(0, 4 - allImages.length);
 
   // ── Carrito ───────────────────────────────────────────────────
-  // PUNTO 3: Agregar nunca redirige a WhatsApp, sin importar la talla.
-  // La talla "A la medida" se agrega normalmente al carrito igual que cualquier otra.
   function handleAddToCart() {
     if (tallas.length > 0 && !selectedSize) {
       toast.error(
@@ -190,15 +188,24 @@ export function ProductDetailClient({
 
     const sizePart = selectedSize ? `Talla: ${selectedSize}` : "";
     const notePart = customNote ? `Nota: ${customNote}` : "";
-    const noteText = [sizePart, notePart].filter(Boolean).join(" · ");
+
+    // Productos "A la medida": sin precio fijo — se cotiza por WhatsApp.
+    // Se usa price=0 para que no sume al subtotal del carrito.
+    // La nota predefinida aclara al vendedor que debe cotizar.
+    const aLaMedida = selectedSize === "A la medida";
+    const quotePart = aLaMedida
+      ? "⚠️ Sin precio fijo — requiere cotización por WhatsApp"
+      : "";
+    const noteText = [quotePart, sizePart, notePart]
+      .filter(Boolean)
+      .join(" · ");
 
     addToCart(
       {
         id: product.id,
         name: product.name,
-        price: cartPrice,
-        // old_price: precio tachado al momento de agregar al carrito
-        old_price: displayOldPrice,
+        price: aLaMedida ? 0 : cartPrice,
+        old_price: aLaMedida ? null : displayOldPrice,
         image_path: getProductMainImage(product),
         slug: `${sector}/${slug}`,
       },
@@ -209,14 +216,9 @@ export function ProductDetailClient({
     setIsCartOpen(true);
   }
 
-  // ── Pedir ahora (PUNTO 2) ─────────────────────────────────────
-  // Reutiliza exactamente handleCotizar (buildQuoteUrl) — mismo mecanismo
-  // que el flujo de cotización por WhatsApp ya implementado.
-  // Agrega el producto al carrito Y abre WhatsApp inmediatamente.
+  // ── Pedir ahora ──────────────────────────────────────────────
   function handlePedirAhora() {
-    // Primero agregar al carrito (para mantener registro)
     handleAddToCart();
-    // Inmediatamente disparar el flujo de WhatsApp
     handleCotizar();
   }
 
@@ -380,12 +382,22 @@ export function ProductDetailClient({
           </div>
         </div>
 
-        {/* Right column: Product info */}
+        {/* ── RIGHT COLUMN ─────────────────────────────────────────────
+            Orden definitivo:
+            1. Breadcrumb
+            2. Tags
+            3. Título + Desc. Corta
+            4. Descripción larga
+            5. Características
+            6. Colores
+            7. Tallas
+            8. BuyBox (Precio → Oferta → Personalizar → CTAs)
+        ─────────────────────────────────────────────────────────────── */}
         <div
           className="animate-fade-in-up flex flex-col gap-6"
           style={{ animationDelay: "200ms" }}
         >
-          {/* Breadcrumb — solo páginas anteriores, etiquetas de una sola palabra */}
+          {/* 1 ── Breadcrumb */}
           <Breadcrumb
             items={[
               { label: "Catálogo", href: "/catalogo" },
@@ -396,32 +408,85 @@ export function ProductDetailClient({
             ]}
           />
 
-          {/* Título */}
+          {/* 3 ── Título */}
           <div>
             <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">
               {product.name}
             </h1>
-            {product.short_description && (
-              <p className="mt-1 text-sm text-slate-500">
-                {product.short_description}
-              </p>
-            )}
           </div>
 
-          {/* Description */}
-          <div className="prose prose-sm prose-slate max-w-none">
-            {product.description ? (
-              <p className="text-sm leading-relaxed text-slate-600">
-                {product.description}
-              </p>
-            ) : (
-              <p className="text-sm text-slate-500 italic">
-                Sin descripción detallada.
-              </p>
-            )}
-          </div>
+          {/* 4 ── Descripción larga */}
+          {product.description && (
+            <p className="text-sm leading-relaxed text-slate-600">
+              {product.description}
+            </p>
+          )}
 
-          {/* Available sizes */}
+          {/* 4b ── Descripción corta — MAYUSC + negrita, mismo tamaño/fuente */}
+          {product.short_description && (
+            <p className="text-sm font-bold tracking-wide text-slate-700 uppercase">
+              {product.short_description}
+            </p>
+          )}
+
+          {/* 5 ── Características */}
+          {caracteristicas.length > 0 && (
+            <ul className="flex flex-col gap-1.5">
+              {caracteristicas.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-sm text-slate-600"
+                >
+                  <span
+                    className="material-symbols-outlined text-primary mt-0.5 shrink-0"
+                    style={{ fontSize: "1rem" }}
+                    aria-hidden="true"
+                  >
+                    check_circle
+                  </span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {/* 6 ── Colores */}
+          {colores.length > 0 && (
+            <div>
+              <p className="mb-2 text-xs font-semibold tracking-wider text-slate-500 uppercase">
+                {product.colores_label ?? "Colores disponibles"}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {colores.map((color) => (
+                  <div
+                    key={color.hex}
+                    className="group flex items-center gap-1.5"
+                    title={color.name}
+                  >
+                    <span
+                      className="h-6 w-6 rounded-full border border-slate-200 shadow-sm"
+                      style={{ backgroundColor: color.hex }}
+                    />
+                    <span className="text-xs text-slate-500">{color.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 6b ── Material */}
+          {product.material && (
+            <div>
+              <p className="text-xs font-semibold tracking-wider text-slate-500 uppercase">
+                Material:{" "}
+                <span className="font-medium text-slate-700 normal-case">
+                  {product.material}
+                </span>
+              </p>
+            </div>
+          )}
+
+          {/* 7 ── Tallas */}
           {tallas.length > 0 && (
             <div>
               <p className="mb-2 text-xs font-semibold tracking-wider text-slate-500 uppercase">
@@ -458,148 +523,82 @@ export function ProductDetailClient({
             </div>
           )}
 
-          {/* Available colors */}
-          {colores.length > 0 && (
-            <div>
-              <p className="mb-2 text-xs font-semibold tracking-wider text-slate-500 uppercase">
-                Colores disponibles
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {colores.map((color) => (
-                  <div
-                    key={color.hex}
-                    className="group flex items-center gap-1.5"
-                    title={color.name}
-                  >
-                    <span
-                      className="h-6 w-6 rounded-full border border-slate-200 shadow-sm"
-                      style={{ backgroundColor: color.hex }}
-                    />
-                    <span className="text-xs text-slate-500">{color.name}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Characteristics */}
-          {caracteristicas.length > 0 && (
-            <ul className="flex flex-col gap-1.5">
-              {caracteristicas.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-sm text-slate-600"
-                >
+          {/* 8 ── BuyBox */}
+          <div
+            className="animate-fade-in-up flex flex-col gap-5 rounded-2xl border border-slate-200 bg-white p-5 shadow-md"
+            style={{ animationDelay: "250ms" }}
+          >
+            {/* Precio */}
+            <div className="flex flex-col gap-1">
+              {isALaMedida ? (
+                <li className="flex items-start gap-2 text-sm text-slate-600">
                   <span
                     className="material-symbols-outlined text-primary mt-0.5 shrink-0"
                     style={{ fontSize: "1rem" }}
                     aria-hidden="true"
                   >
-                    check_circle
+                    chat
                   </span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          )}
-
-          {/* Tags */}
-          {Array.isArray(product.tags) && product.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1.5">
-              {(product.tags as string[]).map((tag) => (
-                <span
-                  key={tag}
-                  className="bg-primary/8 text-primary rounded-full px-3 py-0.5 text-xs font-medium"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
-
-          {/* Buy Box */}
-          <div
-            className="animate-fade-in-up flex flex-col gap-5 rounded-2xl bg-slate-50 p-5 shadow-sm"
-            style={{ animationDelay: "250ms" }}
-          >
-            {/* Price */}
-            <div className="flex flex-col gap-1">
-              {isALaMedida ? (
-                /* A la medida: sin precio fijo, deriva a WhatsApp */
-                /* PUNTO 4: texto actualizado */
-                <div className="flex items-center gap-2 rounded-xl border border-green-100 bg-green-50 px-3 py-2.5 text-xs font-medium text-green-700">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="h-4 w-4 shrink-0"
-                    aria-hidden="true"
-                  >
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                  </svg>
                   <span>
                     Los precios por servicio a la medida se cotizan por
                     WhatsApp.
                   </span>
-                </div>
+                </li>
               ) : (
                 <div className="flex items-end gap-3">
                   {selectedSizeBasePrice !== null ? (
-                    /* Talla seleccionada — muestra precio efectivo */
-                    <p className="text-2xl font-bold text-gray-900">
+                    <p className="text-primary text-3xl leading-none font-extrabold tracking-tight">
                       ${effectivePrice.toFixed(2)}
                     </p>
                   ) : tallas.length > 0 && !selectedSize ? (
-                    /* Sin talla seleccionada — "Desde" precio mínimo (oferta o base) */
-                    <p className="text-2xl font-bold text-gray-900">
+                    <p className="text-primary text-3xl leading-none font-extrabold tracking-tight">
                       Desde $
                       {(globalMinOfferPrice ?? globalMinBasePrice).toFixed(2)}
                     </p>
                   ) : (
-                    /* Producto sin tallas — precio global */
-                    <p className="text-2xl font-bold text-gray-900">
+                    <p className="text-primary text-3xl leading-none font-extrabold tracking-tight">
                       ${Number(product.price).toFixed(2)}
                     </p>
                   )}
-                  {/* Precio tachado:
-                      - Sin talla: globalMinBasePrice tachado cuando hay oferta mínima
-                      - Con talla: displayOldPrice (precio base de esa talla) */}
                   {!selectedSize && globalMinOfferPrice !== null ? (
-                    <p className="text-lg font-medium text-slate-400 line-through">
+                    <p className="mb-0.5 text-base text-slate-400 line-through">
                       ${globalMinBasePrice.toFixed(2)}
                     </p>
                   ) : displayOldPrice ? (
-                    <p className="text-lg font-medium text-slate-400 line-through">
+                    <p className="mb-0.5 text-base text-slate-400 line-through">
                       ${displayOldPrice.toFixed(2)}
                     </p>
                   ) : null}
+                  {onSale && displayOldPrice && displayOldPrice > cartPrice && (
+                    <span className="mb-0.5 rounded-full bg-red-100 px-2 py-0.5 text-xs font-bold text-red-600">
+                      {Math.round(
+                        ((displayOldPrice - cartPrice) / displayOldPrice) * 100
+                      )}
+                      % OFF
+                    </span>
+                  )}
                 </div>
-              )}
-              {product.material && (
-                <p className="text-xs text-slate-500">
-                  Material:{" "}
-                  <span className="font-medium">{product.material}</span>
-                </p>
               )}
             </div>
 
-            {/* PUNTO 6: Sección unificada de oferta — tiempo restante + términos en una sola tarjeta */}
-            {(onSale && offerEndsAt && !isOfferScheduled) ||
-            isOfferScheduled ||
-            offerTerms ? (
-              <div className="overflow-hidden rounded-xl border border-red-100 bg-red-50">
-                {/* Contador de tiempo activo */}
+            {/* Oferta — lista estilo características con icono azul de marca */}
+            {((onSale && offerEndsAt && !isOfferScheduled) ||
+              isOfferScheduled ||
+              offerTerms) && (
+              <ul className="flex flex-col gap-1.5">
+                {/* Vigencia activa */}
                 {onSale && offerEndsAt && !isOfferScheduled && (
-                  <div className="flex items-center gap-2 px-3 py-2.5 text-xs font-medium text-red-700">
+                  <li className="flex items-start gap-2 text-sm text-slate-600">
                     <span
-                      className="material-symbols-outlined shrink-0"
-                      style={{ fontSize: "16px" }}
+                      className="material-symbols-outlined text-primary mt-0.5 shrink-0"
+                      style={{ fontSize: "1rem" }}
+                      aria-hidden="true"
                     >
                       timer
                     </span>
                     <span>
                       Oferta válida hasta el{" "}
-                      <strong>
+                      <strong className="text-slate-800">
                         {offerEndsAt.toLocaleDateString("es-SV", {
                           day: "2-digit",
                           month: "long",
@@ -609,21 +608,22 @@ export function ProductDetailClient({
                         })}
                       </strong>
                     </span>
-                  </div>
+                  </li>
                 )}
 
-                {/* Oferta programada (azul) */}
+                {/* Oferta programada */}
                 {isOfferScheduled && offerStartsAt && (
-                  <div className="flex items-center gap-2 rounded-xl border border-blue-100 bg-blue-50 px-3 py-2.5 text-xs font-medium text-blue-700">
+                  <li className="flex items-start gap-2 text-sm text-slate-600">
                     <span
-                      className="material-symbols-outlined shrink-0"
-                      style={{ fontSize: "16px" }}
+                      className="material-symbols-outlined text-primary mt-0.5 shrink-0"
+                      style={{ fontSize: "1rem" }}
+                      aria-hidden="true"
                     >
                       schedule
                     </span>
                     <span>
-                      La oferta comienza el{" "}
-                      <strong>
+                      Disponible desde el{" "}
+                      <strong className="text-slate-800">
                         {offerStartsAt.toLocaleDateString("es-SV", {
                           day: "2-digit",
                           month: "long",
@@ -633,69 +633,55 @@ export function ProductDetailClient({
                         })}
                       </strong>
                     </span>
-                  </div>
+                  </li>
                 )}
 
-                {/* Términos de la oferta — desplegable dentro de la misma tarjeta */}
+                {/* Condiciones */}
                 {offerTerms && (
-                  <details className="group border-t border-red-100">
-                    <summary className="flex cursor-pointer list-none items-center gap-2 px-3 py-2.5 text-xs font-semibold text-amber-700 transition-colors hover:bg-amber-50/60">
-                      <span className="material-symbols-outlined text-[16px] text-amber-500">
-                        warning
-                      </span>
-                      <span>Esta oferta tiene términos especiales</span>
-                      <span className="material-symbols-outlined ml-auto text-[16px] transition-transform group-open:rotate-180">
-                        expand_more
-                      </span>
-                    </summary>
-                    <p className="px-3 pb-3 text-xs leading-relaxed text-amber-700">
-                      {offerTerms}
-                    </p>
-                  </details>
+                  <li className="flex items-start gap-2 text-sm text-slate-600">
+                    <span
+                      className="material-symbols-outlined text-primary mt-0.5 shrink-0"
+                      style={{ fontSize: "1rem" }}
+                      aria-hidden="true"
+                    >
+                      info
+                    </span>
+                    <span>{offerTerms}</span>
+                  </li>
                 )}
-              </div>
-            ) : null}
+              </ul>
+            )}
 
-            {/* Personalization accordion */}
-            <details className="group cursor-pointer">
-              <summary className="hover:text-primary flex list-none items-center justify-between text-sm font-semibold text-slate-700 transition-colors">
-                <div className="flex items-center gap-2">
-                  <span className="material-symbols-outlined text-[1.125rem]">
-                    edit_note
-                  </span>
-                  <span>¿Necesitas personalizar tu pedido?</span>
-                </div>
-                <span className="material-symbols-outlined transition-transform group-open:rotate-180">
-                  expand_more
+            {/* Personalización — siempre visible */}
+            <div>
+              <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-700">
+                <span className="material-symbols-outlined text-[1.125rem]">
+                  edit_note
                 </span>
-              </summary>
-              <div className="pt-3">
-                <textarea
-                  id="custom-note"
-                  className="focus:border-primary focus:ring-primary w-full rounded-xl border border-slate-200 bg-white p-3 text-sm text-slate-900 placeholder-slate-400 transition-all outline-none focus:ring-1"
-                  placeholder="Ej. Talla exacta, color preferido, bordado personalizado, nombre a bordar... (Máx. 500 caracteres)"
-                  rows={2}
-                  maxLength={500}
-                  value={customNote}
-                  onChange={(e) => setCustomNote(e.target.value)}
-                />
+                <span>¿Necesitas personalizar tu pedido?</span>
               </div>
-            </details>
+              <textarea
+                id="custom-note"
+                className="focus:border-primary focus:ring-primary w-full rounded-xl border border-slate-200 bg-white p-3 text-sm text-slate-900 placeholder-slate-400 transition-all outline-none focus:ring-1"
+                placeholder="Ej. Talla exacta, color preferido, bordado personalizado, nombre a bordar... (Máx. 500 caracteres)"
+                rows={2}
+                maxLength={500}
+                value={customNote}
+                onChange={(e) => setCustomNote(e.target.value)}
+              />
+            </div>
 
-            {/* PUNTOS 1, 2, 7 — Nuevo orden: Agregar → Pedir ahora → Compartir */}
-            {/* Botón verde reemplazado por azul de marca (--color-primary / bg-primary) */}
+            {/* CTAs — Agregar (outline/secundario) | Pedir ahora (filled/primario) | Compartir (icono) */}
             <div className="flex gap-3">
-              {/* Agregar al carrito */}
               <button
                 type="button"
                 onClick={handleAddToCart}
-                className="bg-primary hover:bg-primary/90 flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl py-3.5 font-bold text-white shadow-md transition hover:shadow-lg active:scale-[0.97]"
+                className="border-primary text-primary hover:bg-primary/5 flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border-2 bg-white py-3.5 font-bold transition active:scale-[0.97]"
               >
                 <span className="material-symbols-outlined">shopping_cart</span>
                 Agregar
               </button>
 
-              {/* Pedir ahora — reutiliza el mismo flujo de handleCotizar (buildQuoteUrl/WhatsApp) */}
               <button
                 type="button"
                 onClick={handlePedirAhora}
@@ -714,7 +700,6 @@ export function ProductDetailClient({
                 Pedir ahora
               </button>
 
-              {/* Compartir — al final, según el nuevo orden */}
               <button
                 type="button"
                 onClick={handleCopy}
