@@ -451,7 +451,7 @@ export function Navbar() {
                       : "transform 0.3s cubic-bezier(0.32,0.72,0,1), opacity 0.3s ease",
                     opacity: Math.max(0, 1 + menuDragY / 120),
                   }}
-                  className="border-primary/10 animate-in fade-in slide-in-from-top-2 fixed top-[3.5rem] right-4 left-4 z-50 rounded-2xl border bg-white/95 shadow-[0_10px_25px_-5px_rgba(20,48,103,0.15),0_8px_16px_-6px_rgba(20,48,103,0.1)] backdrop-blur-md duration-200 sm:absolute sm:top-12 sm:right-0 sm:left-auto sm:w-64"
+                  className="border-primary/10 animate-in fade-in slide-in-from-top-2 absolute top-12 right-0 z-50 w-64 rounded-2xl border bg-white/95 shadow-[0_10px_25px_-5px_rgba(20,48,103,0.15),0_8px_16px_-6px_rgba(20,48,103,0.1)] backdrop-blur-md duration-200"
                 >
                   {/* Nav links */}
                   <ul className="space-y-1 p-4">
