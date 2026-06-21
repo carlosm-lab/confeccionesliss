@@ -482,7 +482,7 @@ export function GuestBell() {
                   </span>
                 </button>
                 <span className="text-sm font-bold text-slate-900">
-                  Detalle
+                  Regresar
                 </span>
                 <div className="ml-auto flex items-center gap-1">
                   <button
