@@ -928,7 +928,7 @@ function ConfirmModal({
 }: ConfirmModalProps) {
   return (
     <div
-      className="absolute inset-0 z-20 flex items-center justify-center p-6"
+      className="absolute inset-0 z-20 flex items-center justify-center bg-white/70 p-6 backdrop-blur-sm"
       role="alertdialog"
       aria-modal="true"
     >
