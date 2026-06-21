@@ -86,6 +86,26 @@ export function ProductDetailClient({
   const price = Number(product.price);
   const oldPrice = product.old_price ? Number(product.old_price) : null;
   const offerTerms = (product as { offer_terms?: string | null }).offer_terms;
+  const offerEndsAt = (product as { offer_ends_at?: string | null })
+    .offer_ends_at
+    ? new Date(
+        (product as { offer_ends_at?: string | null }).offer_ends_at as string
+      )
+    : null;
+  const offerStartsAt = (product as { offer_starts_at?: string | null })
+    .offer_starts_at
+    ? new Date(
+        (product as { offer_starts_at?: string | null })
+          .offer_starts_at as string
+      )
+    : null;
+  const now = new Date();
+  const isOfferScheduled = !!(offerStartsAt && offerStartsAt > now);
+  const wholesalePrice = (product as { wholesale_price?: number | null })
+    .wholesale_price;
+  const wholesaleMinQty = (product as { wholesale_min_qty?: number | null })
+    .wholesale_min_qty;
+  const laborPrice = (product as { labor_price?: number | null }).labor_price;
 
   // Contexts
   const { isFavorite, toggleFavorite } = useFavorites();
@@ -500,6 +520,20 @@ export function ProductDetailClient({
             </ul>
           )}
 
+          {/* Tags */}
+          {Array.isArray(product.tags) && product.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5">
+              {(product.tags as string[]).map((tag) => (
+                <span
+                  key={tag}
+                  className="bg-primary/8 text-primary rounded-full px-3 py-0.5 text-xs font-medium"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+
           {/* Buy Box */}
           <div
             className="animate-fade-in-up flex flex-col gap-5 rounded-2xl bg-slate-50 p-5 shadow-sm"
@@ -529,6 +563,82 @@ export function ProductDetailClient({
                 </p>
               )}
             </div>
+
+            {/* Offer expiration / scheduled notice */}
+            {onSale && offerEndsAt && !isOfferScheduled && (
+              <div className="flex items-center gap-2 rounded-xl border border-red-100 bg-red-50 px-3 py-2.5 text-xs font-medium text-red-700">
+                <span
+                  className="material-symbols-outlined shrink-0"
+                  style={{ fontSize: "16px" }}
+                >
+                  timer
+                </span>
+                <span>
+                  Oferta válida hasta el{" "}
+                  <strong>
+                    {offerEndsAt.toLocaleDateString("es-SV", {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </strong>
+                </span>
+              </div>
+            )}
+            {isOfferScheduled && offerStartsAt && (
+              <div className="flex items-center gap-2 rounded-xl border border-blue-100 bg-blue-50 px-3 py-2.5 text-xs font-medium text-blue-700">
+                <span
+                  className="material-symbols-outlined shrink-0"
+                  style={{ fontSize: "16px" }}
+                >
+                  schedule
+                </span>
+                <span>
+                  La oferta comienza el{" "}
+                  <strong>
+                    {offerStartsAt.toLocaleDateString("es-SV", {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </strong>
+                </span>
+              </div>
+            )}
+
+            {/* Wholesale & labor price info */}
+            {(wholesalePrice || laborPrice) && (
+              <div className="flex flex-col gap-2 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-xs">
+                <p className="flex items-center gap-1.5 font-semibold text-blue-700">
+                  <span
+                    className="material-symbols-outlined"
+                    style={{ fontSize: "15px" }}
+                  >
+                    payments
+                  </span>
+                  Precios Especiales
+                </p>
+                {wholesalePrice && wholesaleMinQty && (
+                  <p className="text-blue-800">
+                    Mayoreo: <strong>${wholesalePrice.toFixed(2)}</strong> c/u
+                    al pedir <strong>{wholesaleMinQty}+</strong> unidades
+                  </p>
+                )}
+                {laborPrice && (
+                  <p className="text-blue-800">
+                    Solo mano de obra: <strong>${laborPrice.toFixed(2)}</strong>{" "}
+                    (si traes tu propia tela)
+                  </p>
+                )}
+                <p className="text-[10px] text-blue-500">
+                  Consulta disponibilidad por WhatsApp antes de hacer tu pedido.
+                </p>
+              </div>
+            )}
 
             {/* Offer terms warning */}
             {offerTerms && (

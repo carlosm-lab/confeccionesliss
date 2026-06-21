@@ -37,6 +37,8 @@ interface ProductModalProps {
 interface FormData {
   name: string;
   description: string;
+  /** Descripción corta — se muestra debajo del título en la vista de detalle */
+  short_description: string;
   price: string;
   old_price: string;
   /** Duración de oferta temporal (en el precio base) */
@@ -57,7 +59,11 @@ interface FormData {
   badge_text: string;
   price_suffix: string;
   tallas: string[];
+  /** Colores disponibles — array de { name, hex } */
+  colores: { name: string; hex: string }[];
   material: string;
+  /** Características del producto — lista de strings para bullets con check */
+  caracteristicas: string[];
   // Precios avanzados
   wholesale_price: string;
   wholesale_min_qty: string;
@@ -95,9 +101,16 @@ export default function ProductModal({
     };
   }, []);
 
+  const [colorInput, setColorInput] = useState<{ name: string; hex: string }>({
+    name: "",
+    hex: "#000000",
+  });
+  const [caracteristicaInput, setCaracteristicaInput] = useState("");
+
   const [formData, setFormData] = useState<FormData>({
     name: "",
     description: "",
+    short_description: "",
     price: "",
     old_price: "",
     offer_indefinida: false,
@@ -115,7 +128,9 @@ export default function ProductModal({
     badge_text: "",
     price_suffix: "",
     tallas: [],
+    colores: [],
     material: "",
+    caracteristicas: [],
     wholesale_price: "",
     wholesale_min_qty: "",
     labor_price: "",
@@ -156,6 +171,7 @@ export default function ProductModal({
       setFormData({
         name: product.name || "",
         description: product.description || "",
+        short_description: product.short_description || "",
         price: product.price?.toString() || "",
         old_price: product.old_price?.toString() || "",
         offer_indefinida: !product.offer_ends_at && !!product.old_price,
@@ -181,7 +197,11 @@ export default function ProductModal({
         badge_text: product.badge_text || "",
         price_suffix: product.price_suffix || "",
         tallas: Array.isArray(product.tallas) ? product.tallas : [],
+        colores: Array.isArray(product.colores) ? product.colores : [],
         material: product.material || "",
+        caracteristicas: Array.isArray(product.caracteristicas)
+          ? product.caracteristicas
+          : [],
         wholesale_price: product.wholesale_price?.toString() || "",
         wholesale_min_qty: product.wholesale_min_qty?.toString() || "",
         labor_price: product.labor_price?.toString() || "",
@@ -207,6 +227,7 @@ export default function ProductModal({
       setFormData({
         name: "",
         description: "",
+        short_description: "",
         price: "",
         old_price: "",
         offer_indefinida: false,
@@ -224,7 +245,9 @@ export default function ProductModal({
         badge_text: "",
         price_suffix: "",
         tallas: [],
+        colores: [],
         material: "",
+        caracteristicas: [],
         wholesale_price: "",
         wholesale_min_qty: "",
         labor_price: "",
@@ -236,9 +259,13 @@ export default function ProductModal({
         seo_robots: "",
         seo_publisher: "",
       });
+      setColorInput({ name: "", hex: "#000000" });
+      setCaracteristicaInput("");
       setSlugManuallyEdited(false);
     }
     setTagInput("");
+    setColorInput({ name: "", hex: "#000000" });
+    setCaracteristicaInput("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product?.id, isOpen]);
 
@@ -448,6 +475,7 @@ export default function ProductModal({
     const payload: Partial<Product> = {
       name: formData.name,
       description: formData.description || null,
+      short_description: formData.short_description?.trim() || null,
       price: parsedPrice,
       old_price: parsedOldPrice,
       // 'catalog' NO es columna real en la tabla — se guarda como 'sector'
@@ -471,7 +499,10 @@ export default function ProductModal({
       badge_text: formData.badge_text || null,
       price_suffix: formData.price_suffix || null,
       tallas: formData.tallas.length > 0 ? formData.tallas : [],
+      colores: formData.colores.length > 0 ? formData.colores : [],
       material: formData.material || null,
+      caracteristicas:
+        formData.caracteristicas.length > 0 ? formData.caracteristicas : [],
       // Precios avanzados
       wholesale_price: parsedWholesale,
       wholesale_min_qty: parsedWholesaleMinQty,
@@ -594,6 +625,29 @@ export default function ProductModal({
                     maxLength={2000}
                     className="focus:ring-primary/20 focus:border-primary w-full resize-none rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 transition-all outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
                   ></textarea>
+                </div>
+                <div>
+                  <label
+                    htmlFor="product-short-description"
+                    className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                  >
+                    Descripción Corta{" "}
+                    <span className="ml-1 font-normal text-slate-400">
+                      (aparece debajo del título en la ficha del producto)
+                    </span>
+                  </label>
+                  <input
+                    id="product-short-description"
+                    name="short_description"
+                    value={formData.short_description}
+                    onChange={handleChange}
+                    placeholder="Ej: Uniforme hospitalario de alta durabilidad, disponible a la medida."
+                    maxLength={200}
+                    className="focus:ring-primary/20 focus:border-primary w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 transition-all outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                  />
+                  <p className="mt-0.5 text-right text-[10px] text-slate-400">
+                    {(formData.short_description || "").length}/200 caracteres
+                  </p>
                 </div>
               </div>
 
@@ -1115,6 +1169,200 @@ export default function ProductModal({
                         </button>
                       ))}
                     </div>
+                  </div>
+
+                  {/* Características (bullets con check en la vista pública) */}
+                  <div className="sm:col-span-2">
+                    <span className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400">
+                      Características del Producto{" "}
+                      <span className="font-normal text-slate-400">
+                        (se muestran como lista con ✔ en la ficha)
+                      </span>
+                    </span>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        id="caracteristica-input"
+                        value={caracteristicaInput}
+                        onChange={(e) => setCaracteristicaInput(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" && caracteristicaInput.trim()) {
+                            e.preventDefault();
+                            const item = caracteristicaInput.trim();
+                            if (!formData.caracteristicas.includes(item)) {
+                              setFormData((prev) => ({
+                                ...prev,
+                                caracteristicas: [
+                                  ...prev.caracteristicas,
+                                  item,
+                                ],
+                              }));
+                            }
+                            setCaracteristicaInput("");
+                          }
+                        }}
+                        placeholder="Ej: Tela anti-ácida, bolsillos funcionales... (Enter para agregar)"
+                        className="focus:ring-primary/20 flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const item = caracteristicaInput.trim();
+                          if (
+                            item &&
+                            !formData.caracteristicas.includes(item)
+                          ) {
+                            setFormData((prev) => ({
+                              ...prev,
+                              caracteristicas: [...prev.caracteristicas, item],
+                            }));
+                            setCaracteristicaInput("");
+                          }
+                        }}
+                        className="rounded-lg bg-slate-100 px-3 py-2 text-sm font-medium transition-colors hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20"
+                      >
+                        Agregar
+                      </button>
+                    </div>
+                    {formData.caracteristicas.length > 0 && (
+                      <ul className="mt-2 flex flex-col gap-1">
+                        {formData.caracteristicas.map((item, idx) => (
+                          <li
+                            key={idx}
+                            className="flex items-center justify-between gap-2 rounded-lg bg-white px-3 py-1.5 text-xs text-slate-700 shadow-sm dark:bg-white/5 dark:text-slate-300"
+                          >
+                            <span className="flex items-center gap-1.5">
+                              <span
+                                className="material-symbols-outlined text-primary"
+                                style={{ fontSize: "14px" }}
+                              >
+                                check_circle
+                              </span>
+                              {item}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setFormData((prev) => ({
+                                  ...prev,
+                                  caracteristicas: prev.caracteristicas.filter(
+                                    (_, i) => i !== idx
+                                  ),
+                                }))
+                              }
+                              className="text-slate-400 hover:text-red-500"
+                              aria-label={`Eliminar característica: ${item}`}
+                            >
+                              <span
+                                className="material-symbols-outlined"
+                                style={{ fontSize: "14px" }}
+                              >
+                                close
+                              </span>
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+
+                  {/* Colores disponibles */}
+                  <div className="sm:col-span-2">
+                    <span className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400">
+                      Colores Disponibles{" "}
+                      <span className="font-normal text-slate-400">
+                        (se muestran como círculos de color en la ficha)
+                      </span>
+                    </span>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={colorInput.name}
+                        onChange={(e) =>
+                          setColorInput((prev) => ({
+                            ...prev,
+                            name: e.target.value,
+                          }))
+                        }
+                        placeholder="Nombre del color (ej: Azul marino)"
+                        className="focus:ring-primary/20 flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                        id="color-name-input"
+                      />
+                      <input
+                        type="color"
+                        value={colorInput.hex}
+                        onChange={(e) =>
+                          setColorInput((prev) => ({
+                            ...prev,
+                            hex: e.target.value,
+                          }))
+                        }
+                        aria-label="Seleccionar color"
+                        className="h-10 w-12 cursor-pointer rounded-lg border border-slate-200 bg-white p-1 dark:border-white/10"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (
+                            colorInput.name.trim() &&
+                            !formData.colores.some(
+                              (c) => c.name === colorInput.name.trim()
+                            )
+                          ) {
+                            setFormData((prev) => ({
+                              ...prev,
+                              colores: [
+                                ...prev.colores,
+                                {
+                                  name: colorInput.name.trim(),
+                                  hex: colorInput.hex,
+                                },
+                              ],
+                            }));
+                            setColorInput({ name: "", hex: "#000000" });
+                          }
+                        }}
+                        className="rounded-lg bg-slate-100 px-3 py-2 text-sm font-medium transition-colors hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20"
+                      >
+                        Agregar
+                      </button>
+                    </div>
+                    {formData.colores.length > 0 && (
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {formData.colores.map((color, idx) => (
+                          <div
+                            key={idx}
+                            className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-700 shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-slate-300"
+                          >
+                            <span
+                              className="h-4 w-4 rounded-full border border-slate-200 shadow-sm"
+                              style={{ backgroundColor: color.hex }}
+                            />
+                            {color.name}
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setFormData((prev) => ({
+                                  ...prev,
+                                  colores: prev.colores.filter(
+                                    (_, i) => i !== idx
+                                  ),
+                                }))
+                              }
+                              className="text-slate-400 hover:text-red-500"
+                              aria-label={`Eliminar color: ${color.name}`}
+                            >
+                              <span
+                                className="material-symbols-outlined"
+                                style={{ fontSize: "12px" }}
+                              >
+                                close
+                              </span>
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

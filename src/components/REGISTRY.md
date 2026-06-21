@@ -335,17 +335,19 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 ### ProductModal
 
 - **Ruta:** `src/components/admin/ProductModal.tsx`
-- **Descripción:** Modal único de creación y edición de productos (mismo componente, detecta modo por prop `product`). Contiene todas las secciones del formulario: Nombre, URL/Slug, Descripción, Precio, Precio Anterior, Configuración de Oferta, Precios Especiales, Catálogo, Categoría, Imágenes, Datos del Catálogo Público, Etiquetas, Producto Activo, **SEO del Producto** (ver abajo).
+- **Descripción:** Modal único de creación y edición de productos (mismo componente, detecta modo por prop `product`). Contiene todas las secciones del formulario: Nombre, URL/Slug, Descripción, Descripción Corta, Precio, Precio Anterior, Configuración de Oferta, Precios Especiales, Catálogo, Categoría, Imágenes, Datos del Catálogo Público (Badge, Sufijo Precio, Material, Tallas, **Características**, **Colores**), Etiquetas, Producto Activo, **SEO del Producto**.
 - **Props:**
   - `isOpen: boolean` — Controla visibilidad del modal.
   - `onClose: () => void` — Callback para cerrar.
   - `product?: Product | null` — Si se pasa, activa el modo edición con los valores pre-cargados.
   - `onSave: (payload, offerRules, notify) => Promise<void>` — Callback de guardado.
   - `categories: Category[]` — Lista de categorías disponibles para los selects.
+- **Campos Datos del Catálogo Público** (actualizados 2026-06-21):
+  - `short_description` (200 chars) — aparece debajo del título en la ficha pública.
+  - `caracteristicas` (lista de strings, add/remove con Enter) — se muestran como bullets con ✔ en la ficha.
+  - `colores` (array de `{name, hex}`, input texto + color picker nativo) — se muestran como círculos de color en la ficha.
 - **Sección SEO del Producto** (añadida 2026-06-21, puramente aditiva):
   - Posición: última sección, después de "Producto Activo".
-  - Estilo: caja verde esmeralda (`border-emerald-200 bg-emerald-50`) — mismo patrón visual que las demás cajas de sección.
-  - Campos: `seo_title` (70 chars), `seo_description` (160 chars), `seo_keywords` (300 chars, texto libre separado por comas), `seo_publisher` (100 chars), `seo_robots` (botones seleccionables: Auto / index,follow / noindex,follow / index,nofollow / noindex,nofollow).
-  - Todos opcionales: si se dejan vacíos, `generateMetadata` usa el fallback automático existente sin cambio de comportamiento.
-  - Guardado: campos vacíos → `null` en Supabase (nunca string vacío), consistente con el patrón de `labor_price`, `badge_text`, etc.
+  - Campos: `seo_title` (70 chars), `seo_description` (160 chars), `seo_keywords` (300 chars), `seo_publisher` (100 chars), `seo_robots` (botones: Auto / index,follow / noindex,follow / index,nofollow / noindex,nofollow).
+  - Todos opcionales: vacíos → fallback automático en `generateMetadata`.
 - **Ejemplo:** `<ProductModal isOpen={isOpen} onClose={handleClose} product={selectedProduct} onSave={handleSave} categories={categories} />`
