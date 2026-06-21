@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState, useEffect } from "react";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import { logger } from "@/lib/logger";
@@ -349,7 +349,7 @@ export default function StatDetailModal({
       role="button"
       tabIndex={-1}
       aria-label="Cerrar"
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/30 p-4 backdrop-blur-[2px] sm:bg-black/20"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}

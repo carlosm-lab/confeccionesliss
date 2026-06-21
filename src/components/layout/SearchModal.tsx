@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useRef, useMemo, useTransition } from "react";
 import Image from "next/image";
@@ -133,7 +133,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-[999] flex items-start justify-center bg-black/50 pt-[8vh] backdrop-blur-sm sm:pt-[12vh]"
+      className="fixed inset-0 z-[999] flex items-start justify-center bg-black/30 pt-[8vh] backdrop-blur-[2px] sm:bg-black/20 sm:pt-[12vh]"
       role="dialog"
       aria-modal="true"
       aria-label="Buscar productos"

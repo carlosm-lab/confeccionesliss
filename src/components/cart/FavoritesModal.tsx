@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
 import Image from "next/image";
@@ -102,7 +102,7 @@ export function FavoritesModal({ isOpen, onClose }: FavoritesModalProps) {
     <>
       {/* Backdrop */}
       <div
-        className="animate-in fade-in fixed inset-0 z-[100] flex w-full cursor-default items-end justify-center bg-slate-900/60 backdrop-blur-sm duration-200 sm:items-center sm:p-4"
+        className="animate-in fade-in fixed inset-0 z-[100] flex w-full cursor-default items-end justify-center bg-black/30 backdrop-blur-[2px] duration-200 sm:items-center sm:bg-black/20 sm:p-4"
         onClick={onClose}
         aria-hidden="true"
       >

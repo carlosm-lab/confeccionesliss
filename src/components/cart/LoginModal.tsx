@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useAuth } from "@/context/AuthContext";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
@@ -59,7 +59,7 @@ export function LoginModal({
     <div className="fixed inset-0 z-[110] flex items-center justify-center p-[var(--space-md)]">
       <button
         type="button"
-        className="absolute inset-0 w-full cursor-default bg-slate-900/60 backdrop-blur-sm"
+        className="absolute inset-0 w-full cursor-default bg-black/30 backdrop-blur-[2px] sm:bg-black/20"
         onClick={onClose}
         aria-label="Cerrar modal"
       />

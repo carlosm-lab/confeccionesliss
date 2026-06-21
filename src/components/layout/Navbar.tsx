@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
@@ -263,7 +263,7 @@ export function Navbar() {
       {/* Backdrop blur — visible cuando el menu esta abierto */}
       {isMenuOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/25 backdrop-blur-sm"
+          className="fixed inset-0 z-40 bg-black/30 backdrop-blur-[2px] sm:bg-black/20"
           onClick={closeMenu}
           aria-hidden="true"
         />

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import Image from "next/image";
@@ -264,7 +264,7 @@ export function CartDrawer() {
       {/* ── Backdrop ─────────────────────────────────────── */}
       <button
         type="button"
-        className={`fixed inset-0 z-50 w-full cursor-default bg-[var(--color-scrim)]/25 backdrop-blur-[3px] transition-opacity duration-300 ease-[var(--ease-out-expo)] ${
+        className={`fixed inset-0 z-50 w-full cursor-default bg-black/30 backdrop-blur-[2px] transition-opacity duration-300 ease-[var(--ease-out-expo)] sm:bg-black/20 ${
           isCartOpen ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
         onClick={closeDrawer}

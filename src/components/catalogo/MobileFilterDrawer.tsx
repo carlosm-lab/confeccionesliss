@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * MobileFilterDrawer — Catálogo de Confecciones Liss
@@ -93,7 +93,7 @@ export function MobileFilterDrawer({
       {/* Backdrop */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-50 cursor-pointer bg-slate-900/60 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-50 cursor-pointer bg-black/30 backdrop-blur-[2px] sm:bg-black/20 lg:hidden"
           onClick={onClose}
           aria-hidden="true"
         />

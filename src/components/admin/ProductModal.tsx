@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 /**
  * NOTA:
  * Este formulario NO incluye campo de stock intencionalmente.
@@ -458,7 +458,7 @@ export default function ProductModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div
-        className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/30 backdrop-blur-[2px] sm:bg-black/20"
         onClick={onClose}
         onKeyDown={(e) => e.key === "Escape" && onClose()}
         role="presentation"
