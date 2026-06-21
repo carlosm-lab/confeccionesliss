@@ -50,6 +50,7 @@ export interface AppNotification {
   message: string;
   image_url: string | null;
   target_url: string | null;
+  cta_label: string | null;
   read: boolean;
   created_at: string;
 }
@@ -343,7 +344,9 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     async function fetchDbNotifs() {
       const { data, error } = await supabase
         .from("notifications")
-        .select("id, type, title, message, image_url, target_url, created_at")
+        .select(
+          "id, type, title, message, image_url, target_url, cta_label, created_at"
+        )
         .order("created_at", { ascending: false })
         .limit(50);
 
@@ -437,6 +440,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
           ...notif,
           id: "local_" + notif.type + "_" + Date.now(),
           image_url: null,
+          cta_label: null,
           read: false,
           created_at: new Date().toISOString(),
         };

@@ -383,7 +383,7 @@ export function GuestBell() {
       }
       if (notif.target_url) {
         return {
-          label: "Ver contenido",
+          label: notif.cta_label?.trim() || "Ver contenido",
           icon: "open_in_new",
           action: () => {
             markRead(notif.id);

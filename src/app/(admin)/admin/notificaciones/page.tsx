@@ -25,6 +25,7 @@ interface Notification {
   message: string;
   image_url: string | null;
   target_url: string | null;
+  cta_label: string | null;
   push_sent: boolean;
   created_at: string;
 }
@@ -57,6 +58,7 @@ export default function NotificacionesAdminPage() {
     message: "",
     type: "manual" as string,
     target_url: "",
+    cta_label: "",
     image_url: "",
     sendPush: true,
   });
@@ -66,7 +68,7 @@ export default function NotificacionesAdminPage() {
     const { data, error } = await supabase
       .from("notifications")
       .select(
-        "id, type, title, message, image_url, target_url, push_sent, created_at"
+        "id, type, title, message, image_url, target_url, cta_label, push_sent, created_at"
       )
       .order("created_at", { ascending: false })
       .limit(100);
@@ -102,6 +104,7 @@ export default function NotificacionesAdminPage() {
           title: form.title.trim(),
           message: form.message.trim(),
           target_url: form.target_url.trim() || null,
+          cta_label: form.cta_label.trim() || null,
           image_url: form.image_url.trim() || null,
         })
         .select("id")
@@ -143,6 +146,7 @@ export default function NotificacionesAdminPage() {
         message: "",
         type: "manual",
         target_url: "",
+        cta_label: "",
         image_url: "",
         sendPush: true,
       });
@@ -239,6 +243,31 @@ export default function NotificacionesAdminPage() {
                     setForm((f) => ({ ...f, target_url: e.target.value }))
                   }
                   className="focus:border-primary/40 focus:ring-primary/20 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:ring-2 focus:outline-none"
+                />
+              </div>
+
+              {/* Texto del botón CTA */}
+              <div>
+                <label
+                  htmlFor="notif-cta-label"
+                  className="mb-1.5 block text-xs font-semibold text-slate-600"
+                >
+                  Texto del botón CTA{" "}
+                  <span className="font-normal text-slate-400">
+                    (opcional — ej: «Ver oferta», «Aprovechar ahora»)
+                  </span>
+                </label>
+                <input
+                  id="notif-cta-label"
+                  type="text"
+                  placeholder="Ver oferta"
+                  maxLength={60}
+                  value={form.cta_label}
+                  onChange={(e) =>
+                    setForm((f) => ({ ...f, cta_label: e.target.value }))
+                  }
+                  disabled={!form.target_url.trim()}
+                  className="focus:border-primary/40 focus:ring-primary/20 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:ring-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                 />
               </div>
             </div>
