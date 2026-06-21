@@ -131,9 +131,12 @@ export default function ProductModal({
     setIsSubmitting(false);
 
     if (product) {
-      // Modo edición: derivar el catálogo desde la categoría actual del producto
+      // Modo edición: derivar el catálogo desde la categoría actual del producto.
+      // product.catalog es campo virtual (no existe en DB).
+      // product.sector es la columna real que persiste el valor.
       const inferredCatalog =
         product.catalog ||
+        product.sector ||
         (product.category
           ? (categories.find((c) => c.slug === product.category)?.catalog ?? "")
           : "");
@@ -448,6 +451,7 @@ export default function ProductModal({
       // Precios avanzados
       wholesale_price: parsedWholesale,
       wholesale_min_qty: parsedWholesaleMinQty,
+      labor_price: parsedLaborPrice,
       // offer_terms: texto libre de términos de oferta
       offer_terms: formData.offer_terms?.trim() || null,
     } as Partial<Product> & { offer_terms?: string | null };

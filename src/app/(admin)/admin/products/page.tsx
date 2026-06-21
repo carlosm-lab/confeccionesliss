@@ -77,9 +77,13 @@ export default function AdminProductsPage() {
           .from("products")
           .select(
             `
-        id, name, description, price, old_price, offer_ends_at, category, tags, image_path, images, is_active, slug, created_at,
+        id, name, description, price, old_price,
+        offer_starts_at, offer_ends_at, offer_terms,
+        sector, category, tags, image_path, images, is_active, slug, created_at,
         category_id,
-        categories(name)
+        badge_text, price_suffix, tallas, material,
+        wholesale_price, wholesale_min_qty, labor_price,
+        categories(name, catalog)
       `,
             { count: "exact" }
           )
