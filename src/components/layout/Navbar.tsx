@@ -436,9 +436,6 @@ export function Navbar() {
               {/* Mobile dropdown menu */}
               {isMenuOpen && (
                 <div
-                  onTouchStart={onMenuDragStart}
-                  onTouchMove={onMenuDragMove}
-                  onTouchEnd={onMenuDragEnd}
                   style={{
                     transform: `translateY(${menuDragY}px)`,
                     transition: isMenuDragging
@@ -446,9 +443,10 @@ export function Navbar() {
                       : "transform 0.3s cubic-bezier(0.32,0.72,0,1), opacity 0.3s ease",
                     opacity: Math.max(0, 1 + menuDragY / 120),
                   }}
-                  className="border-primary/10 animate-in fade-in slide-in-from-top-2 absolute top-12 right-0 z-50 w-64 rounded-2xl border bg-white/95 p-4 shadow-[0_10px_25px_-5px_rgba(20,48,103,0.15),0_8px_16px_-6px_rgba(20,48,103,0.1)] backdrop-blur-md duration-200"
+                  className="border-primary/10 animate-in fade-in slide-in-from-top-2 absolute top-12 right-0 z-50 w-64 rounded-2xl border bg-white/95 shadow-[0_10px_25px_-5px_rgba(20,48,103,0.15),0_8px_16px_-6px_rgba(20,48,103,0.1)] backdrop-blur-md duration-200"
                 >
-                  <ul className="space-y-1">
+                  {/* Nav links */}
+                  <ul className="space-y-1 p-4">
                     {navLinks.map((link) => {
                       const isActive =
                         link.href === "/"
@@ -521,6 +519,16 @@ export function Navbar() {
                       </Link>
                     </li>
                   </ul>
+
+                  {/* Drag handle — bottom, only mobile, touch-none prevents page scroll */}
+                  <div
+                    className="flex touch-none justify-center pt-1 pb-3 sm:hidden"
+                    onTouchStart={onMenuDragStart}
+                    onTouchMove={onMenuDragMove}
+                    onTouchEnd={onMenuDragEnd}
+                  >
+                    <div className="h-1 w-10 rounded-full bg-slate-300" />
+                  </div>
                 </div>
               )}
             </div>
