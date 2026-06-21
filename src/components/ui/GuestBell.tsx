@@ -220,7 +220,12 @@ export function GuestBell() {
     if (!isOpen) return;
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        if (expandedNotif) {
+        // Cierra en orden inverso: modal activo → detail view → panel
+        if (deleteTarget) {
+          setDeleteTarget(null);
+        } else if (blockInfo) {
+          setBlockInfo(null);
+        } else if (expandedNotif) {
           setExpandedNotif(null);
         } else {
           closePanel();
@@ -229,7 +234,7 @@ export function GuestBell() {
     };
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
-  }, [isOpen, expandedNotif, closePanel]);
+  }, [isOpen, deleteTarget, blockInfo, expandedNotif, closePanel]);
 
   // ── Helpers ──────────────────────────────────────────────────
 
@@ -626,31 +631,31 @@ export function GuestBell() {
                 </ul>
               )}
             </div>
+
+            {/* ── Confirmación de eliminación ────────────────── */}
+            {deleteTarget && (
+              <ConfirmModal
+                title="¿Eliminar notificación?"
+                message={`Se eliminará "${deleteTarget.title}" de forma permanente.`}
+                confirmLabel="Eliminar"
+                confirmClass="bg-red-500 hover:bg-red-600 text-white"
+                onConfirm={handleDeleteConfirm}
+                onCancel={() => setDeleteTarget(null)}
+              />
+            )}
+
+            {/* ── Modal de bloqueo (condición no cumplida) ─── */}
+            {blockInfo && (
+              <ConfirmModal
+                title="No puedes eliminar esto aún"
+                message={blockInfo.message}
+                confirmLabel={blockInfo.actionLabel}
+                confirmClass="bg-primary hover:bg-primary/90 text-white"
+                onConfirm={blockInfo.onAction}
+                onCancel={() => setBlockInfo(null)}
+              />
+            )}
           </div>
-
-          {/* ── Confirmación de eliminación ───────────────────── */}
-          {deleteTarget && (
-            <ConfirmModal
-              title="¿Eliminar notificación?"
-              message={`Se eliminará "${deleteTarget.title}" de forma permanente.`}
-              confirmLabel="Eliminar"
-              confirmClass="bg-red-500 hover:bg-red-600 text-white"
-              onConfirm={handleDeleteConfirm}
-              onCancel={() => setDeleteTarget(null)}
-            />
-          )}
-
-          {/* ── Modal de bloqueo (condición no cumplida) ─────── */}
-          {blockInfo && (
-            <ConfirmModal
-              title="No puedes eliminar esto aún"
-              message={blockInfo.message}
-              confirmLabel={blockInfo.actionLabel}
-              confirmClass="bg-primary hover:bg-primary/90 text-white"
-              onConfirm={blockInfo.onAction}
-              onCancel={() => setBlockInfo(null)}
-            />
-          )}
         </div>,
         document.body
       )
