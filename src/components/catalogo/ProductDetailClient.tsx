@@ -457,7 +457,7 @@ export function ProductDetailClient({
               Right: tallas · buybox
               lg revierte a 1 col (outer grid ya maneja imagen/info)
           ──────────────────────────────────────────────────────────────── */}
-          <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-2 lg:grid-cols-1">
+          <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-[45%_55%] lg:grid-cols-1">
             {/* ── Columna izquierda ── */}
             <div className="flex flex-col gap-6">
               {/* 4b ── Descripción corta — alineada con encabezado TALLA en tablet */}
