@@ -790,7 +790,10 @@ export function ProductDetailClient({
             {relatedProducts.map((p, index) => (
               <div
                 key={p.id}
-                className={`animate-fade-in-up h-full w-full${index >= 4 ? "md:hidden lg:block" : ""}`}
+                className={cn(
+                  "animate-fade-in-up h-full w-full",
+                  index >= 4 && "md:hidden lg:block"
+                )}
                 style={{ animationDelay: `${index * 40 + 350}ms` }}
               >
                 <CatalogProductCard product={p} />
