@@ -718,148 +718,143 @@ export function ProductReviews({
 
   return (
     <section
-      className="animate-fade-in-up mt-16 rounded-3xl bg-slate-50 py-8"
+      className="animate-fade-in-up -mx-5 mt-16 bg-slate-50 px-5 py-10 md:-mx-8 md:px-8"
       style={{ animationDelay: "350ms" }}
       aria-labelledby="reviews-heading"
     >
-      {/* Contenido con padding horizontal */}
-      <div className="px-6 sm:px-8">
-        {/* ── Header ─────────────────────────────────────────── */}
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <h2
-              id="reviews-heading"
-              className="font-serif text-2xl font-bold text-slate-900"
-            >
-              Reseñas
-            </h2>
-            {aggCount > 0 && (
-              <div className="mt-1 flex items-center gap-2">
-                <Stars rating={Math.round(aggRating)} size={14} />
-                <span className="text-sm font-semibold text-slate-700">
-                  {aggRating.toFixed(1)}
-                </span>
-                <span className="text-sm text-slate-400">·</span>
-                <span className="text-sm text-slate-500">
-                  {aggCount} {aggCount === 1 ? "reseña" : "reseñas"}
-                </span>
-              </div>
-            )}
-          </div>
-
-          {user && !userReview && !showForm && (
-            <button
-              type="button"
-              id="add-review-btn"
-              onClick={() => {
-                setEditTarget(null);
-                setShowForm(true);
-              }}
-              className="bg-primary hover:bg-primary/90 flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:shadow-md active:scale-[0.97]"
-            >
-              <span className="material-symbols-outlined text-[16px]">
-                rate_review
+      {/* ── Header ─────────────────────────────────────────── */}
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h2
+            id="reviews-heading"
+            className="font-serif text-2xl font-bold text-slate-900"
+          >
+            Reseñas
+          </h2>
+          {aggCount > 0 && (
+            <div className="mt-1 flex items-center gap-2">
+              <Stars rating={Math.round(aggRating)} size={14} />
+              <span className="text-sm font-semibold text-slate-700">
+                {aggRating.toFixed(1)}
               </span>
-              Escribir reseña
-            </button>
-          )}
-          {!user && (
-            <button
-              type="button"
-              onClick={() => showAuthModal("reviews")}
-              className="border-primary/25 text-primary hover:border-primary/40 flex items-center gap-2 rounded-xl border bg-white px-4 py-2.5 text-sm font-semibold shadow-sm transition hover:shadow-md active:scale-[0.97]"
-            >
-              <span className="material-symbols-outlined text-[15px]">
-                login
+              <span className="text-sm text-slate-400">·</span>
+              <span className="text-sm text-slate-500">
+                {aggCount} {aggCount === 1 ? "reseña" : "reseñas"}
               </span>
-              Iniciar sesión para reseñar
-            </button>
+            </div>
           )}
         </div>
 
-        {/* ── Stats panel ────────────────────────────────────── */}
-        <StatsPanel reviews={reviews} avgRating={aggRating} />
-
-        {/* ── Form ──────────────────────────────────────────── */}
-        <div id="review-form-anchor" />
-        {showForm && userInfo && (
-          <div className="mb-5">
-            <ReviewForm
-              productId={productId}
-              editTarget={editTarget}
-              onSuccess={handleSuccess}
-              onCancel={() => {
-                setShowForm(false);
-                setEditTarget(null);
-              }}
-              userInfo={userInfo}
-            />
-          </div>
+        {user && !userReview && !showForm && (
+          <button
+            type="button"
+            id="add-review-btn"
+            onClick={() => {
+              setEditTarget(null);
+              setShowForm(true);
+            }}
+            className="bg-primary hover:bg-primary/90 flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:shadow-md active:scale-[0.97]"
+          >
+            <span className="material-symbols-outlined text-[16px]">
+              rate_review
+            </span>
+            Escribir reseña
+          </button>
         )}
-
-        {/* ── Reviews grid ───────────────────────────────────── */}
-        {reviews.length > 0 ? (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {reviews.map((r, i) => (
-              <ReviewCard
-                key={r.id}
-                review={r}
-                currentUserId={user?.id ?? null}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-                isDeleting={deletingId === r.id}
-                index={i}
-              />
-            ))}
-          </div>
-        ) : (
-          !showForm && (
-            <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-white py-14 text-center">
-              <span
-                className="material-symbols-outlined mb-3 text-[40px] text-slate-300"
-                style={{ fontVariationSettings: "'FILL' 0, 'wght' 200" }}
-              >
-                rate_review
-              </span>
-              <p className="font-serif text-base font-bold text-slate-700">
-                Sin reseñas aún
-              </p>
-              <p className="mt-1 text-sm text-slate-400">
-                {user
-                  ? "Sé el primero en compartir tu experiencia."
-                  : "Inicia sesión para dejar la primera reseña."}
-              </p>
-              {user && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setEditTarget(null);
-                    setShowForm(true);
-                  }}
-                  className="bg-primary hover:bg-primary/90 mt-5 flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-white shadow-sm transition active:scale-[0.98]"
-                >
-                  <span className="material-symbols-outlined text-[15px]">
-                    rate_review
-                  </span>
-                  Ser el primero
-                </button>
-              )}
-              {!user && (
-                <button
-                  type="button"
-                  onClick={() => showAuthModal("reviews")}
-                  className="border-primary/25 text-primary hover:bg-primary/5 mt-5 flex items-center gap-2 rounded-xl border px-5 py-2.5 text-sm font-semibold transition"
-                >
-                  <span className="material-symbols-outlined text-[14px]">
-                    login
-                  </span>
-                  Iniciar sesión
-                </button>
-              )}
-            </div>
-          )
+        {!user && (
+          <button
+            type="button"
+            onClick={() => showAuthModal("reviews")}
+            className="border-primary/25 text-primary hover:border-primary/40 flex items-center gap-2 rounded-xl border bg-white px-4 py-2.5 text-sm font-semibold shadow-sm transition hover:shadow-md active:scale-[0.97]"
+          >
+            <span className="material-symbols-outlined text-[15px]">login</span>
+            Iniciar sesión para reseñar
+          </button>
         )}
       </div>
+
+      {/* ── Stats panel ────────────────────────────────────── */}
+      <StatsPanel reviews={reviews} avgRating={aggRating} />
+
+      {/* ── Form ──────────────────────────────────────────── */}
+      <div id="review-form-anchor" />
+      {showForm && userInfo && (
+        <div className="mb-5">
+          <ReviewForm
+            productId={productId}
+            editTarget={editTarget}
+            onSuccess={handleSuccess}
+            onCancel={() => {
+              setShowForm(false);
+              setEditTarget(null);
+            }}
+            userInfo={userInfo}
+          />
+        </div>
+      )}
+
+      {/* ── Reviews grid ───────────────────────────────────── */}
+      {reviews.length > 0 ? (
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {reviews.map((r, i) => (
+            <ReviewCard
+              key={r.id}
+              review={r}
+              currentUserId={user?.id ?? null}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              isDeleting={deletingId === r.id}
+              index={i}
+            />
+          ))}
+        </div>
+      ) : (
+        !showForm && (
+          <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-white py-14 text-center">
+            <span
+              className="material-symbols-outlined mb-3 text-[40px] text-slate-300"
+              style={{ fontVariationSettings: "'FILL' 0, 'wght' 200" }}
+            >
+              rate_review
+            </span>
+            <p className="font-serif text-base font-bold text-slate-700">
+              Sin reseñas aún
+            </p>
+            <p className="mt-1 text-sm text-slate-400">
+              {user
+                ? "Sé el primero en compartir tu experiencia."
+                : "Inicia sesión para dejar la primera reseña."}
+            </p>
+            {user && (
+              <button
+                type="button"
+                onClick={() => {
+                  setEditTarget(null);
+                  setShowForm(true);
+                }}
+                className="bg-primary hover:bg-primary/90 mt-5 flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-white shadow-sm transition active:scale-[0.98]"
+              >
+                <span className="material-symbols-outlined text-[15px]">
+                  rate_review
+                </span>
+                Ser el primero
+              </button>
+            )}
+            {!user && (
+              <button
+                type="button"
+                onClick={() => showAuthModal("reviews")}
+                className="border-primary/25 text-primary hover:bg-primary/5 mt-5 flex items-center gap-2 rounded-xl border px-5 py-2.5 text-sm font-semibold transition"
+              >
+                <span className="material-symbols-outlined text-[14px]">
+                  login
+                </span>
+                Iniciar sesión
+              </button>
+            )}
+          </div>
+        )
+      )}
     </section>
   );
 }
