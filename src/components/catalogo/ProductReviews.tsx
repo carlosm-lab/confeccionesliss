@@ -2,12 +2,8 @@
 
 /**
  * ProductReviews — Confecciones Liss
- *
- * Sección de reseñas de producto rediseñada. Diseño premium con:
- * - Header dividido: score grande + barras de distribución
- * - Cards con borde acento navy y decoración de comillas
- * - Formulario pulido con jerarquía clara
- * - Estado vacío y CTA de login refinados
+ * Rediseño v2: score compacto integrado al header, cards con carácter,
+ * barras de distribución en popover/inline compacto.
  */
 
 import { useState, useCallback } from "react";
@@ -18,8 +14,6 @@ import { reviewSchema } from "@/schemas/reviewSchema";
 import type { DbReview } from "@/lib/reviewsService";
 import { cn } from "@/lib/utils";
 import toast from "react-hot-toast";
-
-// ── Props ──────────────────────────────────────────────────────
 
 interface ProductReviewsProps {
   productId: string;
@@ -33,28 +27,24 @@ interface ProductReviewsProps {
 function StarDisplay({
   rating,
   size = "sm",
+  className,
 }: {
   rating: number;
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "sm" | "md" | "lg";
+  className?: string;
 }) {
-  const sizeClass = {
-    sm: "text-[14px]",
-    md: "text-[18px]",
-    lg: "text-[22px]",
-    xl: "text-[28px]",
-  }[size];
-
+  const px = { sm: "text-[13px]", md: "text-[17px]", lg: "text-[22px]" }[size];
   return (
     <span
-      className="flex items-center gap-0.5"
-      aria-label={`${rating} de 5 estrellas`}
+      className={cn("flex items-center gap-px", className)}
+      aria-label={`${rating} de 5`}
     >
-      {[1, 2, 3, 4, 5].map((star) => (
+      {[1, 2, 3, 4, 5].map((s) => (
         <span
-          key={star}
-          className={cn("material-symbols-outlined text-amber-400", sizeClass)}
+          key={s}
+          className={cn("material-symbols-outlined text-amber-400", px)}
           style={{
-            fontVariationSettings: star <= rating ? "'FILL' 1" : "'FILL' 0",
+            fontVariationSettings: s <= rating ? "'FILL' 1" : "'FILL' 0",
           }}
           aria-hidden="true"
         >
@@ -75,79 +65,72 @@ function StarInput({
   onChange: (v: number) => void;
 }) {
   const [hovered, setHovered] = useState(0);
-
+  const labels = ["", "Muy malo", "Malo", "Regular", "Bueno", "Excelente"];
   return (
-    <div
-      className="flex items-center gap-1.5"
-      role="radiogroup"
-      aria-label="Calificación"
-    >
-      {[1, 2, 3, 4, 5].map((star) => (
-        <button
-          key={star}
-          type="button"
-          role="radio"
-          aria-checked={value === star}
-          aria-label={`${star} estrella${star !== 1 ? "s" : ""}`}
-          className="cursor-pointer transition-transform hover:scale-115 active:scale-95"
-          onMouseEnter={() => setHovered(star)}
-          onMouseLeave={() => setHovered(0)}
-          onClick={() => onChange(star)}
-        >
-          <span
-            className="material-symbols-outlined text-[32px] text-amber-400 transition-all duration-150"
-            style={{
-              fontVariationSettings:
-                star <= (hovered || value) ? "'FILL' 1" : "'FILL' 0",
-            }}
-            aria-hidden="true"
+    <div className="flex flex-wrap items-center gap-3">
+      <div
+        className="flex items-center gap-1"
+        role="radiogroup"
+        aria-label="Calificación"
+      >
+        {[1, 2, 3, 4, 5].map((s) => (
+          <button
+            key={s}
+            type="button"
+            role="radio"
+            aria-checked={value === s}
+            aria-label={`${s} estrella${s > 1 ? "s" : ""}`}
+            onMouseEnter={() => setHovered(s)}
+            onMouseLeave={() => setHovered(0)}
+            onClick={() => onChange(s)}
+            className="transition-transform hover:scale-110 active:scale-95"
           >
-            star
-          </span>
-        </button>
-      ))}
-      {value > 0 && (
-        <span className="ml-2 text-sm font-semibold text-amber-600">
-          {["", "Muy malo", "Malo", "Regular", "Bueno", "Excelente"][value]}
+            <span
+              className="material-symbols-outlined text-[30px] text-amber-400 transition-all"
+              style={{
+                fontVariationSettings:
+                  s <= (hovered || value) ? "'FILL' 1" : "'FILL' 0",
+              }}
+              aria-hidden="true"
+            >
+              star
+            </span>
+          </button>
+        ))}
+      </div>
+      {(hovered || value) > 0 && (
+        <span className="text-sm font-semibold text-amber-600">
+          {labels[hovered || value]}
         </span>
       )}
     </div>
   );
 }
 
-// ── Distribution bar ───────────────────────────────────────────
+// ── Compact distribution bars ──────────────────────────────────
 
-function RatingBar({
-  stars,
-  count,
-  total,
-}: {
-  stars: number;
-  count: number;
-  total: number;
-}) {
-  const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+function DistributionBars({ reviews }: { reviews: DbReview[] }) {
+  const total = reviews.length;
+  if (total === 0) return null;
   return (
-    <div className="flex items-center gap-2.5">
-      <span className="w-2 shrink-0 text-right text-xs font-semibold text-slate-500">
-        {stars}
-      </span>
-      <span
-        className="material-symbols-outlined shrink-0 text-[12px] text-amber-400"
-        style={{ fontVariationSettings: "'FILL' 1" }}
-        aria-hidden="true"
-      >
-        star
-      </span>
-      <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-slate-100">
-        <div
-          className="h-full rounded-full bg-amber-400 transition-all duration-700"
-          style={{ width: `${pct}%` }}
-        />
-      </div>
-      <span className="w-5 shrink-0 text-right text-xs text-slate-400">
-        {count}
-      </span>
+    <div className="flex w-40 flex-col gap-1">
+      {[5, 4, 3, 2, 1].map((stars) => {
+        const count = reviews.filter((r) => r.rating === stars).length;
+        const pct = total > 0 ? (count / total) * 100 : 0;
+        return (
+          <div key={stars} className="flex items-center gap-1.5">
+            <span className="w-2 shrink-0 text-right text-[10px] font-medium text-slate-400">
+              {stars}
+            </span>
+            <div className="h-1 flex-1 overflow-hidden rounded-full bg-slate-100">
+              <div
+                className="h-full rounded-full bg-amber-400 transition-all duration-700"
+                style={{ width: `${pct}%` }}
+              />
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -164,7 +147,7 @@ function ReviewCard({
 }: {
   review: DbReview;
   currentUserId: string | null;
-  onEdit: (review: DbReview) => void;
+  onEdit: (r: DbReview) => void;
   onDelete: (id: string) => void;
   isDeleting: boolean;
   index: number;
@@ -172,98 +155,93 @@ function ReviewCard({
   const isOwner = currentUserId === review.user_id;
   const date = new Date(review.created_at).toLocaleDateString("es-SV", {
     day: "2-digit",
-    month: "long",
+    month: "short",
     year: "numeric",
   });
 
   return (
     <article
-      className="animate-fade-in-up group relative overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition-shadow duration-300 hover:shadow-md"
-      style={{ animationDelay: `${index * 80}ms` }}
+      className="animate-fade-in-up group relative rounded-xl bg-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+      style={{
+        animationDelay: `${index * 70}ms`,
+        boxShadow:
+          "0 1px 3px rgba(20,48,103,0.06), 0 4px 12px rgba(20,48,103,0.04)",
+      }}
     >
-      {/* Navy left accent border */}
-      <div className="bg-primary absolute inset-y-0 left-0 w-1 rounded-l-2xl opacity-70" />
+      {/* Navy left accent */}
+      <div className="bg-primary absolute inset-y-0 left-0 w-[3px] rounded-l-xl" />
 
-      {/* Quote decoration */}
-      <div
-        className="pointer-events-none absolute top-3 right-4 font-serif text-7xl leading-none text-slate-100 select-none"
-        aria-hidden="true"
-      >
-        &ldquo;
-      </div>
-
-      <div className="py-5 pr-4 pl-5">
-        {/* Top row: avatar + meta + actions */}
-        <div className="mb-3 flex items-start justify-between gap-3">
-          <div className="flex items-center gap-3">
-            {/* Avatar */}
-            {review.user_avatar ? (
-              <Image
-                src={review.user_avatar}
-                alt={review.user_name}
-                width={44}
-                height={44}
-                className="ring-primary/20 h-11 w-11 shrink-0 rounded-full object-cover ring-2"
-                unoptimized
-              />
-            ) : (
-              <div className="bg-primary/10 ring-primary/20 flex h-11 w-11 shrink-0 items-center justify-center rounded-full ring-2">
-                <span className="material-symbols-outlined text-primary text-[22px]">
-                  person
-                </span>
-              </div>
-            )}
-
-            {/* Name + stars + date */}
-            <div>
-              <p className="font-serif text-sm leading-tight font-bold text-slate-800">
-                {review.user_name}
-              </p>
-              <div className="mt-0.5 flex items-center gap-2">
-                <StarDisplay rating={review.rating} size="sm" />
-                <span className="text-xs text-slate-400">{date}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Owner actions */}
-          {isOwner && (
-            <div className="flex shrink-0 items-center gap-1 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-              <button
-                type="button"
-                onClick={() => onEdit(review)}
-                className="hover:text-primary rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100"
-                aria-label="Editar reseña"
-                title="Editar"
-              >
-                <span className="material-symbols-outlined text-[16px]">
-                  edit
-                </span>
-              </button>
-              <button
-                type="button"
-                onClick={() => onDelete(review.id)}
-                disabled={isDeleting}
-                className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-red-50 hover:text-red-500 disabled:opacity-40"
-                aria-label="Eliminar reseña"
-                title="Eliminar"
-              >
-                {isDeleting ? (
-                  <span className="material-symbols-outlined animate-spin text-[16px]">
-                    progress_activity
-                  </span>
-                ) : (
-                  <span className="material-symbols-outlined text-[16px]">
-                    delete
-                  </span>
-                )}
-              </button>
+      <div className="px-5 py-4 pl-6">
+        {/* Row 1: avatar + name + stars + date + actions */}
+        <div className="flex items-start gap-3">
+          {/* Avatar */}
+          {review.user_avatar ? (
+            <Image
+              src={review.user_avatar}
+              alt={review.user_name}
+              width={40}
+              height={40}
+              className="ring-primary/15 h-10 w-10 shrink-0 rounded-full object-cover ring-2"
+              unoptimized
+            />
+          ) : (
+            <div className="bg-primary/10 ring-primary/15 flex h-10 w-10 shrink-0 items-center justify-center rounded-full ring-2">
+              <span className="material-symbols-outlined text-primary text-[20px]">
+                person
+              </span>
             </div>
           )}
+
+          {/* Name + meta */}
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+              <p className="font-serif text-sm font-bold text-slate-800">
+                {review.user_name}
+              </p>
+
+              {/* Owner actions — visible on hover */}
+              {isOwner && (
+                <div className="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+                  <button
+                    type="button"
+                    onClick={() => onEdit(review)}
+                    className="hover:text-primary rounded-lg px-2 py-1 text-xs font-medium text-slate-400 transition hover:bg-slate-100"
+                    aria-label="Editar reseña"
+                  >
+                    <span className="material-symbols-outlined text-[14px]">
+                      edit
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => onDelete(review.id)}
+                    disabled={isDeleting}
+                    className="rounded-lg px-2 py-1 text-xs font-medium text-slate-400 transition hover:bg-red-50 hover:text-red-500 disabled:opacity-40"
+                    aria-label="Eliminar reseña"
+                  >
+                    {isDeleting ? (
+                      <span className="material-symbols-outlined animate-spin text-[14px]">
+                        progress_activity
+                      </span>
+                    ) : (
+                      <span className="material-symbols-outlined text-[14px]">
+                        delete
+                      </span>
+                    )}
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <div className="mt-0.5 flex flex-wrap items-center gap-2">
+              <StarDisplay rating={review.rating} size="sm" />
+              <span className="text-xs text-slate-400">{date}</span>
+            </div>
+          </div>
         </div>
 
         {/* Comment */}
-        <p className="text-sm leading-relaxed text-slate-600">
+        <p className="mt-3 text-sm leading-relaxed text-slate-600">
           {review.comment}
         </p>
       </div>
@@ -282,7 +260,7 @@ function ReviewForm({
 }: {
   productId: string;
   editTarget: DbReview | null;
-  onSuccess: (review: DbReview) => void;
+  onSuccess: (r: DbReview) => void;
   onCancel: () => void;
   userInfo: { id: string; name: string; avatar: string | null };
 }) {
@@ -299,19 +277,18 @@ function ReviewForm({
 
     const parsed = reviewSchema.safeParse({ rating, comment });
     if (!parsed.success) {
-      const fieldErrors: { rating?: string; comment?: string } = {};
+      const fe: { rating?: string; comment?: string } = {};
       for (const issue of parsed.error.issues) {
-        const field = issue.path[0] as "rating" | "comment";
-        if (!fieldErrors[field]) fieldErrors[field] = issue.message;
+        const f = issue.path[0] as "rating" | "comment";
+        if (!fe[f]) fe[f] = issue.message;
       }
-      setErrors(fieldErrors);
+      setErrors(fe);
       return;
     }
 
     setIsPending(true);
     try {
       const supabase = getSupabaseClient();
-
       if (editTarget) {
         const { data, error } = await supabase
           .from("product_reviews")
@@ -324,10 +301,9 @@ function ReviewForm({
           .eq("user_id", userInfo.id)
           .select()
           .single();
-
         if (error) {
-          console.error("[ReviewForm] update error:", error);
-          toast.error("No se pudo actualizar la reseña. Inténtalo de nuevo.");
+          console.error("[ReviewForm] update:", error);
+          toast.error("No se pudo actualizar. Inténtalo de nuevo.");
           return;
         }
         toast.success("Reseña actualizada");
@@ -345,14 +321,13 @@ function ReviewForm({
           })
           .select()
           .single();
-
         if (error) {
-          console.error("[ReviewForm] insert error:", error);
-          if (error.code === "23505") {
-            toast.error("Ya tienes una reseña para este producto.");
-          } else {
-            toast.error("No se pudo guardar la reseña. Inténtalo de nuevo.");
-          }
+          console.error("[ReviewForm] insert:", error);
+          toast.error(
+            error.code === "23505"
+              ? "Ya tienes una reseña para este producto."
+              : "No se pudo guardar. Inténtalo de nuevo."
+          );
           return;
         }
         toast.success("¡Gracias por tu reseña!");
@@ -364,19 +339,25 @@ function ReviewForm({
   };
 
   return (
-    <div className="animate-fade-in-up border-primary/20 overflow-hidden rounded-2xl border bg-white shadow-sm">
-      {/* Form header strip */}
-      <div className="bg-primary px-5 py-3.5">
-        <h3 className="font-serif text-sm font-bold text-white">
-          {editTarget ? "Editar tu reseña" : "Comparte tu experiencia"}
+    <div
+      className="animate-fade-in-up border-primary/20 overflow-hidden rounded-2xl border bg-white"
+      style={{ boxShadow: "0 2px 8px rgba(20,48,103,0.08)" }}
+    >
+      {/* Header strip */}
+      <div className="border-primary/10 bg-primary/5 flex items-center gap-2 border-b px-5 py-3">
+        <span className="material-symbols-outlined text-primary text-[18px]">
+          rate_review
+        </span>
+        <h3 className="text-primary font-serif text-sm font-bold">
+          {editTarget ? "Editar reseña" : "Escribe tu reseña"}
         </h3>
       </div>
 
       <form onSubmit={handleSubmit} className="p-5">
-        {/* Star rating */}
-        <div className="mb-5">
-          <p className="mb-2.5 text-xs font-semibold tracking-widest text-slate-400 uppercase">
-            Calificación <span className="text-red-500">*</span>
+        {/* Stars */}
+        <div className="mb-4">
+          <p className="mb-2 text-xs font-semibold tracking-widest text-slate-400 uppercase">
+            Calificación <span className="text-red-400">*</span>
           </p>
           <StarInput value={rating} onChange={setRating} />
           {errors.rating && (
@@ -384,13 +365,13 @@ function ReviewForm({
           )}
         </div>
 
-        {/* Comment */}
-        <div className="mb-5">
+        {/* Textarea */}
+        <div className="mb-4">
           <label
             htmlFor="review-comment"
-            className="mb-2.5 block text-xs font-semibold tracking-widest text-slate-400 uppercase"
+            className="mb-2 block text-xs font-semibold tracking-widest text-slate-400 uppercase"
           >
-            Comentario <span className="text-red-500">*</span>
+            Comentario <span className="text-red-400">*</span>
           </label>
           <textarea
             id="review-comment"
@@ -403,10 +384,10 @@ function ReviewForm({
               "w-full resize-none rounded-xl border bg-slate-50 p-3.5 text-sm text-slate-900 placeholder-slate-400 transition-all outline-none focus:bg-white focus:ring-2",
               errors.comment
                 ? "border-red-300 focus:border-red-400 focus:ring-red-100"
-                : "focus:border-primary/50 focus:ring-primary/10 border-slate-200"
+                : "focus:border-primary/40 focus:ring-primary/10 border-slate-200"
             )}
           />
-          <div className="mt-1.5 flex items-center justify-between">
+          <div className="mt-1 flex items-center justify-between">
             {errors.comment ? (
               <p className="text-xs text-red-500">{errors.comment}</p>
             ) : (
@@ -428,21 +409,21 @@ function ReviewForm({
           <button
             type="submit"
             disabled={isPending}
-            className="bg-primary hover:bg-primary/90 flex flex-1 items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:shadow-md active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 sm:flex-none"
+            className="bg-primary hover:bg-primary/90 flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:shadow active:scale-[0.98] disabled:opacity-60"
           >
             {isPending ? (
               <>
-                <span className="material-symbols-outlined animate-spin text-[16px]">
+                <span className="material-symbols-outlined animate-spin text-[15px]">
                   progress_activity
                 </span>
                 Guardando…
               </>
             ) : (
               <>
-                <span className="material-symbols-outlined text-[16px]">
-                  {editTarget ? "save" : "rate_review"}
+                <span className="material-symbols-outlined text-[15px]">
+                  {editTarget ? "save" : "send"}
                 </span>
-                {editTarget ? "Guardar cambios" : "Publicar reseña"}
+                {editTarget ? "Guardar" : "Publicar reseña"}
               </>
             )}
           </button>
@@ -450,7 +431,7 @@ function ReviewForm({
             type="button"
             onClick={onCancel}
             disabled={isPending}
-            className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50 disabled:opacity-50"
+            className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-500 transition hover:bg-slate-50 disabled:opacity-50"
           >
             Cancelar
           </button>
@@ -478,35 +459,25 @@ export function ProductReviews({
 
   const userReview = user ? reviews.find((r) => r.user_id === user.id) : null;
 
-  // ── Aggregate helpers ────────────────────────────────────────
-  const recalcAggregate = useCallback((updatedReviews: DbReview[]) => {
-    const count = updatedReviews.length;
-    const avg =
-      count > 0
-        ? Math.round(
-            (updatedReviews.reduce((s, r) => s + r.rating, 0) / count) * 10
-          ) / 10
-        : 0;
-    setAggCount(count);
-    setAggRating(avg);
+  const recalcAggregate = useCallback((updated: DbReview[]) => {
+    const n = updated.length;
+    setAggCount(n);
+    setAggRating(
+      n > 0
+        ? Math.round((updated.reduce((s, r) => s + r.rating, 0) / n) * 10) / 10
+        : 0
+    );
   }, []);
 
-  // Rating distribution
-  const distribution = [5, 4, 3, 2, 1].map((stars) => ({
-    stars,
-    count: reviews.filter((r) => r.rating === stars).length,
-  }));
-
-  // ── Handlers ─────────────────────────────────────────────────
   const handleFormSuccess = useCallback(
-    (newReview: DbReview) => {
+    (rev: DbReview) => {
       setReviews((prev) => {
-        const isEdit = prev.some((r) => r.id === newReview.id);
-        const updated = isEdit
-          ? prev.map((r) => (r.id === newReview.id ? newReview : r))
-          : [newReview, ...prev];
-        recalcAggregate(updated);
-        return updated;
+        const isEdit = prev.some((r) => r.id === rev.id);
+        const next = isEdit
+          ? prev.map((r) => (r.id === rev.id ? rev : r))
+          : [rev, ...prev];
+        recalcAggregate(next);
+        return next;
       });
       setShowForm(false);
       setEditTarget(null);
@@ -514,37 +485,36 @@ export function ProductReviews({
     [recalcAggregate]
   );
 
-  const handleEdit = useCallback((review: DbReview) => {
-    setEditTarget(review);
+  const handleEdit = useCallback((r: DbReview) => {
+    setEditTarget(r);
     setShowForm(true);
-    setTimeout(() => {
-      document
-        .getElementById("review-form-anchor")
-        ?.scrollIntoView({ behavior: "smooth", block: "center" });
-    }, 50);
+    setTimeout(
+      () =>
+        document
+          .getElementById("review-form-anchor")
+          ?.scrollIntoView({ behavior: "smooth", block: "center" }),
+      50
+    );
   }, []);
 
   const handleDelete = useCallback(
-    async (reviewId: string) => {
+    async (id: string) => {
       if (!user) return;
-      setDeletingId(reviewId);
-      const supabase = getSupabaseClient();
-      const { error } = await supabase
+      setDeletingId(id);
+      const { error } = await getSupabaseClient()
         .from("product_reviews")
         .delete()
-        .eq("id", reviewId)
+        .eq("id", id)
         .eq("user_id", user.id);
-
       if (error) {
         toast.error("No se pudo eliminar la reseña.");
         setDeletingId(null);
         return;
       }
-
       setReviews((prev) => {
-        const updated = prev.filter((r) => r.id !== reviewId);
-        recalcAggregate(updated);
-        return updated;
+        const next = prev.filter((r) => r.id !== id);
+        recalcAggregate(next);
+        return next;
       });
       setDeletingId(null);
       toast.success("Reseña eliminada");
@@ -552,12 +522,6 @@ export function ProductReviews({
     [user, recalcAggregate]
   );
 
-  const handleCancelForm = useCallback(() => {
-    setShowForm(false);
-    setEditTarget(null);
-  }, []);
-
-  // ── User info ────────────────────────────────────────────────
   const userInfo = user
     ? {
         id: user.id,
@@ -579,23 +543,40 @@ export function ProductReviews({
       style={{ animationDelay: "350ms" }}
       aria-labelledby="reviews-heading"
     >
-      {/* ── Section header ──────────────────────────────────── */}
-      <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-6">
-        <div>
+      {/* ── Header row ─────────────────────────────────────── */}
+      <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
+        {/* Left: title + compact score */}
+        <div className="flex flex-wrap items-center gap-4">
           <h2
             id="reviews-heading"
-            className="font-serif text-2xl font-bold tracking-tight text-slate-900"
+            className="font-serif text-2xl font-bold text-slate-900"
           >
             Reseñas
           </h2>
-          <p className="mt-0.5 text-sm text-slate-400">
-            {aggCount === 0
-              ? "Sé el primero en opinar"
-              : `${aggCount} ${aggCount === 1 ? "reseña verificada" : "reseñas verificadas"}`}
-          </p>
+
+          {aggCount > 0 && (
+            <div className="flex items-center gap-3">
+              {/* Score badge */}
+              <div className="flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-3 py-1">
+                <span
+                  className="material-symbols-outlined text-[15px] text-amber-500"
+                  style={{ fontVariationSettings: "'FILL' 1" }}
+                >
+                  star
+                </span>
+                <span className="font-serif text-sm font-bold text-amber-700">
+                  {aggRating.toFixed(1)}
+                </span>
+                <span className="text-xs text-amber-500">({aggCount})</span>
+              </div>
+
+              {/* Distribution bars — compact inline */}
+              <DistributionBars reviews={reviews} />
+            </div>
+          )}
         </div>
 
-        {/* Write review CTA */}
+        {/* Right: CTA */}
         {user && !userReview && !showForm && (
           <button
             type="button"
@@ -604,7 +585,7 @@ export function ProductReviews({
               setEditTarget(null);
               setShowForm(true);
             }}
-            className="bg-primary hover:bg-primary/90 flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:shadow-md active:scale-[0.98]"
+            className="bg-primary hover:bg-primary/90 flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:shadow-md active:scale-[0.97]"
           >
             <span className="material-symbols-outlined text-[16px]">
               rate_review
@@ -616,7 +597,7 @@ export function ProductReviews({
           <button
             type="button"
             onClick={() => showAuthModal("reviews")}
-            className="border-primary/30 bg-primary/5 text-primary hover:border-primary/50 hover:bg-primary/10 flex items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold transition active:scale-[0.98]"
+            className="border-primary/25 bg-primary/5 text-primary hover:border-primary/40 hover:bg-primary/10 flex items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold transition active:scale-[0.97]"
           >
             <span className="material-symbols-outlined text-[16px]">login</span>
             Inicia sesión para reseñar
@@ -624,79 +605,56 @@ export function ProductReviews({
         )}
       </div>
 
-      {/* ── Aggregate score panel (only when there are reviews) ─ */}
-      {aggCount > 0 && (
-        <div className="mb-8 grid grid-cols-1 gap-6 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm sm:grid-cols-[auto_1fr]">
-          {/* Score */}
-          <div className="flex flex-col items-center justify-center gap-1 sm:border-r sm:border-slate-100 sm:pr-6">
-            <span className="font-serif text-6xl leading-none font-bold tracking-tight text-slate-900">
-              {aggRating.toFixed(1)}
-            </span>
-            <StarDisplay rating={Math.round(aggRating)} size="md" />
-            <span className="mt-1 text-xs text-slate-400">de 5 estrellas</span>
-          </div>
+      {/* Divider */}
+      <div className="from-primary/20 mb-6 h-px bg-gradient-to-r via-slate-200 to-transparent" />
 
-          {/* Distribution bars */}
-          <div className="flex flex-col justify-center gap-1.5 sm:pl-2">
-            {distribution.map(({ stars, count }) => (
-              <RatingBar
-                key={stars}
-                stars={stars}
-                count={count}
-                total={aggCount}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* ── Form anchor + form ──────────────────────────────── */}
+      {/* ── Form ──────────────────────────────────────────── */}
       <div id="review-form-anchor" />
       {showForm && userInfo && (
-        <div className="mb-6">
+        <div className="mb-5">
           <ReviewForm
             productId={productId}
             editTarget={editTarget}
             onSuccess={handleFormSuccess}
-            onCancel={handleCancelForm}
+            onCancel={() => {
+              setShowForm(false);
+              setEditTarget(null);
+            }}
             userInfo={userInfo}
           />
         </div>
       )}
 
-      {/* ── Reviews list ────────────────────────────────────── */}
+      {/* ── Reviews list ───────────────────────────────────── */}
       {reviews.length > 0 ? (
         <div className="flex flex-col gap-3">
-          {reviews.map((review, i) => (
+          {reviews.map((r, i) => (
             <ReviewCard
-              key={review.id}
-              review={review}
+              key={r.id}
+              review={r}
               currentUserId={user?.id ?? null}
               onEdit={handleEdit}
               onDelete={handleDelete}
-              isDeleting={deletingId === review.id}
+              isDeleting={deletingId === r.id}
               index={i}
             />
           ))}
         </div>
       ) : (
-        /* ── Empty state ──────────────────────────────────── */
-        <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-white py-14 text-center">
-          <div className="bg-primary/8 mb-4 flex h-16 w-16 items-center justify-center rounded-2xl">
-            <span
-              className="material-symbols-outlined text-primary text-[32px]"
-              style={{ fontVariationSettings: "'FILL' 0, 'wght' 300" }}
-            >
-              rate_review
-            </span>
-          </div>
-          <p className="font-serif text-base font-bold text-slate-700">
-            Aún no hay reseñas
+        <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 py-12 text-center">
+          <span
+            className="material-symbols-outlined mb-3 text-[40px] text-slate-300"
+            style={{ fontVariationSettings: "'FILL' 0, 'wght' 200" }}
+          >
+            chat_bubble_outline
+          </span>
+          <p className="font-serif text-sm font-bold text-slate-600">
+            Sin reseñas aún
           </p>
-          <p className="mt-1 max-w-xs text-sm text-slate-400">
+          <p className="mt-1 text-xs text-slate-400">
             {user
-              ? "Comparte tu experiencia con este producto y ayuda a otros clientes."
-              : "Inicia sesión para ser el primero en reseñar este producto."}
+              ? "Comparte tu experiencia y ayuda a otros clientes."
+              : "Inicia sesión para dejar la primera reseña."}
           </p>
           {user && !showForm && (
             <button
@@ -705,9 +663,9 @@ export function ProductReviews({
                 setEditTarget(null);
                 setShowForm(true);
               }}
-              className="bg-primary hover:bg-primary/90 mt-5 flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-white shadow-sm transition active:scale-[0.98]"
+              className="bg-primary hover:bg-primary/90 mt-4 flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-white shadow-sm transition active:scale-[0.98]"
             >
-              <span className="material-symbols-outlined text-[16px]">
+              <span className="material-symbols-outlined text-[15px]">
                 rate_review
               </span>
               Ser el primero en reseñar
@@ -717,7 +675,7 @@ export function ProductReviews({
             <button
               type="button"
               onClick={() => showAuthModal("reviews")}
-              className="border-primary/30 text-primary hover:bg-primary/5 mt-5 flex items-center gap-2 rounded-xl border px-5 py-2.5 text-sm font-semibold transition"
+              className="border-primary/25 text-primary hover:bg-primary/5 mt-4 flex items-center gap-2 rounded-xl border px-5 py-2.5 text-sm font-semibold transition"
             >
               <span className="material-symbols-outlined text-[14px]">
                 login
