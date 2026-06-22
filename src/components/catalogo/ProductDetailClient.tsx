@@ -773,14 +773,12 @@ export function ProductDetailClient({
       )}
 
       {/* Reviews section — debajo de "También te puede gustar" */}
-      <div className="mx-auto w-full max-w-3xl">
-        <ProductReviews
-          productId={product.id}
-          initialReviews={initialReviews}
-          averageRating={averageRating}
-          totalCount={totalCount}
-        />
-      </div>
+      <ProductReviews
+        productId={product.id}
+        initialReviews={initialReviews}
+        averageRating={averageRating}
+        totalCount={totalCount}
+      />
 
       {/* Copy toast */}
       {showToast && (
