@@ -265,22 +265,39 @@ export function GuestBell() {
           onAction: () => void;
         } => {
       if (notif.type === "push_permission") {
-        if (
-          pushPermissionStatus === "default" ||
-          pushPermissionStatus === "unsupported"
-        ) {
+        // Navegador no soporta push: imposible cumplir la condición → permitir eliminar
+        if (pushPermissionStatus === "unsupported") {
+          return { allowed: true };
+        }
+        // Permiso concedido: condición cumplida → permitir eliminar
+        if (pushPermissionStatus === "granted") {
+          return { allowed: true };
+        }
+        // Permiso denegado activamente: condición igualmente incumplida.
+        // Informamos cómo desbloquearlo desde ajustes del navegador.
+        if (pushPermissionStatus === "denied") {
           return {
             allowed: false,
             message:
-              "Esta notificación te recuerda activar las alertas de la tienda. Responde primero la solicitud de permisos de notificaciones para poder eliminarla.",
-            actionLabel: "Activar alertas",
+              "Los permisos de notificación están bloqueados en tu navegador. Para activarlos, accede a los ajustes de tu navegador, permite las notificaciones de este sitio y recarga la página.",
+            actionLabel: "Entendido",
             onAction: () => {
-              void handleSubscribePush();
+              setBlockInfo(null);
             },
           };
         }
-        return { allowed: true };
+        // pushPermissionStatus === "default": condición pendiente de responder
+        return {
+          allowed: false,
+          message:
+            "Esta notificación te recuerda activar las alertas de la tienda. Responde primero la solicitud de permisos de notificaciones para poder eliminarla.",
+          actionLabel: "Activar alertas",
+          onAction: () => {
+            void handleSubscribePush();
+          },
+        };
       }
+
       if (
         notif.type === "auth_hint" ||
         notif.type === "favorites_hint" ||

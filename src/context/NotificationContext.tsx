@@ -638,7 +638,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         const conditionMet =
           hint.type === "push_permission"
             ? pushPermissionStatus === "granted" ||
-              pushPermissionStatus === "denied"
+              pushPermissionStatus === "unsupported" // "unsupported" = imposible cumplir, se permite eliminar
             : !!user; // favorites_hint / cart_hint / auth_hint requieren usuario
         if (!conditionMet) return; // Condición incumplida → no eliminar
       }
