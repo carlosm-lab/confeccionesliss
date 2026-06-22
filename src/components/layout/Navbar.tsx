@@ -275,7 +275,7 @@ export function Navbar() {
           !scrollVisible && "nav-scroll-hidden-top"
         )}
       >
-        <div className="mx-auto flex w-full max-w-screen-2xl items-center justify-between px-5 py-[2px] md:px-8">
+        <div className="mx-auto flex w-full max-w-screen-2xl items-center justify-between px-5 py-[5px] md:px-8 lg:py-[2px]">
           <div className="flex items-center gap-6 lg:gap-10">
             {/* Logo */}
             <Link
