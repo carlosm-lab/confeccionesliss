@@ -440,6 +440,21 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   // Si el usuario revocó permisos en config del navegador (granted → default),
   // limpiamos pushPromptDismissed para que el hint reaparezca.
   useEffect(() => {
+    // Cuando el permiso es "denied", auto-eliminar la notificación push_permission.
+    // Razón: el usuario bloqueó activamente y no puede resolverlo sin ir a
+    // ajustes del navegador. Limpiar automáticamente evita un estado atrapado.
+    // reevaluateConditionalHints no la re-crea para "denied", por lo que
+    // la limpieza es definitiva hasta que el usuario cambie los permisos.
+    if (pushPermissionStatus === "denied") {
+      setLocalNotifs((prev) => {
+        const filtered = prev.filter((n) => n.type !== "push_permission");
+        if (filtered.length !== prev.length) saveLocalNotifs(filtered);
+        return filtered;
+      });
+    }
+
+    // Detectar revocación (granted → otro estado): limpiar pushPromptDismissed
+    // para que el hint reaparezca si el usuario deshabilita desde ajustes.
     if (
       prevPushStatusRef.current === "granted" &&
       pushPermissionStatus !== "granted"
@@ -518,13 +533,13 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   const reevaluateConditionalHints = useCallback(() => {
     if (typeof window === "undefined") return;
 
-    // Push permission: existe mientras no sea granted/denied y el usuario
-    // no haya descartado el prompt definitivamente
+    // Push permission: la notificación del panel SIEMPRE existe mientras el permiso
+    // esté en estado 'default' (condición incumplida). pushPromptDismissed solo controla
+    // el TOAST popup, nunca la notificación del panel de la campana.
     if (
       pushPermissionStatus !== "granted" &&
       pushPermissionStatus !== "denied" &&
-      pushPermissionStatus !== "unsupported" &&
-      !pushPromptDismissed
+      pushPermissionStatus !== "unsupported"
     ) {
       addLocalNotification({
         type: "push_permission",
@@ -573,7 +588,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         /* silent */
       }
     }
-  }, [pushPermissionStatus, pushPromptDismissed, user, addLocalNotification]);
+  }, [pushPermissionStatus, user, addLocalNotification]);
 
   // ── Re-evaluar hints cuando cambian las condiciones ──────────
   // Corre en mount y cada vez que user, permiso push o dismissed cambian.
@@ -582,13 +597,8 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!mounted) return;
     reevaluateConditionalHints();
-  }, [
-    user,
-    pushPermissionStatus,
-    pushPromptDismissed,
-    mounted,
-    reevaluateConditionalHints,
-  ]);
+    // pushPromptDismissed eliminado de deps: ya no condiciona el hint del panel
+  }, [user, pushPermissionStatus, mounted, reevaluateConditionalHints]);
 
   // ── markRead ──────────────────────────────────────────────────
   const markRead = useCallback(
@@ -637,8 +647,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
       if (hint && HINT_TYPES.includes(hint.type)) {
         const conditionMet =
           hint.type === "push_permission"
-            ? pushPermissionStatus === "granted" ||
-              pushPermissionStatus === "unsupported" // "unsupported" = imposible cumplir, se permite eliminar
+            ? pushPermissionStatus !== "default" // solo "default" bloquea (condición activamente pendiente)
             : !!user; // favorites_hint / cart_hint / auth_hint requieren usuario
         if (!conditionMet) return; // Condición incumplida → no eliminar
       }

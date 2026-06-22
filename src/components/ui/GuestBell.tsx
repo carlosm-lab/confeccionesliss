@@ -265,37 +265,22 @@ export function GuestBell() {
           onAction: () => void;
         } => {
       if (notif.type === "push_permission") {
-        // Navegador no soporta push: imposible cumplir la condición → permitir eliminar
-        if (pushPermissionStatus === "unsupported") {
-          return { allowed: true };
-        }
-        // Permiso concedido: condición cumplida → permitir eliminar
-        if (pushPermissionStatus === "granted") {
-          return { allowed: true };
-        }
-        // Permiso denegado activamente: condición igualmente incumplida.
-        // Informamos cómo desbloquearlo desde ajustes del navegador.
-        if (pushPermissionStatus === "denied") {
+        // pushPermissionStatus === "default": condición pendiente — no se puede eliminar
+        if (pushPermissionStatus === "default") {
           return {
             allowed: false,
             message:
-              "Los permisos de notificación están bloqueados en tu navegador. Para activarlos, accede a los ajustes de tu navegador, permite las notificaciones de este sitio y recarga la página.",
-            actionLabel: "Entendido",
+              "Esta notificación te recuerda activar las alertas de la tienda. Responde primero la solicitud de permisos de notificaciones para poder eliminarla.",
+            actionLabel: "Activar alertas",
             onAction: () => {
-              setBlockInfo(null);
+              void handleSubscribePush();
             },
           };
         }
-        // pushPermissionStatus === "default": condición pendiente de responder
-        return {
-          allowed: false,
-          message:
-            "Esta notificación te recuerda activar las alertas de la tienda. Responde primero la solicitud de permisos de notificaciones para poder eliminarla.",
-          actionLabel: "Activar alertas",
-          onAction: () => {
-            void handleSubscribePush();
-          },
-        };
+        // granted / denied / unsupported: condición resuelta (o imposible) → permitir eliminar
+        // Nota: "denied" es auto-eliminado por NotificationContext al detectar el estado,
+        // por lo que este branch es unreachable en la práctica (safety net).
+        return { allowed: true };
       }
 
       if (
