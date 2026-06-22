@@ -276,11 +276,11 @@ export function Navbar() {
         )}
       >
         <div className="mx-auto flex w-full max-w-screen-2xl items-center justify-between px-5 py-[2px] md:px-8">
-          <div className="flex min-w-0 items-center gap-6 lg:gap-10">
+          <div className="flex items-center gap-6 lg:gap-10">
             {/* Logo */}
             <Link
               href="/"
-              className="flex min-w-0 items-center gap-3"
+              className="flex items-center gap-3"
               onClick={closeMenu}
             >
               <Image
@@ -288,22 +288,19 @@ export function Navbar() {
                 alt="Confecciones Liss"
                 width={180}
                 height={180}
-                className="h-12 w-auto shrink-0"
+                className="h-12 w-auto"
                 priority
               />
               {/* Texto del logo — siempre en DOM para SEO; visible en sm+ */}
               <span className="sr-only">
                 Confecciones Liss — Uniformes y Scrubs a la medida
               </span>
-              <div
-                className="hidden min-w-0 shrink flex-col overflow-hidden sm:flex"
-                aria-hidden="true"
-              >
-                <span className="text-primary font-serif text-base leading-tight font-bold whitespace-nowrap sm:text-lg md:text-xl">
+              <div className="hidden flex-col lg:flex" aria-hidden="true">
+                <span className="text-primary font-serif text-base leading-tight font-bold sm:text-lg md:text-xl">
                   Confecciones Liss
                 </span>
                 <span
-                  className="block w-full text-[8px] font-semibold whitespace-nowrap text-gray-500 uppercase sm:text-[9px] md:text-[10px]"
+                  className="block w-full text-[8px] font-semibold text-gray-500 uppercase sm:text-[9px] md:text-[10px]"
                   style={{
                     textAlign: "justify",
                     textAlignLast: "justify",
