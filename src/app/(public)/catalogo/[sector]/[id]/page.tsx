@@ -171,7 +171,7 @@ export default async function ProductDetailPage({
   // Fetch related products AND real reviews in parallel (no waterfall)
   const productSector = getProductSector(product);
   const [relatedProducts, reviewData] = await Promise.all([
-    getRelatedProducts(productSector, id, 5),
+    getRelatedProducts(productSector, id, 6),
     getProductReviews(product.id),
   ]);
 

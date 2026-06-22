@@ -792,7 +792,8 @@ export function ProductDetailClient({
                 key={p.id}
                 className={cn(
                   "animate-fade-in-up h-full w-full",
-                  index >= 4 && "md:hidden lg:block"
+                  index === 4 && "md:hidden lg:block",
+                  index >= 5 && "md:hidden"
                 )}
                 style={{ animationDelay: `${index * 40 + 350}ms` }}
               >
