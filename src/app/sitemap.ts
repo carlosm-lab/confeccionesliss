@@ -24,43 +24,43 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: siteConfig.url,
-      lastModified: now,
+      lastModified: now, // ISR: cambia con cada nueva build/revalidación
       changeFrequency: "weekly",
       priority: 1,
     },
     {
       url: `${siteConfig.url}/catalogo`,
-      lastModified: now,
+      lastModified: now, // ISR: se revalida cada hora
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${siteConfig.url}/contacto`,
-      lastModified: now,
+      lastModified: new Date("2025-06-15"), // Página estática — no cambia frecuentemente
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${siteConfig.url}/servicios`,
-      lastModified: now,
+      lastModified: new Date("2025-06-15"), // Página estática — no cambia frecuentemente
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${siteConfig.url}/links`,
-      lastModified: now,
+      lastModified: new Date("2025-06-15"), // Página estática — no cambia frecuentemente
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
       url: `${siteConfig.url}/updates`,
-      lastModified: now,
+      lastModified: now, // Changelog — se actualiza con cada deploy
       changeFrequency: "monthly",
       priority: 0.5,
     },
     {
       url: `${siteConfig.url}/legal`,
-      lastModified: now,
+      lastModified: new Date("2025-06-15"),
       changeFrequency: "monthly",
       priority: 0.6,
     },

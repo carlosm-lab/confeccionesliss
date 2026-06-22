@@ -22,6 +22,15 @@ import { CatalogProductCard } from "@/components/catalogo/CatalogProductCard";
 import { siteConfig } from "@/config/site";
 import { getRecentProducts } from "@/lib/catalogService";
 
+import type { Metadata } from "next";
+
+// Canonical explícito para la homepage — evita ambigüedad con el layout raíz
+export const metadata: Metadata = {
+  alternates: {
+    canonical: siteConfig.url,
+  },
+};
+
 // ── ISR: Re-genera cada hora para reflejar productos nuevos sin re-deploy ──
 export const revalidate = 3600;
 

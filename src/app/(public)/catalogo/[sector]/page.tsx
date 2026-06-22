@@ -10,6 +10,9 @@ import {
 } from "@/lib/catalogService";
 import { OffersReadTracker } from "@/components/ui/OffersReadTracker";
 
+// ── ISR: Re-genera cada hora para reflejar productos/categorías actualizadas ──
+export const revalidate = 3600;
+
 // ── Static params: genera una página por sector ───────────────────────────────
 export function generateStaticParams() {
   return (Object.keys(CATEGORIES) as Sector[]).map((sector) => ({

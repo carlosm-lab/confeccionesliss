@@ -9,6 +9,9 @@ const PAGE_TITLE = "Catálogo de Uniformes por Categoría";
 const PAGE_DESCRIPTION =
   "Catálogo de uniformes en Confecciones Liss: scrubs médicos, universitarios, escolares y más. Confección a la medida desde $8, envíos a todo El Salvador.";
 
+// ── ISR: Re-genera cada hora para reflejar conteos de productos actualizados ──
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
