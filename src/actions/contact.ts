@@ -40,13 +40,13 @@ export async function sendContactMessage(
     auth: { persistSession: false },
   });
 
-  const { error } = await supabase.from("contact_messages").insert([
+  const { error } = await supabase.from("messages").insert([
     {
-      nombre: parsed.data.nombre,
+      name: parsed.data.nombre,
       email: parsed.data.email,
-      telefono: parsed.data.telefono || null,
-      asunto: parsed.data.asunto,
-      mensaje: parsed.data.mensaje,
+      phone: parsed.data.telefono || null,
+      subject: parsed.data.asunto,
+      message: parsed.data.mensaje,
     },
   ]);
 
