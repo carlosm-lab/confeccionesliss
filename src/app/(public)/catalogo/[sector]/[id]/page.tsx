@@ -216,6 +216,20 @@ export default async function ProductDetailPage({
 
   return (
     <>
+      {/* LCP preload: main product image — evita el warning de Next.js y mejora Core Web Vitals */}
+      {imageUrl && (
+        <link
+          rel="preload"
+          as="image"
+          href={
+            imageUrl.startsWith("http")
+              ? imageUrl
+              : `${siteConfig.url}${imageUrl}`
+          }
+          fetchPriority="high"
+        />
+      )}
+
       <ProductDetailClient
         product={product}
         config={config}
