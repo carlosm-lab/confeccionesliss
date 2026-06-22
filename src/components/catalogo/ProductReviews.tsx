@@ -12,7 +12,7 @@
  * - Usuarios no autenticados ven un CTA de login
  */
 
-import { useState, useCallback, useTransition } from "react";
+import { useState, useCallback } from "react";
 import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
 import { getSupabaseClient } from "@/lib/supabaseClient";
@@ -226,9 +226,9 @@ function ReviewForm({
   const [errors, setErrors] = useState<{ rating?: string; comment?: string }>(
     {}
   );
-  const [isPending, startTransition] = useTransition();
+  const [isPending, setIsPending] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
 
@@ -243,7 +243,8 @@ function ReviewForm({
       return;
     }
 
-    startTransition(async () => {
+    setIsPending(true);
+    try {
       const supabase = getSupabaseClient();
 
       if (editTarget) {
@@ -261,6 +262,7 @@ function ReviewForm({
           .single();
 
         if (error) {
+          console.error("[ReviewForm] update error:", error);
           toast.error("No se pudo actualizar la reseña. Inténtalo de nuevo.");
           return;
         }
@@ -282,6 +284,7 @@ function ReviewForm({
           .single();
 
         if (error) {
+          console.error("[ReviewForm] insert error:", error);
           if (error.code === "23505") {
             toast.error("Ya tienes una reseña para este producto.");
           } else {
@@ -292,7 +295,9 @@ function ReviewForm({
         toast.success("¡Gracias por tu reseña!");
         onSuccess(data as DbReview);
       }
-    });
+    } finally {
+      setIsPending(false);
+    }
   };
 
   return (
