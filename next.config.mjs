@@ -12,6 +12,25 @@ const nextConfig = {
     // Next.js genera ahí confunden la detección automática).
     // Documentación: https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory
     root: __dirname,
+
+    // FIX: "Lit is in dev mode" warning en `next dev`.
+    // Causa raíz: Turbopack activa la condición "development" del exports map
+    // de @lit/reactive-element y lit-html durante dev, seleccionando los
+    // archivos en ./development/ donde const DEV_MODE = true está hardcoded.
+    // lit/index.js (dep de @aejkatappaja/phantom-ui) hace bare imports de
+    // estos paquetes, que Turbopack resuelve via exports map → dev build.
+    // El alias apunta directamente a los builds de producción, saltando la
+    // resolución de export conditions. Fix real, no supresión.
+    resolveAlias: {
+      '@lit/reactive-element': path.resolve(
+        __dirname,
+        'node_modules/@lit/reactive-element/reactive-element.js'
+      ),
+      'lit-html': path.resolve(
+        __dirname,
+        'node_modules/lit-html/lit-html.js'
+      ),
+    },
   },
   poweredByHeader: false,
   allowedDevOrigins: ["192.168.1.189"],

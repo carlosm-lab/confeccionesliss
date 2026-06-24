@@ -1628,26 +1628,6 @@ export default function ProductModal({
                 </div>
               </div>
 
-              {/* Active Toggle */}
-              <div className="md:col-span-2">
-                <label className="flex cursor-pointer items-center gap-3">
-                  <div className="relative">
-                    <input
-                      type="checkbox"
-                      name="is_active"
-                      checked={formData.is_active}
-                      onChange={handleChange}
-                      className="peer sr-only"
-                      aria-label="Producto Activo (Visible en catálogo)"
-                    />
-                    <div className="peer-focus:ring-primary/20 peer peer-checked:bg-primary h-6 w-11 rounded-full bg-slate-200 peer-focus:ring-2 peer-focus:outline-none after:absolute after:top-[2px] after:left-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full peer-checked:after:border-white dark:border-white/5 dark:bg-white/10"></div>
-                  </div>
-                  <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                    Producto Activo (Visible en catálogo)
-                  </span>
-                </label>
-              </div>
-
               {/* ─── Detalles del Artículo — campos multi-catálogo ──────────────── */}
               <div className="space-y-4 rounded-xl border border-violet-200 bg-violet-50 p-4 md:col-span-2 dark:border-violet-500/20 dark:bg-violet-500/5">
                 <div className="flex items-center gap-2 text-violet-700 dark:text-violet-400">
@@ -1955,6 +1935,80 @@ export default function ProductModal({
                 </div>
               </div>
             </div>
+
+            {/* ── Estado del Producto ── al final como confirmación final */}
+            <div
+              className={`mx-1 mb-1 rounded-xl border-2 p-4 transition-all ${
+                formData.is_active
+                  ? "border-emerald-300 bg-emerald-50 dark:border-emerald-500/40 dark:bg-emerald-500/10"
+                  : "border-slate-200 bg-slate-50 dark:border-white/10 dark:bg-white/5"
+              }`}
+            >
+              <label className="flex cursor-pointer items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <span
+                    className={`material-symbols-outlined text-[22px] transition-colors ${
+                      formData.is_active
+                        ? "text-emerald-600 dark:text-emerald-400"
+                        : "text-slate-400"
+                    }`}
+                    aria-hidden="true"
+                    style={{
+                      fontVariationSettings: formData.is_active
+                        ? "'FILL' 1"
+                        : "'FILL' 0",
+                    }}
+                  >
+                    {formData.is_active ? "visibility" : "visibility_off"}
+                  </span>
+                  <div>
+                    <p
+                      className={`text-sm font-bold ${
+                        formData.is_active
+                          ? "text-emerald-800 dark:text-emerald-300"
+                          : "text-slate-600 dark:text-slate-400"
+                      }`}
+                    >
+                      {formData.is_active
+                        ? "Producto Activo"
+                        : "Producto Inactivo"}
+                    </p>
+                    <p
+                      className={`text-xs ${
+                        formData.is_active
+                          ? "text-emerald-600 dark:text-emerald-500"
+                          : "text-slate-400"
+                      }`}
+                    >
+                      {formData.is_active
+                        ? "Visible en el catálogo público"
+                        : "Oculto del catálogo público"}
+                    </p>
+                  </div>
+                </div>
+                <div className="relative shrink-0">
+                  <input
+                    type="checkbox"
+                    name="is_active"
+                    checked={formData.is_active}
+                    onChange={handleChange}
+                    className="peer sr-only"
+                    aria-label="Producto Activo (Visible en catálogo)"
+                  />
+                  <div
+                    className={`peer-focus:ring-primary/20 h-7 w-13 rounded-full transition-colors peer-focus:ring-2 peer-focus:outline-none ${
+                      formData.is_active
+                        ? "bg-emerald-500"
+                        : "bg-slate-300 dark:bg-white/20"
+                    } after:absolute after:top-[3px] after:left-[3px] after:h-[22px] after:w-[22px] after:rounded-full after:bg-white after:shadow-sm after:transition-transform after:content-[''] ${
+                      formData.is_active
+                        ? "after:translate-x-6"
+                        : "after:translate-x-0"
+                    }`}
+                  ></div>
+                </div>
+              </label>
+            </div>
           </form>
         </div>
 
@@ -1973,12 +2027,12 @@ export default function ProductModal({
 
           {/* Notification toggle — visible for both create and edit */}
           <label
-            className={`flex cursor-pointer items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-colors ${
+            className={`flex cursor-pointer items-center gap-2 rounded-xl border-2 px-4 py-2 text-sm font-bold transition-all ${
               notifyOnSave
                 ? Object.keys(formData.offer_by_size).length > 0
-                  ? "bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400"
-                  : "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400"
-                : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-white/10"
+                  ? "border-amber-400 bg-amber-50 text-amber-700 shadow-sm dark:border-amber-500/50 dark:bg-amber-500/10 dark:text-amber-400"
+                  : "border-emerald-400 bg-emerald-50 text-emerald-700 shadow-sm dark:border-emerald-500/50 dark:bg-emerald-500/10 dark:text-emerald-400"
+                : "border-slate-300 bg-white text-slate-600 hover:border-slate-400 hover:bg-slate-50 dark:border-white/15 dark:bg-white/5 dark:text-slate-300 dark:hover:border-white/25"
             }`}
           >
             <input
@@ -1989,8 +2043,11 @@ export default function ProductModal({
               aria-label="Notificar a suscriptores"
             />
             <span
-              className="material-symbols-outlined text-[18px]"
+              className="material-symbols-outlined text-[20px]"
               aria-hidden="true"
+              style={{
+                fontVariationSettings: notifyOnSave ? "'FILL' 1" : "'FILL' 0",
+              }}
             >
               {Object.keys(formData.offer_by_size).length > 0
                 ? "local_offer"
