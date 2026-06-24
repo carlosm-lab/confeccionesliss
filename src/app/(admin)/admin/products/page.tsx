@@ -10,10 +10,8 @@ import { useConfirm } from "@/context/ConfirmContext";
 import { collectProductImageFiles } from "@/lib/storageUtils";
 import type { Product } from "@/lib/productUtils";
 import { env } from "@/env";
-// ── PRODUCT_SELECT centraliza todos los campos del producto ─────────────
-// Importar desde catalogService garantiza que el admin siempre fetche
-// los mismos campos que el catálogo público. NUNCA duplicar este string.
 import { PRODUCT_SELECT } from "@/lib/catalogService";
+import { revalidateAfterProductSave } from "@/actions/catalog";
 
 import type { Category } from "@/hooks/useCategories";
 import { CATALOGS } from "@/config/catalogs";
@@ -88,15 +86,28 @@ export default function AdminProductsPage() {
         }
         // FIX B3: apply catalog filter to the actual DB query
         if (filterCatalog) {
-          const catalogSlugs = categories
-            .filter((c) => c.catalog === filterCatalog)
-            .map((c) => c.slug);
-          // If we have category slugs for this catalog, filter by them.
-          // Otherwise use a impossible condition so 0 results show correctly.
-          if (catalogSlugs.length > 0) {
-            query = query.in("category", catalogSlugs);
+          // Para "universitario": los productos tienen sector = 'universitario'.
+          // Si hay categorías en BD (post-migración), filtramos por category IN [slugs].
+          // Si NO hay categorías aún, filtramos directamente por sector para no perder resultados.
+          if (filterCatalog === "universitario") {
+            const univSlugs = categories
+              .filter((c) => c.catalog === "universitario")
+              .map((c) => c.slug);
+            if (univSlugs.length > 0) {
+              query = query.in("category", univSlugs);
+            } else {
+              // Fallback: filtrar por sector directamente
+              query = query.eq("sector", "universitario");
+            }
           } else {
-            query = query.eq("category", "__no_match__");
+            const catalogSlugs = categories
+              .filter((c) => c.catalog === filterCatalog)
+              .map((c) => c.slug);
+            if (catalogSlugs.length > 0) {
+              query = query.in("category", catalogSlugs);
+            } else {
+              query = query.eq("category", "__no_match__");
+            }
           }
         }
         if (filterCategory) query = query.eq("category", filterCategory);
@@ -240,6 +251,19 @@ export default function AdminProductsPage() {
         }
       }
 
+      // 🔄 On-Demand Revalidation — invalida las rutas del catálogo público al instante
+      // Esto sustituye el ISR por tiempo (revalidate=3600). El admin ve cambios inmediatos.
+      try {
+        await revalidateAfterProductSave({
+          sector: productData.sector ?? "scrubs",
+          slug: productData.slug ?? savedProductId ?? "",
+          category: productData.category ?? null,
+        });
+      } catch (revalErr) {
+        // No crítico — el catálogo se actualizará en el próximo build
+        logger.warn("[admin] revalidateAfterProductSave falló:", revalErr);
+      }
+
       handleCloseModal();
       fetchData();
     } catch (error: unknown) {
@@ -274,6 +298,19 @@ export default function AdminProductsPage() {
         .eq("id", product.id!);
       if (error) throw error;
       showToast("Producto eliminado permanentemente.");
+      // 🔄 Revalidar rutas del catálogo al eliminar un producto
+      try {
+        await revalidateAfterProductSave({
+          sector: product.sector ?? "scrubs",
+          slug: product.slug ?? product.id ?? "",
+          category: product.category ?? null,
+        });
+      } catch (revalErr) {
+        logger.warn(
+          "[admin] revalidateAfterProductSave (delete) falló:",
+          revalErr
+        );
+      }
       fetchData(false);
     } catch (error) {
       logger.error("Error deleting product:", error);

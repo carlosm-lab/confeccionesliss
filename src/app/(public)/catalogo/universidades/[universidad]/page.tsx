@@ -9,8 +9,8 @@ import {
 import { OffersReadTracker } from "@/components/ui/OffersReadTracker";
 import type { CategoryConfig } from "@/data/types";
 
-// ── ISR: Revalida cada hora (hasta que se implemente on-demand revalidation) ──
-export const revalidate = 3600;
+// ── SSG puro + On-Demand Revalidation ──────────────────────────────────────
+// No ISR por tiempo. Revalidación on-demand vía src/actions/catalog.ts.
 
 // ── Configuración estática de cada universidad ─────────────────────────────────
 // Datos de presentación. Los productos reales vienen de Supabase en tiempo de build.

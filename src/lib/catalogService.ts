@@ -423,12 +423,18 @@ export async function getProductsByUniversity(
 
 // ── Obtener categorías (carreras) de una universidad específica ───────────────
 /**
- * Devuelve las categorías de la tabla `categories` cuyo slug empieza con
- * el slug de la universidad. Por ejemplo, para "univo" devuelve:
+ * Devuelve las carreras de una universidad desde la tabla `categories`.
+ * Las carreras usan slugs compuestos con guión: "univo-enfermeria", "univo-medicina".
+ *
+ * Para "univo" devuelve:
  *   { slug: "univo-enfermeria", name: "Enfermería" }
  *   { slug: "univo-medicina",   name: "Medicina" }
- * Si no hay categorías en DB, devuelve un array vacío (el caller usará
- * las carreras hardcodeadas del UNIVERSITY_CONFIG como fallback).
+ *
+ * Excluye el slug raíz de la universidad (e.g. "univo") para que el sidebar
+ * solo muestre carreras reales, no la universidad como opción de filtro.
+ *
+ * Si no hay carreras en DB, devuelve [] — el caller usará el fallback hardcoded
+ * del UNIVERSITY_CONFIG.
  */
 export async function getCategoriesForUniversity(
   universidad: string
@@ -439,7 +445,8 @@ export async function getCategoriesForUniversity(
     .from("categories")
     .select("id, name, slug, catalog")
     .eq("catalog", "universitario")
-    .ilike("slug", `${universidad}%`)
+    // "univo-%" con guión → excluye el slug raíz "univo", incluye "univo-enfermeria"
+    .ilike("slug", `${universidad}-%`)
     .order("name");
 
   if (error) {

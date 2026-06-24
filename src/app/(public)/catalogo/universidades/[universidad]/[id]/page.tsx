@@ -13,7 +13,8 @@ import { testimonials } from "@/lib/seo-data";
 import { CATEGORIES } from "@/data/categories";
 import type { Sector } from "@/data/types";
 
-export const revalidate = 3600;
+// ── SSG puro + On-Demand Revalidation ──────────────────────────────────────
+// No ISR por tiempo. Revalidación on-demand vía src/actions/catalog.ts.
 export const dynamicParams = true;
 
 // ── Static params: pre-genera páginas de detalle para cada universidad ─────────

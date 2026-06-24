@@ -7,58 +7,23 @@
 -- admin panel las muestre en el selector de categoría cuando el
 -- catálogo seleccionado es "Uniformes Universitarios".
 --
--- Ejecutar en: Supabase Dashboard → SQL Editor
+-- Schema real de categories: id (uuid), name, slug, catalog, created_at
+-- NOTA: created_at es auto-generado por Supabase (no se incluye en INSERT).
+--
+-- Estado: APLICADA el 2026-06-24 via Supabase MCP.
 -- ============================================================
 
--- Insertar categorías universitarias (upsert por slug para idempotencia)
-INSERT INTO categories (name, slug, catalog, description, created_at)
+INSERT INTO categories (name, slug, catalog)
 VALUES
-  (
-    'UNIVO — Universidad de Oriente',
-    'univo',
-    'universitario',
-    'Scrubs clínicos con colores oficiales de la Universidad de Oriente. Enfermería, Medicina, Odontología, Fisioterapia.',
-    NOW()
-  ),
-  (
-    'IEPROES — Inst. Especializado de la Salud',
-    'ieproes',
-    'universitario',
-    'Uniformes clínicos con colores oficiales del Instituto Especializado de Profesionales de la Salud.',
-    NOW()
-  ),
-  (
-    'UGB — Universidad Gerardo Barrios',
-    'ugb',
-    'universitario',
-    'Uniformes clínicos con colores oficiales de la Universidad Gerardo Barrios.',
-    NOW()
-  ),
-  (
-    'UNAB — Universidad Andrés Bello',
-    'unab',
-    'universitario',
-    'Scrubs universitarios con colores oficiales de la Universidad Andrés Bello.',
-    NOW()
-  ),
-  (
-    'UES — Universidad de El Salvador',
-    'ues',
-    'universitario',
-    'Uniformes clínicos oficiales de la Universidad de El Salvador. Medicina, Enfermería, Farmacia, Odontología.',
-    NOW()
-  ),
-  (
-    'UMA — Universidad Modular Abierta',
-    'uma',
-    'universitario',
-    'Uniformes clínicos con colores oficiales de la Universidad Modular Abierta.',
-    NOW()
-  )
+  ('UNIVO — Universidad de Oriente',            'univo',    'universitario'),
+  ('IEPROES — Inst. Especializado de la Salud', 'ieproes',  'universitario'),
+  ('UGB — Universidad Gerardo Barrios',          'ugb',      'universitario'),
+  ('UNAB — Universidad Andrés Bello',            'unab',     'universitario'),
+  ('UES — Universidad de El Salvador',           'ues',      'universitario'),
+  ('UMA — Universidad Modular Abierta',          'uma',      'universitario')
 ON CONFLICT (slug) DO UPDATE SET
-  name = EXCLUDED.name,
-  catalog = EXCLUDED.catalog,
-  description = EXCLUDED.description;
+  name    = EXCLUDED.name,
+  catalog = EXCLUDED.catalog;
 
 -- Verificar resultado
 SELECT id, name, slug, catalog FROM categories WHERE catalog = 'universitario' ORDER BY slug;

@@ -169,7 +169,8 @@ export function CatalogProductCard({
       <Link
         href={
           sector === "universitario" && product.category
-            ? `/catalogo/universidades/${product.category}/${slug}`
+            ? // Soporte para slugs compuestos: "univo-enfermeria" → universidad = "univo"
+              `/catalogo/universidades/${product.category.split("-")[0]}/${slug}`
             : `/catalogo/${sector}/${slug}`
         }
         className="absolute inset-0 z-[10]"

@@ -10,8 +10,9 @@ import {
 } from "@/lib/catalogService";
 import { OffersReadTracker } from "@/components/ui/OffersReadTracker";
 
-// ── ISR: Re-genera cada hora para reflejar productos/categorías actualizadas ──
-export const revalidate = 3600;
+// ── SSG puro + On-Demand Revalidation ──────────────────────────────────────
+// No ISR por tiempo. Las páginas se regeneran on-demand vía revalidatePath()
+// en src/actions/catalog.ts cuando el admin guarda o elimina un producto.
 
 // ── Static params: genera una página por sector ───────────────────────────────
 // "universitario" se excluye: la ruta fue eliminada, ahora existe /catalogo/universidades.
