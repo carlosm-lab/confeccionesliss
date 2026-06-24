@@ -165,6 +165,74 @@
 
   /* Fluid container padding */
   --container-px: clamp(1.5rem, 5vw, 10rem);
+
+  /* ── prueba-hub-blanco: sticker bomb mobile scaling ───────────────────
+     Factor de escala para el tamaño de cada sticker en el hero collage.
+     Tablet (≥768px) y Desktop: factor = 1 → tamaños EXACTAMENTE iguales.
+     Mobile (<768px): factor = 0.5 → 50% más pequeños, proporcional.
+     Uso: width/height = calc(SIZE_PX * var(--hub-sticker-scale, 1))       */
+  --hub-sticker-scale: 1;
+
+  /* ── prueba-hub-blanco: título hero — font-size fluido ─────────────────
+     Valor base: clamp(1.8rem, 9vw, 9rem) para desktop (≥1024px).
+     Tablet (768-1023px): se sobrescribe +25% → 11.25vw.
+     Mobile (<768px): el useEffect de page.tsx calcula el tamaño exacto
+     midiendo el scrollWidth del texto y aplica inline-style en los spans,
+     ignorando esta variable. */
+  --hub-hero-font-size: clamp(1.8rem, 9vw, 9rem);
+}
+
+/* Mobile override: solo afecta breakpoint < 768px (Tailwind "md") */
+@media (max-width: 767px) {
+  :root {
+    --hub-sticker-scale: 0.5;
+  }
+
+  /* ── prueba-hub-blanco: Hero title — layout base para JS fluid sizing ──
+     El font-size REAL lo calcula el useEffect en page.tsx midiendo scrollWidth.
+     Aquí solo se garantiza el layout correcto (block + nowrap).               */
+  .hub-hero-line-1,
+  .hub-hero-line-2 {
+    display: block;
+    white-space: nowrap;
+  }
+}
+
+/* Tablet override: 768-1023px → título +25% (9vw × 1.25 = 11.25vw) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  :root {
+    --hub-hero-font-size: clamp(1.8rem, 11.25vw, 11.25rem);
+  }
+}
+
+/* ── prueba-hub-blanco: Animación flotante de stickers ───────────────────────
+   Movimiento orgánico: 4 waypoints distintos en XY (no simple up/down)
+   → sensación de deriva tranquila, no rebote mecánico.
+   Delay negativo por logo (var(--float-delay)) → todos desfasados desde t=0. */
+@keyframes hub-float {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  25% {
+    transform: translate(1.5px, -3px);
+  }
+  50% {
+    transform: translate(-1px, -1.5px);
+  }
+  75% {
+    transform: translate(-2px, 2px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+.hub-float {
+  width: 100%;
+  height: 100%;
+  animation: hub-float 6s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+  will-change: transform; /* GPU compositing: sin repaint en cada frame */
 }
 
 @layer utilities {

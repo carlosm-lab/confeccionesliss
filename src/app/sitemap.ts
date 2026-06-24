@@ -79,31 +79,72 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   // Páginas de categoría del catálogo (una por sector)
+  // "universitario" se excluye — la ruta fue eliminada, ahora existe /catalogo/universidades.
+  // El hub universitario y las páginas individuales se incluyen más abajo.
   const sectorPages: MetadataRoute.Sitemap = (
     Object.keys(CATEGORIES) as Sector[]
-  ).map((sector) => ({
-    url: `${siteConfig.url}/catalogo/${sector}`,
-    lastModified: now,
-    changeFrequency: "weekly" as const,
-    priority: 0.85,
-  }));
+  )
+    .filter((sector) => sector !== "universitario")
+    .map((sector) => ({
+      url: `${siteConfig.url}/catalogo/${sector}`,
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: 0.85,
+    }));
 
   // Páginas de productos individuales (desde Supabase)
+  // Los productos universitarios (sector = "universitario") van a /universidades/[category]/[slug]
+  // El resto va a /catalogo/[sector]/[slug]
   let productPages: MetadataRoute.Sitemap = [];
+  let universityProductPages: MetadataRoute.Sitemap = [];
   try {
     const products = await getAllProductsForSitemap();
     productPages = products
-      .filter((p) => p.slug)
+      .filter((p) => p.slug && p.sector !== "universitario")
       .map((p) => ({
         url: `${siteConfig.url}/catalogo/${p.sector}/${p.slug}`,
         lastModified: p.updated_at ? new Date(p.updated_at) : now,
         changeFrequency: "weekly" as const,
         priority: 0.75,
       }));
+    // Productos universitarios — ruta: /catalogo/universidades/[category]/[slug]
+    universityProductPages = products
+      .filter((p) => p.slug && p.sector === "universitario" && p.category)
+      .map((p) => ({
+        url: `${siteConfig.url}/catalogo/universidades/${p.category}/${p.slug}`,
+        lastModified: p.updated_at ? new Date(p.updated_at) : now,
+        changeFrequency: "weekly" as const,
+        priority: 0.8,
+      }));
   } catch {
     // Si Supabase no está disponible en build time, omitir productos del sitemap
     console.warn("[sitemap] Could not fetch products for sitemap");
   }
 
-  return [...staticPages, ...sectorPages, ...productPages];
+  // ── Hub universitario y páginas SSG por universidad ────────────────────────
+  // Estas son las páginas de más alta intención SEO del proyecto:
+  // "uniformes UNIVO San Miguel", "scrubs IEPROES El Salvador", etc.
+  const UNIVERSITY_SLUGS = ["univo", "ieproes", "ugb", "unab", "ues", "uma"];
+  const universidadesPages: MetadataRoute.Sitemap = [
+    {
+      url: `${siteConfig.url}/catalogo/universidades`,
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    },
+    ...UNIVERSITY_SLUGS.map((slug) => ({
+      url: `${siteConfig.url}/catalogo/universidades/${slug}`,
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    })),
+  ];
+
+  return [
+    ...staticPages,
+    ...sectorPages,
+    ...universidadesPages,
+    ...universityProductPages,
+    ...productPages,
+  ];
 }

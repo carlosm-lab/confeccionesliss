@@ -936,30 +936,108 @@ export default function ProductModal({
                 />
               </div>
 
-              {/* Categoría — filtrada por el catálogo seleccionado */}
+              {/* Categoría — filtrada por catálogo; selector especial para universitario */}
               <div>
                 <label
                   htmlFor="product-category"
                   className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300"
                 >
-                  Categoría
+                  {formData.catalog === "universitario"
+                    ? "Universidad"
+                    : "Categoría"}
                 </label>
-                <CustomSelect
-                  id="product-category"
-                  options={categories
-                    .filter((cat) => cat.catalog === formData.catalog)
-                    .map((cat) => ({ value: cat.slug, label: cat.name }))}
-                  value={formData.category}
-                  onChange={(v) =>
-                    setFormData((prev) => ({ ...prev, category: v }))
-                  }
-                  placeholder={
-                    formData.catalog
-                      ? "Seleccionar categoría..."
-                      : "Primero selecciona un catálogo"
-                  }
-                  disabled={!formData.catalog}
-                />
+
+                {/* Selector visual de universidades cuando catalog = "universitario" */}
+                {formData.catalog === "universitario" ? (
+                  <div className="space-y-2">
+                    <div className="flex flex-wrap gap-2">
+                      {[
+                        {
+                          slug: "univo",
+                          label: "UNIVO",
+                          nombre: "Univ. de Oriente",
+                        },
+                        {
+                          slug: "ieproes",
+                          label: "IEPROES",
+                          nombre: "Inst. Esp. de la Salud",
+                        },
+                        {
+                          slug: "ugb",
+                          label: "UGB",
+                          nombre: "Univ. Gerardo Barrios",
+                        },
+                        {
+                          slug: "unab",
+                          label: "UNAB",
+                          nombre: "Univ. Andrés Bello",
+                        },
+                        {
+                          slug: "ues",
+                          label: "UES",
+                          nombre: "Univ. de El Salvador",
+                        },
+                        {
+                          slug: "uma",
+                          label: "UMA",
+                          nombre: "Univ. Modular Abierta",
+                        },
+                      ].map((univ) => (
+                        <button
+                          key={univ.slug}
+                          type="button"
+                          onClick={() =>
+                            setFormData((prev) => ({
+                              ...prev,
+                              category:
+                                prev.category === univ.slug ? "" : univ.slug,
+                            }))
+                          }
+                          title={univ.nombre}
+                          className={`rounded-lg border px-3 py-1.5 text-xs font-bold transition-all ${
+                            formData.category === univ.slug
+                              ? "bg-primary border-primary text-white shadow-md"
+                              : "border-slate-200 bg-white text-slate-600 hover:border-slate-400 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                          }`}
+                        >
+                          {univ.label}
+                        </button>
+                      ))}
+                    </div>
+                    {formData.category && (
+                      <p className="text-xs text-slate-400">
+                        El producto aparecerá en{" "}
+                        <span className="text-primary font-semibold">
+                          /catalogo/universidades/{formData.category}
+                        </span>
+                      </p>
+                    )}
+                    {!formData.category && (
+                      <p className="text-xs text-amber-600">
+                        ⚠ Selecciona la universidad a la que pertenece este
+                        uniforme.
+                      </p>
+                    )}
+                  </div>
+                ) : (
+                  /* Selector estándar de categorías para otros catálogos */
+                  <CustomSelect
+                    id="product-category"
+                    options={categories
+                      .filter((cat) => cat.catalog === formData.catalog)
+                      .map((cat) => ({ value: cat.slug, label: cat.name }))}
+                    value={formData.category}
+                    onChange={(v) =>
+                      setFormData((prev) => ({ ...prev, category: v }))
+                    }
+                    placeholder={
+                      formData.catalog
+                        ? "Seleccionar categoría..."
+                        : "Primero selecciona un catálogo"
+                    }
+                    disabled={!formData.catalog}
+                  />
+                )}
               </div>
 
               {/* Multi-Image Upload */}

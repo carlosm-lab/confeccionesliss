@@ -14,10 +14,11 @@ import { OffersReadTracker } from "@/components/ui/OffersReadTracker";
 export const revalidate = 3600;
 
 // ── Static params: genera una página por sector ───────────────────────────────
+// "universitario" se excluye: la ruta fue eliminada, ahora existe /catalogo/universidades.
 export function generateStaticParams() {
-  return (Object.keys(CATEGORIES) as Sector[]).map((sector) => ({
-    sector,
-  }));
+  return (Object.keys(CATEGORIES) as Sector[])
+    .filter((sector) => sector !== "universitario")
+    .map((sector) => ({ sector }));
 }
 
 // ── Metadata dinámica por sector ──────────────────────────────────────────────
@@ -69,7 +70,8 @@ export default async function SectorCatalogPage({
   const { sector } = await params;
   const config = CATEGORIES[sector as Sector];
 
-  if (!config) {
+  // La ruta /catalogo/universitario fue eliminada — ahora existe /catalogo/universidades.
+  if (!config || sector === "universitario") {
     notFound();
   }
 

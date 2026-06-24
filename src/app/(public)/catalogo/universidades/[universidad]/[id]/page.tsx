@@ -1,48 +1,43 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { CATEGORIES } from "@/data/categories";
 import { ProductDetailClient } from "@/components/catalogo/ProductDetailClient";
 import { siteConfig } from "@/config/site";
-import type { Sector } from "@/data/types";
 import {
   getProductBySlug,
   getRelatedProducts,
-  getProductSector,
   getProductMainImage,
-  getAllProductsForSitemap,
+  getProductsByUniversity,
 } from "@/lib/catalogService";
 import { getProductReviews } from "@/lib/reviewsService";
 import { testimonials } from "@/lib/seo-data";
+import { CATEGORIES } from "@/data/categories";
+import type { Sector } from "@/data/types";
 
-// ── ISR: Re-genera cada hora para reflejar cambios de producto sin re-deploy ──
 export const revalidate = 3600;
-
-// ── dynamicParams: true (default) — productos nuevos post-build se generan
-// on-demand la primera vez y luego se cachean como estáticos (SSG diferido) ──
 export const dynamicParams = true;
 
-// ── generateStaticParams: pre-genera TODAS las páginas de producto en build ──
-// Google recibe HTML pre-construido → SSG real, sin SSR on-demand
+// ── Static params: pre-genera páginas de detalle para cada universidad ─────────
 export async function generateStaticParams(): Promise<
-  { sector: string; id: string }[]
+  { universidad: string; id: string }[]
 > {
+  const slugs = ["univo", "ieproes", "ugb", "unab", "ues", "uma"];
+  const results: { universidad: string; id: string }[] = [];
   try {
-    const products = await getAllProductsForSitemap();
-    return products
-      .filter((p) => p.slug && p.sector)
-      .map((p) => ({
-        sector: p.sector,
-        id: p.slug,
-      }));
+    await Promise.all(
+      slugs.map(async (universidad) => {
+        const products = await getProductsByUniversity(universidad);
+        for (const p of products) {
+          if (p.slug) results.push({ universidad, id: p.slug });
+        }
+      })
+    );
   } catch {
-    // Si Supabase no está disponible en build time, Next.js caerá en
-    // dynamicParams = true y generará on-demand (sin romper el build)
-    return [];
+    // Si Supabase no está disponible, Next.js genera on-demand con dynamicParams
   }
+  return results;
 }
 
-// ── Constantes de Schema para Google Rich Results ─────────────────────────────
-// Fuente: testimonios reales de Google Maps verificados (src/lib/seo-data.ts)
+// ── Schema constants ───────────────────────────────────────────────────────────
 const PRODUCT_AGGREGATE_RATING = {
   "@type": "AggregateRating",
   ratingValue: "5.0",
@@ -54,10 +49,7 @@ const PRODUCT_AGGREGATE_RATING = {
 
 const PRODUCT_REVIEWS = testimonials.map((t) => ({
   "@type": "Review",
-  author: {
-    "@type": "Person",
-    name: t.nombre,
-  },
+  author: { "@type": "Person", name: t.nombre },
   reviewBody: t.texto,
   reviewRating: {
     "@type": "Rating",
@@ -68,18 +60,10 @@ const PRODUCT_REVIEWS = testimonials.map((t) => ({
   datePublished: "2025-06-01",
 }));
 
-// Política de envío para El Salvador (OfferShippingDetails)
 const SHIPPING_DETAILS_SV = {
   "@type": "OfferShippingDetails",
-  shippingRate: {
-    "@type": "MonetaryAmount",
-    value: "0",
-    currency: "USD",
-  },
-  shippingDestination: {
-    "@type": "DefinedRegion",
-    addressCountry: "SV",
-  },
+  shippingRate: { "@type": "MonetaryAmount", value: "0", currency: "USD" },
+  shippingDestination: { "@type": "DefinedRegion", addressCountry: "SV" },
   deliveryTime: {
     "@type": "ShippingDeliveryTime",
     handlingTime: {
@@ -97,7 +81,6 @@ const SHIPPING_DETAILS_SV = {
   },
 } as const;
 
-// Política de devoluciones
 const MERCHANT_RETURN_POLICY = {
   "@type": "MerchantReturnPolicy",
   applicableCountry: "SV",
@@ -107,24 +90,19 @@ const MERCHANT_RETURN_POLICY = {
   returnFees: "https://schema.org/FreeReturn",
 } as const;
 
-// ── Dynamic metadata per product ─────────────────────────────────────────────
+// ── Metadata ───────────────────────────────────────────────────────────────────
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ sector: string; id: string }>;
+  params: Promise<{ universidad: string; id: string }>;
 }): Promise<Metadata> {
-  const { sector, id } = await params;
+  const { id } = await params;
   const product = await getProductBySlug(id);
+  if (!product) return { title: "Producto no encontrado" };
 
-  if (!product) {
-    return { title: "Producto no encontrado" };
-  }
-
-  const config = CATEGORIES[sector as Sector];
-  const PAGE_URL = `${siteConfig.url}/catalogo/${sector}/${id}`;
-
-  // ── Valores automáticos (comportamiento pre-existente) ──
-  const autoTitle = `${product.name} | ${config?.subtitle ?? "Catálogo"}`;
+  const config = CATEGORIES["universitario" as Sector];
+  const PAGE_URL = `${siteConfig.url}/catalogo/universidades/${(await params).universidad}/${id}`;
+  const autoTitle = `${product.name} | ${config?.subtitle ?? "Uniformes Universitarios"}`;
   const autoDescription =
     product.short_description ?? product.description ?? product.name;
   const imageUrl = getProductMainImage(product);
@@ -134,34 +112,15 @@ export async function generateMetadata({
       : `${siteConfig.url}${imageUrl}`
     : undefined;
 
-  // ── Campos SEO manuales (prioridad sobre automático si no son null/empty) ──
-  const seoTitle = product.seo_title?.trim() || autoTitle;
-  const seoDescription = product.seo_description?.trim() || autoDescription;
-  const seoKeywords = product.seo_keywords?.trim() || undefined;
-  const seoPublisher = product.seo_publisher?.trim() || siteConfig.name;
-
-  // Parsear seo_robots ("noindex, nofollow" → { index: false, follow: false })
-  let robotsDirective: { index: boolean; follow: boolean } = {
-    index: true,
-    follow: true,
-  };
-  if (product.seo_robots?.trim()) {
-    robotsDirective = {
-      index: !product.seo_robots.includes("noindex"),
-      follow: !product.seo_robots.includes("nofollow"),
-    };
-  }
-
   return {
-    title: seoTitle,
-    description: seoDescription,
-    ...(seoKeywords && { keywords: seoKeywords }),
+    title: product.seo_title?.trim() || autoTitle,
+    description: product.seo_description?.trim() || autoDescription,
     alternates: { canonical: PAGE_URL },
     openGraph: {
-      title: `${product.seo_title?.trim() || product.name} | ${seoPublisher}`,
-      description: seoDescription ?? undefined,
+      title: product.name,
+      description: autoDescription ?? undefined,
       url: PAGE_URL,
-      siteName: seoPublisher,
+      siteName: siteConfig.name,
       locale: "es_SV",
       type: "website",
       ...(absoluteImage && {
@@ -172,40 +131,32 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: product.seo_title?.trim() || product.name,
-      description: seoDescription ?? undefined,
+      title: product.name,
+      description: autoDescription ?? undefined,
       creator: siteConfig.twitterHandle,
     },
-    robots: robotsDirective,
+    robots: { index: true, follow: true },
   };
 }
 
-// ── Page ─────────────────────────────────────────────────────────────────────
-export default async function ProductDetailPage({
+// ── Página ────────────────────────────────────────────────────────────────────
+export default async function UniversityProductDetailPage({
   params,
 }: {
-  params: Promise<{ sector: string; id: string }>;
+  params: Promise<{ universidad: string; id: string }>;
 }) {
-  const { sector, id } = await params;
-  const config = CATEGORIES[sector as Sector];
-
-  // Fetch product from Supabase by slug
+  const { universidad, id } = await params;
   const product = await getProductBySlug(id);
+  const config = CATEGORIES["universitario" as Sector];
 
-  // El sector "universitario" fue eliminado — las páginas de producto universitario
-  // ahora están en /catalogo/universidades/[universidad]/[id].
-  if (!config || !product || sector === "universitario") {
-    notFound();
-  }
+  if (!product || !config) notFound();
 
-  // Fetch related products AND real reviews in parallel (no waterfall)
-  const productSector = getProductSector(product);
   const [relatedProducts, reviewData] = await Promise.all([
-    getRelatedProducts(productSector, id, 6),
+    getRelatedProducts("universitario", id, 6),
     getProductReviews(product.id),
   ]);
 
-  const PAGE_URL = `${siteConfig.url}/catalogo/${sector}/${id}`;
+  const PAGE_URL = `${siteConfig.url}/catalogo/universidades/${universidad}/${id}`;
   const description =
     product.short_description ?? product.description ?? product.name;
   const imageUrl = getProductMainImage(product);
@@ -215,9 +166,7 @@ export default async function ProductDetailPage({
       : `${siteConfig.url}${imageUrl}`
     : undefined;
 
-  // ── JSON-LD: Use real reviews when available, else fallback to testimonials
   const hasRealReviews = reviewData.totalCount > 0;
-
   const jsonLdAggregateRating = hasRealReviews
     ? {
         "@type": "AggregateRating",
@@ -246,7 +195,6 @@ export default async function ProductDetailPage({
 
   return (
     <>
-      {/* LCP preload: main product image — evita el warning de Next.js y mejora Core Web Vitals */}
       {imageUrl && (
         <link
           rel="preload"
@@ -269,7 +217,7 @@ export default async function ProductDetailPage({
         totalCount={reviewData.totalCount}
       />
 
-      {/* JSON-LD: Product — Rich Results (aggregateRating + review + Offer completo) */}
+      {/* JSON-LD: Product */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -281,16 +229,9 @@ export default async function ProductDetailPage({
             image: productImageAbsolute ? [productImageAbsolute] : undefined,
             url: PAGE_URL,
             sku: product.slug ?? product.id,
-            // Identificadores de categoría
             ...(product.category && { category: product.category }),
-            // Material del producto (si está disponible)
             ...(product.material && { material: product.material }),
-            // Marca
-            brand: {
-              "@type": "Brand",
-              name: siteConfig.name,
-            },
-            // Oferta — Merchant Listing completo
+            brand: { "@type": "Brand", name: siteConfig.name },
             offers: {
               "@type": "Offer",
               price: Number(product.price).toFixed(2),
@@ -301,27 +242,22 @@ export default async function ProductDetailPage({
                   : "https://schema.org/OutOfStock",
               itemCondition: "https://schema.org/NewCondition",
               url: PAGE_URL,
-              // Precio válido hasta fin del año corriente
               priceValidUntil: `${new Date().getFullYear()}-12-31`,
               seller: {
                 "@type": "Organization",
                 name: siteConfig.name,
                 url: siteConfig.url,
               },
-              // Envío a El Salvador
               shippingDetails: SHIPPING_DETAILS_SV,
-              // Política de devoluciones
               hasMerchantReturnPolicy: MERCHANT_RETURN_POLICY,
             },
-            // ⭐ Calificación agregada — real si hay reseñas, fallback a testimonios
             aggregateRating: jsonLdAggregateRating,
-            // ⭐ Reseñas — reales si existen, fallback a testimonios verificados
             review: jsonLdReviews,
           }).replace(/</g, "\\u003c"),
         }}
       />
 
-      {/* JSON-LD: BreadcrumbList */}
+      {/* JSON-LD: BreadcrumbList — 4 niveles */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -344,12 +280,18 @@ export default async function ProductDetailPage({
               {
                 "@type": "ListItem",
                 position: 3,
-                name: config.subtitle,
-                item: `${siteConfig.url}/catalogo/${sector}`,
+                name: "Universidades",
+                item: `${siteConfig.url}/catalogo/universidades`,
               },
               {
                 "@type": "ListItem",
                 position: 4,
+                name: universidad.toUpperCase(),
+                item: `${siteConfig.url}/catalogo/universidades/${universidad}`,
+              },
+              {
+                "@type": "ListItem",
+                position: 5,
                 name: product.name,
                 item: PAGE_URL,
               },

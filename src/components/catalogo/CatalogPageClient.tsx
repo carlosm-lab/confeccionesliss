@@ -21,6 +21,9 @@ interface CatalogPageClientProps {
   sector: Sector;
   config: CategoryConfig;
   initialProducts: DbProduct[];
+  /** Item extra de breadcrumb insertado entre Catálogo y el nivel actual.
+   *  Uso: páginas /catalogo/universidades/[slug] → { label: "Universidades", href: "/catalogo/universidades" } */
+  breadcrumbExtra?: { label: string; href: string };
 }
 
 function applySort(products: DbProduct[], sortBy: SortOption): DbProduct[] {
@@ -46,6 +49,7 @@ export function CatalogPageClient({
   sector,
   config,
   initialProducts,
+  breadcrumbExtra,
 }: CatalogPageClientProps) {
   const [sortBy, setSortBy] = useState<SortOption>("best-selling");
   const [currentPage, setCurrentPage] = useState(1);
@@ -201,7 +205,13 @@ export function CatalogPageClient({
           items={[
             { label: "Inicio", href: "/" },
             { label: "Catálogo", href: "/catalogo" },
-            { label: config.subtitle, href: `/catalogo/${sector}` },
+            ...(breadcrumbExtra ? [breadcrumbExtra] : []),
+            {
+              label: config.subtitle,
+              href: breadcrumbExtra
+                ? `${breadcrumbExtra.href}/${sector === "universitario" ? config.subtitle.toLowerCase() : sector}`
+                : `/catalogo/${sector}`,
+            },
           ]}
         />
       </div>

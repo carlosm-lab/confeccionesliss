@@ -33,7 +33,11 @@ function CategoryCard({
 
   return (
     <Link
-      href={`/catalogo/${sector}`}
+      href={
+        sector === "universitario"
+          ? "/catalogo/universidades"
+          : `/catalogo/${sector}`
+      }
       className={cn(
         "group border-primary/35 @container mx-auto flex w-full max-w-md flex-col overflow-hidden rounded-2xl border bg-white transition-all duration-300 lg:max-w-none",
         "shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]",

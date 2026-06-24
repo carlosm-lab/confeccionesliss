@@ -1,0 +1,197 @@
+================================================================================
+REPORTE SEO — CATÁLOGO UNIVERSITARIO — CONFECCIONES LISS
+Fecha: 2026-06-22
+Auditor: Antigravity (AI Senior SEO)
+================================================================================
+
+CONTEXTO DEL PROYECTO
+─────────────────────
+- Framework: Next.js 16 App Router (Turbopack)
+- Estado de producción: Solo 7 páginas en línea (/, /contacto, /links, /updates,
+  /legal, /legal/privacidad, /legal/terminos)
+- El catálogo completo está en desarrollo, NO publicado en producción todavía.
+- Esto significa libertad total para diseñar URLs desde cero sin preocuparse
+  por redirects ni pérdida de indexación existente.
+
+
+================================================================================
+PARTE 1 — DIAGNÓSTICO: EL PROBLEMA ACTUAL DEL CATÁLOGO UNIVERSITARIO
+================================================================================
+
+Situación actual:
+- Existe una sola página: /catalogo/universitario
+- Dentro de esa página hay filtros en el sidebar (UNIVO, IEPROES, UGB, etc.)
+- Esos filtros son client-side: los ejecuta el navegador del usuario
+- Google NO ejecuta esos filtros. Google llega, lee el contenido, y se va.
+- Google ve uniformes universitarios mezclados sin diferenciación por universidad.
+
+Consecuencia:
+- Alguien que busca "uniformes UNIVO San Miguel" no encuentra ninguna página
+  tuya dedicada exclusivamente a esa búsqueda.
+- Se pierden búsquedas de alta intención de compra (personas que saben qué
+  universidad tienen y qué necesitan comprar).
+
+Universidades afectadas: UNIVO, IEPROES, UGB, UMA, UNAB, UES
+
+
+================================================================================
+PARTE 2 — ANÁLISIS DE LA PROPUESTA EXTERNA (otro agente IA)
+================================================================================
+
+El otro agente recomendó:
+  A) Crear páginas SSG por universidad ← CORRECTO
+  B) Cambiar la URL de /catalogo/universitario a /catalogo/uniformes-universitarios
+  C) Mover los productos a 4 niveles: /catalogo/uniformes-universitarios/univo/slug
+
+VEREDICTO:
+
+  A) Páginas por universidad → IMPLEMENTAR. Es la ganancia SEO real.
+
+  B) Renombrar el sector → NO HACER.
+     - Google entiende "universitario" igual que "uniformes-universitarios"
+     - Requiere cambiar el campo "sector" en toda la base de datos de Supabase
+     - Requiere cambiar el tipo TypeScript Sector en types.ts
+     - Requiere cambiar todas las funciones de catalogService.ts
+     - Costo técnico alto. Beneficio SEO: cero medible.
+
+  C) Productos a 4 niveles de profundidad → NO HACER.
+     - Rompe el generateStaticParams actual de [sector]/[id]/page.tsx
+     - Agrega lógica condicional compleja para distinguir universidad vs slug
+     - Google maneja bien la profundidad, pero la arquitectura se vuelve frágil
+
+
+================================================================================
+PARTE 3 — ANÁLISIS DE ALTERNATIVA: LANDING PAGES EXTERNAS AL CATÁLOGO
+================================================================================
+
+Propuesta evaluada:
+  - Dejar el catálogo como está (con filtros)
+  - Crear páginas tipo /uniformes-univo o /servicios/uniformes-univo
+  - Poner botón CTA que lleve al catálogo con el filtro ya aplicado
+
+ANÁLISIS:
+
+Defecto estructural:
+  El botón "Ver uniformes UNIVO" lleva a /catalogo/universitario con el filtro
+  de UNIVO activado. Ese filtrado es client-side (JavaScript del navegador).
+  Google llega al destino del enlace y ve TODOS los uniformes universitarios
+  sin filtrar. La landing habla de UNIVO pero el destino muestra todo.
+  Google detecta la incongruencia entre la landing y su destino.
+
+Para qué SÍ sirven las landing pages externas:
+  Capturan búsquedas INFORMATIVAS, no de compra:
+  - "¿Qué color es el uniforme de enfermería UNIVO?"
+  - "¿Qué necesito para entrar a enfermería IEPROES?"
+  - "Colores oficiales UGB carrera de salud"
+
+  Son personas que aún están investigando, no listas para comprar.
+
+Comparación directa:
+
+  Búsqueda: "uniformes UNIVO San Miguel" (intención de compra)
+
+  CON LANDING EXTERNA:
+    Google → /uniformes-univo (landing) → usuario hace clic → /catalogo/universitario
+    (filtrado en cliente) → producto [2 pasos, destino débil para Google]
+
+  CON PÁGINA EN EL CATÁLOGO:
+    Google → /catalogo/universitario/univo (página real con productos UNIVO) → producto
+    [1 paso, todo coherente]
+
+
+================================================================================
+PARTE 4 — RECOMENDACIÓN FINAL (arquitectura óptima)
+================================================================================
+
+ARQUITECTURA RECOMENDADA:
+─────────────────────────
+
+Capa 1 — Captura búsquedas de compra (PRIORIDAD ALTA):
+
+  /catalogo/universitario                    ← Hub: muestra todas las universidades
+  /catalogo/universitario/univo              ← SSG: solo productos UNIVO
+  /catalogo/universitario/ieproes            ← SSG: solo productos IEPROES
+  /catalogo/universitario/ugb               ← SSG: solo productos UGB
+  /catalogo/universitario/unab              ← SSG: solo productos UNAB
+  /catalogo/universitario/ues               ← SSG: solo productos UES
+  /catalogo/universitario/uma               ← SSG: solo productos UMA
+  /catalogo/universitario/[slug-producto]   ← Sin cambio (existe actualmente)
+
+  Cada página de universidad tiene:
+  - H1 específico: "Uniformes UNIVO | Confecciones Liss"
+  - Meta description con keywords de esa universidad
+  - JSON-LD CollectionPage con los productos de esa universidad
+  - Breadcrumb: Inicio > Catálogo > Universitario > UNIVO
+
+Capa 2 — Captura búsquedas informativas (PRIORIDAD MEDIA, complementaria):
+
+  /uniformes-medicos-univo (o ruta similar)  ← Landing editorial
+  /uniformes-medicos-ieproes                 ← Landing editorial
+  etc.
+
+  Estas páginas tienen:
+  - Contenido educativo: colores oficiales, carreras, qué incluye el uniforme
+  - CTA que lleva al catálogo (/catalogo/universitario/univo)
+  - Captura a personas que están investigando antes de comprar
+
+
+IMPLEMENTACIÓN TÉCNICA REQUERIDA:
+─────────────────────────────────
+
+1. Nueva ruta en Next.js:
+   src/app/(public)/catalogo/universitario/[universidad]/page.tsx
+   (esta ruta tiene prioridad sobre [sector]/[id] por ser más específica)
+
+2. Nueva función en catalogService.ts:
+   getProductsByUniversity(universidad: string) → Promise<DbProduct[]>
+   Filtra: sector = "universitario" AND category = universidad
+
+3. Lista de universidades como constante (en el archivo de la nueva ruta):
+   const UNIVERSIDADES = ["univo", "ieproes", "ugb", "unab", "ues", "uma"]
+
+4. generateStaticParams genera una página por universidad en build time
+
+5. generateMetadata dinámica por universidad para título y descripción SEO
+
+6. JSON-LD CollectionPage con productos de esa universidad específica
+
+7. BreadcrumbList: Inicio > Catálogo > Universitario > [Universidad]
+
+
+================================================================================
+PARTE 5 — RIESGOS SEO DEL SSG-ISR (contexto adicional auditado)
+================================================================================
+
+El catálogo usa revalidate = 3600 (1 hora). Para un catálogo como este
+(~180 modelos fijos que no cambian a diario), se recomienda migrar a
+On-Demand Revalidation en lugar de ISR por tiempo:
+
+  Cómo funciona:
+  - Cuando el admin guarda un producto en el panel, se llama revalidatePath()
+  - Solo se regeneran las páginas afectadas, al instante
+  - No hay revalidación cada hora cuando no hay cambios
+
+  Código a agregar en las Server Actions del admin (src/actions/):
+    revalidatePath(`/catalogo/${sector}/${slug}`)
+    revalidatePath(`/catalogo/${sector}`)
+    revalidatePath('/catalogo')
+    revalidatePath('/')  // si el home muestra productos recientes
+
+  Ventaja: el admin ve los cambios publicados inmediatamente sin esperar 1 hora.
+
+
+================================================================================
+DECISIONES PENDIENTES
+================================================================================
+
+[ ] Confirmar si se implementan las páginas /catalogo/universitario/[universidad]
+[ ] Definir slugs exactos para cada universidad:
+    - univo, ieproes, ugb, unab, ues, uma (propuesta actual)
+[ ] Decidir si se crean también landing pages editoriales por universidad
+    en una ruta separada de /servicios o raíz
+[ ] Migrar de ISR (revalidate=3600) a On-Demand Revalidation (revalidatePath)
+    en las Server Actions del panel admin
+
+================================================================================
+FIN DEL REPORTE
+================================================================================

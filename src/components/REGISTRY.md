@@ -142,11 +142,28 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 ### CatalogPageClient
 
 - **Ruta:** `src/components/catalogo/CatalogPageClient.tsx`
-- **Descripción:** Orquestador del listado de catálogo. Layout 2 columnas (sidebar + grid), filtrado/paginación client-side sobre `ALL_PRODUCTS`, estado vacío elegante. Copia pixel a pixel el TechCatalogPage de Padilla Store.
+- **Descripción:** Orquestador del listado de catálogo. Layout 2 columnas (sidebar + grid), filtrado/paginación client-side sobre `initialProducts`, estado vacío elegante. Copia pixel a pixel el TechCatalogPage de Padilla Store. Soporta breadcrumb de 3 o 4 niveles mediante `breadcrumbExtra`.
 - **Props:**
-  - `sector: Sector` — Identificador del sector.
-  - `config: CategoryConfig` — Configuración de la categoría.
-- **Ejemplo:** `<CatalogPageClient sector="scrubs" config={CATEGORIES.scrubs} />`
+  - `sector: Sector` — Identificador del sector (usado para links de producto detail).
+  - `config: CategoryConfig` — Configuración de la categoría (título H1, filtros, chips, CTA).
+  - `initialProducts: DbProduct[]` — Productos cargados en servidor (SSR/SSG).
+  - `breadcrumbExtra?: { label: string; href: string }` — (Opcional) Ítem de breadcrumb extra entre "Catálogo" y el nivel actual. Uso: páginas `/catalogo/universidades/[slug]`.
+- **Ejemplo sector normal:** `<CatalogPageClient sector="scrubs" config={CATEGORIES.scrubs} initialProducts={products} />`
+- **Ejemplo universidad:** `<CatalogPageClient sector="universitario" config={univConfig} initialProducts={products} breadcrumbExtra={{ label: "Universidades", href: "/catalogo/universidades" }} />`
+
+### UniversidadesHub (página)
+
+- **Ruta:** `src/app/(public)/catalogo/universidades/page.tsx`
+- **Descripción:** Hub visual del catálogo universitario. Hero con collage animado de logos universitarios (3 variantes: desktop hexagonal 10×7, tablet 8×10, mobile 7×10), sección de 6 tarjetas de universidad (grid asimétrico tipo bento), strip de garantías y CTA final oscuro. Cada tarjeta enlaza a `/catalogo/universidades/[slug]`. Layout completamente estático (generado en build) gracias a la semilla LCG fija en los builders de collage.
+- **Metadata:** Provista por `src/app/(public)/catalogo/universidades/layout.tsx` (la página es "use client").
+- **Props:** No recibe props.
+
+### UniversidadCatalogPage (página SSG)
+
+- **Ruta:** `src/app/(public)/catalogo/universidades/[universidad]/page.tsx`
+- **Descripción:** Página SSG generada estáticamente para cada una de las 6 universidades: univo, ieproes, ugb, unab, ues, uma. Fetch de productos desde Supabase en build time (`getProductsByUniversity`), categorías (carreras) desde `getCategoriesForUniversity`. Reutiliza `CatalogPageClient` con `breadcrumbExtra` para mostrar Inicio › Catálogo › Universidades › [Sigla]. Incluye JSON-LD CollectionPage y BreadcrumbList (4 niveles). SEO title y description únicos por universidad. ISR con `revalidate = 3600`.
+- **Props:** `params: Promise<{ universidad: string }>` (Next.js App Router)
+- **Datos:** `UNIVERSITY_CONFIG` record (hardcoded) con sigla, nombre, carreras, seoTitle, seoDescription.
 
 ### ProductDetailClient
 

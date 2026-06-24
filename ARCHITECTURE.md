@@ -204,12 +204,63 @@ Tres tipos de notificaciones:
 - Lee `STORAGE_FAVORITES_KEY` y `STORAGE_CART_KEY` de localStorage para saber si los hints de auth deben existir.
 - `addLocalNotification` genera NUEVO ID al re-activar un tipo existente ? evita que `readIds` enmascare la notificaci�n.
 
-**Detecci�n de revocaci�n de permisos push**
+- `addLocalNotification` genera NUEVO ID al re-activar un tipo existente ? evita que `readIds` enmascare la notificacin.
+
+**Deteccin de revocacin de permisos push**
 
 - `visibilitychange` listener re-checa `Notification.permission` al recuperar foco.
-- `prevPushStatusRef` detecta transici�n `granted ? default` y limpia `pushPromptDismissed`.
+- `prevPushStatusRef` detecta transicin `granted ? default` y limpia `pushPromptDismissed`.
 
-**Guard de condici�n en dismissNotification (Problema 2)**
+**Guard de condición en dismissNotification (Problema 2)**
 
-- Defensa en profundidad: si el caller intenta eliminar un HINT_TYPE con condici�n incumplida, la llamada es ignorada.
-- La UI (`GuestBell.canDelete`) ya lo bloqueaba; esto protege la funci�n base tambi�n.
+- Defensa en profundidad: si el caller intenta eliminar un HINT_TYPE con condición incumplida, la llamada es ignorada.
+- La UI (`GuestBell.canDelete`) ya lo bloqueaba; esto protege la función base también.
+
+---
+
+**Date:** 2026-06-23
+**Decision:** ROUTING-001 — Hub universitario en `/catalogo/universidades` + páginas SSG por universidad en `/catalogo/universidades/[slug]`
+
+**Context:**
+El catálogo universitario existía en `/catalogo/universitario` con filtrado **client-side** por universidad (UNIVO, IEPROES, etc.). Google llega a esa página, ejecuta el render inicial y ve TODOS los productos mezclados sin diferenciar por universidad. Las búsquedas de alta intención de compra ("uniformes UNIVO San Miguel") no encontraban ninguna página dedicada. Análisis documentado en `SEO_ANALISIS_CATALOGO_UNIVERSITARIO.txt`.
+
+**Decisions made:**
+
+1. **Hub visual en `/catalogo/universidades`** (ruta estática, toma prioridad sobre `[sector]`):
+   - Página "use client" con hero de collage de logos animado (LCG con seed fija → sin hydration mismatch).
+   - Grid bento de 6 tarjetas de universidad que enlazan a `/catalogo/universidades/[slug]`.
+   - Metadata provista por `layout.tsx` (la página no puede exportar `generateMetadata` siendo "use client").
+
+2. **Páginas SSG por universidad en `/catalogo/universidades/[universidad]`**:
+   - `generateStaticParams` → 6 slugs: univo, ieproes, ugb, unab, ues, uma.
+   - Fetch de productos en build time via `getProductsByUniversity(universidad)` (nueva función en `catalogService.ts`).
+   - `generateMetadata` individual → `<title>Uniformes UNIVO | Confecciones Liss</title>` único por universidad.
+   - Reutiliza `CatalogPageClient` con prop `breadcrumbExtra` (nueva, opcional, backward-compatible).
+   - Sidebar muestra carreras de esa universidad (desde DB o fallback hardcoded en `UNIVERSITY_CONFIG`).
+   - JSON-LD `CollectionPage` + `BreadcrumbList` (4 niveles) por página.
+
+3. **Nueva función `getProductsByUniversity(universidad)` en `catalogService.ts`**:
+   - Query: `sector = "universitario" AND category ILIKE "%${slug}%"`.
+   - Fallback a `getProductsBySector("universitario")` si la query falla.
+
+4. **Nueva función `getCategoriesForUniversity(universidad)` en `catalogService.ts`**:
+   - Query: `catalog = "universitario" AND slug ILIKE "${slug}%"`.
+   - Devuelve las carreras (categorías) de esa universidad específica para el sidebar.
+
+5. **`CatalogPageClient` — prop `breadcrumbExtra` opcional:**
+   - `{ label: string; href: string }` insertado entre "Catálogo" y el nivel actual.
+   - Permite breadcrumbs de 4 niveles: Inicio › Catálogo › Universidades › UNIVO.
+   - Backward-compatible — callers existentes no pasan la prop y continúan con 3 niveles.
+
+6. **El sector `"universitario"` en `/catalogo/universitario` NO se elimina ni renombra:**
+   - Sigue siendo la ruta de producto-detail para uniformes universitarios (`/catalogo/universitario/[slug]`).
+   - Las tarjetas de productos en `CatalogPageClient` enlazan a `/catalogo/universitario/[slug]` (campo `sector`).
+   - Renombrar el sector implicaría migrar Supabase + TypeScript Sector type + todas las funciones — costo técnico alto, beneficio SEO cero (analizado en el SEO doc).
+
+**Consequences:**
+
+- (1) `/catalogo/universidades` y `/catalogo/universidades/[slug]` son rutas **estáticas** que toman prioridad sobre `[sector]` y `[sector]/[id]` en Next.js App Router. No hay conflicto de routing.
+- (2) Los productos de UNIVO deben tener `sector = "universitario"` y `category = "univo"` (o variante similar) en Supabase para que `getProductsByUniversity("univo")` los recupere.
+- (3) Si `category` no sigue el patrón slug, las páginas de universidad aparecerán vacías. La única ruta de debug es verificar en Supabase que los productos tengan el campo `category` correcto.
+- (4) ISR con `revalidate = 3600` — las páginas de universidad se regeneran cada hora. Si se implementa on-demand revalidation en las Server Actions de admin, se debe llamar `revalidatePath('/catalogo/universidades')` y `revalidatePath('/catalogo/universidades/${slug}')` al guardar un producto universitario.
+- (5) `UNIVERSITY_CONFIG` en el archivo de la ruta es la fuente de verdad para slugs válidos. Para agregar una nueva universidad: agregar entrada en `UNIVERSITY_CONFIG` → el `generateStaticParams` la incluye automáticamente.

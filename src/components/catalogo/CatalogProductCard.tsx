@@ -167,7 +167,11 @@ export function CatalogProductCard({
 
       {/* Link de toda la tarjeta */}
       <Link
-        href={`/catalogo/${sector}/${slug}`}
+        href={
+          sector === "universitario" && product.category
+            ? `/catalogo/universidades/${product.category}/${slug}`
+            : `/catalogo/${sector}/${slug}`
+        }
         className="absolute inset-0 z-[10]"
         aria-label={`Ver detalles de ${product.name}`}
         prefetch={false}

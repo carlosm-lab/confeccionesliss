@@ -317,13 +317,18 @@ export async function getRelatedProducts(
 
 // ── Obtener slug + sector de todos los productos activos (para sitemap) ───────
 export async function getAllProductsForSitemap(): Promise<
-  { slug: string; sector: string; updated_at: string | null }[]
+  {
+    slug: string;
+    sector: string;
+    updated_at: string | null;
+    category: string | null;
+  }[]
 > {
   const supabase = createServerClient();
 
   const { data, error } = await supabase
     .from("products")
-    .select("slug, sector, updated_at, categories(catalog)")
+    .select("slug, sector, category, updated_at, categories(catalog)")
     .eq("is_active", true)
     .not("slug", "is", null);
 
@@ -336,18 +341,20 @@ export async function getAllProductsForSitemap(): Promise<
     const r = row as {
       slug: string | null;
       sector: string | null;
+      category: string | null;
       updated_at: string | null;
       categories: { catalog: string } | { catalog: string }[] | null;
     };
-    let sectorResolved = r.sector;
-    if (!sectorResolved && r.categories) {
+    let sectorVal = r.sector;
+    if (!sectorVal && r.categories) {
       const cat = Array.isArray(r.categories) ? r.categories[0] : r.categories;
-      sectorResolved = cat?.catalog ?? null;
+      sectorVal = cat?.catalog ?? null;
     }
     return {
       slug: r.slug ?? "",
-      sector: sectorResolved ?? "scrubs",
+      sector: sectorVal ?? "scrubs",
       updated_at: r.updated_at,
+      category: r.category ?? null,
     };
   });
 }
@@ -380,6 +387,63 @@ export async function getCategoriesForSector(
 
   if (error) {
     logger.error("[catalogService] getCategoriesForSector error:", error);
+    return [];
+  }
+
+  return (data ?? []) as DbCategory[];
+}
+
+// ── Obtener productos del sector universitario filtrados por universidad ──────
+/**
+ * Devuelve los productos activos del sector "universitario" cuya `category`
+ * coincide (parcialmente, case-insensitive) con el slug de la universidad.
+ * Ejemplo: universidad = "univo" → products donde category ILIKE "%univo%"
+ */
+export async function getProductsByUniversity(
+  universidad: string
+): Promise<DbProduct[]> {
+  const supabase = createServerClient();
+
+  const { data, error } = await supabase
+    .from("products")
+    .select(PRODUCT_SELECT)
+    .eq("is_active", true)
+    .eq("sector", "universitario")
+    .ilike("category", `%${universidad}%`)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    logger.error("[catalogService] getProductsByUniversity error:", error);
+    // Fallback: devolver todos los universitarios sin filtrar
+    return getProductsBySector("universitario");
+  }
+
+  return (data ?? []) as unknown as DbProduct[];
+}
+
+// ── Obtener categorías (carreras) de una universidad específica ───────────────
+/**
+ * Devuelve las categorías de la tabla `categories` cuyo slug empieza con
+ * el slug de la universidad. Por ejemplo, para "univo" devuelve:
+ *   { slug: "univo-enfermeria", name: "Enfermería" }
+ *   { slug: "univo-medicina",   name: "Medicina" }
+ * Si no hay categorías en DB, devuelve un array vacío (el caller usará
+ * las carreras hardcodeadas del UNIVERSITY_CONFIG como fallback).
+ */
+export async function getCategoriesForUniversity(
+  universidad: string
+): Promise<DbCategory[]> {
+  const supabase = createServerClient();
+
+  const { data, error } = await supabase
+    .from("categories")
+    .select("id, name, slug, catalog")
+    .eq("catalog", "universitario")
+    .ilike("slug", `${universidad}%`)
+    .order("name");
+
+  if (error) {
+    logger.error("[catalogService] getCategoriesForUniversity error:", error);
     return [];
   }
 
