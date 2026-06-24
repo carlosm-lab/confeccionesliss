@@ -61,6 +61,19 @@ export interface Product {
   seo_robots?: string | null;
   /** Publisher manual */
   seo_publisher?: string | null;
+  // ── Campos multi-catálogo ────────────────────────────────────
+  /** Precio único para productos sin variantes de talla */
+  base_price?: number | null;
+  /** Etiquetas de ocasión: San Valentín, Cumpleaños, etc. */
+  ocasion?: string[] | null;
+  /** Dimensiones físicas en texto libre */
+  dimensiones?: string | null;
+  /** Cantidad mínima de pedido (default 1) */
+  cantidad_minima?: number | null;
+  /** Envío disponible a nivel nacional */
+  envio_nacional?: boolean | null;
+  /** Solo disponible en San Miguel */
+  solo_san_miguel?: boolean | null;
 }
 
 /**

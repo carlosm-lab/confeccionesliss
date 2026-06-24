@@ -544,6 +544,90 @@ export function ProductDetailClient({
                   </p>
                 </div>
               )}
+
+              {/* 6c ── Dimensiones */}
+              {(product as { dimensiones?: string | null }).dimensiones && (
+                <div>
+                  <p className="text-xs font-semibold tracking-wider text-slate-500 uppercase">
+                    Dimensiones:{" "}
+                    <span className="font-medium text-slate-700 normal-case">
+                      {(product as { dimensiones?: string | null }).dimensiones}
+                    </span>
+                  </p>
+                </div>
+              )}
+
+              {/* 6d ── Cantidad mínima */}
+              {((product as { cantidad_minima?: number | null })
+                .cantidad_minima ?? 1) > 1 && (
+                <div className="flex items-center gap-1.5 rounded-lg bg-amber-50 px-3 py-2 text-xs font-semibold text-amber-700">
+                  <span
+                    className="material-symbols-outlined"
+                    style={{ fontSize: "16px" }}
+                  >
+                    info
+                  </span>
+                  Pedido mínimo:{" "}
+                  {
+                    (product as { cantidad_minima?: number | null })
+                      .cantidad_minima
+                  }{" "}
+                  unidades
+                </div>
+              )}
+
+              {/* 6e ── Disponibilidad de envío */}
+              {(product as { solo_san_miguel?: boolean | null })
+                .solo_san_miguel && (
+                <div className="flex items-center gap-1.5 rounded-lg bg-blue-50 px-3 py-2 text-xs font-semibold text-blue-700">
+                  <span
+                    className="material-symbols-outlined"
+                    style={{ fontSize: "16px" }}
+                  >
+                    location_on
+                  </span>
+                  Solo disponible en San Miguel
+                </div>
+              )}
+              {!(product as { envio_nacional?: boolean | null })
+                .envio_nacional &&
+                !(product as { solo_san_miguel?: boolean | null })
+                  .solo_san_miguel && (
+                  <div className="flex items-center gap-1.5 rounded-lg bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-600">
+                    <span
+                      className="material-symbols-outlined"
+                      style={{ fontSize: "16px" }}
+                    >
+                      store
+                    </span>
+                    Retiro en tienda
+                  </div>
+                )}
+
+              {/* 6f ── Ocasión */}
+              {Array.isArray(
+                (product as { ocasion?: string[] | null }).ocasion
+              ) &&
+                ((product as { ocasion?: string[] | null }).ocasion?.length ??
+                  0) > 0 && (
+                  <div>
+                    <p className="mb-1.5 text-xs font-semibold tracking-wider text-slate-500 uppercase">
+                      Ocasión
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {(product as { ocasion?: string[] }).ocasion!.map(
+                        (oc) => (
+                          <span
+                            key={oc}
+                            className="rounded-full bg-violet-50 px-2.5 py-1 text-xs font-medium text-violet-700"
+                          >
+                            {oc}
+                          </span>
+                        )
+                      )}
+                    </div>
+                  </div>
+                )}
             </div>
             {/* /columna izquierda */}
 

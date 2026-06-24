@@ -57,6 +57,19 @@ export interface DbProduct {
   seo_robots?: string | null;
   /** Publisher manual — si null, se usa siteConfig.name */
   seo_publisher?: string | null;
+  /** Precio único para productos sin variantes de talla.
+   * Cuando price_by_size es null/vacío, este campo es el precio definitivo del producto. */
+  base_price?: number | null;
+  /** Etiquetas de ocasión: San Valentín, Cumpleaños, Boda, etc. */
+  ocasion?: string[] | null;
+  /** Dimensiones físicas en texto libre. Ej: "30cm × 20cm" */
+  dimensiones?: string | null;
+  /** Cantidad mínima de pedido. Default 1. */
+  cantidad_minima?: number | null;
+  /** Si hay envío disponible a nivel nacional. */
+  envio_nacional?: boolean | null;
+  /** Si el producto solo se entrega en San Miguel. */
+  solo_san_miguel?: boolean | null;
 }
 
 // ── Imagen principal resuelta ─────────────────────────────────
@@ -114,6 +127,7 @@ export const PRODUCT_SELECT = `
   image_path, images, is_active, slug, sector,
   tallas, colores, colores_label, material, caracteristicas,
   price_by_size, offer_by_size,
+  base_price, ocasion, dimensiones, cantidad_minima, envio_nacional, solo_san_miguel,
   seo_title, seo_description, seo_keywords, seo_robots, seo_publisher,
   created_at, updated_at,
   categories(name, catalog)

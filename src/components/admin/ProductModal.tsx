@@ -75,6 +75,19 @@ interface FormData {
   seo_keywords: string;
   seo_robots: string;
   seo_publisher: string;
+  // ── Campos multi-catálogo ────────────────────
+  /** Precio único para productos sin variantes de talla (string para el input) */
+  base_price: string;
+  /** Etiquetas de ocasión */
+  ocasion: string[];
+  /** Dimensiones físicas en texto libre */
+  dimensiones: string;
+  /** Cantidad mínima de pedido */
+  cantidad_minima: string;
+  /** Envío nacional disponible */
+  envio_nacional: boolean;
+  /** Solo disponible en San Miguel */
+  solo_san_miguel: boolean;
 }
 
 export default function ProductModal({
@@ -105,6 +118,8 @@ export default function ProductModal({
     hex: "#000000",
   });
   const [caracteristicaInput, setCaracteristicaInput] = useState("");
+  /** Estado local del input de talla personalizada (zapatos, tallas de niño, etc.) */
+  const [customTallaInput, setCustomTallaInput] = useState("");
 
   const [formData, setFormData] = useState<FormData>({
     name: "",
@@ -136,6 +151,13 @@ export default function ProductModal({
     seo_keywords: "",
     seo_robots: "",
     seo_publisher: "",
+    // Multi-catálogo
+    base_price: "",
+    ocasion: [],
+    dimensiones: "",
+    cantidad_minima: "1",
+    envio_nacional: true,
+    solo_san_miguel: false,
   });
 
   const [tagInput, setTagInput] = useState("");
@@ -235,6 +257,26 @@ export default function ProductModal({
         seo_keywords: product.seo_keywords || "",
         seo_robots: product.seo_robots || "",
         seo_publisher: product.seo_publisher || "",
+        // Multi-catálogo
+        base_price: (product as { base_price?: number | null }).base_price
+          ? String((product as { base_price?: number | null }).base_price)
+          : "",
+        ocasion: Array.isArray(
+          (product as { ocasion?: string[] | null }).ocasion
+        )
+          ? ((product as { ocasion?: string[] | null }).ocasion ?? [])
+          : [],
+        dimensiones:
+          (product as { dimensiones?: string | null }).dimensiones || "",
+        cantidad_minima: String(
+          (product as { cantidad_minima?: number | null }).cantidad_minima ?? 1
+        ),
+        envio_nacional:
+          (product as { envio_nacional?: boolean | null }).envio_nacional !==
+          false,
+        solo_san_miguel: Boolean(
+          (product as { solo_san_miguel?: boolean | null }).solo_san_miguel
+        ),
       });
       setSlugManuallyEdited(!!product.slug);
     } else {
@@ -276,9 +318,17 @@ export default function ProductModal({
         seo_keywords: "",
         seo_robots: "",
         seo_publisher: "",
+        // Multi-catálogo
+        base_price: "",
+        ocasion: [],
+        dimensiones: "",
+        cantidad_minima: "1",
+        envio_nacional: true,
+        solo_san_miguel: false,
       });
       setColorInput({ name: "", hex: "#000000" });
       setCaracteristicaInput("");
+      setCustomTallaInput("");
       setSlugManuallyEdited(false);
     }
     setTagInput("");
@@ -418,9 +468,11 @@ export default function ProductModal({
     }
 
     // Calcular price global: mínimo de price_by_size (para compatibilidad con campos legacy)
+    // Si no hay tallas con precio → usar base_price (artículos sin variantes de talla)
     const priceValues = Object.values(parsedPriceBySize);
+    const basePriceNum = parseFloat(formData.base_price) || 0;
     const calculatedPrice =
-      priceValues.length > 0 ? Math.min(...priceValues) : 0;
+      priceValues.length > 0 ? Math.min(...priceValues) : basePriceNum;
 
     // Calcular old_price global: mínimo de offer_by_size (para compatibilidad con filtros legacy)
     const offerValues = Object.values(parsedOfferBySize);
@@ -508,6 +560,13 @@ export default function ProductModal({
       seo_keywords: formData.seo_keywords?.trim() || null,
       seo_robots: formData.seo_robots?.trim() || null,
       seo_publisher: formData.seo_publisher?.trim() || null,
+      // ── Campos multi-catálogo ──────────────────────────────────────────
+      base_price: basePriceNum > 0 ? basePriceNum : null,
+      ocasion: formData.ocasion.length > 0 ? formData.ocasion : [],
+      dimensiones: formData.dimensiones?.trim() || null,
+      cantidad_minima: parseInt(formData.cantidad_minima, 10) || 1,
+      envio_nacional: formData.envio_nacional,
+      solo_san_miguel: formData.solo_san_miguel,
     } as Partial<Product> & {
       offer_terms?: string | null;
       price_by_size?: Record<string, number> | null;
@@ -1116,11 +1175,16 @@ export default function ProductModal({
                       className="focus:ring-primary/20 focus:border-primary w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
                     />
                   </div>
-                  {/* Tallas */}
+                  {/* Tallas Disponibles — botones predefinidos */}
                   <div className="sm:col-span-2">
                     <span className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400">
-                      Tallas Disponibles
+                      Tallas Disponibles{" "}
+                      <span className="font-normal text-slate-400">
+                        (ropa: XS–XXL · zapatos: escribe el número · niños:
+                        4–16)
+                      </span>
                     </span>
+                    {/* Botones predefinidos */}
                     <div className="flex flex-wrap gap-2">
                       {[
                         "XS",
@@ -1142,7 +1206,6 @@ export default function ProductModal({
                               const newTallas = isSelected
                                 ? prev.tallas.filter((t) => t !== talla)
                                 : [...prev.tallas, talla];
-                              // Si se deselecciona, limpiar su precio de price_by_size y offer_by_size
                               const newPriceBySize = { ...prev.price_by_size };
                               const newOfferBySize = { ...prev.offer_by_size };
                               if (isSelected) {
@@ -1167,7 +1230,155 @@ export default function ProductModal({
                         </button>
                       ))}
                     </div>
+
+                    {/* Talla personalizada (zapatos, tallas de niño, etc.) */}
+                    <div className="mt-2 flex gap-2">
+                      <input
+                        type="text"
+                        id="custom-talla-input"
+                        value={customTallaInput}
+                        onChange={(e) => setCustomTallaInput(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" && customTallaInput.trim()) {
+                            e.preventDefault();
+                            const t = customTallaInput.trim();
+                            if (!formData.tallas.includes(t)) {
+                              setFormData((prev) => ({
+                                ...prev,
+                                tallas: [...prev.tallas, t],
+                              }));
+                            }
+                            setCustomTallaInput("");
+                          }
+                        }}
+                        placeholder="Agregar talla (ej: 37, 4, 16…) y presiona Enter"
+                        className="focus:ring-primary/20 flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const t = customTallaInput.trim();
+                          if (t && !formData.tallas.includes(t)) {
+                            setFormData((prev) => ({
+                              ...prev,
+                              tallas: [...prev.tallas, t],
+                            }));
+                          }
+                          setCustomTallaInput("");
+                        }}
+                        className="rounded-lg bg-slate-100 px-3 py-2 text-sm font-medium transition-colors hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20"
+                      >
+                        + Agregar
+                      </button>
+                    </div>
+
+                    {/* Chips de tallas personalizadas activas (las que no son predefinidas) */}
+                    {formData.tallas.filter(
+                      (t) =>
+                        ![
+                          "XS",
+                          "S",
+                          "M",
+                          "L",
+                          "XL",
+                          "XXL",
+                          "3XL",
+                          "Única",
+                          "A la medida",
+                        ].includes(t)
+                    ).length > 0 && (
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {formData.tallas
+                          .filter(
+                            (t) =>
+                              ![
+                                "XS",
+                                "S",
+                                "M",
+                                "L",
+                                "XL",
+                                "XXL",
+                                "3XL",
+                                "Única",
+                                "A la medida",
+                              ].includes(t)
+                          )
+                          .map((talla) => (
+                            <span
+                              key={talla}
+                              className="bg-primary/10 text-primary inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold"
+                            >
+                              {talla}
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setFormData((prev) => ({
+                                    ...prev,
+                                    tallas: prev.tallas.filter(
+                                      (t) => t !== talla
+                                    ),
+                                    price_by_size: Object.fromEntries(
+                                      Object.entries(prev.price_by_size).filter(
+                                        ([k]) => k !== talla
+                                      )
+                                    ),
+                                    offer_by_size: Object.fromEntries(
+                                      Object.entries(prev.offer_by_size).filter(
+                                        ([k]) => k !== talla
+                                      )
+                                    ),
+                                  }))
+                                }
+                                className="text-primary/60 hover:text-red-500"
+                                aria-label={`Eliminar talla ${talla}`}
+                              >
+                                <span
+                                  className="material-symbols-outlined"
+                                  style={{ fontSize: "12px" }}
+                                >
+                                  close
+                                </span>
+                              </button>
+                            </span>
+                          ))}
+                      </div>
+                    )}
                   </div>
+
+                  {/* Precio base — solo visible cuando NO hay tallas seleccionadas */}
+                  {formData.tallas.length === 0 && (
+                    <div className="sm:col-span-2">
+                      <label
+                        htmlFor="product-base-price"
+                        className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
+                      >
+                        Precio base ($){" "}
+                        <span className="font-normal text-slate-400">
+                          — para artículos sin variantes de talla
+                        </span>
+                      </label>
+                      <input
+                        id="product-base-price"
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        value={formData.base_price}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            base_price: e.target.value,
+                          }))
+                        }
+                        placeholder="0.00"
+                        onWheel={(e) => (e.target as HTMLInputElement).blur()}
+                        className="focus:ring-primary/20 focus:border-primary w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 transition-all outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                      />
+                      <p className="mt-1 text-[10px] text-slate-400">
+                        Este precio se aplica directamente cuando el producto no
+                        tiene tallas (flores, accesorios, sublimados, etc.).
+                      </p>
+                    </div>
+                  )}
 
                   {/* Características (bullets con check en la vista pública) */}
                   <div className="sm:col-span-2">
@@ -1435,6 +1646,154 @@ export default function ProductModal({
                     Producto Activo (Visible en catálogo)
                   </span>
                 </label>
+              </div>
+
+              {/* ─── Detalles del Artículo — campos multi-catálogo ──────────────── */}
+              <div className="space-y-4 rounded-xl border border-violet-200 bg-violet-50 p-4 md:col-span-2 dark:border-violet-500/20 dark:bg-violet-500/5">
+                <div className="flex items-center gap-2 text-violet-700 dark:text-violet-400">
+                  <span
+                    className="material-symbols-outlined"
+                    style={{ fontSize: "20px" }}
+                  >
+                    info
+                  </span>
+                  <h4 className="text-sm font-bold">Detalles del Artículo</h4>
+                  <span className="ml-auto text-[10px] font-normal text-slate-400">
+                    Opcional
+                  </span>
+                </div>
+
+                {/* Ocasión */}
+                <div>
+                  <span className="mb-2 block text-xs font-medium text-slate-600 dark:text-slate-400">
+                    Ocasión{" "}
+                    <span className="font-normal text-slate-400">
+                      (selecciona las que apliquen)
+                    </span>
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      "San Valentín",
+                      "Cumpleaños",
+                      "Boda",
+                      "Graduación",
+                      "Aniversario",
+                      "Día del Maestro",
+                      "Día de la Madre",
+                      "Día del Padre",
+                      "Navidad",
+                      "Sin ocasión especial",
+                    ].map((oc) => (
+                      <button
+                        key={oc}
+                        type="button"
+                        onClick={() =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            ocasion: prev.ocasion.includes(oc)
+                              ? prev.ocasion.filter((o) => o !== oc)
+                              : [...prev.ocasion, oc],
+                          }))
+                        }
+                        className={`rounded-lg border px-3 py-1 text-xs font-semibold transition-colors ${
+                          formData.ocasion.includes(oc)
+                            ? "border-violet-500 bg-violet-600 text-white"
+                            : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                        }`}
+                      >
+                        {oc}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Dimensiones */}
+                <div>
+                  <label
+                    htmlFor="product-dimensiones"
+                    className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
+                  >
+                    Dimensiones / Medidas{" "}
+                    <span className="font-normal text-slate-400">
+                      (texto libre)
+                    </span>
+                  </label>
+                  <input
+                    id="product-dimensiones"
+                    name="dimensiones"
+                    value={formData.dimensiones}
+                    onChange={handleChange}
+                    placeholder="Ej: 30cm × 20cm, alto 15cm · Talla S: largo 65cm"
+                    maxLength={200}
+                    className="focus:ring-primary/20 focus:border-primary w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                  />
+                </div>
+
+                {/* Cantidad mínima */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label
+                      htmlFor="product-cantidad-minima"
+                      className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
+                    >
+                      Cantidad mínima de pedido
+                    </label>
+                    <input
+                      id="product-cantidad-minima"
+                      name="cantidad_minima"
+                      type="number"
+                      min="1"
+                      value={formData.cantidad_minima}
+                      onChange={handleChange}
+                      onWheel={(e) => (e.target as HTMLInputElement).blur()}
+                      className="focus:ring-primary/20 focus:border-primary w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                    />
+                  </div>
+
+                  {/* Disponibilidad de envío */}
+                  <div className="flex flex-col justify-center gap-2">
+                    <label className="flex cursor-pointer items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={formData.envio_nacional}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            envio_nacional: e.target.checked,
+                            // Si se activa envío nacional, desactivar solo_san_miguel
+                            solo_san_miguel: e.target.checked
+                              ? false
+                              : prev.solo_san_miguel,
+                          }))
+                        }
+                        className="h-4 w-4 rounded border-slate-300 accent-violet-600"
+                      />
+                      <span className="text-xs font-medium text-slate-700 dark:text-slate-300">
+                        Envío nacional disponible
+                      </span>
+                    </label>
+                    <label className="flex cursor-pointer items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={formData.solo_san_miguel}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            solo_san_miguel: e.target.checked,
+                            // Si se activa solo SM, desactivar envío nacional
+                            envio_nacional: e.target.checked
+                              ? false
+                              : prev.envio_nacional,
+                          }))
+                        }
+                        className="h-4 w-4 rounded border-slate-300 accent-violet-600"
+                      />
+                      <span className="text-xs font-medium text-slate-700 dark:text-slate-300">
+                        Solo en San Miguel
+                      </span>
+                    </label>
+                  </div>
+                </div>
               </div>
 
               {/* ─── SEO Manual ─────────────────────────────────────────── */}
