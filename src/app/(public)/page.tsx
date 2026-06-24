@@ -31,8 +31,9 @@ export const metadata: Metadata = {
   },
 };
 
-// ── ISR: Re-genera cada hora para reflejar productos nuevos sin re-deploy ──
-export const revalidate = 3600;
+// ── SSG puro + On-Demand Revalidation ──────────────────────────────────────
+// No ISR por tiempo. Se regenera vía revalidatePath('/') desde src/actions/catalog.ts
+// cuando el admin guarda o elimina un producto.
 
 export default async function HomePage() {
   // Load recent products from Supabase (server-side, no hardcoding)
