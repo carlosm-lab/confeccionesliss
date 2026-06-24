@@ -6,7 +6,6 @@ import {
   getProductBySlug,
   getRelatedProducts,
   getProductMainImage,
-  getProductsByUniversity,
 } from "@/lib/catalogService";
 import { getProductReviews } from "@/lib/reviewsService";
 import { testimonials } from "@/lib/seo-data";
@@ -18,24 +17,48 @@ import type { Sector } from "@/data/types";
 export const dynamicParams = true;
 
 // ── Static params: pre-genera páginas de detalle para cada universidad ─────────
+// Una sola query a Supabase en lugar de 6. Deriva la universidad del slug
+// compuesto de categoría: "ieproes-enfermeria" → "ieproes".
+const VALID_UNIVERSITY_SLUGS = new Set([
+  "univo",
+  "ieproes",
+  "ugb",
+  "unab",
+  "ues",
+  "uma",
+]);
+
 export async function generateStaticParams(): Promise<
   { universidad: string; id: string }[]
 > {
-  const slugs = ["univo", "ieproes", "ugb", "unab", "ues", "uma"];
-  const results: { universidad: string; id: string }[] = [];
   try {
-    await Promise.all(
-      slugs.map(async (universidad) => {
-        const products = await getProductsByUniversity(universidad);
-        for (const p of products) {
-          if (p.slug) results.push({ universidad, id: p.slug });
-        }
-      })
-    );
+    const { getSupabaseClient } = await import("@/lib/supabaseClient");
+    const supabase = getSupabaseClient();
+
+    const { data } = await supabase
+      .from("products")
+      .select("slug, category")
+      .eq("is_active", true)
+      .eq("sector", "universitario")
+      .not("slug", "is", null)
+      .not("category", "is", null);
+
+    if (!data) return [];
+
+    const params: { universidad: string; id: string }[] = [];
+    for (const p of data as { slug: string; category: string }[]) {
+      // Slug compuesto: "ieproes-enfermeria" → universidad = "ieproes"
+      // Slug simple:    "ieproes"            → universidad = "ieproes"
+      const universitySlug = p.category.split("-")[0];
+      if (VALID_UNIVERSITY_SLUGS.has(universitySlug)) {
+        params.push({ universidad: universitySlug, id: p.slug });
+      }
+    }
+    return params;
   } catch {
-    // Si Supabase no está disponible, Next.js genera on-demand con dynamicParams
+    // Si Supabase no está disponible, dynamicParams = true genera on-demand
+    return [];
   }
-  return results;
 }
 
 // ── Schema constants ───────────────────────────────────────────────────────────
