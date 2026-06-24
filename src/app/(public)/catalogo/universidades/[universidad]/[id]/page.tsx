@@ -281,7 +281,7 @@ export default async function UniversityProductDetailPage({
         }}
       />
 
-      {/* JSON-LD: BreadcrumbList — 4 niveles */}
+      {/* JSON-LD: BreadcrumbList — 5 niveles: Inicio › Catálogo › Universidades › [SIGLA] › [Producto] */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
