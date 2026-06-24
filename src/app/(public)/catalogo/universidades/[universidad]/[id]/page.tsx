@@ -120,12 +120,12 @@ export async function generateMetadata({
 }: {
   params: Promise<{ universidad: string; id: string }>;
 }): Promise<Metadata> {
-  const { id } = await params;
+  const { universidad, id } = await params;
   const product = await getProductBySlug(id);
   if (!product) return { title: "Producto no encontrado" };
 
   const config = CATEGORIES["universitario" as Sector];
-  const PAGE_URL = `${siteConfig.url}/catalogo/universidades/${(await params).universidad}/${id}`;
+  const PAGE_URL = `${siteConfig.url}/catalogo/universidades/${universidad}/${id}`;
   const autoTitle = `${product.name} | ${config?.subtitle ?? "Uniformes Universitarios"}`;
   const autoDescription =
     product.short_description ?? product.description ?? product.name;
@@ -136,15 +136,34 @@ export async function generateMetadata({
       : `${siteConfig.url}${imageUrl}`
     : undefined;
 
+  // ── Campos SEO manuales (prioridad sobre automático si no son null/empty) ──
+  const seoTitle = product.seo_title?.trim() || autoTitle;
+  const seoDescription = product.seo_description?.trim() || autoDescription;
+  const seoKeywords = product.seo_keywords?.trim() || undefined;
+  const seoPublisher = product.seo_publisher?.trim() || siteConfig.name;
+
+  // Parsear seo_robots ("noindex, nofollow" → { index: false, follow: false })
+  let robotsDirective: { index: boolean; follow: boolean } = {
+    index: true,
+    follow: true,
+  };
+  if (product.seo_robots?.trim()) {
+    robotsDirective = {
+      index: !product.seo_robots.includes("noindex"),
+      follow: !product.seo_robots.includes("nofollow"),
+    };
+  }
+
   return {
-    title: product.seo_title?.trim() || autoTitle,
-    description: product.seo_description?.trim() || autoDescription,
+    title: seoTitle,
+    description: seoDescription,
+    ...(seoKeywords && { keywords: seoKeywords }),
     alternates: { canonical: PAGE_URL },
     openGraph: {
-      title: product.name,
-      description: autoDescription ?? undefined,
+      title: `${product.seo_title?.trim() || product.name} | ${seoPublisher}`,
+      description: seoDescription ?? undefined,
       url: PAGE_URL,
-      siteName: siteConfig.name,
+      siteName: seoPublisher,
       locale: "es_SV",
       type: "website",
       ...(absoluteImage && {
@@ -155,11 +174,11 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: product.name,
-      description: autoDescription ?? undefined,
+      title: product.seo_title?.trim() || product.name,
+      description: seoDescription ?? undefined,
       creator: siteConfig.twitterHandle,
     },
-    robots: { index: true, follow: true },
+    robots: robotsDirective,
   };
 }
 
