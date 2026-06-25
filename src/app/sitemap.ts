@@ -173,6 +173,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "yearly",
       priority: 0.5,
     },
+    {
+      url: `${siteConfig.url}/legal/garantia`,
+      lastModified: new Date("2026-06-25"),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
   ];
 
   // Páginas de categoría del catálogo (una por sector)

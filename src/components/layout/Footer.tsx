@@ -288,6 +288,14 @@ export function Footer() {
                 Resolución de Disputas
               </Link>
             </li>
+            <li>
+              <Link
+                href="/legal/garantia"
+                className="transition-colors hover:text-white hover:underline"
+              >
+                Garantía de Producto
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

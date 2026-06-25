@@ -182,8 +182,8 @@ const LEGAL_DOCS: LegalDoc[] = [
     tagline:
       "Condiciones de cobertura, plazos de reclamo por defectos de fábrica y soporte de calidad.",
     icon: "verified",
-    available: false,
-    readingTime: 0,
+    available: true,
+    readingTime: 15,
   },
 ];
 
