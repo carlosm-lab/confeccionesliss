@@ -12,15 +12,19 @@ import {
   LegalFootnote,
 } from "@/components/legal/LegalContent";
 
+export const dynamic = "force-static";
+
 export const metadata: Metadata = {
-  title: "Política de Derechos del Usuario y Cliente — Políticas Oficiales",
+  title: "Política de Derechos del Usuario y Cliente",
   description:
-    "Política de Derechos del Usuario y Cliente de Confecciones Liss. Conoce los derechos reconocidos en materia de información, transparencia, atención, reclamaciones y protección de datos.",
+    "Política de derechos de Confecciones Liss: transparencia, atención al cliente, reclamaciones, rectificación de datos personales y protección del usuario.",
+  keywords:
+    "derechos usuario, derechos cliente, protección consumidor, reclamaciones, transparencia, Confecciones Liss, derechos El Salvador",
   alternates: { canonical: `${siteConfig.url}/legal/derechos` },
   openGraph: {
     title: "Política de Derechos del Usuario y Cliente | Confecciones Liss",
     description:
-      "Política de Derechos del Usuario y Cliente de Confecciones Liss. Conoce los derechos reconocidos en materia de información, transparencia, atención, reclamaciones y protección de datos.",
+      "Política de derechos de Confecciones Liss: transparencia, atención al cliente, reclamaciones, rectificación de datos personales y protección del usuario.",
     url: `${siteConfig.url}/legal/derechos`,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -30,7 +34,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Política de Derechos del Usuario y Cliente | Confecciones Liss",
     description:
-      "Política de Derechos del Usuario y Cliente de Confecciones Liss. Conoce los derechos reconocidos en materia de información, transparencia, atención, reclamaciones y protección de datos.",
+      "Política de derechos de Confecciones Liss: transparencia, atención al cliente, reclamaciones, rectificación de datos personales y protección del usuario.",
     creator: siteConfig.twitterHandle,
   },
   robots: {
@@ -43,6 +47,9 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  other: {
+    publisher: siteConfig.name,
   },
 };
 
@@ -58,7 +65,7 @@ export default function PoliticaDerechosPage() {
           url: PAGE_URL,
           name: "Política de Derechos del Usuario y Cliente — Políticas Oficiales | Confecciones Liss",
           description:
-            "Política de Derechos del Usuario y Cliente de Confecciones Liss. Conoce los derechos reconocidos en materia de información, transparencia, atención, reclamaciones y protección de datos.",
+            "Política de derechos de Confecciones Liss: transparencia, atención al cliente, reclamaciones, rectificación de datos personales y protección del usuario.",
         }),
         "@type": "Article",
         author: { "@id": `${siteConfig.url}/#business` },
@@ -90,6 +97,7 @@ export default function PoliticaDerechosPage() {
 
       <LegalArticleReader
         title="Política de Derechos del Usuario y Cliente"
+        category="Catálogo taxativo de derechos reconocidos al usuario y cliente de la plataforma digital de Confecciones Liss."
         date="24 Jun, 2026"
         readingTime={22}
       >

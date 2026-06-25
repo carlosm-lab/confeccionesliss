@@ -13,15 +13,19 @@ import {
   LegalFootnote,
 } from "@/components/legal/LegalContent";
 
+export const dynamic = "force-static";
+
 export const metadata: Metadata = {
-  title: "Programa de Referidos — Políticas Oficiales y Condiciones",
+  title: "Política del Programa de Referidos Oficiales",
   description:
-    "Programa de Referidos de Confecciones Liss. Conoce cómo acumular descuentos refiriendo nuevos clientes, las condiciones de validez, vigencia del saldo y reglas de participación.",
+    "Programa de referidos de Confecciones Liss: acumula descuentos recomendando clientes, condiciones de validez, vigencia de saldo y reglas del programa.",
+  keywords:
+    "programa referidos, descuento por referir, saldo referidos, Confecciones Liss, referidos uniformes El Salvador, recompensas clientes",
   alternates: { canonical: `${siteConfig.url}/legal/referidos` },
   openGraph: {
-    title: "Programa de Referidos | Confecciones Liss",
+    title: "Política del Programa de Referidos Oficiales | Confecciones Liss",
     description:
-      "Programa de Referidos de Confecciones Liss. Conoce cómo acumular descuentos refiriendo nuevos clientes, las condiciones de validez, vigencia del saldo y reglas de participación.",
+      "Programa de referidos de Confecciones Liss: acumula descuentos recomendando clientes, condiciones de validez, vigencia de saldo y reglas del programa.",
     url: `${siteConfig.url}/legal/referidos`,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -29,9 +33,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Programa de Referidos | Confecciones Liss",
+    title: "Política del Programa de Referidos Oficiales | Confecciones Liss",
     description:
-      "Programa de Referidos de Confecciones Liss. Conoce cómo acumular descuentos refiriendo nuevos clientes, las condiciones de validez, vigencia del saldo y reglas de participación.",
+      "Programa de referidos de Confecciones Liss: acumula descuentos recomendando clientes, condiciones de validez, vigencia de saldo y reglas del programa.",
     creator: siteConfig.twitterHandle,
   },
   robots: {
@@ -44,6 +48,9 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  other: {
+    publisher: siteConfig.name,
   },
 };
 
@@ -59,7 +66,7 @@ export default function ProgramaReferidosPage() {
           url: PAGE_URL,
           name: "Programa de Referidos — Políticas Oficiales | Confecciones Liss",
           description:
-            "Programa de Referidos de Confecciones Liss. Conoce cómo acumular descuentos refiriendo nuevos clientes, las condiciones de validez, vigencia del saldo y reglas de participación.",
+            "Programa de referidos de Confecciones Liss: acumula descuentos recomendando clientes, condiciones de validez, vigencia de saldo y reglas del programa.",
         }),
         "@type": "Article",
         author: { "@id": `${siteConfig.url}/#business` },
@@ -91,6 +98,7 @@ export default function ProgramaReferidosPage() {
 
       <LegalArticleReader
         title="Programa de Referidos — Políticas Oficiales y Condiciones de Participación"
+        category="Condiciones, beneficios, validez de saldos y reglas de participación del programa de referidos oficiales."
         date="24 Jun, 2026"
         readingTime={18}
       >

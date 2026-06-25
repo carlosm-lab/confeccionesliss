@@ -12,15 +12,19 @@ import {
   LegalFootnote,
 } from "@/components/legal/LegalContent";
 
+export const dynamic = "force-static";
+
 export const metadata: Metadata = {
-  title: "Política de Deberes del Usuario y Cliente — Políticas Oficiales",
+  title: "Política de Deberes de Usuarios y Clientes",
   description:
-    "Política de Deberes del Usuario y Cliente de Confecciones Liss. Conoce las obligaciones de pago, información oportuna, conducta diligente y marco legal aplicable.",
+    "Política de deberes de Confecciones Liss: obligaciones de pago, información oportuna, conducta diligente y uso aceptable de toda nuestra plataforma web.",
+  keywords:
+    "deberes usuario, obligaciones cliente, conducta aceptable, marco legal, política cliente, Confecciones Liss El Salvador",
   alternates: { canonical: `${siteConfig.url}/legal/deberes` },
   openGraph: {
-    title: "Política de Deberes del Usuario y Cliente | Confecciones Liss",
+    title: "Política de Deberes de Usuarios y Clientes | Confecciones Liss",
     description:
-      "Política de Deberes del Usuario y Cliente de Confecciones Liss. Conoce las obligaciones de pago, información oportuna, conducta diligente y marco legal aplicable.",
+      "Política de deberes de Confecciones Liss: obligaciones de pago, información oportuna, conducta diligente y uso aceptable de toda nuestra plataforma web.",
     url: `${siteConfig.url}/legal/deberes`,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -28,9 +32,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Política de Deberes del Usuario y Cliente | Confecciones Liss",
+    title: "Política de Deberes de Usuarios y Clientes | Confecciones Liss",
     description:
-      "Política de Deberes del Usuario y Cliente de Confecciones Liss. Conoce las obligaciones de pago, información oportuna, conducta diligente y marco legal aplicable.",
+      "Política de deberes de Confecciones Liss: obligaciones de pago, información oportuna, conducta diligente y uso aceptable de toda nuestra plataforma web.",
     creator: siteConfig.twitterHandle,
   },
   robots: {
@@ -44,6 +48,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  other: {
+    publisher: siteConfig.name,
+  },
 };
 
 export default function PoliticaDeberesPage() {
@@ -56,9 +63,9 @@ export default function PoliticaDeberesPage() {
       {
         ...buildWebPageSchema({
           url: PAGE_URL,
-          name: "Política de Deberes del Usuario y Cliente — Políticas Oficiales | Confecciones Liss",
+          name: "Política de Deberes de Usuarios y Clientes | Confecciones Liss",
           description:
-            "Política de Deberes del Usuario y Cliente de Confecciones Liss. Conoce las obligaciones de pago, información oportuna, conducta diligente y marco legal aplicable.",
+            "Política de deberes de Confecciones Liss: obligaciones de pago, información oportuna, conducta diligente y uso aceptable de toda nuestra plataforma web.",
         }),
         "@type": "Article",
         author: { "@id": `${siteConfig.url}/#business` },
@@ -90,6 +97,7 @@ export default function PoliticaDeberesPage() {
 
       <LegalArticleReader
         title="Política de Deberes del Usuario y Cliente"
+        category="Catálogo de deberes, obligaciones de pago y normas de conducta que rigen la relación comercial."
         date="24 Jun, 2026"
         readingTime={20}
       >

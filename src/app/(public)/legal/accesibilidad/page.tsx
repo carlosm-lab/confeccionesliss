@@ -1,243 +1,320 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
+import { buildWebPageSchema, buildBreadcrumbSchema } from "@/lib/schemas";
 import LegalArticleReader from "@/components/legal/LegalArticleReader";
-import { Section, P, Ul } from "@/components/legal/LegalContent";
+import LegalHubBackground from "@/components/legal/LegalHubBackground";
+import Link from "next/link";
+import {
+  Section,
+  Hr,
+  P,
+  Ul,
+  LegalFootnote,
+} from "@/components/legal/LegalContent";
 
-/* ── Metadata ─────────────────────────────────────────────────────────────── */
+export const dynamic = "force-static";
+
 export const metadata: Metadata = {
-  title: "Política de Accesibilidad del Sitio Web | Confecciones Liss",
+  title:
+    "Política de Accesibilidad del Sitio Web — Declaración WCAG 2.1 AA | Confecciones Liss",
   description:
-    "Declaración de accesibilidad web de Confecciones Liss: nivel de conformidad WCAG 2.1 AA, medidas implementadas, limitaciones técnicas y canales de contacto.",
+    "Declaración oficial de accesibilidad digital de Confecciones Liss v2.0: compromiso WCAG 2.1 AA, medidas implementadas, limitaciones conocidas, canal de reporte y alternativas de acceso.",
+  keywords:
+    "accesibilidad web, WCAG 2.1 AA, WCAG 2.2, declaración accesibilidad, lectores de pantalla, navegación teclado, Confecciones Liss El Salvador",
   alternates: {
     canonical: `${siteConfig.url}/legal/accesibilidad`,
   },
   openGraph: {
-    title: "Política de Accesibilidad del Sitio Web | Confecciones Liss",
+    title:
+      "Política de Accesibilidad — Declaración WCAG 2.1 AA | Confecciones Liss",
     description:
-      "Conoce el nivel de accesibilidad de nuestra plataforma, las medidas activas y los límites técnicos actuales.",
+      "Declaración oficial de accesibilidad digital de Confecciones Liss v2.0: compromiso WCAG 2.1 AA, medidas implementadas, limitaciones conocidas, canal de reporte y alternativas de acceso.",
     url: `${siteConfig.url}/legal/accesibilidad`,
     siteName: siteConfig.name,
-    locale: "es_CO",
+    locale: "es_SV",
     type: "article",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title:
+      "Política de Accesibilidad — Declaración WCAG 2.1 AA | Confecciones Liss",
+    description:
+      "Declaración oficial de accesibilidad digital de Confecciones Liss v2.0: compromiso WCAG 2.1 AA, medidas implementadas, limitaciones conocidas, canal de reporte y alternativas de acceso.",
+    creator: siteConfig.twitterHandle,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  other: {
+    publisher: siteConfig.name,
   },
 };
 
-/* ── JSON-LD ──────────────────────────────────────────────────────────────── */
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebPage",
-      "@id": `${siteConfig.url}/legal/accesibilidad`,
-      url: `${siteConfig.url}/legal/accesibilidad`,
-      name: "Política de Accesibilidad del Sitio Web",
-      isPartOf: { "@id": `${siteConfig.url}/#website` },
-      inLanguage: "es-CO",
-      datePublished: "2026-06-25",
-      dateModified: "2026-06-25",
-    },
-    {
-      "@type": "Article",
-      "@id": `${siteConfig.url}/legal/accesibilidad#article`,
-      headline: "Política de Accesibilidad del Sitio Web — Confecciones Liss",
-      datePublished: "2026-06-25",
-      dateModified: "2026-06-25",
-      author: {
-        "@type": "Organization",
-        name: siteConfig.name,
-        url: siteConfig.url,
-      },
-      publisher: {
-        "@type": "Organization",
-        name: siteConfig.name,
-        url: siteConfig.url,
-      },
-      inLanguage: "es-CO",
-      isPartOf: { "@id": `${siteConfig.url}/legal/accesibilidad` },
-    },
-    {
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Inicio",
-          item: `${siteConfig.url}/`,
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "Legal",
-          item: `${siteConfig.url}/legal`,
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: "Accesibilidad",
-          item: `${siteConfig.url}/legal/accesibilidad`,
-        },
-      ],
-    },
-  ],
-};
-
-/* ── Page ─────────────────────────────────────────────────────────────────── */
 export default function AccesibilidadPage() {
+  const PAGE_URL = `${siteConfig.url}/legal/accesibilidad`;
+  const PAGE_TITLE = "Política de Accesibilidad";
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        ...buildWebPageSchema({
+          url: PAGE_URL,
+          name: "Política de Accesibilidad del Sitio Web — Declaración WCAG 2.1 AA | Confecciones Liss",
+          description:
+            "Declaración oficial de accesibilidad digital de Confecciones Liss v2.0: compromiso WCAG 2.1 AA, medidas implementadas, limitaciones conocidas, canal de reporte y alternativas de acceso.",
+        }),
+        "@type": "Article",
+        author: { "@id": `${siteConfig.url}/#business` },
+        datePublished: "2026-06-25",
+        dateModified: "2026-06-25",
+      },
+      buildBreadcrumbSchema([
+        { name: "Inicio", item: siteConfig.url },
+        { name: "Legal", item: `${siteConfig.url}/legal` },
+        { name: PAGE_TITLE, item: PAGE_URL },
+      ]),
+    ],
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
       />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none hidden select-none lg:block"
+      >
+        <LegalHubBackground animated={false} />
+      </div>
 
       <LegalArticleReader
-        title="Política de Accesibilidad del Sitio Web"
-        category="Declaración de conformidad, medidas implementadas y limitaciones técnicas de la plataforma digital de Confecciones Liss."
+        title="Política de Accesibilidad del Sitio Web — Declaración Oficial de Accesibilidad Digital"
+        category="Declaración de conformidad WCAG 2.1 AA, medidas implementadas, limitaciones técnicas conocidas y canales de reporte. Versión 2.0 — 25 de junio de 2026."
         date="25 Jun, 2026"
-        readingTime={12}
+        readingTime={18}
       >
-        {/* ── 1. Introducción ────────────────────────────────────────────── */}
-        <Section n={1} title="Introducción y Compromiso">
+        {/* ── I. Introducción ───────────────────────────────────────────────── */}
+        <Section n={1} title="Introducción, Compromiso y Ámbito de Aplicación">
           <P>
-            Confecciones Liss, empresa colombiana dedicada a la fabricación y
-            comercialización de uniformes, dotaciones y prendas personalizadas,
-            entiende la accesibilidad web como una dimensión fundamental de la
-            calidad, la ética empresarial y el respeto por la diversidad humana.
-            Este documento constituye nuestra Declaración de Accesibilidad
-            conforme a los estándares internacionales y a la legislación
-            colombiana aplicable.
+            Confecciones Liss (en adelante &quot;el Taller&quot;), taller de
+            confección dedicado a la fabricación y comercialización de
+            uniformes, dotaciones y prendas personalizadas con sede en Barrio La
+            Merced, San Miguel, El Salvador, entiende la accesibilidad web como
+            una dimensión fundamental de su calidad de servicio, su ética
+            empresarial y su respeto por la diversidad humana. El presente
+            documento constituye la Declaración Oficial de Accesibilidad del
+            Taller, conforme a los estándares internacionales aplicables y en
+            armonía con el marco jurídico comercial del Taller establecido en la
+            República de El Salvador.
           </P>
           <P>
-            Creemos firmemente que todas las personas, independientemente de sus
-            capacidades físicas, sensoriales, cognitivas o tecnológicas, tienen
-            el mismo derecho a acceder a la información, a los productos y a los
-            servicios que ofrecemos. La accesibilidad no es un favor: es una
-            obligación moral, legal y técnica que asumimos de manera consciente
-            y progresiva.
+            El Taller cree firmemente que todas las personas, independientemente
+            de sus capacidades físicas, sensoriales, cognitivas o tecnológicas,
+            tienen el mismo derecho a acceder a la información, los productos y
+            los servicios que ofrece. La accesibilidad no es un favor: es una
+            obligación moral, técnica y de calidad que el Taller asume de manera
+            consciente, progresiva y documentada.
           </P>
           <P>
-            El presente sitio web — accesible a través del dominio oficial de
-            Confecciones Liss — está diseñado con el objetivo de alcanzar y
-            mantener el nivel de conformidad <strong>WCAG 2.1 nivel AA</strong>{" "}
-            (Web Content Accessibility Guidelines, versión 2.1, nivel de
-            adecuación AA), definido por el World Wide Web Consortium (W3C) como
-            el estándar de referencia global en materia de accesibilidad web.
+            El presente sitio web, accesible a través del dominio oficial{" "}
+            <Link
+              href="https://www.confeccionesliss.com/"
+              className="text-blue-600 hover:underline"
+            >
+              https://www.confeccionesliss.com/
+            </Link>
+            , está diseñado con el objetivo de alcanzar y mantener el nivel de
+            conformidad <strong>WCAG 2.1 nivel AA</strong> (Web Content
+            Accessibility Guidelines, versión 2.1, nivel de adecuación AA),
+            definido por el World Wide Web Consortium (W3C) como estándar de
+            referencia global en materia de accesibilidad web.
           </P>
           <P>
-            Esta política se aplica al sitio web principal, sus subpáginas, el
-            catálogo de productos, el módulo de cotización, el blog
-            institucional y todos los contenidos digitales publicados bajo el
-            dominio oficial de Confecciones Liss. Los canales externos — como
-            redes sociales de terceros, plataformas de mensajería o marketplaces
-            — se rigen por las políticas de accesibilidad de sus respectivos
-            proveedores.
+            <strong>ÁMBITO DE APLICACIÓN.</strong> La presente Política se
+            aplica a:
+          </P>
+          <Ul
+            items={[
+              "El sitio web principal y todas sus subpáginas.",
+              "El catálogo de productos publicado en la Plataforma.",
+              "Los módulos de cotización y contacto.",
+              "El blog institucional y contenidos editoriales.",
+              "Todos los contenidos digitales publicados bajo el dominio oficial.",
+            ]}
+          />
+          <P>
+            <strong>EXCLUSIONES EXPRESAS.</strong> Quedan expresamente excluidas
+            del ámbito de esta Política, sin que ello genere responsabilidad del
+            Taller:
+          </P>
+          <Ul
+            items={[
+              "Los perfiles del Taller en redes sociales de terceros (Facebook, Instagram, TikTok y otras), los cuales se rigen por las políticas de accesibilidad de sus respectivos proveedores.",
+              "Las aplicaciones de terceros integradas (plataformas de pago, sistemas de envío, widgets externos), cuya accesibilidad es responsabilidad de sus propios proveedores.",
+              "El contenido archivado de fechas anteriores a la implementación de esta Política, el cual se revisa y actualiza progresivamente.",
+              "Las comunicaciones y documentos personalizados generados para cada cliente (cotizaciones, facturas, propuestas comerciales), disponibles en formato alternativo a solicitud del interesado.",
+              "Los canales de comunicación externos (WhatsApp, correo electrónico), cuya accesibilidad depende de las plataformas que los soportan.",
+            ]}
+          />
+          <P>
+            <strong>RESPONSABILIDAD DEL USUARIO.</strong> El acceso al contenido
+            del sitio web en condiciones de accesibilidad óptimas requiere que
+            el Usuario disponga de un dispositivo, navegador y tecnología de
+            apoyo compatibles con los estándares declarados en la Sección VI de
+            este documento. El Taller no puede garantizar la accesibilidad total
+            del sitio cuando el problema de acceso sea atribuible a
+            configuraciones del dispositivo del Usuario, versiones obsoletas de
+            navegadores o tecnologías de apoyo incompatibles con las
+            especificaciones técnicas declaradas. En tales casos, el Taller pone
+            a disposición los canales alternativos establecidos en la Sección X.
           </P>
         </Section>
+        <Hr />
 
-        {/* ── 2. Público y Uso ───────────────────────────────────────────── */}
+        {/* ── II. Público Objetivo ──────────────────────────────────────────── */}
         <Section n={2} title="Público Objetivo y Naturaleza del Contenido">
           <P>
-            El uso activo del sitio web — es decir, la creación de cuentas, la
-            realización de pedidos, la solicitud de cotizaciones y la
-            contratación de servicios — está reservado para personas mayores de
-            18 años, en pleno ejercicio de su capacidad jurídica, tal como se
-            establece en nuestra Política de Términos y Condiciones.
+            El uso activo del sitio web —entendido como la creación de cuentas,
+            la realización de pedidos, la solicitud de cotizaciones y la
+            contratación de servicios— está reservado para personas mayores de
+            18 años, en pleno ejercicio de su capacidad jurídica, conforme a lo
+            establecido en la{" "}
+            <Link
+              href="/legal/terminos"
+              className="text-blue-600 hover:underline"
+            >
+              Política de Términos y Condiciones del Taller
+            </Link>
+            .
           </P>
           <P>
-            Sin embargo, el contenido informativo del sitio — incluyendo el
+            Sin embargo, el contenido informativo del sitio —incluyendo el
             catálogo de productos, los artículos del blog, las guías de tallas,
-            el portafolio de diseños y los materiales educativos sobre moda y
-            confección — es de naturaleza completamente apta para todo público.
-            Nuestro sitio no contiene:
+            el portafolio de diseños y los materiales sobre confección y moda—
+            es de naturaleza apta para todo público. El sitio no contiene
+            imágenes sugerentes ni de contenido sexual, lenguaje violento o
+            discriminatorio, ni material diseñado para manipular a usuarios
+            vulnerables.
+          </P>
+          <P>
+            <strong>CONTENIDO GENERADO CON INTELIGENCIA ARTIFICIAL.</strong> El
+            sitio incluye contenido visual procesado con herramientas de
+            inteligencia artificial, incluyendo imágenes de prendas editadas
+            digitalmente y el personaje sintético masculino denominado Liam
+            Alejandro, utilizado como modelo comercial. La naturaleza de dicho
+            contenido está íntegramente declarada en la{" "}
+            <Link href="/legal/ia" className="text-blue-600 hover:underline">
+              Política de Uso de Inteligencia Artificial del Taller
+            </Link>
+            .
+          </P>
+          <P>
+            Ningún aspecto del contenido generado con IA representa una barrera
+            de accesibilidad intencional. Todo contenido visual publicado por el
+            Taller cuenta con texto alternativo descriptivo, conforme a los
+            estándares de accesibilidad aplicables.
+          </P>
+        </Section>
+        <Hr />
+
+        {/* ── III. Marco Normativo ─────────────────────────────────────────── */}
+        <Section n={3} title="Marco Normativo y Estándares Técnicos Aplicables">
+          <P>
+            La presente Política se enmarca en los siguientes estándares e
+            instrumentos:
           </P>
           <Ul
             items={[
-              "Imágenes sugerentes, eróticas o de contenido sexual explícito.",
-              "Lenguaje violento, discriminatorio u ofensivo.",
-              "Contenido diseñado para perturbar, engañar o manipular a usuarios vulnerables.",
-              "Material que pueda resultar perturbador para niños, niñas o adolescentes que visiten el sitio en compañía de un adulto.",
+              "WCAG 2.1 — W3C (2018): Pautas de Accesibilidad para el Contenido Web, versión 2.1. Estándar técnico internacional de referencia. Meta declarada: nivel AA de conformidad.",
+              "WCAG 2.2 — W3C (2023): Actualización de las pautas de accesibilidad con nuevos criterios de éxito. El Taller evalúa progresivamente su implementación.",
+              "WAI-ARIA 1.2 — W3C: Especificación de Aplicaciones de Internet Enriquecidas Accesibles, utilizada para complementar la semántica HTML en componentes dinámicos de interfaz.",
+              "Convención sobre los Derechos de las Personas con Discapacidad — ONU (2006): El Taller adopta voluntariamente sus principios de igualdad de acceso a la información y las comunicaciones como estándar ético aplicable a su operación.",
             ]}
           />
           <P>
-            Esta distinción es importante desde el punto de vista de la
-            accesibilidad: aunque ciertas funcionalidades están restringidas por
-            edad, el acceso visual al contenido informativo es universal y no
-            requiere registro previo.
+            <strong>JURISDICCIÓN Y MARCO LEGAL APLICABLE.</strong> La presente
+            Política se rige exclusivamente por la legislación de la República
+            de El Salvador. El Taller opera conforme a las leyes salvadoreñas
+            vigentes. Ninguna normativa extranjera de accesibilidad web es
+            vinculante para el Taller ni puede ser invocada por el Usuario como
+            fundamento de reclamación. El Usuario que acceda al sitio desde
+            fuera del territorio salvadoreño lo hace bajo su propia
+            responsabilidad y no puede exigir el cumplimiento de legislaciones
+            de otras jurisdicciones.
+          </P>
+          <P>
+            La adopción de los estándares técnicos internacionales (WCAG) es
+            voluntaria y refleja el compromiso genuino del Taller con la calidad
+            y la inclusión digital, no la sujeción a normativas de países
+            distintos a El Salvador.
           </P>
         </Section>
+        <Hr />
 
-        {/* ── 3. Marco Normativo ────────────────────────────────────────── */}
-        <Section n={3} title="Marco Normativo y Legal Aplicable">
-          <P>
-            La presente política de accesibilidad se enmarca en los siguientes
-            instrumentos normativos y estándares técnicos:
-          </P>
-          <Ul
-            items={[
-              "WCAG 2.1 — W3C (2018): Pautas de Accesibilidad para el Contenido Web, versión 2.1. Son el estándar técnico internacional de referencia. Nuestra meta es cumplir el nivel AA de conformidad.",
-              'Ley 1618 de 2013 — Colombia: "Por medio de la cual se establecen las disposiciones para garantizar el pleno ejercicio de los derechos de las personas con discapacidad." Obliga a entidades y empresas a garantizar el acceso a la información en condiciones de igualdad.',
-              "Ley 1341 de 2009 (Ley TIC) y su reforma Ley 1978 de 2019 — Colombia: Establece principios de neutralidad tecnológica y acceso en condiciones de igualdad a los servicios de la Sociedad de la Información.",
-              "CONPES 3975 de 2019 — Colombia: Política Nacional para la Transformación Digital e Inteligencia Artificial, que contempla lineamientos de inclusión digital.",
-              "Convención sobre los Derechos de las Personas con Discapacidad — ONU (2006), ratificada por Colombia mediante Ley 1346 de 2009: Obliga al Estado y a los actores privados a garantizar el acceso a la información y las comunicaciones en igualdad de condiciones.",
-              "NTC 5854 — ICONTEC: Norma Técnica Colombiana sobre Requisitos de Accesibilidad para Páginas Web, adoptada como referencia de buenas prácticas en el sector privado colombiano.",
-            ]}
-          />
-          <P>
-            La adopción de estos marcos no es meramente declarativa:
-            Confecciones Liss realiza evaluaciones periódicas de accesibilidad y
-            toma medidas correctivas cuando se identifican brechas entre el
-            estado actual del sitio y los requisitos normativos o técnicos
-            mencionados.
-          </P>
-        </Section>
-
-        {/* ── 4. Nivel de Conformidad ───────────────────────────────────── */}
+        {/* ── IV. Nivel de Conformidad ─────────────────────────────────────── */}
         <Section n={4} title="Nivel de Conformidad Declarado">
           <P>
             Confecciones Liss declara su compromiso de alcanzar el nivel de
             conformidad <strong>WCAG 2.1 nivel AA</strong> en su sitio web
             oficial. Este nivel implica el cumplimiento de todos los criterios
-            de éxito de nivel A (básicos) y de nivel AA (intermedios),
-            estructurados en torno a los cuatro principios fundamentales de la
-            accesibilidad:
+            de éxito de nivel A (básicos) y nivel AA (intermedios),
+            estructurados en torno a los cuatro principios fundamentales:
           </P>
           <Ul
             items={[
-              "Perceptible: La información y los componentes de la interfaz deben presentarse de manera que los usuarios puedan percibirlos, independientemente de sus capacidades sensoriales.",
-              "Operable: Los componentes de la interfaz y la navegación deben ser operables, sin requerir necesariamente el uso del mouse o de un dispositivo señalador.",
-              "Comprensible: La información y el funcionamiento de la interfaz deben ser comprensibles para el mayor rango posible de usuarios.",
-              "Robusto: El contenido debe ser suficientemente robusto como para ser interpretado de forma fiable por una amplia variedad de agentes de usuario, incluidas las tecnologías de apoyo.",
+              "PERCEPTIBLE: La información y los componentes de la interfaz se presentan de manera que los usuarios puedan percibirlos con independencia de sus capacidades sensoriales.",
+              "OPERABLE: Los componentes de la interfaz y la navegación son operables sin requerir necesariamente el uso del mouse o dispositivo señalador.",
+              "COMPRENSIBLE: La información y el funcionamiento de la interfaz son comprensibles para el mayor rango posible de usuarios.",
+              "ROBUSTO: El contenido es suficientemente robusto para ser interpretado por una amplia variedad de agentes de usuario, incluidas las tecnologías de apoyo.",
             ]}
           />
           <P>
-            Actualmente, el sitio web de Confecciones Liss se encuentra en
-            proceso activo de mejora continua hacia la conformidad total con
-            WCAG 2.1 AA. Algunas secciones o componentes pueden presentar
-            brechas parciales que se encuentran identificadas y en proceso de
-            corrección. Dichas brechas se documentan en la Sección 9 de este
-            documento.
+            El sitio se encuentra en proceso activo de mejora continua hacia la
+            conformidad total con WCAG 2.1 AA. Las brechas actualmente
+            identificadas se documentan en la Sección IX. El Taller no declara
+            conformidad plena con el nivel AAA de WCAG 2.1, dado que varios de
+            sus criterios son de aplicación especializada y pueden entrar en
+            conflicto con requisitos de diseño, funcionalidad o recursos
+            técnicos. No obstante, se implementan criterios AAA cuando son
+            razonablemente alcanzables sin comprometer otros aspectos del sitio.
           </P>
           <P>
-            No declaramos conformidad plena con el nivel AAA de WCAG 2.1, dado
-            que varios de sus criterios son de aplicación especializada y pueden
-            entrar en conflicto con requisitos de diseño, funcionalidad o
-            recursos técnicos. Sin embargo, implementamos criterios AAA cuando
-            son razonablemente alcanzables sin comprometer otros aspectos del
-            sitio.
+            <strong>LIMITACIÓN DE RESPONSABILIDAD DECLARATIVA.</strong> La
+            presente declaración de conformidad refleja el estado actual
+            conocido del sitio y el compromiso del Taller con la mejora
+            continua. No constituye garantía absoluta de accesibilidad universal
+            en todos los dispositivos, navegadores y tecnologías de apoyo
+            existentes. El Usuario que encuentre una barrera de accesibilidad no
+            documentada en la Sección IX tiene el deber de reportarla conforme
+            al procedimiento establecido en la Sección XI antes de formular
+            cualquier reclamación.
           </P>
         </Section>
+        <Hr />
 
-        {/* ── 5. Medidas Implementadas ──────────────────────────────────── */}
+        {/* ── V. Medidas Implementadas ─────────────────────────────────────── */}
         <Section n={5} title="Medidas de Accesibilidad Implementadas">
           <P>
-            A continuación se describen en detalle las medidas técnicas,
-            editoriales y organizativas que Confecciones Liss ha implementado
-            para garantizar la accesibilidad de su sitio web:
+            A continuación se describen las medidas técnicas, editoriales y
+            organizativas implementadas:
           </P>
 
           <div style={{ marginTop: "1.5rem" }}>
             <P>
-              <strong>5.1. Estructura Semántica del HTML</strong>
+              <strong>5.1 ESTRUCTURA SEMÁNTICA DEL HTML.</strong>
             </P>
             <P>
               El sitio está construido con HTML5 semántico. Se utilizan
@@ -246,531 +323,988 @@ export default function AccesibilidadPage() {
               <code>&lt;footer&gt;</code>, <code>&lt;article&gt;</code>,{" "}
               <code>&lt;section&gt;</code>, <code>&lt;aside&gt;</code> y{" "}
               <code>&lt;figure&gt;</code> para estructurar el contenido de
-              manera significativa. Esta estructura permite a los lectores de
-              pantalla navegar el documento con eficiencia y a los motores de
-              indexación interpretar la jerarquía del contenido.
+              manera significativa, facilitando la navegación eficiente mediante
+              lectores de pantalla y la correcta indexación del contenido.
             </P>
           </div>
 
           <div style={{ marginTop: "1.5rem" }}>
             <P>
-              <strong>5.2. Jerarquía de Encabezados</strong>
+              <strong>5.2 JERARQUÍA DE ENCABEZADOS.</strong>
             </P>
             <P>
               Cada página contiene un único encabezado de nivel 1 (
-              <code>&lt;h1&gt;</code>) que describe el propósito principal de la
-              página. Los encabezados de nivel 2 (<code>&lt;h2&gt;</code>) y
-              niveles inferiores se utilizan para estructurar el contenido en
-              secciones lógicas, sin saltarse niveles de jerarquía. Esta
-              práctica facilita la navegación para usuarios de lectores de
-              pantalla y mejora la experiencia general de lectura.
+              <code>&lt;h1&gt;</code>) que describe el propósito principal. Los
+              encabezados de niveles inferiores estructuran el contenido en
+              secciones lógicas sin saltarse niveles de jerarquía.
             </P>
           </div>
 
           <div style={{ marginTop: "1.5rem" }}>
             <P>
-              <strong>5.3. Texto Alternativo para Imágenes</strong>
+              <strong>5.3 TEXTO ALTERNATIVO PARA IMÁGENES.</strong>
             </P>
             <P>
-              Todas las imágenes con contenido informativo incluyen un atributo{" "}
-              <code>alt</code> descriptivo que comunica el propósito de la
-              imagen en contexto. Las imágenes puramente decorativas incluyen el
-              atributo <code>alt=&quot;&quot;</code> vacío para que los lectores
-              de pantalla las ignoren. Los iconos SVG incluyen etiquetas{" "}
-              <code>&lt;title&gt;</code> o atributos <code>aria-label</code>{" "}
-              apropiados cuando son interactivos o informativos.
-            </P>
-          </div>
-
-          <div style={{ marginTop: "1.5rem" }}>
-            <P>
-              <strong>5.4. Contraste de Color</strong>
+              Todas las imágenes con contenido informativo incluyen atributo{" "}
+              <code>alt</code> descriptivo. Las imágenes decorativas incluyen{" "}
+              <code>alt=&quot;&quot;</code> vacío. Los iconos SVG interactivos o
+              informativos incluyen etiquetas <code>&lt;title&gt;</code> o
+              atributos <code>aria-label</code> apropiados.
             </P>
             <P>
-              El sitio emplea una paleta de colores diseñada para cumplir los
-              requisitos mínimos de contraste de WCAG 2.1 AA: relación de
-              contraste mínima de 4.5:1 para texto normal y de 3:1 para texto
-              grande (mayor de 18 puntos o 14 puntos en negrita). Los elementos
-              interactivos — botones, enlaces, campos de formulario — cuentan
-              con indicadores de estado visual con contraste suficiente para ser
-              distinguidos tanto en estados normales como de foco, hover y
-              activo.
+              <strong>IMÁGENES EDITADAS CON IA.</strong> Dado que el Taller
+              utiliza herramientas de inteligencia artificial en la edición de
+              imágenes de sus productos y en la generación del Modelo IA Liam
+              Alejandro, el texto alternativo de dichas imágenes describe el
+              contenido visual real de la prenda presentada, sin hacer
+              referencia a la naturaleza real o sintética del modelo. La
+              descripción de accesibilidad se enfoca en el producto, conforme al
+              propósito comercial de la imagen.
             </P>
           </div>
 
           <div style={{ marginTop: "1.5rem" }}>
             <P>
-              <strong>5.5. Navegación por Teclado</strong>
+              <strong>5.4 CONTRASTE DE COLOR.</strong>
             </P>
             <P>
-              Todos los elementos interactivos del sitio — incluyendo menús de
-              navegación, botones, formularios, enlaces, controles de
-              paginación, carruseles y acordeones — son completamente operables
-              mediante el teclado. Se garantiza un orden de tabulación lógico y
-              predecible, alineado con la estructura visual del contenido. Se
+              La paleta del sitio cumple los requisitos mínimos de contraste
+              WCAG 2.1 AA: relación mínima de 4.5:1 para texto normal y 3:1 para
+              texto grande. Los elementos interactivos cuentan con indicadores
+              visuales con contraste suficiente en todos sus estados.
+            </P>
+          </div>
+
+          <div style={{ marginTop: "1.5rem" }}>
+            <P>
+              <strong>5.5 NAVEGACIÓN POR TECLADO.</strong>
+            </P>
+            <P>
+              Todos los elementos interactivos son operables mediante teclado.
+              Se garantiza orden de tabulación lógico y predecible. Se
               implementan atajos de teclado para saltar al contenido principal
-              (skip-to-content) y a la navegación principal, reduciendo la carga
-              de navegación para usuarios que no utilizan mouse.
+              (skip-to-content) y a la navegación principal.
             </P>
           </div>
 
           <div style={{ marginTop: "1.5rem" }}>
             <P>
-              <strong>5.6. Indicadores de Foco Visibles</strong>
+              <strong>5.6 INDICADORES DE FOCO VISIBLES.</strong>
             </P>
             <P>
               El indicador de foco del teclado es visible en todos los elementos
-              interactivos del sitio. Nuestro sistema de diseño garantiza que el
-              anillo de foco (<em>focus ring</em>) tenga contraste suficiente y
-              un tamaño adecuado para ser identificado claramente por usuarios
-              con baja visión o que dependen de la navegación por teclado. No
-              suprimimos el indicador de foco nativo del navegador sin
-              reemplazarlo por un equivalente al menos tan visible.
+              interactivos, con contraste suficiente y tamaño adecuado. No se
+              suprime el indicador de foco nativo sin reemplazarlo por un
+              equivalente al menos tan visible.
             </P>
           </div>
 
           <div style={{ marginTop: "1.5rem" }}>
             <P>
-              <strong>5.7. Roles y Atributos ARIA</strong>
+              <strong>5.7 ROLES Y ATRIBUTOS ARIA.</strong>
             </P>
             <P>
-              Se utilizan atributos ARIA (Accessible Rich Internet Applications)
-              de manera estratégica y conservadora para complementar la
-              semántica HTML cuando es necesario. Se implementan roles ARIA
-              (como <code>role=&quot;navigation&quot;</code>,{" "}
-              <code>role=&quot;dialog&quot;</code>,{" "}
-              <code>role=&quot;alert&quot;</code>,{" "}
-              <code>role=&quot;status&quot;</code>) y propiedades como{" "}
-              <code>aria-label</code>, <code>aria-labelledby</code>,{" "}
-              <code>aria-describedby</code>, <code>aria-expanded</code>,{" "}
-              <code>aria-controls</code>, <code>aria-live</code> y{" "}
-              <code>aria-hidden</code> para enriquecer la experiencia de los
-              usuarios de tecnologías de asistencia.
+              Se utilizan atributos ARIA de manera estratégica y conservadora
+              para complementar la semántica HTML. Se implementan roles (
+              <code>navigation</code>, <code>dialog</code>, <code>alert</code>,{" "}
+              <code>status</code>) y propiedades (<code>aria-label</code>,{" "}
+              <code>aria-labelledby</code>, <code>aria-describedby</code>,{" "}
+              <code>aria-expanded</code>, <code>aria-controls</code>,{" "}
+              <code>aria-live</code>, <code>aria-hidden</code>) para enriquecer
+              la experiencia de usuarios de tecnologías de asistencia.
             </P>
           </div>
 
           <div style={{ marginTop: "1.5rem" }}>
             <P>
-              <strong>5.8. Formularios Accesibles</strong>
+              <strong>5.8 FORMULARIOS ACCESIBLES.</strong>
             </P>
             <P>
-              Todos los formularios del sitio — incluyendo el formulario de
-              cotización, el formulario de contacto, el módulo de suscripción y
-              el proceso de creación de cuenta — cuentan con:
-            </P>
-            <Ul
-              items={[
-                "Etiquetas visibles (<label>) o etiquetas ARIA asociadas programáticamente a cada campo de entrada.",
-                "Instrucciones claras sobre el formato esperado para los datos de entrada (por ejemplo, formato de fecha, número de teléfono o límite de caracteres).",
-                "Mensajes de error descriptivos que identifican el campo con error y explican cómo corregirlo, sin depender únicamente del color.",
-                "Agrupación lógica de campos relacionados mediante elementos <fieldset> y <legend>.",
-                "Atributos de autocompletado (autocomplete) donde corresponda, para reducir la carga cognitiva del usuario.",
-              ]}
-            />
-          </div>
-
-          <div style={{ marginTop: "1.5rem" }}>
-            <P>
-              <strong>5.9. Diseño Responsivo y Adaptable</strong>
-            </P>
-            <P>
-              El sitio adopta un enfoque mobile-first: el diseño se adapta
-              fluidamente a pantallas de diferentes tamaños, desde smartphones
-              de 320px hasta monitores de escritorio de alta resolución. El
-              contenido no requiere desplazamiento horizontal en pantallas de
-              320px de ancho para orientación vertical. El zoom del navegador
-              puede escalarse hasta el 200% sin pérdida de contenido ni
-              funcionalidad, cumpliendo el criterio de éxito 1.4.4 de WCAG 2.1.
+              Todos los formularios del sitio —cotización, contacto,
+              suscripción— cuentan con: etiquetas visibles o ARIA asociadas
+              programáticamente; instrucciones claras sobre el formato esperado;
+              mensajes de error descriptivos independientes del color;
+              agrupación lógica de campos mediante <code>&lt;fieldset&gt;</code>{" "}
+              y <code>&lt;legend&gt;</code>; y atributos de autocompletado (
+              <code>autocomplete</code>) donde corresponda.
             </P>
           </div>
 
           <div style={{ marginTop: "1.5rem" }}>
             <P>
-              <strong>5.10. Idioma de la Página</strong>
+              <strong>5.9 DISEÑO RESPONSIVO Y ADAPTABLE.</strong>
             </P>
             <P>
-              El atributo de idioma (<code>lang=&quot;es&quot;</code>) está
-              correctamente declarado en el elemento raíz{" "}
-              <code>&lt;html&gt;</code> de todas las páginas del sitio. Esto
-              permite a los lectores de pantalla y otros agentes de usuario
-              aplicar las reglas lingüísticas correctas al procesar el
-              contenido.
+              El sitio adopta un enfoque mobile-first que se adapta a pantallas
+              de 320px hasta monitores de alta resolución. El contenido no
+              requiere desplazamiento horizontal en 320px de ancho vertical. El
+              zoom del navegador puede escalarse hasta el 200% sin pérdida de
+              contenido ni funcionalidad.
+            </P>
+          </div>
+
+          <div style={{ marginTop: "1.5rem" }}>
+            <P>
+              <strong>5.10 IDIOMA DE LA PÁGINA.</strong>
+            </P>
+            <P>
+              El atributo <code>lang=&quot;es&quot;</code> está correctamente
+              declarado en el elemento raíz <code>&lt;html&gt;</code> de todas
+              las páginas, permitiendo a los lectores de pantalla aplicar las
+              reglas lingüísticas correctas.
             </P>
           </div>
 
           <div style={{ marginTop: "1.5rem" }}>
             <P>
               <strong>
-                5.11. Contenido Sin Parpadeo ni Destello Peligroso
+                5.11 CONTENIDO SIN PARPADEO NI DESTELLO PELIGROSO.
               </strong>
             </P>
             <P>
               El sitio no contiene animaciones, videos ni elementos que
-              parpadeen más de tres veces por segundo, siguiendo el criterio de
-              éxito 2.3.1 de WCAG 2.1 para prevenir el riesgo de crisis
-              convulsivas fotosensibles. Las animaciones decorativas que se
-              utilizan en la interfaz son suaves, de baja frecuencia y están
-              diseñadas para no representar un riesgo para usuarios con
+              parpadeen más de tres veces por segundo, conforme al criterio WCAG
+              2.1 2.3.1. Las animaciones decorativas son de baja frecuencia y
+              diseñadas para no representar riesgo para usuarios con
               fotosensibilidad.
             </P>
           </div>
 
           <div style={{ marginTop: "1.5rem" }}>
             <P>
-              <strong>5.12. Preferencia de Movimiento Reducido</strong>
+              <strong>5.12 PREFERENCIA DE MOVIMIENTO REDUCIDO.</strong>
             </P>
             <P>
-              El sitio respeta la preferencia del sistema operativo del usuario
-              mediante la media query <code>prefers-reduced-motion</code>.
-              Cuando el usuario ha indicado en su sistema que prefiere
-              movimiento reducido, las animaciones decorativas, transiciones y
-              efectos cinéticos del sitio se reducen o eliminan automáticamente,
-              sin necesidad de configuración adicional por parte del usuario.
+              El sitio respeta la preferencia del sistema operativo mediante la
+              media query <code>prefers-reduced-motion</code>. Cuando el usuario
+              ha indicado preferencia de movimiento reducido, las animaciones y
+              efectos cinéticos se reducen o eliminan automáticamente.
             </P>
           </div>
 
           <div style={{ marginTop: "1.5rem" }}>
             <P>
-              <strong>5.13. Preferencia de Esquema de Color</strong>
+              <strong>5.13 PREFERENCIA DE ESQUEMA DE COLOR.</strong>
             </P>
             <P>
               El sitio detecta y respeta la preferencia de esquema de color del
-              sistema operativo del usuario (modo claro / modo oscuro) a través
-              de la media query <code>prefers-color-scheme</code>. Aunque el
-              diseño principal del sitio utiliza un esquema de color oscuro, se
-              garantiza que el contraste y la legibilidad se mantienen en todos
-              los modos disponibles.
+              sistema operativo (modo claro / modo oscuro) a través de la media
+              query <code>prefers-color-scheme</code>, garantizando contraste y
+              legibilidad en todos los modos disponibles.
             </P>
           </div>
 
           <div style={{ marginTop: "1.5rem" }}>
             <P>
-              <strong>5.14. Descripciones de Vínculos y Botones</strong>
+              <strong>5.14 DESCRIPCIONES DE VÍNCULOS Y BOTONES.</strong>
             </P>
             <P>
-              Todos los enlaces y botones del sitio tienen un propósito claro y
-              descriptivo que puede determinarse a partir del texto del enlace o
-              del contexto inmediato. Se evitan textos genéricos como &quot;Haz
-              clic aquí&quot;, &quot;Leer más&quot; o &quot;Ver&quot; sin
-              contexto adicional. Cuando se utilizan iconos como únicos
-              elementos visuales de un botón, se garantiza que el nombre
-              accesible del elemento sea descriptivo mediante{" "}
-              <code>aria-label</code> o texto oculto visualmente pero accesible
-              para lectores de pantalla.
+              Todos los enlaces y botones tienen propósito claro y descriptivo
+              determinable desde el texto o el contexto inmediato. Se evitan
+              textos genéricos sin contexto. Los iconos como únicos elementos
+              visuales de un botón incluyen nombre accesible descriptivo
+              mediante <code>aria-label</code> o texto visualmente oculto.
             </P>
           </div>
 
           <div style={{ marginTop: "1.5rem" }}>
             <P>
-              <strong>5.15. Tablas de Datos Accesibles</strong>
+              <strong>5.15 TABLAS DE DATOS ACCESIBLES.</strong>
             </P>
             <P>
-              Las tablas de datos (como comparativos de productos, guías de
-              tallas o tarifas de envío) incluyen encabezados de fila y columna
-              correctamente marcados con el elemento <code>&lt;th&gt;</code> y
-              el atributo <code>scope</code> correspondiente. Las tablas
-              complejas incluyen un elemento <code>&lt;caption&gt;</code> que
-              describe el propósito de la tabla.
-            </P>
-          </div>
-
-          <div style={{ marginTop: "1.5rem" }}>
-            <P>
-              <strong>5.16. Contenido Multimedia</strong>
-            </P>
-            <P>
-              Los videos publicados en el sitio (como tutoriales de cuidado de
-              prendas o presentaciones de productos) incluyen subtítulos
-              sincronizados para usuarios con discapacidad auditiva. Las
-              presentaciones de solo audio incluyen transcripciones textuales.
-              Para el contenido puramente decorativo de video o audio, se
-              garantiza que no transmita información indispensable que no esté
-              disponible en otra forma.
+              Las tablas de datos (comparativos de productos, guías de tallas,
+              tarifas de envío) incluyen encabezados de fila y columna
+              correctamente marcados con <code>&lt;th&gt;</code> y atributo{" "}
+              <code>scope</code>. Las tablas complejas incluyen{" "}
+              <code>&lt;caption&gt;</code> descriptivo.
             </P>
           </div>
 
           <div style={{ marginTop: "1.5rem" }}>
             <P>
-              <strong>5.17. Gestión de Errores y Recuperación</strong>
+              <strong>5.16 CONTENIDO MULTIMEDIA.</strong>
             </P>
             <P>
-              Los procesos críticos del sitio — como el envío de formularios, el
-              proceso de cotización y la creación de cuenta — incluyen
-              mecanismos de confirmación, revisión y corrección antes de que las
-              acciones sean definitivas. Los errores se notifican de forma
-              clara, descriptiva y accesible, sin depender exclusivamente del
-              color para comunicar el estado de error.
+              Los videos publicados incluyen subtítulos sincronizados para
+              usuarios con discapacidad auditiva. Las presentaciones de solo
+              audio incluyen transcripciones textuales. El contenido puramente
+              decorativo de video o audio no transmite información indispensable
+              no disponible en otra forma.
             </P>
           </div>
 
           <div style={{ marginTop: "1.5rem" }}>
             <P>
-              <strong>5.18. Tiempo Suficiente para Completar Tareas</strong>
+              <strong>5.17 GESTIÓN DE ERRORES Y RECUPERACIÓN.</strong>
+            </P>
+            <P>
+              Los procesos críticos del sitio —envío de formularios, cotización,
+              creación de cuenta— incluyen mecanismos de confirmación, revisión
+              y corrección antes de que las acciones sean definitivas. Los
+              errores se notifican de forma clara, descriptiva y accesible, sin
+              depender del color como único indicador.
+            </P>
+          </div>
+
+          <div style={{ marginTop: "1.5rem" }}>
+            <P>
+              <strong>5.18 TIEMPO SUFICIENTE PARA COMPLETAR TAREAS.</strong>
             </P>
             <P>
               El sitio no impone límites de tiempo estrictos para completar
               formularios o procesos. Si en el futuro se implementan sesiones
-              con tiempo límite (por ejemplo, por razones de seguridad), se
-              notificará al usuario con suficiente antelación y se le ofrecerá
-              la posibilidad de extender el tiempo o guardar el progreso.
+              con tiempo límite, se notificará al usuario con antelación
+              suficiente y se ofrecerá la posibilidad de extender el tiempo o
+              guardar el progreso.
             </P>
           </div>
 
           <div style={{ marginTop: "1.5rem" }}>
             <P>
-              <strong>5.19. Navegación Consistente</strong>
+              <strong>5.19 NAVEGACIÓN CONSISTENTE.</strong>
             </P>
             <P>
-              Los componentes de navegación — menú principal, menú de pie de
-              página, migas de pan (breadcrumbs), botones de acción — se
+              Los componentes de navegación —menú principal, menú de pie de
+              página, migas de pan (breadcrumbs), botones de acción— se
               presentan en el mismo orden y con la misma apariencia en todas las
-              páginas del sitio. Este patrón consistente reduce la carga
-              cognitiva y permite que los usuarios con discapacidades
-              cognitivas, aprendizaje o memoria construyan un modelo mental
-              predecible del sitio.
+              páginas. Este patrón consistente reduce la carga cognitiva y
+              permite construir un modelo mental predecible del sitio.
+            </P>
+          </div>
+
+          <div style={{ marginTop: "1.5rem" }}>
+            <P>
+              <strong>5.20 ACCESIBILIDAD DEL CONTENIDO LEGAL.</strong>
+            </P>
+            <P>
+              Todas las políticas del Taller publicadas bajo el directorio{" "}
+              <code>/legal/</code> del sitio están redactadas en formato de
+              texto plano estructurado, compatible con lectores de pantalla y
+              herramientas de apoyo, y accesibles sin necesidad de plugins ni
+              software especializado. El directorio completo de políticas está
+              disponible en{" "}
+              <Link href="/legal" className="text-blue-600 hover:underline">
+                https://www.confeccionesliss.com/legal
+              </Link>
+              .
+            </P>
+          </div>
+
+          <div style={{ marginTop: "1.5rem" }}>
+            <P>
+              <strong>5.21 ACCESIBILIDAD DEL DIRECTORIO DE CANALES.</strong>
+            </P>
+            <P>
+              El hub centralizado de canales oficiales del Taller, disponible en{" "}
+              <Link href="/links" className="text-blue-600 hover:underline">
+                https://www.confeccionesliss.com/links
+              </Link>
+              , está diseñado conforme a los mismos estándares de accesibilidad
+              del sitio principal, garantizando que el Usuario pueda acceder y
+              verificar los canales oficiales independientemente de la
+              tecnología de apoyo que utilice.
             </P>
           </div>
         </Section>
+        <Hr />
 
-        {/* ── 6. Tecnologías de Apoyo Compatibles ──────────────────────── */}
+        {/* ── VI. Tecnologías de Apoyo ─────────────────────────────────────── */}
         <Section n={6} title="Tecnologías de Apoyo Compatibles">
           <P>
-            El sitio web de Confecciones Liss ha sido probado y optimizado para
-            funcionar correctamente con las siguientes tecnologías de apoyo y
-            configuraciones de usuario:
+            El sitio web del Taller ha sido probado y optimizado para funcionar
+            con las siguientes tecnologías de apoyo y configuraciones:
           </P>
           <Ul
             items={[
-              "Lectores de pantalla: NVDA (NonVisual Desktop Access) con navegadores Firefox y Chrome en Windows; JAWS (Job Access With Speech) con Internet Explorer y Chrome en Windows; VoiceOver con Safari en macOS e iOS; TalkBack en Android con Chrome.",
-              "Navegación por teclado: Compatible con la navegación completa mediante teclado estándar (Tab, Shift+Tab, Enter, Espacio, flechas de dirección) en todos los navegadores principales.",
-              "Zoom del navegador: El sitio soporta zoom de hasta el 400% sin pérdida de contenido (orientación vertical en pantalla de 1280px de ancho) y sin superposición de elementos.",
-              "Contraste alto: El sitio es compatible con el modo de alto contraste de Windows y con extensiones de navegador que ajustan el contraste de color.",
-              "Tamaño de texto del sistema: El sitio respeta las configuraciones de tamaño de fuente del sistema operativo y del navegador, utilizando unidades relativas (rem, em, %) en lugar de unidades absolutas (px) para los tamaños de fuente.",
-              "Dispositivos apuntadores alternativos: El sitio es operable con ratones especializados, joysticks, trackpads y otros dispositivos señaladores alternativos que emulan la funcionalidad del mouse.",
-              "Control por voz: El sitio es compatible con Dragon NaturallySpeaking y con la funcionalidad de control por voz integrada en sistemas operativos modernos (Voice Control en macOS/iOS, Voice Access en Android).",
+              "LECTORES DE PANTALLA: NVDA con Firefox y Chrome en Windows; JAWS con Chrome en Windows; VoiceOver con Safari en macOS e iOS; TalkBack en Android con Chrome.",
+              "NAVEGACIÓN POR TECLADO: Compatible con navegación completa mediante teclado estándar (Tab, Shift+Tab, Enter, Espacio, flechas de dirección) en todos los navegadores principales modernos.",
+              "ZOOM DEL NAVEGADOR: Soporta zoom hasta el 400% sin pérdida de contenido ni superposición de elementos en orientación vertical (pantalla de 1280px).",
+              "CONTRASTE ALTO: Compatible con el modo de alto contraste de Windows y con extensiones de navegador que ajustan el contraste de color.",
+              "TAMAÑO DE TEXTO DEL SISTEMA: El sitio respeta las configuraciones de tamaño de fuente del sistema operativo y del navegador, utilizando unidades relativas (rem, em, %) en lugar de unidades absolutas para los tamaños de fuente.",
+              "DISPOSITIVOS APUNTADORES ALTERNATIVOS: El sitio es operable con ratones especializados, joysticks, trackpads y otros dispositivos señaladores alternativos que emulan la funcionalidad del mouse.",
+              "CONTROL POR VOZ: El sitio es compatible con Dragon NaturallySpeaking y con las funcionalidades de control por voz integradas en sistemas operativos modernos (Voice Control en macOS/iOS, Voice Access en Android).",
             ]}
           />
           <P>
-            Las pruebas de compatibilidad con tecnologías de apoyo se realizan
-            periódicamente como parte de nuestro proceso de aseguramiento de
-            calidad. Reconocemos que la compatibilidad perfecta con todas las
-            versiones y configuraciones posibles de tecnologías de apoyo está
-            fuera de nuestro alcance, pero nos comprometemos a atender los
-            reportes de incompatibilidad de manera prioritaria.
+            <strong>LIMITACIÓN DE COMPATIBILIDAD.</strong> El Taller reconoce
+            que la compatibilidad perfecta con todas las versiones y
+            configuraciones posibles de tecnologías de apoyo está fuera de su
+            alcance. La lista anterior refleja las configuraciones probadas a la
+            fecha de publicación de esta versión de la Política. El Taller se
+            compromete a atender con prioridad los reportes de incompatibilidad
+            recibidos a través de los canales establecidos en la Sección XI.
+          </P>
+          <P>
+            El Usuario que utilice tecnologías de apoyo no incluidas en la lista
+            anterior tiene el deber de verificar la compatibilidad de su
+            tecnología con el sitio antes de iniciar cualquier gestión
+            comercial. El Taller no asumirá responsabilidad por problemas de
+            acceso atribuibles al uso de tecnologías de apoyo no probadas ni
+            declaradas en la presente sección.
           </P>
         </Section>
+        <Hr />
 
-        {/* ── 7. Evaluación y Auditoría ─────────────────────────────────── */}
+        {/* ── VII. Evaluación ──────────────────────────────────────────────── */}
         <Section n={7} title="Proceso de Evaluación y Auditoría">
           <P>
-            Confecciones Liss adopta un enfoque estructurado para la evaluación
-            continua de la accesibilidad de su sitio web. Nuestro proceso de
-            evaluación incluye las siguientes actividades:
+            El Taller adopta un enfoque estructurado para la evaluación continua
+            de la accesibilidad de su sitio web:
           </P>
           <Ul
             items={[
-              "Autoevaluación continua: El equipo de desarrollo realiza revisiones de accesibilidad como parte del proceso de desarrollo de nuevas funcionalidades, utilizando herramientas automatizadas como axe-core, Lighthouse, WAVE y Accessibility Insights.",
-              "Pruebas manuales periódicas: Adicionalmente a las herramientas automatizadas, se realizan pruebas manuales con tecnologías de apoyo reales (lectores de pantalla, navegación por teclado) para identificar problemas que no son detectados por herramientas automatizadas.",
-              "Auditorías formales: Se planifican auditorías de accesibilidad formales con evaluadores especializados, con una periodicidad mínima anual o cuando se realicen cambios significativos en la arquitectura o el diseño del sitio.",
-              "Evaluación participativa: Se promueve la participación de usuarios con diferentes capacidades en las pruebas de usabilidad, cuando sea posible, para obtener retroalimentación directa desde la perspectiva de los usuarios afectados.",
-              "Monitoreo de retroalimentación: Se revisan periódicamente los reportes de accesibilidad recibidos por los canales de contacto habilitados, y se priorizan las correcciones en función del impacto sobre el usuario.",
+              "AUTOEVALUACIÓN CONTINUA: El equipo técnico realiza revisiones de accesibilidad como parte del proceso de desarrollo de nuevas funcionalidades, utilizando herramientas automatizadas como axe-core, Lighthouse, WAVE y Accessibility Insights.",
+              "PRUEBAS MANUALES PERIÓDICAS: Adicionalmente a las herramientas automatizadas, se realizan pruebas manuales con tecnologías de apoyo reales (lectores de pantalla, navegación por teclado) para identificar problemas no detectados por herramientas automatizadas.",
+              "AUDITORÍAS FORMALES: Se planifican auditorías de accesibilidad formales con una periodicidad mínima anual, o cuando se realicen cambios significativos en la arquitectura o diseño del sitio.",
+              "MONITOREO DE RETROALIMENTACIÓN: Se revisan periódicamente los reportes de accesibilidad recibidos y se priorizan las correcciones según su impacto.",
             ]}
           />
           <P>
-            Los resultados de las auditorías y evaluaciones son documentados
-            internamente y utilizados para planificar las mejoras de
-            accesibilidad en las iteraciones sucesivas del sitio.
+            Los resultados de las evaluaciones son documentados internamente y
+            utilizados para planificar mejoras en las iteraciones sucesivas del
+            sitio.
           </P>
         </Section>
+        <Hr />
 
-        {/* ── 8. Responsabilidad Organizacional ───────────────────────── */}
-        <Section n={8} title="Responsabilidad Organizacional">
+        {/* ── VIII. Responsabilidad ────────────────────────────────────────── */}
+        <Section n={8} title="Responsabilidad Organizacional y del Usuario">
           <P>
-            La accesibilidad web no es responsabilidad exclusiva del equipo
-            técnico: es una responsabilidad compartida que involucra a todos los
-            colaboradores que participan en la creación y gestión del contenido
-            digital de Confecciones Liss.
+            <strong>RESPONSABILIDADES INTERNAS DEL TALLER:</strong>
           </P>
           <Ul
             items={[
-              "Dirección General: Aprueba y respalda la política de accesibilidad y asigna los recursos necesarios para su implementación y mantenimiento.",
+              "Encargado de Comunicaciones (Carlos José Molina Villacorta): Responsable de la recepción, registro y escalamiento de reportes de accesibilidad, y de garantizar que existan canales alternativos de atención para usuarios que no puedan utilizar el sitio web.",
               "Equipo de Desarrollo y Tecnología: Responsable de implementar las medidas técnicas de accesibilidad, realizar pruebas automatizadas y manuales, y mantener el código conforme a los estándares WCAG 2.1 AA.",
-              "Equipo de Diseño: Responsable de garantizar que los diseños visuales cumplan los requisitos de contraste, tamaño de fuente, espaciado y jerarquía visual que sustentan la accesibilidad del sitio.",
-              "Equipo de Contenido y Marketing: Responsable de crear y publicar contenido accesible: textos claros, imágenes con texto alternativo adecuado, videos con subtítulos y documentos en formatos accesibles.",
-              "Servicio al Cliente: Responsable de recibir, registrar y escalar los reportes de accesibilidad recibidos de los usuarios, y de garantizar que existan canales alternativos de atención para usuarios que no puedan utilizar el sitio web.",
+              "Equipo de Diseño: Responsable de garantizar que los diseños visuales cumplan los requisitos de contraste, tamaño de fuente, espaciado y jerarquía visual.",
+              "Equipo de Contenido: Responsable de crear y publicar contenido accesible: textos claros, imágenes con texto alternativo adecuado, videos con subtítulos y documentos en formatos accesibles.",
             ]}
           />
+          <P>
+            <strong>RESPONSABILIDADES DEL USUARIO.</strong> La accesibilidad
+            óptima del sitio depende también de que el Usuario cumpla los
+            siguientes deberes, cuyo incumplimiento limita la capacidad del
+            Taller de garantizar la experiencia de acceso:
+          </P>
+          <div style={{ paddingLeft: "1.5rem" }}>
+            <P>
+              a) Utilizar navegadores y tecnologías de apoyo en versiones
+              actualizadas y compatibles con los estándares declarados en la
+              Sección VI.
+            </P>
+            <P>
+              b) Mantener configurado correctamente su dispositivo, sistema
+              operativo y herramientas de apoyo conforme a sus propias
+              necesidades de accesibilidad.
+            </P>
+            <P>
+              c) Reportar las barreras de accesibilidad que encuentre, conforme
+              al procedimiento establecido en la Sección XI, antes de formular
+              cualquier reclamación derivada de problemas de acceso.
+            </P>
+            <P>
+              d) Consultar los canales alternativos de acceso establecidos en la
+              Sección X cuando no pueda completar una gestión a través del sitio
+              web.
+            </P>
+            <P>
+              e) Verificar que los problemas de acceso que experimenta no son
+              atribuibles a su dispositivo, configuración o tecnología de apoyo,
+              antes de atribuirlos al sitio web del Taller.
+            </P>
+          </div>
+          <P>
+            El Taller no asumirá responsabilidad alguna derivada de problemas de
+            acceso atribuibles al incumplimiento de los deberes del Usuario
+            establecidos en los literales anteriores, ni de problemas originados
+            en el dispositivo, la conectividad, el sistema operativo o la
+            tecnología de apoyo del Usuario.
+          </P>
+          <P>
+            Para la totalidad de los deberes del Usuario, consúltese la{" "}
+            <Link
+              href="/legal/deberes"
+              className="text-blue-600 hover:underline"
+            >
+              Política de Deberes del Usuario
+            </Link>
+            . Para la totalidad de los derechos del Usuario, consúltese la{" "}
+            <Link
+              href="/legal/derechos"
+              className="text-blue-600 hover:underline"
+            >
+              Política de Derechos del Usuario
+            </Link>
+            .
+          </P>
         </Section>
+        <Hr />
 
-        {/* ── 9. Limitaciones Conocidas ─────────────────────────────────── */}
+        {/* ── IX. Limitaciones Conocidas ───────────────────────────────────── */}
         <Section n={9} title="Limitaciones Técnicas Conocidas">
           <P>
-            Confecciones Liss opera bajo el principio de transparencia. A
-            continuación, documentamos las limitaciones de accesibilidad
-            actualmente identificadas en nuestro sitio web, junto con el estado
-            de las acciones correctivas:
+            El Taller opera bajo el principio de transparencia. A continuación
+            se documentan las limitaciones de accesibilidad actualmente
+            identificadas, junto con el estado de las acciones correctivas. Esta
+            sección es de conocimiento expreso del Usuario desde el momento en
+            que accede al sitio, y no constituye fundamento autónomo de
+            reclamación.
           </P>
           <Ul
             items={[
-              "Contenido generado por usuarios (reseñas y comentarios): Los comentarios y reseñas publicados por clientes pueden no siempre incluir texto alternativo en imágenes adjuntas. Estamos desarrollando guías de moderación y herramientas de apoyo para facilitar la creación de contenido accesible por parte de los usuarios.",
-              "Documentos PDF: Algunos documentos en formato PDF (fichas técnicas, fichas de producto, catálogos descargables) pueden no cumplir plenamente los requisitos de accesibilidad para documentos PDF (PDF/UA). Estamos trabajando en la conversión y corrección progresiva de estos documentos.",
-              "Contenido de terceros integrado: El sitio puede integrar contenido de terceros (como mapas, widgets de redes sociales, herramientas de chat de atención al cliente) cuya accesibilidad depende de los proveedores externos correspondientes y está fuera de nuestro control directo. Evaluamos la accesibilidad de estos proveedores antes de integrar sus herramientas y optamos por alternativas accesibles cuando es posible.",
-              "Componentes de interfaz complejos: Algunos componentes de interfaz avanzados (como el configurador de productos personalizados) pueden presentar experiencias subóptimas con determinadas configuraciones de tecnologías de apoyo. Si bien cumplen los criterios básicos de accesibilidad, reconocemos que la experiencia puede no ser equivalente a la de los usuarios sin discapacidad. Estamos trabajando en mejoras específicas para estos componentes.",
-              "Videos heredados: Algunos videos publicados en fechas anteriores a la implementación de esta política pueden no contar con subtítulos o transcripciones. Estamos realizando una revisión y actualización progresiva de este contenido.",
+              "CONTENIDO GENERADO POR USUARIOS (reseñas y comentarios): Los comentarios y reseñas publicados por clientes pueden no incluir siempre texto alternativo en imágenes adjuntas. El Taller está desarrollando guías de moderación y herramientas de apoyo para facilitar la creación de contenido accesible. Estado: en proceso de mejora.",
+              "DOCUMENTOS PDF: Algunos documentos en formato PDF (fichas técnicas, catálogos descargables) pueden no cumplir plenamente los requisitos de accesibilidad para documentos PDF (PDF/UA). Estado: en proceso de conversión y corrección progresiva. Disponible en formato alternativo a solicitud.",
+              "CONTENIDO DE TERCEROS INTEGRADO: El sitio puede integrar contenido de terceros (mapas, widgets de redes sociales, herramientas de chat) cuya accesibilidad depende de los proveedores externos y está fuera del control directo del Taller. Estado: monitoreo continuo.",
+              "IMÁGENES EDITADAS CON IA: Las imágenes de prendas procesadas con inteligencia artificial y las imágenes del Modelo IA Liam Alejandro cuentan con texto alternativo descriptivo del producto. No obstante, el proceso de generación de texto alternativo para contenido generado con IA es un área en mejora continua. Estado: mejora progresiva.",
+              "COMPONENTES DE INTERFAZ COMPLEJOS: Algunos componentes avanzados (configurador de productos personalizados) pueden presentar experiencias subóptimas con determinadas configuraciones de tecnologías de apoyo. Cumplen criterios básicos de accesibilidad pero la experiencia puede no ser equivalente. Estado: mejoras específicas en planificación.",
+              "VIDEOS HEREDADOS: Algunos videos publicados antes de la implementación de esta Política pueden no contar con subtítulos o transcripciones completas. Estado: revisión y actualización progresiva.",
+              "CONTENIDO EN REDES SOCIALES: El contenido publicado en los canales oficiales del Taller en redes sociales (Facebook, Instagram, TikTok) sigue las buenas prácticas de accesibilidad disponibles en cada plataforma, pero su accesibilidad está condicionada a las capacidades técnicas de dichas plataformas, sobre las que el Taller no tiene control total.",
             ]}
           />
           <P>
-            Si identifica una barrera de accesibilidad que no esté documentada
-            en esta sección, le invitamos a reportarla a través de nuestros
-            canales de contacto (véase Sección 11). Su retroalimentación es
-            fundamental para mejorar continuamente la experiencia de todos los
-            usuarios.
+            Si el Usuario identifica una barrera de accesibilidad no documentada
+            en esta sección, tiene el deber de reportarla conforme al
+            procedimiento establecido en la Sección XI. La formulación de
+            reclamaciones sin haber cumplido previamente el deber de reporte
+            establecido en la Sección XI será considerada inadmisible.
           </P>
         </Section>
+        <Hr />
 
-        {/* ── 10. Alternativas de Acceso ────────────────────────────────── */}
+        {/* ── X. Alternativas de Acceso ────────────────────────────────────── */}
         <Section n={10} title="Alternativas de Acceso y Asistencia">
           <P>
-            Confecciones Liss reconoce que, a pesar de sus esfuerzos, el sitio
-            web puede no ser completamente accesible para todos los usuarios en
-            todas las situaciones. Por esta razón, garantizamos la
-            disponibilidad de canales alternativos de acceso a la información y
-            los servicios:
+            El Taller reconoce que, a pesar de sus esfuerzos, el sitio web puede
+            no ser completamente accesible para todos los usuarios en todas las
+            situaciones. Por esta razón, garantiza la disponibilidad de los
+            siguientes canales alternativos de acceso, disponibles en{" "}
+            <Link href="/links" className="text-blue-600 hover:underline">
+              https://www.confeccionesliss.com/links
+            </Link>
+            :
           </P>
           <Ul
             items={[
-              "Atención telefónica: El equipo de servicio al cliente puede proporcionar asistencia verbal completa para usuarios que no puedan acceder al sitio web o utilizar sus funcionalidades. Este canal está disponible durante los horarios de atención publicados en el sitio.",
-              "Atención por WhatsApp: Disponemos de canal de atención por WhatsApp para usuarios que prefieran comunicarse por mensajería de texto. Las funciones de accesibilidad integradas en la aplicación WhatsApp (como los mensajes de voz, la lectura de texto o el ajuste de tamaño de fuente) pueden complementar la experiencia del usuario.",
-              "Atención por correo electrónico: Los usuarios pueden solicitar información sobre productos, cotizaciones y servicios directamente por correo electrónico, sin necesidad de utilizar el sitio web.",
-              "Atención presencial: Para usuarios que prefieran o requieran atención presencial, nuestras instalaciones físicas están disponibles durante los horarios de atención publicados. Informamos oportunamente sobre las condiciones de accesibilidad física de nuestras instalaciones.",
-              "Formatos alternativos: A solicitud del usuario, podemos proporcionar información específica (catálogos, fichas técnicas, presupuestos) en formatos alternativos más accesibles, como texto plano, Word accesible o audio.",
-            ]}
-          />
-        </Section>
-
-        {/* ── 11. Contacto ─────────────────────────────────────────────── */}
-        <Section n={11} title="Canal de Contacto para Accesibilidad">
-          <P>
-            Si experimenta dificultades para acceder a cualquier parte de
-            nuestro sitio web, si desea reportar un problema de accesibilidad, o
-            si necesita obtener información en un formato alternativo, puede
-            contactarnos a través de los siguientes canales:
-          </P>
-          <Ul
-            items={[
-              'Correo electrónico: Puede escribirnos a nuestra dirección de correo electrónico oficial, indicando en el asunto "Reporte de Accesibilidad" o "Solicitud de Formato Alternativo". Nos comprometemos a responder en un plazo máximo de cinco (5) días hábiles.',
-              "WhatsApp: Puede comunicarse con nuestro equipo de servicio al cliente a través del número de WhatsApp oficial de Confecciones Liss, disponible en el pie de página de este sitio.",
-              "Formulario de contacto: Puede utilizar el formulario de contacto disponible en la sección de Contacto del sitio web, indicando que su mensaje está relacionado con accesibilidad.",
+              "ATENCIÓN POR WHATSAPP: Canal de atención por mensajería disponible durante el horario oficial del Taller (Lunes a Sábado, 8:00 AM – 5:00 PM). Las funciones de accesibilidad integradas en WhatsApp (mensajes de voz, lectura de texto, ajuste de tamaño de fuente) pueden complementar la experiencia. Número oficial: +503 7331-7181.",
+              "ATENCIÓN PRESENCIAL: Las instalaciones físicas del Taller están disponibles durante el horario de atención publicado, para usuarios que prefieran o requieran atención presencial. Dirección: Barrio La Merced, 5ª Calle Poniente y 1ª Avenida Sur, Casa #402, San Miguel, El Salvador.",
+              "FORMATOS ALTERNATIVOS: A solicitud del Usuario, el Taller puede proporcionar información específica (catálogos, fichas técnicas, presupuestos) en formatos alternativos más accesibles, como texto plano o audio, dentro de sus capacidades operativas.",
             ]}
           />
           <P>
-            Al recibir un reporte de accesibilidad, seguimos el siguiente
-            procedimiento:
+            <strong>LIMITACIÓN DEL DERECHO A CANALES ALTERNATIVOS.</strong> La
+            disponibilidad de canales alternativos no exime al Usuario de su
+            deber de agotar primero el canal de reporte de accesibilidad
+            establecido en la Sección XI cuando el problema sea atribuible al
+            sitio web. Los canales alternativos son un complemento de acceso, no
+            un mecanismo de reclamación. Las reclamaciones comerciales derivadas
+            de pedidos, cotizaciones, devoluciones u otras gestiones se rigen
+            exclusivamente por las políticas comerciales correspondientes del
+            Taller, disponibles en{" "}
+            <Link href="/legal" className="text-blue-600 hover:underline">
+              https://www.confeccionesliss.com/legal
+            </Link>
+            .
+          </P>
+        </Section>
+        <Hr />
+
+        {/* ── XI. Canal de Reporte ─────────────────────────────────────────── */}
+        <Section
+          n={11}
+          title="Canal de Reporte de Accesibilidad: Procedimiento y Plazos"
+        >
+          <P>
+            <strong>DEBER DE REPORTE PREVIO.</strong> El Usuario que experimente
+            una barrera de accesibilidad en el sitio web tiene el deber de
+            reportarla al Taller antes de formular cualquier reclamación
+            derivada de dicha barrera. El incumplimiento de este deber previo de
+            reporte convierte cualquier reclamación posterior en inadmisible,
+            toda vez que el Taller no tuvo la oportunidad de conocer y corregir
+            el problema.
+          </P>
+          <P>
+            <strong>CÓMO REPORTAR.</strong> El Usuario puede reportar barreras
+            de accesibilidad a través de los canales oficiales del Taller,
+            disponibles en{" "}
+            <Link href="/links" className="text-blue-600 hover:underline">
+              https://www.confeccionesliss.com/links
+            </Link>
+            . Al realizar el reporte, el Usuario deberá proporcionar:
+          </P>
+          <div style={{ paddingLeft: "1.5rem" }}>
+            <P>
+              a) Descripción precisa de la barrera de accesibilidad encontrada.
+            </P>
+            <P>
+              b) URL específica de la página o sección donde se produce el
+              problema.
+            </P>
+            <P>c) Dispositivo, sistema operativo y navegador utilizados.</P>
+            <P>
+              d) Tecnología de apoyo utilizada (si aplica), incluyendo nombre y
+              versión.
+            </P>
+            <P>e) Pasos para reproducir el problema, si es posible.</P>
+          </div>
+          <P>
+            El Taller no está obligado a procesar reportes que no contengan la
+            información mínima necesaria para identificar y evaluar la barrera
+            reportada.
+          </P>
+          <P>
+            <strong>PROCEDIMIENTO DE ATENCIÓN:</strong>
           </P>
           <Ul
             items={[
-              "Confirmamos la recepción del reporte en un plazo de dos (2) días hábiles.",
-              "Evaluamos el problema reportado y determinamos si constituye una barrera de accesibilidad WCAG 2.1 AA en un plazo de cinco (5) días hábiles.",
-              "Si se confirma la barrera, planificamos la corrección e informamos al usuario del plazo estimado de resolución.",
-              "Ofrecemos, cuando sea posible, una solución alternativa inmediata mientras se trabaja en la corrección definitiva.",
-              "Notificamos al usuario cuando la corrección ha sido implementada.",
+              "Confirmación de recepción del reporte: hasta 2 días hábiles.",
+              "Evaluación del problema y determinación de si constituye una barrera WCAG 2.1 AA: hasta 5 días hábiles.",
+              "Si se confirma la barrera: planificación de corrección e información al Usuario del plazo estimado de resolución.",
+              "Ofrecimiento de solución alternativa inmediata mientras se trabaja en la corrección definitiva, cuando sea posible.",
+              "Notificación al Usuario cuando la corrección haya sido implementada.",
             ]}
           />
+          <P>
+            <strong>LIMITACIÓN DE PLAZOS.</strong> Los plazos indicados son
+            estimaciones operativas sujetas a la carga de trabajo del equipo
+            técnico y a la complejidad del problema reportado. Su incumplimiento
+            no genera derecho a indemnización ni a ninguna compensación por
+            parte del Taller.
+          </P>
         </Section>
+        <Hr />
 
-        {/* ── 12. Mejora Continua ───────────────────────────────────────── */}
+        {/* ── XII. Mejora Continua ─────────────────────────────────────────── */}
         <Section n={12} title="Compromiso de Mejora Continua">
           <P>
-            La accesibilidad web es un proceso continuo, no un destino final.
-            Confecciones Liss se compromete a mantener y mejorar progresivamente
-            la accesibilidad de su sitio web a través de las siguientes
-            acciones:
+            La accesibilidad web es un proceso continuo. El Taller se compromete
+            a:
           </P>
           <Ul
             items={[
               "Integrar la accesibilidad como criterio de aceptación en todos los ciclos de desarrollo y actualización del sitio.",
-              "Capacitar al equipo de desarrollo, diseño y contenido en buenas prácticas de accesibilidad web, con actualizaciones periódicas conforme evolucionan los estándares.",
-              "Mantenernos al día con las actualizaciones de las WCAG (incluyendo WCAG 2.2 y las futuras WCAG 3.0) y evaluar su implementación en nuestro sitio.",
-              "Revisar y actualizar esta declaración de accesibilidad al menos una vez al año, o cada vez que se realicen cambios significativos en el sitio.",
-              "Considerar la retroalimentación de usuarios con discapacidad como una fuente privilegiada de información para priorizar mejoras.",
-              "Evaluar proactivamente nuevas tecnologías y herramientas que puedan mejorar la experiencia de accesibilidad de nuestros usuarios.",
+              "Capacitar al equipo de desarrollo, diseño y contenido en buenas prácticas de accesibilidad web, con actualizaciones periódicas.",
+              "Mantenerse al día con las actualizaciones de las WCAG (incluyendo WCAG 2.2 y futuras WCAG 3.0) y evaluar su implementación.",
+              "Revisar y actualizar esta declaración al menos una vez al año, o cada vez que se realicen cambios significativos en el sitio.",
+              "Considerar la retroalimentación de usuarios con discapacidad como fuente privilegiada de información para priorizar mejoras.",
+              "Evaluar proactivamente nuevas tecnologías que puedan mejorar la experiencia de accesibilidad de los usuarios.",
             ]}
           />
-        </Section>
-
-        {/* ── 13. Exclusiones y Límites ─────────────────────────────────── */}
-        <Section n={13} title="Exclusiones y Alcance de la Declaración">
           <P>
-            La presente declaración de accesibilidad cubre exclusivamente el
-            sitio web oficial de Confecciones Liss accesible bajo el dominio
-            principal. Las siguientes áreas quedan excluidas de esta
-            declaración, aunque nos esforzamos por promover la accesibilidad
-            también en estos contextos:
+            Este compromiso es genuino y refleja los valores del Taller, sin que
+            su declaración genere derechos adicionales para el Usuario más allá
+            de los expresamente establecidos en la presente Política y en la{" "}
+            <Link
+              href="/legal/derechos"
+              className="text-blue-600 hover:underline"
+            >
+              Política de Derechos del Usuario
+            </Link>
+            .
+          </P>
+        </Section>
+        <Hr />
+
+        {/* ── XIII. Exención de Responsabilidad ───────────────────────────── */}
+        <Section n={13} title="Exención de Responsabilidad">
+          <P>
+            En la máxima medida permitida por la legislación salvadoreña
+            aplicable, Confecciones Liss queda expresamente eximido de toda
+            responsabilidad derivada de los siguientes supuestos, sin que esta
+            lista sea limitativa:
+          </P>
+          <div style={{ paddingLeft: "1.5rem" }}>
+            <P>
+              a) Barreras de accesibilidad atribuibles al dispositivo, sistema
+              operativo, navegador o tecnología de apoyo del Usuario, y no al
+              sitio web del Taller.
+            </P>
+            <P>
+              b) Problemas de acceso derivados del uso de navegadores o
+              tecnologías de apoyo en versiones no probadas ni declaradas en la
+              Sección VI.
+            </P>
+            <P>
+              c) Barreras de accesibilidad conocidas y documentadas en la
+              Sección IX, cuya existencia es de conocimiento expreso del Usuario
+              desde el momento en que accede al sitio.
+            </P>
+            <P>
+              d) Barreras de accesibilidad en contenido de terceros integrado en
+              el sitio (mapas, widgets de redes sociales, herramientas de chat),
+              cuya accesibilidad es responsabilidad de los proveedores externos.
+            </P>
+            <P>
+              e) Barreras de accesibilidad en los perfiles del Taller en redes
+              sociales de terceros, que se rigen por las políticas de sus
+              propias plataformas.
+            </P>
+            <P>
+              f) Problemas de acceso reportados fuera de los canales oficiales o
+              sin haber cumplido el procedimiento de reporte establecido en la
+              Sección XI.
+            </P>
+            <P>
+              g) Decisiones comerciales adoptadas por el Usuario afectadas por
+              barreras de accesibilidad no previamente reportadas al Taller.
+            </P>
+            <P>
+              h) Incompatibilidades derivadas de la correcta implementación de
+              los estándares WCAG con configuraciones atípicas o minoritarias de
+              tecnologías de apoyo no probadas por el Taller.
+            </P>
+            <P>
+              i) Cualquier daño, perjuicio o inconveniente derivado del período
+              de corrección de barreras de accesibilidad reportadas, conforme a
+              los plazos establecidos en la Sección XI.
+            </P>
+          </div>
+        </Section>
+        <Hr />
+
+        {/* ── XIV. Relación con otras políticas ───────────────────────────── */}
+        <Section n={14} title="Relación con Otras Políticas del Taller">
+          <P>
+            La presente Política forma parte integral del marco jurídico y
+            comercial de Confecciones Liss y debe interpretarse de forma
+            complementaria y consistente con las demás políticas del Taller, en
+            particular:
+          </P>
+          <div
+            style={{
+              paddingLeft: "1.5rem",
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.4rem",
+              marginBottom: "0.75rem",
+            }}
+          >
+            {[
+              {
+                label: "Términos y Condiciones de Uso:",
+                href: "/legal/terminos",
+                url: "https://www.confeccionesliss.com/legal/terminos",
+              },
+              {
+                label: "Política de Privacidad:",
+                href: "/legal/privacidad",
+                url: "https://www.confeccionesliss.com/legal/privacidad",
+              },
+              {
+                label: "Política de Deberes del Usuario:",
+                href: "/legal/deberes",
+                url: "https://www.confeccionesliss.com/legal/deberes",
+              },
+              {
+                label: "Política de Derechos del Usuario:",
+                href: "/legal/derechos",
+                url: "https://www.confeccionesliss.com/legal/derechos",
+              },
+              {
+                label: "Política de Uso de Inteligencia Artificial:",
+                href: "/legal/ia",
+                url: "https://www.confeccionesliss.com/legal/ia",
+              },
+              {
+                label: "Política de Cookies:",
+                href: "/legal/cookies",
+                url: "https://www.confeccionesliss.com/legal/cookies",
+              },
+              {
+                label: "Política de Comunicaciones Comerciales:",
+                href: "/legal/comunicaciones",
+                url: "https://www.confeccionesliss.com/legal/comunicaciones",
+              },
+              {
+                label: "Política de Contenido Generado por Usuarios (UGC):",
+                href: "/legal/ugc",
+                url: "https://www.confeccionesliss.com/legal/ugc",
+              },
+              {
+                label:
+                  "Política de Logos e Identidad Institucional de Terceros:",
+                href: "/legal/terceros",
+                url: "https://www.confeccionesliss.com/legal/terceros",
+              },
+              {
+                label: "Directorio de canales oficiales:",
+                href: "/links",
+                url: "https://www.confeccionesliss.com/links",
+              },
+            ].map(({ label, href, url }) => (
+              <div key={href} style={{ display: "flex", gap: "0.5rem" }}>
+                <span>—</span>
+                <div>
+                  <strong>{label}</strong>{" "}
+                  <Link href={href} className="text-blue-600 hover:underline">
+                    {url}
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Section>
+        <Hr />
+
+        {/* ── XV. Exclusiones y Alcance ────────────────────────────────────── */}
+        <Section n={15} title="Exclusiones y Alcance de la Declaración">
+          <P>
+            La presente declaración cubre exclusivamente el sitio web oficial
+            del Taller bajo el dominio{" "}
+            <Link
+              href="https://www.confeccionesliss.com/"
+              className="text-blue-600 hover:underline"
+            >
+              https://www.confeccionesliss.com/
+            </Link>
+            . Las siguientes áreas quedan expresamente excluidas:
           </P>
           <Ul
             items={[
-              "Perfiles en redes sociales: Las páginas de Confecciones Liss en plataformas como Instagram, Facebook, Pinterest o TikTok se rigen por las políticas y capacidades de accesibilidad de sus respectivas plataformas. Adoptamos buenas prácticas de accesibilidad en la publicación de contenido (texto alternativo en imágenes, subtítulos en videos) en la medida en que cada plataforma lo permite.",
-              "Aplicaciones de terceros integradas: Herramientas como plataformas de pago, sistemas de envío o widgets externos de terceros tienen su propia declaración de accesibilidad y están bajo la responsabilidad de sus respectivos proveedores.",
-              "Contenido archivado: El contenido histórico archivado (publicaciones de blog muy antiguas, catálogos de temporadas anteriores) puede no cumplir todos los criterios WCAG 2.1 AA, dado que fue creado antes de la implementación de esta política. Este contenido se revisa y actualiza progresivamente según las capacidades del equipo.",
-              "Comunicaciones directas personalizadas: Los documentos generados de manera personalizada para cada cliente (cotizaciones, facturas, propuestas comerciales) pueden no cumplir todos los criterios de accesibilidad de documentos. En caso de que un cliente requiera estos documentos en un formato accesible específico, puede solicitarlo a través de nuestros canales de contacto.",
+              "PERFILES EN REDES SOCIALES: Las páginas del Taller en Instagram, Facebook, TikTok y otras plataformas se rigen por las políticas de accesibilidad de sus respectivas plataformas. El Taller adopta buenas prácticas de accesibilidad en la publicación de contenido (texto alternativo en imágenes, subtítulos en videos) en la medida en que cada plataforma lo permite, sin que esto le genere obligaciones adicionales de accesibilidad más allá de las declaradas en la presente Política.",
+              "APLICACIONES DE TERCEROS INTEGRADAS: Herramientas de pago, sistemas de envío y widgets externos tienen su propia declaración de accesibilidad y son responsabilidad de sus respectivos proveedores.",
+              "CONTENIDO ARCHIVADO: El contenido histórico puede no cumplir todos los criterios WCAG 2.1 AA, dado que fue creado antes de la implementación de esta Política. Se revisa y actualiza progresivamente.",
+              "COMUNICACIONES DIRECTAS PERSONALIZADAS: Las cotizaciones, facturas y propuestas comerciales generadas para cada cliente pueden no cumplir todos los criterios de accesibilidad de documentos. El Cliente puede solicitar estos documentos en formato alternativo accesible a través de los canales oficiales del Taller.",
             ]}
           />
         </Section>
+        <Hr />
 
-        {/* ── 14. Versión y Vigencia ─────────────────────────────────── */}
-        <Section n={14} title="Versión y Vigencia de la Declaración">
+        {/* ── XVI. Jurisdicción ────────────────────────────────────────────── */}
+        <Section
+          n={16}
+          title="Jurisdicción, Resolución de Disputas y Legislación Aplicable"
+        >
           <P>
-            Esta declaración de accesibilidad corresponde a la{" "}
-            <strong>versión 1.0</strong>, publicada el{" "}
-            <strong>25 de junio de 2026</strong>. Será revisada y actualizada en
-            las siguientes circunstancias:
+            Toda controversia derivada de la interpretación, aplicación o
+            incumplimiento de la presente Política se resolverá en primera
+            instancia mediante comunicación directa de buena fe entre el Usuario
+            y el Taller, a través de los canales oficiales disponibles en{" "}
+            <Link href="/links" className="text-blue-600 hover:underline">
+              https://www.confeccionesliss.com/links
+            </Link>
+            .
+          </P>
+          <P>
+            De no alcanzarse un acuerdo, la controversia se someterá a la
+            jurisdicción exclusiva de los tribunales competentes de la República
+            de El Salvador, aplicando la legislación salvadoreña vigente. El
+            Usuario renuncia expresamente a cualquier otro fuero o jurisdicción
+            que pudiera corresponderle, con independencia de su lugar de
+            residencia o domicilio.
+          </P>
+          <P>
+            La legislación salvadoreña es la única aplicable a la presente
+            Política y a todas las relaciones jurídicas que de ella deriven.
+            Ninguna normativa de accesibilidad extranjera es vinculante para el
+            Taller ni puede ser invocada por el Usuario como fundamento de
+            reclamación.
+          </P>
+        </Section>
+        <Hr />
+
+        {/* ── XVII. Versión y Vigencia ─────────────────────────────────────── */}
+        <Section n={17} title="Versión, Vigencia y Modificaciones">
+          <P>
+            Esta declaración corresponde a la <strong>Versión 2.0</strong>,
+            publicada el 25 de junio de 2026. Será revisada y actualizada en las
+            siguientes circunstancias:
           </P>
           <Ul
             items={[
-              "Anualmente, como mínimo, para verificar que refleja el estado actual del sitio.",
+              "Anualmente, como mínimo.",
               "Cuando se realicen cambios significativos en la arquitectura, el diseño o las funcionalidades del sitio.",
-              "Cuando se completen correcciones de las limitaciones documentadas en la Sección 9.",
-              "Cuando entren en vigor nuevos estándares o normativas de accesibilidad aplicables.",
+              "Cuando se completen correcciones de las limitaciones documentadas en la Sección IX.",
+              "Cuando entren en vigor nuevos estándares de accesibilidad cuya adopción el Taller decida incorporar.",
             ]}
           />
           <P>
-            La versión vigente de esta declaración estará siempre disponible en
-            la ruta <code>/legal/accesibilidad</code> del sitio web oficial de
-            Confecciones Liss. Las versiones anteriores podrán estar disponibles
-            a solicitud.
+            El Taller se reserva el derecho de modificar la presente Política en
+            cualquier momento y sin previo aviso. Las modificaciones entran en
+            vigencia desde su publicación. El acceso continuado al sitio con
+            posterioridad a cualquier modificación constituye aceptación
+            automática e irrevocable de la versión actualizada. El Taller no
+            está obligado a notificar individualmente a los Usuarios sobre
+            modificaciones. Es deber exclusivo del Usuario verificar
+            periódicamente la versión vigente, siempre disponible en{" "}
+            <Link
+              href="/legal/accesibilidad"
+              className="text-blue-600 hover:underline"
+            >
+              https://www.confeccionesliss.com/legal/accesibilidad
+            </Link>
+            .
+          </P>
+        </Section>
+        <Hr />
+
+        {/* ── XVIII. Divisibilidad ─────────────────────────────────────────── */}
+        <Section n={18} title="Divisibilidad">
+          <P>
+            Si alguna disposición de la presente Política fuera declarada
+            inválida, ilegal o inaplicable por un tribunal competente de la
+            República de El Salvador, las restantes disposiciones continuarán en
+            plena vigencia y efecto. La disposición declarada inválida será
+            reemplazada, en la medida de lo posible, por una disposición válida
+            que refleje la intención original.
+          </P>
+        </Section>
+        <Hr />
+
+        {/* ── XIX. Disposición Final ───────────────────────────────────────── */}
+        <Section n={19} title="Disposición Final">
+          <P>
+            Confecciones Liss cree que un negocio verdaderamente responsable es
+            aquel que garantiza a todas las personas el acceso a sus productos y
+            servicios en condiciones de igualdad y dignidad. La accesibilidad
+            web es una dimensión concreta y medible de esa responsabilidad, y el
+            Taller la asume con la misma seriedad con la que gestiona cada
+            pedido de confección.
+          </P>
+          <P>
+            El camino hacia una accesibilidad plena es continuo. El Taller
+            agradece la retroalimentación de todos los usuarios que encuentren
+            barreras en el sitio y los invita a utilizar el canal de reporte
+            establecido en la Sección XI. Cada reporte recibido es una
+            oportunidad de mejora para el beneficio de todos.
+          </P>
+          <P>
+            La presente Política es un documento vivo que evoluciona con el
+            Taller, con la tecnología y con los estándares de la industria. Su
+            existencia y publicación reflejan el compromiso genuino de
+            Confecciones Liss con la inclusión digital, la diversidad y la
+            igualdad de oportunidades, en el marco de la legislación salvadoreña
+            aplicable y con absoluta independencia de normativas extranjeras.
           </P>
         </Section>
 
-        {/* ── 15. Disposición Final ─────────────────────────────────────── */}
-        <Section n={15} title="Disposición Final">
-          <P>
-            En Confecciones Liss creemos que un negocio verdaderamente
-            responsable es uno que se asegura de que todas las personas puedan
-            acceder a sus productos y servicios en condiciones de igualdad y
-            dignidad. La accesibilidad web es una dimensión concreta y medible
-            de esa responsabilidad.
-          </P>
-          <P>
-            Reconocemos que el camino hacia una accesibilidad plena es continuo
-            y que siempre habrá espacio para mejorar. Agradecemos profundamente
-            la paciencia, la comprensión y, sobre todo, la retroalimentación de
-            todos los usuarios que encuentren barreras en nuestro sitio. Cada
-            reporte que recibimos es una oportunidad de mejorar la experiencia
-            de todos.
-          </P>
-          <P>
-            Esta Política de Accesibilidad del Sitio Web es un documento vivo
-            que evoluciona con la empresa, con la tecnología y con los
-            estándares de la industria. Su existencia y publicación reflejan el
-            compromiso genuino de Confecciones Liss con la inclusión digital, la
-            diversidad y la igualdad de oportunidades.
-          </P>
-          <P>
-            <em>
-              Confecciones Liss — Porque vestir bien es un derecho de todos.
-            </em>
-          </P>
-        </Section>
+        <LegalFootnote>
+          <div style={{ fontWeight: "700", marginBottom: "0.5rem" }}>
+            CONFECCIONES LISS — CONTACTO OFICIAL
+          </div>
+          <div style={{ marginBottom: "0.5rem" }}>
+            Toda gestión exclusivamente a través de:{" "}
+            <Link href="/links" className="text-blue-600 hover:underline">
+              https://www.confeccionesliss.com/links
+            </Link>
+          </div>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "auto 1fr",
+              gap: "0.25rem 1rem",
+              marginBottom: "0.5rem",
+            }}
+          >
+            <span style={{ fontWeight: "600" }}>
+              WhatsApp oficial de atención:
+            </span>
+            <span style={{ color: "#16a34a", fontWeight: "600" }}>
+              +503 7331-7181
+            </span>
+
+            <span style={{ fontWeight: "600" }}>
+              Encargado de Comunicaciones:
+            </span>
+            <span>Carlos José Molina Villacorta</span>
+
+            <span style={{ fontWeight: "600" }}>Contacto del Encargado:</span>
+            <span>+503 7329-4499 (mediación y conflictos)</span>
+
+            <span style={{ fontWeight: "600" }}>
+              Política de Accesibilidad:
+            </span>
+            <Link
+              href="/legal/accesibilidad"
+              className="text-blue-600 hover:underline"
+            >
+              https://www.confeccionesliss.com/legal/accesibilidad
+            </Link>
+
+            <span style={{ fontWeight: "600" }}>Política de Privacidad:</span>
+            <Link
+              href="/legal/privacidad"
+              className="text-blue-600 hover:underline"
+            >
+              https://www.confeccionesliss.com/legal/privacidad
+            </Link>
+
+            <span style={{ fontWeight: "600" }}>Términos y Condiciones:</span>
+            <Link
+              href="/legal/terminos"
+              className="text-blue-600 hover:underline"
+            >
+              https://www.confeccionesliss.com/legal/terminos
+            </Link>
+
+            <span style={{ fontWeight: "600" }}>Política de Deberes:</span>
+            <Link
+              href="/legal/deberes"
+              className="text-blue-600 hover:underline"
+            >
+              https://www.confeccionesliss.com/legal/deberes
+            </Link>
+
+            <span style={{ fontWeight: "600" }}>Política de Derechos:</span>
+            <Link
+              href="/legal/derechos"
+              className="text-blue-600 hover:underline"
+            >
+              https://www.confeccionesliss.com/legal/derechos
+            </Link>
+
+            <span style={{ fontWeight: "600" }}>Política de IA:</span>
+            <Link href="/legal/ia" className="text-blue-600 hover:underline">
+              https://www.confeccionesliss.com/legal/ia
+            </Link>
+
+            <span style={{ fontWeight: "600" }}>Política de Cookies:</span>
+            <Link
+              href="/legal/cookies"
+              className="text-blue-600 hover:underline"
+            >
+              https://www.confeccionesliss.com/legal/cookies
+            </Link>
+
+            <span style={{ fontWeight: "600" }}>
+              Política de Comunicaciones:
+            </span>
+            <Link
+              href="/legal/comunicaciones"
+              className="text-blue-600 hover:underline"
+            >
+              https://www.confeccionesliss.com/legal/comunicaciones
+            </Link>
+
+            <span style={{ fontWeight: "600" }}>Política UGC:</span>
+            <Link href="/legal/ugc" className="text-blue-600 hover:underline">
+              https://www.confeccionesliss.com/legal/ugc
+            </Link>
+
+            <span style={{ fontWeight: "600" }}>
+              Política Logos Institucionales:
+            </span>
+            <Link
+              href="/legal/terceros"
+              className="text-blue-600 hover:underline"
+            >
+              https://www.confeccionesliss.com/legal/terceros
+            </Link>
+          </div>
+          <div
+            style={{
+              fontSize: "0.8rem",
+              marginTop: "0.5rem",
+              lineHeight: "1.4",
+            }}
+          >
+            <strong>Dirección:</strong> Barrio La Merced, 5ª Calle Poniente y 1ª
+            Avenida Sur, Casa #402, San Miguel, El Salvador.
+            <br />
+            <strong>Horario:</strong> Lunes a Sábado, 8:00 AM – 5:00 PM
+            <br />
+            <strong>Versión 2.0 — Vigente desde el 25 de junio de 2026</strong>
+          </div>
+        </LegalFootnote>
       </LegalArticleReader>
     </>
   );

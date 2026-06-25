@@ -13,15 +13,19 @@ import {
   LegalFootnote,
 } from "@/components/legal/LegalContent";
 
+export const dynamic = "force-static";
+
 export const metadata: Metadata = {
   title: "Política de Confección de Prendas y Uniformes",
   description:
-    "Política de Confección de Confecciones Liss. Conoce nuestras modalidades (por talla y a la medida), proceso de toma de medidas, garantía de ajuste, anticipos y plazos de entrega.",
+    "Política de confección de Confecciones Liss: modalidades por talla y medida, toma de medidas, garantías, anticipos de pago y plazos de entrega vigentes.",
+  keywords:
+    "política confección, uniformes a la medida, toma de medidas, scrubs El Salvador, garantía ajuste, Confecciones Liss San Miguel",
   alternates: { canonical: `${siteConfig.url}/legal/confeccion` },
   openGraph: {
-    title: "Política de Confección | Confecciones Liss",
+    title: "Política de Confección de Prendas y Uniformes | Confecciones Liss",
     description:
-      "Política de Confección de Confecciones Liss. Conoce nuestras modalidades (por talla y a la medida), proceso de toma de medidas, garantía de ajuste, anticipos y plazos de entrega.",
+      "Política de confección de Confecciones Liss: modalidades por talla y medida, toma de medidas, garantías, anticipos de pago y plazos de entrega vigentes.",
     url: `${siteConfig.url}/legal/confeccion`,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -29,9 +33,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Política de Confección | Confecciones Liss",
+    title: "Política de Confección de Prendas y Uniformes | Confecciones Liss",
     description:
-      "Política de Confección de Confecciones Liss. Conoce nuestras modalidades (por talla y a la medida), proceso de toma de medidas, garantía de ajuste, anticipos y plazos de entrega.",
+      "Política de confección de Confecciones Liss: modalidades por talla y medida, toma de medidas, garantías, anticipos de pago y plazos de entrega vigentes.",
     creator: siteConfig.twitterHandle,
   },
   robots: {
@@ -44,6 +48,9 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  other: {
+    publisher: siteConfig.name,
   },
 };
 
@@ -59,7 +66,7 @@ export default function PoliticaConfeccionPage() {
           url: PAGE_URL,
           name: "Política de Confección | Confecciones Liss",
           description:
-            "Política de Confección de Confecciones Liss. Conoce nuestras modalidades (por talla y a la medida), proceso de toma de medidas, garantía de ajuste, anticipos y plazos de entrega.",
+            "Política de confección de Confecciones Liss: modalidades por talla y medida, toma de medidas, garantías, anticipos de pago y plazos de entrega vigentes.",
         }),
         "@type": "Article",
         author: { "@id": `${siteConfig.url}/#business` },
@@ -91,6 +98,7 @@ export default function PoliticaConfeccionPage() {
 
       <LegalArticleReader
         title="Política de Confección"
+        category="Estándares de calidad, toma de medidas, plazos de confección y garantías aplicables a nuestras prendas."
         date="24 Jun, 2026"
         readingTime={17}
       >

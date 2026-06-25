@@ -1,0 +1,802 @@
+═══════════════════════════════════════════════════════════════════════════════
+              POLÍTICA DE ACCESIBILIDAD DEL SITIO WEB
+              DECLARACIÓN OFICIAL DE ACCESIBILIDAD DIGITAL
+              CONFECCIONES LISS
+              Versión 2.0 — 25 de junio de 2026
+              Sujeta a actualización sin previo aviso
+
+═══════════════════════════════════════════════════════════════════════════════
+
+───────────────────────────────────────────────────────────────────────────────
+I — INTRODUCCIÓN, COMPROMISO Y ÁMBITO DE APLICACIÓN
+───────────────────────────────────────────────────────────────────────────────
+
+Confecciones Liss (en adelante "el Taller"), taller de confección dedicado a
+la fabricación y comercialización de uniformes, dotaciones y prendas
+personalizadas con sede en Barrio La Merced, San Miguel, El Salvador,
+entiende la accesibilidad web como una dimensión fundamental de su calidad
+de servicio, su ética empresarial y su respeto por la diversidad humana.
+El presente documento constituye la Declaración Oficial de Accesibilidad del
+Taller, conforme a los estándares internacionales aplicables y en armonía con
+el marco jurídico comercial del Taller establecido en la República de El Salvador.
+
+El Taller cree firmemente que todas las personas, independientemente de sus
+capacidades físicas, sensoriales, cognitivas o tecnológicas, tienen el mismo
+derecho a acceder a la información, los productos y los servicios que ofrece.
+La accesibilidad no es un favor: es una obligación moral, técnica y de calidad
+que el Taller asume de manera consciente, progresiva y documentada.
+
+El presente sitio web, accesible a través del dominio oficial:
+
+    https://www.confeccionesliss.com/
+
+está diseñado con el objetivo de alcanzar y mantener el nivel de conformidad
+WCAG 2.1 nivel AA (Web Content Accessibility Guidelines, versión 2.1, nivel
+de adecuación AA), definido por el World Wide Web Consortium (W3C) como
+estándar de referencia global en materia de accesibilidad web.
+
+ÁMBITO DE APLICACIÓN. La presente Política se aplica a:
+
+    — El sitio web principal y todas sus subpáginas.
+    — El catálogo de productos publicado en la Plataforma.
+    — Los módulos de cotización y contacto.
+    — El blog institucional y contenidos editoriales.
+    — Todos los contenidos digitales publicados bajo el dominio oficial.
+
+EXCLUSIONES EXPRESAS. Quedan expresamente excluidas del ámbito de esta
+Política, sin que ello genere responsabilidad del Taller:
+
+    — Los perfiles del Taller en redes sociales de terceros (Facebook,
+      Instagram, TikTok y otras), los cuales se rigen por las políticas
+      de accesibilidad de sus respectivos proveedores.
+    — Las aplicaciones de terceros integradas (plataformas de pago,
+      sistemas de envío, widgets externos), cuya accesibilidad es
+      responsabilidad de sus propios proveedores.
+    — El contenido archivado de fechas anteriores a la implementación de
+      esta Política, el cual se revisa y actualiza progresivamente.
+    — Las comunicaciones y documentos personalizados generados para cada
+      cliente (cotizaciones, facturas, propuestas comerciales), disponibles
+      en formato alternativo a solicitud del interesado.
+    — Los canales de comunicación externos (WhatsApp, correo electrónico),
+      cuya accesibilidad depende de las plataformas que los soportan.
+
+RESPONSABILIDAD DEL USUARIO. El acceso al contenido del sitio web en
+condiciones de accesibilidad óptimas requiere que el Usuario disponga de
+un dispositivo, navegador y tecnología de apoyo compatibles con los estándares
+declarados en la Sección VI de este documento. El Taller no puede garantizar
+la accesibilidad total del sitio cuando el problema de acceso sea atribuible
+a configuraciones del dispositivo del Usuario, versiones obsoletas de
+navegadores o tecnologías de apoyo incompatibles con las especificaciones
+técnicas declaradas. En tales casos, el Taller pone a disposición los canales
+alternativos establecidos en la Sección X.
+
+───────────────────────────────────────────────────────────────────────────────
+II — PÚBLICO OBJETIVO Y NATURALEZA DEL CONTENIDO
+───────────────────────────────────────────────────────────────────────────────
+
+El uso activo del sitio web — entendido como la creación de cuentas, la
+realización de pedidos, la solicitud de cotizaciones y la contratación de
+servicios — está reservado para personas mayores de 18 años, en pleno
+ejercicio de su capacidad jurídica, conforme a lo establecido en la Política
+de Términos y Condiciones del Taller, disponible en:
+
+    https://www.confeccionesliss.com/legal/terminos
+
+Sin embargo, el contenido informativo del sitio — incluyendo el catálogo de
+productos, los artículos del blog, las guías de tallas, el portafolio de
+diseños y los materiales sobre confección y moda — es de naturaleza apta para
+todo público. El sitio no contiene imágenes sugerentes ni de contenido sexual,
+lenguaje violento o discriminatorio, ni material diseñado para manipular a
+usuarios vulnerables.
+
+CONTENIDO GENERADO CON INTELIGENCIA ARTIFICIAL. El sitio incluye contenido
+visual procesado con herramientas de inteligencia artificial, incluyendo
+imágenes de prendas editadas digitalmente y el personaje sintético masculino
+denominado Liam Alejandro, utilizado como modelo comercial. La naturaleza de
+dicho contenido está íntegramente declarada en la Política de Uso de
+Inteligencia Artificial del Taller, disponible en:
+
+    https://www.confeccionesliss.com/legal/ia
+
+Ningún aspecto del contenido generado con IA representa una barrera de
+accesibilidad intencional. Todo contenido visual publicado por el Taller
+cuenta con texto alternativo descriptivo, conforme a los estándares de
+accesibilidad aplicables.
+
+───────────────────────────────────────────────────────────────────────────────
+III — MARCO NORMATIVO Y ESTÁNDARES TÉCNICOS APLICABLES
+───────────────────────────────────────────────────────────────────────────────
+
+La presente Política se enmarca en los siguientes estándares e instrumentos:
+
+WCAG 2.1 — W3C (2018): Pautas de Accesibilidad para el Contenido Web,
+versión 2.1. Estándar técnico internacional de referencia. Meta declarada:
+nivel AA de conformidad.
+
+WCAG 2.2 — W3C (2023): Actualización de las pautas de accesibilidad con
+nuevos criterios de éxito. El Taller evalúa progresivamente su implementación.
+
+WAI-ARIA 1.2 — W3C: Especificación de Aplicaciones de Internet Enriquecidas
+Accesibles, utilizada para complementar la semántica HTML en componentes
+dinámicos de interfaz.
+
+Convención sobre los Derechos de las Personas con Discapacidad — ONU (2006):
+El Taller adopta voluntariamente sus principios de igualdad de acceso a la
+información y las comunicaciones como estándar ético aplicable a su operación.
+
+JURISDICCIÓN Y MARCO LEGAL APLICABLE. La presente Política se rige
+exclusivamente por la legislación de la República de El Salvador. El Taller
+opera conforme a las leyes salvadoreñas vigentes. Ninguna normativa
+extranjera de accesibilidad web es vinculante para el Taller ni puede ser
+invocada por el Usuario como fundamento de reclamación. El Usuario que acceda
+al sitio desde fuera del territorio salvadoreño lo hace bajo su propia
+responsabilidad y no puede exigir el cumplimiento de legislaciones de otras
+jurisdicciones.
+
+La adopción de los estándares técnicos internacionales (WCAG) es voluntaria
+y refleja el compromiso genuino del Taller con la calidad y la inclusión
+digital, no la sujeción a normativas de países distintos a El Salvador.
+
+───────────────────────────────────────────────────────────────────────────────
+IV — NIVEL DE CONFORMIDAD DECLARADO
+───────────────────────────────────────────────────────────────────────────────
+
+Confecciones Liss declara su compromiso de alcanzar el nivel de conformidad
+WCAG 2.1 nivel AA en su sitio web oficial. Este nivel implica el cumplimiento
+de todos los criterios de éxito de nivel A (básicos) y nivel AA (intermedios),
+estructurados en torno a los cuatro principios fundamentales:
+
+PERCEPTIBLE: La información y los componentes de la interfaz se presentan
+de manera que los usuarios puedan percibirlos con independencia de sus
+capacidades sensoriales.
+
+OPERABLE: Los componentes de la interfaz y la navegación son operables sin
+requerir necesariamente el uso del mouse o dispositivo señalador.
+
+COMPRENSIBLE: La información y el funcionamiento de la interfaz son
+comprensibles para el mayor rango posible de usuarios.
+
+ROBUSTO: El contenido es suficientemente robusto para ser interpretado por
+una amplia variedad de agentes de usuario, incluidas las tecnologías de apoyo.
+
+El sitio se encuentra en proceso activo de mejora continua hacia la
+conformidad total con WCAG 2.1 AA. Las brechas actualmente identificadas
+se documentan en la Sección IX. El Taller no declara conformidad plena con
+el nivel AAA de WCAG 2.1, dado que varios de sus criterios son de aplicación
+especializada y pueden entrar en conflicto con requisitos de diseño,
+funcionalidad o recursos técnicos. No obstante, se implementan criterios AAA
+cuando son razonablemente alcanzables sin comprometer otros aspectos del sitio.
+
+LIMITACIÓN DE RESPONSABILIDAD DECLARATIVA. La presente declaración de
+conformidad refleja el estado actual conocido del sitio y el compromiso del
+Taller con la mejora continua. No constituye garantía absoluta de accesibilidad
+universal en todos los dispositivos, navegadores y tecnologías de apoyo
+existentes. El Usuario que encuentre una barrera de accesibilidad no
+documentada en la Sección IX tiene el deber de reportarla conforme al
+procedimiento establecido en la Sección XI antes de formular cualquier
+reclamación.
+
+───────────────────────────────────────────────────────────────────────────────
+V — MEDIDAS DE ACCESIBILIDAD IMPLEMENTADAS
+───────────────────────────────────────────────────────────────────────────────
+
+5.1  ESTRUCTURA SEMÁNTICA DEL HTML. El sitio está construido con HTML5
+     semántico. Se utilizan correctamente elementos como <header>, <main>,
+     <nav>, <footer>, <article>, <section>, <aside> y <figure> para
+     estructurar el contenido de manera significativa, facilitando la
+     navegación eficiente mediante lectores de pantalla y la correcta
+     indexación del contenido.
+
+5.2  JERARQUÍA DE ENCABEZADOS. Cada página contiene un único encabezado
+     de nivel 1 (<h1>) que describe el propósito principal. Los encabezados
+     de niveles inferiores estructuran el contenido en secciones lógicas
+     sin saltarse niveles de jerarquía.
+
+5.3  TEXTO ALTERNATIVO PARA IMÁGENES. Todas las imágenes con contenido
+     informativo incluyen atributo alt descriptivo. Las imágenes decorativas
+     incluyen alt="" vacío. Los iconos SVG interactivos o informativos
+     incluyen etiquetas <title> o atributos aria-label apropiados.
+
+     IMÁGENES EDITADAS CON IA. Dado que el Taller utiliza herramientas de
+     inteligencia artificial en la edición de imágenes de sus productos y
+     en la generación del Modelo IA Liam Alejandro, el texto alternativo
+     de dichas imágenes describe el contenido visual real de la prenda
+     presentada, sin hacer referencia a la naturaleza real o sintética
+     del modelo. La descripción de accesibilidad se enfoca en el producto,
+     conforme al propósito comercial de la imagen.
+
+5.4  CONTRASTE DE COLOR. La paleta del sitio cumple los requisitos mínimos
+     de contraste WCAG 2.1 AA: relación mínima de 4.5:1 para texto normal
+     y 3:1 para texto grande. Los elementos interactivos cuentan con
+     indicadores visuales con contraste suficiente en todos sus estados.
+
+5.5  NAVEGACIÓN POR TECLADO. Todos los elementos interactivos son operables
+     mediante teclado. Se garantiza orden de tabulación lógico y predecible.
+     Se implementan atajos de teclado para saltar al contenido principal
+     (skip-to-content) y a la navegación principal.
+
+5.6  INDICADORES DE FOCO VISIBLES. El indicador de foco del teclado es
+     visible en todos los elementos interactivos, con contraste suficiente
+     y tamaño adecuado. No se suprime el indicador de foco nativo sin
+     reemplazarlo por un equivalente al menos tan visible.
+
+5.7  ROLES Y ATRIBUTOS ARIA. Se utilizan atributos ARIA de manera estratégica
+     y conservadora para complementar la semántica HTML. Se implementan roles
+     (navigation, dialog, alert, status) y propiedades (aria-label,
+     aria-labelledby, aria-describedby, aria-expanded, aria-controls,
+     aria-live, aria-hidden) para enriquecer la experiencia de usuarios
+     de tecnologías de asistencia.
+
+5.8  FORMULARIOS ACCESIBLES. Todos los formularios del sitio — cotización,
+     contacto, suscripción — cuentan con: etiquetas visibles o ARIA
+     asociadas programáticamente; instrucciones claras sobre el formato
+     esperado; mensajes de error descriptivos independientes del color;
+     agrupación lógica de campos mediante <fieldset> y <legend>; y atributos
+     de autocompletado (autocomplete) donde corresponda.
+
+5.9  DISEÑO RESPONSIVO Y ADAPTABLE. El sitio adopta un enfoque mobile-first
+     que se adapta a pantallas de 320px hasta monitores de alta resolución.
+     El contenido no requiere desplazamiento horizontal en 320px de ancho
+     vertical. El zoom del navegador puede escalarse hasta el 200% sin
+     pérdida de contenido ni funcionalidad.
+
+5.10 IDIOMA DE LA PÁGINA. El atributo lang="es" está correctamente declarado
+     en el elemento raíz <html> de todas las páginas, permitiendo a los
+     lectores de pantalla aplicar las reglas lingüísticas correctas.
+
+5.11 CONTENIDO SIN PARPADEO NI DESTELLO PELIGROSO. El sitio no contiene
+     animaciones, videos ni elementos que parpadeen más de tres veces por
+     segundo, conforme al criterio WCAG 2.1 2.3.1. Las animaciones
+     decorativas son de baja frecuencia y diseñadas para no representar
+     riesgo para usuarios con fotosensibilidad.
+
+5.12 PREFERENCIA DE MOVIMIENTO REDUCIDO. El sitio respeta la preferencia
+     del sistema operativo mediante la media query prefers-reduced-motion.
+     Cuando el usuario ha indicado preferencia de movimiento reducido,
+     las animaciones y efectos cinéticos se reducen o eliminan automáticamente.
+
+5.13 PREFERENCIA DE ESQUEMA DE COLOR. El sitio detecta y respeta la
+     preferencia de esquema de color del sistema operativo (modo claro /
+     modo oscuro) a través de la media query prefers-color-scheme,
+     garantizando contraste y legibilidad en todos los modos disponibles.
+
+5.14 DESCRIPCIONES DE VÍNCULOS Y BOTONES. Todos los enlaces y botones tienen
+     propósito claro y descriptivo determinable desde el texto o el contexto
+     inmediato. Se evitan textos genéricos sin contexto. Los iconos como
+     únicos elementos visuales de un botón incluyen nombre accesible
+     descriptivo mediante aria-label o texto visualmente oculto.
+
+5.15 TABLAS DE DATOS ACCESIBLES. Las tablas de datos (comparativos de
+     productos, guías de tallas, tarifas de envío) incluyen encabezados
+     de fila y columna correctamente marcados con <th> y atributo scope.
+     Las tablas complejas incluyen <caption> descriptivo.
+
+5.16 CONTENIDO MULTIMEDIA. Los videos publicados incluyen subtítulos
+     sincronizados para usuarios con discapacidad auditiva. Las presentaciones
+     de solo audio incluyen transcripciones textuales. El contenido
+     puramente decorativo de video o audio no transmite información
+     indispensable no disponible en otra forma.
+
+5.17 GESTIÓN DE ERRORES Y RECUPERACIÓN. Los procesos críticos del sitio
+     — envío de formularios, cotización, creación de cuenta — incluyen
+     mecanismos de confirmación, revisión y corrección antes de que las
+     acciones sean definitivas. Los errores se notifican de forma clara,
+     descriptiva y accesible, sin depender del color como único indicador.
+
+5.18 TIEMPO SUFICIENTE PARA COMPLETAR TAREAS. El sitio no impone límites
+     de tiempo estrictos para completar formularios o procesos. Si en el
+     futuro se implementan sesiones con tiempo límite, se notificará al
+     usuario con antelación suficiente y se ofrecerá la posibilidad de
+     extender el tiempo o guardar el progreso.
+
+5.19 NAVEGACIÓN CONSISTENTE. Los componentes de navegación — menú principal,
+     menú de pie de página, migas de pan (breadcrumbs), botones de acción —
+     se presentan en el mismo orden y con la misma apariencia en todas las
+     páginas. Este patrón consistente reduce la carga cognitiva y permite
+     construir un modelo mental predecible del sitio.
+
+5.20 ACCESIBILIDAD DEL CONTENIDO LEGAL. Todas las políticas del Taller
+     publicadas bajo el directorio /legal/ del sitio están redactadas en
+     formato de texto plano estructurado, compatible con lectores de pantalla
+     y herramientas de apoyo, y accesibles sin necesidad de plugins ni
+     software especializado. El directorio completo de políticas está
+     disponible en: https://www.confeccionesliss.com/legal
+
+5.21 ACCESIBILIDAD DEL DIRECTORIO DE CANALES. El hub centralizado de canales
+     oficiales del Taller, disponible en https://www.confeccionesliss.com/links,
+     está diseñado conforme a los mismos estándares de accesibilidad del
+     sitio principal, garantizando que el Usuario pueda acceder y verificar
+     los canales oficiales independientemente de la tecnología de apoyo
+     que utilice.
+
+───────────────────────────────────────────────────────────────────────────────
+VI — TECNOLOGÍAS DE APOYO COMPATIBLES
+───────────────────────────────────────────────────────────────────────────────
+
+El sitio web del Taller ha sido probado y optimizado para funcionar con las
+siguientes tecnologías de apoyo y configuraciones:
+
+LECTORES DE PANTALLA: NVDA con Firefox y Chrome en Windows; JAWS con Chrome
+en Windows; VoiceOver con Safari en macOS e iOS; TalkBack en Android con
+Chrome.
+
+NAVEGACIÓN POR TECLADO: Compatible con navegación completa mediante teclado
+estándar (Tab, Shift+Tab, Enter, Espacio, flechas de dirección) en todos los
+navegadores principales modernos.
+
+ZOOM DEL NAVEGADOR: Soporta zoom hasta el 400% sin pérdida de contenido
+ni superposición de elementos en orientación vertical (pantalla de 1280px).
+
+CONTRASTE ALTO: Compatible con el modo de alto contraste de Windows y con
+extensiones de navegador que ajustan el contraste de color.
+
+TAMAÑO DE TEXTO DEL SISTEMA: El sitio respeta las configuraciones de tamaño
+de fuente del sistema operativo y del navegador, utilizando unidades relativas
+(rem, em, %) en lugar de unidades absolutas para los tamaños de fuente.
+
+DISPOSITIVOS APUNTADORES ALTERNATIVOS: El sitio es operable con ratones
+especializados, joysticks, trackpads y otros dispositivos señaladores
+alternativos que emulan la funcionalidad del mouse.
+
+CONTROL POR VOZ: El sitio es compatible con Dragon NaturallySpeaking y con
+las funcionalidades de control por voz integradas en sistemas operativos
+modernos (Voice Control en macOS/iOS, Voice Access en Android).
+
+LIMITACIÓN DE COMPATIBILIDAD. El Taller reconoce que la compatibilidad
+perfecta con todas las versiones y configuraciones posibles de tecnologías
+de apoyo está fuera de su alcance. La lista anterior refleja las configuraciones
+probadas a la fecha de publicación de esta versión de la Política. El Taller
+se compromete a atender con prioridad los reportes de incompatibilidad
+recibidos a través de los canales establecidos en la Sección XI.
+
+El Usuario que utilice tecnologías de apoyo no incluidas en la lista anterior
+tiene el deber de verificar la compatibilidad de su tecnología con el sitio
+antes de iniciar cualquier gestión comercial. El Taller no asumirá
+responsabilidad por problemas de acceso atribuibles al uso de tecnologías
+de apoyo no probadas ni declaradas en la presente sección.
+
+───────────────────────────────────────────────────────────────────────────────
+VII — PROCESO DE EVALUACIÓN Y AUDITORÍA
+───────────────────────────────────────────────────────────────────────────────
+
+El Taller adopta un enfoque estructurado para la evaluación continua de la
+accesibilidad de su sitio web:
+
+AUTOEVALUACIÓN CONTINUA: El equipo técnico realiza revisiones de accesibilidad
+como parte del proceso de desarrollo de nuevas funcionalidades, utilizando
+herramientas automatizadas como axe-core, Lighthouse, WAVE y Accessibility
+Insights.
+
+PRUEBAS MANUALES PERIÓDICAS: Adicionalmente a las herramientas automatizadas,
+se realizan pruebas manuales con tecnologías de apoyo reales (lectores de
+pantalla, navegación por teclado) para identificar problemas no detectados
+por herramientas automatizadas.
+
+AUDITORÍAS FORMALES: Se planifican auditorías de accesibilidad formales con
+una periodicidad mínima anual, o cuando se realicen cambios significativos
+en la arquitectura o diseño del sitio.
+
+MONITOREO DE RETROALIMENTACIÓN: Se revisan periódicamente los reportes de
+accesibilidad recibidos y se priorizan las correcciones según su impacto.
+
+Los resultados de las evaluaciones son documentados internamente y utilizados
+para planificar mejoras en las iteraciones sucesivas del sitio.
+
+───────────────────────────────────────────────────────────────────────────────
+VIII — RESPONSABILIDAD ORGANIZACIONAL Y DEL USUARIO
+───────────────────────────────────────────────────────────────────────────────
+
+RESPONSABILIDADES INTERNAS DEL TALLER:
+
+Encargado de Comunicaciones (Carlos José Molina Villacorta): Responsable de
+la recepción, registro y escalamiento de reportes de accesibilidad, y de
+garantizar que existan canales alternativos de atención para usuarios que
+no puedan utilizar el sitio web.
+
+Equipo de Desarrollo y Tecnología: Responsable de implementar las medidas
+técnicas de accesibilidad, realizar pruebas automatizadas y manuales, y
+mantener el código conforme a los estándares WCAG 2.1 AA.
+
+Equipo de Diseño: Responsable de garantizar que los diseños visuales cumplan
+los requisitos de contraste, tamaño de fuente, espaciado y jerarquía visual.
+
+Equipo de Contenido: Responsable de crear y publicar contenido accesible:
+textos claros, imágenes con texto alternativo adecuado, videos con subtítulos
+y documentos en formatos accesibles.
+
+RESPONSABILIDADES DEL USUARIO. La accesibilidad óptima del sitio depende
+también de que el Usuario cumpla los siguientes deberes, cuyo incumplimiento
+limita la capacidad del Taller de garantizar la experiencia de acceso:
+
+a) Utilizar navegadores y tecnologías de apoyo en versiones actualizadas
+   y compatibles con los estándares declarados en la Sección VI.
+b) Mantener configurado correctamente su dispositivo, sistema operativo
+   y herramientas de apoyo conforme a sus propias necesidades de accesibilidad.
+c) Reportar las barreras de accesibilidad que encuentre, conforme al
+   procedimiento establecido en la Sección XI, antes de formular cualquier
+   reclamación derivada de problemas de acceso.
+d) Consultar los canales alternativos de acceso establecidos en la Sección X
+   cuando no pueda completar una gestión a través del sitio web.
+e) Verificar que los problemas de acceso que experimenta no son atribuibles
+   a su dispositivo, configuración o tecnología de apoyo, antes de atribuirlos
+   al sitio web del Taller.
+
+El Taller no asumirá responsabilidad alguna derivada de problemas de acceso
+atribuibles al incumplimiento de los deberes del Usuario establecidos en los
+literales anteriores, ni de problemas originados en el dispositivo, la
+conectividad, el sistema operativo o la tecnología de apoyo del Usuario.
+
+Para la totalidad de los deberes del Usuario, consúltese:
+    https://www.confeccionesliss.com/legal/deberes
+
+Para la totalidad de los derechos del Usuario, consúltese:
+    https://www.confeccionesliss.com/legal/derecho
+
+───────────────────────────────────────────────────────────────────────────────
+IX — LIMITACIONES TÉCNICAS CONOCIDAS
+───────────────────────────────────────────────────────────────────────────────
+
+El Taller opera bajo el principio de transparencia. A continuación se
+documentan las limitaciones de accesibilidad actualmente identificadas,
+junto con el estado de las acciones correctivas. Esta sección es de
+conocimiento expreso del Usuario desde el momento en que accede al sitio,
+y no constituye fundamento autónomo de reclamación.
+
+CONTENIDO GENERADO POR USUARIOS (reseñas y comentarios): Los comentarios y
+reseñas publicados por clientes pueden no incluir siempre texto alternativo
+en imágenes adjuntas. El Taller está desarrollando guías de moderación y
+herramientas de apoyo para facilitar la creación de contenido accesible.
+Estado: en proceso de mejora.
+
+DOCUMENTOS PDF: Algunos documentos en formato PDF (fichas técnicas, catálogos
+descargables) pueden no cumplir plenamente los requisitos de accesibilidad
+para documentos PDF (PDF/UA). Estado: en proceso de conversión y corrección
+progresiva. Disponible en formato alternativo a solicitud.
+
+CONTENIDO DE TERCEROS INTEGRADO: El sitio puede integrar contenido de terceros
+(mapas, widgets de redes sociales, herramientas de chat) cuya accesibilidad
+depende de los proveedores externos y está fuera del control directo del
+Taller. El Taller evalúa la accesibilidad de estos proveedores antes de
+integrar sus herramientas. Estado: monitoreo continuo.
+
+IMÁGENES EDITADAS CON IA: Las imágenes de prendas procesadas con inteligencia
+artificial y las imágenes del Modelo IA Liam Alejandro cuentan con texto
+alternativo descriptivo del producto. No obstante, el proceso de generación
+de texto alternativo para contenido generado con IA es un área en mejora
+continua. Estado: mejora progresiva. La naturaleza del contenido IA está
+declarada en: https://www.confeccionesliss.com/legal/ia
+
+COMPONENTES DE INTERFAZ COMPLEJOS: Algunos componentes avanzados (configurador
+de productos personalizados) pueden presentar experiencias subóptimas con
+determinadas configuraciones de tecnologías de apoyo. Cumplen criterios
+básicos de accesibilidad pero la experiencia puede no ser equivalente.
+Estado: mejoras específicas en planificación.
+
+VIDEOS HEREDADOS: Algunos videos publicados antes de la implementación de
+esta Política pueden no contar con subtítulos o transcripciones completas.
+Estado: revisión y actualización progresiva.
+
+CONTENIDO EN REDES SOCIALES: El contenido publicado en los canales oficiales
+del Taller en redes sociales (Facebook, Instagram, TikTok) sigue las buenas
+prácticas de accesibilidad disponibles en cada plataforma, pero su
+accesibilidad está condicionada a las capacidades técnicas de dichas
+plataformas, sobre las que el Taller no tiene control total.
+
+Si el Usuario identifica una barrera de accesibilidad no documentada en esta
+sección, tiene el deber de reportarla conforme al procedimiento establecido
+en la Sección XI. La formulación de reclamaciones sin haber cumplido
+previamente el deber de reporte establecido en la Sección XI será considerada
+inadmisible.
+
+───────────────────────────────────────────────────────────────────────────────
+X — ALTERNATIVAS DE ACCESO Y ASISTENCIA
+───────────────────────────────────────────────────────────────────────────────
+
+El Taller reconoce que, a pesar de sus esfuerzos, el sitio web puede no ser
+completamente accesible para todos los usuarios en todas las situaciones.
+Por esta razón, garantiza la disponibilidad de los siguientes canales
+alternativos de acceso, disponibles en:
+
+    https://www.confeccionesliss.com/links
+
+ATENCIÓN POR WHATSAPP: Canal de atención por mensajería disponible durante
+el horario oficial del Taller (Lunes a Sábado, 8:00 AM – 5:00 PM). Las
+funciones de accesibilidad integradas en WhatsApp (mensajes de voz, lectura
+de texto, ajuste de tamaño de fuente) pueden complementar la experiencia.
+Número oficial: +503 7331-7181
+
+ATENCIÓN PRESENCIAL: Las instalaciones físicas del Taller están disponibles
+durante el horario de atención publicado, para usuarios que prefieran o
+requieran atención presencial. Dirección: Barrio La Merced, 5ª Calle Poniente
+y 1ª Avenida Sur, Casa #402, San Miguel, El Salvador.
+
+FORMATOS ALTERNATIVOS: A solicitud del Usuario, el Taller puede proporcionar
+información específica (catálogos, fichas técnicas, presupuestos) en formatos
+alternativos más accesibles, como texto plano o audio, dentro de sus
+capacidades operativas. Esta solicitud debe realizarse a través de los canales
+oficiales disponibles en: https://www.confeccionesliss.com/links
+
+LIMITACIÓN DEL DERECHO A CANALES ALTERNATIVOS. La disponibilidad de canales
+alternativos no exime al Usuario de su deber de agotar primero el canal de
+reporte de accesibilidad establecido en la Sección XI cuando el problema sea
+atribuible al sitio web. Los canales alternativos son un complemento de
+acceso, no un mecanismo de reclamación. Las reclamaciones comerciales
+derivadas de pedidos, cotizaciones, devoluciones u otras gestiones se rigen
+exclusivamente por las políticas comerciales correspondientes del Taller,
+disponibles en: https://www.confeccionesliss.com/legal
+
+───────────────────────────────────────────────────────────────────────────────
+XI — CANAL DE REPORTE DE ACCESIBILIDAD: PROCEDIMIENTO Y PLAZOS
+───────────────────────────────────────────────────────────────────────────────
+
+DEBER DE REPORTE PREVIO. El Usuario que experimente una barrera de
+accesibilidad en el sitio web tiene el deber de reportarla al Taller antes
+de formular cualquier reclamación derivada de dicha barrera. El incumplimiento
+de este deber previo de reporte convierte cualquier reclamación posterior en
+inadmisible, toda vez que el Taller no tuvo la oportunidad de conocer y
+corregir el problema.
+
+CÓMO REPORTAR. El Usuario puede reportar barreras de accesibilidad a través
+de los canales oficiales del Taller, disponibles en:
+
+    https://www.confeccionesliss.com/links
+
+Al realizar el reporte, el Usuario deberá proporcionar la siguiente
+información para permitir la evaluación eficiente del problema:
+
+    a) Descripción precisa de la barrera de accesibilidad encontrada.
+    b) URL específica de la página o sección donde se produce el problema.
+    c) Dispositivo, sistema operativo y navegador utilizados.
+    d) Tecnología de apoyo utilizada (si aplica), incluyendo nombre y versión.
+    e) Pasos para reproducir el problema, si es posible.
+
+El Taller no está obligado a procesar reportes que no contengan la información
+mínima necesaria para identificar y evaluar la barrera reportada.
+
+PROCEDIMIENTO DE ATENCIÓN:
+
+    1. Confirmación de recepción del reporte: hasta 2 días hábiles.
+    2. Evaluación del problema y determinación de si constituye una barrera
+       WCAG 2.1 AA: hasta 5 días hábiles.
+    3. Si se confirma la barrera: planificación de corrección e información
+       al Usuario del plazo estimado de resolución.
+    4. Ofrecimiento de solución alternativa inmediata mientras se trabaja
+       en la corrección definitiva, cuando sea posible.
+    5. Notificación al Usuario cuando la corrección haya sido implementada.
+
+LIMITACIÓN DE PLAZOS. Los plazos indicados son estimaciones operativas
+sujetas a la carga de trabajo del equipo técnico y a la complejidad del
+problema reportado. Su incumplimiento no genera derecho a indemnización
+ni a ninguna compensación por parte del Taller.
+
+───────────────────────────────────────────────────────────────────────────────
+XII — COMPROMISO DE MEJORA CONTINUA
+───────────────────────────────────────────────────────────────────────────────
+
+La accesibilidad web es un proceso continuo. El Taller se compromete a:
+
+    — Integrar la accesibilidad como criterio de aceptación en todos los
+      ciclos de desarrollo y actualización del sitio.
+    — Capacitar al equipo de desarrollo, diseño y contenido en buenas
+      prácticas de accesibilidad web, con actualizaciones periódicas.
+    — Mantenerse al día con las actualizaciones de las WCAG (incluyendo
+      WCAG 2.2 y futuras WCAG 3.0) y evaluar su implementación.
+    — Revisar y actualizar esta declaración al menos una vez al año, o
+      cada vez que se realicen cambios significativos en el sitio.
+    — Considerar la retroalimentación de usuarios con discapacidad como
+      fuente privilegiada de información para priorizar mejoras.
+    — Evaluar proactivamente nuevas tecnologías que puedan mejorar la
+      experiencia de accesibilidad de los usuarios.
+
+Este compromiso es genuino y refleja los valores del Taller, sin que
+su declaración genere derechos adicionales para el Usuario más allá de
+los expresamente establecidos en la presente Política y en la Política
+de Derechos del Usuario disponible en:
+    https://www.confeccionesliss.com/legal/derecho
+
+───────────────────────────────────────────────────────────────────────────────
+XIII — EXENCIÓN DE RESPONSABILIDAD
+───────────────────────────────────────────────────────────────────────────────
+
+En la máxima medida permitida por la legislación salvadoreña aplicable,
+Confecciones Liss queda expresamente eximido de toda responsabilidad derivada
+de los siguientes supuestos, sin que esta lista sea limitativa:
+
+a) Barreras de accesibilidad atribuibles al dispositivo, sistema operativo,
+   navegador o tecnología de apoyo del Usuario, y no al sitio web del Taller.
+
+b) Problemas de acceso derivados del uso de navegadores o tecnologías de
+   apoyo en versiones no probadas ni declaradas en la Sección VI.
+
+c) Barreras de accesibilidad conocidas y documentadas en la Sección IX,
+   cuya existencia es de conocimiento expreso del Usuario desde el momento
+   en que accede al sitio.
+
+d) Barreras de accesibilidad en contenido de terceros integrado en el sitio
+   (mapas, widgets de redes sociales, herramientas de chat), cuya
+   accesibilidad es responsabilidad de los proveedores externos.
+
+e) Barreras de accesibilidad en los perfiles del Taller en redes sociales
+   de terceros, que se rigen por las políticas de sus propias plataformas.
+
+f) Problemas de acceso reportados fuera de los canales oficiales o sin
+   haber cumplido el procedimiento de reporte establecido en la Sección XI.
+
+g) Decisiones comerciales adoptadas por el Usuario afectadas por barreras
+   de accesibilidad no previamente reportadas al Taller.
+
+h) Incompatibilidades derivadas de la correcta implementación de los
+   estándares WCAG con configuraciones atípicas o minoritarias de tecnologías
+   de apoyo no probadas por el Taller.
+
+i) Cualquier daño, perjuicio o inconveniente derivado del período de
+   corrección de barreras de accesibilidad reportadas, conforme a los
+   plazos establecidos en la Sección XI.
+
+───────────────────────────────────────────────────────────────────────────────
+XIV — RELACIÓN CON OTRAS POLÍTICAS DEL TALLER
+───────────────────────────────────────────────────────────────────────────────
+
+La presente Política forma parte integral del marco jurídico y comercial de
+Confecciones Liss y debe interpretarse de forma complementaria y consistente
+con las demás políticas del Taller, en particular:
+
+    — Términos y Condiciones de Uso:
+      https://www.confeccionesliss.com/legal/terminos
+
+    — Política de Privacidad:
+      https://www.confeccionesliss.com/legal/privacidad
+
+    — Política de Deberes del Usuario:
+      https://www.confeccionesliss.com/legal/deberes
+
+    — Política de Derechos del Usuario:
+      https://www.confeccionesliss.com/legal/derecho
+
+    — Política de Uso de Inteligencia Artificial:
+      https://www.confeccionesliss.com/legal/ia
+
+    — Política de Cookies:
+      https://www.confeccionesliss.com/legal/cookies
+
+    — Política de Comunicaciones Comerciales:
+      https://www.confeccionesliss.com/legal/comunicaciones
+
+    — Política de Contenido Generado por Usuarios (UGC):
+      https://www.confeccionesliss.com/legal/ugc
+
+    — Política de Logos e Identidad Institucional de Terceros:
+      https://www.confeccionesliss.com/legal/terceros
+
+    — Directorio de canales oficiales:
+      https://www.confeccionesliss.com/links
+
+───────────────────────────────────────────────────────────────────────────────
+XV — EXCLUSIONES Y ALCANCE DE LA DECLARACIÓN
+───────────────────────────────────────────────────────────────────────────────
+
+La presente declaración cubre exclusivamente el sitio web oficial del Taller
+bajo el dominio https://www.confeccionesliss.com/ Las siguientes áreas quedan
+expresamente excluidas:
+
+PERFILES EN REDES SOCIALES: Las páginas del Taller en Instagram, Facebook,
+TikTok y otras plataformas se rigen por las políticas de accesibilidad de sus
+respectivas plataformas. El Taller adopta buenas prácticas de accesibilidad
+en la publicación de contenido (texto alternativo en imágenes, subtítulos en
+videos) en la medida en que cada plataforma lo permite, sin que esto le
+genere obligaciones adicionales de accesibilidad más allá de las declaradas
+en la presente Política.
+
+APLICACIONES DE TERCEROS INTEGRADAS: Herramientas de pago, sistemas de envío
+y widgets externos tienen su propia declaración de accesibilidad y son
+responsabilidad de sus respectivos proveedores.
+
+CONTENIDO ARCHIVADO: El contenido histórico puede no cumplir todos los
+criterios WCAG 2.1 AA, dado que fue creado antes de la implementación de
+esta Política. Se revisa y actualiza progresivamente.
+
+COMUNICACIONES DIRECTAS PERSONALIZADAS: Las cotizaciones, facturas y
+propuestas comerciales generadas para cada cliente pueden no cumplir todos
+los criterios de accesibilidad de documentos. El Cliente puede solicitar
+estos documentos en formato alternativo accesible a través de los canales
+oficiales del Taller.
+
+───────────────────────────────────────────────────────────────────────────────
+XVI — JURISDICCIÓN, RESOLUCIÓN DE DISPUTAS Y LEGISLACIÓN APLICABLE
+───────────────────────────────────────────────────────────────────────────────
+
+Toda controversia derivada de la interpretación, aplicación o incumplimiento
+de la presente Política se resolverá en primera instancia mediante
+comunicación directa de buena fe entre el Usuario y el Taller, a través
+de los canales oficiales disponibles en: https://www.confeccionesliss.com/links
+
+De no alcanzarse un acuerdo, la controversia se someterá a la jurisdicción
+exclusiva de los tribunales competentes de la República de El Salvador,
+aplicando la legislación salvadoreña vigente. El Usuario renuncia
+expresamente a cualquier otro fuero o jurisdicción que pudiera
+corresponderle, con independencia de su lugar de residencia o domicilio.
+
+La legislación salvadoreña es la única aplicable a la presente Política y
+a todas las relaciones jurídicas que de ella deriven. Ninguna normativa
+de accesibilidad extranjera es vinculante para el Taller ni puede ser
+invocada por el Usuario como fundamento de reclamación.
+
+───────────────────────────────────────────────────────────────────────────────
+XVII — VERSIÓN, VIGENCIA Y MODIFICACIONES
+───────────────────────────────────────────────────────────────────────────────
+
+Esta declaración corresponde a la Versión 2.0, publicada el 25 de junio de
+2026. Será revisada y actualizada en las siguientes circunstancias:
+
+    — Anualmente, como mínimo.
+    — Cuando se realicen cambios significativos en la arquitectura,
+      el diseño o las funcionalidades del sitio.
+    — Cuando se completen correcciones de las limitaciones documentadas
+      en la Sección IX.
+    — Cuando entren en vigor nuevos estándares de accesibilidad cuya
+      adopción el Taller decida incorporar.
+
+El Taller se reserva el derecho de modificar la presente Política en
+cualquier momento y sin previo aviso. Las modificaciones entran en vigencia
+desde su publicación. El acceso continuado al sitio con posterioridad a
+cualquier modificación constituye aceptación automática e irrevocable de
+la versión actualizada. El Taller no está obligado a notificar
+individualmente a los Usuarios sobre modificaciones. Es deber exclusivo
+del Usuario verificar periódicamente la versión vigente.
+
+La versión vigente estará siempre disponible en:
+    https://www.confeccionesliss.com/legal/accesibilidad
+
+───────────────────────────────────────────────────────────────────────────────
+XVIII — DIVISIBILIDAD
+───────────────────────────────────────────────────────────────────────────────
+
+Si alguna disposición de la presente Política fuera declarada inválida,
+ilegal o inaplicable por un tribunal competente de la República de El Salvador,
+las restantes disposiciones continuarán en plena vigencia y efecto. La
+disposición declarada inválida será reemplazada, en la medida de lo posible,
+por una disposición válida que refleje la intención original.
+
+───────────────────────────────────────────────────────────────────────────────
+XIX — DISPOSICIÓN FINAL
+───────────────────────────────────────────────────────────────────────────────
+
+Confecciones Liss cree que un negocio verdaderamente responsable es aquel que
+garantiza a todas las personas el acceso a sus productos y servicios en
+condiciones de igualdad y dignidad. La accesibilidad web es una dimensión
+concreta y medible de esa responsabilidad, y el Taller la asume con la misma
+seriedad con la que gestiona cada pedido de confección.
+
+El camino hacia una accesibilidad plena es continuo. El Taller agradece la
+retroalimentación de todos los usuarios que encuentren barreras en el sitio
+y los invita a utilizar el canal de reporte establecido en la Sección XI.
+Cada reporte recibido es una oportunidad de mejora para el beneficio de todos.
+
+La presente Política es un documento vivo que evoluciona con el Taller,
+con la tecnología y con los estándares de la industria. Su existencia y
+publicación reflejan el compromiso genuino de Confecciones Liss con la
+inclusión digital, la diversidad y la igualdad de oportunidades, en el
+marco de la legislación salvadoreña aplicable y con absoluta independencia
+de normativas extranjeras.
+
+───────────────────────────────────────────────────────────────────────────────
+CONFECCIONES LISS — CONTACTO OFICIAL
+Toda gestión exclusivamente a través de: https://www.confeccionesliss.com/links
+WhatsApp oficial de atención:   +503 7331-7181
+Encargado de Comunicaciones:    Carlos José Molina Villacorta
+Contacto del Encargado:         +503 7329-4499 (mediación y conflictos)
+Política de Accesibilidad:      https://www.confeccionesliss.com/legal/accesibilidad
+Política de Privacidad:         https://www.confeccionesliss.com/legal/privacidad
+Términos y Condiciones:         https://www.confeccionesliss.com/legal/terminos
+Política de Deberes:            https://www.confeccionesliss.com/legal/deberes
+Política de Derechos:           https://www.confeccionesliss.com/legal/derecho
+Política de IA:                 https://www.confeccionesliss.com/legal/ia
+Política de Cookies:            https://www.confeccionesliss.com/legal/cookies
+Política de Comunicaciones:     https://www.confeccionesliss.com/legal/comunicaciones
+Política UGC:                   https://www.confeccionesliss.com/legal/ugc
+Política Logos Institucionales: https://www.confeccionesliss.com/legal/terceros
+Dirección: Barrio La Merced, 5ª Calle Poniente y 1ª Avenida Sur, Casa #402,
+           San Miguel, El Salvador.
+Horario:   Lunes a Sábado, 8:00 AM – 5:00 PM
+Versión 2.0 — Vigente desde el 25 de junio de 2026
+───────────────────────────────────────────────────────────────────────────────

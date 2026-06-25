@@ -2,17 +2,21 @@ import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 import LegalHubClient from "@/components/legal/LegalHubClient";
 
+export const dynamic = "force-static";
+
 const PAGE_URL = `${siteConfig.url}/legal`;
 
 export const metadata: Metadata = {
-  title: "Documentos Legales: Privacidad y Términos",
+  title: "Documentos Legales: Políticas y Privacidad",
   description:
-    "Accede a todos los documentos legales de Confecciones Liss: política de privacidad, términos y condiciones de uso, y más documentos regulatorios vigentes.",
+    "Accede a los documentos legales de Confecciones Liss: privacidad, términos, devoluciones, envíos, cookies, referidos, IA y accesibilidad en El Salvador.",
+  keywords:
+    "documentos legales, política de privacidad, términos y condiciones, políticas legales, derechos usuario, devoluciones, envíos El Salvador, cookies, Confecciones Liss",
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Documentos Legales | Confecciones Liss",
+    title: "Documentos Legales: Políticas y Privacidad | Confecciones Liss",
     description:
-      "Accede a todos los documentos legales de Confecciones Liss: política de privacidad, términos y condiciones de uso, y más documentos regulatorios vigentes.",
+      "Accede a los documentos legales de Confecciones Liss: privacidad, términos, devoluciones, envíos, cookies, referidos, IA y accesibilidad en El Salvador.",
     url: PAGE_URL,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -20,9 +24,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Documentos Legales | Confecciones Liss",
+    title: "Documentos Legales: Políticas y Privacidad | Confecciones Liss",
     description:
-      "Accede a todos los documentos legales de Confecciones Liss: política de privacidad, términos y condiciones de uso, y más documentos regulatorios vigentes.",
+      "Accede a los documentos legales de Confecciones Liss: privacidad, términos, devoluciones, envíos, cookies, referidos, IA y accesibilidad en El Salvador.",
     creator: siteConfig.twitterHandle,
   },
   robots: {
@@ -36,6 +40,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  other: {
+    publisher: siteConfig.name,
+  },
 };
 
 export default function LegalHubPage() {
@@ -48,7 +55,7 @@ export default function LegalHubPage() {
         url: PAGE_URL,
         name: "Documentos Legales | Confecciones Liss",
         description:
-          "Accede a todos los documentos legales de Confecciones Liss: política de privacidad, términos y condiciones de uso, y más documentos regulatorios vigentes.",
+          "Accede a los documentos legales de Confecciones Liss: privacidad, términos, devoluciones, envíos, cookies, referidos, IA y accesibilidad en El Salvador.",
         inLanguage: "es-SV",
         isPartOf: { "@id": `${siteConfig.url}/#website` },
       },

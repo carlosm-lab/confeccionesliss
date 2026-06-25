@@ -12,15 +12,19 @@ import {
   LegalFootnote,
 } from "@/components/legal/LegalContent";
 
+export const dynamic = "force-static";
+
 export const metadata: Metadata = {
   title: "Términos y Condiciones del Servicio en Línea",
   description:
-    "Términos y condiciones de uso de Confecciones Liss. Lee sobre los derechos del usuario, responsabilidades y las reglas vigentes del servicio en línea.",
+    "Términos y condiciones de Confecciones Liss: responsabilidades del usuario, propiedad intelectual, resolución de disputas y toda la legislación aplicable.",
+  keywords:
+    "términos y condiciones, condiciones de uso, reglamento usuario, derechos usuario, Confecciones Liss, política legal El Salvador",
   alternates: { canonical: `${siteConfig.url}/legal/terminos` },
   openGraph: {
-    title: "Términos y Condiciones | Confecciones Liss",
+    title: "Términos y Condiciones del Servicio en Línea | Confecciones Liss",
     description:
-      "Términos y condiciones de uso de Confecciones Liss. Lee sobre los derechos del usuario, responsabilidades y las reglas vigentes del servicio en línea.",
+      "Términos y condiciones de Confecciones Liss: responsabilidades del usuario, propiedad intelectual, resolución de disputas y toda la legislación aplicable.",
     url: `${siteConfig.url}/legal/terminos`,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -28,9 +32,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Términos y Condiciones | Confecciones Liss",
+    title: "Términos y Condiciones del Servicio en Línea | Confecciones Liss",
     description:
-      "Términos y condiciones de uso de Confecciones Liss. Lee sobre los derechos del usuario, responsabilidades y las reglas vigentes del servicio en línea.",
+      "Términos y condiciones de Confecciones Liss: responsabilidades del usuario, propiedad intelectual, resolución de disputas y toda la legislación aplicable.",
     creator: siteConfig.twitterHandle,
   },
   robots: {
@@ -43,6 +47,9 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  other: {
+    publisher: siteConfig.name,
   },
 };
 
@@ -58,7 +65,7 @@ export default function TerminosPage() {
           url: PAGE_URL,
           name: "Términos y Condiciones del Servicio en Línea | Confecciones Liss",
           description:
-            "Términos y condiciones de uso de Confecciones Liss. Lee sobre los derechos del usuario, responsabilidades y las reglas vigentes del servicio en línea.",
+            "Términos y condiciones de Confecciones Liss: responsabilidades del usuario, propiedad intelectual, resolución de disputas y toda la legislación aplicable.",
         }),
         "@type": "Article",
         author: { "@id": `${siteConfig.url}/#business` },
@@ -92,6 +99,7 @@ export default function TerminosPage() {
 
       <LegalArticleReader
         title="Términos y Condiciones de Uso"
+        category="Términos y condiciones generales que regulan el acceso, uso y responsabilidades de nuestra plataforma y servicios."
         date="15 Jun, 2025"
         readingTime={16}
       >

@@ -160,12 +160,12 @@ const LEGAL_DOCS: LegalDoc[] = [
   },
   {
     slug: "fotografia",
-    title: "FOTOGRAFÍA & IMAGEN",
+    title: "FOTOGRAFÍA E IMAGEN",
     tagline:
-      "Derechos de uso, protección de datos y publicación de prendas personalizadas y bordados en portafolio.",
+      "Regulación sobre captación, uso y derechos de imagen de clientes y modelos para nuestro portafolio comercial.",
     icon: "photo_camera",
-    available: false,
-    readingTime: 0,
+    available: true,
+    readingTime: 15,
   },
   {
     slug: "disputas",
@@ -173,8 +173,8 @@ const LEGAL_DOCS: LegalDoc[] = [
     tagline:
       "Procedimiento centralizado de mediación, plazos de reclamación y resolución amigable de diferencias.",
     icon: "gavel",
-    available: false,
-    readingTime: 0,
+    available: true,
+    readingTime: 18,
   },
   {
     slug: "garantia",
@@ -225,8 +225,17 @@ export default function LegalHubBackground({
             className={cn(anim, "section-title")}
             style={{ ...delay("100ms"), textAlign: "left" }}
           >
-            Documentos Legales
+            Políticas & Documentación Legal
           </h1>
+          <h2
+            className={cn(
+              anim,
+              "mt-2 text-left text-sm font-semibold tracking-wide text-slate-500 uppercase md:text-base"
+            )}
+            style={delay("150ms")}
+          >
+            Marco Regulatorio, Reglamentos & Conexos de Confecciones Liss
+          </h2>
           <div
             className={cn(
               anim,

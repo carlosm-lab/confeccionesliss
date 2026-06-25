@@ -6,17 +6,19 @@ import LegalHubBackground from "@/components/legal/LegalHubBackground";
 import Link from "next/link";
 import { Section, Hr, P, LegalFootnote } from "@/components/legal/LegalContent";
 
+export const dynamic = "force-static";
+
 export const metadata: Metadata = {
-  title:
-    "Política de Logos e Identidad Institucional de Terceros — Políticas Oficiales",
+  title: "Política de Logos y de Identidad de Terceros",
   description:
-    "Política de descargo de responsabilidad por uso de logotipos, imágenes e identidad visual institucional de terceros en servicios de confección y canales digitales de Confecciones Liss.",
+    "Política de Confecciones Liss sobre el uso de logotipos de terceros: descargo de responsabilidad, propiedad intelectual, marcas registradas y permisos.",
+  keywords:
+    "logotipos de terceros, marcas registradas, descargo de responsabilidad, propiedad intelectual, uniformes personalizados, logos institucionales El Salvador",
   alternates: { canonical: `${siteConfig.url}/legal/terceros` },
   openGraph: {
-    title:
-      "Política de Logos e Identidad Institucional de Terceros | Confecciones Liss",
+    title: "Política de Logos y de Identidad de Terceros | Confecciones Liss",
     description:
-      "Política de descargo de responsabilidad por uso de logotipos, imágenes e identidad visual institucional de terceros en servicios de confección y canales digitales de Confecciones Liss.",
+      "Política de Confecciones Liss sobre el uso de logotipos de terceros: descargo de responsabilidad, propiedad intelectual, marcas registradas y permisos.",
     url: `${siteConfig.url}/legal/terceros`,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -24,10 +26,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "Política de Logos e Identidad Institucional de Terceros | Confecciones Liss",
+    title: "Política de Logos y de Identidad de Terceros | Confecciones Liss",
     description:
-      "Política de descargo de responsabilidad por uso de logotipos, imágenes e identidad visual institucional de terceros en servicios de confección y canales digitales de Confecciones Liss.",
+      "Política de Confecciones Liss sobre el uso de logotipos de terceros: descargo de responsabilidad, propiedad intelectual, marcas registradas y permisos.",
     creator: siteConfig.twitterHandle,
   },
   robots: {
@@ -41,11 +42,14 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  other: {
+    publisher: siteConfig.name,
+  },
 };
 
 export default function PoliticaTercerosPage() {
   const PAGE_URL = `${siteConfig.url}/legal/terceros`;
-  const PAGE_TITLE = "Política de Logos e Identidad Institucional de Terceros";
+  const PAGE_TITLE = "Política de Logos de Terceros";
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -53,9 +57,9 @@ export default function PoliticaTercerosPage() {
       {
         ...buildWebPageSchema({
           url: PAGE_URL,
-          name: "Política de Descargo de Responsabilidad por Uso de Logotipos e Identidad Visual Institucional de Terceros — Políticas Oficiales | Confecciones Liss",
+          name: "Política de Logos y de Identidad de Terceros | Confecciones Liss",
           description:
-            "Política de descargo de responsabilidad por uso de logotipos, imágenes e identidad visual institucional de terceros en servicios de confección y canales digitales de Confecciones Liss.",
+            "Política de Confecciones Liss sobre el uso de logotipos de terceros: descargo de responsabilidad, propiedad intelectual, marcas registradas y permisos.",
         }),
         "@type": "Article",
         author: { "@id": `${siteConfig.url}/#business` },
@@ -87,6 +91,7 @@ export default function PoliticaTercerosPage() {
 
       <LegalArticleReader
         title="Política de Descargo de Responsabilidad por Uso de Logotipos, Imágenes e Identidad Visual Institucional de Terceros en Servicios de Confección y Canales Digitales Oficiales"
+        category="Descargo de responsabilidad por el uso de logotipos, marcas registradas e identidad institucional de terceros."
         date="24 Jun, 2026"
         readingTime={20}
       >

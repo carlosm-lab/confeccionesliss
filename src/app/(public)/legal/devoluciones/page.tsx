@@ -13,15 +13,19 @@ import {
   LegalFootnote,
 } from "@/components/legal/LegalContent";
 
+export const dynamic = "force-static";
+
 export const metadata: Metadata = {
-  title: "Política de Devoluciones y Reclamaciones de Pago",
+  title: "Política de Devoluciones y Reclamaciones Liss",
   description:
-    "Política de Devoluciones de Confecciones Liss. Conoce nuestra política absoluta de no devoluciones ni cambios de prendas, y las condiciones de anticipos y reembolsos.",
+    "Política oficial de devoluciones de Confecciones Liss: reglas de anticipos, reclamaciones y reembolsos. Sin devolución ni cambio en prendas personalizadas.",
+  keywords:
+    "política devoluciones, no devolución prendas, anticipos uniformes, reclamaciones, política cambios, Confecciones Liss El Salvador",
   alternates: { canonical: `${siteConfig.url}/legal/devoluciones` },
   openGraph: {
-    title: "Política de Devoluciones | Confecciones Liss",
+    title: "Política de Devoluciones y Reclamaciones Liss | Confecciones Liss",
     description:
-      "Política de Devoluciones de Confecciones Liss. Conoce nuestra política absoluta de no devoluciones ni cambios de prendas, y las condiciones de anticipos y reembolsos.",
+      "Política oficial de devoluciones de Confecciones Liss: reglas de anticipos, reclamaciones y reembolsos. Sin devolución ni cambio en prendas personalizadas.",
     url: `${siteConfig.url}/legal/devoluciones`,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -29,9 +33,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Política de Devoluciones | Confecciones Liss",
+    title: "Política de Devoluciones y Reclamaciones Liss | Confecciones Liss",
     description:
-      "Política de Devoluciones de Confecciones Liss. Conoce nuestra política absoluta de no devoluciones ni cambios de prendas, y las condiciones de anticipos y reembolsos.",
+      "Política oficial de devoluciones de Confecciones Liss: reglas de anticipos, reclamaciones y reembolsos. Sin devolución ni cambio en prendas personalizadas.",
     creator: siteConfig.twitterHandle,
   },
   robots: {
@@ -45,6 +49,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  other: {
+    publisher: siteConfig.name,
+  },
 };
 
 export default function PoliticaDevolucionesPage() {
@@ -57,9 +64,9 @@ export default function PoliticaDevolucionesPage() {
       {
         ...buildWebPageSchema({
           url: PAGE_URL,
-          name: "Política de Devoluciones y Cambios | Confecciones Liss",
+          name: "Política de Devoluciones y Reclamaciones Liss | Confecciones Liss",
           description:
-            "Política de Devoluciones de Confecciones Liss. Conoce nuestra política absoluta de no devoluciones ni cambios de prendas, y las condiciones de anticipos y reembolsos.",
+            "Política oficial de devoluciones de Confecciones Liss: reglas de anticipos, reclamaciones y reembolsos. Sin devolución ni cambio en prendas personalizadas.",
         }),
         "@type": "Article",
         author: { "@id": `${siteConfig.url}/#business` },
@@ -91,6 +98,7 @@ export default function PoliticaDevolucionesPage() {
 
       <LegalArticleReader
         title="Política de Devoluciones"
+        category="Regulación de anticipos, cancelaciones y condiciones de reembolso aplicables a la confección de prendas."
         date="24 Jun, 2026"
         readingTime={12}
       >

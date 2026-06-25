@@ -13,15 +13,19 @@ import {
   LegalFootnote,
 } from "@/components/legal/LegalContent";
 
+export const dynamic = "force-static";
+
 export const metadata: Metadata = {
   title: "Política General de Cotizaciones Comerciales",
   description:
-    "Política General de Cotizaciones de Confecciones Liss. Conoce los términos, vigencia, precios, tallas especiales, tiempos de entrega y condiciones de pago.",
+    "Política de cotizaciones de Confecciones Liss: vigencia de precios, tallas especiales, tiempos de entrega, condiciones de pago y anticipos requeridos.",
+  keywords:
+    "cotizaciones uniformes, presupuesto uniformes, precios scrubs El Salvador, cotización taller, Confecciones Liss, anticipos uniformes",
   alternates: { canonical: `${siteConfig.url}/legal/cotizaciones` },
   openGraph: {
-    title: "Política de Cotizaciones | Confecciones Liss",
+    title: "Política General de Cotizaciones Comerciales | Confecciones Liss",
     description:
-      "Política General de Cotizaciones de Confecciones Liss. Conoce los términos, vigencia, precios, tallas especiales, tiempos de entrega y condiciones de pago.",
+      "Política de cotizaciones de Confecciones Liss: vigencia de precios, tallas especiales, tiempos de entrega, condiciones de pago y anticipos requeridos.",
     url: `${siteConfig.url}/legal/cotizaciones`,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -29,9 +33,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Política de Cotizaciones | Confecciones Liss",
+    title: "Política General de Cotizaciones Comerciales | Confecciones Liss",
     description:
-      "Política General de Cotizaciones de Confecciones Liss. Conoce los términos, vigencia, precios, tallas especiales, tiempos de entrega y condiciones de pago.",
+      "Política de cotizaciones de Confecciones Liss: vigencia de precios, tallas especiales, tiempos de entrega, condiciones de pago y anticipos requeridos.",
     creator: siteConfig.twitterHandle,
   },
   robots: {
@@ -44,6 +48,9 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  other: {
+    publisher: siteConfig.name,
   },
 };
 
@@ -59,7 +66,7 @@ export default function PoliticaCotizacionesPage() {
           url: PAGE_URL,
           name: "Política General de Cotizaciones | Confecciones Liss",
           description:
-            "Política General de Cotizaciones de Confecciones Liss. Conoce los términos, vigencia, precios, tallas especiales, tiempos de entrega y condiciones de pago.",
+            "Política de cotizaciones de Confecciones Liss: vigencia de precios, tallas especiales, tiempos de entrega, condiciones de pago y anticipos requeridos.",
         }),
         "@type": "Article",
         author: { "@id": `${siteConfig.url}/#business` },
@@ -91,6 +98,7 @@ export default function PoliticaCotizacionesPage() {
 
       <LegalArticleReader
         title="Política General de Cotizaciones"
+        category="Regulación del proceso, tiempos de entrega, validez de precios y condiciones de nuestras cotizaciones comerciales."
         date="24 Jun, 2026"
         readingTime={18}
       >

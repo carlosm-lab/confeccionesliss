@@ -13,15 +13,19 @@ import {
   LegalFootnote,
 } from "@/components/legal/LegalContent";
 
+export const dynamic = "force-static";
+
 export const metadata: Metadata = {
   title: "Política General de Promociones y Descuentos",
   description:
-    "Política General de Promociones y Descuentos de Confecciones Liss. Conoce las condiciones, vigencia, descuento por reseña en Google Maps, promociones de temporada y programa de referidos.",
+    "Política de promociones de Confecciones Liss: descuentos por reseña en Google Maps, ofertas de temporada, programa de referidos y sus reglas aplicables.",
+  keywords:
+    "promociones uniformes, descuentos scrubs, programa referidos, descuento reseña, ofertas temporada, Confecciones Liss El Salvador",
   alternates: { canonical: `${siteConfig.url}/legal/promociones` },
   openGraph: {
-    title: "Política de Promociones y Descuentos | Confecciones Liss",
+    title: "Política General de Promociones y Descuentos | Confecciones Liss",
     description:
-      "Política General de Promociones y Descuentos de Confecciones Liss. Conoce las condiciones, vigencia, descuento por reseña en Google Maps, promociones de temporada y programa de referidos.",
+      "Política de promociones de Confecciones Liss: descuentos por reseña en Google Maps, ofertas de temporada, programa de referidos y sus reglas aplicables.",
     url: `${siteConfig.url}/legal/promociones`,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -29,9 +33,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Política de Promociones y Descuentos | Confecciones Liss",
+    title: "Política General de Promociones y Descuentos | Confecciones Liss",
     description:
-      "Política General de Promociones y Descuentos de Confecciones Liss. Conoce las condiciones, vigencia, descuento por reseña en Google Maps, promociones de temporada y programa de referidos.",
+      "Política de promociones de Confecciones Liss: descuentos por reseña en Google Maps, ofertas de temporada, programa de referidos y sus reglas aplicables.",
     creator: siteConfig.twitterHandle,
   },
   robots: {
@@ -44,6 +48,9 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  other: {
+    publisher: siteConfig.name,
   },
 };
 
@@ -59,7 +66,7 @@ export default function PoliticaPromocionesPage() {
           url: PAGE_URL,
           name: "Política General de Promociones y Descuentos | Confecciones Liss",
           description:
-            "Política General de Promociones y Descuentos de Confecciones Liss. Conoce las condiciones, vigencia, descuento por reseña en Google Maps, promociones de temporada y programa de referidos.",
+            "Política de promociones de Confecciones Liss: descuentos por reseña en Google Maps, ofertas de temporada, programa de referidos y sus reglas aplicables.",
         }),
         "@type": "Article",
         author: { "@id": `${siteConfig.url}/#business` },
@@ -91,6 +98,7 @@ export default function PoliticaPromocionesPage() {
 
       <LegalArticleReader
         title="Política General de Promociones y Descuentos"
+        category="Términos y condiciones aplicables a descuentos, promociones de temporada y sorteos organizados por el Taller."
         date="24 Jun, 2026"
         readingTime={16}
       >

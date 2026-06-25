@@ -12,15 +12,19 @@ import {
   LegalFootnote,
 } from "@/components/legal/LegalContent";
 
+export const dynamic = "force-static";
+
 export const metadata: Metadata = {
   title: "Política de Privacidad y Protección de Datos",
   description:
-    "Política de privacidad de Confecciones Liss. Cómo recopilamos, usamos y protegemos tus datos personales, incluido almacenamiento, derechos y seguridad.",
+    "Política oficial de privacidad de Confecciones Liss: recopilación, uso y seguridad de datos personales, y ejercicio de derechos de acceso y rectificación.",
+  keywords:
+    "política de privacidad, protección de datos, datos personales, RGPD, derechos usuario, privacidad El Salvador, Confecciones Liss",
   alternates: { canonical: `${siteConfig.url}/legal/privacidad` },
   openGraph: {
-    title: "Política de Privacidad | Confecciones Liss",
+    title: "Política de Privacidad y Protección de Datos | Confecciones Liss",
     description:
-      "Política de privacidad de Confecciones Liss. Cómo recopilamos, usamos y protegemos tus datos personales, incluido almacenamiento, derechos y seguridad.",
+      "Política oficial de privacidad de Confecciones Liss: recopilación, uso y seguridad de datos personales, y ejercicio de derechos de acceso y rectificación.",
     url: `${siteConfig.url}/legal/privacidad`,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -28,9 +32,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Política de Privacidad | Confecciones Liss",
+    title: "Política de Privacidad y Protección de Datos | Confecciones Liss",
     description:
-      "Política de privacidad de Confecciones Liss. Cómo recopilamos, usamos y protegemos tus datos personales, incluido almacenamiento, derechos y seguridad.",
+      "Política oficial de privacidad de Confecciones Liss: recopilación, uso y seguridad de datos personales, y ejercicio de derechos de acceso y rectificación.",
     creator: siteConfig.twitterHandle,
   },
   robots: {
@@ -43,6 +47,9 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  other: {
+    publisher: siteConfig.name,
   },
 };
 
@@ -58,7 +65,7 @@ export default function PrivacidadPage() {
           url: PAGE_URL,
           name: "Política de Privacidad y Protección de Datos | Confecciones Liss",
           description:
-            "Política de privacidad de Confecciones Liss. Cómo recopilamos, usamos y protegemos tus datos personales.",
+            "Política oficial de privacidad de Confecciones Liss: recopilación, uso y seguridad de datos personales, y ejercicio de derechos de acceso y rectificación.",
         }),
         "@type": "Article",
         author: { "@id": `${siteConfig.url}/#business` },
@@ -92,6 +99,7 @@ export default function PrivacidadPage() {
 
       <LegalArticleReader
         title="Política de Privacidad"
+        category="Regulación sobre cómo recopilamos, usamos, almacenamos y protegemos tus datos personales y privacidad."
         date="15 Jun, 2025"
         readingTime={14}
       >

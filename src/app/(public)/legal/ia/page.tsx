@@ -13,15 +13,19 @@ import {
   LegalFootnote,
 } from "@/components/legal/LegalContent";
 
+export const dynamic = "force-static";
+
 export const metadata: Metadata = {
-  title: "Política de Uso de Inteligencia Artificial — Políticas Oficiales",
+  title: "Política de Uso de Inteligencia Artificial",
   description:
-    "Política de Uso de Inteligencia Artificial en Contenidos Visuales y Comerciales de Confecciones Liss. Conoce los detalles de Liam Alejandro (Modelo IA) y el tratamiento de imágenes.",
+    "Política de Inteligencia Artificial de Confecciones Liss: uso de imágenes IA, modelo Liam Alejandro, transparencia en contenidos y derechos de imagen.",
+  keywords:
+    "inteligencia artificial uniformes, modelo IA Confecciones Liss, Liam Alejandro modelo, imágenes IA moda, transparencia IA, Confecciones Liss",
   alternates: { canonical: `${siteConfig.url}/legal/ia` },
   openGraph: {
     title: "Política de Uso de Inteligencia Artificial | Confecciones Liss",
     description:
-      "Política de Uso de Inteligencia Artificial en Contenidos Visuales y Comerciales de Confecciones Liss. Conoce los detalles de Liam Alejandro (Modelo IA) y el tratamiento de imágenes.",
+      "Política de Inteligencia Artificial de Confecciones Liss: uso de imágenes IA, modelo Liam Alejandro, transparencia en contenidos y derechos de imagen.",
     url: `${siteConfig.url}/legal/ia`,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -31,7 +35,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Política de Uso de Inteligencia Artificial | Confecciones Liss",
     description:
-      "Política de Uso de Inteligencia Artificial en Contenidos Visuales y Comerciales de Confecciones Liss. Conoce los detalles de Liam Alejandro (Modelo IA) y el tratamiento de imágenes.",
+      "Política de Inteligencia Artificial de Confecciones Liss: uso de imágenes IA, modelo Liam Alejandro, transparencia en contenidos y derechos de imagen.",
     creator: siteConfig.twitterHandle,
   },
   robots: {
@@ -44,6 +48,9 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  other: {
+    publisher: siteConfig.name,
   },
 };
 
@@ -59,7 +66,7 @@ export default function PoliticaIAPage() {
           url: PAGE_URL,
           name: "Política de Uso de Inteligencia Artificial — Políticas Oficiales | Confecciones Liss",
           description:
-            "Política de Uso de Inteligencia Artificial en Contenidos Visuales y Comerciales de Confecciones Liss. Conoce los detalles de Liam Alejandro (Modelo IA) y el tratamiento de imágenes.",
+            "Política de Inteligencia Artificial de Confecciones Liss: uso de imágenes IA, modelo Liam Alejandro, transparencia en contenidos y derechos de imagen.",
         }),
         "@type": "Article",
         author: { "@id": `${siteConfig.url}/#business` },
@@ -91,6 +98,7 @@ export default function PoliticaIAPage() {
 
       <LegalArticleReader
         title="Política de Uso de Inteligencia Artificial en Contenidos Visuales y Comerciales"
+        category="Aviso legal y políticas sobre el uso transparente de inteligencia artificial y modelos generativos en el Taller."
         date="24 Jun, 2026"
         readingTime={20}
       >

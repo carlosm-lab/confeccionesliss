@@ -280,6 +280,14 @@ export function Footer() {
                 Política de Mayoreo
               </Link>
             </li>
+            <li>
+              <Link
+                href="/legal/disputas"
+                className="transition-colors hover:text-white hover:underline"
+              >
+                Resolución de Disputas
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

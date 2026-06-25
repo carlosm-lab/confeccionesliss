@@ -13,15 +13,19 @@ import {
   LegalFootnote,
 } from "@/components/legal/LegalContent";
 
+export const dynamic = "force-static";
+
 export const metadata: Metadata = {
-  title: "Política General de Envíos de Pedidos",
+  title: "Política de Envíos y Delivery en El Salvador",
   description:
-    "Política General de Envíos de Confecciones Liss. Conoce nuestras tarifas de delivery en El Salvador, cobertura, tiempos de preparación, transporte y condiciones de envío gratis.",
+    "Política de envíos de Confecciones Liss: tarifas de delivery en El Salvador, cobertura departamental, tiempos de preparación y condiciones de entrega.",
+  keywords:
+    "envíos uniformes El Salvador, delivery scrubs, cobertura envíos, tarifas delivery, Confecciones Liss, envío gratis uniformes",
   alternates: { canonical: `${siteConfig.url}/legal/envios` },
   openGraph: {
-    title: "Política de Envíos | Confecciones Liss",
+    title: "Política de Envíos y Delivery en El Salvador | Confecciones Liss",
     description:
-      "Política General de Envíos de Confecciones Liss. Conoce nuestras tarifas de delivery en El Salvador, cobertura, tiempos de preparación, transporte y condiciones de envío gratis.",
+      "Política de envíos de Confecciones Liss: tarifas de delivery en El Salvador, cobertura departamental, tiempos de preparación y condiciones de entrega.",
     url: `${siteConfig.url}/legal/envios`,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -29,9 +33,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Política de Envíos | Confecciones Liss",
+    title: "Política de Envíos y Delivery en El Salvador | Confecciones Liss",
     description:
-      "Política General de Envíos de Confecciones Liss. Conoce nuestras tarifas de delivery en El Salvador, cobertura, tiempos de preparación, transporte y condiciones de envío gratis.",
+      "Política de envíos de Confecciones Liss: tarifas de delivery en El Salvador, cobertura departamental, tiempos de preparación y condiciones de entrega.",
     creator: siteConfig.twitterHandle,
   },
   robots: {
@@ -44,6 +48,9 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  other: {
+    publisher: siteConfig.name,
   },
 };
 
@@ -59,7 +66,7 @@ export default function PoliticaEnviosPage() {
           url: PAGE_URL,
           name: "Política General de Envíos | Confecciones Liss",
           description:
-            "Política General de Envíos de Confecciones Liss. Conoce nuestras tarifas de delivery en El Salvador, cobertura, tiempos de preparación, transporte y condiciones de envío gratis.",
+            "Política de envíos de Confecciones Liss: tarifas de delivery en El Salvador, cobertura departamental, tiempos de preparación y condiciones de entrega.",
         }),
         "@type": "Article",
         author: { "@id": `${siteConfig.url}/#business` },
@@ -91,6 +98,7 @@ export default function PoliticaEnviosPage() {
 
       <LegalArticleReader
         title="Política General de Envíos"
+        category="Políticas de cobertura, plazos de entrega, tarifas de delivery y condiciones de envío de pedidos en El Salvador."
         date="24 Jun, 2026"
         readingTime={15}
       >
