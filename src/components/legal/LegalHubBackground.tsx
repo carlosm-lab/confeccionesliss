@@ -354,15 +354,15 @@ function DocCard({ doc }: { doc: LegalDoc }) {
   );
 
   const infoPanel = (
-    <div className="p-3 @[280px]:p-3.5 @[320px]:p-4">
-      <div className="mb-2 flex items-center gap-2">
+    <div className="flex h-[88px] flex-col justify-center p-3 @[280px]:p-3.5 @[320px]:p-4">
+      <div className="mb-1.5 flex items-center gap-2">
         <div className="flex items-center">
           <h2 className="text-primary group-hover:text-tertiary text-[11px] font-extrabold tracking-wider uppercase transition-colors duration-300 @[280px]:text-[12.5px] @[320px]:text-[14px] @[360px]:text-[15px]">
             {doc.title}
           </h2>
         </div>
       </div>
-      <p className="text-on-surface-variant mt-1 line-clamp-2 text-[9px] leading-snug transition-all @[280px]:text-[10px] @[320px]:text-[11px] @[360px]:text-[12px]">
+      <p className="text-on-surface-variant line-clamp-2 text-[9px] leading-snug transition-all @[280px]:text-[10px] @[320px]:text-[11px] @[360px]:text-[12px]">
         {doc.tagline}
       </p>
     </div>
