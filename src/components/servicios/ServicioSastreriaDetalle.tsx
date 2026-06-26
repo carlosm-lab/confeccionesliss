@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Breadcrumb } from "@/components/ui/Breadcrumb";
+import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
+import { heroTrustBadges } from "@/lib/seo-data";
 
 // Background grid texture for the entire page
 const pageGridTextureStyle = {
@@ -64,79 +65,103 @@ export function ServicioSastreriaDetalle() {
   return (
     <div className="min-h-screen w-full" style={pageGridTextureStyle}>
       <div className="w-full">
-        {/* Breadcrumb */}
-        <div className="mx-auto max-w-screen-2xl px-5 py-4 md:px-8">
-          <Breadcrumb
-            items={[
-              { label: "Inicio", href: "/" },
-              { label: "Servicios", href: "/servicios" },
-              {
-                label: "Confección a la Medida",
-                href: "/servicios/confeccion-a-medida",
-              },
-            ]}
-          />
-        </div>
-
-        {/* Hero Section */}
-        <section className="w-full px-5 pt-4 pb-10 md:px-8 md:pt-6 md:pb-14">
-          <div className="mx-auto max-w-screen-2xl">
-            <div className="flex flex-col items-center gap-12 md:flex-row">
-              {/* Left side content (55% / md:w-[55%]) */}
-              <div className="flex w-full flex-col items-start md:w-[55%]">
-                <div className="mb-6 flex items-center gap-4">
-                  <span className="bg-secondary h-6 w-1"></span>
-                  <span className="text-on-surface-variant font-sans text-xs font-semibold tracking-widest uppercase">
-                    SERVICIO
-                  </span>
-                </div>
-                <h1 className="text-primary mb-6 font-serif text-[32px] leading-tight font-bold md:text-[48px]">
+        {/* ── HERO HOME TEMPLATE ── */}
+        <section className="relative flex min-h-[calc(100dvh-56px)] flex-col overflow-x-hidden px-5 pt-4 pb-10 md:min-h-0 md:px-8 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:pb-4">
+          <div className="mx-auto flex h-full w-full max-w-screen-2xl flex-col items-start gap-8 lg:flex-row lg:items-center lg:gap-16">
+            <div className="z-10 flex w-full flex-col items-start lg:min-w-0 lg:flex-1">
+              <h1 className="animate-fade-in-up text-primary mb-6 w-full text-center font-serif text-[32px] leading-tight font-bold md:mb-10 md:flex md:flex-col md:items-center md:text-[48px] lg:mb-6 lg:block lg:text-left">
+                <span className="block w-full text-center lg:text-left">
                   Confección y Sastrería a la Medida
-                </h1>
+                </span>
+              </h1>
 
-                <p className="text-on-surface-variant mb-8 max-w-lg font-sans text-lg leading-relaxed">
-                  Olvídate de uniformes estándar que no te favorecen. Tomamos
-                  más de 12 medidas anatómicas para crear una prenda que se
-                  adapta perfectamente a tu cuerpo.
-                </p>
-                <div className="mb-10 flex flex-wrap gap-3">
-                  <span className="text-on-surface-variant border-primary/10 rounded-full border bg-[#F0F2F5] px-4 py-2 font-sans text-xs font-semibold tracking-wider uppercase">
-                    Tallas inclusivas
-                  </span>
-                  <span className="text-on-surface-variant border-primary/10 rounded-full border bg-[#F0F2F5] px-4 py-2 font-sans text-xs font-semibold tracking-wider uppercase">
-                    Entalle perfecto
-                  </span>
-                  <span className="text-on-surface-variant border-primary/10 rounded-full border bg-[#F0F2F5] px-4 py-2 font-sans text-xs font-semibold tracking-wider uppercase">
-                    Realza tu figura
-                  </span>
-                </div>
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-primary inline-flex cursor-pointer items-center gap-2 rounded-lg px-6 py-3 font-sans text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
+              {/* Contenedor inferior de contenido (Móvil / Tablet) */}
+              <div className="flex w-full flex-col gap-6 md:grid md:grid-cols-2 md:items-stretch md:gap-12 lg:flex lg:flex-col lg:gap-0">
+                {/* IMAGEN HERO - VERSIÓN MÓVIL */}
+                <div
+                  className="animate-fade-in-up relative w-full max-w-sm self-center md:order-2 md:h-full md:max-w-none md:self-stretch lg:hidden"
+                  style={{ animationDelay: "300ms" }}
                 >
-                  <span
-                    className="material-symbols-outlined text-[20px]"
-                    aria-hidden="true"
-                  >
-                    chat
-                  </span>
-                  Agendar visita al taller
-                </a>
-              </div>
+                  <div className="border-primary/35 relative z-10 flex w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:h-full">
+                    <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
+                    <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl md:aspect-auto md:h-full md:w-full">
+                      <Image
+                        fill
+                        alt="Medición y sastrería profesional"
+                        className="rounded-xl object-cover object-center"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqWKImQOmvghJ9sTWz-PPSR-X6p3OJFCZ7SQy2ujL63JLQJhDVp_ao4QQikgLRZ9UI4MBKUWjF09De_7XStyh4MfrvbLSO9lR3mO9ZINHCrHZu7r-UaAxfdatm6nJFfqeFHw0jVB3VqlyVzFBV56Dt_axkoPyM-dwx8aeG4bC5j5giSjFqtHuvigtbJxcul23soXhglEB-BqZRJ5VOrMsxKpbhP_Hq1F99zIo3yEF_yl6wDObNg_q1c_H8XyUlyhl2hXyVSK4jCPfq"
+                        sizes="(max-width:768px) 80vw, 40vw"
+                        priority
+                      />
+                    </div>
+                  </div>
+                </div>
 
-              {/* Right Side Image (45% / md:w-[45%]) */}
-              <div className="relative mx-auto h-[300px] w-full max-w-[500px] shrink-0 sm:h-[400px] md:h-[500px] md:w-[45%] md:max-w-none">
-                <div className="bg-primary/5 absolute inset-0 -z-10 -m-4 rounded-t-2xl rounded-b-lg" />
-                <div className="border-primary/10 relative h-full w-full overflow-hidden rounded-t-2xl rounded-b-lg border shadow-md">
+                {/* COLUMNA DE TEXTO Y ACCIONES */}
+                <div className="flex w-full flex-col items-start md:order-1 md:justify-center">
+                  <p
+                    className="animate-fade-in-up text-on-surface-variant mb-6 w-full font-sans text-lg leading-relaxed"
+                    style={{ animationDelay: "150ms" }}
+                  >
+                    Olvídate de uniformes estándar que no te favorecen. Tomamos
+                    más de 12 medidas anatómicas para crear una prenda que se
+                    adapta perfectamente a tu cuerpo.
+                  </p>
+                  <div className="mb-8 grid w-full grid-cols-2 gap-x-3 gap-y-2.5 md:grid-cols-1 lg:grid-cols-2">
+                    {[
+                      { icon: "accessibility_new", text: "Tallas inclusivas" },
+                      { icon: "checkroom", text: "Entalle perfecto" },
+                      { icon: "auto_fix_high", text: "Realza tu figura" },
+                      { icon: "content_cut", text: "Hecho a la medida" },
+                    ].map((b, index) => (
+                      <div
+                        key={b.text}
+                        className="border-primary/12 text-primary animate-fade-in-up flex w-full items-center gap-2 rounded-full border bg-white px-4 py-2 font-sans text-sm font-medium shadow-xs"
+                        style={{ animationDelay: `${index * 50 + 200}ms` }}
+                      >
+                        <span className="material-symbols-outlined text-secondary mr-2 shrink-0 text-[16px]">
+                          {b.icon}
+                        </span>
+                        <span className="leading-tight">{b.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex w-full flex-col gap-3 sm:flex-row sm:gap-4">
+                    <a
+                      href="https://maps.app.goo.gl/XSs2vgjLG8uvJGoQ7"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="animate-fade-in-up border-outline text-primary flex h-12 w-full items-center justify-center rounded-md border bg-white px-12 text-center font-serif text-base font-medium whitespace-nowrap transition hover:bg-gray-50 active:scale-[0.97] sm:flex-1"
+                      style={{ animationDelay: "400ms" }}
+                    >
+                      Cómo llegar
+                    </a>
+                    <Link
+                      href="/catalogo"
+                      className="animate-fade-in-up btn-gradient font-body ambient-shadow flex h-12 w-full items-center justify-center rounded-md px-12 text-center text-base font-semibold whitespace-nowrap text-white transition hover:opacity-90 active:scale-[0.97] sm:flex-1"
+                      style={{ animationDelay: "450ms" }}
+                    >
+                      Catálogo
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* IMAGEN HERO - VERSIÓN DESKTOP */}
+            <div
+              className="animate-fade-in-up hidden h-full lg:flex lg:w-[40%] lg:items-center"
+              style={{ animationDelay: "300ms" }}
+            >
+              <div className="border-primary/35 relative flex h-full w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+                <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
+                <div className="relative h-full w-full overflow-hidden rounded-xl">
                   <Image
-                    alt="Medición y sastrería profesional"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqWKImQOmvghJ9sTWz-PPSR-X6p3OJFCZ7SQy2ujL63JLQJhDVp_ao4QQikgLRZ9UI4MBKUWjF09De_7XStyh4MfrvbLSO9lR3mO9ZINHCrHZu7r-UaAxfdatm6nJFfqeFHw0jVB3VqlyVzFBV56Dt_axkoPyM-dwx8aeG4bC5j5giSjFqtHuvigtbJxcul23soXhglEB-BqZRJ5VOrMsxKpbhP_Hq1F99zIo3yEF_yl6wDObNg_q1c_H8XyUlyhl2hXyVSK4jCPfq"
                     fill
-                    sizes="(max-width: 768px) 100vw, 45vw"
+                    alt="Medición y sastrería profesional"
+                    className="rounded-xl object-cover object-center"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqWKImQOmvghJ9sTWz-PPSR-X6p3OJFCZ7SQy2ujL63JLQJhDVp_ao4QQikgLRZ9UI4MBKUWjF09De_7XStyh4MfrvbLSO9lR3mO9ZINHCrHZu7r-UaAxfdatm6nJFfqeFHw0jVB3VqlyVzFBV56Dt_axkoPyM-dwx8aeG4bC5j5giSjFqtHuvigtbJxcul23soXhglEB-BqZRJ5VOrMsxKpbhP_Hq1F99zIo3yEF_yl6wDObNg_q1c_H8XyUlyhl2hXyVSK4jCPfq"
+                    sizes="40vw"
                     priority
-                    className="object-cover"
                   />
                 </div>
               </div>

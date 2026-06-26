@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Breadcrumb } from "@/components/ui/Breadcrumb";
+import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
+import { heroTrustBadges } from "@/lib/seo-data";
 
 // Background texture for the entire page
 const pageWovenTextureStyle = {
@@ -67,87 +68,104 @@ export function ServicioManoObraDetalle() {
   return (
     <div className="min-h-screen w-full" style={pageWovenTextureStyle}>
       <div className="w-full">
-        {/* Breadcrumb */}
-        <div className="mx-auto max-w-screen-2xl px-5 py-4 md:px-8">
-          <Breadcrumb
-            items={[
-              { label: "Inicio", href: "/" },
-              { label: "Servicios", href: "/servicios" },
-              { label: "Mano de Obra", href: "/servicios/mano-de-obra" },
-            ]}
-          />
-        </div>
-
-        {/* Hero Section */}
-        <section className="w-full px-5 pt-4 pb-10 md:px-8 md:pt-6 md:pb-14">
-          <div className="mx-auto max-w-screen-2xl">
-            <div className="flex flex-col items-center gap-12 lg:flex-row">
-              {/* Left: Image (45% / lg:w-[45%]) */}
-              <div className="border-primary/12 relative mx-auto h-[300px] w-full max-w-[500px] shrink-0 overflow-hidden rounded-xl border shadow-sm sm:h-[400px] lg:h-[500px] lg:w-[45%] lg:max-w-none">
-                <Image
-                  alt="Manos costurando a máquina en taller"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIOK8UY5TesvxqjgC-Hwzg1ChKEulzHNqCG0kzVs_ttKJCHxUqdEdMLD9L6yLQY_4CZ3SpSURhaA-teMGZlRDHSf54LpLg09zvPPvI3G17Qv2B3ha0XpAczn8Z9ePBV_aU1qq0iOLby22hSdzlVYdDOHJJ79fZECSwenAOvf12ZViI69T3CxsPQ1PlsKOShnHhZk4WRDodUOsCknVFOqWsxCcv4SUiMv-8Wl0u-q-p2XxtTP3wMOohB9ndCnWWERpi7f7fa4dO2RR3"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 45vw"
-                  priority
-                  className="object-cover"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#143067]/20 to-transparent" />
-              </div>
-
-              {/* Right: Content Column (55% / lg:w-[55%]) */}
-              <div className="flex w-full flex-col space-y-6 lg:w-[55%]">
-                <div className="inline-flex items-center gap-3">
-                  <div className="bg-secondary h-6 w-1 rounded-full" />
-                  <span className="text-secondary font-sans text-xs font-semibold tracking-widest uppercase">
-                    Servicio
-                  </span>
-                </div>
-                <h1 className="text-primary font-serif text-[32px] leading-tight font-bold md:text-[48px]">
+        {/* ── HERO HOME TEMPLATE ── */}
+        <section className="relative flex min-h-[calc(100dvh-56px)] flex-col overflow-x-hidden px-5 pt-4 pb-10 md:min-h-0 md:px-8 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:pb-4">
+          <div className="mx-auto flex h-full w-full max-w-screen-2xl flex-col items-start gap-8 lg:flex-row-reverse lg:items-center lg:gap-16">
+            <div className="z-10 flex w-full flex-col items-start lg:min-w-0 lg:flex-1">
+              <h1 className="animate-fade-in-up text-primary mb-6 w-full text-center font-serif text-[32px] leading-tight font-bold md:mb-10 md:flex md:flex-col md:items-center md:text-[48px] lg:mb-6 lg:block lg:text-left">
+                <span className="block w-full text-center lg:text-left">
                   Servicio de Solo Mano de Obra
-                </h1>
+                </span>
+              </h1>
 
-                <p className="text-on-surface-variant max-w-prose font-sans text-lg leading-relaxed">
-                  Tú pones la tela, nosotros ponemos el talento. Trae tu
-                  material y confeccionamos tu prenda cobrando exclusivamente la
-                  mano de obra.
-                </p>
-                <div className="flex flex-wrap gap-3 pt-2">
-                  <span className="bg-surface-container-low text-primary border-primary/5 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-sans text-xs font-semibold tracking-wider uppercase shadow-sm">
-                    <span className="material-symbols-outlined text-secondary text-[16px]">
-                      savings
-                    </span>
-                    Súper económico
-                  </span>
-                  <span className="bg-surface-container-low text-primary border-primary/5 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-sans text-xs font-semibold tracking-wider uppercase shadow-sm">
-                    <span className="material-symbols-outlined text-secondary text-[16px]">
-                      design_services
-                    </span>
-                    Tus propios diseños
-                  </span>
-                  <span className="bg-surface-container-low text-primary border-primary/5 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-sans text-xs font-semibold tracking-wider uppercase shadow-sm">
-                    <span className="material-symbols-outlined text-secondary text-[16px]">
-                      checkroom
-                    </span>
-                    Aceptamos toda tela
-                  </span>
+              {/* Contenedor inferior de contenido (Móvil / Tablet) */}
+              <div className="flex w-full flex-col gap-6 md:grid md:grid-cols-2 md:items-stretch md:gap-12 lg:flex lg:flex-col lg:gap-0">
+                {/* IMAGEN HERO - VERSIÓN MÓVIL */}
+                <div
+                  className="animate-fade-in-up relative w-full max-w-sm self-center md:order-2 md:h-full md:max-w-none md:self-stretch lg:hidden"
+                  style={{ animationDelay: "300ms" }}
+                >
+                  <div className="border-primary/35 relative z-10 flex w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:h-full">
+                    <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
+                    <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl md:aspect-auto md:h-full md:w-full">
+                      <Image
+                        fill
+                        alt="Manos costurando a máquina en taller"
+                        className="rounded-xl object-cover object-center"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIOK8UY5TesvxqjgC-Hwzg1ChKEulzHNqCG0kzVs_ttKJCHxUqdEdMLD9L6yLQY_4CZ3SpSURhaA-teMGZlRDHSf54LpLg09zvPPvI3G17Qv2B3ha0XpAczn8Z9ePBV_aU1qq0iOLby22hSdzlVYdDOHJJ79fZECSwenAOvf12ZViI69T3CxsPQ1PlsKOShnHhZk4WRDodUOsCknVFOqWsxCcv4SUiMv-8Wl0u-q-p2XxtTP3wMOohB9ndCnWWERpi7f7fa4dO2RR3"
+                        sizes="(max-width:768px) 80vw, 40vw"
+                        priority
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div className="pt-6">
-                  <a
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="border-primary/12 inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border bg-[#143067] px-8 py-4 font-sans text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#143067]/90 sm:w-auto"
+
+                {/* COLUMNA DE TEXTO Y ACCIONES */}
+                <div className="flex w-full flex-col items-start md:order-1 md:justify-center">
+                  <p
+                    className="animate-fade-in-up text-on-surface-variant mb-6 w-full font-sans text-lg leading-relaxed"
+                    style={{ animationDelay: "150ms" }}
                   >
-                    <span
-                      className="material-symbols-outlined"
-                      style={{ fontVariationSettings: "'FILL' 1" }}
-                      aria-hidden="true"
+                    Tú pones la tela, nosotros ponemos el talento. Trae tu
+                    material y confeccionamos tu prenda cobrando exclusivamente
+                    la mano de obra.
+                  </p>
+                  <div className="mb-8 grid w-full grid-cols-2 gap-x-3 gap-y-2.5 md:grid-cols-1 lg:grid-cols-2">
+                    {[
+                      { icon: "savings", text: "Súper económico" },
+                      { icon: "design_services", text: "Tus propios diseños" },
+                      { icon: "checkroom", text: "Aceptamos toda tela" },
+                      { icon: "verified", text: "Acabado profesional" },
+                    ].map((b, index) => (
+                      <div
+                        key={b.text}
+                        className="border-primary/12 text-primary animate-fade-in-up flex w-full items-center gap-2 rounded-full border bg-white px-4 py-2 font-sans text-sm font-medium shadow-xs"
+                        style={{ animationDelay: `${index * 50 + 200}ms` }}
+                      >
+                        <span className="material-symbols-outlined text-secondary mr-2 shrink-0 text-[16px]">
+                          {b.icon}
+                        </span>
+                        <span className="leading-tight">{b.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex w-full flex-col gap-3 sm:flex-row sm:gap-4">
+                    <a
+                      href="https://maps.app.goo.gl/XSs2vgjLG8uvJGoQ7"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="animate-fade-in-up border-outline text-primary flex h-12 w-full items-center justify-center rounded-md border bg-white px-12 text-center font-serif text-base font-medium whitespace-nowrap transition hover:bg-gray-50 active:scale-[0.97] sm:flex-1"
+                      style={{ animationDelay: "400ms" }}
                     >
-                      chat
-                    </span>
-                    Cotizar costura
-                  </a>
+                      Cómo llegar
+                    </a>
+                    <Link
+                      href="/catalogo"
+                      className="animate-fade-in-up btn-gradient font-body ambient-shadow flex h-12 w-full items-center justify-center rounded-md px-12 text-center text-base font-semibold whitespace-nowrap text-white transition hover:opacity-90 active:scale-[0.97] sm:flex-1"
+                      style={{ animationDelay: "450ms" }}
+                    >
+                      Catálogo
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* IMAGEN HERO - VERSIÓN DESKTOP */}
+            <div
+              className="animate-fade-in-up hidden h-full lg:flex lg:w-[40%] lg:items-center"
+              style={{ animationDelay: "300ms" }}
+            >
+              <div className="border-primary/35 relative flex h-full w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+                <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
+                <div className="relative h-full w-full overflow-hidden rounded-xl">
+                  <Image
+                    fill
+                    alt="Manos costurando a máquina en taller"
+                    className="rounded-xl object-cover object-center"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIOK8UY5TesvxqjgC-Hwzg1ChKEulzHNqCG0kzVs_ttKJCHxUqdEdMLD9L6yLQY_4CZ3SpSURhaA-teMGZlRDHSf54LpLg09zvPPvI3G17Qv2B3ha0XpAczn8Z9ePBV_aU1qq0iOLby22hSdzlVYdDOHJJ79fZECSwenAOvf12ZViI69T3CxsPQ1PlsKOShnHhZk4WRDodUOsCknVFOqWsxCcv4SUiMv-8Wl0u-q-p2XxtTP3wMOohB9ndCnWWERpi7f7fa4dO2RR3"
+                    sizes="40vw"
+                    priority
+                  />
                 </div>
               </div>
             </div>

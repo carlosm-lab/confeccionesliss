@@ -1,6 +1,5 @@
 "use client";
 
-import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { ServicioHero } from "./ServicioHero";
 import { ServicioFAQ } from "./ServicioFAQ";
 import { ServicioCTABanner } from "./ServicioCTABanner";
@@ -43,17 +42,6 @@ export function ServicioDetalleGeneric({
 }: ServicioDetalleGenericProps) {
   return (
     <div className="mx-auto w-full max-w-screen-2xl">
-      {/* Breadcrumb */}
-      <div className="px-5 py-4 md:px-8">
-        <Breadcrumb
-          items={[
-            { label: "Inicio", href: "/" },
-            { label: "Servicios", href: "/servicios" },
-            { label: service.navLabel, href: `/servicios/${service.slug}` },
-          ]}
-        />
-      </div>
-
       {/* Hero Section */}
       <ServicioHero
         title={service.title}

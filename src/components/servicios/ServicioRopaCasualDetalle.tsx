@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { Breadcrumb } from "@/components/ui/Breadcrumb";
+import Link from "next/link";
 import { siteConfig } from "@/config/site";
+import { heroTrustBadges } from "@/lib/seo-data";
 
 // Background fabric texture (dot texture)
 const fabricTextureStyle = {
@@ -15,82 +16,104 @@ export function ServicioRopaCasualDetalle() {
   return (
     <div className="min-h-screen w-full" style={fabricTextureStyle}>
       <div className="w-full">
-        {/* Breadcrumb */}
-        <div className="mx-auto max-w-screen-2xl px-5 py-4 md:px-8">
-          <Breadcrumb
-            items={[
-              { label: "Inicio", href: "/" },
-              { label: "Servicios", href: "/servicios" },
-              { label: "Ropa General", href: "/servicios/ropa-general" },
-            ]}
-          />
-        </div>
-
-        {/* Hero Section */}
-        <section className="w-full px-5 pt-4 pb-10 md:px-8 md:pt-6 md:pb-14">
-          <div className="mx-auto max-w-screen-2xl">
-            <div className="flex flex-col items-center gap-12 md:flex-row">
-              {/* Left: Content Column (55% / md:w-[55%]) */}
-              <div className="flex w-full flex-col items-start md:w-[55%]">
-                <div className="mb-6 flex items-center gap-3">
-                  <div className="bg-secondary h-6 w-1" />
-                  <span className="text-secondary font-sans text-xs font-semibold tracking-wider uppercase">
-                    Servicio
-                  </span>
-                </div>
-                <h1 className="text-primary mb-6 font-serif text-[32px] leading-tight font-bold md:text-[48px]">
+        {/* ── HERO HOME TEMPLATE ── */}
+        <section className="relative flex min-h-[calc(100dvh-56px)] flex-col overflow-x-hidden px-5 pt-4 pb-10 md:min-h-0 md:px-8 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:pb-4">
+          <div className="mx-auto flex h-full w-full max-w-screen-2xl flex-col items-start gap-8 lg:flex-row lg:items-center lg:gap-16">
+            <div className="z-10 flex w-full flex-col items-start lg:min-w-0 lg:flex-1">
+              <h1 className="animate-fade-in-up text-primary mb-6 w-full text-center font-serif text-[32px] leading-tight font-bold md:mb-10 md:flex md:flex-col md:items-center md:text-[48px] lg:mb-6 lg:block lg:text-left">
+                <span className="block w-full text-center lg:text-left">
                   Confección de Ropa Casual y de Vestir
-                </h1>
+                </span>
+              </h1>
 
-                <p className="text-on-surface-variant mb-8 font-sans text-lg leading-relaxed">
-                  ¿Viste algo que te encantó en Pinterest o Instagram? Lo
-                  hacemos realidad. Confeccionamos prendas a la medida
-                  basándonos en tus imágenes o ideas, asegurando un ajuste
-                  perfecto y acabados de alta calidad para cada ocasión.
-                </p>
-                <div className="mb-10 flex flex-wrap gap-4">
-                  <span className="bg-surface-container-low text-primary border-primary/10 inline-flex items-center rounded border px-4 py-2 font-sans text-xs font-semibold tracking-wider uppercase shadow-sm">
-                    <span className="material-symbols-outlined mr-2 text-[18px]">
-                      draw
-                    </span>{" "}
-                    Diseño libre
-                  </span>
-                  <span className="bg-surface-container-low text-primary border-primary/10 inline-flex items-center rounded border px-4 py-2 font-sans text-xs font-semibold tracking-wider uppercase shadow-sm">
-                    <span className="material-symbols-outlined mr-2 text-[18px]">
-                      photo_camera
-                    </span>{" "}
-                    Copiamos de fotos
-                  </span>
-                  <span className="bg-surface-container-low text-primary border-primary/10 inline-flex items-center rounded border px-4 py-2 font-sans text-xs font-semibold tracking-wider uppercase shadow-sm">
-                    <span className="material-symbols-outlined mr-2 text-[18px]">
-                      family_restroom
-                    </span>{" "}
-                    Toda la familia
-                  </span>
-                </div>
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-primary hover:bg-primary/95 inline-flex w-full cursor-pointer items-center justify-center rounded px-8 py-4 font-sans text-xs font-bold tracking-wider text-white uppercase shadow-md transition-all md:w-auto"
+              {/* Contenedor inferior de contenido (Móvil / Tablet) */}
+              <div className="flex w-full flex-col gap-6 md:grid md:grid-cols-2 md:items-stretch md:gap-12 lg:flex lg:flex-col lg:gap-0">
+                {/* IMAGEN HERO - VERSIÓN MÓVIL */}
+                <div
+                  className="animate-fade-in-up relative w-full max-w-sm self-center md:order-2 md:h-full md:max-w-none md:self-stretch lg:hidden"
+                  style={{ animationDelay: "300ms" }}
                 >
-                  Enviar diseño por WhatsApp
-                  <span className="material-symbols-outlined ml-2 text-[20px]">
-                    arrow_forward
-                  </span>
-                </a>
-              </div>
+                  <div className="border-primary/35 relative z-10 flex w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:h-full">
+                    <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
+                    <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl md:aspect-auto md:h-full md:w-full">
+                      <Image
+                        fill
+                        alt="Studio de sastreria y confeccion de ropa"
+                        className="rounded-xl object-cover object-center"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWTRZx5W-uPd8adEBbgLS5OehCkntY8Bct6jTW9MgSskNd10j1uWakL7Oo83OZdMVDjFuz1Vy_P9Q9cklYhvoXwIL3AACQ6vjMya8ncZSiVisb8lZ2BgLAp-0WEXPp6QOw4sNw9qhbgyBqp45lMV8Iyx6iyTZJM_ocAYEujXc-XGbScd_JOFP9Oxz5Iqheh6IZd8sU4M4AxLzkC2BH31Qrep2lmjWFezjyyTKnUPDnIoQtsC9BLgeQd_L_756dG-2pI-mHX-F1o1Xr"
+                        sizes="(max-width:768px) 80vw, 40vw"
+                        priority
+                      />
+                    </div>
+                  </div>
+                </div>
 
-              {/* Right: Image Column (45% / md:w-[45%]) */}
-              <div className="relative mx-auto h-[300px] w-full max-w-[500px] shrink-0 sm:h-[400px] md:h-[500px] md:w-[45%] md:max-w-none">
-                <div className="border-primary/12 relative h-full w-full overflow-hidden rounded-xl border shadow-md">
+                {/* COLUMNA DE TEXTO Y ACCIONES */}
+                <div className="flex w-full flex-col items-start md:order-1 md:justify-center">
+                  <p
+                    className="animate-fade-in-up text-on-surface-variant mb-6 w-full font-sans text-lg leading-relaxed"
+                    style={{ animationDelay: "150ms" }}
+                  >
+                    ¿Viste algo que te encantó en Pinterest o Instagram? Lo
+                    hacemos realidad. Confeccionamos prendas a la medida
+                    basándose en tus imágenes o ideas, asegurando un ajuste
+                    perfecto y acabados de alta calidad para cada ocasión.
+                  </p>
+                  <div className="mb-8 grid w-full grid-cols-2 gap-x-3 gap-y-2.5 md:grid-cols-1 lg:grid-cols-2">
+                    {[
+                      { icon: "draw", text: "Diseño libre" },
+                      { icon: "photo_camera", text: "Copiamos de fotos" },
+                      { icon: "family_restroom", text: "Toda la familia" },
+                      { icon: "straighten", text: "Ajuste perfecto" },
+                    ].map((b, index) => (
+                      <div
+                        key={b.text}
+                        className="border-primary/12 text-primary animate-fade-in-up flex w-full items-center gap-2 rounded-full border bg-white px-4 py-2 font-sans text-sm font-medium shadow-xs"
+                        style={{ animationDelay: `${index * 50 + 200}ms` }}
+                      >
+                        <span className="material-symbols-outlined text-secondary mr-2 shrink-0 text-[16px]">
+                          {b.icon}
+                        </span>
+                        <span className="leading-tight">{b.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex w-full flex-col gap-3 sm:flex-row sm:gap-4">
+                    <a
+                      href="https://maps.app.goo.gl/XSs2vgjLG8uvJGoQ7"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="animate-fade-in-up border-outline text-primary flex h-12 w-full items-center justify-center rounded-md border bg-white px-12 text-center font-serif text-base font-medium whitespace-nowrap transition hover:bg-gray-50 active:scale-[0.97] sm:flex-1"
+                      style={{ animationDelay: "400ms" }}
+                    >
+                      Cómo llegar
+                    </a>
+                    <Link
+                      href="/catalogo"
+                      className="animate-fade-in-up btn-gradient font-body ambient-shadow flex h-12 w-full items-center justify-center rounded-md px-12 text-center text-base font-semibold whitespace-nowrap text-white transition hover:opacity-90 active:scale-[0.97] sm:flex-1"
+                      style={{ animationDelay: "450ms" }}
+                    >
+                      Catálogo
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* IMAGEN HERO - VERSIÓN DESKTOP */}
+            <div
+              className="animate-fade-in-up hidden h-full lg:flex lg:w-[40%] lg:items-center"
+              style={{ animationDelay: "300ms" }}
+            >
+              <div className="border-primary/35 relative flex h-full w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+                <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
+                <div className="relative h-full w-full overflow-hidden rounded-xl">
                   <Image
-                    alt="Studio de sastreria y confeccion de ropa"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWTRZx5W-uPd8adEBbgLS5OehCkntY8Bct6jTW9MgSskNd10j1uWakL7Oo83OZdMVDjFuz1Vy_P9Q9cklYhvoXwIL3AACQ6vjMya8ncZSiVisb8lZ2BgLAp-0WEXPp6QOw4sNw9qhbgyBqp45lMV8Iyx6iyTZJM_ocAYEujXc-XGbScd_JOFP9Oxz5Iqheh6IZd8sU4M4AxLzkC2BH31Qrep2lmjWFezjyyTKnUPDnIoQtsC9BLgeQd_L_756dG-2pI-mHX-F1o1Xr"
                     fill
-                    sizes="(max-width: 768px) 100vw, 45vw"
+                    alt="Studio de sastreria y confeccion de ropa"
+                    className="rounded-xl object-cover object-center"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWTRZx5W-uPd8adEBbgLS5OehCkntY8Bct6jTW9MgSskNd10j1uWakL7Oo83OZdMVDjFuz1Vy_P9Q9cklYhvoXwIL3AACQ6vjMya8ncZSiVisb8lZ2BgLAp-0WEXPp6QOw4sNw9qhbgyBqp45lMV8Iyx6iyTZJM_ocAYEujXc-XGbScd_JOFP9Oxz5Iqheh6IZd8sU4M4AxLzkC2BH31Qrep2lmjWFezjyyTKnUPDnIoQtsC9BLgeQd_L_756dG-2pI-mHX-F1o1Xr"
+                    sizes="40vw"
                     priority
-                    className="object-cover"
                   />
                 </div>
               </div>

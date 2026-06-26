@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Breadcrumb } from "@/components/ui/Breadcrumb";
+import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
+import { heroTrustBadges } from "@/lib/seo-data";
 
 const dotTextureStyle = {
   backgroundImage: `url('data:image/svg+xml;utf8,%3Csvg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23143067" fill-opacity="1" fill-rule="evenodd"%3E%3Ccircle cx="3" cy="3" r="3"/%3E%3Ccircle cx="13" cy="13" r="3"/%3E%3C/g%3E%3C/svg%3E')`,
@@ -62,85 +63,104 @@ export function ServicioSublimacionDetalle() {
 
   return (
     <div className="w-full">
-      {/* Breadcrumb */}
-      <div className="mx-auto max-w-screen-2xl px-5 py-4 md:px-8">
-        <Breadcrumb
-          items={[
-            { label: "Inicio", href: "/" },
-            { label: "Servicios", href: "/servicios" },
-            { label: "Sublimación", href: "/servicios/sublimacion-deportiva" },
-          ]}
-        />
-      </div>
-
-      {/* ── HERO ── */}
-      <section className="w-full px-5 pt-4 pb-10 md:px-8 md:pt-6 md:pb-14">
-        <div className="mx-auto max-w-screen-2xl">
-          <div className="flex flex-col items-center gap-12 md:flex-row">
-            {/* Left: Image (45% / md:w-[45%]) */}
-            <div className="border-primary/12 relative mx-auto h-[300px] w-full max-w-[500px] shrink-0 overflow-hidden rounded-2xl border shadow-sm sm:h-[400px] md:h-[500px] md:w-[45%] md:max-w-none">
-              <Image
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNzJF5IzFnwusc6jtqateTbIc--otqFEfsklVo_8Xei5-kdJ3mLBZ_qLys7bfIWvFXb3e4_1Sk_TUFuY5fit9zyhp3vA7caH7WozRMxPeFZ0tXIu24See7ZoqLnYBi1U0SIZO7hq14ivadINWG2sEn2CE-la0R5IMiad57i0CuHnZL2Y9gMn9uNfgeBYF-2wYieiB43CYKmGOsoCNSFjEcHRJACpVWLyj8W3_VQs9-k651kMJ69PQtggPzo1MXYRFV8lE3Kn-PtRxo"
-                alt="Jerseys deportivos sublimados"
-                fill
-                sizes="(max-width: 768px) 100vw, 45vw"
-                priority
-                className="object-cover"
-              />
-            </div>
-
-            {/* Right: Content (55% / md:w-[55%]) */}
-            <div className="flex w-full flex-col justify-center md:w-[55%]">
-              <div className="mb-6 inline-flex items-center gap-3">
-                <div className="bg-secondary h-4 w-1"></div>
-                <span className="text-on-surface-variant font-sans text-xs font-semibold tracking-wider uppercase">
-                  SERVICIO
-                </span>
-              </div>
-              <h1 className="text-primary mb-6 font-serif text-[28px] leading-tight font-bold md:text-[48px]">
+      {/* ── HERO HOME TEMPLATE ── */}
+      <section className="relative flex min-h-[calc(100dvh-56px)] flex-col overflow-x-hidden px-5 pt-4 pb-10 md:min-h-0 md:px-8 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:pb-4">
+        <div className="mx-auto flex h-full w-full max-w-screen-2xl flex-col items-start gap-8 lg:flex-row-reverse lg:items-center lg:gap-16">
+          <div className="z-10 flex w-full flex-col items-start lg:min-w-0 lg:flex-1">
+            <h1 className="animate-fade-in-up text-primary mb-6 w-full text-center font-serif text-[28px] leading-tight font-bold md:mb-10 md:flex md:flex-col md:items-center md:text-[48px] lg:mb-6 lg:block lg:text-left">
+              <span className="block w-full text-center lg:text-left">
                 Sublimación Textil Full Color
-              </h1>
+              </span>
+            </h1>
 
-              <p className="text-on-surface-variant mb-8 max-w-xl font-sans text-lg leading-relaxed">
-                Impresión textil mediante calor para prendas deportivas. Tinta
-                permanente que se funde con la fibra y nunca se cuartea ni
-                pierde color.
-              </p>
-              <div className="mb-10 flex flex-wrap gap-3">
-                <span className="bg-surface-container-low border-primary/12 text-primary inline-flex items-center rounded-full border px-4 py-2 font-sans text-sm font-medium">
-                  <span className="material-symbols-outlined text-secondary mr-2 text-[16px]">
-                    palette
-                  </span>
-                  Colores vibrantes
-                </span>
-                <span className="bg-surface-container-low border-primary/12 text-primary inline-flex items-center rounded-full border px-4 py-2 font-sans text-sm font-medium">
-                  <span className="material-symbols-outlined text-secondary mr-2 text-[16px]">
-                    water_drop
-                  </span>
-                  No se decolora
-                </span>
-                <span className="bg-surface-container-low border-primary/12 text-primary inline-flex items-center rounded-full border px-4 py-2 font-sans text-sm font-medium">
-                  <span className="material-symbols-outlined text-secondary mr-2 text-[16px]">
-                    touch_app
-                  </span>
-                  Textura invisible
-                </span>
+            {/* Contenedor inferior de contenido (Móvil / Tablet) */}
+            <div className="flex w-full flex-col gap-6 md:grid md:grid-cols-2 md:items-stretch md:gap-12 lg:flex lg:flex-col lg:gap-0">
+              {/* IMAGEN HERO - VERSIÓN MÓVIL */}
+              <div
+                className="animate-fade-in-up relative w-full max-w-sm self-center md:order-2 md:h-full md:max-w-none md:self-stretch lg:hidden"
+                style={{ animationDelay: "300ms" }}
+              >
+                <div className="border-primary/35 relative z-10 flex w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:h-full">
+                  <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
+                  <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl md:aspect-auto md:h-full md:w-full">
+                    <Image
+                      fill
+                      alt="Jerseys deportivos sublimados"
+                      className="rounded-xl object-cover object-center"
+                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNzJF5IzFnwusc6jtqateTbIc--otqFEfsklVo_8Xei5-kdJ3mLBZ_qLys7bfIWvFXb3e4_1Sk_TUFuY5fit9zyhp3vA7caH7WozRMxPeFZ0tXIu24See7ZoqLnYBi1U0SIZO7hq14ivadINWG2sEn2CE-la0R5IMiad57i0CuHnZL2Y9gMn9uNfgeBYF-2wYieiB43CYKmGOsoCNSFjEcHRJACpVWLyj8W3_VQs9-k651kMJ69PQtggPzo1MXYRFV8lE3Kn-PtRxo"
+                      sizes="(max-width:768px) 80vw, 40vw"
+                      priority
+                    />
+                  </div>
+                </div>
               </div>
-              <div>
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-primary hover:bg-primary/95 inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg px-8 py-4 font-sans text-base font-semibold text-white shadow-md transition-all duration-300 hover:shadow-lg"
+
+              {/* COLUMNA DE TEXTO Y ACCIONES */}
+              <div className="flex w-full flex-col items-start md:order-1 md:justify-center">
+                <p
+                  className="animate-fade-in-up text-on-surface-variant mb-6 w-full font-sans text-lg leading-relaxed"
+                  style={{ animationDelay: "150ms" }}
                 >
-                  <span
-                    className="material-symbols-outlined"
-                    aria-hidden="true"
+                  Impresión textil mediante calor para prendas deportivas. Tinta
+                  permanente que se funde con la fibra y nunca se cuartea ni
+                  pierde color.
+                </p>
+                <div className="mb-8 grid w-full grid-cols-2 gap-x-3 gap-y-2.5 md:grid-cols-1 lg:grid-cols-2">
+                  {[
+                    { icon: "palette", text: "Colores vibrantes" },
+                    { icon: "water_drop", text: "No se decolora" },
+                    { icon: "touch_app", text: "Textura invisible" },
+                    { icon: "verified", text: "Alta resolución" },
+                  ].map((b, index) => (
+                    <div
+                      key={b.text}
+                      className="border-primary/12 text-primary animate-fade-in-up flex w-full items-center gap-2 rounded-full border bg-white px-4 py-2 font-sans text-sm font-medium shadow-xs"
+                      style={{ animationDelay: `${index * 50 + 200}ms` }}
+                    >
+                      <span className="material-symbols-outlined text-secondary mr-2 shrink-0 text-[16px]">
+                        {b.icon}
+                      </span>
+                      <span className="leading-tight">{b.text}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex w-full flex-col gap-3 sm:flex-row sm:gap-4">
+                  <a
+                    href="https://maps.app.goo.gl/XSs2vgjLG8uvJGoQ7"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="animate-fade-in-up border-outline text-primary flex h-12 w-full items-center justify-center rounded-md border bg-white px-12 text-center font-serif text-base font-medium whitespace-nowrap transition hover:bg-gray-50 active:scale-[0.97] sm:flex-1"
+                    style={{ animationDelay: "400ms" }}
                   >
-                    chat
-                  </span>
-                  Cotizar sublimación
-                </a>
+                    Cómo llegar
+                  </a>
+                  <Link
+                    href="/catalogo"
+                    className="animate-fade-in-up btn-gradient font-body ambient-shadow flex h-12 w-full items-center justify-center rounded-md px-12 text-center text-base font-semibold whitespace-nowrap text-white transition hover:opacity-90 active:scale-[0.97] sm:flex-1"
+                    style={{ animationDelay: "450ms" }}
+                  >
+                    Catálogo
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* IMAGEN HERO - VERSIÓN DESKTOP */}
+          <div
+            className="animate-fade-in-up hidden h-full lg:flex lg:w-[40%] lg:items-center"
+            style={{ animationDelay: "300ms" }}
+          >
+            <div className="border-primary/35 relative flex h-full w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
+              <div className="relative h-full w-full overflow-hidden rounded-xl">
+                <Image
+                  fill
+                  alt="Jerseys deportivos sublimados"
+                  className="rounded-xl object-cover object-center"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNzJF5IzFnwusc6jtqateTbIc--otqFEfsklVo_8Xei5-kdJ3mLBZ_qLys7bfIWvFXb3e4_1Sk_TUFuY5fit9zyhp3vA7caH7WozRMxPeFZ0tXIu24See7ZoqLnYBi1U0SIZO7hq14ivadINWG2sEn2CE-la0R5IMiad57i0CuHnZL2Y9gMn9uNfgeBYF-2wYieiB43CYKmGOsoCNSFjEcHRJACpVWLyj8W3_VQs9-k651kMJ69PQtggPzo1MXYRFV8lE3Kn-PtRxo"
+                  sizes="40vw"
+                  priority
+                />
               </div>
             </div>
           </div>
@@ -156,7 +176,7 @@ export function ServicioSublimacionDetalle() {
               {/* What is it? */}
               <div className="space-y-6">
                 <div className="mb-4 flex items-center gap-4">
-                  <div className="bg-surface-container-low border-primary/12 text-primary flex h-12 w-12 items-center justify-center rounded-full border">
+                  <div className="border-primary/12 text-primary flex h-12 w-12 items-center justify-center rounded-full border bg-white">
                     <span className="material-symbols-outlined">layers</span>
                   </div>
                   <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
