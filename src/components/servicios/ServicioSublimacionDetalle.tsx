@@ -74,11 +74,11 @@ export function ServicioSublimacionDetalle() {
       </div>
 
       {/* ── HERO ── */}
-      <section className="w-full px-5 pt-4 pb-10 md:px-8 md:pt-6 md:pb-14 lg:flex lg:h-[calc(100dvh-56px)] lg:pb-4">
-        <div className="mx-auto max-w-screen-2xl lg:h-full">
-          <div className="flex flex-col items-center gap-12 md:flex-row lg:h-full">
+      <section className="w-full px-5 pt-4 pb-10 md:px-8 md:pt-6 md:pb-14">
+        <div className="mx-auto max-w-screen-2xl">
+          <div className="flex flex-col items-center gap-12 md:flex-row">
             {/* Left: Image (45% / md:w-[45%]) */}
-            <div className="border-primary/12 relative mx-auto h-[300px] w-full max-w-[500px] shrink-0 overflow-hidden rounded-2xl border shadow-sm sm:h-[400px] md:h-[480px] md:w-[45%] md:max-w-none lg:h-full">
+            <div className="border-primary/12 relative mx-auto h-[300px] w-full max-w-[500px] shrink-0 overflow-hidden rounded-2xl border shadow-sm sm:h-[400px] md:h-[500px] md:w-[45%] md:max-w-none">
               <Image
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNzJF5IzFnwusc6jtqateTbIc--otqFEfsklVo_8Xei5-kdJ3mLBZ_qLys7bfIWvFXb3e4_1Sk_TUFuY5fit9zyhp3vA7caH7WozRMxPeFZ0tXIu24See7ZoqLnYBi1U0SIZO7hq14ivadINWG2sEn2CE-la0R5IMiad57i0CuHnZL2Y9gMn9uNfgeBYF-2wYieiB43CYKmGOsoCNSFjEcHRJACpVWLyj8W3_VQs9-k651kMJ69PQtggPzo1MXYRFV8lE3Kn-PtRxo"
                 alt="Jerseys deportivos sublimados"

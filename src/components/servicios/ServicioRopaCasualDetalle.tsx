@@ -27,10 +27,9 @@ export function ServicioRopaCasualDetalle() {
         </div>
 
         {/* Hero Section */}
-        {/* Hero Section */}
-        <section className="w-full px-5 pt-4 pb-10 md:px-8 md:pt-6 md:pb-14 lg:flex lg:h-[calc(100dvh-56px)] lg:pb-4">
-          <div className="mx-auto max-w-screen-2xl lg:h-full">
-            <div className="flex flex-col items-center gap-12 md:flex-row lg:h-full">
+        <section className="w-full px-5 pt-4 pb-10 md:px-8 md:pt-6 md:pb-14">
+          <div className="mx-auto max-w-screen-2xl">
+            <div className="flex flex-col items-center gap-12 md:flex-row">
               {/* Left: Content Column (55% / md:w-[55%]) */}
               <div className="flex w-full flex-col items-start md:w-[55%]">
                 <div className="mb-6 flex items-center gap-3">
@@ -83,7 +82,7 @@ export function ServicioRopaCasualDetalle() {
               </div>
 
               {/* Right: Image Column (45% / md:w-[45%]) */}
-              <div className="relative mx-auto h-[300px] w-full max-w-[500px] shrink-0 sm:h-[400px] md:h-[480px] md:w-[45%] md:max-w-none lg:h-full">
+              <div className="relative mx-auto h-[300px] w-full max-w-[500px] shrink-0 sm:h-[400px] md:h-[500px] md:w-[45%] md:max-w-none">
                 <div className="border-primary/12 relative h-full w-full overflow-hidden rounded-xl border shadow-md">
                   <Image
                     alt="Studio de sastreria y confeccion de ropa"

@@ -79,11 +79,11 @@ export function ServicioManoObraDetalle() {
         </div>
 
         {/* Hero Section */}
-        <section className="w-full px-5 pt-4 pb-10 md:px-8 md:pt-6 md:pb-14 lg:flex lg:h-[calc(100dvh-56px)] lg:pb-4">
-          <div className="mx-auto max-w-screen-2xl lg:h-full">
-            <div className="flex flex-col items-center gap-12 lg:h-full lg:flex-row">
+        <section className="w-full px-5 pt-4 pb-10 md:px-8 md:pt-6 md:pb-14">
+          <div className="mx-auto max-w-screen-2xl">
+            <div className="flex flex-col items-center gap-12 lg:flex-row">
               {/* Left: Image (45% / lg:w-[45%]) */}
-              <div className="border-primary/12 relative mx-auto h-[300px] w-full max-w-[500px] shrink-0 overflow-hidden rounded-xl border shadow-sm sm:h-[400px] lg:h-full lg:w-[45%] lg:max-w-none">
+              <div className="border-primary/12 relative mx-auto h-[300px] w-full max-w-[500px] shrink-0 overflow-hidden rounded-xl border shadow-sm sm:h-[400px] lg:h-[500px] lg:w-[45%] lg:max-w-none">
                 <Image
                   alt="Manos costurando a máquina en taller"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIOK8UY5TesvxqjgC-Hwzg1ChKEulzHNqCG0kzVs_ttKJCHxUqdEdMLD9L6yLQY_4CZ3SpSURhaA-teMGZlRDHSf54LpLg09zvPPvI3G17Qv2B3ha0XpAczn8Z9ePBV_aU1qq0iOLby22hSdzlVYdDOHJJ79fZECSwenAOvf12ZViI69T3CxsPQ1PlsKOShnHhZk4WRDodUOsCknVFOqWsxCcv4SUiMv-8Wl0u-q-p2XxtTP3wMOohB9ndCnWWERpi7f7fa4dO2RR3"

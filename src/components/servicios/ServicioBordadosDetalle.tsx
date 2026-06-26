@@ -89,9 +89,9 @@ export function ServicioBordadosDetalle() {
       </div>
 
       {/* ── HERO ── */}
-      <section className="w-full px-5 pt-4 pb-10 md:px-8 md:pt-6 md:pb-14 lg:flex lg:h-[calc(100dvh-56px)] lg:pb-4">
-        <div className="mx-auto max-w-screen-2xl lg:h-full">
-          <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-12 md:gap-8 lg:h-full lg:gap-16">
+      <section className="w-full px-5 pt-4 pb-10 md:px-8 md:pt-6 md:pb-14">
+        <div className="mx-auto max-w-screen-2xl">
+          <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-12 md:gap-8 lg:gap-16">
             {/* Left: Content (55% / md:col-span-7) */}
             <div className="flex flex-col items-start gap-6 md:col-span-7">
               {/* Label "SERVICIO" con barra roja */}
@@ -154,7 +154,7 @@ export function ServicioBordadosDetalle() {
             </div>
 
             {/* Right: Image (45% / md:col-span-5) */}
-            <div className="relative mx-auto h-[300px] w-full max-w-[500px] sm:h-[400px] md:col-span-5 md:h-[500px] md:max-w-none lg:h-full">
+            <div className="relative mx-auto h-[300px] w-full max-w-[500px] sm:h-[400px] md:col-span-5 md:h-[500px] md:max-w-none">
               <Image
                 src={DATA.heroImage}
                 alt="Máquina de bordado computarizado"
