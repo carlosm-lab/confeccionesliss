@@ -18,6 +18,28 @@ This document tracks important architectural decisions made during the project l
 
 _ (Add new decisions below this line)_
 
+**Date:** 2026-06-26
+**Decision:** Ruta dinámica de servicios [slug] y modularización del diseño de Stitch
+**Context:** Se requería implementar la página de servicio de Bordado Computarizado utilizando el diseño exacto (pixel a pixel) generado en Google Stitch, pero manteniendo la flexibilidad de soportar los otros 4 servicios de forma dinámica en el futuro sin modificar la arquitectura de ruteo.
+**Decision:**
+
+- Se configuró la ruta dinámica `src/app/(public)/servicios/[slug]/page.tsx` con soporte para SSG puro (`generateStaticParams`).
+- Se implementó un componente coordinador `ServicioDetallePage` que actúa como selector.
+- Si el slug es `bordados-personalizados`, redirige al componente dedicado `ServicioBordadosDetalle` el cual ensambla las sub-secciones (`ServicioHero`, `ServicioEditorial`, `ServicioFAQ` y `ServicioCTABanner`) con datos fijos e imágenes de alta fidelidad provenientes del prototipo.
+- Para el resto de los slugs, se renderiza un fallback `ServicioDetalleGeneric` que consume dinámicamente la información de `@/data/services`.
+- La textura del fondo de tela y las transiciones del acordeón se modularizaron usando CSS en línea (inline styles) y clases nativas de React con estados (`useState`) respectivamente, garantizando una implementación autoportante.
+  **Consequences:**
+- Se asegura una réplica exacta de los prototipos de Stitch sin alterar la consistencia del resto de las páginas del sitio.
+- A la fecha, se han implementado por completo los 5 componentes detallados específicos:
+  1. `ServicioBordadosDetalle` (`bordados-personalizados`)
+  2. `ServicioSublimacionDetalle` (`sublimacion-deportiva`)
+  3. `ServicioSastreriaDetalle` (`confeccion-a-medida`)
+  4. `ServicioManoObraDetalle` (`mano-de-obra`)
+  5. `ServicioRopaCasualDetalle` (`ropa-general`)
+- El componente `ServicioDetalleGeneric` se mantiene como fallback de seguridad de la arquitectura.
+
+---
+
 **Date:** 2026-06-20
 **Decision:** SEC-001 — NULL-safe authorization check en funciones SECURITY DEFINER
 **Context:** Las funciones `admin_delete_user`, `admin_set_user_role`, `get_dashboard_data`, `get_users_list` usaban el operador `<>` para verificar el rol de admin. En PL/pgSQL, `IF NULL <> 'admin' THEN` evalúa la condición como NULL (no TRUE ni FALSE), lo que hace que el bloque `RAISE EXCEPTION` no se ejecute. Combinado con un GRANT a `PUBLIC`, esto significaba que un usuario anónimo podía ejecutar funciones de admin privilegiadas.

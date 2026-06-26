@@ -63,6 +63,31 @@
   --font-label: "Manrope", sans-serif;
   --font-sans: "Manrope", sans-serif;
 
+  /* Fonts - 8-bit playground */
+  --font-focal: var(--font-focal);
+  --font-chivo-mono: var(--font-chivo-mono);
+  --font-publicsansrounded: var(--font-publicsansrounded);
+
+  /* Colors - 8-bit playground */
+  --color-pixel-lime: #f1ffd2;
+  --color-sky-cyan: #99ecff;
+  --color-electric-violet: #6120ee;
+  --color-deep-ultraviolet: #4a17b0;
+  --color-lavender-pixel: #ab77ff;
+  --color-lilac-wash: #d0b7f9;
+  --color-bubblegum-pink: #ffddfa;
+  --color-forest-pixel: #004012;
+  --color-cobalt-pixel: #0a4dce;
+  --color-paper-white: #ffffff;
+  --color-hairline-gray: #e5e7eb;
+  --color-fog-surface: #f4f4f5;
+  --color-ink-black: #000000;
+  --color-graphite: #1b1b1d;
+  --color-carbon: #252527;
+  --color-obsidian: #121216;
+  --color-slate-body: #383a42;
+  --color-ash: #787882;
+
   /* Emil Kowalski: custom easing curves for premium motion */
   --ease-out-expo: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out-expo: cubic-bezier(0.77, 0, 0.175, 1);

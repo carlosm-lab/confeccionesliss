@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bordado Computarizado - Confecciones Liss</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&amp;family=Noto+Serif:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#30323c",
+                        "on-secondary-container": "#650001",
+                        "on-background": "#191c1e",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#455d96",
+                        "on-secondary-fixed-variant": "#8e130c",
+                        "surface-container-low": "#f2f4f6",
+                        "primary-container": "#143067",
+                        "surface-dim": "#d9dadc",
+                        "surface-container-highest": "#e1e2e4",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#e1e1ee",
+                        "secondary-fixed-dim": "#ffb4a9",
+                        "on-tertiary-container": "#999aa6",
+                        "on-tertiary-fixed": "#191b24",
+                        "inverse-primary": "#b1c5ff",
+                        "on-primary-fixed": "#001946",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#444650",
+                        "tertiary": "#1b1d26",
+                        "on-surface-variant": "#444650",
+                        "on-primary": "#ffffff",
+                        "background": "#f8f9fb",
+                        "primary": "#001b4a",
+                        "inverse-surface": "#2e3132",
+                        "on-surface": "#191c1e",
+                        "secondary": "#b02d22",
+                        "primary-fixed": "#d9e2ff",
+                        "inverse-on-surface": "#f0f1f3",
+                        "secondary-fixed": "#ffdad5",
+                        "surface-container-high": "#e7e8ea",
+                        "outline": "#757781",
+                        "surface-bright": "#f8f9fb",
+                        "tertiary-fixed-dim": "#c5c6d2",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#b1c5ff",
+                        "secondary-container": "#fc6452",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e1e2e4",
+                        "on-primary-container": "#8299d7",
+                        "on-error": "#ffffff",
+                        "surface-container": "#edeef0",
+                        "on-primary-fixed-variant": "#2c457d",
+                        "surface": "#f8f9fb",
+                        "outline-variant": "#c4c6d1",
+                        "on-secondary-fixed": "#410000"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "container-max": "1200px",
+                        "margin-desktop": "40px",
+                        "margin-mobile": "16px",
+                        "unit": "8px"
+                    },
+                    "fontFamily": {
+                        "display": ["Noto Serif"],
+                        "headline-lg": ["Noto Serif"],
+                        "body-sm": ["Manrope"],
+                        "body-md": ["Manrope"],
+                        "label-caps": ["Manrope"],
+                        "headline-lg-mobile": ["Noto Serif"],
+                        "body-lg": ["Manrope"],
+                        "headline-md": ["Noto Serif"]
+                    },
+                    "fontSize": {
+                        "display": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .fabric-texture {
+            background-image: url('data:image/svg+xml,%3Csvg width="20" height="20" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M0 0h20v20H0z" fill="none"/%3E%3Cpath d="M0 0h1v20H0zm2 0h1v20H2zm2 0h1v20H4zm2 0h1v20H6zm2 0h1v20H8zm2 0h1v20h-1zm2 0h1v20h-1zm2 0h1v20h-1zm2 0h1v20h-1zm2 0h1v20h-1zM0 0v1h20V0zm0 2v1h20V2zm0 2v1h20V4zm0 2v1h20V6zm0 2v1h20V8zm0 2v1h20v-1zm0 2v1h20v-1zm0 2v1h20v-1zm0 2v1h20v-1zm0 2v1h20v-1z" fill="%23143067" fill-opacity="0.03"/%3E%3C/svg%3E');
+        }
+        .accordion-content {
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            max-height: 0;
+            overflow: hidden;
+        }
+        .accordion-active .accordion-content {
+            max-height: 200px;
+            padding-bottom: 1rem;
+        }
+        .accordion-active .accordion-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased pt-[88px] md:pt-[96px]">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 bg-surface-container-lowest dark:bg-tertiary border-b border-primary/10 dark:border-white/10 flat no shadows">
+<div class="font-headline-md text-headline-md text-primary dark:text-primary-fixed">Confecciones Liss</div>
+<nav class="hidden md:flex gap-8">
+<a class="font-body-md text-body-md font-semibold text-on-surface-variant dark:text-on-tertiary-container hover:text-secondary transition-colors duration-200" href="#">Catálogo</a>
+<a class="font-body-md text-body-md font-semibold text-secondary border-b-2 border-secondary pb-1 hover:text-secondary transition-colors duration-200" href="#">Servicios</a>
+<a class="font-body-md text-body-md font-semibold text-on-surface-variant dark:text-on-tertiary-container hover:text-secondary transition-colors duration-200" href="#">Contacto</a>
+</nav>
+<button class="hidden md:flex items-center gap-2 bg-primary-container text-on-primary px-6 py-3 rounded-lg font-body-md font-semibold hover:bg-primary transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat</span>
+            WhatsApp
+        </button>
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</header>
+<main class="max-w-[1200px] mx-auto w-full">
+<!-- Breadcrumb -->
+<div class="px-margin-mobile md:px-margin-desktop py-4">
+<p class="font-body-sm text-body-sm text-on-surface-variant">Inicio &gt; Servicios &gt; Bordados</p>
+</div>
+<!-- Hero Section -->
+<section class="px-margin-mobile md:px-margin-desktop py-8 md:py-16">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-gutter items-center">
+<!-- Left: Content (55%) -->
+<div class="md:col-span-7 flex flex-col items-start gap-6">
+<div class="flex items-center gap-4">
+<div class="w-1 h-6 bg-[#B43024]"></div>
+<span class="font-label-caps text-label-caps uppercase text-primary-container tracking-widest">Servicio</span>
+</div>
+<h1 class="font-display text-headline-lg-mobile md:text-display text-primary-container">
+                        Servicio de Bordado Computarizado
+                    </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                        Personalizamos sus prendas con precisión milimétrica. Nuestro servicio de bordado computarizado garantiza durabilidad, colores vibrantes y un acabado profesional que refleja la calidad de su marca. Ideal para uniformes, gorras y textiles corporativos.
+                    </p>
+<div class="flex flex-wrap gap-3 mt-2">
+<div class="bg-primary-container text-on-primary px-4 py-2 rounded-full font-body-sm text-body-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">verified</span>
+                            Alta precisión
+                        </div>
+<div class="bg-primary-container text-on-primary px-4 py-2 rounded-full font-body-sm text-body-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">local_shipping</span>
+                            Entregas rápidas
+                        </div>
+<div class="bg-primary-container text-on-primary px-4 py-2 rounded-full font-body-sm text-body-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">design_services</span>
+                            Digitalización gratis
+                        </div>
+</div>
+<button class="mt-6 flex items-center gap-2 bg-primary-container text-on-primary px-8 py-4 rounded-[12px] font-body-md font-semibold hover:bg-primary transition-colors shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat</span>
+                        Cotizar bordado
+                    </button>
+</div>
+<!-- Right: Image (45%) -->
+<div class="md:col-span-5 w-full h-[400px] md:h-[500px]">
+<img alt="Industrial embroidery machine" class="w-full h-full object-cover rounded-[16px] border border-primary/12 shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6jGN2zqo5KCCZFCLxiPbzhahgf_EQFytz6rb5HVdLlxqQ4VJ8S1BystI0w_Sta5EGnt883oBvXgG3gk2yTOSoMhldpg6c_HOI1mhG78RTn1k3DAgUWm-M1MV43SEe5Wwc-0lmwCzphS3Gk7kVyKcx1ECxskfTUUKZSmBUmlpCpTttbR7UJq_C73mUbiJyOng80OMkHgyXaCEKmQxEaZQ3P-IWvpA3heAMe9VX4m9ryoy-Ft3YfkSHFcqjMfCPf0hV79efXsjD9FLV"/>
+</div>
+</div>
+</section>
+<!-- Editorial Sections -->
+<section class="px-margin-mobile md:px-margin-desktop py-12 md:py-20 flex flex-col gap-24">
+<!-- Section A -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+<div class="order-2 md:order-1 h-[300px] bg-surface-container-lowest rounded-[16px] border border-primary/12 p-8 flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 fabric-texture opacity-50"></div>
+<img class="w-full h-full object-cover absolute inset-0 z-0" data-alt="A close-up shot of vibrant, tightly woven embroidery threads forming a sharp, detailed geometric logo on crisp white fabric. The lighting is studio-quality, highlighting the texture and sheen of the thread against the matte fabric background. The color palette features deep navy blues, warm terracotta reds, and crisp whites. The aesthetic is highly professional, clean, and artisanal, emphasizing precision and craftsmanship." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzNcREsUj-gAOY0MsFycUFSnXBmyNU2dpjy0BeOLrQD7UVXvxs7ioNsaS5Ip6xxQNurkxAkP0WxpR-NSCOFYUVrYslQBhv-Ls_Cb8TXdSeM2JatkyiduxXypH34w4_rEjNOhFeJdB4SvV8vBjjzqefhIhzzW9D4cKPW4s95WJRzaf1u4zTdfyznFV9zxr0avV4zYMNwRp3cciNvhdn2abhUSn8YC0ei8gB1IgpwoCCYH-lM6mH27YC0yov-kEUgEVy5U-KrD2pcpjX"/>
+<div class="z-10 bg-white/90 backdrop-blur-sm p-6 rounded-full shadow-lg">
+<span class="material-symbols-outlined text-[48px] text-primary-container">strikethrough_s</span>
+</div>
+</div>
+<div class="order-1 md:order-2 flex flex-col gap-4">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary-container flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-3xl">info</span>
+                        ¿Qué es el bordado computarizado?
+                    </h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        Es el proceso de reproducir un diseño digital mediante hilos sobre una prenda textil, utilizando máquinas de coser industriales controladas por computadora. Este método ofrece una resistencia superior frente a lavados y fricción constante, garantizando que su logotipo mantenga su forma y color durante toda la vida útil de la prenda. Es el estándar de oro para indumentaria corporativa y uniformes de trabajo que requieren transmitir una imagen sólida y profesional.
+                    </p>
+</div>
+</div>
+<!-- Section B -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+<div class="flex flex-col gap-4">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary-container">
+                        ¿Sobre qué prendas bordamos?
+                    </h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        Nuestra tecnología nos permite adaptar la tensión del hilo y el tipo de puntada a una amplia variedad de textiles. Desde telas ligeras hasta materiales gruesos, ajustamos cada matriz de bordado para evitar frunces o daños en la tela original.
+                    </p>
+<ul class="flex flex-col gap-3 mt-4">
+<li class="flex items-center gap-3 font-body-md text-on-surface">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span> Polos camiseros y camisetas (Algodón, Piqué)
+                        </li>
+<li class="flex items-center gap-3 font-body-md text-on-surface">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span> Camisas corporativas (Oxford, Popelina)
+                        </li>
+<li class="flex items-center gap-3 font-body-md text-on-surface">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span> Casacas, chalecos y polares
+                        </li>
+<li class="flex items-center gap-3 font-body-md text-on-surface">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span> Gorras, sombreros y accesorios textiles
+                        </li>
+<li class="flex items-center gap-3 font-body-md text-on-surface">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span> Ropa de trabajo industrial (Drill, Denim)
+                        </li>
+</ul>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="aspect-square bg-surface-container-lowest rounded-[16px] border border-primary/12 p-4 flex flex-col items-center justify-center text-center gap-2">
+<img class="w-full h-24 object-cover rounded-lg mb-2" data-alt="A neatly folded pile of premium piqué polo shirts in navy blue, white, and subtle light gray. The fabrics have a distinct, high-quality waffle texture clearly visible under soft, natural studio lighting. A small, elegant embroidered crest is visible on the top navy shirt. The setting is clean, minimalist, and professional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJPKOJfFpAaIKRzm8AhXmbyfIoc018Ivq4Pxf59-SNQQ4w2mjiHNzOG-qyRI-I6TGL80ZSvpaCeUztBA59MoaxJc2GduXCO2MZr24AB9eWmBLJc2h8M9OliaNhDJeykMxDt_wKfUTmfotfdKY0BlSfDPPAMyDpcYJJrLrDlAmLD69XyHg058Xlp0HUDBw9gqW3auy2Ly3s34IhA9LQMHLyN0aGfn5LpCYPzi2BFsl4Nj5VDG9b-kL9-iomEX3iTqfVqwrKS0bm2Jez"/>
+<span class="font-label-caps text-label-caps text-primary-container uppercase">Polos &amp; Piqué</span>
+</div>
+<div class="aspect-square bg-surface-container-lowest rounded-[16px] border border-primary/12 p-4 flex flex-col items-center justify-center text-center gap-2">
+<img class="w-full h-24 object-cover rounded-lg mb-2" data-alt="A close-up of a crisp, light blue Oxford cloth button-down shirt collar and chest area. The weave of the Oxford cotton is distinct. A perfectly aligned, small corporate logo is embroidered in deep navy thread on the chest. The lighting is bright and airy, conveying cleanliness and corporate professionalism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8UALRQZEd-VvcVKP-Jn-M3jfZTEYqGwxxmYdsOAWkJknIahgkm3Z6h9ECQCY48Y2gzKdvj9NQM0pxuZCooed187gNsOcUAOkek8mhY1vItk8jwBgNhciVFgD0Z1hJbyH54LvVFO0QfWgi3SDLRJ4gbvOkj4uiER7tFqf3WnV0FCcNedE962G8L6RaKfDQc3tbefLnBYbGqnBPvrigNxqtF-7nK_KATm4nSHHvbHpMSNp7F55EphIvk1SpOP02ix76oyihUeIOYuoo"/>
+<span class="font-label-caps text-label-caps text-primary-container uppercase">Camisas Oxford</span>
+</div>
+<div class="aspect-square bg-surface-container-lowest rounded-[16px] border border-primary/12 p-4 flex flex-col items-center justify-center text-center gap-2">
+<img class="w-full h-24 object-cover rounded-lg mb-2" data-alt="A stack of heavy-duty drill cotton workwear jackets in navy blue and deep terracotta red. The fabric is thick and durable. A large, complex safety logo is embroidered on the back of the top jacket, showing high thread density and precision. The lighting emphasizes the rugged yet tailored nature of the garments." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZfj19Pxka9aPjvaZscboS6tUZIxvkYYseVmlKiEhmBF0ibhYR7ifJT9IgWbACVRotvlJezaSRhGyIPZPlxpG7kdLdBBjAmgIb6Wis4l-SVh3zG1ykS68SefpMK4_bNH4yULGR7MEsEzFnV1AlQ0FovN59TCktEn8nqoxR_G5FLie5xziA-YxJrt6FMz55pYhdBHa6EmjcLCrUZjqLPf5CmMTTTNdi4tA_YRdL3f04fAq_b6gdYyxrDEv_4BmfI58L_N7bu46DNWLp"/>
+<span class="font-label-caps text-label-caps text-primary-container uppercase">Ropa Industrial</span>
+</div>
+<div class="aspect-square bg-surface-container-lowest rounded-[16px] border border-primary/12 p-4 flex flex-col items-center justify-center text-center gap-2">
+<img class="w-full h-24 object-cover rounded-lg mb-2" data-alt="Three structured, professional baseball caps arranged neatly in a row on a clean white surface. The caps are navy blue, white, and a soft gray. Each cap features a cleanly embroidered 3D puff logo on the front panels. The lighting is sharp, creating subtle shadows that highlight the 3D effect of the embroidery." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdUQIwc-E3pdFJEWG4QTQnvndOiZYLnNPV3y_iDB8BId7OI9gYFUQIW4hgxN2tBQTepVtNE11XKx_lyNx_ulTkZfjbRI7isQmNauJhdMDYwf0aW-oPURA5RAArR74NEZxsR4g26w4rE2hu7e9WA4r7Lo8SeJF6LN3zNc2vlSUbbeZbFX9c1Q63mJrmJ2higZ6uzSA-AOzigwgQG8XxTxkRcmeH7OHqVpF7hlVgTvcKVl-cqf1aJDOXdiPu0_67C4feI_9QVW3TDThy"/>
+<span class="font-label-caps text-label-caps text-primary-container uppercase">Gorras</span>
+</div>
+</div>
+</div>
+<!-- Section C -->
+<div class="flex flex-col gap-12 bg-surface-container-lowest border border-primary/12 rounded-[16px] p-8 md:p-12 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-bl-full -z-10"></div>
+<div class="text-center max-w-2xl mx-auto flex flex-col gap-4">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary-container">
+                        Proceso de digitalización
+                    </h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        Transformamos su logo en un programa que la máquina de bordar entiende. Este proceso, conocido como "ponchado" o matrizaje, es crucial para determinar la dirección de la puntada, densidad y orden de los colores.
+                    </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+<!-- Connecting arrows (visible on md+) -->
+<div class="hidden md:block absolute top-1/2 left-1/4 right-1/4 h-[2px] bg-secondary/30 -translate-y-1/2 z-0"></div>
+<!-- Step 1 -->
+<div class="bg-white border border-primary/12 rounded-[16px] p-6 flex flex-col items-center text-center gap-4 relative z-10 shadow-sm">
+<div class="w-16 h-16 rounded-full bg-primary-container text-white flex items-center justify-center text-2xl font-display shadow-md">1</div>
+<h3 class="font-body-lg text-body-lg font-semibold text-primary-container">Digitalizar</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Convertimos su archivo de imagen (JPG, PNG, PDF) en una matriz de bordado profesional.</p>
+<span class="material-symbols-outlined text-secondary mt-2 hidden md:hidden">arrow_downward</span>
+</div>
+<!-- Step 2 -->
+<div class="bg-white border border-primary/12 rounded-[16px] p-6 flex flex-col items-center text-center gap-4 relative z-10 shadow-sm">
+<div class="w-16 h-16 rounded-full bg-primary-container text-white flex items-center justify-center text-2xl font-display shadow-md">2</div>
+<h3 class="font-body-lg text-body-lg font-semibold text-primary-container">Configurar</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Asignamos los colores de hilo exactos y configuramos la tensión según el tipo de tela a bordar.</p>
+<span class="material-symbols-outlined text-secondary mt-2 hidden md:hidden">arrow_downward</span>
+</div>
+<!-- Step 3 -->
+<div class="bg-white border border-primary/12 rounded-[16px] p-6 flex flex-col items-center text-center gap-4 relative z-10 shadow-sm">
+<div class="w-16 h-16 rounded-full bg-secondary text-white flex items-center justify-center text-2xl font-display shadow-md">3</div>
+<h3 class="font-body-lg text-body-lg font-semibold text-secondary">Bordar</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Nuestras máquinas multicabezal ejecutan el diseño con alta velocidad y precisión absoluta.</p>
+</div>
+</div>
+</div>
+<!-- Section D -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center bg-surface p-8 rounded-[16px] border border-primary/12">
+<div class="flex flex-col gap-4">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary-container">
+                        Pedidos mínimos y tiempos
+                    </h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        Atendemos desde pequeñas empresas hasta corporaciones. Nuestros tiempos de entrega están optimizados para garantizar calidad sin demoras innecesarias.
+                    </p>
+</div>
+<div class="flex flex-col gap-6">
+<div class="flex items-center gap-4 bg-white p-4 rounded-[12px] border border-primary/12">
+<span class="material-symbols-outlined text-3xl text-secondary">inventory_2</span>
+<div>
+<p class="font-label-caps text-label-caps uppercase text-on-surface-variant">Pedido Mínimo</p>
+<p class="font-body-lg text-body-lg font-semibold text-primary-container">Desde 12 unidades</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-white p-4 rounded-[12px] border border-primary/12">
+<span class="material-symbols-outlined text-3xl text-secondary">schedule</span>
+<div>
+<p class="font-label-caps text-label-caps uppercase text-on-surface-variant">Tiempo Promedio</p>
+<p class="font-body-lg text-body-lg font-semibold text-primary-container">3 a 5 días hábiles</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 text-xs">Sujeto a volumen y complejidad del logo.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="px-margin-mobile md:px-margin-desktop py-12 md:py-16">
+<div class="text-center mb-12">
+<h2 class="font-display text-headline-lg-mobile md:text-headline-lg text-primary-container">Preguntas Frecuentes</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-4">Resolvemos sus dudas sobre el proceso de bordado.</p>
+</div>
+<div class="max-w-3xl mx-auto flex flex-col gap-4">
+<!-- FAQ 1 -->
+<div class="bg-white border border-primary/12 rounded-[16px] overflow-hidden" onclick="this.classList.toggle('accordion-active')">
+<button class="w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+<span class="font-display text-body-lg font-bold text-primary-container">¿Cuánto cuesta bordar un logo?</span>
+<span class="material-symbols-outlined text-[#B43024] transition-transform duration-300 accordion-icon">expand_more</span>
+</button>
+<div class="accordion-content px-6">
+<p class="font-body-md text-body-md text-on-surface-variant border-t border-primary/10 pt-4">
+                            El costo no depende del número de colores, sino de la cantidad de puntadas requeridas (tamaño y densidad del diseño) y del volumen total de prendas. Le recomendamos enviarnos su diseño para realizar una cotización exacta sin compromiso.
+                        </p>
+</div>
+</div>
+<!-- FAQ 2 -->
+<div class="bg-white border border-primary/12 rounded-[16px] overflow-hidden" onclick="this.classList.toggle('accordion-active')">
+<button class="w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+<span class="font-display text-body-lg font-bold text-primary-container">¿Se puede bordar sobre cualquier color de tela?</span>
+<span class="material-symbols-outlined text-[#B43024] transition-transform duration-300 accordion-icon">expand_more</span>
+</button>
+<div class="accordion-content px-6">
+<p class="font-body-md text-body-md text-on-surface-variant border-t border-primary/10 pt-4">
+                            Sí. Contamos con una amplia paleta de hilos en diversos tonos. Si su tela es oscura, recomendamos usar un hilo base blanco bajo el diseño principal para asegurar que los colores de su logo resalten perfectamente sin perder intensidad.
+                        </p>
+</div>
+</div>
+<!-- FAQ 3 -->
+<div class="bg-white border border-primary/12 rounded-[16px] overflow-hidden" onclick="this.classList.toggle('accordion-active')">
+<button class="w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+<span class="font-display text-body-lg font-bold text-primary-container">¿El bordado se deshila con los lavados?</span>
+<span class="material-symbols-outlined text-[#B43024] transition-transform duration-300 accordion-icon">expand_more</span>
+</button>
+<div class="accordion-content px-6">
+<p class="font-body-md text-body-md text-on-surface-variant border-t border-primary/10 pt-4">
+                            No. Utilizamos hilos de poliéster de alta tenacidad que son resistentes a lavados industriales, cloro y fricción. El bordado es, por naturaleza, la técnica de personalización más duradera disponible en el mercado textil.
+                        </p>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Banner -->
+<section class="px-margin-mobile md:px-margin-desktop py-12 md:py-20 mb-12">
+<div class="w-full bg-[#143067] rounded-[24px] relative overflow-hidden px-8 py-16 md:py-24 flex flex-col items-center text-center gap-6 shadow-lg">
+<div class="absolute inset-0 opacity-[0.06] bg-[url('https://www.transparenttextures.com/patterns/woven.png')] z-0"></div>
+<h2 class="font-display text-headline-lg-mobile md:text-display text-white z-10">
+                    ¿Necesitas bordar tu logo?
+                </h2>
+<p class="font-body-lg text-body-lg text-white/90 max-w-2xl z-10">
+                    Envíanos tu diseño y la cantidad que necesitas. Te enviaremos una cotización detallada y una prueba digital de cómo quedará tu matriz de bordado.
+                </p>
+<button class="mt-4 z-10 flex items-center gap-2 bg-white text-[#143067] px-8 py-4 rounded-[12px] font-body-md font-bold hover:bg-surface transition-colors shadow-md">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat</span>
+                    Solicitar cotización
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 px-margin-mobile md:px-margin-desktop flex flex-col items-center text-center gap-6 bg-primary dark:bg-primary-container relative overflow-hidden before:content-[''] before:absolute before:inset-0 before:opacity-[0.06] before:bg-[url('https://www.transparenttextures.com/patterns/woven.png')] flat no shadows">
+<div class="font-headline-md text-headline-md text-on-primary z-10">Confecciones Liss</div>
+<nav class="flex flex-wrap justify-center gap-6 z-10">
+<a class="font-body-sm text-body-sm text-on-primary/80 hover:text-on-primary transition-opacity" href="#">Catálogo</a>
+<a class="font-body-sm text-body-sm text-on-primary font-bold hover:text-on-primary transition-opacity" href="#">Servicios</a>
+<a class="font-body-sm text-body-sm text-on-primary/80 hover:text-on-primary transition-opacity" href="#">Contacto</a>
+<a class="font-body-sm text-body-sm text-on-primary/80 hover:text-on-primary transition-opacity" href="#">Privacidad</a>
+</nav>
+<p class="font-body-sm text-body-sm text-on-primary/60 mt-4 z-10">© 2024 Confecciones Liss. Artesanía y Tradición.</p>
+</footer>
+</body></html>

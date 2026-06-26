@@ -444,7 +444,78 @@ Cada ruta del proyecto tiene un `loading.tsx` propio que Next.js muestra automá
 | `/admin/usuarios`         | `src/app/(admin)/admin/usuarios/loading.tsx`          |
 | `/admin/login`            | `src/app/(admin)/admin/login/loading.tsx`             |
 
-**Setup global:**
-
-- `@aejkatappaja/phantom-ui/ssr.css` importado en `src/app/layout.tsx` (evita flash pre-hidratación)
 - `src/phantom-ui.d.ts` declara los tipos JSX de `<phantom-ui>` para TypeScript
+
+## Servicios Components
+
+### ServicioDetallePage
+
+- **Ruta:** `src/components/servicios/ServicioDetallePage.tsx`
+- **Descripción:** Coordinador principal de la página de detalles de servicios. Muestra la página de bordado computarizado personalizada o una plantilla genérica para otros servicios.
+- **Props:**
+  - `service: ServicePage` — Datos del servicio a renderizar.
+
+### ServicioBordadosDetalle
+
+- **Ruta:** `src/components/servicios/ServicioBordadosDetalle.tsx`
+- **Descripción:** Vista detallada y específica del servicio de Bordado Computarizado. Ensambla el Hero, Editorial, FAQ y CTABanner con los datos precisos del prototipo.
+- **Props:** No recibe props.
+
+### ServicioSublimacionDetalle
+
+- **Ruta:** `src/components/servicios/ServicioSublimacionDetalle.tsx`
+- **Descripción:** Vista detallada y específica del servicio de Sublimación Textil Full Color. Ensambla la estructura del prototipo: Hero invertido (imagen izquierda), bloques editoriales con indicador de poliéster requerido, tabla comparativa con técnica tradicional, flujo de proceso de 4 pasos y banner final.
+- **Props:** No recibe props.
+
+### ServicioSastreriaDetalle
+
+- **Ruta:** `src/components/servicios/ServicioSastreriaDetalle.tsx`
+- **Descripción:** Vista detallada y específica del servicio de Confección y Sastrería a la Medida. Ensambla el Hero asimétrico con fondo texturizado y caja sombreada, vitrina de las 12 medidas anatómicas requeridas, listado de tallas con destaque visual, grilla de artículos informativos (con flujo en 3 pasos y listado de prendas) y el acordeón de FAQs.
+- **Props:** No recibe props.
+
+### ServicioManoObraDetalle
+
+- **Ruta:** `src/components/servicios/ServicioManoObraDetalle.tsx`
+- **Descripción:** Vista detallada y específica del servicio de Solo Mano de Obra. Recrea exactamente los elementos del prototipo: Hero con disposición de imagen a la izquierda, flujo asimétrico de 3 pasos ("¿Cómo funciona?") con conectores visuales y flechas, barra deslizante de telas aceptadas, artículos editoriales de costura y empaque con imágenes detalladas, y el acordeón de preguntas frecuentes.
+- **Props:** No recibe props.
+
+### ServicioRopaCasualDetalle
+
+- **Ruta:** `src/components/servicios/ServicioRopaCasualDetalle.tsx`
+- **Descripción:** Vista detallada y específica del servicio de Confección de Ropa Casual y de Vestir. Recrea exactamente los elementos del prototipo: Hero con disposición de imagen a la derecha, flujo secuencial de 4 pasos ("De tu foto a tu prenda") con iconos informativos y flechas horizontales, galería de prendas confeccionadas estructurada mediante Bento Grid de 3 elementos interactivos con efectos de zoom y degradados, sección especial para marcas locales con barra lateral e insignia decorativa, y banner de llamada a la acción.
+- **Props:** No recibe props.
+
+### ServicioHero
+
+- **Ruta:** `src/components/servicios/ServicioHero.tsx`
+- **Descripción:** Hero section asimétrica que incluye un badge vertical de color, título en Serif, chips de características y enlace CTA directo a WhatsApp.
+- **Props:**
+  - `title: string` — Título principal.
+  - `description: string` — Descripción.
+  - `features: { icon: string; text: string }[]` — Chips de características.
+  - `ctaText: string` — Texto del botón de acción.
+  - `heroImage: string` — Imagen de fondo o lateral del Hero.
+
+### ServicioEditorial
+
+- **Ruta:** `src/components/servicios/ServicioEditorial.tsx`
+- **Descripción:** Secciones editoriales estructuradas. Incluye un visual con textura de tela, cuadrícula 2x2 para muestras de prendas, infografía del proceso de digitalización y tarjetas informativas de pedidos mínimos.
+- **Props:**
+  - `sectionAImage: string` — URL de la imagen principal.
+  - `garmentImages: { polos: string; camisas: string; industrial: string; gorras: string }` — URLs de imágenes para las tarjetas de prendas.
+
+### ServicioFAQ
+
+- **Ruta:** `src/components/servicios/ServicioFAQ.tsx`
+- **Descripción:** Acordeón interactivo para resolver las dudas frecuentes del servicio con animaciones fluidas basadas en estado de React.
+- **Props:**
+  - `faqs: { question: string; answer: string }[]` — Listado de preguntas y respuestas.
+
+### ServicioCTABanner
+
+- **Ruta:** `src/components/servicios/ServicioCTABanner.tsx`
+- **Descripción:** Banner destacado con textura tejida al 6% de opacidad y botón de WhatsApp centrado.
+- **Props:**
+  - `title: string` — Título del banner.
+  - `description: string` — Descripción secundaria.
+  - `ctaText: string` — Texto del botón.

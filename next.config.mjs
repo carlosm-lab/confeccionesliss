@@ -94,11 +94,7 @@ const nextConfig = {
         destination: "/catalogo",
         permanent: true,
       },
-      {
-        source: "/servicios/:slug((?!opengraph-image|twitter-image)[^/]+)/:rest*",
-        destination: "/servicios",
-        permanent: true,
-      },
+
     ];
   },
   images: {
