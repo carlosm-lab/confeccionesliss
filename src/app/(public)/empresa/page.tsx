@@ -214,25 +214,23 @@ export default function EmpresaPage() {
       />
 
       <main className="bg-[#f8f9fc] text-[#191c1e] antialiased selection:bg-[#d9e2ff] selection:text-[#001946]">
-        {/* Breadcrumb section */}
-        <section className="bg-[#f8f9fc] px-5 pt-4 pb-0 md:px-8 md:pt-6 md:pb-0">
-          <div className="mx-auto max-w-screen-2xl">
-            <Breadcrumb
-              items={[
-                { label: "Inicio", href: "/" },
-                { label: "Empresa", href: "/empresa" },
-              ]}
-              className="animate-fade-in-up"
-            />
-          </div>
-        </section>
-
         {/* ======================================================== */}
         {/* 1. HERO COPIADO DEL INDEX EXACTAMENTE SIN CAMBIAR NADA */}
         {/* ======================================================== */}
-        <section className="relative flex min-h-[calc(100dvh-56px)] flex-col overflow-x-hidden px-5 pt-4 pb-10 md:min-h-0 md:px-8 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:pb-4">
+        <section className="bg-surface-container-low relative flex min-h-[calc(100dvh-56px)] flex-col overflow-x-hidden px-5 pt-4 pb-10 md:min-h-0 md:px-8 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:pb-4">
           <div className="mx-auto flex h-full w-full max-w-screen-2xl flex-col items-start gap-8 lg:flex-row lg:items-center lg:gap-16">
             <div className="z-10 flex w-full flex-col items-start lg:min-w-0 lg:flex-1">
+              {/* Breadcrumb section */}
+              <div className="mb-6 lg:mb-8">
+                <Breadcrumb
+                  items={[
+                    { label: "Inicio", href: "/" },
+                    { label: "Empresa", href: "/empresa" },
+                  ]}
+                  className="animate-fade-in-up"
+                />
+              </div>
+
               <h1 className="animate-fade-in-up text-primary mb-6 w-full text-center font-serif text-3xl leading-[1.15] tracking-tight sm:text-4xl md:mb-10 md:flex md:flex-col md:items-center md:text-5xl lg:mb-6 lg:block lg:text-left lg:text-5xl xl:text-6xl xl:leading-[1.1]">
                 <span className="text-center lg:text-left">
                   La Identidad De{" "}
@@ -263,8 +261,9 @@ export default function EmpresaPage() {
                   className="animate-fade-in-up relative w-full max-w-sm self-center md:order-2 md:h-full md:max-w-none md:self-stretch lg:hidden"
                   style={{ animationDelay: "300ms" }}
                 >
-                  <div className="relative z-10 flex w-full flex-col items-center justify-center overflow-hidden rounded-2xl shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:h-full">
-                    <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl md:aspect-auto md:h-full md:w-full">
+                  <div className="border-primary/35 relative z-10 flex w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:h-full">
+                    <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
+                    <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl md:aspect-auto md:h-full md:w-full">
                       <Image
                         fill
                         alt="Nuestra Identidad - Confecciones Liss"
@@ -302,7 +301,8 @@ export default function EmpresaPage() {
               className="animate-fade-in-up hidden h-full lg:flex lg:w-[40%] lg:items-center"
               style={{ animationDelay: "300ms" }}
             >
-              <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-2xl shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <div className="border-primary/35 relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+                <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
                 <div className="relative h-full w-full overflow-hidden rounded-2xl">
                   <Image
                     fill

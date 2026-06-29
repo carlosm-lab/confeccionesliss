@@ -3,6 +3,7 @@
 import { motion, Variants } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 interface TeamMember {
   name: string;
@@ -128,57 +129,109 @@ export default function SobreNosotrosClient() {
       />
 
       {/* Escena 1: Origen (2005) */}
-      <section className="relative flex min-h-[90vh] items-center justify-center px-5 pt-4 pb-20 md:px-8 md:pt-6 md:pb-20">
-        <div className="pointer-events-none absolute top-10 left-10 font-serif text-[10rem] leading-none font-bold text-[#143067]/5 select-none md:text-[18rem]">
-          2005
-        </div>
-        <div className="mx-auto grid w-full max-w-screen-2xl grid-cols-1 items-center gap-12 lg:grid-cols-12">
-          <motion.div
-            className="z-10 space-y-6 lg:col-span-7"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={fadeIn}
-          >
-            <span className="font-mono text-xs font-semibold tracking-[0.2em] text-[#b43024] uppercase">
+      <section className="bg-surface-container-low relative flex min-h-[calc(100dvh-56px)] flex-col overflow-x-hidden px-5 pt-4 pb-10 md:min-h-0 md:px-8 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:pb-4">
+        <div className="mx-auto flex h-full w-full max-w-screen-2xl flex-col items-start gap-8 lg:flex-row lg:items-center lg:gap-16">
+          <div className="z-10 flex w-full flex-col items-start lg:min-w-0 lg:flex-1">
+            {/* Breadcrumb section */}
+            <div className="mb-6 lg:mb-8">
+              <Breadcrumb
+                items={[
+                  { label: "Inicio", href: "/" },
+                  { label: "Empresa", href: "/empresa" },
+                  { label: "Sobre Nosotros", href: "/empresa/sobre-nosotros" },
+                ]}
+                className="animate-fade-in-up"
+              />
+            </div>
+
+            <span className="mb-2 font-mono text-xs font-semibold tracking-[0.2em] text-[#b43024] uppercase">
               Capítulo I — El Origen
             </span>
-            <h1 className="font-serif text-5xl leading-tight font-bold text-[#143067] md:text-7xl">
-              Una historia construida <br className="hidden md:inline" />
-              <span className="text-[#b43024] italic">puntada a puntada</span>
-            </h1>
-            <p className="max-w-[58ch] font-sans text-lg leading-relaxed text-[#444650] md:text-xl">
-              Toda gran historia tiene un primer paso. En el año 2005, nuestra
-              fundadora inició un pequeño taller desde su hogar. Especialista en
-              moda y técnica certificada en Corte y Confección, comenzó
-              confeccionando y reparando ropa para su propia familia.
-            </p>
-            <p className="max-w-[58ch] font-sans text-base leading-relaxed text-[#444650]">
-              No había local comercial, empleados, ni internet. Solo una máquina
-              de coser, talento, disciplina y la firme decisión de perfeccionar
-              cada costura que salía de sus manos.
-            </p>
-          </motion.div>
 
-          <motion.div
-            className="relative flex justify-center lg:col-span-5 lg:justify-end"
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] as const }}
-          >
-            <div className="relative aspect-[4/5] w-full max-w-md overflow-hidden rounded-3xl shadow-[0_20px_50px_rgba(20,48,103,0.1)]">
-              <Image
-                src="/images/servicios/mano-obra.png"
-                alt="Máquina de coser tradicional en taller familiar"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 40vw"
-                priority
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#143067]/40 via-transparent to-transparent" />
+            <h1 className="animate-fade-in-up text-primary mb-6 w-full text-center font-serif text-3xl leading-[1.15] tracking-tight sm:text-4xl md:mb-10 md:flex md:flex-col md:items-center md:text-5xl lg:mb-6 lg:block lg:text-left lg:text-5xl xl:text-6xl xl:leading-[1.1]">
+              <span className="text-center lg:text-left">
+                Una historia construida{" "}
+              </span>
+              <span className="text-secondary font-serif md:mt-2 md:flex md:w-full md:items-center md:justify-center md:gap-4 lg:mt-0 lg:inline lg:gap-0">
+                {/* LÍNEA DECORATIVA IZQUIERDA (Solo Tablet) */}
+                <span className="hidden md:flex md:flex-1 md:items-center md:gap-2 lg:hidden">
+                  <span className="to-secondary/30 h-[1.5px] flex-1 bg-gradient-to-r from-transparent" />
+                  <span className="bg-secondary/50 h-1.5 w-1.5 shrink-0 rotate-45" />
+                </span>
+
+                <span className="shrink-0">puntada a puntada</span>
+
+                {/* LÍNEA DECORATIVA DERECHA (Solo Tablet) */}
+                <span className="hidden md:flex md:flex-1 md:items-center md:gap-2 lg:hidden">
+                  <span className="bg-secondary/50 h-1.5 w-1.5 shrink-0 rotate-45" />
+                  <span className="from-secondary/30 h-[1.5px] flex-1 bg-gradient-to-r to-transparent" />
+                </span>
+              </span>
+            </h1>
+
+            {/* Contenedor inferior de contenido (Móvil / Tablet) */}
+            <div className="flex w-full flex-col gap-6 md:grid md:grid-cols-2 md:items-stretch md:gap-12 lg:flex lg:flex-col lg:gap-0">
+              {/* IMAGEN HERO - VERSIÓN MÓVIL */}
+              <div
+                className="animate-fade-in-up relative w-full max-w-sm self-center md:order-2 md:h-full md:max-w-none md:self-stretch lg:hidden"
+                style={{ animationDelay: "300ms" }}
+              >
+                <div className="border-primary/35 relative z-10 flex w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:h-full">
+                  <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
+                  <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl md:aspect-auto md:h-full md:w-full">
+                    <Image
+                      fill
+                      src="/images/servicios/mano-obra.png"
+                      alt="Máquina de coser tradicional en taller familiar"
+                      className="rounded-xl object-cover object-center"
+                      sizes="(max-width:768px) 80vw, 40vw"
+                      priority
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* COLUMNA DE TEXTO Y ACCIONES */}
+              <div className="flex w-full flex-col items-start md:order-1 md:justify-center">
+                <div
+                  className="animate-fade-in-up text-on-surface-variant mb-6 w-full space-y-4 font-sans text-base leading-relaxed md:text-lg lg:mb-6 lg:text-xl"
+                  style={{ animationDelay: "150ms" }}
+                >
+                  <p>
+                    Toda gran historia tiene un primer paso. En el año 2005,
+                    nuestra fundadora inició un pequeño taller desde su hogar.
+                    Especialista en moda y técnica certificada en Corte y
+                    Confección, comenzó confeccionando y reparando ropa para su
+                    propia familia.
+                  </p>
+                  <p>
+                    No había local comercial, empleados, ni internet. Solo una
+                    máquina de coser, talento, disciplina y la firme decisión de
+                    perfeccionar cada costura que salía de sus manos.
+                  </p>
+                </div>
+              </div>
             </div>
-          </motion.div>
+          </div>
+          {/* IMAGEN HERO - VERSIÓN DESKTOP */}
+          <div
+            className="animate-fade-in-up hidden h-full lg:flex lg:w-[40%] lg:items-center"
+            style={{ animationDelay: "300ms" }}
+          >
+            <div className="border-primary/35 relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
+              <div className="relative h-full w-full overflow-hidden rounded-2xl">
+                <Image
+                  fill
+                  src="/images/servicios/mano-obra.png"
+                  alt="Máquina de coser tradicional en taller familiar"
+                  className="rounded-xl object-cover object-center"
+                  sizes="40vw"
+                  priority
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
