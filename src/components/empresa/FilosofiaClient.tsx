@@ -8,6 +8,7 @@ import {
   useTransform,
 } from "framer-motion";
 import Image from "next/image";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import Link from "next/link";
 import TextilePatternCanvas from "./TextilePatternCanvas";
 
@@ -77,7 +78,7 @@ export default function FilosofiaClient() {
   const [hoveredPanel, setHoveredPanel] = useState<number | null>(null);
 
   // Cabecera Scroll Parallax Tracking
-  const headerRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
   const { scrollYProgress: headerScroll } = useScroll({
     target: headerRef,
     offset: ["start start", "end start"],
@@ -102,49 +103,109 @@ export default function FilosofiaClient() {
       {/* ──────────────────────────────────────────────────────── */}
       {/* 1. CABECERA (Lienzo Editorial) */}
       {/* ──────────────────────────────────────────────────────── */}
-      <header
+      <section
         ref={headerRef}
-        className="relative flex min-h-[92vh] flex-col items-stretch justify-between border-b border-[#e1e2e4] bg-[#f8f9fb] px-5 pt-4 pb-12 md:px-8 md:pt-6 md:pb-20 lg:flex-row lg:py-0"
+        className="bg-surface-container-low relative flex min-h-[calc(100dvh-56px)] flex-col overflow-x-hidden px-5 pt-4 pb-10 md:min-h-0 md:px-8 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:pb-4"
       >
-        {/* Left Side: Word and Quotes */}
-        <div className="z-10 flex flex-1 flex-col justify-between pt-4 pb-8 lg:py-24">
-          <div>
-            <motion.h1
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={smoothTransition}
-              className="font-serif text-[13vw] leading-[0.8] font-extrabold tracking-tighter text-[#143067] uppercase select-none md:text-[8vw] lg:text-[7.5vw]"
-            >
-              FILO
-              <br />
-              SOFÍA
-            </motion.h1>
+        <div className="mx-auto flex h-full w-full max-w-screen-2xl flex-col items-start gap-8 lg:flex-row lg:items-center lg:gap-16">
+          <div className="z-10 flex w-full flex-col items-start lg:min-w-0 lg:flex-1">
+            {/* Breadcrumb section */}
+            <div className="mb-6 lg:mb-8">
+              <Breadcrumb
+                items={[
+                  { label: "Inicio", href: "/" },
+                  { label: "Empresa", href: "/empresa" },
+                  { label: "Filosofía", href: "/empresa/filosofia" },
+                ]}
+                className="animate-fade-in-up"
+              />
+            </div>
 
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4, ...smoothTransition }}
-              className="mt-12 max-w-md font-sans text-lg leading-relaxed font-normal text-[#555e76] md:text-xl"
-            >
-              No comenzamos construyendo una empresa.
-              <span className="mt-2 block font-serif text-xl font-semibold text-[#143067] italic md:text-2xl">
-                Comenzamos aprendiendo un oficio.
-              </span>
-            </motion.p>
-          </div>
-
-          <div className="mt-16 lg:mt-0">
-            <span className="font-mono text-xs tracking-[0.2em] text-[#757781] uppercase">
-              Confecciones Liss · Desde 2005
+            <span className="mb-2 font-mono text-xs font-semibold tracking-[0.2em] text-[#b43024] uppercase">
+              Filosofía y Valores
             </span>
+
+            <h1 className="animate-fade-in-up text-primary mb-6 w-full text-center font-serif text-3xl leading-[1.15] tracking-tight sm:text-4xl md:mb-10 md:flex md:flex-col md:items-center md:text-5xl lg:mb-6 lg:block lg:text-left lg:text-5xl xl:text-6xl xl:leading-[1.1]">
+              <span className="text-center lg:text-left">
+                Nuestros Valores y{" "}
+              </span>
+              <span className="text-secondary font-serif md:mt-2 md:flex md:w-full md:items-center md:justify-center md:gap-4 lg:mt-0 lg:inline lg:gap-0">
+                {/* LÍNEA DECORATIVA IZQUIERDA (Solo Tablet) */}
+                <span className="hidden md:flex md:flex-1 md:items-center md:gap-2 lg:hidden">
+                  <span className="to-secondary/30 h-[1.5px] flex-1 bg-gradient-to-r from-transparent" />
+                  <span className="bg-secondary/50 h-1.5 w-1.5 shrink-0 rotate-45" />
+                </span>
+
+                <span className="shrink-0">Filosofía</span>
+
+                {/* LÍNEA DECORATIVA DERECHA (Solo Tablet) */}
+                <span className="hidden md:flex md:flex-1 md:items-center md:gap-2 lg:hidden">
+                  <span className="bg-secondary/50 h-1.5 w-1.5 shrink-0 rotate-45" />
+                  <span className="from-secondary/30 h-[1.5px] flex-1 bg-gradient-to-r to-transparent" />
+                </span>
+              </span>
+            </h1>
+
+            {/* Contenedor inferior de contenido (Móvil / Tablet) */}
+            <div className="flex w-full flex-col gap-6 md:grid md:grid-cols-2 md:items-stretch md:gap-12 lg:flex lg:flex-col lg:gap-0">
+              {/* IMAGEN HERO - VERSIÓN MÓVIL */}
+              <div
+                className="animate-fade-in-up relative w-full max-w-sm self-center md:order-2 md:h-full md:max-w-none md:self-stretch lg:hidden"
+                style={{ animationDelay: "300ms" }}
+              >
+                <div className="border-primary/35 relative z-10 flex w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:h-full">
+                  <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
+                  <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl md:aspect-auto md:h-full md:w-full">
+                    <Image
+                      fill
+                      src="/images/empresa/filosofia/vintage_sewing_machine.png"
+                      alt="La primera máquina de coser en nuestro taller"
+                      className="rounded-xl object-cover object-center grayscale"
+                      sizes="(max-width:768px) 80vw, 40vw"
+                      priority
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* COLUMNA DE TEXTO Y ACCIONES */}
+              <div className="flex w-full flex-col items-start md:order-1 md:justify-center">
+                <div
+                  className="animate-fade-in-up text-on-surface-variant mb-6 w-full space-y-4 font-sans text-base leading-relaxed md:text-lg lg:mb-6 lg:text-xl"
+                  style={{ animationDelay: "150ms" }}
+                >
+                  <p>
+                    No comenzamos construyendo una empresa. Comenzamos
+                    aprendiendo un oficio. Desde 2005, nuestra filosofía ha sido
+                    entregar la máxima calidad y precisión en cada prenda,
+                    respaldados por un compromiso real con cada profesional y
+                    estudiante.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* IMAGEN HERO - VERSIÓN DESKTOP */}
+          <div
+            className="animate-fade-in-up hidden h-full lg:flex lg:w-[40%] lg:items-center"
+            style={{ animationDelay: "300ms" }}
+          >
+            <div className="border-primary/35 relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
+              <div className="relative h-full w-full overflow-hidden rounded-2xl">
+                <Image
+                  fill
+                  src="/images/empresa/filosofia/vintage_sewing_machine.png"
+                  alt="La primera máquina de coser en nuestro taller"
+                  className="rounded-xl object-cover object-center grayscale"
+                  sizes="40vw"
+                  priority
+                />
+              </div>
+            </div>
           </div>
         </div>
-
-        {/* Right Side: Abstract Tailoring Schema */}
-        <div className="relative min-h-[400px] flex-1 border-t border-[#e1e2e4] lg:min-h-0 lg:border-t-0 lg:border-l">
-          <TextilePatternCanvas scrollYProgress={headerScroll} />
-        </div>
-      </header>
+      </section>
 
       {/* ──────────────────────────────────────────────────────── */}
       {/* 2. SECCIÓN 1 (Confianza e Historia) */}
