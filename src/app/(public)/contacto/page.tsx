@@ -254,8 +254,12 @@ export default function ContactoPage() {
               className="animate-fade-in-up mt-4 max-w-xl text-base leading-relaxed text-gray-500 md:text-lg"
               style={{ animationDelay: "200ms" }}
             >
-              Estamos listos para ayudarte con tu pedido. Escríbenos, llámanos o
-              visítanos en nuestro taller en San Miguel.
+              Estamos listos para atender tus dudas y asesorarte en la
+              cotización de tus uniformes personalizados en San Miguel. Puedes
+              escribirnos directamente por WhatsApp para una respuesta rápida,
+              llamarnos vía telefónica o visitarnos en nuestro taller físico en
+              el Barrio La Merced. Nuestro equipo de costura a la medida está a
+              tu disposición para concretar los detalles de tu pedido.
             </p>
           </section>
 

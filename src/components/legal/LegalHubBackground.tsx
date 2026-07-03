@@ -257,17 +257,14 @@ export default function LegalHubBackground({
 
             <div className="relative z-20">
               <p className="text-justify text-sm leading-relaxed text-slate-700 md:text-left md:text-base">
-                La presente documentación establece de manera integral,
-                exhaustiva y vinculante el catálogo de reglas, derechos,
-                deberes, obligaciones, beneficios y disposiciones que
-                corresponden a toda persona natural o jurídica que acceda,
-                navegue, consulte, interactúe, solicite servicios o adquiera
-                productos de Confecciones Liss, ya sea en calidad de visitante,
-                usuario de la plataforma o cliente con pedido en curso o
-                completado. El desconocimiento de los reglamentos, normativas y
-                demás, no eximen al usuario de su cumplimiento. Se recomienda
-                encarecidamente leer todas y cada una de las disposiciones aquí
-                contenidas.
+                En esta sección recopilamos el marco regulatorio oficial y las
+                políticas comerciales de Confecciones Liss para garantizar total
+                transparencia en tu experiencia de compra. Aquí encontrarás
+                detalladas nuestras condiciones de envío, políticas de
+                devoluciones, términos de uso de la plataforma y el resguardo de
+                tu privacidad y datos personales. Te invitamos a leer
+                detenidamente estos documentos para conocer tus derechos y
+                deberes como cliente.
               </p>
               <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-semibold text-slate-500">
                 <span className="flex items-center gap-1">

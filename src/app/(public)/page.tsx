@@ -5,12 +5,7 @@ import {
   buildWebPageSchema,
   buildBreadcrumbSchema,
 } from "@/lib/schemas";
-import {
-  heroTrustBadges,
-  whyItems,
-  processSteps,
-  testimonials,
-} from "@/lib/seo-data";
+import { heroTrustBadges, whyItems, processSteps } from "@/lib/seo-data";
 import { ServiciosPrincipales } from "@/components/seo/ServiciosPrincipales";
 import { UniversidadesCoverage } from "@/components/seo/UniversidadesCoverage";
 import { FaqSection } from "@/components/seo/FaqSection";
@@ -21,13 +16,35 @@ import { KeywordsSeoFooter } from "@/components/seo/KeywordsSeoFooter";
 import { CatalogProductCard } from "@/components/catalogo/CatalogProductCard";
 import { siteConfig } from "@/config/site";
 import { getRecentProducts } from "@/lib/catalogService";
+import { GoogleReviews } from "@/components/seo/GoogleReviews";
+import { getGoogleReviews } from "@/lib/googleReviewsService";
 
 import type { Metadata } from "next";
 
-// Canonical explícito para la homepage — evita ambigüedad con el layout raíz
+// Metadata explícita para la homepage — evita depender del fallback del layout raíz
 export const metadata: Metadata = {
-  alternates: {
-    canonical: siteConfig.url,
+  title:
+    "Scrubs y Uniformes Médicos en San Miguel Sv | Desde $35 · Confecciones Liss",
+  description:
+    "Taller de confección a la medida en San Miguel, El Salvador. Scrubs médicos y uniformes universitarios para IEPROES, UNIVO, UNAB, UGB, UES, UMA y más. Desde $35.00. WhatsApp: 7331-7181.",
+  alternates: { canonical: siteConfig.url },
+  openGraph: {
+    title:
+      "Scrubs y Uniformes Médicos en San Miguel Sv | Desde $35 · Confecciones Liss",
+    description:
+      "Taller de confección a la medida en San Miguel, El Salvador. Scrubs médicos y uniformes universitarios para IEPROES, UNIVO, UNAB, UGB, UES, UMA y más. Desde $35.00. WhatsApp: 7331-7181.",
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    locale: "es_SV",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title:
+      "Scrubs y Uniformes Médicos en San Miguel Sv | Desde $35 · Confecciones Liss",
+    description:
+      "Taller de confección a la medida en San Miguel, El Salvador. Scrubs médicos y uniformes universitarios para IEPROES, UNIVO, UNAB, UGB, UES, UMA y más. Desde $35.00. WhatsApp: 7331-7181.",
+    creator: siteConfig.twitterHandle,
   },
 };
 
@@ -38,6 +55,8 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   // Load recent products from Supabase (server-side, no hardcoding)
   const recentProducts = await getRecentProducts(6);
+  // Fetch dynamic Google Reviews from Supabase / fallback service
+  const reviews = await getGoogleReviews();
   return (
     <>
       {/* ═══ JSON-LD STRUCTURED DATA ═══ */}
@@ -50,7 +69,8 @@ export default async function HomePage() {
               buildWebPageSchema({
                 url: siteConfig.url,
                 name: "Scrubs y Uniformes Médicos en San Miguel Sv | Desde $35 · Confecciones Liss",
-                description: siteConfig.description,
+                description:
+                  "Taller de confección a la medida en San Miguel, El Salvador. Scrubs médicos y uniformes universitarios para IEPROES, UNIVO, UNAB, UGB, UES, UMA y más. Desde $35.00. WhatsApp: 7331-7181.",
               }),
               buildBreadcrumbSchema([{ name: "Inicio", item: siteConfig.url }]),
               schemaFAQ,
@@ -294,66 +314,8 @@ export default async function HomePage() {
       {/* ═══ FAQ (NEW) ═══ */}
       <FaqSection />
 
-      {/* ═══ TESTIMONIOS (updated content) ═══ */}
-      <section
-        aria-labelledby="testimonios-heading"
-        className="bg-[#f4f5f7] px-5 py-14 md:px-8 md:py-24"
-      >
-        <div className="mx-auto max-w-screen-2xl">
-          <div className="mb-12 flex flex-col items-center">
-            <h2
-              id="testimonios-heading"
-              className="animate-fade-in-up section-title"
-            >
-              Lo que dicen nuestros clientes en San Miguel y todo El Salvador
-            </h2>
-            <div
-              className="animate-fade-in-up bg-tertiary mt-6 h-1 w-16 rounded-full"
-              style={{ animationDelay: "100ms" }}
-            ></div>
-          </div>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            {testimonials.map((t, index) => (
-              <article
-                key={t.nombre}
-                className="animate-fade-in-up ambient-shadow rounded-xl bg-white p-5 md:p-8"
-                style={{ animationDelay: `${index * 75 + 150}ms` }}
-              >
-                <div
-                  className="text-tertiary mb-4 flex gap-1"
-                  aria-label={`${t.stars} estrellas`}
-                >
-                  {Array(t.stars)
-                    .fill(null)
-                    .map((_, i) => (
-                      <span
-                        key={i}
-                        className="material-symbols-outlined text-sm"
-                        style={{ fontVariationSettings: "'FILL' 1" }}
-                      >
-                        star
-                      </span>
-                    ))}
-                </div>
-                <blockquote className="text-on-surface-variant font-body mb-6 text-sm leading-relaxed italic">
-                  &quot;{t.texto}&quot;
-                </blockquote>
-                <div className="flex items-center gap-4">
-                  <div className="bg-surface-container text-secondary flex h-12 w-12 items-center justify-center rounded-full font-bold">
-                    {t.nombre.charAt(0)}
-                  </div>
-                  <div>
-                    <div className="text-on-surface font-serif text-sm font-bold">
-                      {t.nombre}
-                    </div>
-                    <div className="text-secondary text-xs">{t.cargo}</div>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ═══ GOOGLE REVIEWS (dynamic) ═══ */}
+      <GoogleReviews reviews={reviews} />
 
       {/* ═══ COBERTURA NACIONAL (NEW) ═══ */}
       <CoberturaNacional />

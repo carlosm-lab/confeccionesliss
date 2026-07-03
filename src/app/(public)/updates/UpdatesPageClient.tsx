@@ -139,13 +139,17 @@ export function UpdatesPageClient({
           >
             Historial de cambios
           </h1>
-          {/* Static intro — mirrors meta description so Google uses it as snippet */}
           <p
-            className="animate-fade-in-up mb-1 max-w-2xl text-base leading-relaxed text-gray-500 md:text-lg"
+            className="animate-fade-in-up mb-2 max-w-2xl text-base leading-relaxed text-gray-500 md:text-lg"
             style={{ animationDelay: "180ms" }}
           >
-            Registro público de mejoras, correcciones y nuevas funcionalidades
-            del sitio de Confecciones Liss. Transparencia total del proyecto.
+            Te damos la bienvenida a nuestra bitácora pública de actualizaciones
+            de la plataforma web de Confecciones Liss. En este registro
+            documentamos detalladamente cada mejora, corrección de errores,
+            optimización de velocidad y nueva característica que implementamos
+            en el sitio. Creemos en la transparencia total del proyecto y en
+            mantenerte al tanto del desarrollo constante de nuestra tienda y
+            catálogo en línea.
           </p>
           <p
             className="animate-fade-in-up max-w-2xl text-sm leading-relaxed text-gray-400"
