@@ -8,10 +8,10 @@ import {
   SiYoutube,
   SiWhatsapp,
   SiThreads,
-  SiLinkedIn,
   SiPinterest,
   SiX,
 } from "react-icons/si";
+import { FaLinkedin } from "react-icons/fa";
 import type { IconType } from "react-icons";
 
 const socialIconMap: Record<string, { Icon: IconType; color: string }> = {
@@ -24,7 +24,7 @@ const socialIconMap: Record<string, { Icon: IconType; color: string }> = {
   WhatsApp: { Icon: SiWhatsapp, color: "#25D366" },
   Threads: { Icon: SiThreads, color: "#000000" },
   Twitter: { Icon: SiX, color: "#000000" },
-  LinkedIn: { Icon: SiLinkedIn, color: "#0077B5" },
+  LinkedIn: { Icon: FaLinkedin, color: "#0077B5" },
   Pinterest: { Icon: SiPinterest, color: "#E60023" },
   MarketPlace: { Icon: SiFacebook, color: "#1877F2" },
 };
@@ -148,7 +148,7 @@ export function NapContacto() {
           <p className="text-on-surface-variant mb-4 text-sm">
             Síguenos en redes sociales para ver nuestros trabajos más recientes:
           </p>
-          <div className="flex justify-center gap-4">
+          <div className="mx-auto flex max-w-md flex-wrap justify-center gap-3">
             {socialLinks.map((s, index) => {
               const entry = socialIconMap[s.red];
               if (!entry) return null;

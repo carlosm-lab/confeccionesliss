@@ -100,8 +100,8 @@ export function MobileBottomNav() {
               ? pathname === "/"
               : pathname.startsWith(item.href);
 
-          const isCartTab = item.href === "/carrito";
-          const isProfileTab = item.href === "/cuenta";
+          const isCartTab = (item.href as string) === "/carrito";
+          const isProfileTab = (item.href as string) === "/cuenta";
 
           const handleTabClick = (e: React.MouseEvent) => {
             if (isCartTab) {
