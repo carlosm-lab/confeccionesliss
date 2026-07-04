@@ -10,7 +10,7 @@ function Shimmer({ className }: { className?: string }) {
   );
 }
 
-export default function MiCuentaLoading() {
+export default function CuentaLoading() {
   useEffect(() => {
     import("@aejkatappaja/phantom-ui");
   }, []);
@@ -18,7 +18,7 @@ export default function MiCuentaLoading() {
   return (
     <div
       aria-busy="true"
-      aria-label="Cargando mi cuenta"
+      aria-label="Cargando cuenta"
       className="mx-auto max-w-screen-xl px-5 py-10 md:px-8"
     >
       {/* Header */}

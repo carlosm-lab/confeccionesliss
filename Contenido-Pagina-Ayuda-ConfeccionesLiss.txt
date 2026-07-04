@@ -1,0 +1,1043 @@
+================================================================================
+CONTENIDO PARA LA PÁGINA /ayuda — CONFECCIONESLISS.COM
+Preparado a partir de: auditoría del repositorio, datos reales de Google Search
+Console (últimos 3 meses), investigación de competencia e instituciones locales
+de San Miguel y El Salvador.
+================================================================================
+
+
+--------------------------------------------------------------------------------
+1. META TITLE (55-60 caracteres)
+--------------------------------------------------------------------------------
+
+PRINCIPAL (57 caracteres):
+Ayuda sobre Scrubs y Uniformes Médicos | Liss El Salvador
+
+ALTERNATIVAS válidas por si quieres probar en A/B:
+- (55 car.) Preguntas Frecuentes sobre Scrubs y Uniformes | Liss SV
+- (59 car.) Scrubs y Uniformes Médicos: Ayuda y FAQ | Confecciones Liss
+- (60 car.) Preguntas Frecuentes de Scrubs y Uniformes | Liss San Miguel
+
+Por qué esta: abre con "Ayuda" (coincide con la intención de quien ya sabe que
+llegó a un centro de ayuda), mete "Scrubs" Y "Uniformes Médicos" (las dos
+formas en que te buscan), y cierra con marca + país para reforzar SEO local.
+
+
+--------------------------------------------------------------------------------
+2. META DESCRIPTION (150-155 caracteres)
+--------------------------------------------------------------------------------
+
+PRINCIPAL (152 caracteres):
+Resuelve tus dudas sobre scrubs, uniformes médicos, universitarios y escolares
+en San Miguel, El Salvador: precios, tallas, envíos, bordados y garantía.
+
+ALTERNATIVAS válidas:
+- (150 car.) Resuelve tus dudas sobre scrubs y uniformes médicos, universitarios
+  y escolares en San Miguel: precios, tallas, envíos, bordado y formas de pago aquí.
+- (152 car.) Todo sobre scrubs y uniformes médicos, universitarios y escolares
+  en San Miguel: precios, tallas, envíos a todo El Salvador, bordados, pagos y garantía.
+
+
+--------------------------------------------------------------------------------
+3. OTRAS ETIQUETAS Y METADATOS DE LA PÁGINA
+--------------------------------------------------------------------------------
+
+URL de la página:        https://www.confeccionesliss.com/ayuda
+Canonical:                https://www.confeccionesliss.com/ayuda
+  (importante: usar SIEMPRE la versión https://www.  Detecté que Google tiene
+  indexada también http://confeccionesliss.com/ sin "www" como URL aparte —
+  eso es contenido duplicado. El canonical debe apuntar solo a la versión
+  https://www. en TODAS las páginas, incluida esta.)
+
+Robots:                    index, follow
+  max-image-preview:large, max-snippet:-1, max-video-preview:-1
+  (mismo patrón que ya usan en el resto del sitio)
+
+Meta keywords (opcional, bajo impacto real en Google pero lo usan en el resto
+del sitio, así que por consistencia):
+  scrubs El Salvador, uniformes médicos San Miguel, filipina médica El Salvador,
+  gabacha médica, uniformes de enfermería, uniformes universitarios UNIVO UGB
+  UNAB UMA IEPROES UES, uniformes escolares San Miguel, preguntas frecuentes
+  uniformes, ayuda Confecciones Liss
+
+Idioma / locale:           es-SV
+hreflang:                  es-sv (si en algún momento manejas otra región, si no, omitir)
+
+Open Graph:
+  og:title        = mismo texto que el meta title
+  og:description  = mismo texto que la meta description
+  og:url           = https://www.confeccionesliss.com/ayuda
+  og:type          = website
+  og:locale        = es_SV
+  og:site_name     = Confecciones Liss
+  og:image         = usar una imagen 1200x630 real del taller o de scrubs
+                      (no reutilizar el OG genérico del home; ayuda a que se
+                      vea distinto si comparten el link de /ayuda en redes)
+
+Twitter Card:
+  twitter:card         = summary_large_image
+  twitter:title        = mismo texto que el meta title
+  twitter:description  = mismo texto que la meta description
+  twitter:creator      = @confeccionliss
+
+Breadcrumb visible e indexable:
+  Inicio > Ayuda
+
+H1 de la página (no confundir con el meta title, van juntos pero no son lo
+mismo — el H1 puede ser más natural/largo):
+  Centro de Ayuda: Todo sobre Scrubs y Uniformes en El Salvador
+
+
+--------------------------------------------------------------------------------
+4. SCHEMA / DATOS ESTRUCTURADOS (JSON-LD)
+--------------------------------------------------------------------------------
+
+NOTA IMPORTANTE ANTES DE IMPLEMENTAR (esto cambió muy recientemente y no
+quiero que gastes tiempo esperando algo que ya no va a pasar):
+
+El 7 de mayo de 2026 Google eliminó por completo el "rich result" visual de
+FAQ (los desplegables de preguntas y respuestas debajo del resultado azul).
+Esto ya no aplica ni siquiera a los sitios de gobierno/salud que antes eran
+la excepción — la función se retiró para TODOS. O sea: NO esperes que a
+Confecciones Liss le empiecen a salir los acordeones de preguntas dentro de
+Google por poner este schema.
+
+Aun así, SÍ vale la pena poner el FAQPage schema, por tres razones reales:
+1) Sigue siendo un tipo válido de Schema.org, no genera ningún error ni
+   penalización por tenerlo.
+2) Bing, DuckDuckGo y los rastreadores de IA (el de ChatGPT/GPTBot, el de
+   Perplexity, el de Gemini, etc.) sí siguen leyendo este schema para
+   entender de qué trata la página — esto es justo lo que te ayuda en AEO
+   y GEO (que te citen en respuestas de IA), aunque ya no mueva la aguja en
+   el buscador clásico de Google.
+3) Ayuda a Google a entender la ESTRUCTURA del contenido igual, aunque ya
+   no lo premie con más espacio visual en el resultado.
+
+Regla de oro: el schema debe reflejar EXACTAMENTE las preguntas y respuestas
+que están visibles en la página como texto real (no ocultas). Todo lo que
+va abajo en la sección 5 de este documento cumple esa condición: es
+contenido real pensado para verse en pantalla, no relleno solo para el
+schema.
+
+Ejemplo de cómo debe ir estructurado (usa este patrón para las ~150
+preguntas de la sección 5; aquí solo pongo 3 de muestra para no repetir
+todo el archivo dos veces):
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://www.confeccionesliss.com/ayuda#webpage",
+      "url": "https://www.confeccionesliss.com/ayuda",
+      "name": "Ayuda sobre Scrubs y Uniformes Médicos | Liss El Salvador",
+      "description": "Resuelve tus dudas sobre scrubs, uniformes médicos, universitarios y escolares en San Miguel, El Salvador: precios, tallas, envíos, bordados y garantía.",
+      "inLanguage": "es-SV",
+      "isPartOf": { "@id": "https://www.confeccionesliss.com/#website" },
+      "about": { "@id": "https://www.confeccionesliss.com/#business" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.confeccionesliss.com" },
+        { "@type": "ListItem", "position": 2, "name": "Ayuda", "item": "https://www.confeccionesliss.com/ayuda" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Cuánto cuestan los scrubs médicos en El Salvador?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Los scrubs médicos en Confecciones Liss comienzan desde $35.00 USD. El precio varía según modelo, tela y personalización (bordado de nombre o logo). Los pedidos grupales e institucionales tienen precio especial por volumen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Hacen uniformes para enfermeras y enfermeros en El Salvador?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. Confeccionamos scrubs y filipinas para enfermería a la medida, en tela Sincatex antifluidos y Lino Oxford. Trabajamos con estudiantes, personal de hospitales públicos, ISSS, clínicas privadas y consultorios."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuáles son las redes sociales de Confecciones Liss?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Estamos en Facebook, Instagram, TikTok, YouTube, Threads, X (Twitter), LinkedIn, Pinterest y Google Maps, todas bajo el usuario @confeccionliss. También puedes escribirnos directo por WhatsApp al +503 7331-7181."
+          }
+        }
+        // ... repetir el mismo patrón "Question" / "acceptedAnswer" con las
+        // ~150 preguntas y respuestas exactas de la sección 5 de este documento.
+      ]
+    }
+  ]
+}
+</script>
+
+Además del FAQPage, en el <head> global del sitio (layout.tsx) ya existe un
+schema de tipo "ClothingStore" con NAP, geo, redes (sameAs) y catálogo de
+servicios — está bien hecho, no lo dupliques dentro de /ayuda. En /ayuda
+basta con enlazarlo por referencia usando "about": { "@id": ".../#business" }
+como en el ejemplo de arriba, para que quede claro que esta página pertenece
+al mismo negocio, sin repetir el bloque completo.
+
+
+--------------------------------------------------------------------------------
+5. EL LISTADO DE PREGUNTAS FRECUENTES (contenido completo de la página)
+--------------------------------------------------------------------------------
+
+Organizado en 18 bloques temáticos para que la página no se sienta como una
+sola lista infinita (eso ahuyenta tanto a personas como a Google). Cada
+bloque cubre una intención de búsqueda distinta. Dentro de cada pregunta ya
+integré, de forma natural, las variantes de palabra que pediste cubrir
+(uniforme/uniformes, scrub/scrubs, filipina, gabacha, enfermera/enfermería,
+médico/médicos, etc.) en vez de forzarlas todas en una sola pregunta rara.
+
+Nota sobre errores de escritura (unifmorme, srcubs, uniformés, etc.): Google
+ya corrige solo estas variantes cuando alguien las escribe (su corrector
+ortográfico interno hace el trabajo), así que no hace falta —ni se ve bien—
+tener una pregunta visible que diga literalmente "unifmorme". Lo que sí hice
+fue confirmar en tus propios datos de Search Console que la gente SÍ escribe
+así ("cofecciones", "unifomes"), y ya lo cubrí con el bloque 5.18 más abajo,
+que integra esas formas de manera natural en un solo párrafo pensado
+exactamente para eso.
+
+
+==================== 5.1 SOBRE CONFECCIONES LISS (marca) ====================
+
+1) ¿Qué es Confecciones Liss?
+Confecciones Liss es un taller de confección a la medida en San Miguel, El
+Salvador, especializado en scrubs médicos y uniformes universitarios,
+escolares y corporativos. No revendemos ropa importada: cada prenda se corta
+y cose en nuestro propio taller.
+
+2) ¿Confecciones Liss es una fábrica, un taller, una tienda o un proveedor?
+Las cuatro cosas a la vez, según lo que necesites: somos el taller donde se
+confecciona cada prenda, la tienda donde puedes comprar directo, y el
+proveedor oficial de uniformes de varios hospitales, universidades, colegios
+y empresas de la zona oriental de El Salvador.
+
+3) ¿Dónde está ubicado Confecciones Liss?
+Estamos en el Barrio La Merced, 5A Calle Poniente y 1A Avenida Sur, San
+Miguel, El Salvador — a la par del edificio anexo de la Universidad Dr.
+Andrés Bello (UNAB), sobre la misma calle de la Corte de Cuentas.
+
+4) ¿Cuál es el horario de atención?
+Lunes a sábado, de 8:00 a.m. a 5:00 p.m. Fuera de ese horario puedes
+escribirnos por WhatsApp y respondemos en cuanto abrimos.
+
+5) ¿Quién fundó Confecciones Liss?
+La fundadora es Iris Lisseth de Molina, técnico en corte y confección. El
+taller nació formalmente el 20 de enero de 2021, aunque ella confecciona
+prendas desde 2005.
+
+6) ¿Desde cuándo existe Confecciones Liss?
+Como marca formal, desde el 20 de enero de 2021. La experiencia detrás del
+taller viene de más de dos décadas: la fundadora también confeccionó
+uniformes para el Ministerio de Educación y trabajó con maquilas de San
+Miguel antes de abrir su propio local.
+
+7) ¿Tienen tienda física donde pueda probarme el uniforme?
+Sí, el taller en Barrio La Merced, San Miguel, atiende al público. Puedes
+llegar a que te tomen medidas, probarte modelos y recoger tu pedido en
+persona.
+
+8) He visto el nombre escrito como "Confeccion Liss" o "Cofecciones Liss",
+¿es la misma empresa?
+Sí. El nombre correcto es "Confecciones Liss" (con "n" y con doble "c"), pero
+sabemos que muchas personas lo buscan sin tilde o con alguna letra de menos,
+y es la misma empresa en San Miguel.
+
+9) ¿Qué significa el nombre "Liss"?
+Viene del segundo nombre de la fundadora, "Lisseth", y también hace
+referencia a la flor de lis.
+
+10) ¿Cómo contacto a Confecciones Liss?
+Por WhatsApp al +503 7331-7181 (el canal más rápido), por correo a
+confeccionesliss.contacto@gmail.com, o visitando el taller en San Miguel en
+horario de atención.
+
+
+========== 5.2 SCRUBS, UNIFORMES, FILIPINAS Y GABACHAS (qué es cada cosa) ==========
+
+11) ¿Qué es exactamente un "scrub" médico?
+Un scrub es el uniforme de dos piezas (camisola/top y pantalón) que usa el
+personal de salud en hospitales, clínicas y consultorios. En Confecciones
+Liss los confeccionamos a la medida en tela Sincatex antifluidos y Lino
+Oxford.
+
+12) ¿"Scrubs" y "uniforme médico" son lo mismo?
+Sí, son sinónimos. "Scrubs" es el nombre en inglés que se usa igual en
+español; "uniforme médico" o "uniforme clínico" es la forma más tradicional
+de decirlo en El Salvador. Nosotros confeccionamos ambos con el mismo
+significado.
+
+13) ¿Qué es una "filipina" médica?
+"Filipina" es como se le llama en Centroamérica al conjunto de blusa/camisola
+y pantalón usado por personal de salud —es básicamente otro nombre para el
+scrub, muy usado también en documentos oficiales del sector salud en El
+Salvador (por ejemplo para el uniforme de turno de odontología).
+
+14) ¿Qué es una "gabacha" o "gabachón" médico?
+La gabacha (o gabachón, en su versión de manga larga) es la bata blanca tipo
+saco que usan médicos, estudiantes de medicina en servicio social y personal
+de laboratorio sobre su ropa o sobre el scrub. La confeccionamos en Lino,
+Sincatex y otras telas, manga corta o larga.
+
+15) ¿Qué es una "pijama quirúrgica"?
+Es otro nombre común para el scrub, especialmente el que se usa dentro de
+quirófano. Lo confeccionamos igual que el scrub estándar, en la tela y color
+que necesites.
+
+16) ¿Solo confeccionan scrubs o también "ropa médica" y "vestimenta
+sanitaria" en general?
+Confeccionamos toda la vestimenta del sector salud: scrubs, filipinas,
+gabachas, batas de laboratorio, chaquetas clínicas y gorros quirúrgicos —no
+solo el conjunto básico de dos piezas.
+
+17) ¿Hacen batas de laboratorio?
+Sí, batas de laboratorio manga corta y manga larga, en tela Sincatex o Lino,
+para personal de laboratorio clínico, estudiantes y docentes de ciencias de
+la salud.
+
+18) ¿Hacen gorros quirúrgicos o "cofias" para enfermera?
+Sí, hacemos gorros quirúrgicos y cofias de enfermería como accesorio
+complementario al uniforme, con la tela y el color que combine con tu scrub.
+
+19) ¿Qué es un "traje de turno"?
+Es el nombre que se usa en algunos lineamientos del sector salud (por
+ejemplo en odontología) para referirse al uniforme completo que se usa
+durante el turno laboral — en la práctica, es el mismo scrub o filipina que
+confeccionamos.
+
+20) ¿La chaqueta clínica es lo mismo que la gabacha?
+No exactamente: la chaqueta clínica suele ser más corta, con cierre o
+botones al frente, y se usa sobre el scrub en áreas frías o para dar una
+imagen más formal; la gabacha es más larga, tipo bata. Confeccionamos ambas.
+
+
+================ 5.3 UNIFORMES POR PROFESIÓN DE LA SALUD ================
+
+21) ¿Hacen scrubs para médicos generales y especialistas?
+Sí, confeccionamos scrubs y gabachas para médicos generales, internistas,
+cirujanos, pediatras, ginecólogos, anestesiólogos y cualquier especialidad.
+
+22) ¿Hacen uniformes de enfermería para enfermeras y enfermeros?
+Sí. Es una de nuestras líneas principales: scrubs y filipinas de enfermería
+a la medida, con posibilidad de bordado de nombre y especialidad.
+
+23) ¿Hacen uniformes para odontólogos y dentistas?
+Sí, incluyendo el traje de turno/filipina para consultorio y gabachón para
+procedimientos, en telas resistentes a lavado frecuente.
+
+24) ¿Hacen uniformes para laboratoristas clínicos y técnicos de laboratorio?
+Sí, scrubs y batas de laboratorio pensados para jornadas largas de pie y
+contacto con reactivos.
+
+25) ¿Hacen uniformes para fisioterapeutas?
+Sí, scrubs cómodos y de corte más deportivo para quienes trabajan de pie y
+en movimiento constante durante sesiones de terapia.
+
+26) ¿Hacen uniformes para farmacéuticos y nutricionistas?
+Sí, incluyendo gabacha o scrub según lo que use tu farmacia, clínica o
+programa de nutrición.
+
+27) ¿Hacen uniformes para radiólogos, cirujanos y anestesiólogos?
+Sí, confeccionamos para todo el personal de sala de operaciones y áreas de
+diagnóstico por imágenes, respetando los colores que use tu institución.
+
+28) ¿Hacen uniformes para personal de la Cruz Roja Salvadoreña o Bomberos?
+Sí, atendemos pedidos institucionales para personal de socorro y emergencias,
+con precio especial por volumen.
+
+29) ¿Hacen uniformes para veterinarios?
+Sí, scrubs y gabachas para clínicas veterinarias, con la misma tela
+resistente que usamos en salud humana.
+
+30) ¿Hacen scrubs para estudiantes de medicina, enfermería u odontología en
+prácticas o servicio social?
+Sí, es una de las líneas con más demanda: confeccionamos el uniforme exacto
+que exige cada universidad para prácticas clínicas y servicio social,
+incluido el gabachón blanco cerrado que piden a estudiantes de medicina.
+
+31) ¿Hacen uniformes para personal del ISSS o del MINSAL?
+Sí, atendemos tanto a personal como a pedidos institucionales relacionados
+con el Instituto Salvadoreño del Seguro Social (ISSS) y el Ministerio de
+Salud (MINSAL), respetando los lineamientos de uniforme de cada institución.
+
+32) ¿Hacen uniformes para psicólogos y optometristas?
+Sí, aunque su vestimenta suele ser más flexible, muchos prefieren un scrub o
+gabacha ligera para consulta; lo confeccionamos igual a la medida.
+
+33) ¿Hacen uniformes para auxiliares de salud y personal hospitalario en
+general (no solo médicos y enfermeras)?
+Sí, cubrimos a todo el personal de un centro de salud: camilleros,
+auxiliares, personal de limpieza hospitalaria, recepción clínica, etc.
+
+
+============ 5.4 HOSPITALES, CLÍNICAS, LABORATORIOS Y CONSULTORIOS ============
+
+34) ¿Hacen uniformes para hospitales públicos y privados de El Salvador?
+Sí. Atendemos pedidos institucionales para hospitales públicos (red MINSAL e
+ISSS) y hospitales y clínicas privadas, con precio especial por volumen y
+bordado del logo institucional.
+
+35) ¿Confeccionan uniformes para el personal del Hospital Nacional San Juan
+de Dios de San Miguel?
+Sí, por cercanía y trayectoria en la zona oriental, trabajamos con personal
+y estudiantes que hacen sus prácticas en el Hospital San Juan de Dios de
+San Miguel.
+
+36) ¿Hacen uniformes para el Hospital Regional del ISSS en San Miguel?
+Sí, confeccionamos scrubs y filipinas para personal que labora en el
+Hospital Regional San Miguel del ISSS y en sus unidades médicas de la zona
+oriental (Moncagua, Chinameca, San Francisco Gotera, Santiago de María,
+Berlín, Usulután, La Unión, entre otras).
+
+37) ¿Hacen uniformes para clínicas privadas y consultorios médicos?
+Sí, tanto para consultorios individuales como para clínicas con varios
+médicos, incluyendo bordado del nombre del médico o de la clínica.
+
+38) ¿Hacen uniformes para laboratorios clínicos y centros de diagnóstico?
+Sí, batas y scrubs para personal de laboratorio y centros de toma de
+muestras y diagnóstico por imágenes.
+
+39) ¿Hacen uniformes para consultorios y clínicas dentales/odontológicas?
+Sí, incluido el "traje de turno" u overol de odontología que piden los
+lineamientos del sector salud.
+
+40) ¿Pueden confeccionar el uniforme completo de todo el personal de un
+hospital o clínica, o solo prendas sueltas para una persona?
+Ambas cosas. Atendemos desde un pedido individual hasta la dotación completa
+de un hospital, clínica o laboratorio, coordinando tallas por persona.
+
+41) ¿Los uniformes que hacen cumplen con los lineamientos de bioseguridad
+del MINSAL?
+Confeccionamos siguiendo el diseño, color y tipo de prenda que cada
+institución define en sus lineamientos (por ejemplo el gabachón cerrado
+para estudiantes en servicio social). Si tu hospital o universidad tiene un
+lineamiento específico, lo replicamos exactamente.
+
+42) ¿Hacen uniformes para clínicas comunales y unidades de salud?
+Sí, trabajamos con unidades médicas y clínicas comunales de San Miguel y
+municipios cercanos, con precio especial por ser pedidos institucionales.
+
+
+======================= 5.5 UNIFORMES UNIVERSITARIOS =======================
+
+43) ¿Hacen uniformes para la UNIVO (Universidad de Oriente)?
+Sí, confeccionamos el scrub clínico con los colores oficiales de UNIVO para
+las carreras de salud.
+
+44) ¿Hacen uniformes para la UNAB (Universidad Dr. Andrés Bello)?
+Sí, con los colores y especificaciones oficiales de cada carrera de salud de
+la UNAB. Nuestro taller está justo a la par del edificio anexo de la UNAB en
+San Miguel.
+
+45) ¿Hacen uniformes para la UGB (Universidad Gerardo Barrios)?
+Sí, scrubs clínicos con los colores oficiales de la UGB.
+
+46) ¿Hacen uniformes para la UMA (Universidad Modular Abierta)?
+Sí, confeccionamos el uniforme oficial de las carreras de salud de la UMA.
+
+47) ¿Hacen uniformes para IEPROES (Instituto Especializado de Profesionales
+de la Salud)?
+Sí, es una de las instituciones con las que más trabajamos: uniformes para
+Licenciatura y Técnico en Enfermería, entre otras carreras de IEPROES sede
+San Miguel.
+
+48) ¿Hacen uniformes para la UES (Universidad de El Salvador)?
+Sí, confeccionamos uniformes para las carreras de salud de la UES.
+
+49) ¿Hacen uniformes para la UEES (Universidad Evangélica de El Salvador)?
+Sí, con las especificaciones oficiales de cada carrera.
+
+50) Mi universidad no está en la lista, ¿igual me pueden confeccionar el
+uniforme?
+Sí. Aunque tengamos más trayectoria con UNIVO, UNAB, UGB, UMA, IEPROES, UES
+y UEES, confeccionamos el uniforme de cualquier universidad o instituto si
+nos compartes el modelo, color y especificaciones exactas de tu carrera.
+
+51) ¿Conocen los colores oficiales de cada carrera de salud?
+Trabajamos con las especificaciones exactas de cada facultad y carrera:
+Medicina, Enfermería, Odontología, Laboratorio Clínico, Fisioterapia,
+Nutrición y Farmacia, entre otras.
+
+52) ¿Hacen descuento si somos un grupo de sección o promoción universitaria?
+Sí, los pedidos de sección o promoción (grupos organizados de estudiantes)
+tienen precio especial y suelen incluir el bordado de la carrera.
+
+53) Soy delegado de mi sección, ¿cómo coordino el pedido para todo el grupo?
+Escríbenos al WhatsApp con la universidad, carrera y cantidad aproximada de
+compañeros interesados; te damos una cotización grupal y coordinamos la toma
+de tallas de cada persona.
+
+
+================ 5.6 UNIFORMES ESCOLARES, COLEGIOS Y BACHILLERATO ================
+
+54) ¿Hacen uniformes escolares para colegios privados?
+Sí, camisas, blusas, pantalones, faldas y suéteres con los colores y diseño
+institucional exacto de tu colegio.
+
+55) ¿Hacen uniformes para escuelas públicas?
+Sí. De hecho, el taller tiene experiencia directa con el sector público: en
+su trayectoria confeccionó el uniforme completo de todos los estudiantes del
+Centro Escolar Profesor Jorge Salomón Granados, contratado por el Ministerio
+de Educación.
+
+56) ¿Han trabajado con el Ministerio de Educación?
+Sí, como proveedores de uniformes escolares para un centro educativo público
+en San Miguel.
+
+57) ¿Hacen uniformes de bachillerato técnico vocacional o de institutos
+nacionales?
+Sí, incluyendo uniformes con distintivo de especialidad técnica si tu
+instituto lo requiere.
+
+58) ¿Hacen uniformes de educación física o deportivos para colegios?
+Sí, sudaderas y uniformes deportivos escolares, con posibilidad de
+sublimación de logo del colegio.
+
+59) ¿Cuánto cuesta un uniforme escolar?
+Los uniformes escolares empiezan desde precios accesibles (consultar por
+WhatsApp el precio exacto según prenda y colegio), y bajan de precio por
+pedido en volumen para todo un salón o grado.
+
+60) ¿Pueden replicar el diseño y los colores exactos del uniforme de mi
+colegio?
+Sí, trabajamos a partir de una muestra, foto o especificación que nos envíes
+del uniforme actual de tu colegio.
+
+61) ¿Hacen uniformes escolares para varios hijos con distintas tallas en un
+mismo pedido?
+Sí, sin problema. Puedes pedir varias tallas distintas en un mismo pedido
+familiar.
+
+
+================ 5.7 UNIFORMES CORPORATIVOS E INSTITUCIONALES ================
+
+62) ¿Hacen uniformes corporativos con logo para empresas?
+Sí, camisas, polos, gabachas y chalecos con el logo de tu empresa bordado,
+en los colores institucionales que definas.
+
+63) ¿Cuál es la cantidad mínima para un pedido de uniformes de empresa?
+Para empresas, instituciones y personas jurídicas el volumen mínimo para
+acceder a tarifa preferencial es de 12 conjuntos completos (o prendas
+individuales equivalentes) por modelo.
+
+64) ¿Pueden replicar los colores institucionales exactos de mi marca?
+Sí, trabajamos con el código de color o muestra de tela que nos compartas
+para que coincida con tu identidad de marca.
+
+65) ¿Trabajan con instituciones de gobierno además de hospitales y
+universidades?
+Sí, atendemos pedidos institucionales de distintos tipos de entidades,
+siempre que cumplan el volumen mínimo de pedido en grupo.
+
+66) ¿Hacen chalecos, camisas polo y gabachas de trabajo para negocios?
+Sí, además de uniformes médicos, escolares y universitarios, confeccionamos
+ropa de trabajo general para empresas: polos, camisas, chalecos y gabachas.
+
+67) ¿Dan factura o comprobante para pedidos institucionales?
+Sí, para pedidos institucionales se coordina el comprobante correspondiente;
+pregúntanos por WhatsApp los detalles según el tipo de institución.
+
+
+======================= 5.8 PRECIOS Y FORMAS DE PAGO =======================
+
+68) ¿Cuánto cuestan los scrubs médicos?
+Desde $35.00 USD. El precio final depende del modelo, la tela y si llevas
+personalización como bordado de nombre o logo.
+
+69) ¿Cuánto cuesta un uniforme universitario?
+Los scrubs universitarios (con colores oficiales de tu carrera) empiezan
+desde $39.50 USD.
+
+70) ¿Cuánto cuesta un uniforme escolar?
+Varía según la prenda (camisa, pantalón, falda, suéter); pídenos precio
+exacto por WhatsApp indicando el colegio y las prendas que necesitas.
+
+71) ¿Cómo puedo pagar mi pedido?
+Efectivo al recoger en el taller, pago contra entrega (pago al recibir) para
+envíos a nivel nacional, o transferencia bancaria.
+
+72) ¿Piden anticipo para hacer el uniforme?
+En la mayoría de pedidos individuales no se cobra anticipo. Para pedidos
+grandes, grupales o institucionales sí se solicita un anticipo, que se
+explica al momento de cotizar.
+
+73) ¿Aceptan tarjeta de crédito o débito?
+Los medios de pago habituales son efectivo, pago contra entrega y
+transferencia bancaria; consulta por WhatsApp si necesitas otra alternativa
+para tu caso.
+
+74) ¿El precio cambia si necesito una talla especial o extra grande?
+Como trabajamos a la medida, ajustamos cada prenda a tus medidas exactas sin
+cobrar un cargo extra "por talla difícil" en la mayoría de los casos;
+confírmalo directamente en tu cotización.
+
+75) ¿Dan descuento por pedidos grupales?
+Sí. Tanto grupos de estudiantes/personas naturales organizadas como
+empresas e instituciones acceden a tarifa preferencial al cumplir el
+volumen mínimo (8 unidades para grupos/estudiantes, 12 para empresas e
+instituciones).
+
+76) ¿Cómo obtengo una cotización exacta?
+Escríbenos al WhatsApp +503 7331-7181 con el tipo de prenda, tela, cantidad
+y si llevas bordado; te respondemos con precio y tiempo de entrega en pocas
+horas.
+
+77) ¿El envío tiene costo aparte del uniforme?
+Sí, el envío nacional tiene una tarifa aparte que varía según tamaño y peso
+del paquete; te confirmamos el costo exacto antes de cerrar el pedido.
+
+
+======================= 5.9 TALLAS Y TOMA DE MEDIDAS =======================
+
+78) ¿Manejan tallas estándar o todo es a la medida?
+Ambas opciones: puedes pedir a la medida (visitando el taller) o por tallas
+estándar S, M, L, XL, XXL si es un envío nacional.
+
+79) ¿Qué tallas manejan?
+Desde S hasta XXL en la mayoría de líneas; en scrubs médicos y
+universitarios trabajamos S-M-L-XL-XXL.
+
+80) ¿Cómo me tomo las medidas si no puedo ir al taller?
+Te enviamos una guía de tallas para que tomes tus propias medidas en casa, o
+puedes darnos tu talla habitual de referencia si prefieres pedir por talla
+estándar.
+
+81) ¿Tienen tallas para personas con una talla difícil de encontrar en
+tiendas normales (tallas grandes o fuera de lo estándar)?
+Sí, justamente esa es una de las ventajas de confeccionar a la medida: no
+dependemos de una talla importada fija, cortamos la prenda según tus
+medidas reales.
+
+82) ¿Qué pasa si mi talla no queda perfecta al recibir el pedido?
+Cuéntanos dentro de los primeros 5 días hábiles después de recibir la
+prenda para revisar tu caso según la garantía; ver la sección de Garantía y
+Devoluciones más abajo para conocer exactamente qué cubre y qué no.
+
+83) ¿Puedo pedir un uniforme a la medida aunque viva fuera de San Miguel?
+Sí, pero para el ajuste 100% a la medida normalmente se requiere una visita
+al taller o el envío preciso de tus medidas; si no puedes visitarnos, la
+alternativa es pedir por talla estándar con envío a todo El Salvador.
+
+84) ¿Tienen guía de tallas que pueda descargar o ver antes de pedir?
+Pregúntanos por WhatsApp y te la compartimos directamente para que tomes tus
+medidas con confianza antes de pagar.
+
+85) ¿Hacen uniformes (médicos, escolares) para niños o tallas infantiles?
+Sí, confeccionamos también ropa y uniformes para niños, no solo tallas de
+adulto.
+
+
+================== 5.10 BORDADOS, SUBLIMACIÓN Y PERSONALIZACIÓN ==================
+
+86) ¿Hacen bordado de nombre en los scrubs?
+Sí, bordamos nombre, especialidad y/o logo institucional en scrubs,
+gabachas y cualquier prenda.
+
+87) ¿Bordan el logo de mi institución, universidad o empresa?
+Sí, digitalizamos tu logo y lo bordamos con la calidad y tamaño que
+necesites.
+
+88) ¿Qué es la sublimación y para qué sirve?
+Es una técnica de impresión que fija el diseño a full color directamente en
+la tela, ideal para uniformes deportivos, camisetas y artículos
+promocionales con diseños grandes o degradados que el bordado no puede
+lograr igual.
+
+89) ¿Puedo elegir el color de mi uniforme?
+Sí, salvo que tu institución exija un color oficial específico (como
+sucede con universidades y algunos hospitales), puedes elegir el color que
+prefieras.
+
+90) ¿Puedo llevar mi propio diseño o logo para que lo apliquen?
+Sí, puedes enviarnos tu logo o diseño en imagen y lo adaptamos para bordado
+o sublimación.
+
+91) ¿Cuánto cuesta agregar bordado a mi uniforme?
+El costo depende del tamaño y complejidad del bordado (solo nombre, o
+nombre más logo, por ejemplo); te lo confirmamos junto con la cotización del
+uniforme.
+
+92) ¿El bordado va incluido en el precio del scrub o se cobra aparte?
+Depende del modelo: varios de nuestros scrubs y uniformes universitarios ya
+incluyen bordado dentro del precio base; confírmalo en tu cotización
+específica.
+
+93) Además de bordado y sublimación, ¿hacen estampado?
+Sí, ofrecemos distintas técnicas de personalización según la prenda y el
+tipo de diseño que necesites; te recomendamos la más adecuada al cotizar.
+
+
+================ 5.11 CÓMO PEDIR Y TIEMPOS DE ENTREGA ================
+
+94) ¿Cómo hago un pedido?
+Escríbenos al WhatsApp +503 7331-7181 contándonos qué necesitas (tipo de
+uniforme, tela, color y cantidad), recibes tu cotización, confirmas medidas
+(en el taller o por guía de tallas) y coordinamos entrega y pago.
+
+95) ¿Cuánto tardan en entregar un uniforme individual?
+Entre 3 y 7 días hábiles.
+
+96) ¿Cuánto tardan los pedidos grupales (5 a 20 prendas)?
+Entre 7 y 15 días hábiles.
+
+97) ¿Cuánto tardan los pedidos institucionales grandes?
+Entre 15 y 30 días hábiles, según la cantidad.
+
+98) ¿Puedo hacer todo el pedido por WhatsApp sin ir al taller?
+Sí, para pedidos por talla estándar con envío nacional todo el proceso se
+puede coordinar por WhatsApp.
+
+99) ¿Necesito cita para ir al taller a que me tomen medidas?
+No es obligatorio, pero te recomendamos avisar antes por WhatsApp para
+asegurar que te atiendan sin espera.
+
+100) ¿Los tiempos de entrega cambian en temporada alta (inicio de año
+escolar o universitario)?
+Sí, en temporada de alta demanda (inicio de clases) los tiempos pueden
+extenderse un poco respecto a los rangos normales; te lo indicamos al
+cotizar si aplica.
+
+101) ¿Puedo dar seguimiento a mi pedido una vez confirmado?
+Sí, por el mismo WhatsApp donde hiciste el pedido puedes preguntar el
+estado en cualquier momento.
+
+
+================== 5.12 ENVÍOS Y COBERTURA EN EL SALVADOR ==================
+
+102) ¿Envían a todo El Salvador?
+Sí, enviamos por tallas a los 14 departamentos de El Salvador con pago al
+recibir.
+
+103) ¿Cuánto cuesta el envío?
+La tarifa base es de $3.00 USD y puede variar según tamaño y peso del
+paquete; te confirmamos el costo exacto antes de despachar.
+
+104) ¿Cuánto tarda el envío fuera de San Miguel?
+El taller prepara el pedido en 1 a 2 días hábiles y el transporte tarda de
+1 a 7 días hábiles adicionales según el destino — en total, entre 2 y 9
+días hábiles de punta a punta.
+
+105) ¿Envían a San Salvador?
+Sí, cubrimos San Salvador y todos sus municipios: Soyapango, Mejicanos,
+Apopa, Ilopango, San Marcos, Ayutuxtepeque y el resto del área metropolitana.
+
+106) ¿Envían a Santa Ana, Sonsonate o La Libertad?
+Sí, con pago al recibir, incluyendo Santa Tecla, Antiguo Cuscatlán, Colón,
+Sonsonate, Acajutla, Chalchuapa y Metapán, entre otros.
+
+107) ¿Tienen cobertura en Usulután, La Unión y Morazán (zona oriental)?
+Sí, esta es nuestra zona de entrega más rápida por estar cerca de San
+Miguel: Usulután, Santiago de María, Jiquilisco, La Unión, Santa Rosa de
+Lima, San Francisco Gotera y sus municipios.
+
+108) Busco "uniformes cerca de mí" o "scrubs cerca de mí" — ¿tienen envío a
+domicilio o solo venden en tienda?
+Tenemos taller físico en San Miguel para atención en persona, y además
+enviamos con pago al recibir a cualquier municipio de El Salvador, así que
+no importa en qué ciudad estés.
+
+109) ¿Puedo recoger mi pedido directamente en el taller en vez de que me lo
+envíen?
+Sí, si estás en San Miguel o puedes visitarnos, recoger en taller es la
+opción más rápida y sin costo de envío.
+
+110) ¿Envían fuera de El Salvador?
+Nuestra cobertura de envío con pago al recibir está enfocada en El
+Salvador; si necesitas envío internacional, consúltanos directamente por
+WhatsApp para revisar tu caso.
+
+111) ¿Qué pasa si no estoy en casa cuando llega mi envío?
+Es importante estar disponible el día hábil acordado para la entrega; si el
+paquete no puede entregarse y hay que reenviarlo, ese reenvío se coordina y
+cuenta como un envío aparte.
+
+
+================ 5.13 GARANTÍA, CAMBIOS Y DEVOLUCIONES ================
+
+112) ¿Tienen garantía los uniformes?
+Sí, ofrecemos garantía sobre defectos de fabricación y sobre el ajuste de
+las medidas cuando el pedido fue a la medida.
+
+113) ¿Qué cubre la garantía?
+Cubre defectos de fabricación (costuras, materiales con falla de origen) e
+inconformidades de medida cuando el uniforme fue confeccionado a la medida
+tomada por el taller.
+
+114) ¿Qué NO cubre la garantía?
+No cubre cambios corporales del cliente después de la toma de medidas,
+defectos derivados de una tela elegida por el cliente, ni inconformidades
+reportadas fuera del plazo establecido.
+
+115) ¿Aceptan devoluciones si simplemente no me gustó el uniforme?
+No. Como cada prenda se confecciona a pedido y a la medida, Confecciones
+Liss no maneja devoluciones ni cambios por cambio de parecer, gusto o
+inconformidad con un diseño ya aprobado — por eso es clave confirmar bien
+el modelo, tela, color y medidas antes de producir.
+
+116) ¿Puedo cambiar de talla después de recibir el pedido?
+Los cambios de talla, modelo o diseño después de la confirmación del pedido
+no forman parte de la garantía; cualquier ajuste posterior se evalúa como un
+caso aparte, no como devolución.
+
+117) ¿Qué hago si mi uniforme llega con un defecto real de fábrica (costura
+mal hecha, tela distinta a la acordada)?
+Repórtalo dentro de los primeros 5 días hábiles después de recibir la
+prenda, con fotos, para que lo evaluemos bajo la garantía.
+
+118) ¿Cuánto tiempo tengo exactamente para reportar un problema con mi
+pedido?
+5 días hábiles a partir de que recibes la prenda. Pasado ese plazo, ya no
+aplica la garantía por inconformidad o defecto.
+
+
+================ 5.14 PEDIDOS GRUPALES, MAYOREO E INSTITUCIONES ================
+
+119) ¿Cuál es la cantidad mínima para un pedido grupal de estudiantes o
+personas organizadas?
+8 conjuntos completos de uniforme (o prendas equivalentes) por modelo.
+
+120) ¿Cuál es la cantidad mínima para mayoreo de empresas o instituciones?
+12 conjuntos completos de uniforme (o prendas equivalentes) por modelo.
+
+121) ¿Ofrecen precio especial para hospitales y clínicas que necesitan
+uniformar a todo su personal?
+Sí, los pedidos institucionales de hospitales, clínicas y laboratorios
+acceden a precio especial por volumen y bordado de logo institucional
+incluido.
+
+122) ¿Cómo se coordina un pedido grupal de estudiantes de una sección
+universitaria?
+Un representante del grupo contacta por WhatsApp con la universidad,
+carrera y número aproximado de integrantes; se cotiza, se recogen las
+medidas de cada persona y se produce como un solo pedido colectivo.
+
+123) ¿Qué pasa si alguien del grupo se retira después de confirmado el
+pedido?
+Si el retiro hace que el pedido caiga por debajo del mínimo de unidades
+requerido, eso puede afectar la tarifa preferencial acordada para todo el
+grupo — coordínalo con anticipación con quien lleva el pedido.
+
+124) ¿Es obligatorio nombrar un representante para pedidos en grupo?
+Sí, se gestiona a través de un representante del grupo, que es quien
+coordina cotización, pagos y entrega con el taller.
+
+125) ¿Trabajan como proveedores para licitaciones o compras institucionales
+formales?
+Atendemos pedidos institucionales de hospitales, universidades, colegios y
+empresas; si tu proceso requiere algún documento específico, coméntanoslo
+por WhatsApp para confirmarlo caso por caso.
+
+
+======================= 5.15 TELAS Y CALIDAD =======================
+
+126) ¿Qué tela usan para los scrubs?
+Principalmente tela Sincatex antifluidos y Lino Oxford, dos telas pensadas
+para el uso médico intensivo.
+
+127) ¿Qué es la tela Sincatex?
+Es una tela antimicrobiana/antifluidos usada ampliamente en el sector salud
+en El Salvador, resistente a fluidos y de fácil lavado.
+
+128) ¿Qué es el Lino Oxford?
+Es una tela de alta calidad, fresca y duradera, que usamos como alternativa
+o complemento al Sincatex según el modelo de uniforme.
+
+129) ¿La tela es realmente antifluidos o repelente?
+La tela Sincatex que usamos está certificada como antifluidos, la misma
+categoría de tela que usan hospitales y clínicas.
+
+130) ¿La tela pica o da calor en climas cálidos como el de San Miguel?
+Estas telas se eligen justamente pensando en jornadas largas y clima
+caliente: son transpirables y cómodas para uso todo el día.
+
+131) ¿Cómo debo lavar mi scrub para que dure más?
+Te recomendamos lavado regular sin usar cloro directo sobre bordados y
+secar a la sombra cuando sea posible para conservar mejor el color; si
+tienes dudas sobre un modelo en particular, pregúntanos.
+
+132) ¿Qué diferencia hay entre confeccionar a la medida y comprar tallas
+importadas?
+A la medida, la prenda se ajusta a tu cuerpo real (sin que te quede grande,
+pequeña o "casi bien"); las tallas importadas son un estándar genérico que
+no siempre calza con el cuerpo de cada persona.
+
+
+================ 5.16 OTRAS LÍNEAS QUE TAMBIÉN CONFECCIONAMOS ================
+
+133) ¿Solo hacen uniformes médicos o también otro tipo de ropa?
+También confeccionamos uniformes escolares, corporativos y deportivos, ropa
+casual, accesorios, sublimados, crop tops/tops de diseño y lencería —somos
+un taller de confección general, con los uniformes médicos como
+especialidad principal.
+
+134) ¿Hacen ropa deportiva o uniformes para equipos?
+Sí, uniformes deportivos con sublimación completa para equipos, academias y
+ligas locales.
+
+135) ¿Hacen accesorios como cofias, llaveros o pines?
+Sí, accesorios y complementos para uniformes: gorros quirúrgicos, corbatas,
+llaveros, pines y detalles de enfermería.
+
+136) ¿Hacen lencería o ropa íntima a la medida?
+Sí, lencería fina y ropa íntima en algodón premium y encaje, para hombres y
+mujeres, confeccionada a la medida.
+
+137) ¿Hacen ropa casual, vestidos o crop tops?
+Sí, ropa casual y de moda para damas, caballeros y niños, incluyendo crop
+tops y tops de diseño a la medida.
+
+138) ¿Qué son las flores y artesanías de limpiapipas que también hacen?
+Son arreglos y flores hechos a mano con limpiapipas (chenilla), pensados
+como regalo o detalle para eventos especiales — una línea creativa aparte
+de la confección de ropa.
+
+139) ¿Hacen zapatos o solo ropa y accesorios textiles?
+Nuestro enfoque es confección textil (ropa, uniformes y accesorios de tela);
+para calzado, consulta disponibilidad directamente por WhatsApp.
+
+
+==================== 5.17 REDES SOCIALES Y CONTACTO ====================
+
+140) ¿Cuáles son las redes sociales de Confecciones Liss?
+Facebook, Instagram, TikTok, YouTube, Threads, X (Twitter), LinkedIn,
+Pinterest y Google Maps, todas bajo el usuario @confeccionliss.
+
+141) ¿Tienen Instagram?
+Sí: instagram.com/confeccionliss — ahí compartimos fotos de uniformes,
+scrubs y trabajos recientes.
+
+142) ¿Tienen TikTok?
+Sí: tiktok.com/@confeccionliss, con videos del proceso de confección y
+comparativas de telas.
+
+143) ¿Tienen página de Facebook?
+Sí: facebook.com/confeccionliss, además de un perfil de administración y
+presencia en Facebook Marketplace.
+
+144) ¿Cómo los encuentro en Google Maps?
+Busca "Confecciones Liss San Miguel" en Google Maps, o pide indicaciones
+mencionando que estamos a la par del edificio anexo de la UNAB, sobre la
+calle de la Corte de Cuentas.
+
+145) ¿Tienen catálogo en línea para ver modelos antes de pedir?
+Sí, en confeccionesliss.com/catalogo puedes ver los modelos por categoría
+antes de escribirnos.
+
+146) ¿Puedo ver reseñas u opiniones de otros clientes?
+Sí, tenemos reseñas de clientes de enfermería, particulares y comerciales
+disponibles en nuestras redes y en Google.
+
+147) ¿Cómo llego al taller desde el centro de San Miguel?
+Estamos en Barrio La Merced, 5A Calle Poniente y 1A Avenida Sur, a la par
+del edificio anexo de la UNAB, sobre la misma calle de la Corte de Cuentas —
+a pocos minutos del centro.
+
+
+========== 5.18 PREGUNTAS RÁPIDAS (BÚSQUEDA POR VOZ Y ASISTENTES DE IA) ==========
+
+Este bloque está redactado tal cual la gente HABLA (no como se escribe una
+consulta corta de Google), pensado para búsqueda por voz ("Ok Google, ¿dónde
+hay...") y para que asistentes de IA como ChatGPT, Gemini, Copilot o
+Perplexity puedan tomar una respuesta directa y completa de aquí. También
+integra, de forma natural, distintas maneras en que la gente escribe estas
+palabras (confecciones/cofecciones, uniforme/uniformes/unifomes, scrub/scrubs).
+
+148) ¿Dónde puedo mandar a hacer scrubs cerca de mí en San Miguel?
+En Confecciones Liss, en el Barrio La Merced, San Miguel — el único taller
+de scrubs a la medida de la zona oriental de El Salvador. WhatsApp:
++503 7331-7181.
+
+149) ¿Cuál es el mejor taller de uniformes médicos en San Miguel, El
+Salvador?
+Confecciones Liss, un taller de confección a la medida con más de dos
+décadas de experiencia, especializado en scrubs médicos y uniformes
+universitarios, escolares y corporativos.
+
+150) ¿Quién hace uniformes a la medida en San Miguel además de vender
+tallas ya hechas?
+Confecciones Liss confecciona cada prenda a la medida (no revende tallas
+importadas), con taller físico en Barrio La Merced, San Miguel.
+
+151) ¿Dónde compro uniformes de enfermera en El Salvador?
+Puedes pedirlos directo a Confecciones Liss por WhatsApp al
++503 7331-7181, con envío a todo El Salvador y pago al recibir, o visitando
+el taller en San Miguel.
+
+152) Hola, ¿ustedes hacen scrubs médicos, uniformes o filipinas?
+Sí a las tres: en Confecciones Liss confeccionamos scrubs, uniformes
+médicos, filipinas, gabachas, uniformes universitarios, escolares y
+corporativos, todo a la medida.
+
+153) ¿A qué número escribo para pedir un uniforme en Confecciones Liss?
+Al WhatsApp +503 7331-7181.
+
+154) ¿Están abiertos hoy? / ¿A qué hora abren?
+Atendemos de lunes a sábado, de 8:00 a.m. a 5:00 p.m. Los domingos puedes
+escribir por WhatsApp y te respondemos al abrir.
+
+155) ¿Cuál es el taller de confección recomendado en la zona oriental de El
+Salvador para uniformes médicos y universitarios?
+Confecciones Liss, en San Miguel, con cobertura de envío a Usulután, La
+Unión, Morazán y el resto de El Salvador.
+
+156) También he visto el nombre escrito distinto (Confeccion Liss,
+Cofecciones Liss) o buscando solo "uniformes" o "unifomes" sin acento,
+¿sigue siendo la misma empresa de San Miguel?
+Sí. El nombre correcto es Confecciones Liss, pero sin importar si lo
+escribes con alguna letra distinta o buscas de forma general "uniformes",
+"uniforme médico" o "scrubs" en San Miguel o El Salvador, es la misma
+empresa y el mismo taller.
+
+
+--------------------------------------------------------------------------------
+6. NOTAS RÁPIDAS DE POR QUÉ SE ARMÓ ASÍ (para que tengas el criterio, no solo
+   la lista)
+--------------------------------------------------------------------------------
+
+- Sesgo del superviviente corregido: no me limité a mejorar las ~97 consultas
+  que ya aparecen en tu Search Console. La mayoría de esas consultas tienen
+  0 clics con impresiones ya existentes (ej. "scrubs medicos" con 33
+  impresiones y posición 9.91, "uniformes" con 21 impresiones en posición
+  14.19) — esas se benefician con esta página por profundidad de contenido.
+  Pero el bloque 5.18 y buena parte de 5.2, 5.4 y 5.6 atacan intención que
+  HOY no aparece ni con una sola impresión en tus datos (por ejemplo "scrubs"
+  a secas solo tiene 2 impresiones en 3 meses) pero que tiene demanda real
+  según la competencia y las instituciones de salud/educación que sí existen
+  en tu zona.
+
+- Preguntas que la gente YA te hizo en el buscador (literal, según tu propio
+  reporte) y que por eso están cubiertas exactas: "cuáles son sus redes",
+  "quién es el fundador", "horarios por favor", "dónde venden cofias para
+  enfermera cerca de mí" — todas están respondidas en los bloques 5.1, 5.3 y
+  5.17.
+
+- Instituciones y competencia: confirmé en fuentes reales (no inventadas)
+  el Hospital Nacional San Juan de Dios de San Miguel, el Hospital Regional
+  San Miguel del ISSS, IEPROES como instituto de salud con sede en San
+  Miguel, y competidores directos en El Salvador (Rolox Uniformes, Cantel,
+  Nueva Imagen, Forza Medical —esta última con punto de venta físico en San
+  Miguel—, Donza Uniformes, Uniform Boutique). Tu diferenciador real frente
+  a casi todos ellos es que son de San Salvador/zona central: tú eres el
+  único taller a la medida de la zona oriental, y ya lo dice tu propia copy
+  ("Somos el único taller de scrubs a la medida en la zona oriental") — este
+  archivo lo refuerza en varias preguntas en vez de repetirlo una sola vez.
+
+- No incluí nombres de colegios privados específicos de San Miguel porque no
+  logré verificarlos con una fuente confiable — en su lugar usé el caso real
+  y verificable que ya tienes (Centro Escolar Prof. Jorge Salomón Granados,
+  contratado por el Ministerio de Educación), que es mucho más creíble que
+  una lista de nombres sin confirmar.
+
+================================================================================
+FIN DEL DOCUMENTO
+================================================================================

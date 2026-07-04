@@ -152,7 +152,7 @@ export function Navbar() {
     typeof window !== "undefined" ? window.scrollY : 0
   );
 
-  const BLOCKED_ROUTES = ["/servicios", "/catalogo", "/carrito", "/mi-cuenta"];
+  const BLOCKED_ROUTES = ["/servicios", "/catalogo", "/carrito", "/cuenta"];
 
   const navLinks = isHomeOnly
     ? NAV_LINKS.filter((link) => link.href === "/")
@@ -180,7 +180,7 @@ export function Navbar() {
   const handleAvatarClick = () => {
     closeMenu();
     if (user) {
-      router.push("/mi-cuenta");
+      router.push("/cuenta");
     } else {
       showAuthModal("account");
     }

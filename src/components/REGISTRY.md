@@ -15,7 +15,7 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 - **Ruta:** `src/components/layout/MobileBottomNav.tsx`
 - **Descripción:** Barra de navegación inferior móvil con notch cóncavo animado (inspirado en `CurvedBottomNavigationView` de Android). 5 tabs fijos. Arquitectura limpia basada en: ① burbuja FAB flotante con animación sink/rise, ② path SVG principal con notch cóncavo animado, ③ path SVG superior con borde 3D blanco y sombra/brillo blanco para garantizar un contraste perfecto y evitar que desaparezca en fondos del mismo color. `activeIdx` se deriva directamente del pathname.
 - **Props:** No recibe props.
-- **Tabs:** Catálogo `/catalogo`, Carrito `/carrito`, Inicio `/`, Contacto `/contacto`, Perfil `/mi-cuenta`
+- **Tabs:** Catálogo `/catalogo`, Carrito `/carrito`, Inicio `/`, Contacto `/contacto`, Perfil `/cuenta`
 - **Animación bubble:** sink (top REST→SUNK, primeros 50%) + slide horizontal (duración completa) + rise (SUNK→REST, últimos 50%). Icono FAB aparece al inicio de la fase rise (delay = ANIM_DURATION × 0.5).
 - **Animación tabs:** icono activo `opacity 0, y +8`, inactivo `opacity 1, y 0` — Framer Motion transiciona entre estados automáticamente (efecto rise/sink del source/destination).
 - **Geometría notch:** `CURVE_HALF=56` (mínimo geométrico para no cortar la burbuja), `NOTCH_Y=62` (2px bajo el borde inferior de la burbuja). `CTRL_X_SPREAD=34`.
@@ -428,9 +428,10 @@ Cada ruta del proyecto tiene un `loading.tsx` propio que Next.js muestra automá
 | `/catalogo/[sector]/[id]` | `src/app/(public)/catalogo/[sector]/[id]/loading.tsx` |
 | `/servicios`              | `src/app/(public)/servicios/loading.tsx`              |
 | `/contacto`               | `src/app/(public)/contacto/loading.tsx`               |
-| `/mi-cuenta`              | `src/app/(public)/mi-cuenta/loading.tsx`              |
+| `/cuenta`                 | `src/app/(public)/cuenta/loading.tsx`                 |
 | `/links`                  | `src/app/(public)/links/loading.tsx`                  |
 | `/updates`                | `src/app/(public)/updates/loading.tsx`                |
+| `/ayuda`                  | `src/app/(public)/ayuda/page.tsx`                     |
 | `/legal`                  | `src/app/(public)/legal/loading.tsx`                  |
 | `/legal/privacidad`       | `src/app/(public)/legal/privacidad/loading.tsx`       |
 | `/legal/terminos`         | `src/app/(public)/legal/terminos/loading.tsx`         |

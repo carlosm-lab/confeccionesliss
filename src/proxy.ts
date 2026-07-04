@@ -23,7 +23,7 @@ import { env } from "@/env";
 /**
  * Rutas bloqueadas en producción (no listas para acceso público aún).
  */
-const BLOCKED_ROUTES = ["/mi-cuenta"];
+const BLOCKED_ROUTES = ["/cuenta"];
 
 // ── Killswitch: caché en memoria con TTL de 30 segundos ──────────
 // Patrón stale-while-revalidate: se sirve el valor cacheado inmediatamente

@@ -83,7 +83,7 @@ const ITEMS = [
   { href: "/carrito", icon: "shopping_cart", label: "Carrito" },
   { href: "/", icon: "home", label: "Inicio" },
   { href: "/contacto", icon: "mail", label: "Contacto" },
-  { href: "/mi-cuenta", icon: "person", label: "Perfil" },
+  { href: "/cuenta", icon: "person", label: "Perfil" },
 ] as const;
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -100,7 +100,7 @@ export function MobileBottomNav() {
   const { user, showAuthModal } = useAuth();
 
   /* In production, these routes are blocked by middleware — hide from nav */
-  const PROD_BLOCKED = ["/catalogo", "/servicios", "/carrito", "/mi-cuenta"];
+  const PROD_BLOCKED = ["/catalogo", "/servicios", "/carrito", "/cuenta"];
   const visibleItems = ITEMS.filter(
     (item) =>
       process.env.NODE_ENV !== "production" || !PROD_BLOCKED.includes(item.href)
@@ -307,7 +307,7 @@ export function MobileBottomNav() {
         {visibleItems.map((item, idx) => {
           const isActive = idx === activeIdx;
           const isCartTab = item.href === "/carrito";
-          const isProfileTab = item.href === "/mi-cuenta";
+          const isProfileTab = item.href === "/cuenta";
 
           // El tab de carrito abre el drawer; el de perfil requiere auth
           const handleTabClick = (e: React.MouseEvent) => {

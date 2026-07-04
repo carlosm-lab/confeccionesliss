@@ -6,7 +6,7 @@ import { formatPrice } from "@/lib/formatPrice";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function MiCuentaPageClient() {
+export default function CuentaPageClient() {
   const { user, profile, loading, signOut, showAuthModal } = useAuth();
   const { cartItems, cartTotal, setIsCartOpen } = useCart();
 
@@ -40,7 +40,7 @@ export default function MiCuentaPageClient() {
             className="animate-fade-in-up text-primary font-serif text-3xl font-bold"
             style={{ animationDelay: "200ms" }}
           >
-            Mi Cuenta
+            Cuenta
           </h1>
           <p
             className="animate-fade-in-up max-w-sm text-gray-500"
