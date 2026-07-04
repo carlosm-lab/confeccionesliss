@@ -181,6 +181,9 @@ export default function LegalArticleReader({
             fontSize: "1.05rem",
             lineHeight: 1.75,
             fontFamily: "'Georgia', 'Times New Roman', serif",
+            overflowWrap: "anywhere",
+            wordBreak: "break-word",
+            minWidth: 0,
           }}
         >
           {children}
@@ -336,6 +339,9 @@ export default function LegalArticleReader({
               fontSize: "1.05rem",
               lineHeight: 1.75,
               fontFamily: "'Georgia', 'Times New Roman', serif",
+              overflowWrap: "anywhere",
+              wordBreak: "break-word",
+              minWidth: 0,
             }}
           >
             {children}

@@ -12,6 +12,7 @@ import type { Product } from "@/lib/productUtils";
 import { env } from "@/env";
 import { PRODUCT_SELECT } from "@/lib/catalogService";
 import { revalidateAfterProductSave } from "@/actions/catalog";
+import { toggleFeaturedProduct } from "@/actions/featuredProducts";
 
 import type { Category } from "@/hooks/useCategories";
 import { CATALOGS } from "@/config/catalogs";
@@ -24,6 +25,9 @@ export default function AdminProductsPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [toast, setToast] = useState<{ msg: string; ok: boolean } | null>(null);
+  const [isTogglingFeatured, setIsTogglingFeatured] = useState<string | null>(
+    null
+  );
 
   const showToast = (msg: string, ok = true) => {
     setToast({ msg, ok });
@@ -352,6 +356,40 @@ export default function AdminProductsPage() {
     }
   };
 
+  const handleToggleFeatured = async (product: Product) => {
+    if (!product.id) return;
+    setIsTogglingFeatured(product.id);
+
+    try {
+      const currentValue = product.is_featured ?? false;
+      const result = await toggleFeaturedProduct(product.id, currentValue);
+
+      if (result.success) {
+        // Actualizar estado local sin recargar toda la lista
+        setProducts((prev) =>
+          prev.map((p) =>
+            p.id === product.id ? { ...p, is_featured: result.is_featured } : p
+          )
+        );
+        showToast(
+          result.is_featured
+            ? "Producto fijado en el home."
+            : "Producto desmarcado del home."
+        );
+      } else {
+        showToast(
+          result.error ?? "Error al cambiar el estado del producto.",
+          false
+        );
+      }
+    } catch (error) {
+      logger.error("Error toggling featured product:", error);
+      showToast("Error inesperado. Intenta de nuevo.", false);
+    } finally {
+      setIsTogglingFeatured(null);
+    }
+  };
+
   return (
     <div className="flex w-full max-w-[1400px] flex-col">
       {/* Toast */}
@@ -461,6 +499,8 @@ export default function AdminProductsPage() {
           if (product) handleDeleteProduct(product);
         }}
         onBulkDelete={handleBulkDelete}
+        onToggleFeatured={handleToggleFeatured}
+        isTogglingFeatured={isTogglingFeatured}
       />
 
       {/* Load More */}

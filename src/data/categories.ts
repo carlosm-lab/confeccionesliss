@@ -4,12 +4,12 @@ import { siteConfig } from "@/config/site";
 export const CATEGORIES: Record<Sector, CategoryConfig> = {
   scrubs: {
     sector: "scrubs",
-    title: "Uniformes Médicos de Alta Calidad",
+    title: "Scrubs Médicos y de Enfermería",
     subtitle: "Scrubs",
     description:
       "Scrubs, batas, gorros quirúrgicos y chaquetas clínicas confeccionados con tela antimicrobiana Sincatex.",
     seoDescription:
-      "Scrubs médicos, batas, gorros quirúrgicos y chaquetas clínicas con tela antimicrobiana Sincatex. Bordado personalizado. Desde $35, San Miguel.",
+      "Scrubs médicos y de enfermería, batas, gorros quirúrgicos y chaquetas clínicas con tela Sincatex. Bordado personalizado. Desde $35, San Miguel.",
     icon: "health_and_safety",
     heroGradient: "bg-primary text-white",
     heroFeatures: [

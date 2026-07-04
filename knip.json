@@ -17,5 +17,9 @@
     "src/config/mediaKit.ts",
     "src/components/empresa/PerfilDetalleClient.tsx"
   ],
-  "entry": ["src/app/**/*.{ts,tsx}", "src/mocks/handlers.ts"]
+  "entry": [
+    "src/app/**/*.{ts,tsx}",
+    "src/mocks/handlers.ts",
+    "src/components/legal/LegalContent.tsx"
+  ]
 }

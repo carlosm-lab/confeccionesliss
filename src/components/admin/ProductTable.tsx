@@ -9,6 +9,8 @@ interface ProductTableProps {
   onEdit: (product: Product) => void;
   onDelete: (id: string) => void;
   onBulkDelete: (ids: string[]) => Promise<void>;
+  onToggleFeatured: (product: Product) => void;
+  isTogglingFeatured: string | null;
   isLoading: boolean;
 }
 
@@ -17,6 +19,8 @@ export default function ProductTable({
   onEdit,
   onDelete,
   onBulkDelete,
+  onToggleFeatured,
+  isTogglingFeatured,
   isLoading,
 }: ProductTableProps) {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -263,6 +267,40 @@ export default function ProductTable({
                 </td>
                 <td className="px-6 py-4 text-right">
                   <div className="flex items-center justify-end gap-2">
+                    {/* Pin al home */}
+                    <button
+                      onClick={() => onToggleFeatured(product)}
+                      disabled={isTogglingFeatured === product.id}
+                      title={
+                        product.is_featured
+                          ? "Desfijar del home"
+                          : "Fijar en home"
+                      }
+                      aria-label={
+                        product.is_featured
+                          ? `Desfijar del home: ${product.name}`
+                          : `Fijar en home: ${product.name}`
+                      }
+                      className={[
+                        "rounded-lg p-1.5 transition-colors",
+                        isTogglingFeatured === product.id
+                          ? "animate-pulse cursor-not-allowed opacity-50"
+                          : product.is_featured
+                            ? "text-amber-500 hover:bg-amber-50 hover:text-amber-600 dark:hover:bg-amber-900/20"
+                            : "text-slate-400 hover:bg-amber-50 hover:text-amber-500 dark:hover:bg-amber-900/20",
+                      ].join(" ")}
+                    >
+                      <span
+                        className="material-symbols-outlined text-[20px]"
+                        style={{
+                          fontVariationSettings: product.is_featured
+                            ? "'FILL' 1"
+                            : "'FILL' 0",
+                        }}
+                      >
+                        push_pin
+                      </span>
+                    </button>
                     <button
                       onClick={() => onEdit(product)}
                       className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900/20"

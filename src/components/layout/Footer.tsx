@@ -191,6 +191,9 @@ export function Footer() {
                     { href: "/servicios", label: "Servicios" },
                     { href: "/empresa", label: "Empresa" },
                     { href: "/contacto", label: "Contacto" },
+                    { href: "/links", label: "Redes Sociales" },
+                    { href: "/updates", label: "Updates" },
+                    { href: "/ayuda", label: "Ayuda" },
                   ].map((link, idx) => (
                     <li key={idx}>
                       <Link
@@ -407,6 +410,9 @@ export function Footer() {
                     { href: "/servicios", label: "Servicios" },
                     { href: "/empresa", label: "Empresa" },
                     { href: "/contacto", label: "Contacto" },
+                    { href: "/links", label: "Redes Sociales" },
+                    { href: "/updates", label: "Updates" },
+                    { href: "/ayuda", label: "Ayuda" },
                   ].map((link, idx) => (
                     <li key={idx}>
                       <Link
@@ -551,6 +557,9 @@ export function Footer() {
                 { href: "/servicios", label: "Servicios" },
                 { href: "/empresa", label: "Empresa" },
                 { href: "/contacto", label: "Contacto" },
+                { href: "/links", label: "Redes Sociales" },
+                { href: "/updates", label: "Updates" },
+                { href: "/ayuda", label: "Ayuda" },
               ].map((link, idx) => (
                 <li key={idx}>
                   <Link

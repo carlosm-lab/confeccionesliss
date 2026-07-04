@@ -154,12 +154,12 @@ export default function FilosofiaClient() {
                 style={{ animationDelay: "300ms" }}
               >
                 <div className="border-primary/35 relative z-10 flex w-full flex-col items-center justify-center rounded-2xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:h-full">
-                  <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl md:aspect-auto md:h-full md:w-full">
+                  <div className="border-primary/35 relative aspect-[4/5] w-full overflow-hidden rounded-2xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:aspect-auto md:h-full md:w-full">
                     <Image
                       fill
                       src="/images/empresa/filosofia/vintage_sewing_machine.png"
                       alt="La primera máquina de coser en nuestro taller"
-                      className="rounded-xl object-cover object-center grayscale"
+                      className="rounded-2xl object-cover object-center grayscale"
                       sizes="(max-width:768px) 80vw, 40vw"
                       priority
                     />
@@ -195,7 +195,7 @@ export default function FilosofiaClient() {
                   fill
                   src="/images/empresa/filosofia/vintage_sewing_machine.png"
                   alt="La primera máquina de coser en nuestro taller"
-                  className="rounded-xl object-cover object-center grayscale"
+                  className="rounded-2xl object-cover object-center grayscale"
                   sizes="40vw"
                   priority
                 />
@@ -215,7 +215,7 @@ export default function FilosofiaClient() {
         <div className="mx-auto grid w-full max-w-screen-2xl grid-cols-1 items-center gap-16 lg:grid-cols-12 lg:gap-24">
           {/* Left: Large Vertical Image with Parallax Shift inside container */}
           <div className="flex justify-center lg:col-span-5 lg:justify-start">
-            <div className="relative aspect-[3/4] w-full max-w-[420px] overflow-hidden rounded-lg border border-[#c4c6d1] bg-[#edeef0]">
+            <div className="border-primary/35 relative aspect-[3/4] w-full max-w-[420px] overflow-hidden rounded-2xl border bg-[#edeef0] shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <motion.div
                 style={{ y: s1ImageY }}
                 className="absolute inset-x-0 -top-12 -bottom-12"
@@ -406,7 +406,7 @@ export default function FilosofiaClient() {
                   transition={smoothTransition}
                   onMouseEnter={() => setHoveredPanel(idx)}
                   onMouseLeave={() => setHoveredPanel(null)}
-                  className={`border-primary/35 relative flex flex-col justify-between overflow-hidden rounded-lg border bg-white p-8 transition-shadow duration-300 ${
+                  className={`border-primary/35 relative flex flex-col justify-between overflow-hidden rounded-2xl border bg-white p-8 transition-shadow duration-300 ${
                     isHovered
                       ? "border-primary/55 shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]"
                       : "shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]"
@@ -461,7 +461,7 @@ export default function FilosofiaClient() {
               {MUSEUM_PANELS.map((panel) => (
                 <div
                   key={panel.num}
-                  className="border-primary/35 flex min-h-[320px] w-[85vw] shrink-0 snap-center flex-col justify-between rounded-lg border bg-white p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:w-[45vw]"
+                  className="border-primary/35 flex min-h-[320px] w-[85vw] shrink-0 snap-center flex-col justify-between rounded-2xl border bg-white p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:w-[45vw]"
                 >
                   <div>
                     <span className="font-mono text-lg font-bold text-[#143067]">

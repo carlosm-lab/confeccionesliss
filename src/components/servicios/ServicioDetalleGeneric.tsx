@@ -23,6 +23,8 @@ export function ServicioDetalleGeneric({
         features={service.heroFeatures}
         ctaText={service.ctaBanner.ctaText}
         heroImage={service.cardImage}
+        slug={service.slug}
+        navLabel={service.navLabel}
       />
 
       {/* Editorial Sections (Dynamic fallback) */}

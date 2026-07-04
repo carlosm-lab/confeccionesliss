@@ -16,6 +16,21 @@ This document tracks important architectural decisions made during the project l
 
 ## Logged Decisions
 
+**Date:** 2026-07-04
+**Decision:** Implementación de Productos Fijados ("is_featured") en Home
+**Context:** El cliente solicitó la capacidad de seleccionar desde `/admin/products` qué productos específicos deben quedar fijos en la sección "Novedades" del Home en lugar de mostrar de forma estricta los más recientes creados.
+**Decision:**
+
+- Se agregó la columna `is_featured BOOLEAN NOT NULL DEFAULT FALSE` en la tabla `products` de Supabase con un índice parcial.
+- Se implementó la Server Action `toggleFeaturedProduct` en `src/actions/featuredProducts.ts` que valida el límite de máximo 6 productos fijados, actualiza el estado y realiza un `revalidatePath('/')` inmediato.
+- Se modificó `getRecentProducts()` en `catalogService.ts` para retornar primero los productos con `is_featured=true` (activos) y rellenar los espacios restantes (hasta 6) con los productos activos más recientes no fijados.
+- Se rediseñó la columna de Acciones en la tabla `ProductTable.tsx` agregando un botón de pin (`push_pin` de Material Symbols) que se ilumina en ámbar/dorado cuando el producto está fijado.
+- Se integró el handler en la página de administración de productos con toasts descriptivos en caso de éxito o superación del límite máximo.
+  **Consequences:**
+- El administrador ahora cuenta con control total sobre qué productos se priorizan en la página de inicio, manteniendo un flujo de autocompletado inteligente con los productos más nuevos si decide fijar menos de 6. Se preserva la consistencia de estilos y la revalidación on-demand.
+
+---
+
 **Date:** 2026-06-28
 **Decision:** Rediseño Completo de Manifiesto Editorial e Inmersivo para `/empresa/filosofia`
 **Context:** Se requería rediseñar la página de filosofía desde cero para no parecer la típica página corporativa con tarjetas repetitivas de visión/misión/valores, sino transmitir la esencia viva del oficio artesanal acumulado desde 2005. Se prohibió expresamente reutilizar cualquier sección o patrón previo del sitio, buscando una experiencia editorial premium de estudio creativo.

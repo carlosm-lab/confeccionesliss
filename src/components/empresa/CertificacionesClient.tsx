@@ -19,10 +19,10 @@ export default function CertificacionesClient() {
       {/* 1. HERO: CENTRO DE CREDENCIALES (Ficha de Expediente) */}
       {/* ──────────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-screen-2xl border-b border-[#e1e2e5] px-5 pt-4 pb-16 md:px-8 md:pt-6 md:pb-24">
-        <div className="border-primary/35 rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-12">
-          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12">
-            {/* Texto del Hero */}
-            <div className="space-y-6 lg:col-span-7">
+        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12">
+          {/* Texto del Hero */}
+          <div className="border-primary/35 rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-12 lg:col-span-7">
+            <div className="space-y-6">
               <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
                 Formación y Experiencia
               </span>
@@ -41,92 +41,92 @@ export default function CertificacionesClient() {
                 formación y la trayectoria que respaldan nuestro trabajo.
               </p>
             </div>
+          </div>
 
-            {/* Ilustración de Archivador Técnico (SVG Blueprint) */}
-            <div className="flex justify-center lg:col-span-5">
-              <div className="border-primary/35 relative flex aspect-[4/3] w-full max-w-md flex-col justify-between overflow-hidden rounded border bg-[#f8f9fb] p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
-                <div
-                  className="pointer-events-none absolute inset-0 opacity-[0.03]"
-                  style={{
-                    backgroundImage:
-                      "radial-gradient(#143067 1px, transparent 1px)",
-                    backgroundSize: "16px 16px",
-                  }}
-                ></div>
+          {/* Ilustración de Archivador Técnico (SVG Blueprint) */}
+          <div className="flex justify-center lg:col-span-5">
+            <div className="border-primary/35 relative flex aspect-[4/3] w-full max-w-md flex-col justify-between overflow-hidden rounded-2xl border bg-[#f8f9fb] p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <div
+                className="pointer-events-none absolute inset-0 opacity-[0.03]"
+                style={{
+                  backgroundImage:
+                    "radial-gradient(#143067 1px, transparent 1px)",
+                  backgroundSize: "16px 16px",
+                }}
+              ></div>
 
-                {/* SVG Folder representational */}
-                <svg
-                  className="h-auto w-full fill-none stroke-current stroke-1 text-[#143067]/30"
-                  viewBox="0 0 100 70"
-                  aria-hidden="true"
-                >
-                  {/* Folder Back Tab */}
-                  <path d="M 10,15 L 40,15 L 45,20 L 90,20 L 90,60 L 10,60 Z" />
+              {/* SVG Folder representational */}
+              <svg
+                className="h-auto w-full fill-none stroke-current stroke-1 text-[#143067]/30"
+                viewBox="0 0 100 70"
+                aria-hidden="true"
+              >
+                {/* Folder Back Tab */}
+                <path d="M 10,15 L 40,15 L 45,20 L 90,20 L 90,60 L 10,60 Z" />
 
-                  {/* Document Sheets slipping out */}
-                  <rect
-                    x="18"
-                    y="8"
-                    width="64"
-                    height="42"
-                    rx="1"
-                    className="fill-white text-[#143067]/10"
-                  />
-                  <rect
-                    x="22"
-                    y="11"
-                    width="60"
-                    height="38"
-                    rx="1"
-                    className="fill-white text-[#143067]/15"
-                  />
+                {/* Document Sheets slipping out */}
+                <rect
+                  x="18"
+                  y="8"
+                  width="64"
+                  height="42"
+                  rx="1"
+                  className="fill-white text-[#143067]/10"
+                />
+                <rect
+                  x="22"
+                  y="11"
+                  width="60"
+                  height="38"
+                  rx="1"
+                  className="fill-white text-[#143067]/15"
+                />
 
-                  {/* Lines representing certificate text */}
-                  <line
-                    x1="28"
-                    y1="18"
-                    x2="76"
-                    y2="18"
-                    strokeDasharray="1,1"
-                    strokeWidth="0.5"
-                  />
-                  <line
-                    x1="28"
-                    y1="24"
-                    x2="76"
-                    y2="24"
-                    strokeDasharray="1,1"
-                    strokeWidth="0.5"
-                  />
-                  <line
-                    x1="28"
-                    y1="30"
-                    x2="60"
-                    y2="30"
-                    strokeDasharray="1,1"
-                    strokeWidth="0.5"
-                  />
+                {/* Lines representing certificate text */}
+                <line
+                  x1="28"
+                  y1="18"
+                  x2="76"
+                  y2="18"
+                  strokeDasharray="1,1"
+                  strokeWidth="0.5"
+                />
+                <line
+                  x1="28"
+                  y1="24"
+                  x2="76"
+                  y2="24"
+                  strokeDasharray="1,1"
+                  strokeWidth="0.5"
+                />
+                <line
+                  x1="28"
+                  y1="30"
+                  x2="60"
+                  y2="30"
+                  strokeDasharray="1,1"
+                  strokeWidth="0.5"
+                />
 
-                  {/* Seal circle on certificate */}
-                  <circle
-                    cx="70"
-                    cy="38"
-                    r="5"
-                    className="text-[#143067]/40"
-                    strokeWidth="0.5"
-                  />
+                {/* Seal circle on certificate */}
+                <circle
+                  cx="70"
+                  cy="38"
+                  r="5"
+                  className="text-[#143067]/40"
+                  strokeWidth="0.5"
+                />
 
-                  {/* Folder Front Tab */}
-                  <path
-                    d="M 10,23 L 38,23 L 42,28 L 90,28 L 90,62 L 10,62 Z"
-                    className="fill-white/80"
-                  />
-                </svg>
+                {/* Folder Front Tab */}
+                <path
+                  d="M 10,23 L 38,23 L 42,28 L 90,28 L 90,62 L 10,62 Z"
+                  className="fill-white/80"
+                />
+              </svg>
 
-                <div className="z-10 flex items-end justify-between border-t border-[#e1e2e5] pt-4 font-mono text-[9px] text-[#444650]">
-                  <span>CONFECCIONES LISS // FORMACIÓN Y EXPERIENCIA</span>
-                  <span className="font-bold text-[#143067]">VERIFICADO</span>
-                </div>
+              <div className="z-10 flex items-end justify-between border-t border-[#e1e2e5] pt-4 font-mono text-[9px] text-[#444650]">
+                <span>CONFECCIONES LISS // FORMACIÓN Y EXPERIENCIA</span>
+                <span className="font-bold text-[#143067]">VERIFICADO</span>
               </div>
             </div>
           </div>
@@ -140,7 +140,7 @@ export default function CertificacionesClient() {
         <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-16">
           {/* Columna Izquierda: Números Grandes */}
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:col-span-5 lg:grid-cols-1 lg:gap-8">
-            <div className="border-primary/35 flex flex-col justify-between rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+            <div className="border-primary/35 flex flex-col justify-between rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <span className="font-serif text-5xl font-bold text-[#143067]">
                 20+ Años
               </span>
@@ -151,7 +151,7 @@ export default function CertificacionesClient() {
                 Trayectoria en costura y confección desde 2005.
               </p>
             </div>
-            <div className="border-primary/35 flex flex-col justify-between rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+            <div className="border-primary/35 flex flex-col justify-between rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <span className="font-serif text-5xl font-bold text-[#143067]">
                 2021
               </span>
@@ -162,7 +162,7 @@ export default function CertificacionesClient() {
                 Apertura del taller en Barrio La Merced.
               </p>
             </div>
-            <div className="border-primary/35 flex flex-col justify-between rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+            <div className="border-primary/35 flex flex-col justify-between rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <span className="font-serif text-5xl font-bold text-[#143067]">
                 3 Áreas
               </span>
@@ -222,7 +222,7 @@ export default function CertificacionesClient() {
 
           <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-12 lg:gap-12">
             {/* Foto Placeholder (Ficha Identidad) */}
-            <div className="relative flex flex-col justify-between overflow-hidden rounded border border-[#e1e2e5] bg-[#f8f9fb] p-8 text-center lg:col-span-4">
+            <div className="border-primary/35 relative flex flex-col justify-between overflow-hidden rounded-2xl border bg-[#f8f9fb] p-8 text-center shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] lg:col-span-4">
               <div
                 className="pointer-events-none absolute inset-0 opacity-[0.02]"
                 style={{
@@ -249,7 +249,7 @@ export default function CertificacionesClient() {
             </div>
 
             {/* Listado de Acreditaciones Técnicas */}
-            <div className="flex flex-col justify-between rounded border border-[#e1e2e5] p-6 md:p-8 lg:col-span-8">
+            <div className="border-primary/35 flex flex-col justify-between rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-8 lg:col-span-8">
               <div className="space-y-6">
                 <h4 className="border-b border-[#e1e2e5] pb-3 font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
                   Formación y experiencia práctica
@@ -372,7 +372,7 @@ export default function CertificacionesClient() {
         <div className="space-y-8">
           {/* Nivel 1: Dirección */}
           <div className="flex justify-center">
-            <div className="w-full max-w-sm rounded border-2 border-[#143067] bg-white p-6 text-center">
+            <div className="w-full max-w-sm rounded-2xl border-2 border-[#143067] bg-white p-6 text-center shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <span className="mb-1 block font-mono text-[9px] font-bold tracking-wider text-[#143067] uppercase">
                 Dirección General
               </span>
@@ -391,7 +391,7 @@ export default function CertificacionesClient() {
           {/* Nivel 2: Producción & Operaciones */}
           <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-3">
             {/* Rama A: Confección Especializada */}
-            <div className="border-primary/35 hover:border-primary/55 flex flex-col justify-between rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-colors duration-300">
+            <div className="border-primary/35 hover:border-primary/55 flex flex-col justify-between rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-colors duration-300">
               <div>
                 <span className="mb-2 block font-mono text-[9px] font-bold tracking-wider text-[#143067] uppercase">
                   Confección y Ensamblado
@@ -407,7 +407,7 @@ export default function CertificacionesClient() {
             </div>
 
             {/* Rama B: Calidad & Logística */}
-            <div className="border-primary/35 hover:border-primary/55 flex flex-col justify-between rounded border bg-[#143067]/5 p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-colors duration-300">
+            <div className="border-primary/35 hover:border-primary/55 flex flex-col justify-between rounded-2xl border bg-[#143067]/5 p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-colors duration-300">
               <div>
                 <span className="mb-2 block font-mono text-[9px] font-bold tracking-wider text-[#143067] uppercase">
                   Calidad, Medidas y Logística
@@ -423,7 +423,7 @@ export default function CertificacionesClient() {
             </div>
 
             {/* Rama C: Estrategia & Imagen */}
-            <div className="border-primary/35 hover:border-primary/55 flex flex-col justify-between rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-colors duration-300">
+            <div className="border-primary/35 hover:border-primary/55 flex flex-col justify-between rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-colors duration-300">
               <div>
                 <span className="mb-2 block font-mono text-[9px] font-bold tracking-wider text-[#143067] uppercase">
                   Tecnología e Imagen
@@ -491,7 +491,7 @@ export default function CertificacionesClient() {
               2005
             </div>
 
-            <div className="space-y-2 rounded border border-[#e1e2e5] bg-white p-6">
+            <div className="border-primary/35 space-y-2 rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <span className="block font-serif text-xl font-bold text-[#143067] md:hidden">
                 2005 — Inicio del oficio
               </span>
@@ -514,7 +514,7 @@ export default function CertificacionesClient() {
               2012
             </div>
 
-            <div className="space-y-2 rounded border border-[#e1e2e5] bg-white p-6">
+            <div className="border-primary/35 space-y-2 rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <span className="block font-serif text-xl font-bold text-[#143067] md:hidden">
                 2012 — Confección Institucional
               </span>
@@ -538,7 +538,7 @@ export default function CertificacionesClient() {
               2021
             </div>
 
-            <div className="space-y-2 rounded border border-[#143067]/40 bg-white p-6">
+            <div className="border-primary/35 space-y-2 rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <span className="block font-serif text-xl font-bold text-[#143067] md:hidden">
                 2021 — Fundación Oficial
               </span>
@@ -560,7 +560,7 @@ export default function CertificacionesClient() {
               2026
             </div>
 
-            <div className="space-y-2 rounded border border-[#e1e2e5] bg-white p-6">
+            <div className="border-primary/35 space-y-2 rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <span className="block font-serif text-xl font-bold text-[#143067] md:hidden">
                 2026 — Transformación Digital
               </span>

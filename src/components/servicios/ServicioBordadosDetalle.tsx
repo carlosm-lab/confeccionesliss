@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { ServicePage } from "@/data/services";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 interface ServicioBordadosDetalleProps {
   service: ServicePage;
@@ -62,6 +63,21 @@ export function ServicioBordadosDetalle({
       <section className="relative flex min-h-[calc(100dvh-56px)] flex-col overflow-x-hidden px-5 pt-4 pb-10 md:min-h-0 md:px-8 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:pb-4">
         <div className="mx-auto flex h-full w-full max-w-screen-2xl flex-col items-start gap-8 lg:flex-row lg:items-center lg:gap-16">
           <div className="z-10 flex w-full flex-col items-start lg:min-w-0 lg:flex-1">
+            {/* Breadcrumb section */}
+            <div className="mb-6 lg:mb-8">
+              <Breadcrumb
+                items={[
+                  { label: "Inicio", href: "/" },
+                  { label: "Servicios", href: "/servicios" },
+                  {
+                    label: service.navLabel || service.title,
+                    href: `/servicios/${service.slug}`,
+                  },
+                ]}
+                className="animate-fade-in-up"
+              />
+            </div>
+
             <h1 className="animate-fade-in-up text-primary mb-6 w-full text-center font-serif text-[28px] leading-tight font-bold md:mb-10 md:flex md:flex-col md:items-center md:text-[48px] lg:mb-6 lg:block lg:text-left">
               <span className="block w-full text-center lg:text-left">
                 {service.title}

@@ -29,17 +29,17 @@ export default function MediaKitClient() {
             </p>
 
             {/* Botones */}
-            <div className="flex flex-wrap gap-2 pt-2">
+            <div className="grid w-full grid-cols-2 gap-2 pt-2 sm:flex sm:w-auto">
               <a
                 href="/logo.png"
                 download
-                className="rounded-lg bg-[#143067] px-4 py-2 font-mono text-[10px] tracking-wider text-white uppercase transition-opacity hover:opacity-80"
+                className="flex items-center justify-center rounded-lg bg-[#143067] px-4 py-2.5 text-center font-mono text-[10px] tracking-wider text-white uppercase transition-opacity hover:opacity-80"
               >
                 Descargar Logos
               </a>
               <Link
                 href="/catalogo"
-                className="rounded-lg border border-[#143067] px-4 py-2 font-mono text-[10px] tracking-wider text-[#143067] uppercase transition-colors hover:bg-[#143067]/5"
+                className="flex items-center justify-center rounded-lg border border-[#143067] px-4 py-2.5 text-center font-mono text-[10px] tracking-wider text-[#143067] uppercase transition-colors hover:bg-[#143067]/5"
               >
                 Ver Catálogo
               </Link>
@@ -47,13 +47,13 @@ export default function MediaKitClient() {
           </div>
 
           {/* Columna Derecha: Logo real */}
-          <div className="border-primary/35 flex aspect-[4/3] h-full max-h-[220px] items-center justify-center rounded-2xl border bg-[#f8f9fb] p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:w-2/5">
+          <div className="flex items-center justify-center p-4 md:w-2/5">
             <Image
               src="/logo.png"
               alt="Logotipo Confecciones Liss"
-              width={180}
-              height={90}
-              className="h-auto w-full max-w-[180px] object-contain"
+              width={220}
+              height={110}
+              className="h-auto w-full max-w-[220px] object-contain"
               priority
             />
           </div>
@@ -88,13 +88,13 @@ export default function MediaKitClient() {
               <span className="font-mono text-[9px] text-[#444650]/60">
                 01 // LOGO PRINCIPAL
               </span>
-              <div className="flex items-center justify-center py-4">
+              <div className="my-auto flex flex-1 items-center justify-center py-2">
                 <Image
                   src="/logo.png"
                   alt="Logotipo Confecciones Liss — versión principal"
-                  width={100}
-                  height={50}
-                  className="h-auto w-auto max-w-[100px] object-contain"
+                  width={240}
+                  height={240}
+                  className="h-auto max-h-[80%] w-[80%] object-contain"
                 />
               </div>
               <span className="text-center font-mono text-[9px] font-bold text-[#143067]">
@@ -107,13 +107,13 @@ export default function MediaKitClient() {
               <span className="font-mono text-[9px] text-[#444650]/60">
                 02 // MONOCROMÁTICO
               </span>
-              <div className="flex items-center justify-center py-4">
+              <div className="my-auto flex flex-1 items-center justify-center py-2">
                 <Image
                   src="/logo.png"
                   alt="Logotipo Confecciones Liss — versión monocromática"
-                  width={100}
-                  height={50}
-                  className="h-auto w-auto max-w-[100px] object-contain grayscale"
+                  width={240}
+                  height={240}
+                  className="h-auto max-h-[80%] w-[80%] object-contain grayscale"
                 />
               </div>
               <span className="text-center font-mono text-[9px] text-[#444650]">
@@ -126,13 +126,13 @@ export default function MediaKitClient() {
               <span className="font-mono text-[9px] text-white/60">
                 03 // NEGATIVO
               </span>
-              <div className="flex items-center justify-center py-4">
+              <div className="my-auto flex flex-1 items-center justify-center py-2">
                 <Image
                   src="/logo.png"
                   alt="Logotipo Confecciones Liss — versión negativa"
-                  width={100}
-                  height={50}
-                  className="h-auto w-auto max-w-[100px] object-contain brightness-0 invert"
+                  width={240}
+                  height={240}
+                  className="h-auto max-h-[80%] w-[80%] object-contain brightness-0 invert"
                 />
               </div>
               <span className="text-center font-mono text-[9px] text-white/80">
@@ -411,13 +411,13 @@ export default function MediaKitClient() {
             <span className="inline-block rounded bg-green-100 px-3 py-1 font-mono text-[10px] font-bold tracking-wider text-green-800 uppercase">
               CORRECTO
             </span>
-            <div className="border-primary/35 flex aspect-[4/3] items-center justify-center rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+            <div className="border-primary/35 flex aspect-[4/3] items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <Image
                 src="/logo.png"
                 alt="Logo sobre fondo claro — uso correcto"
-                width={100}
-                height={50}
-                className="h-auto w-auto max-w-[100px] object-contain"
+                width={240}
+                height={240}
+                className="h-auto max-h-[80%] w-[80%] object-contain"
               />
             </div>
             <h3 className="font-serif text-sm font-bold text-[#143067]">
@@ -434,13 +434,13 @@ export default function MediaKitClient() {
             <span className="inline-block rounded bg-green-100 px-3 py-1 font-mono text-[10px] font-bold tracking-wider text-green-800 uppercase">
               CORRECTO
             </span>
-            <div className="border-primary/35 flex aspect-[4/3] items-center justify-center rounded-2xl border bg-[#143067] p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+            <div className="border-primary/35 flex aspect-[4/3] items-center justify-center rounded-2xl border bg-[#143067] p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <Image
                 src="/logo.png"
                 alt="Logo negativo sobre fondo oscuro — uso correcto"
-                width={100}
-                height={50}
-                className="h-auto w-auto max-w-[100px] object-contain brightness-0 invert"
+                width={240}
+                height={240}
+                className="h-auto max-h-[80%] w-[80%] object-contain brightness-0 invert"
               />
             </div>
             <h3 className="font-serif text-sm font-bold text-[#143067]">
@@ -458,13 +458,13 @@ export default function MediaKitClient() {
             <span className="inline-block rounded bg-red-100 px-3 py-1 font-mono text-[10px] font-bold tracking-wider text-red-800 uppercase">
               INCORRECTO
             </span>
-            <div className="border-primary/35 flex aspect-[4/3] items-center justify-center rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+            <div className="border-primary/35 flex aspect-[4/3] items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <Image
                 src="/logo.png"
                 alt="Logo con color alterado — uso incorrecto"
-                width={100}
-                height={50}
-                className="h-auto w-auto max-w-[100px] object-contain hue-rotate-[240deg] saturate-[2]"
+                width={240}
+                height={240}
+                className="h-auto max-h-[80%] w-[80%] object-contain hue-rotate-[240deg] saturate-[2]"
               />
             </div>
             <h3 className="font-serif text-sm font-bold text-[#143067]">
@@ -481,13 +481,13 @@ export default function MediaKitClient() {
             <span className="inline-block rounded bg-red-100 px-3 py-1 font-mono text-[10px] font-bold tracking-wider text-red-800 uppercase">
               INCORRECTO
             </span>
-            <div className="border-primary/35 flex aspect-[4/3] items-center justify-center rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+            <div className="border-primary/35 flex aspect-[4/3] items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <Image
                 src="/logo.png"
                 alt="Logo deformado — uso incorrecto"
-                width={100}
-                height={50}
-                className="h-auto w-auto max-w-[100px] scale-x-[1.8] object-contain"
+                width={240}
+                height={240}
+                className="h-auto max-h-[80%] w-[80%] scale-x-[1.5] object-contain"
               />
             </div>
             <h3 className="font-serif text-sm font-bold text-[#143067]">

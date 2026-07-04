@@ -70,6 +70,8 @@ export interface DbProduct {
   envio_nacional?: boolean | null;
   /** Si el producto solo se entrega en San Miguel. */
   solo_san_miguel?: boolean | null;
+  /** Si TRUE, el producto aparece fijado en la sección Novedades del home */
+  is_featured?: boolean;
 }
 
 // ── Imagen principal resuelta ─────────────────────────────────
@@ -124,7 +126,7 @@ function createServerClient() {
 export const PRODUCT_SELECT = `
   id, name, description, short_description, price, old_price,
   offer_ends_at, offer_starts_at, offer_terms, category, category_id, tags,
-  image_path, images, is_active, slug, sector,
+  image_path, images, is_active, is_featured, slug, sector,
   tallas, colores, colores_label, material, caracteristicas,
   price_by_size, offer_by_size,
   base_price, ocasion, dimensiones, cantidad_minima, envio_nacional, solo_san_miguel,
@@ -223,23 +225,68 @@ export async function getProductBySlug(
   return (data ?? null) as unknown as DbProduct | null;
 }
 
-// ── Obtener productos recientes/novedades ─────────────────────
+// ── Obtener productos para la sección Novedades del home ─────
+// Lógica: primero los fijados (is_featured=true), luego los más
+// recientes activos hasta completar el límite.
 export async function getRecentProducts(limit = 6): Promise<DbProduct[]> {
   const supabase = createServerClient();
 
-  const { data, error } = await supabase
+  // 1. Obtener todos los productos fijados activos
+  const { data: featured, error: featuredError } = await supabase
     .from("products")
     .select(PRODUCT_SELECT)
     .eq("is_active", true)
+    .eq("is_featured", true)
     .order("created_at", { ascending: false })
     .limit(limit);
 
-  if (error) {
-    logger.error("[catalogService] getRecentProducts error:", error);
+  if (featuredError) {
+    logger.error(
+      "[catalogService] getRecentProducts (featured) error:",
+      featuredError
+    );
     return [];
   }
 
-  return (data ?? []) as unknown as DbProduct[];
+  const featuredList = (featured ?? []) as unknown as DbProduct[];
+
+  // Si ya tenemos suficientes fijados, retornar directo
+  if (featuredList.length >= limit) {
+    return featuredList.slice(0, limit);
+  }
+
+  // 2. Completar con los más recientes que NO estén fijados
+  const remaining = limit - featuredList.length;
+  const featuredIds = featuredList.map((p) => p.id).filter(Boolean);
+
+  let recentsQuery = supabase
+    .from("products")
+    .select(PRODUCT_SELECT)
+    .eq("is_active", true)
+    .eq("is_featured", false)
+    .order("created_at", { ascending: false })
+    .limit(remaining);
+
+  // Excluir los fijados si los hay (aunque con is_featured=false ya no debería solaparse)
+  if (featuredIds.length > 0) {
+    recentsQuery = recentsQuery.not("id", "in", `(${featuredIds.join(",")})`);
+  }
+
+  const { data: recents, error: recentsError } = await recentsQuery;
+
+  if (recentsError) {
+    logger.error(
+      "[catalogService] getRecentProducts (recents) error:",
+      recentsError
+    );
+    // Fallback: retornar solo los fijados disponibles
+    return featuredList;
+  }
+
+  const recentsList = (recents ?? []) as unknown as DbProduct[];
+
+  // Combinar: fijados primero, luego recientes
+  return [...featuredList, ...recentsList];
 }
 
 // ── Obtener conteo de productos activos por sector ────────────

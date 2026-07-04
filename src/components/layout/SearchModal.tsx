@@ -92,6 +92,7 @@ interface SearchModalProps {
 
 export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const [query, setQuery] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
   const [results, setResults] = useState<DbProduct[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -252,11 +253,13 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
               className="w-full text-base text-gray-800 outline-none"
               aria-label="Buscar productos, categorías o servicios"
             />
-            {/* Typewriter placeholder — visible solo cuando el input está vacío */}
-            {query === "" && (
+            {/* Typewriter placeholder — oculto cuando el input tiene foco o hay texto */}
+            {query === "" && !isFocused && (
               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center">
                 <TypewriterPlaceholder />
               </div>

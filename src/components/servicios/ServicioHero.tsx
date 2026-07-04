@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { siteConfig } from "@/config/site";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 interface Feature {
   icon: string;
@@ -14,6 +15,8 @@ interface ServicioHeroProps {
   features: Feature[];
   ctaText: string;
   heroImage: string;
+  slug?: string;
+  navLabel?: string;
 }
 
 export function ServicioHero({
@@ -22,6 +25,8 @@ export function ServicioHero({
   features,
   ctaText,
   heroImage,
+  slug,
+  navLabel,
 }: ServicioHeroProps) {
   const whatsappUrl = siteConfig.links.whatsappDirect;
 
@@ -29,12 +34,19 @@ export function ServicioHero({
     <section className="bg-surface-container-low relative flex min-h-[calc(100dvh-56px)] flex-col overflow-x-hidden px-5 pt-4 pb-10 md:min-h-0 md:px-8 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:pb-4">
       <div className="mx-auto flex h-full w-full max-w-screen-2xl flex-col items-start gap-8 lg:flex-row lg:items-center lg:gap-16">
         <div className="z-10 flex w-full flex-col items-start lg:min-w-0 lg:flex-1">
-          {/* Label "SERVICIO" con barra roja — diseño original del prototipo */}
-          <div className="mb-4 flex items-center gap-3">
-            <div className="h-6 w-1 bg-[#143067]" />
-            <span className="text-primary font-sans text-xs font-semibold tracking-widest uppercase">
-              Servicio
-            </span>
+          {/* Breadcrumb section */}
+          <div className="mb-6 lg:mb-8">
+            <Breadcrumb
+              items={[
+                { label: "Inicio", href: "/" },
+                { label: "Servicios", href: "/servicios" },
+                {
+                  label: navLabel || title,
+                  href: slug ? `/servicios/${slug}` : "/servicios",
+                },
+              ]}
+              className="animate-fade-in-up"
+            />
           </div>
 
           {/* H1 */}

@@ -4,6 +4,39 @@
  */
 import type { ReactNode } from "react";
 
+/* ── A (Inline anchor) ───────────────────────────────────── */
+interface AProps {
+  href: string;
+  children: ReactNode;
+  external?: boolean;
+}
+
+/**
+ * Use <A> instead of raw URLs inside legal content.
+ * The `external` prop opens in a new tab with rel="noopener noreferrer".
+ *
+ * Example:
+ *   <A href="/legal/privacidad">Política de Privacidad</A>
+ *   <A href="https://wa.me/..." external>WhatsApp</A>
+ */
+export function A({ href, children, external = false }: AProps) {
+  return (
+    <a
+      href={href}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      style={{
+        color: "#1d4ed8",
+        textDecoration: "underline",
+        textUnderlineOffset: "3px",
+        overflowWrap: "anywhere",
+        wordBreak: "break-word",
+      }}
+    >
+      {children}
+    </a>
+  );
+}
+
 /* ── Roman numeral helper ─────────────────────────────────── */
 const ROMAN_MAP: [number, string][] = [
   [1000, "M"],

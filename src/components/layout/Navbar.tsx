@@ -11,6 +11,7 @@ import { GuestBell } from "@/components/ui/GuestBell";
 import { useCart } from "@/context/CartContext";
 import { useFavorites } from "@/context/FavoritesContext";
 import { useAuth } from "@/context/AuthContext";
+import { useNotifications } from "@/context/NotificationContext";
 import { env } from "@/env";
 
 interface NavLink {
@@ -25,6 +26,8 @@ const NAV_LINKS: NavLink[] = [
   { href: "/servicios", label: "Servicios", mobileIcon: "design_services" },
   { href: "/empresa", label: "Empresa", mobileIcon: "business" },
   { href: "/contacto", label: "Contacto", mobileIcon: "mail" },
+  { href: "/legal", label: "Legal", mobileIcon: "gavel" },
+  { href: "/ayuda", label: "Ayuda", mobileIcon: "help" },
 ];
 
 const SEARCH_PHRASES = [
@@ -101,6 +104,11 @@ export function Navbar() {
   const menuRef = useRef<HTMLDivElement>(null);
   const [scrollVisible, setScrollVisible] = useState(true);
 
+  // Dynamic navbar links calculation for responsive overflow
+  const [visibleCount, setVisibleCount] = useState(NAV_LINKS.length);
+  const navContainerRef = useRef<HTMLDivElement>(null);
+  const navPillsRef = useRef<HTMLDivElement>(null);
+
   // Swipe-up-to-close for mobile menu
   const [menuDragY, setMenuDragY] = useState(0);
   const [isMenuDragging, setIsMenuDragging] = useState(false);
@@ -128,26 +136,25 @@ export function Navbar() {
   const { cartCount, setIsCartOpen } = useCart();
   const { favorites } = useFavorites();
   const { user, showAuthModal } = useAuth();
+  const { unreadCount } = useNotifications();
 
-  // Guard de hidratación: cartCount y favorites.length vienen de localStorage.
-  // En SSR el servidor renderiza con 0, el cliente con el valor real.
-  // Usar isMounted evita el mismatch de React hydration.
+  // Guard de hidratación
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMounted(true);
   }, []);
 
-  // Valores seguros para SSR (0 hasta que el cliente haya hidratado)
+  // Valores seguros para SSR
   const safeCartCount = isMounted ? cartCount : 0;
   const safeFavoritesCount = isMounted ? favorites.length : 0;
+  const safeUnreadCount = isMounted ? unreadCount : 0;
+  const hasIndicator =
+    !isMenuOpen &&
+    (safeUnreadCount > 0 || safeFavoritesCount > 0 || safeCartCount > 0);
 
   const isHomeOnly = env.NEXT_PUBLIC_HOME_ONLY === "true";
 
-  /*
-   * lastScrollY: initialized to window.scrollY so browser scroll-restoration
-   * on fresh load doesn't falsely trigger "scrolling down" and hide the bar.
-   */
   const lastScrollY = useRef(
     typeof window !== "undefined" ? window.scrollY : 0
   );
@@ -187,7 +194,6 @@ export function Navbar() {
   };
 
   useEffect(() => {
-    // Heartbeat movido a Providers — cubre admin y público por igual.
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsMenuOpen(false);
@@ -203,14 +209,6 @@ export function Navbar() {
   }, [isMenuOpen]);
 
   useEffect(() => {
-    /*
-     * INITIALISATION WINDOW & SCROLL HYSTERESIS
-     * ─────────────────────────────────────────
-     * 1. 1500 ms ready-state delay to absorb browser session restore / smooth scroll restoration
-     *    and Next.js hydration completely.
-     * 2. Jump guard: single-event scroll jumps > 100px reset baseline and ensure bars stay visible.
-     * 3. 10px hysteresis threshold to filter out tiny adjustments & layout shift jitter.
-     */
     let ready = false;
     lastScrollY.current = window.scrollY;
 
@@ -226,7 +224,6 @@ export function Navbar() {
         return;
       }
 
-      // Safe bounds near the top: always keep visible
       if (currentScrollY <= 10) {
         setScrollVisible(true);
         lastScrollY.current = currentScrollY;
@@ -235,14 +232,12 @@ export function Navbar() {
 
       const delta = currentScrollY - lastScrollY.current;
 
-      // Detect browser scroll restoration or page jumps (> 100px in one frame)
       if (Math.abs(delta) > 100) {
         lastScrollY.current = currentScrollY;
         setScrollVisible(true);
         return;
       }
 
-      // 10px hysteresis threshold to filter out tiny adjustments & layout shift jitter
       if (delta > 10) {
         setScrollVisible(false);
         lastScrollY.current = currentScrollY;
@@ -258,6 +253,61 @@ export function Navbar() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  // --- Dynamic responsive navigation logic (hidden progressively from right to left) ---
+  useEffect(() => {
+    if (typeof window === "undefined" || isHomeOnly) return;
+
+    const calculateVisibleLinks = () => {
+      const container = navContainerRef.current;
+      const pillsContainer = navPillsRef.current;
+      if (!container || !pillsContainer) return;
+
+      const containerWidth = container.getBoundingClientRect().width;
+      const pillElements = Array.from(pillsContainer.children) as HTMLElement[];
+
+      let accumulatedWidth = 0;
+      let count = 0;
+
+      for (let i = 0; i < pillElements.length; i++) {
+        // Obtenemos el ancho exacto del elemento de la píldora incluyendo márgenes si los hay.
+        // Las píldoras tienen anchos fijos estables (flex-shrink-0).
+        const pillWidth = pillElements[i].getBoundingClientRect().width + 12; // 12px de gap
+        if (accumulatedWidth + pillWidth - 12 <= containerWidth) {
+          accumulatedWidth += pillWidth;
+          count++;
+        } else {
+          break;
+        }
+      }
+      setVisibleCount(count);
+    };
+
+    const observer = new ResizeObserver(() => {
+      calculateVisibleLinks();
+    });
+
+    const container = navContainerRef.current;
+    if (container) {
+      observer.observe(container);
+    }
+
+    // Ejecutar inicialmente
+    calculateVisibleLinks();
+
+    return () => {
+      if (container) {
+        observer.unobserve(container);
+      }
+      observer.disconnect();
+    };
+  }, [isHomeOnly, navLinks.length]);
+
+  // Enlaces que se muestran como píldoras en la barra principal (md+)
+  const visiblePills = navLinks.slice(0, visibleCount);
+
+  // Enlaces que se ocultan de la barra principal y pasan al menú desplegable para desktop/tablet
+  const hiddenPills = navLinks.slice(visibleCount);
 
   return (
     <>
@@ -276,8 +326,8 @@ export function Navbar() {
           !scrollVisible && "nav-scroll-hidden-top"
         )}
       >
-        <div className="mx-auto flex w-full max-w-screen-2xl items-center justify-between px-5 py-[5px] md:px-8 lg:py-[2px]">
-          <div className="flex items-center gap-6 lg:gap-10">
+        <div className="mx-auto flex w-full max-w-screen-2xl items-center justify-between gap-2.5 px-5 py-[5px] sm:gap-3 md:gap-0 md:px-8 lg:py-[2px]">
+          <div className="flex shrink-0 items-center gap-6 lg:gap-10">
             {/* Logo */}
             <Link
               href="/"
@@ -314,18 +364,70 @@ export function Navbar() {
             </Link>
           </div>
 
+          {/* ── Desktop & Tablet Navigation Pill Bar (md+) ── */}
+          {!isHomeOnly && (
+            <div
+              ref={navContainerRef}
+              className="hidden min-w-0 flex-1 items-center justify-center px-6 md:flex"
+            >
+              {/* Contenedor temporal e invisible con todos los elementos para que ResizeObserver
+                  siempre pueda medir la anchura ideal estática de cada píldora sin mutar su DOM. */}
+              <div
+                ref={navPillsRef}
+                className="pointer-events-none absolute -z-50 flex gap-3 whitespace-nowrap opacity-0"
+                aria-hidden="true"
+              >
+                {navLinks.map((link) => (
+                  <div
+                    key={`measure-${link.href}`}
+                    className="border-primary/10 text-primary flex h-10 items-center justify-center rounded-full border bg-white px-4 text-sm font-bold whitespace-nowrap shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)]"
+                    style={{ width: "120px" }} // Ancho fijo por píldora consistente
+                  >
+                    {link.label}
+                  </div>
+                ))}
+              </div>
+
+              {/* Píldoras visibles renderizadas de manera interactiva */}
+              <nav className="flex gap-3">
+                {visiblePills.map((link) => {
+                  const isActive =
+                    link.href === "/"
+                      ? pathname === "/"
+                      : pathname.startsWith(link.href);
+
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className={cn(
+                        "border-primary/10 text-primary flex h-10 items-center justify-center rounded-full border px-4 text-sm font-bold whitespace-nowrap shadow-[0_4px_12px_-1px_rgba(20,48,103,0.2),0_2px_6px_-1px_rgba(20,48,103,0.15)] transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-3px_rgba(20,48,103,0.3),0_4px_10px_-2px_rgba(20,48,103,0.2)]",
+                        isActive
+                          ? "bg-primary border-transparent text-white"
+                          : "bg-white hover:bg-slate-50"
+                      )}
+                      style={{ width: "120px" }} // Ancho fijo por píldora consistente
+                    >
+                      {link.label}
+                    </Link>
+                  );
+                })}
+              </nav>
+            </div>
+          )}
+
           {/* ── Right side: Actions ── */}
           {!isHomeOnly && (
             <div
               ref={menuRef}
-              className="relative flex items-center gap-2.5 sm:gap-3"
+              className="relative flex min-w-0 flex-1 items-center gap-2.5 sm:gap-3 md:flex-none"
             >
-              {/* Search bar trigger — full bar (md+, 768px+) */}
+              {/* Search bar — full bar (md+) */}
               <button
                 type="button"
                 onClick={openSearch}
                 aria-label="Abrir buscador"
-                className="border-primary/10 hidden cursor-pointer items-center gap-2.5 rounded-full border bg-white px-4 py-2 shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)] md:flex"
+                className="border-primary/10 hidden cursor-pointer items-center gap-2.5 rounded-full border bg-white px-4 py-2 shadow-[0_4px_12px_-1px_rgba(20,48,103,0.2),0_2px_6px_-1px_rgba(20,48,103,0.15)] transition-all hover:shadow-[0_8px_20px_-3px_rgba(20,48,103,0.3),0_4px_10px_-2px_rgba(20,48,103,0.2)] md:flex"
               >
                 <span
                   className="material-symbols-outlined text-primary text-[20px]"
@@ -338,104 +440,37 @@ export function Navbar() {
                 </span>
               </button>
 
-              {/* Search bar trigger — icon only (all mobile up to md). Visible on mobile now that profile is in bottom nav */}
+              {/* Search bar — full pill expanding on mobile only (below md) */}
               <button
                 type="button"
                 onClick={openSearch}
                 aria-label="Abrir buscador"
-                className="border-primary/10 flex size-10 cursor-pointer items-center justify-center rounded-full border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)] md:hidden"
+                className="border-primary/10 flex min-w-0 flex-1 cursor-pointer items-center gap-2 rounded-full border bg-white px-3 py-2 shadow-[0_4px_12px_-1px_rgba(20,48,103,0.2),0_2px_6px_-1px_rgba(20,48,103,0.15)] transition-all hover:shadow-[0_8px_20px_-3px_rgba(20,48,103,0.3),0_4px_10px_-2px_rgba(20,48,103,0.2)] md:hidden"
               >
                 <span
-                  className="material-symbols-outlined text-primary text-[22px]"
+                  className="material-symbols-outlined text-primary shrink-0 text-[20px]"
                   aria-hidden="true"
                 >
                   search
                 </span>
-              </button>
-
-              {/* Favorites — visible on all sizes */}
-              <button
-                aria-label={`Favoritos${safeFavoritesCount > 0 ? ` (${safeFavoritesCount})` : ""}`}
-                onClick={handleFavoritesClick}
-                className="border-primary/10 text-primary relative flex size-10 cursor-pointer items-center justify-center rounded-full border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)]"
-              >
-                <span
-                  className="material-symbols-outlined text-[22px]"
-                  aria-hidden="true"
-                  style={{
-                    fontVariationSettings:
-                      safeFavoritesCount > 0 ? "'FILL' 1" : "'FILL' 0",
-                  }}
-                >
-                  favorite
+                <span className="min-w-0 flex-1 overflow-hidden">
+                  <TypewriterPlaceholder />
                 </span>
-                {safeFavoritesCount > 0 && (
-                  <span className="bg-primary absolute -top-1.5 -right-1.5 flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-black text-white ring-2 ring-white">
-                    {safeFavoritesCount > 99 ? "99+" : safeFavoritesCount}
-                  </span>
-                )}
               </button>
-
-              {/* Cart — hidden on mobile (bottom nav handles it) */}
-              <button
-                aria-label={`Carrito de compras${safeCartCount > 0 ? ` (${safeCartCount})` : ""}`}
-                onClick={handleCartClick}
-                className="border-primary/10 text-primary relative hidden size-10 cursor-pointer items-center justify-center rounded-full border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)] sm:flex"
-              >
-                <span
-                  className="material-symbols-outlined text-[22px]"
-                  aria-hidden="true"
-                >
-                  shopping_cart
-                </span>
-                {safeCartCount > 0 && (
-                  <span className="bg-primary absolute -top-1.5 -right-1.5 flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-black text-white ring-2 ring-white">
-                    {safeCartCount > 99 ? "99+" : safeCartCount}
-                  </span>
-                )}
-              </button>
-
-              {/* Avatar — hidden on mobile (profile moved to bottom nav) */}
-              <button
-                aria-label={
-                  isMounted && user
-                    ? `Mi cuenta (${user.email})`
-                    : "Iniciar sesión"
-                }
-                onClick={handleAvatarClick}
-                className="border-primary/10 hidden size-10 cursor-pointer items-center justify-center overflow-hidden rounded-full border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-90 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)] sm:flex"
-              >
-                {isMounted && user?.user_metadata?.avatar_url ? (
-                  <Image
-                    src={user.user_metadata.avatar_url as string}
-                    alt="Avatar"
-                    width={40}
-                    height={40}
-                    className="h-full w-full object-cover"
-                    referrerPolicy="no-referrer"
-                    unoptimized
-                  />
-                ) : (
-                  <span
-                    className="material-symbols-outlined text-primary text-[24px]"
-                    aria-hidden="true"
-                  >
-                    {isMounted && user ? "account_circle" : "person"}
-                  </span>
-                )}
-              </button>
-
-              {/* Menu Button — visible on all sizes */}
-              {/* GuestBell — solo para usuarios no autenticados */}
-              {isMounted && <GuestBell />}
 
               <button
                 type="button"
                 aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
                 aria-expanded={isMenuOpen}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="border-primary/10 text-primary flex size-10 cursor-pointer items-center justify-center rounded-full border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_4px_12px_-2px_rgba(20,48,103,0.15),0_2px_6px_-1px_rgba(20,48,103,0.1)]"
+                className="border-primary/10 text-primary relative flex size-10 cursor-pointer items-center justify-center rounded-full border bg-white shadow-[0_4px_12px_-1px_rgba(20,48,103,0.2),0_2px_6px_-1px_rgba(20,48,103,0.15)] transition-all hover:-translate-y-0.5 hover:opacity-80 hover:shadow-[0_8px_20px_-3px_rgba(20,48,103,0.3),0_4px_10px_-2px_rgba(20,48,103,0.2)]"
               >
+                {hasIndicator && (
+                  <span
+                    className="bg-primary/20 absolute inset-0 animate-ping rounded-full"
+                    aria-hidden="true"
+                  />
+                )}
                 <span
                   className="material-symbols-outlined text-[24px]"
                   aria-hidden="true"
@@ -454,39 +489,175 @@ export function Navbar() {
                       : "transform 0.3s cubic-bezier(0.32,0.72,0,1), opacity 0.3s ease",
                     opacity: Math.max(0, 1 + menuDragY / 120),
                   }}
-                  className="border-primary/10 animate-in fade-in slide-in-from-top-2 absolute top-12 right-0 z-50 w-64 rounded-2xl border bg-white/95 shadow-[0_10px_25px_-5px_rgba(20,48,103,0.15),0_8px_16px_-6px_rgba(20,48,103,0.1)] backdrop-blur-md duration-200"
+                  className="border-primary/10 animate-in fade-in slide-in-from-top-2 absolute top-[51px] right-0 z-50 w-64 rounded-2xl border bg-white/95 shadow-[0_10px_25px_-5px_rgba(20,48,103,0.15),0_8px_16px_-6px_rgba(20,48,103,0.1)] backdrop-blur-md duration-200 lg:top-12"
                 >
+                  {/* Dropdown Header — onMouseDown stops propagation so GuestBell and other bubbles
+                      don't trigger the click-outside handler that closes the menu */}
+                  {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+                  <div
+                    role="group"
+                    aria-label="Acciones rápidas"
+                    className="flex items-center justify-around gap-2 border-b border-gray-100 p-3.5 dark:border-white/5"
+                    onMouseDown={(e) => e.stopPropagation()}
+                  >
+                    {/* Notifications */}
+                    {isMounted && <GuestBell />}
+
+                    {/* Cart */}
+                    <button
+                      type="button"
+                      aria-label={`Carrito de compras${safeCartCount > 0 ? ` (${safeCartCount})` : ""}`}
+                      onClick={handleCartClick}
+                      className="border-primary/10 text-primary relative flex size-10 cursor-pointer items-center justify-center rounded-full border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 dark:bg-slate-800"
+                    >
+                      <span
+                        className="material-symbols-outlined text-[22px]"
+                        aria-hidden="true"
+                      >
+                        shopping_cart
+                      </span>
+                      {safeCartCount > 0 && (
+                        <span className="bg-primary absolute -top-1.5 -right-1.5 flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-black text-white ring-2 ring-white">
+                          {safeCartCount > 99 ? "99+" : safeCartCount}
+                        </span>
+                      )}
+                    </button>
+
+                    {/* Favorites */}
+                    <button
+                      type="button"
+                      aria-label={`Favoritos${safeFavoritesCount > 0 ? ` (${safeFavoritesCount})` : ""}`}
+                      onClick={handleFavoritesClick}
+                      className="border-primary/10 text-primary relative flex size-10 cursor-pointer items-center justify-center rounded-full border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 dark:bg-slate-800"
+                    >
+                      <span
+                        className="material-symbols-outlined text-[22px]"
+                        aria-hidden="true"
+                        style={{
+                          fontVariationSettings:
+                            safeFavoritesCount > 0 ? "'FILL' 1" : "'FILL' 0",
+                        }}
+                      >
+                        favorite
+                      </span>
+                      {safeFavoritesCount > 0 && (
+                        <span className="bg-primary absolute -top-1.5 -right-1.5 flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-black text-white ring-2 ring-white">
+                          {safeFavoritesCount > 99 ? "99+" : safeFavoritesCount}
+                        </span>
+                      )}
+                    </button>
+
+                    {/* User Avatar */}
+                    <button
+                      type="button"
+                      aria-label={
+                        isMounted && user
+                          ? `Mi cuenta (${user.email})`
+                          : "Iniciar sesión"
+                      }
+                      onClick={handleAvatarClick}
+                      className="border-primary/10 flex size-10 cursor-pointer items-center justify-center overflow-hidden rounded-full border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-90 dark:bg-slate-800"
+                    >
+                      {isMounted && user?.user_metadata?.avatar_url ? (
+                        <Image
+                          src={user.user_metadata.avatar_url as string}
+                          alt="Avatar"
+                          width={40}
+                          height={40}
+                          className="h-full w-full object-cover"
+                          referrerPolicy="no-referrer"
+                          unoptimized
+                        />
+                      ) : (
+                        <span
+                          className="material-symbols-outlined text-primary text-[24px]"
+                          aria-hidden="true"
+                        >
+                          {isMounted && user ? "account_circle" : "person"}
+                        </span>
+                      )}
+                    </button>
+                  </div>
+
                   {/* Nav links */}
                   <ul className="space-y-1 p-4">
-                    {navLinks.map((link) => {
-                      const isActive =
-                        link.href === "/"
-                          ? pathname === "/"
-                          : pathname.startsWith(link.href);
+                    {/* Para Mobile (< md): Muestra todos los enlaces correspondientes */}
+                    <div className="space-y-1 md:hidden">
+                      {navLinks.map((link) => {
+                        const isActive =
+                          link.href === "/"
+                            ? pathname === "/"
+                            : pathname.startsWith(link.href);
 
-                      return (
-                        <li key={link.href}>
-                          <Link
-                            href={link.href}
-                            onClick={closeMenu}
-                            className={cn(
-                              "flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all",
-                              isActive
-                                ? "bg-primary text-on-primary shadow-sm"
-                                : "hover:bg-primary/5 hover:text-primary text-gray-700"
-                            )}
+                        const isOnBottomBar = [
+                          "/",
+                          "/catalogo",
+                          "/servicios",
+                          "/empresa",
+                          "/contacto",
+                        ].includes(link.href);
+
+                        return (
+                          <li
+                            key={link.href}
+                            className={cn(isOnBottomBar && "hidden sm:block")}
                           >
-                            <span
-                              className="material-symbols-outlined text-[18px]"
-                              aria-hidden="true"
+                            <Link
+                              href={link.href}
+                              onClick={closeMenu}
+                              className={cn(
+                                "flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all",
+                                isActive
+                                  ? "bg-primary text-on-primary shadow-sm"
+                                  : "hover:bg-primary/5 hover:text-primary text-gray-700"
+                              )}
                             >
-                              {link.mobileIcon}
-                            </span>
-                            {link.label}
-                          </Link>
-                        </li>
-                      );
-                    })}
+                              <span
+                                className="material-symbols-outlined text-[18px]"
+                                aria-hidden="true"
+                              >
+                                {link.mobileIcon}
+                              </span>
+                              {link.label}
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </div>
+
+                    {/* Para Tablet/Desktop (>= md): Muestra únicamente los enlaces que están ocultos del menú principal (hiddenPills) */}
+                    <div className="hidden space-y-1 md:block">
+                      {hiddenPills.map((link) => {
+                        const isActive =
+                          link.href === "/"
+                            ? pathname === "/"
+                            : pathname.startsWith(link.href);
+
+                        return (
+                          <li key={link.href}>
+                            <Link
+                              href={link.href}
+                              onClick={closeMenu}
+                              className={cn(
+                                "flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all",
+                                isActive
+                                  ? "bg-primary text-on-primary shadow-sm"
+                                  : "hover:bg-primary/5 hover:text-primary text-gray-700"
+                              )}
+                            >
+                              <span
+                                className="material-symbols-outlined text-[18px]"
+                                aria-hidden="true"
+                              >
+                                {link.mobileIcon}
+                              </span>
+                              {link.label}
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </div>
+
                     {/* Divider */}
                     <li className="my-2 border-t border-gray-100" />
                     {/* Links Page */}
@@ -506,7 +677,7 @@ export function Navbar() {
                         >
                           alternate_email
                         </span>
-                        Mis Enlaces / Redes
+                        Redes Sociales
                       </Link>
                     </li>
                     {/* Updates Page */}

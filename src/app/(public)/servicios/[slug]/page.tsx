@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { SERVICE_PAGES } from "@/data/services";
 import { siteConfig } from "@/config/site";
 import { ServicioDetallePage } from "@/components/servicios/ServicioDetallePage";
+import { buildBreadcrumbSchema } from "@/lib/schemas";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -86,12 +87,25 @@ export default async function ServicioSlugPage({ params }: Props) {
         }
       : null;
 
+  // BreadcrumbList structured data
+  const breadcrumbJsonLd = buildBreadcrumbSchema([
+    { name: "Inicio", item: siteConfig.url },
+    { name: "Servicios", item: `${siteConfig.url}/servicios` },
+    { name: service.navLabel || service.title, item: pageUrl },
+  ]);
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, "\\u003c"),
         }}
       />
       {faqJsonLd && (

@@ -74,6 +74,8 @@ export interface Product {
   envio_nacional?: boolean | null;
   /** Solo disponible en San Miguel */
   solo_san_miguel?: boolean | null;
+  /** Si TRUE, el producto aparece fijado en la sección Novedades del home */
+  is_featured?: boolean | null;
 }
 
 /**

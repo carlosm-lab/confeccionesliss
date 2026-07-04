@@ -93,7 +93,7 @@ export default function CalidadClient() {
       {/* 1. HERO: MANUAL DE CONTROL DE CALIDAD (Ficha Técnica) */}
       {/* ──────────────────────────────────────────────────────── */}
       <section className="relative mx-auto max-w-screen-2xl border-b border-[#e1e2e5] px-5 pt-4 pb-16 md:px-8 md:pt-6 md:pb-24">
-        <div className="border-primary/35 rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-12">
+        <div className="border-primary/35 rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-12">
           <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12">
             {/* Texto del Hero */}
             <div className="space-y-6 lg:col-span-7">
@@ -225,7 +225,7 @@ export default function CalidadClient() {
                 </div>
 
                 {/* Puntos de medida verificados */}
-                <div className="overflow-hidden rounded border border-[#e1e2e5]">
+                <div className="border-primary/35 overflow-hidden rounded-2xl border shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
                   <div className="border-b border-[#e1e2e5] bg-[#f8f9fb] p-3">
                     <p className="font-mono text-xs font-bold text-[#143067] uppercase">
                       Puntos de medida verificados
@@ -246,7 +246,7 @@ export default function CalidadClient() {
                 </div>
               </div>
 
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded border border-[#e1e2e5] bg-[#f8f9fb]">
+              <div className="border-primary/35 relative aspect-[4/3] w-full overflow-hidden rounded-2xl border bg-[#f8f9fb] shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
                 <Image
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuDql6RAV4sbPJQGYiXijV7KHGzjJUep7ygJh0aamJxp9_KY2wPDDgZuqgHyZ2hSX5FHdJ0_zeDOOcmveyy3URfYQuwBDOHHaeKJnJtwfHT8R4APNmQ4dC5IeR89-M-GRnMhKL3Mrmz4RIrW6UfXKZPfojqoPElzWRv7xPnZzlzYWzxpMNKA05CvKHF38tVCtOs7SaFpaAbA0baMp_63_ivw10zgiOvHS0bReDbkD2_GAibQocZlAk9zBix5wNco3k5Ph_kMGvT35cY"
                   alt="Verificación de medidas de patrones"
@@ -266,7 +266,7 @@ export default function CalidadClient() {
               className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-16"
             >
               <div className="order-2 lg:order-1 lg:col-span-5">
-                <div className="relative aspect-square w-full overflow-hidden rounded border border-[#e1e2e5] bg-[#f8f9fb]">
+                <div className="border-primary/35 relative aspect-square w-full overflow-hidden rounded-2xl border bg-[#f8f9fb] shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
                   <Image
                     src="/images/servicios/ropa-general.png"
                     alt="Inspección detallada del corte textil"
@@ -298,7 +298,7 @@ export default function CalidadClient() {
 
                 {/* Lista técnica */}
                 <div className="grid grid-cols-1 gap-4 border-t border-[#e1e2e5] pt-4 sm:grid-cols-2">
-                  <div className="rounded border border-[#e1e2e5] bg-[#f8f9fb] p-4">
+                  <div className="border-primary/35 rounded-2xl border bg-[#f8f9fb] p-4">
                     <span className="mb-1 block font-mono text-[10px] font-bold tracking-wider text-[#143067] uppercase">
                       Método
                     </span>
@@ -310,7 +310,7 @@ export default function CalidadClient() {
                       corte.
                     </p>
                   </div>
-                  <div className="rounded border border-[#e1e2e5] bg-[#f8f9fb] p-4">
+                  <div className="border-primary/35 rounded-2xl border bg-[#f8f9fb] p-4">
                     <span className="mb-1 block font-mono text-[10px] font-bold tracking-wider text-[#143067] uppercase">
                       Estándar
                     </span>
@@ -332,7 +332,7 @@ export default function CalidadClient() {
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               variants={blockVariants}
-              className="grid grid-cols-1 items-center gap-8 rounded bg-[#143067] p-8 text-white md:p-12 lg:grid-cols-12 lg:gap-12"
+              className="grid grid-cols-1 items-center gap-8 rounded-2xl bg-[#143067] p-8 text-white md:p-12 lg:grid-cols-12 lg:gap-12"
             >
               <div className="space-y-6 lg:col-span-7">
                 <div className="flex items-baseline gap-2">
@@ -358,7 +358,7 @@ export default function CalidadClient() {
               </div>
 
               {/* Bloque descriptivo de costura */}
-              <div className="flex flex-col justify-between rounded border border-white/20 bg-white/5 p-6 lg:col-span-5">
+              <div className="flex flex-col justify-between rounded-2xl border border-white/20 bg-white/5 p-6 lg:col-span-5">
                 <div className="mb-4 font-mono text-[10px] tracking-wider text-[#dae2ff] uppercase">
                   <span>Revisión de costura</span>
                 </div>
@@ -435,7 +435,7 @@ export default function CalidadClient() {
                 </div>
               </div>
 
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded border border-[#e1e2e5] bg-[#f8f9fb] lg:order-1">
+              <div className="border-primary/35 relative aspect-[4/3] w-full overflow-hidden rounded-2xl border bg-[#f8f9fb] shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] lg:order-1">
                 <Image
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuDD6YmAqb_zdTS9DKq81gxmcNQo1DbwvhW0Hzx0Ug6Bpw2z5h0oX6HOvVncd_AyuAPhlSGNRjspP5eKzd0YrjawC1Zw5EZGdXCK4CzUAaXl_SCI3Xl0OLUWMFb1dIjHXKfAbr6dLdFCvviIwVei4lHZFkRHWv0Jpe2Wh0nnlPPfVR8fnMD7MFGLRWE_PcG0XUYqm9Ug69qoEd5pWrq5gn_wCbwu1Qnmq6T6ngDTkGFN-TerIsO0BbuTebPXct0Je4DKVjzFErMGvQ0"
                   alt="Control de calidad del bordado computarizado"
@@ -477,7 +477,7 @@ export default function CalidadClient() {
               </div>
 
               {/* Clipboard QA Checklist */}
-              <div className="border-primary/35 relative rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] lg:col-span-7">
+              <div className="border-primary/35 relative rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] lg:col-span-7">
                 {/* Clipboard Clip style decoration */}
                 <div className="mx-auto -mt-8 mb-6 h-4 w-24 rounded-full border border-[#143067]/30 bg-[#143067]/20"></div>
 
@@ -570,7 +570,7 @@ export default function CalidadClient() {
               variants={blockVariants}
               className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-16"
             >
-              <div className="relative order-2 aspect-[16/10] w-full overflow-hidden rounded border border-[#e1e2e5] bg-[#f8f9fb] lg:order-1 lg:col-span-7">
+              <div className="border-primary/35 relative order-2 aspect-[16/10] w-full overflow-hidden rounded-2xl border bg-[#f8f9fb] shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] lg:order-1 lg:col-span-7">
                 <Image
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-G2wJz71AP5vwCDp3t359I7x2kSZWb9W7SHnNgNThWNfLM7fMGzA0y5M1GjR6pDnLljfIYHiihui8K68JiUD61l1KTSZN1A_Oo_XYoUlopyn2KmLs-ATCrchByg932AMdkhGYxkz2-QJc41OYMvs5KMFq3BuohZHD_x0PQnYgjNgxZmdeVpUJnQX1nbkXpev54ppZsOzALWst7M23heLgF9ER-lEwexccB4aD4cpnHF9CP4YW-nLRvjo2GTw9BzKMAp4XF9tpZeY"
                   alt="Preparación final y empaque de uniformes"
@@ -607,7 +607,7 @@ export default function CalidadClient() {
       {/* 4. LO QUE NUNCA PERMITIMOS (Checklist Industrial Red) */}
       {/* ──────────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-screen-2xl px-5 py-16 md:px-8 md:py-24">
-        <div className="relative overflow-hidden rounded border-2 border-[#143067] bg-white p-6 md:p-12">
+        <div className="border-primary/35 relative overflow-hidden rounded-2xl border-2 border-[#143067] bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-12">
           {/* Warning stamp decoration */}
           <div className="pointer-events-none absolute -top-8 -right-8 flex h-32 w-32 rotate-12 items-center justify-center rounded-full border-4 border-[#143067]/10 select-none">
             <span className="font-mono text-[9px] font-bold tracking-widest text-[#143067]/30 uppercase">
@@ -660,7 +660,7 @@ export default function CalidadClient() {
               ].map((item, index) => (
                 <div
                   key={index}
-                  className="flex gap-4 rounded border border-[#e1e2e5] bg-[#f8f9fb] p-4 transition-colors duration-300 hover:border-[#143067]/40"
+                  className="border-primary/35 flex gap-4 rounded-2xl border bg-[#f8f9fb] p-4 transition-colors duration-300 hover:border-[#143067]/40 hover:shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]"
                 >
                   <span className="material-symbols-outlined shrink-0 font-bold text-[#143067] select-none">
                     cancel
@@ -711,7 +711,7 @@ export default function CalidadClient() {
 
             {/* Interactive Flow Chart Diagram */}
             <div className="space-y-6 lg:col-span-7">
-              <div className="rounded border border-[#e1e2e5] bg-[#f8f9fb] p-4">
+              <div className="border-primary/35 rounded-2xl border bg-[#f8f9fb] p-4">
                 <p className="mb-4 font-mono text-[10px] tracking-wider text-[#444650] uppercase">
                   Selecciona una etapa para ver más detalle.
                 </p>
@@ -776,7 +776,7 @@ export default function CalidadClient() {
       {/* 6. NUESTRO COMPROMISO (Declaración Firmada) */}
       {/* ──────────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-screen-2xl px-5 py-16 md:px-8 md:py-24">
-        <div className="border-primary/35 mx-auto max-w-4xl rounded border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-12">
+        <div className="border-primary/35 mx-auto max-w-4xl rounded-2xl border bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:p-12">
           <div className="mb-8 space-y-2 border-b border-[#e1e2e5] pb-6 text-center">
             <span className="font-mono text-[10px] font-bold tracking-widest text-[#143067] uppercase">
               Nuestro compromiso

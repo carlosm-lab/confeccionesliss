@@ -266,7 +266,7 @@ function StationConfeccion({ station }: { station: Station }) {
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
         >
           <div
-            className="relative flex-shrink-0 overflow-hidden rounded-lg"
+            className="border-primary/35 relative flex-shrink-0 overflow-hidden rounded-2xl shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]"
             style={{ width: "30%", aspectRatio: "3/4" }}
           >
             <Image
@@ -279,7 +279,7 @@ function StationConfeccion({ station }: { station: Station }) {
             <div className="absolute inset-0 bg-gradient-to-t from-[#143067]/60 to-transparent" />
           </div>
           <div
-            className="relative mt-8 flex-1 self-start overflow-hidden rounded-lg"
+            className="border-primary/35 relative mt-8 flex-1 self-start overflow-hidden rounded-2xl shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]"
             style={{ aspectRatio: "16/9" }}
           >
             <Image
@@ -296,7 +296,7 @@ function StationConfeccion({ station }: { station: Station }) {
             </div>
           </div>
           <div
-            className="relative mb-4 flex-shrink-0 self-end overflow-hidden rounded-lg"
+            className="border-primary/35 relative mb-4 flex-shrink-0 self-end overflow-hidden rounded-2xl shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]"
             style={{ width: "20%", aspectRatio: "1/1" }}
           >
             <Image
