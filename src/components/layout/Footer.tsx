@@ -160,7 +160,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className={`flex h-10 w-10 items-center justify-center rounded-full border border-[#1e2d4a] bg-[#0f244c]/50 text-[#a5b1c9] transition-all duration-300 hover:border-white ${social.color} hover:scale-105`}
+                  className={`flex h-10 w-10 items-center justify-center rounded-full border border-[#1e2d4a] bg-[#0f244c]/50 text-white transition-all duration-300 hover:border-white ${social.color} hover:scale-105`}
                 >
                   <SocialIcon
                     id={social.svgKey}
@@ -327,7 +327,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.label}
-                className={`flex h-10 w-10 items-center justify-center rounded-full border border-[#1e2d4a] bg-[#0f244c]/50 text-[#a5b1c9] transition-all duration-300 hover:border-white ${social.color} hover:scale-105`}
+                className={`flex h-10 w-10 items-center justify-center rounded-full border border-[#1e2d4a] bg-[#0f244c]/50 text-white transition-all duration-300 hover:border-white ${social.color} hover:scale-105`}
               >
                 <SocialIcon
                   id={social.svgKey}
@@ -506,7 +506,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className={`flex h-10 w-10 items-center justify-center rounded-full border border-[#1e2d4a] bg-[#0f244c]/50 text-[#a5b1c9] transition-all duration-300 hover:border-white ${social.color} hover:scale-105`}
+                  className={`flex h-10 w-10 items-center justify-center rounded-full border border-[#1e2d4a] bg-[#0f244c]/50 text-white transition-all duration-300 hover:border-white ${social.color} hover:scale-105`}
                 >
                   <SocialIcon
                     id={social.svgKey}
