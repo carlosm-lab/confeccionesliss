@@ -10,6 +10,12 @@
     "@testing-library/react",
     "lucide-react"
   ],
-  "ignore": [".agents/**", "public/sw.js", "supabase/**"],
+  "ignore": [
+    ".agents/**",
+    "public/sw.js",
+    "supabase/**",
+    "src/config/mediaKit.ts",
+    "src/components/empresa/PerfilDetalleClient.tsx"
+  ],
   "entry": ["src/app/**/*.{ts,tsx}", "src/mocks/handlers.ts"]
 }
