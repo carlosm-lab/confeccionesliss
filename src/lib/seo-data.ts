@@ -5,8 +5,8 @@ export const heroTrustBadges = [
   { icon: "local_shipping", text: "Envíos a todo El Salvador" },
   { icon: "payments", text: "Pago al recibir" },
   { icon: "star", text: "Bordados en cualquier prenda" },
-  { icon: "groups", text: "Pedidos grupales e institucionales" },
-  { icon: "schedule", text: "Entrega en 3–7 días hábiles" },
+  { icon: "workspace_premium", text: "Desde el 2005 | +20 Años" },
+  { icon: "school", text: "+5000 Estudiantes Satisfechos" },
 ];
 
 export const services = [

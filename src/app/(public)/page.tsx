@@ -140,10 +140,8 @@ export default async function HomePage() {
                       className="animate-fade-in-up border-primary/5 text-secondary flex w-full items-center gap-2 rounded-full border bg-white/60 px-2.5 py-1.5 text-xs font-medium shadow-xs backdrop-blur-xs sm:text-sm"
                       style={{ animationDelay: `${index * 50 + 200}ms` }}
                     >
-                      <span className="bg-primary/10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                        <span className="material-symbols-outlined text-primary text-[14px] font-bold">
-                          {b.icon}
-                        </span>
+                      <span className="material-symbols-outlined text-primary flex h-6 w-6 shrink-0 items-center justify-center text-[16px] font-bold">
+                        {b.icon}
                       </span>
                       <span className="leading-tight font-semibold text-gray-700">
                         {b.text}
