@@ -91,6 +91,15 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 - **Props:** No recibe props.
 - **Ejemplo:** `<ShareButton />`
 
+### HeroImageCarousel
+
+- **Ruta:** `src/components/ui/HeroImageCarousel.tsx`
+- **Descripción:** Componente de carrusel de imágenes para el hero principal. Muestra 6 imágenes en una secuencia infinita con transición suave de desvanecimiento (cross-fade) mediante opacidad controlada por estado.
+- **Props:**
+  - `sizes: string` — Definición de tamaños responsivos para Next.js Image.
+  - `priority?: boolean` — Si se debe priorizar la carga de la primera imagen.
+- **Ejemplo:** `<HeroImageCarousel sizes="40vw" priority />`
+
 ## Catálogo Components
 
 ### FilterSidebar

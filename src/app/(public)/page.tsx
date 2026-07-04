@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { HeroImageCarousel } from "@/components/ui/HeroImageCarousel";
 import {
   schemaFAQ,
   buildWebPageSchema,
@@ -114,11 +114,7 @@ export default async function HomePage() {
                 <div className="border-primary/35 relative z-10 flex w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:h-full">
                   <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
                   <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl md:aspect-auto md:h-full md:w-full">
-                    <Image
-                      fill
-                      alt="Scrubs médicos a la medida confeccionados en San Miguel El Salvador por Confecciones Liss"
-                      className="rounded-xl object-cover object-center"
-                      src="/images/uniformes/portada.webp"
+                    <HeroImageCarousel
                       sizes="(max-width:768px) 80vw, 40vw"
                       priority
                     />
@@ -184,14 +180,7 @@ export default async function HomePage() {
             <div className="border-primary/35 relative flex h-full w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
               <div className="relative h-full w-full overflow-hidden rounded-xl">
-                <Image
-                  fill
-                  alt="Scrubs médicos a la medida confeccionados en San Miguel El Salvador por Confecciones Liss"
-                  className="rounded-xl object-cover object-center"
-                  src="/images/uniformes/portada.webp"
-                  sizes="40vw"
-                  priority
-                />
+                <HeroImageCarousel sizes="40vw" priority />
               </div>
             </div>
           </div>
