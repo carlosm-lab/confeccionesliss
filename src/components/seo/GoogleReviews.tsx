@@ -89,7 +89,7 @@ export function GoogleReviews({ reviews }: GoogleReviewsProps) {
               </div>
             </div>
             <span className="rounded-full bg-slate-100 px-3 py-0.5 font-sans text-xs font-medium text-slate-500">
-              4.8 de 5 &middot; 21 reseñas
+              21 reseñas
             </span>
           </div>
         </div>
