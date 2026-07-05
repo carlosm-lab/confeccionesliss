@@ -29,6 +29,8 @@ export interface ChangeEntry {
   category: ChangeCategory;
   title: string;
   description: string;
+  commit?: string;
+  note?: string;
 }
 
 export interface VersionGroup {
