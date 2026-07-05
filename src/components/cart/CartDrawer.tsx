@@ -13,6 +13,7 @@ import { env } from "@/env";
 import toast from "react-hot-toast";
 import FocusLock from "react-focus-lock";
 import { DEPARTMENTS, getShippingInfo } from "@/lib/shipping";
+import { getProductUrl } from "@/lib/catalogService";
 
 // Pasos del checkout
 type DrawerStep = "cart" | "shipping" | "confirm" | "sent";
@@ -622,16 +623,9 @@ export function CartDrawer() {
                       >
                         {/* Product image */}
                         <Link
-                          href={
-                            item.product.slug
-                              ? `/catalogo/${item.product.slug}`
-                              : "#"
-                          }
+                          href={getProductUrl(item.product as any)}
                           onClick={closeDrawer}
-                          className={`aspect-[4/5] w-[5rem] shrink-0 overflow-hidden rounded-xl bg-[var(--color-surface-container-low)] ring-1 ring-[var(--color-outline-variant)]/15 ${
-                            !item.product.slug &&
-                            "pointer-events-none opacity-80"
-                          }`}
+                          className="aspect-[4/5] w-[5rem] shrink-0 overflow-hidden rounded-xl bg-[var(--color-surface-container-low)] ring-1 ring-[var(--color-outline-variant)]/15"
                         >
                           <Image
                             loading="lazy"

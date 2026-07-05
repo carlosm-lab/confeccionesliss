@@ -12,6 +12,7 @@ import { useModal } from "@/hooks/useModal";
 import { logger } from "@/lib/logger";
 import { FAVORITES_SELECT_COLUMNS } from "@/lib/constants";
 import FocusLock from "react-focus-lock";
+import { getProductUrl } from "@/lib/catalogService";
 
 interface FavoriteProduct {
   id: string;
@@ -22,6 +23,9 @@ interface FavoriteProduct {
   slug?: string | null;
   is_active?: boolean;
   category_id?: string;
+  sector?: string | null;
+  category?: string | null;
+  categories?: { name: string; catalog: string } | null;
 }
 
 interface FavoritesModalProps {
@@ -199,11 +203,7 @@ export function FavoritesModal({ isOpen, onClose }: FavoritesModalProps) {
                       .map((product) => (
                         <Link
                           key={product.id}
-                          href={
-                            product.slug
-                              ? `/catalogo/${product.slug}`
-                              : "/catalogo"
-                          }
+                          href={getProductUrl(product as any)}
                           onClick={onClose}
                           className="group relative flex items-center gap-4 rounded-2xl bg-gray-50 p-4 transition-all hover:shadow-md"
                         >

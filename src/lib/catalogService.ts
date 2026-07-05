@@ -154,6 +154,46 @@ export function getProductSector(product: DbProduct): string {
   );
 }
 
+// ── Resolver la URL de un producto ───────────────────────────
+export function getProductUrl(
+  product: Pick<DbProduct, "id" | "slug" | "sector" | "category" | "categories">
+): string {
+  const sector = getProductSector(product as DbProduct);
+
+  // Si viene con prefijo sector/slug, limpiar la primera parte para evitar duplicados
+  let slug = product.slug ?? product.id;
+  if (slug.includes("/")) {
+    slug = slug.split("/").pop() || slug;
+  }
+
+  if (sector === "universitario") {
+    const VALID_UNIVERSITY_SLUGS = new Set([
+      "univo",
+      "ieproes",
+      "ugb",
+      "unab",
+      "ues",
+      "uma",
+    ]);
+
+    let universitySlug = "univo";
+    if (
+      product.categories?.catalog &&
+      VALID_UNIVERSITY_SLUGS.has(product.categories.catalog)
+    ) {
+      universitySlug = product.categories.catalog;
+    } else if (product.category) {
+      const prefix = product.category.split("-")[0];
+      if (VALID_UNIVERSITY_SLUGS.has(prefix)) {
+        universitySlug = prefix;
+      }
+    }
+    return `/catalogo/universidades/${universitySlug}/${slug}`;
+  }
+
+  return `/catalogo/${sector}/${slug}`;
+}
+
 // ── Crear cliente Supabase sin "use client" (para RSC) ────────
 function createServerClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;

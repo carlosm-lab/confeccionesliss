@@ -10,6 +10,7 @@ import { getSupabaseClient } from "@/lib/supabaseClient";
 import {
   getProductMainImage,
   getProductSector,
+  getProductUrl,
   type DbProduct,
 } from "@/lib/catalogService";
 
@@ -179,14 +180,16 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   /* ── Navigate to product page ── */
   function navigateToProduct(product: DbProduct) {
     onClose();
-    const sector = getProductSector(product);
-    const slug = product.slug ?? product.id;
-    router.push(`/catalogo/${sector}/${slug}`);
+    router.push(getProductUrl(product));
   }
 
   function handleChipClick(sector: Sector) {
     onClose();
-    router.push(`/catalogo/${sector}`);
+    if (sector === "universitario") {
+      router.push("/catalogo/universidades");
+    } else {
+      router.push(`/catalogo/${sector}`);
+    }
   }
 
   // Swipe-up-to-close (mobile) — el modal esta en la parte superior

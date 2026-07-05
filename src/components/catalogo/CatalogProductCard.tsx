@@ -14,6 +14,7 @@ import {
   getProductMainImage,
   isProductOnSale,
   getProductSector,
+  getProductUrl,
   type DbProduct,
 } from "@/lib/catalogService";
 
@@ -79,28 +80,6 @@ export function CatalogProductCard({
     e.preventDefault();
     e.stopPropagation();
     toggleFavorite(product.id);
-  }
-
-  const VALID_UNIVERSITY_SLUGS = new Set([
-    "univo",
-    "ieproes",
-    "ugb",
-    "unab",
-    "ues",
-    "uma",
-  ]);
-
-  let universitySlug = "univo";
-  if (
-    product.categories?.catalog &&
-    VALID_UNIVERSITY_SLUGS.has(product.categories.catalog)
-  ) {
-    universitySlug = product.categories.catalog;
-  } else if (product.category) {
-    const prefix = product.category.split("-")[0];
-    if (VALID_UNIVERSITY_SLUGS.has(prefix)) {
-      universitySlug = prefix;
-    }
   }
 
   return (
@@ -187,11 +166,7 @@ export function CatalogProductCard({
 
       {/* Link de toda la tarjeta */}
       <Link
-        href={
-          sector === "universitario"
-            ? `/catalogo/universidades/${universitySlug}/${slug}`
-            : `/catalogo/${sector}/${slug}`
-        }
+        href={getProductUrl(product)}
         className="absolute inset-0 z-[10]"
         aria-label={`Ver detalles de ${product.name}`}
         prefetch={false}

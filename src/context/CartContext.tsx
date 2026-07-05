@@ -60,6 +60,9 @@ interface CartProduct {
   offer_ends_at?: string | null;
   offer_starts_at?: string | null;
   is_active?: boolean;
+  sector?: string | null;
+  category?: string | null;
+  categories?: { name: string; catalog: string } | null;
   /** Talla seleccionada por el usuario */
   selectedSize?: string | null;
   /** Modo de precio: 'normal' | 'wholesale' | 'labor' */
