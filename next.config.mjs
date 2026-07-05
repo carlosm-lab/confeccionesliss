@@ -93,7 +93,6 @@ const nextConfig = {
         destination: "/catalogo",
         permanent: true,
       },
-
     ];
   },
   images: {

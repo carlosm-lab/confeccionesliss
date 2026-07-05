@@ -71,7 +71,6 @@ export default async function SectorCatalogPage({
   const { sector } = await params;
   const config = CATEGORIES[sector as Sector];
 
-  // La ruta /catalogo/universitario fue eliminada — ahora existe /catalogo/universidades.
   if (!config || sector === "universitario") {
     notFound();
   }

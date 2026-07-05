@@ -192,8 +192,6 @@ export default async function ProductDetailPage({
   // Fetch product from Supabase by slug
   const product = await getProductBySlug(id);
 
-  // El sector "universitario" fue eliminado — las páginas de producto universitario
-  // ahora están en /catalogo/universidades/[universidad]/[id].
   if (!config || !product || sector === "universitario") {
     notFound();
   }

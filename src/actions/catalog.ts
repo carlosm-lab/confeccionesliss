@@ -47,13 +47,25 @@ export async function revalidateAfterProductSave({
     // Hub universitario
     revalidatePath("/catalogo/universidades");
 
-    if (category) {
-      // Soporte para slugs compuestos: "univo-enfermeria" → universidad = "univo"
-      const universitySlug = category.split("-")[0];
-      // Listing específico de la universidad (e.g. /catalogo/universidades/univo)
-      revalidatePath(`/catalogo/universidades/${universitySlug}`);
-      // Detalle del producto universitario
-      revalidatePath(`/catalogo/universidades/${universitySlug}/${slug}`);
+    const validUniversitySlugs = [
+      "univo",
+      "ieproes",
+      "ugb",
+      "unab",
+      "ues",
+      "uma",
+    ];
+    const prefix = category ? category.split("-")[0] : null;
+
+    if (prefix && validUniversitySlugs.includes(prefix)) {
+      revalidatePath(`/catalogo/universidades/${prefix}`);
+      revalidatePath(`/catalogo/universidades/${prefix}/${slug}`);
+    } else {
+      // Revalidar para todas si no coincide con prefijo conocido
+      for (const u of validUniversitySlugs) {
+        revalidatePath(`/catalogo/universidades/${u}`);
+        revalidatePath(`/catalogo/universidades/${u}/${slug}`);
+      }
     }
   } else {
     // Sector estándar (scrubs, escolar, corporativo, etc.)

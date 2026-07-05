@@ -260,7 +260,7 @@ export function MobileFilterDrawer({
                 )}
               </button>
 
-              {categoriesGroup.options.map((opt) => {
+              {categoriesGroup.options.map((opt, idx) => {
                 const isActive = selected.includes(opt.value);
                 const icon = getCategoryIcon(
                   opt.label,
@@ -270,7 +270,7 @@ export function MobileFilterDrawer({
 
                 return (
                   <button
-                    key={opt.value}
+                    key={`${opt.value}-${idx}`}
                     type="button"
                     onClick={() => onFilterToggle(field, opt.value)}
                     className={cn(

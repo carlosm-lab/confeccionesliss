@@ -465,21 +465,66 @@ export async function getProductsByUniversity(
 ): Promise<DbProduct[]> {
   const supabase = createServerClient();
 
-  const { data, error } = await supabase
+  // 1. Obtener los IDs de categoría pertenecientes a esta universidad (catalog = universidad)
+  const { data: catData, error: catErr } = await supabase
+    .from("categories")
+    .select("id")
+    .eq("catalog", universidad);
+
+  if (catErr) {
+    logger.error(
+      "[catalogService] getProductsByUniversity (categories) error:",
+      catErr
+    );
+  }
+
+  const categoryIds = (catData ?? []).map((c: { id: string }) => c.id);
+
+  // 2. Query 1: Productos asociados vía category_id
+  let byCategory: DbProduct[] = [];
+  if (categoryIds.length > 0) {
+    const { data: byCat, error: errCat } = await supabase
+      .from("products")
+      .select(PRODUCT_SELECT)
+      .eq("is_active", true)
+      .in("category_id", categoryIds)
+      .order("created_at", { ascending: false });
+
+    if (errCat) {
+      logger.error(
+        "[catalogService] getProductsByUniversity (by category_id) error:",
+        errCat
+      );
+    } else {
+      byCategory = (byCat ?? []) as unknown as DbProduct[];
+    }
+  }
+
+  // 3. Query 2: Productos con sector "universitario" o el slug de la universidad y category ILIKE %universidad% (legacy/fallback)
+  const { data: byDirect, error: errDirect } = await supabase
     .from("products")
     .select(PRODUCT_SELECT)
     .eq("is_active", true)
-    .eq("sector", "universitario")
+    .or(`sector.eq.universitario,sector.eq.${universidad}`)
     .ilike("category", `%${universidad}%`)
     .order("created_at", { ascending: false });
 
-  if (error) {
-    logger.error("[catalogService] getProductsByUniversity error:", error);
-    // Fallback: devolver todos los universitarios sin filtrar
-    return getProductsBySector("universitario");
+  if (errDirect) {
+    logger.error(
+      "[catalogService] getProductsByUniversity (direct) error:",
+      errDirect
+    );
   }
 
-  return (data ?? []) as unknown as DbProduct[];
+  const directList = (byDirect ?? []) as unknown as DbProduct[];
+
+  // 4. Combinar y deduplicar por id
+  const seen = new Set<string>(byCategory.map((p) => p.id));
+  const merged = [...byCategory, ...directList.filter((p) => !seen.has(p.id))];
+
+  merged.sort((a, b) => (b.created_at ?? "").localeCompare(a.created_at ?? ""));
+
+  return merged;
 }
 
 // ── Obtener categorías (carreras) de una universidad específica ───────────────

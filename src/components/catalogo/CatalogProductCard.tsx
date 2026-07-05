@@ -81,6 +81,28 @@ export function CatalogProductCard({
     toggleFavorite(product.id);
   }
 
+  const VALID_UNIVERSITY_SLUGS = new Set([
+    "univo",
+    "ieproes",
+    "ugb",
+    "unab",
+    "ues",
+    "uma",
+  ]);
+
+  let universitySlug = "univo";
+  if (
+    product.categories?.catalog &&
+    VALID_UNIVERSITY_SLUGS.has(product.categories.catalog)
+  ) {
+    universitySlug = product.categories.catalog;
+  } else if (product.category) {
+    const prefix = product.category.split("-")[0];
+    if (VALID_UNIVERSITY_SLUGS.has(prefix)) {
+      universitySlug = prefix;
+    }
+  }
+
   return (
     <article
       data-testid="product-card"
@@ -168,9 +190,8 @@ export function CatalogProductCard({
       {/* Link de toda la tarjeta */}
       <Link
         href={
-          sector === "universitario" && product.category
-            ? // Soporte para slugs compuestos: "univo-enfermeria" → universidad = "univo"
-              `/catalogo/universidades/${product.category.split("-")[0]}/${slug}`
+          sector === "universitario"
+            ? `/catalogo/universidades/${universitySlug}/${slug}`
             : `/catalogo/${sector}/${slug}`
         }
         className="absolute inset-0 z-[10]"

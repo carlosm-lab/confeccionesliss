@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useState, useEffect, useCallback } from "react";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import { logger } from "@/lib/logger";
@@ -79,7 +79,15 @@ export default function AdminCategoriesPage() {
       setCurrentCat((prev) => ({ ...prev, name }));
       return;
     }
-    setCurrentCat((prev) => ({ ...prev, name, slug: generateSlug(name) }));
+    const slugBase = generateSlug(name);
+    const isUniv =
+      currentCat.catalog &&
+      CATALOGS_UNIVERSITY.some((u) => u.value === currentCat.catalog);
+    const slug =
+      isUniv && !slugBase.startsWith(`${currentCat.catalog}-`)
+        ? `${currentCat.catalog}-${slugBase}`
+        : slugBase;
+    setCurrentCat((prev) => ({ ...prev, name, slug }));
   };
 
   const handleSlugChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,7 +96,17 @@ export default function AdminCategoriesPage() {
   };
 
   const handleCatalogChange = (value: string) => {
-    setCurrentCat((prev) => ({ ...prev, catalog: value || null }));
+    setCurrentCat((prev) => {
+      const catalog = value || null;
+      let slug = prev.slug;
+      if (!isEditing && !slugManuallyEdited && prev.name) {
+        const slugBase = generateSlug(prev.name);
+        const isUniv =
+          catalog && CATALOGS_UNIVERSITY.some((u) => u.value === catalog);
+        slug = isUniv ? `${catalog}-${slugBase}` : slugBase;
+      }
+      return { ...prev, catalog, slug };
+    });
   };
 
   const handleEdit = (cat: Category) => {

@@ -114,7 +114,7 @@ export function FilterSidebar({
               <span className="leading-tight text-[var(--text-sm)]">Todos</span>
             </button>
 
-            {categoriesGroup.options.map((opt) => {
+            {categoriesGroup.options.map((opt, idx) => {
               const isActive = selected.includes(opt.value);
               const icon = getCategoryIcon(
                 opt.label,
@@ -124,7 +124,7 @@ export function FilterSidebar({
 
               return (
                 <button
-                  key={opt.value}
+                  key={`${opt.value}-${idx}`}
                   type="button"
                   onClick={() => onFilterToggle(field, opt.value)}
                   className={cn(

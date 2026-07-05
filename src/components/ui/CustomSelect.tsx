@@ -155,11 +155,11 @@ export function CustomSelect({
               Sin opciones disponibles
             </p>
           ) : (
-            options.map((opt) => {
+            options.map((opt, idx) => {
               const isSelected = opt.value === value;
               return (
                 <button
-                  key={opt.value}
+                  key={`${opt.value}-${idx}`}
                   type="button"
                   role="option"
                   aria-selected={isSelected}

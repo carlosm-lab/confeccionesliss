@@ -1917,9 +1917,9 @@ export default function ProductModal({
                         value: "noindex, nofollow",
                         label: "noindex, nofollow",
                       },
-                    ].map((opt) => (
+                    ].map((opt, idx) => (
                       <button
-                        key={opt.value || "auto"}
+                        key={opt.value || `auto-${idx}`}
                         type="button"
                         onClick={() =>
                           setFormData((prev) => ({

@@ -380,7 +380,7 @@ export function CatalogPageClient({
                     className="animate-fade-in-up h-full w-full"
                     style={{ animationDelay: `${index * 30 + 100}ms` }}
                   >
-                    <CatalogProductCard product={p} />
+                    <CatalogProductCard product={p} priority={index < 4} />
                   </div>
                 ))}
               </div>
