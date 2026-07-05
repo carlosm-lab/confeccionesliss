@@ -136,18 +136,37 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
           );
         }
 
-        // Filtrar locales inválidos antes de insertar en DB
-        const validLocalFavorites = localFavorites.filter(
+        // Filtrar locales con sintaxis UUID válida
+        const validSyntaxLocalFavorites = localFavorites.filter(
           (id) => typeof id === "string" && id.length > 0 && UUID_REGEX.test(id)
         );
 
-        // Insertar favoritos locales que no existen en DB
-        const toInsert = validLocalFavorites.filter(
+        // Identificar favoritos locales que no existen aún en DB
+        const candidateToInsert = validSyntaxLocalFavorites.filter(
           (id) => !dbFavorites.includes(id)
         );
 
-        if (toInsert.length > 0) {
-          const newRecords = toInsert.map((product_id) => ({
+        let validToInsert: string[] = [];
+        if (candidateToInsert.length > 0) {
+          // Consultar la tabla products para asegurar que los product_id existen físicamente en la BD
+          // evitando así violaciones de la Foreign Key constraint (user_favorites_product_id_fkey)
+          const { data: existingProducts } = await supabase
+            .from("products")
+            .select("id")
+            .in("id", candidateToInsert);
+
+          const dbProductIds = new Set(
+            (existingProducts as { id: string }[] | null)?.map((p) => p.id) ||
+              []
+          );
+          validToInsert = candidateToInsert.filter((id) =>
+            dbProductIds.has(id)
+          );
+        }
+
+        // Insertar únicamente los favoritos válidos cuyo producto existe en la base de datos
+        if (validToInsert.length > 0) {
+          const newRecords = validToInsert.map((product_id) => ({
             user_id: user.id,
             product_id,
           }));
@@ -163,8 +182,11 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
           }
         }
 
-        // Merge: unión sin duplicados
+        // Merge: unión sin duplicados, purgando IDs locales huérfanos/eliminados
         if (mounted) {
+          const validLocalFavorites = validSyntaxLocalFavorites.filter(
+            (id) => dbFavorites.includes(id) || validToInsert.includes(id)
+          );
           const updatedFavorites = [
             ...new Set([...dbFavorites, ...validLocalFavorites]),
           ];
