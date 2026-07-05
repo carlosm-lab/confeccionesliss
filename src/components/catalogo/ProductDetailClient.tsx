@@ -949,19 +949,15 @@ export function ProductDetailClient({
           >
             <span className="material-symbols-outlined text-2xl">close</span>
           </button>
-          <div className="relative z-10 flex max-h-[90dvh] max-w-[90vw] items-center justify-center overflow-hidden rounded-2xl">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+          <div className="relative z-10 h-[80dvh] w-[90vw] overflow-hidden rounded-2xl">
+            <Image
               src={mainImg}
               alt={product.name ?? "Producto"}
-              className="max-h-[85dvh] max-w-[90vw] rounded-2xl object-contain shadow-2xl"
-              referrerPolicy="no-referrer"
-              onError={(e) => {
-                const fallback = getProductMainImage(product);
-                if (fallback && e.currentTarget.src !== fallback) {
-                  e.currentTarget.src = fallback;
-                }
-              }}
+              fill
+              sizes="90vw"
+              className="object-contain"
+              priority
+              unoptimized
             />
           </div>
         </div>
