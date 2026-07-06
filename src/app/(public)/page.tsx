@@ -48,12 +48,8 @@ export const metadata: Metadata = {
   },
 };
 
-// ── ISR con revalidacion on-demand + tiempo de seguridad ──────────────────
-// Se regenera inmediatamente via revalidatePath('/') cuando el admin
-// guarda/elimina/fija un producto. El revalidate=30 es red de seguridad:
-// garantiza que en maximo 30s la pagina muestra los datos frescos, incluso
-// si el CDN/edge no respeta la purga on-demand de Next.js.
-export const revalidate = 30;
+// Forzar dynamic temporalmente para diagnosticar y bypassear la cache de Vercel/CDN.
+export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   // Load recent products from Supabase (server-side, no hardcoding)
