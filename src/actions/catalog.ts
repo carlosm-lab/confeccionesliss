@@ -55,17 +55,12 @@ export async function revalidateAfterProductSave({
       "ues",
       "uma",
     ];
-    const prefix = category ? category.split("-")[0] : null;
-
-    if (prefix && validUniversitySlugs.includes(prefix)) {
-      revalidatePath(`/catalogo/universidades/${prefix}`);
-      revalidatePath(`/catalogo/universidades/${prefix}/${slug}`);
-    } else {
-      // Revalidar para todas si no coincide con prefijo conocido
-      for (const u of validUniversitySlugs) {
-        revalidatePath(`/catalogo/universidades/${u}`);
-        revalidatePath(`/catalogo/universidades/${u}/${slug}`);
-      }
+    // Revalidar TODAS las universidades para garantizar que si un producto fue movido
+    // de una universidad a otra (ej. de UNAB a UNIVO), la página de la universidad anterior
+    // se limpie y no muestre duplicados en la caché de Next.js.
+    for (const u of validUniversitySlugs) {
+      revalidatePath(`/catalogo/universidades/${u}`);
+      revalidatePath(`/catalogo/universidades/${u}/${slug}`);
     }
   } else {
     // Sector estándar (scrubs, escolar, corporativo, etc.)
