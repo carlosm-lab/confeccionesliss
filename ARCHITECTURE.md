@@ -17,6 +17,17 @@ This document tracks important architectural decisions made during the project l
 ## Logged Decisions
 
 **Date:** 2026-07-06
+**Decision:** Prohibición Estricta de SSR — Estrategia de SSG Puro + Revalidación Bajo Demanda (On-Demand Revalidation)
+**Context:** El cliente exige que la plataforma funcione en su totalidad mediante SSG (Static Site Generation), eliminando cualquier ruta SSR (`force-dynamic`). Se realizó una auditoría completa del proyecto para garantizar que todas las páginas se generen estáticamente y se revaliden bajo demanda (`revalidatePath`).
+**Decision:**
+- **Todas las Páginas Públicas son SSG:** Las vistas principales (`/`, `/catalogo`, `/catalogo/[sector]`, `/catalogo/[sector]/[id]`, `/catalogo/universidades/[universidad]`, `/catalogo/universidades/[universidad]/[id]`, `/servicios/[slug]`) utilizan `generateStaticParams()` o pre-renderizado estático de RSC en build time.
+- **On-Demand Revalidation:** Ante mutaciones en el panel de administración (alta, baja, modificación de productos o toggling de productos fijados), se invoca `revalidatePath(...)` desde las Server Actions para actualizar el HTML estático en caché de forma inmediata.
+- **Prohibición de SSR:** Cero uso de `export const dynamic = 'force-dynamic'`. Ninguna página pública realiza lecturas dinámicas por petición en el servidor.
+- **Panel Administrativo:** Utiliza Client Components (`"use client"`) cuyo shell HTML se compila de forma estática (SSG) y la interacción se realiza directamente desde el cliente.
+
+---
+
+**Date:** 2026-07-06
 **Decision:** Auditoría 360° de Seguridad OWASP y Endurecimiento de Server Actions & Middleware
 **Context:** Se realizó una auditoría exhaustiva 360° en base a OWASP Top 10 (2021/2026), OWASP API Security Top 10 (2023) y OWASP ASVS. Se identificaron vectores de riesgo en Server Actions públicas sin verificación de rol, ausencia de Rate Limiting en formularios de contacto y necesidad de verificación de convenciones de Next.js 16 para middleware (`src/proxy.ts`).
 **Decision:**

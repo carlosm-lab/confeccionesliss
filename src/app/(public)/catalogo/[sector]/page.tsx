@@ -75,7 +75,7 @@ export default async function SectorCatalogPage({
     notFound();
   }
 
-  // Fetch productos y categorías en paralelo desde Supabase (SSR)
+  // Fetch productos y categorías en paralelo desde Supabase (SSG)
   const [products, dbCategories] = await Promise.all([
     getProductsBySector(sector),
     getCategoriesForSector(sector),
