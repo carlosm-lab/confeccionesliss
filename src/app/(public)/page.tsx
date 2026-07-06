@@ -48,8 +48,10 @@ export const metadata: Metadata = {
   },
 };
 
-// Forzar dynamic temporalmente para diagnosticar y bypassear la cache de Vercel/CDN.
-export const dynamic = "force-dynamic";
+// ── SSG puro + On-Demand Revalidation ──────────────────────────────────────
+// No ISR por tiempo. Se regenera vía revalidatePath('/') desde src/actions/catalog.ts
+// y src/actions/featuredProducts.ts cuando el admin guarda, elimina o fija un producto.
+// Mismo patrón que /catalogo, /catalogo/[sector] y /catalogo/universidades.
 
 export default async function HomePage() {
   // Load recent products from Supabase (server-side, no hardcoding)
