@@ -6,6 +6,7 @@
 // NO importar en Client Components — usar el hook useProducts.ts.
 // ──────────────────────────────────────────────────────────────
 import { createClient } from "@supabase/supabase-js";
+import { unstable_cache } from "next/cache";
 import { logger } from "@/lib/logger";
 import { env } from "@/env";
 import { HOMEPAGE_PRODUCTS_TAG } from "@/lib/constants";
@@ -341,15 +342,9 @@ export async function getProductBySlug(
   return (data ?? null) as unknown as DbProduct | null;
 }
 
-// ── Obtener productos para la sección Novedades del home ─────
-// Lógica: primero los fijados (is_featured=true), luego los más
-// recientes activos hasta completar el límite.
-// Usa createServerClient con HOMEPAGE_PRODUCTS_TAG para que Next.js
-// tagee los fetches internos de Supabase y revalidateTag() los invalide.
-export async function getRecentProducts(limit = 10): Promise<DbProduct[]> {
-  // El cliente pasa los tags al fetch nativo — Next.js cachea y puede invalidar
-  // estos fetches con revalidateTag(HOMEPAGE_PRODUCTS_TAG)
-  const supabase = createServerClient([HOMEPAGE_PRODUCTS_TAG]);
+// Helper interno que hace la consulta directa a Supabase (sin caché)
+async function fetchRecentProductsFromDb(limit = 10): Promise<DbProduct[]> {
+  const supabase = createServerClient();
 
   // 1. Obtener todos los productos fijados activos
   const { data: featured, error: featuredError } = await supabase
@@ -362,7 +357,7 @@ export async function getRecentProducts(limit = 10): Promise<DbProduct[]> {
 
   if (featuredError) {
     logger.error(
-      "[catalogService] getRecentProducts (featured) error:",
+      "[catalogService] fetchRecentProductsFromDb (featured) error:",
       featuredError
     );
     return [];
@@ -395,7 +390,7 @@ export async function getRecentProducts(limit = 10): Promise<DbProduct[]> {
 
   if (recentsError) {
     logger.error(
-      "[catalogService] getRecentProducts (recents) error:",
+      "[catalogService] fetchRecentProductsFromDb (recents) error:",
       recentsError
     );
     return featuredList;
@@ -404,6 +399,27 @@ export async function getRecentProducts(limit = 10): Promise<DbProduct[]> {
   const recentsList = (recents ?? []) as unknown as DbProduct[];
 
   return [...featuredList, ...recentsList];
+}
+
+// Wrapper de unstable_cache para producción
+const getCachedRecentProducts = unstable_cache(
+  async (limit: number) => fetchRecentProductsFromDb(limit),
+  ["recent-products-list"],
+  { tags: [HOMEPAGE_PRODUCTS_TAG] }
+);
+
+// ── Obtener productos para la sección Novedades del home ─────
+// Lógica: primero los fijados (is_featured=true), luego los más
+// recientes activos hasta completar el límite.
+// Evita el caché en desarrollo local para ver cambios de inmediato,
+// y usa unstable_cache en producción para compilar como SSG.
+export async function getRecentProducts(limit = 10): Promise<DbProduct[]> {
+  if (process.env.NODE_ENV === "development") {
+    // En desarrollo local, consulta directa para no lidiar con caches en memoria de next dev
+    return fetchRecentProductsFromDb(limit);
+  }
+  // En producción, utiliza unstable_cache para soportar SSG + Revalidation On-Demand
+  return getCachedRecentProducts(limit);
 }
 
 // ── Obtener conteo de productos activos por sector ────────────

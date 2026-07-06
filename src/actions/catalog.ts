@@ -20,8 +20,9 @@
  */
 
 import { createServerClient } from "@supabase/ssr";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
+import { HOMEPAGE_PRODUCTS_TAG } from "@/lib/constants";
 
 interface RevalidateProductParams {
   /** Sector del producto tal como está en la BD (e.g. "scrubs", "universitario") */
@@ -69,7 +70,8 @@ export async function revalidateAfterProductSave({
     }
   }
 
-  // Siempre: hub principal y home
+  // Siempre: hub principal y home (tanto ruta como data cache)
+  revalidateTag(HOMEPAGE_PRODUCTS_TAG, { expire: 0 });
   revalidatePath("/catalogo");
   revalidatePath("/");
 
