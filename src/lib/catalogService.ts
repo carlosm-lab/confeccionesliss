@@ -321,7 +321,7 @@ export async function getRecentProducts(limit = 10): Promise<DbProduct[]> {
     .select(PRODUCT_SELECT)
     .eq("is_active", true)
     .eq("is_featured", true)
-    .order("created_at", { ascending: false })
+    .order("updated_at", { ascending: false })
     .limit(limit);
 
   if (featuredError) {

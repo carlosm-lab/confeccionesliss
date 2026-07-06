@@ -104,10 +104,13 @@ export async function toggleFeaturedProduct(
     }
   }
 
-  // Actualizar el campo is_featured
+  // Actualizar el campo is_featured y updated_at
   const { error: updateError } = await supabase
     .from("products")
-    .update({ is_featured: newValue })
+    .update({
+      is_featured: newValue,
+      updated_at: new Date().toISOString(),
+    })
     .eq("id", productId);
 
   if (updateError) {
