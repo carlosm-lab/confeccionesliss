@@ -38,8 +38,8 @@ async function isKillswitchActive(): Promise<boolean> {
   // Caché expirado → refrescar desde Supabase
   try {
     const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      env.NEXT_PUBLIC_SUPABASE_URL,
+      env.NEXT_PUBLIC_SUPABASE_ANON_KEY
     );
 
     // Usa RPC SECURITY DEFINER en vez de SELECT directo.
@@ -102,8 +102,8 @@ export async function proxy(request: NextRequest) {
     let supabaseResponse = NextResponse.next({ request });
 
     const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      env.NEXT_PUBLIC_SUPABASE_URL,
+      env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
       {
         cookies: {
           getAll() {

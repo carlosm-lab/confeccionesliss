@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { logger } from "@/lib/logger";
+import { env } from "@/env";
 
 export interface GoogleReview {
   id: string;
@@ -195,9 +196,11 @@ const REAL_GOOGLE_REVIEWS_FALLBACK: GoogleReview[] = [
 ];
 
 function createServerClient() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !key) throw new Error("Missing Supabase env variables");
+  const url =
+    process.env.NEXT_PUBLIC_SUPABASE_URL || env.NEXT_PUBLIC_SUPABASE_URL;
+  const key =
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+    env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   return createClient(url, key);
 }
 
