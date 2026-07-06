@@ -20,7 +20,7 @@
  */
 
 import { createServerClient } from "@supabase/ssr";
-import { revalidatePath, refresh } from "next/cache";
+import { revalidatePath, revalidateTag, refresh } from "next/cache";
 import { cookies } from "next/headers";
 import { HOMEPAGE_PRODUCTS_TAG } from "@/lib/constants";
 
@@ -71,8 +71,9 @@ export async function revalidateAfterProductSave({
   }
 
   // Siempre: hub principal y home
-  // refresh(): limpia el Client Router Cache del browser (RSC payload cacheado).
-  // revalidatePath: invalida el Full Route Cache del servidor (HTML estático).
+  // revalidateTag: invalida el Data Cache del Supabase fetch.
+  // {} satisface el tipo CacheLifeConfig (todos los campos opcionales) sin stale behavior.
+  revalidateTag(HOMEPAGE_PRODUCTS_TAG, {});
   refresh();
   revalidatePath("/catalogo");
   revalidatePath("/");

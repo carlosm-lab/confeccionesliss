@@ -9,7 +9,7 @@
  */
 
 import { createServerClient } from "@supabase/ssr";
-import { revalidatePath, refresh } from "next/cache";
+import { revalidatePath, revalidateTag, refresh } from "next/cache";
 import { cookies } from "next/headers";
 import { HOMEPAGE_PRODUCTS_TAG } from "@/lib/constants";
 
@@ -137,6 +137,11 @@ export async function toggleFeaturedProduct(
     // Si falla el log de auditoría, no bloquear la operación de negocio
     console.error("[toggleFeaturedProduct] Audit log warning:", auditErr);
   }
+
+  // Invalidar el Data Cache de la consulta de Supabase del home.
+  // {} como segundo arg satisface el tipo de Next.js 16 (CacheLifeConfig con todos los campos opcionales)
+  // sin añadir ningún comportamiento stale — es una invalidación inmediata.
+  revalidateTag(HOMEPAGE_PRODUCTS_TAG, {});
 
   // Invalidar el Full Route Cache del servidor (HTML cacheado de /)
   // + el Client Router Cache del browser para que el usuario vea cambios
