@@ -90,27 +90,20 @@ export default function AdminProductsPage() {
         }
         // FIX B3: apply catalog filter to the actual DB query
         if (filterCatalog) {
-          // Para "universitario": los productos tienen sector = 'universitario'.
-          // Si hay categorías en BD (post-migración), filtramos por category IN [slugs].
-          // Si NO hay categorías aún, filtramos directamente por sector para no perder resultados.
           if (filterCatalog === "universitario") {
-            const univSlugs = categories
-              .filter((c) => c.catalog === "universitario")
-              .map((c) => c.slug);
-            if (univSlugs.length > 0) {
-              query = query.in("category", univSlugs);
-            } else {
-              // Fallback: filtrar por sector directamente
-              query = query.eq("sector", "universitario");
-            }
+            query = query.or(
+              `sector.eq.universitario,category.ilike.%univo%,category.ilike.%ieproes%,category.ilike.%ugb%,category.ilike.%unab%,category.ilike.%ues%,category.ilike.%uma%`
+            );
           } else {
             const catalogSlugs = categories
               .filter((c) => c.catalog === filterCatalog)
               .map((c) => c.slug);
             if (catalogSlugs.length > 0) {
-              query = query.in("category", catalogSlugs);
+              query = query.or(
+                `sector.eq.${filterCatalog},and(category.in.(${catalogSlugs.join(",")}),sector.is.null)`
+              );
             } else {
-              query = query.eq("category", "__no_match__");
+              query = query.eq("sector", filterCatalog);
             }
           }
         }

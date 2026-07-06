@@ -282,7 +282,9 @@ export async function getProductsBySector(
         err3
       );
     }
-    byCategory = (byCat ?? []) as unknown as DbProduct[];
+    byCategory = ((byCat ?? []) as unknown as DbProduct[]).filter(
+      (p) => !p.sector || p.sector === sector
+    );
   }
 
   // Combinar y deduplicar por id
@@ -460,7 +462,7 @@ export async function getRelatedProducts(
       .limit(limit);
 
     const byCatList = ((byCat ?? []) as unknown as DbProduct[]).filter(
-      (p) => !seen.has(p.id)
+      (p) => !seen.has(p.id) && (!p.sector || p.sector === sector)
     );
     return [...directList, ...byCatList].slice(0, limit);
   }

@@ -548,7 +548,11 @@ export default function ProductModal({
       offer_ends_at: offerEndsAt,
       offer_starts_at: offerStartsAt,
       category_id:
-        categories.find((c) => c.slug === formData.category)?.id || null,
+        categories.find(
+          (c) => c.slug === formData.category && c.catalog === formData.catalog
+        )?.id ||
+        categories.find((c) => c.slug === formData.category)?.id ||
+        null,
       tallas: formData.tallas.length > 0 ? formData.tallas : [],
       colores: formData.colores.length > 0 ? formData.colores : [],
       colores_label: formData.colores_label?.trim() || null,
