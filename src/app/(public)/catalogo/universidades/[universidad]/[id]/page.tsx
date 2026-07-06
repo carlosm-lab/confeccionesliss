@@ -285,7 +285,7 @@ export default async function UniversityProductDetailPage({
             description,
             image: productImageAbsolute ? [productImageAbsolute] : undefined,
             url: PAGE_URL,
-            sku: product.slug ?? product.id,
+            sku: `LIS-${product.id.split("-")[0].toUpperCase()}`,
             ...(product.category && { category: product.category }),
             ...(product.material && { material: product.material }),
             brand: { "@type": "Brand", name: siteConfig.name },

@@ -295,7 +295,7 @@ export default async function ProductDetailPage({
             description,
             image: productImageAbsolute ? [productImageAbsolute] : undefined,
             url: PAGE_URL,
-            sku: product.slug ?? product.id,
+            sku: `LIS-${product.id.split("-")[0].toUpperCase()}`,
             // Identificadores de categoría
             ...(product.category && { category: product.category }),
             // Material del producto (si está disponible)
