@@ -140,7 +140,7 @@ export async function toggleFeaturedProduct(
 
   // Invalidar el Data Cache de Next.js para los productos del home
   // (unstable_cache en getRecentProducts usa este tag)
-  revalidateTag(HOMEPAGE_PRODUCTS_TAG);
+  revalidateTag(HOMEPAGE_PRODUCTS_TAG, { expire: 0 });
 
   // Invalidar las rutas afectadas en la caché de Next.js
   revalidatePath("/", "page");
