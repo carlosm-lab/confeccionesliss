@@ -61,13 +61,18 @@ function ProductGridSkeleton() {
       <div className="mx-auto max-w-screen-2xl">
         <Shimmer className="mb-12 h-10 w-72" />
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-5">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="flex flex-col gap-2">
-              <Shimmer className="aspect-[3/4] w-full rounded-xl" />
-              <Shimmer className="h-4 w-3/4" />
-              <Shimmer className="h-4 w-1/2" />
-            </div>
-          ))}
+          {Array.from({ length: 10 }).map((_, i) => {
+            const visibilityClass =
+              i >= 8 ? "hidden lg:flex" : i >= 6 ? "hidden md:flex" : "flex";
+
+            return (
+              <div key={i} className={`flex-col gap-2 ${visibilityClass}`}>
+                <Shimmer className="aspect-[3/4] w-full rounded-xl" />
+                <Shimmer className="h-4 w-3/4" />
+                <Shimmer className="h-4 w-1/2" />
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

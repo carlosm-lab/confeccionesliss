@@ -312,7 +312,7 @@ export async function getProductBySlug(
 // ── Obtener productos para la sección Novedades del home ─────
 // Lógica: primero los fijados (is_featured=true), luego los más
 // recientes activos hasta completar el límite.
-export async function getRecentProducts(limit = 6): Promise<DbProduct[]> {
+export async function getRecentProducts(limit = 10): Promise<DbProduct[]> {
   const supabase = createServerClient();
 
   // 1. Obtener todos los productos fijados activos

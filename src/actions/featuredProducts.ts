@@ -12,7 +12,7 @@ import { createServerClient } from "@supabase/ssr";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
-const MAX_FEATURED = 6;
+const MAX_FEATURED = 10;
 
 /** Cliente Supabase server-side autenticado mediante cookies del admin */
 async function createClientWithSession() {

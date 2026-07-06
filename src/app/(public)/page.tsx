@@ -54,7 +54,7 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   // Load recent products from Supabase (server-side, no hardcoding)
-  const recentProducts = await getRecentProducts(6);
+  const recentProducts = await getRecentProducts(10);
   // Fetch dynamic Google Reviews from Supabase / fallback service
   const reviews = await getGoogleReviews();
   return (
@@ -202,15 +202,27 @@ export default async function HomePage() {
               </Link>
             </div>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-5">
-              {recentProducts.map((product, index) => (
-                <div
-                  key={product.id}
-                  className="animate-fade-in-up h-full w-full"
-                  style={{ animationDelay: `${index * 50 + 150}ms` }}
-                >
-                  <CatalogProductCard product={product} priority={index < 2} />
-                </div>
-              ))}
+              {recentProducts.map((product, index) => {
+                const visibilityClass =
+                  index >= 8
+                    ? "hidden lg:block"
+                    : index >= 6
+                      ? "hidden md:block"
+                      : "block";
+
+                return (
+                  <div
+                    key={product.id}
+                    className={`animate-fade-in-up h-full w-full ${visibilityClass}`}
+                    style={{ animationDelay: `${index * 50 + 150}ms` }}
+                  >
+                    <CatalogProductCard
+                      product={product}
+                      priority={index < 2}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
