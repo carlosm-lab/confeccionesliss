@@ -13,13 +13,8 @@ export const env = createEnv({
     NEXT_PUBLIC_SUPABASE_URL: z
       .string()
       .url()
-      .default("https://cvbdqsxjfrbwovzpydng.supabase.co"),
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: z
-      .string()
-      .min(1)
-      .default(
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2YmRxc3hqZnJid292enB5ZG5nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4ODc5MDQsImV4cCI6MjA5MjQ2MzkwNH0.UesSE_PRrkYK5n4nrwzS_k7HDO7TVFHOMJcF2zzRnzo"
-      ),
+      .default("https://placeholder.supabase.co"),
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1).default("placeholder_key"),
     NEXT_PUBLIC_WHATSAPP_NUMBER: z.string().min(1).default("50373317181"),
     NEXT_PUBLIC_CONTACT_EMAIL: z
       .string()
