@@ -14,9 +14,8 @@ import {
 import { getProductReviews } from "@/lib/reviewsService";
 import { testimonials } from "@/lib/seo-data";
 
-// ── SSG + On-Demand Revalidation (ISR) ──────────────────────────────────────
-// revalidate = false: cachear indefinidamente, solo revalidar bajo demanda vía revalidatePath().
-export const revalidate = false;
+// ── SSG puro + On-Demand Revalidation ──────────────────────────────────────
+// No ISR por tiempo. Revalidación on-demand vía src/actions/catalog.ts.
 
 // ── dynamicParams: true (default) — productos nuevos post-build se generan
 // on-demand la primera vez y luego se cachean como estáticos (SSG diferido) ──

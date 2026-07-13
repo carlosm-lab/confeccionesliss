@@ -10,9 +10,9 @@ import {
 } from "@/lib/catalogService";
 import { OffersReadTracker } from "@/components/ui/OffersReadTracker";
 
-// ── SSG + On-Demand Revalidation (ISR) ──────────────────────────────────────
-// revalidate = false: cachear indefinidamente, solo revalidar bajo demanda vía revalidatePath().
-export const revalidate = false;
+// ── SSG puro + On-Demand Revalidation ──────────────────────────────────────
+// No ISR por tiempo. Las páginas se regeneran on-demand vía revalidatePath()
+// en src/actions/catalog.ts cuando el admin guarda o elimina un producto.
 
 // ── Static params: genera una página por sector ───────────────────────────────
 // "universitario" se excluye: la ruta fue eliminada, ahora existe /catalogo/universidades.
