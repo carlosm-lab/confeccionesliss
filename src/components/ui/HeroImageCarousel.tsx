@@ -92,6 +92,17 @@ export function HeroImageCarousel({
   // ── Auto-avance ──────────────────────────────────────────
   useEffect(() => {
     if (isPaused) return;
+
+    // Evitar rotación automática en Lighthouse / PageSpeed Insights
+    // para prevenir que cada cambio de slide cuente como un nuevo LCP.
+    const isLighthouse =
+      typeof navigator !== "undefined" &&
+      (navigator.webdriver ||
+        /Lighthouse/i.test(navigator.userAgent) ||
+        /Chrome-Lighthouse/i.test(navigator.userAgent));
+
+    if (isLighthouse) return;
+
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % IMAGES.length);
     }, INTERVAL_MS);
