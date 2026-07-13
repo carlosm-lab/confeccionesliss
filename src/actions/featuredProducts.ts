@@ -4,14 +4,12 @@
  *
  * ARQUITECTURA:
  * - Solo el admin puede llamar estos actions (protección por RLS en Supabase).
- * - Al fijar/desfijar se invalida el home (/) inmediatamente via fetch interno
- *   al Route Handler /api/revalidate, que sí purga el CDN de Vercel de forma fiable.
+ * - El home es SSG puro: los cambios se reflejan en el siguiente redeploy.
  * - Límite de 10 productos fijados simultáneamente, aplicado en esta capa.
  */
 
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
-import { env } from "@/env";
 
 const MAX_FEATURED = 10;
 
@@ -138,21 +136,8 @@ export async function toggleFeaturedProduct(
     console.error("[toggleFeaturedProduct] Audit log warning:", auditErr);
   }
 
-  // Purgar el CDN de Vercel via fetch interno al Route Handler /api/revalidate.
-  // Esto es más fiable que revalidatePath() desde una Server Action en Vercel.
-  try {
-    const siteUrl = env.NEXT_PUBLIC_SITE_URL;
-    const secret = env.REVALIDATE_SECRET;
-    await fetch(`${siteUrl}/api/revalidate?secret=${secret}&path=/`, {
-      cache: "no-store",
-    });
-  } catch (revalidateErr) {
-    // No bloquear la respuesta al cliente si la purga de caché falla
-    console.error(
-      "[toggleFeaturedProduct] Cache revalidation warning:",
-      revalidateErr
-    );
-  }
+  // Nota: el home es SSG puro. Los cambios se reflejan en el próximo redeploy.
+  // El endpoint /api/revalidate queda disponible para uso futuro on-demand.
 
   return { success: true, is_featured: newValue };
 }
