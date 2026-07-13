@@ -482,8 +482,13 @@ export function UniversityHubClient() {
 
       void h1.offsetWidth;
       const verifyW = h1.offsetWidth - h1PL - h1PR;
-      spans.forEach((span) => {
-        const scrollW = span.scrollWidth;
+
+      // ── Batch read: leer todos los scrollWidths antes de escribir ─────────
+      const scrollWidths = spans.map((span) => span.scrollWidth);
+
+      // ── Batch write: aplicar correcciones sin mezclar lecturas DOM ─────────
+      spans.forEach((span, i) => {
+        const scrollW = scrollWidths[i];
         if (scrollW > Math.ceil(verifyW)) {
           const fs = parseFloat(span.style.fontSize);
           if (!isNaN(fs) && fs > 8) {

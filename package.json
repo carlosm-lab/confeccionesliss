@@ -82,5 +82,14 @@
     "workerDirectory": [
       "public"
     ]
-  }
+  },
+  "browserslist": [
+    "chrome >= 96",
+    "firefox >= 96",
+    "safari >= 15",
+    "edge >= 96",
+    "opera >= 82",
+    "samsung >= 16",
+    "not dead"
+  ]
 }

@@ -127,7 +127,9 @@ export function HeroImageCarousel({
               alt={item.alt}
               className="rounded-xl object-cover object-center"
               sizes={sizes}
+              quality={75}
               priority={priority && idx === 0}
+              loading={priority && idx === 0 ? undefined : "lazy"}
               {...(priority && idx === 0 ? { fetchPriority: "high" } : {})}
             />
           </div>
@@ -190,20 +192,26 @@ export function HeroImageCarousel({
       </button>
 
       {/* ── Indicadores de puntos + línea activa ────── */}
-      <div className="absolute bottom-3 left-1/2 z-20 flex -translate-x-1/2 items-center gap-1.5">
+      <div className="absolute bottom-3 left-1/2 z-20 flex -translate-x-1/2 items-center gap-0.5">
         {IMAGES.map((_, idx) => (
+          /* Wrapper 44×44 para cumplir touch target mínimo WCAG sin afectar visual */
           <button
             key={idx}
             onClick={() => goTo(idx)}
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
             aria-label={`Ir a imagen ${idx + 1}`}
-            className={`block rounded-full transition-all duration-300 ${
-              idx === currentIndex
-                ? "h-1.5 w-6 bg-white shadow-sm"
-                : "h-1.5 w-1.5 bg-white/50 hover:bg-white/80"
-            }`}
-          />
+            aria-current={idx === currentIndex ? "true" : undefined}
+            className="flex h-11 w-11 items-center justify-center"
+          >
+            <span
+              className={`block h-1.5 origin-left rounded-full transition-[transform,opacity] duration-300 ${
+                idx === currentIndex
+                  ? "w-6 scale-x-100 bg-white opacity-100"
+                  : "w-1.5 scale-x-100 bg-white/50 hover:bg-white/80"
+              }`}
+            />
+          </button>
         ))}
       </div>
     </div>

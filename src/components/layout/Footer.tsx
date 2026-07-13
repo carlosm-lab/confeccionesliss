@@ -147,6 +147,7 @@ export function Footer() {
                 alt="Confecciones Liss"
                 width={144}
                 height={144}
+                sizes="72px"
                 className="h-[72px] w-auto brightness-0 invert"
               />
             </Link>
@@ -181,9 +182,9 @@ export function Footer() {
             <div className="mb-10 grid w-full grid-cols-2 gap-8">
               {/* Explorar */}
               <div>
-                <h4 className="mb-4 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+                <p className="mb-4 font-serif text-sm font-semibold tracking-wider text-white uppercase">
                   Explorar
-                </h4>
+                </p>
                 <ul className="space-y-3 text-sm">
                   {[
                     { href: "/", label: "Inicio" },
@@ -209,9 +210,9 @@ export function Footer() {
 
               {/* Legal */}
               <div>
-                <h4 className="mb-4 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+                <p className="mb-4 font-serif text-sm font-semibold tracking-wider text-white uppercase">
                   Legal
-                </h4>
+                </p>
                 <ul className="space-y-3 text-sm">
                   {[
                     {
@@ -257,9 +258,9 @@ export function Footer() {
 
             {/* 6. Contacto al final, encima del copyright */}
             <div className="w-full border-t border-[#1e2d4a]/50 pt-8">
-              <h4 className="mb-4 text-left font-serif text-sm font-semibold tracking-wider text-white uppercase">
+              <p className="mb-4 text-left font-serif text-sm font-semibold tracking-wider text-white uppercase">
                 Contacto
-              </h4>
+              </p>
               <ul className="flex flex-col items-start space-y-4 text-sm text-[#a5b1c9]">
                 <li className="flex gap-3 text-left">
                   <span className="material-symbols-outlined mt-0.5 shrink-0 text-[20px] text-white">
@@ -314,6 +315,7 @@ export function Footer() {
                 alt="Confecciones Liss"
                 width={144}
                 height={144}
+                sizes="72px"
                 className="h-[72px] w-auto brightness-0 invert"
               />
             </Link>
@@ -350,9 +352,9 @@ export function Footer() {
                 </p>
               </div>
               <div>
-                <h4 className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+                <p className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
                   Contacto
-                </h4>
+                </p>
                 <ul className="space-y-4 text-sm text-[#a5b1c9]">
                   <li className="flex items-start gap-3">
                     <span className="material-symbols-outlined mt-0.5 shrink-0 text-[20px] text-white">
@@ -401,9 +403,9 @@ export function Footer() {
             {/* Columna Central: Explorar (Centrada) */}
             <div className="flex flex-col items-center">
               <div className="w-fit">
-                <h4 className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+                <p className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
                   Explorar
-                </h4>
+                </p>
                 <ul className="space-y-3 text-sm">
                   {[
                     { href: "/", label: "Inicio" },
@@ -431,9 +433,9 @@ export function Footer() {
             {/* Columna Derecha: Legal */}
             <div className="flex flex-col items-end">
               <div className="w-fit">
-                <h4 className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+                <p className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
                   Legal
-                </h4>
+                </p>
                 <ul className="space-y-3 text-sm">
                   {[
                     {
@@ -490,6 +492,7 @@ export function Footer() {
                   alt="Confecciones Liss"
                   width={96}
                   height={96}
+                  sizes="48px"
                   className="h-12 w-auto brightness-0 invert"
                 />
               </Link>
@@ -521,9 +524,9 @@ export function Footer() {
 
           {/* Column 2: Explorar */}
           <div className="lg:col-span-2">
-            <h4 className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+            <p className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
               Explorar
-            </h4>
+            </p>
             <ul className="space-y-3 text-sm">
               {[
                 { href: "/", label: "Inicio" },
@@ -549,9 +552,9 @@ export function Footer() {
 
           {/* Column 3: Contacto */}
           <div className="lg:col-span-3">
-            <h4 className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+            <p className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
               Contacto
-            </h4>
+            </p>
             <ul className="space-y-4 text-sm text-[#a5b1c9]">
               <li className="flex items-start gap-3">
                 <span className="material-symbols-outlined mt-0.5 shrink-0 text-[20px] text-white">
@@ -596,9 +599,9 @@ export function Footer() {
 
           {/* Column 4: Legal */}
           <div className="lg:col-span-3">
-            <h4 className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+            <p className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
               Legal
-            </h4>
+            </p>
             <ul className="space-y-3 text-sm">
               {[
                 { href: "/legal/privacidad", label: "Política de Privacidad" },

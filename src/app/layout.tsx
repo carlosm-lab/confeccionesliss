@@ -19,6 +19,7 @@ const notoSerif = Noto_Serif({
 import { siteConfig } from "@/config/site";
 import { env } from "@/env";
 import { AnalyticsScripts } from "@/components/analytics/AnalyticsScripts";
+import { MaterialSymbolsLoader } from "@/components/layout/MaterialSymbolsLoader";
 
 export const metadata = {
   title: {
@@ -102,9 +103,13 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+          rel="preconnect"
+          href="https://cvbdqsxjfrbwovzpydng.supabase.co"
+          crossOrigin="anonymous"
         />
+        {/* Material Symbols se carga via MaterialSymbolsLoader (Client Component)
+            en el body para evitar bloqueo de render. Ver:
+            src/components/layout/MaterialSymbolsLoader.tsx */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -291,6 +296,8 @@ export default function RootLayout({
         />
       </head>
       <body className="flex min-h-screen flex-col antialiased">
+        {/* Material Symbols: carga async post-hidratación, no bloquea LCP/FCP */}
+        <MaterialSymbolsLoader />
         <Providers>{children}</Providers>
         <AnalyticsScripts
           gaId={env.NEXT_PUBLIC_GA_MEASUREMENT_ID}

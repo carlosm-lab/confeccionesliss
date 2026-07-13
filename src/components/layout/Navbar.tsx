@@ -261,18 +261,27 @@ export function Navbar() {
 
       // Non-negotiable: 24px on each side (double the 12px inter-pill gap)
       const SIDE_MARGIN = 24;
+
+      // ── Batch DOM read: leer todos los anchos de una sola vez ─────────────
+      // Esto evita reflows síncronos forzados (layout thrashing) que ocurren
+      // cuando se intercalan lecturas y escrituras de propiedades de layout.
       const availableWidth =
         container.getBoundingClientRect().width - SIDE_MARGIN * 2;
 
       const pillElements = Array.from(pillsContainer.children) as HTMLElement[];
 
+      // Leer todos los anchos en una sola pasada (sin escribir nada al DOM)
+      const pillWidths = pillElements.map(
+        (el) => el.getBoundingClientRect().width + 12 // +12px inter-pill gap
+      );
+
+      // ── Cálculo aritmético puro (cero accesos al DOM) ─────────────────────
       let accumulatedWidth = 0;
       let count = 0;
 
-      for (let i = 0; i < pillElements.length; i++) {
-        const pillWidth = pillElements[i].getBoundingClientRect().width + 12; // 12px inter-pill gap
-        if (accumulatedWidth + pillWidth - 12 <= availableWidth) {
-          accumulatedWidth += pillWidth;
+      for (let i = 0; i < pillWidths.length; i++) {
+        if (accumulatedWidth + pillWidths[i] - 12 <= availableWidth) {
+          accumulatedWidth += pillWidths[i];
           count++;
         } else {
           break;
@@ -337,6 +346,7 @@ export function Navbar() {
                 alt="Confecciones Liss"
                 width={96}
                 height={96}
+                sizes="48px"
                 className="h-12 w-auto"
                 priority
               />
