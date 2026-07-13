@@ -12,6 +12,8 @@ export const env = createEnv({
       .string()
       .min(16)
       .default("dev_revalidate_secret_local"),
+    // PageSpeed Insights API key (server-side only — nunca exponer al cliente)
+    PAGESPEED_API_KEY: z.string().optional(),
   },
   client: {
     NEXT_PUBLIC_SUPABASE_URL: z
