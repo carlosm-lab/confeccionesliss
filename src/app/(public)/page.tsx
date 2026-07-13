@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { HeroImageCarousel } from "@/components/ui/HeroImageCarousel";
+import { StaticHeroImage } from "@/components/ui/StaticHeroImage";
 import {
   schemaFAQ,
   buildWebPageSchema,
@@ -115,10 +116,15 @@ export default async function HomePage() {
                 <div className="border-primary/35 relative z-10 flex w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:h-full">
                   <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
                   <div className="relative aspect-[4/5] w-full rounded-xl md:aspect-auto md:h-full md:w-full">
-                    <HeroImageCarousel
-                      sizes="(max-width:768px) 80vw, 40vw"
-                      priority
-                    />
+                    {/* SSR static image — visible before JS hydrates (fixes LCP) */}
+                    <StaticHeroImage sizes="(max-width:768px) 80vw, 40vw" />
+                    {/* Carousel progressively replaces once hydrated */}
+                    <div className="absolute inset-0">
+                      <HeroImageCarousel
+                        sizes="(max-width:768px) 80vw, 40vw"
+                        priority
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -180,7 +186,12 @@ export default async function HomePage() {
             <div className="border-primary/35 relative flex h-full w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
               <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
               <div className="relative h-full w-full rounded-xl">
-                <HeroImageCarousel sizes="40vw" priority />
+                {/* SSR static image — visible before JS hydrates (fixes LCP) */}
+                <StaticHeroImage sizes="40vw" />
+                {/* Carousel progressively replaces once hydrated */}
+                <div className="absolute inset-0">
+                  <HeroImageCarousel sizes="40vw" priority />
+                </div>
               </div>
             </div>
           </div>

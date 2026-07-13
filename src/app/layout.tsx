@@ -107,15 +107,6 @@ export default function RootLayout({
           href="https://cvbdqsxjfrbwovzpydng.supabase.co"
           crossOrigin="anonymous"
         />
-        {/* Preload del LCP hero image — crítico para PageSpeed */}
-        <link
-          rel="preload"
-          as="image"
-          href="/images/uniformes/portada.webp"
-          // @ts-expect-error fetchpriority es válido en HTML5 pero no está en los tipos de React todavía
-          fetchpriority="high"
-          imageSizes="(max-width: 768px) 80vw, 40vw"
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

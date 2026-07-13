@@ -141,11 +141,11 @@ export function HeroImageCarousel({
      * combinado con -translate-x-1/2 / translate-x-1/2.
      */
     <div
-      className="relative h-full w-full"
+      className="absolute inset-0 h-full w-full"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {/* ── Imágenes: solo se renderiza la activa + adyacentes ─────── */}
+      {/* ── Imágenes: solo se renderiza la activa + adyacentes ─────────────── */}
       <div className="absolute inset-0 overflow-hidden rounded-xl">
         {IMAGES.map((item, idx) => {
           const isActive = idx === currentIndex;
@@ -170,9 +170,8 @@ export function HeroImageCarousel({
                 className="rounded-xl object-cover object-center"
                 sizes={sizes}
                 quality={80}
-                priority={priority && idx === 0}
-                loading={priority && idx === 0 ? undefined : "lazy"}
-                {...(priority && idx === 0 ? { fetchPriority: "high" } : {})}
+                priority={false}
+                loading="lazy"
               />
             </div>
           );
