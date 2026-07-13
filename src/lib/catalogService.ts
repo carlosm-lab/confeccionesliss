@@ -202,11 +202,22 @@ export function getProductUrl(
   return `/catalogo/${sector}/${slug}`;
 }
 
-// -- Crear cliente Supabase sin "use client" (para RSC) --------
-function createServerClient() {
+// -- Crear cliente Supabase con Data Cache + tags (para RSC) --------
+// Pasa tags para habilitar invalidación on-demand via updateTag/revalidateTag.
+// cache: "force-cache" es OBLIGATORIO en Next.js 16 para que next: { tags } surta efecto.
+function createServerClient(tags: string[] = []) {
   const url = env.NEXT_PUBLIC_SUPABASE_URL;
   const key = env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  return createClient(url, key);
+  return createClient(url, key, {
+    global: {
+      fetch: (input: RequestInfo | URL, init?: RequestInit) =>
+        fetch(input, {
+          ...init,
+          cache: "force-cache",
+          next: { tags } as NextFetchRequestConfig,
+        } as RequestInit),
+    },
+  });
 }
 
 // ── Selects reutilizables ─────────────────────────────────
@@ -231,7 +242,7 @@ const PRODUCT_DETAIL_SELECT = PRODUCT_SELECT;
 export async function getProductsBySector(
   sector: string
 ): Promise<DbProduct[]> {
-  const supabase = createServerClient();
+  const supabase = createServerClient(["products"]);
 
   // PostgREST no soporta filtros sobre tablas relacionadas en .or()
   // Estrategia: dos queries separadas, una por sector directo
@@ -250,7 +261,8 @@ export async function getProductsBySector(
   }
 
   // Query 2: obtener los category_ids del catalog que coincida
-  const { data: catData, error: err2 } = await supabase
+  const supabaseCat = createServerClient(["categories"]);
+  const { data: catData, error: err2 } = await supabaseCat
     .from("categories")
     .select("id")
     .eq("catalog", sector);
@@ -299,7 +311,7 @@ export async function getProductsBySector(
 export async function getProductBySlug(
   slug: string
 ): Promise<DbProduct | null> {
-  const supabase = createServerClient();
+  const supabase = createServerClient(["products"]);
 
   const { data, error } = await supabase
     .from("products")
@@ -321,7 +333,7 @@ export async function getProductBySlug(
 // Next.js 15/16: fetch no usa cache por defecto (no-store), por lo que
 // cada regeneracion de ISR siempre obtiene datos frescos de Supabase.
 export async function getRecentProducts(limit = 10): Promise<DbProduct[]> {
-  const supabase = createServerClient();
+  const supabase = createServerClient(["products"]);
 
   // 1. Obtener todos los productos fijados activos
   const { data: featured, error: featuredError } = await supabase
@@ -377,7 +389,7 @@ export async function getRecentProducts(limit = 10): Promise<DbProduct[]> {
 export async function getProductCountsBySector(): Promise<
   Record<string, number>
 > {
-  const supabase = createServerClient();
+  const supabase = createServerClient(["product-counts"]);
 
   const { data, error } = await supabase
     .from("products")
@@ -413,7 +425,7 @@ export async function getRelatedProducts(
   excludeSlug: string,
   limit = 5
 ): Promise<DbProduct[]> {
-  const supabase = createServerClient();
+  const supabase = createServerClient(["products"]);
 
   // Query 1: por sector directo
   const { data: byDirect, error: err1 } = await supabase
@@ -469,7 +481,7 @@ export async function getAllProductsForSitemap(): Promise<
     category: string | null;
   }[]
 > {
-  const supabase = createServerClient();
+  const supabase = createServerClient(["products"]);
 
   const { data, error } = await supabase
     .from("products")
@@ -522,7 +534,7 @@ interface DbCategory {
 export async function getCategoriesForSector(
   sector: string
 ): Promise<DbCategory[]> {
-  const supabase = createServerClient();
+  const supabase = createServerClient(["categories"]);
 
   const { data, error } = await supabase
     .from("categories")
@@ -547,7 +559,7 @@ export async function getCategoriesForSector(
 export async function getProductsByUniversity(
   universidad: string
 ): Promise<DbProduct[]> {
-  const supabase = createServerClient();
+  const supabase = createServerClient(["products", "categories"]);
 
   // 1. Obtener los IDs de categoría pertenecientes a esta universidad (catalog = universidad)
   const { data: catData, error: catErr } = await supabase
@@ -627,7 +639,7 @@ export async function getProductsByUniversity(
 export async function getCategoriesForUniversity(
   universidad: string
 ): Promise<DbCategory[]> {
-  const supabase = createServerClient();
+  const supabase = createServerClient(["categories"]);
 
   const { data, error } = await supabase
     .from("categories")

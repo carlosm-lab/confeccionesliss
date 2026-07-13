@@ -195,18 +195,27 @@ const REAL_GOOGLE_REVIEWS_FALLBACK: GoogleReview[] = [
   },
 ];
 
-function createServerClient() {
+function createServerClient(tags: string[] = []) {
   const url =
     process.env.NEXT_PUBLIC_SUPABASE_URL || env.NEXT_PUBLIC_SUPABASE_URL;
   const key =
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
     env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  return createClient(url, key);
+  return createClient(url, key, {
+    global: {
+      fetch: (input: RequestInfo | URL, init?: RequestInit) =>
+        fetch(input, {
+          ...init,
+          cache: "force-cache",
+          next: { tags } as NextFetchRequestConfig,
+        } as RequestInit),
+    },
+  });
 }
 
 export async function getGoogleReviews(): Promise<GoogleReview[]> {
   try {
-    const supabase = createServerClient();
+    const supabase = createServerClient(["reviews"]);
     const { data, error } = await supabase
       .from("google_reviews")
       .select("*")

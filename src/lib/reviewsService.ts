@@ -32,20 +32,29 @@ interface ProductRatingData {
 }
 
 // ── Cliente de Supabase para el servidor (RSC) ─────────────────
-function createServerClient() {
+function createServerClient(tags: string[] = []) {
   const url =
     process.env.NEXT_PUBLIC_SUPABASE_URL || env.NEXT_PUBLIC_SUPABASE_URL;
   const key =
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
     env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  return createClient(url, key);
+  return createClient(url, key, {
+    global: {
+      fetch: (input: RequestInfo | URL, init?: RequestInit) =>
+        fetch(input, {
+          ...init,
+          cache: "force-cache",
+          next: { tags } as NextFetchRequestConfig,
+        } as RequestInit),
+    },
+  });
 }
 
 // ── Obtener reseñas y calificación agregada de un producto ─────
 export async function getProductReviews(
   productId: string
 ): Promise<ProductRatingData> {
-  const supabase = createServerClient();
+  const supabase = createServerClient(["product-reviews"]);
 
   const { data, error } = await supabase
     .from("product_reviews")

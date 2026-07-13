@@ -9,8 +9,9 @@ const PAGE_TITLE = "Catálogo de Uniformes por Categoría";
 const PAGE_DESCRIPTION =
   "Catálogo de uniformes en Confecciones Liss: scrubs médicos, universitarios, escolares y más. Confección a la medida desde $8, envíos a todo El Salvador.";
 
-// ── SSG puro + On-Demand Revalidation ──────────────────────────────────────
-// No ISR por tiempo. Se regenera vía revalidatePath('/catalogo') desde src/actions/catalog.ts.
+// ── ISR + On-Demand Revalidation ────────────────────────────────────────────
+// Red de seguridad: regenera cada 30s. Invalidación instantánea via updateTag.
+export const revalidate = 30;
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,

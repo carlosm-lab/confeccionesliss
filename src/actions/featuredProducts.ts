@@ -9,7 +9,7 @@
  */
 
 import { createServerClient } from "@supabase/ssr";
-import { revalidatePath, refresh } from "next/cache";
+import { revalidatePath, updateTag, refresh } from "next/cache";
 import { cookies } from "next/headers";
 
 const MAX_FEATURED = 10;
@@ -137,11 +137,16 @@ export async function toggleFeaturedProduct(
     console.error("[toggleFeaturedProduct] Audit log warning:", auditErr);
   }
 
-  // Paso 1: invalidar el HTML cacheado del home (Full Route Cache).
-  // revalidatePath marca la pagina como obsoleta. La siguiente request la regenera.
+  // Paso 1: Expirar inmediatamente los datos en el Data Cache (Next.js 16 updateTag).
+  // Esto hace que la siguiente request espere datos frescos en vez de servir caché viejo.
+  updateTag("products");
+  updateTag("product-counts");
+
+  // Paso 2: Invalidar el Full Route Cache (HTML pre-renderizado) de las rutas afectadas.
   revalidatePath("/");
   revalidatePath("/catalogo");
-  // Paso 2: invalidar el Client Router Cache del browser.
+
+  // Paso 3: Invalidar el Client Router Cache del browser.
   // Sin esto, el usuario ve el HTML viejo si navega via <Link> sin recargar.
   refresh();
   revalidatePath("/admin/products");

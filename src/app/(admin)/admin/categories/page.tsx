@@ -5,6 +5,7 @@ import { logger } from "@/lib/logger";
 import { generateSlug } from "@/lib/slug";
 import { useConfirm } from "@/context/ConfirmContext";
 import { invalidateCategoryCache } from "@/hooks/useCategories";
+import { revalidateAfterCategorySave } from "@/actions/categories";
 import {
   CATALOGS,
   CATALOGS_GENERAL,
@@ -158,6 +159,7 @@ export default function AdminCategoriesPage() {
       setSlugManuallyEdited(false);
       setIsEditing(false);
       invalidateCategoryCache();
+      await revalidateAfterCategorySave();
       fetchCategories();
     } catch (error: unknown) {
       logger.error("Error saving:", error);
@@ -190,6 +192,7 @@ export default function AdminCategoriesPage() {
       if (error) throw error;
       showToast("Categoria eliminada");
       invalidateCategoryCache();
+      await revalidateAfterCategorySave();
       fetchCategories();
     } catch (error) {
       logger.error("Error delete:", error);

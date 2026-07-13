@@ -14,8 +14,9 @@ import {
 import { getProductReviews } from "@/lib/reviewsService";
 import { testimonials } from "@/lib/seo-data";
 
-// ── SSG puro + On-Demand Revalidation ──────────────────────────────────────
-// No ISR por tiempo. Revalidación on-demand vía src/actions/catalog.ts.
+// ── ISR + On-Demand Revalidation ────────────────────────────────────────────
+// Red de seguridad: regenera cada 30s. Invalidación instantánea via updateTag.
+export const revalidate = 30;
 
 // ── dynamicParams: true (default) — productos nuevos post-build se generan
 // on-demand la primera vez y luego se cachean como estáticos (SSG diferido) ──
