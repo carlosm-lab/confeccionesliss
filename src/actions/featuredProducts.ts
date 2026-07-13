@@ -142,9 +142,10 @@ export async function toggleFeaturedProduct(
   revalidateTag("products", { expire: 0 });
   revalidateTag("product-counts", { expire: 0 });
 
-  // Paso 2: Invalidar el Full Route Cache (HTML pre-renderizado) de las rutas afectadas.
-  revalidatePath("/");
-  revalidatePath("/catalogo");
+  // Paso 2: Invalidar el Full Route Cache (HTML pre-renderizado) de las rutas afectadas con el formato de grupos de Next.js 16.
+  revalidatePath("/(public)/page", "page");
+  revalidatePath("/(public)/catalogo", "page");
+  revalidatePath("/", "layout");
 
   // Paso 3: Invalidar el Client Router Cache del browser.
   // Sin esto, el usuario ve el HTML viejo si navega via <Link> sin recargar.

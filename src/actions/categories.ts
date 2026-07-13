@@ -21,9 +21,10 @@ export async function revalidateAfterCategorySave(): Promise<void> {
   revalidateTag("categories", { expire: 0 });
   revalidateTag("product-counts", { expire: 0 });
 
-  // 2. Invalidar Full Route Cache de las rutas que muestran categorías.
-  revalidatePath("/");
-  revalidatePath("/catalogo");
+  // 2. Invalidar Full Route Cache de las rutas que muestran categorías con el formato de grupos de Next.js 16.
+  revalidatePath("/(public)/page", "page");
+  revalidatePath("/(public)/catalogo", "page");
+  revalidatePath("/", "layout");
 
   // Revalidar todos los sectores conocidos y sus categorías.
   const sectors = [
@@ -34,13 +35,13 @@ export async function revalidateAfterCategorySave(): Promise<void> {
     "bordados",
   ];
   for (const sector of sectors) {
-    revalidatePath(`/catalogo/${sector}`);
+    revalidatePath(`/(public)/catalogo/${sector}`, "page");
   }
 
   // Revalidar hub universitario y todas las universidades.
-  revalidatePath("/catalogo/universidades");
+  revalidatePath("/(public)/catalogo/universidades", "page");
   const universities = ["univo", "ieproes", "ugb", "unab", "ues", "uma"];
   for (const uni of universities) {
-    revalidatePath(`/catalogo/universidades/${uni}`);
+    revalidatePath(`/(public)/catalogo/universidades/${uni}`, "page");
   }
 }

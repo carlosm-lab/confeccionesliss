@@ -73,14 +73,15 @@ export async function revalidateAfterProductSave({
   revalidateTag("products", { expire: 0 });
   revalidateTag("product-counts", { expire: 0 });
 
-  // 2. Invalidar Full Route Cache de las páginas principales de catálogo e inicio (SSG).
-  revalidatePath("/");
-  revalidatePath("/catalogo");
+  // 2. Invalidar Full Route Cache de las páginas principales con el formato de grupos de Next.js 16.
+  revalidatePath("/(public)/page", "page");
+  revalidatePath("/(public)/catalogo", "page");
+  revalidatePath("/", "layout");
   refresh();
 
   if (sector === "universitario") {
     // Hub universitario
-    revalidatePath("/catalogo/universidades");
+    revalidatePath("/(public)/catalogo/universidades", "page");
 
     const validUniversitySlugs = [
       "univo",
@@ -94,12 +95,12 @@ export async function revalidateAfterProductSave({
     // de una universidad a otra (ej. de UNAB a UNIVO), la página de la universidad anterior
     // se limpie y no muestre duplicados en la caché de Next.js.
     for (const u of validUniversitySlugs) {
-      revalidatePath(`/catalogo/universidades/${u}`);
-      revalidatePath(`/catalogo/universidades/${u}/${slug}`);
+      revalidatePath(`/(public)/catalogo/universidades/${u}`, "page");
+      revalidatePath(`/(public)/catalogo/universidades/${u}/${slug}`, "page");
     }
   } else {
     // Sector estándar (scrubs, escolar, corporativo, etc.)
-    revalidatePath(`/catalogo/${sector}`);
-    revalidatePath(`/catalogo/${sector}/${slug}`);
+    revalidatePath(`/(public)/catalogo/${sector}`, "page");
+    revalidatePath(`/(public)/catalogo/${sector}/${slug}`, "page");
   }
 }
