@@ -9,7 +9,7 @@
  */
 
 import { createServerClient } from "@supabase/ssr";
-import { revalidatePath, updateTag, refresh } from "next/cache";
+import { revalidatePath, revalidateTag, refresh } from "next/cache";
 import { cookies } from "next/headers";
 
 const MAX_FEATURED = 10;
@@ -137,10 +137,10 @@ export async function toggleFeaturedProduct(
     console.error("[toggleFeaturedProduct] Audit log warning:", auditErr);
   }
 
-  // Paso 1: Expirar inmediatamente los datos en el Data Cache (Next.js 16 updateTag).
+  // Paso 1: Expirar inmediatamente los datos en el Data Cache (Next.js 16 revalidateTag).
   // Esto hace que la siguiente request espere datos frescos en vez de servir caché viejo.
-  updateTag("products");
-  updateTag("product-counts");
+  revalidateTag("products", { expire: 0 });
+  revalidateTag("product-counts", { expire: 0 });
 
   // Paso 2: Invalidar el Full Route Cache (HTML pre-renderizado) de las rutas afectadas.
   revalidatePath("/");
