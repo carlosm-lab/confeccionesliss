@@ -113,6 +113,7 @@ export function MobileBottomNav() {
               key={item.href}
               href={item.href}
               onClick={handleTabClick}
+              prefetch={false}
               className={cn(
                 "relative flex h-full w-full flex-col items-center justify-center gap-0.5 transition-colors",
                 isActive

@@ -338,6 +338,7 @@ export function Navbar() {
             {/* Logo */}
             <Link
               href="/"
+              prefetch={false}
               className="flex items-center gap-3"
               onClick={closeMenu}
             >
@@ -407,6 +408,7 @@ export function Navbar() {
                     <Link
                       key={link.href}
                       href={link.href}
+                      prefetch={false}
                       className={cn(
                         "border-primary/10 text-primary flex h-10 items-center justify-center rounded-full border px-4 text-sm font-bold whitespace-nowrap shadow-[0_4px_12px_-1px_rgba(20,48,103,0.2),0_2px_6px_-1px_rgba(20,48,103,0.15)] transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-3px_rgba(20,48,103,0.3),0_4px_10px_-2px_rgba(20,48,103,0.2)]",
                         isActive
@@ -612,6 +614,7 @@ export function Navbar() {
                             <Link
                               href={link.href}
                               onClick={closeMenu}
+                              prefetch={false}
                               className={cn(
                                 "flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all",
                                 isActive
@@ -645,6 +648,7 @@ export function Navbar() {
                             <Link
                               href={link.href}
                               onClick={closeMenu}
+                              prefetch={false}
                               className={cn(
                                 "flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all",
                                 isActive
