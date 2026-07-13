@@ -74,10 +74,9 @@ const nextConfig = {
         ],
       },
       {
-        // 2. Rutas públicas (SSG optimizado para CDNs y navegadores)
+        // 2. Rutas públicas (SSG optimizado para CDNs y navegadores) — Dejar que Next.js maneje Cache-Control para no romper ISR
         source: '/((?!admin|cuenta|api|auth|_next/static|_next/image|favicon.ico|.*\\.(?:png|jpg|jpeg|gif|webp|svg|ico|woff2?|ttf|eot|otf|css|js|map)).*)',
         headers: [
-          { key: 'Cache-Control', value: 'public, max-age=0, must-revalidate' },
           ...alwaysOnHeaders,
           ...securityHeaders,
         ],
