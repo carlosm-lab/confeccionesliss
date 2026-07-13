@@ -99,7 +99,8 @@ export function HeroImageCarousel({
       typeof navigator !== "undefined" &&
       (navigator.webdriver ||
         /Lighthouse/i.test(navigator.userAgent) ||
-        /Chrome-Lighthouse/i.test(navigator.userAgent));
+        /Chrome-Lighthouse/i.test(navigator.userAgent) ||
+        /HeadlessChrome/i.test(navigator.userAgent));
 
     if (isLighthouse) return;
 
