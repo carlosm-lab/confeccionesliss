@@ -11,9 +11,8 @@ import {
 import { OffersReadTracker } from "@/components/ui/OffersReadTracker";
 
 // ── SSG + On-Demand Revalidation (ISR) ──────────────────────────────────────
-// revalidate = 86400 (24h) habilita la infraestructura de ISR en Vercel,
-// permitiendo que revalidatePath() purgue el CDN en caché bajo demanda.
-export const revalidate = 86400;
+// revalidate = false: cachear indefinidamente, solo revalidar bajo demanda vía revalidatePath().
+export const revalidate = false;
 
 // ── Static params: genera una página por sector ───────────────────────────────
 // "universitario" se excluye: la ruta fue eliminada, ahora existe /catalogo/universidades.

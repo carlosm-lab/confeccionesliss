@@ -51,7 +51,7 @@ export const metadata: Metadata = {
 // ── SSG + On-Demand Revalidation (ISR) ──────────────────────────────────────
 // revalidate = 86400 (24h) habilita la infraestructura de ISR en Vercel,
 // permitiendo que revalidatePath('/') purgue el CDN en caché bajo demanda.
-export const revalidate = 86400;
+export const revalidate = false;
 
 export default async function HomePage() {
   // Load recent products from Supabase (server-side, no hardcoding)

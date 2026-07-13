@@ -12,7 +12,7 @@ const PAGE_DESCRIPTION =
 // ── SSG + On-Demand Revalidation (ISR) ──────────────────────────────────────
 // revalidate = 86400 (24h) habilita la infraestructura de ISR en Vercel,
 // permitiendo que revalidatePath() purgue el CDN en caché bajo demanda.
-export const revalidate = 86400;
+export const revalidate = false;
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,

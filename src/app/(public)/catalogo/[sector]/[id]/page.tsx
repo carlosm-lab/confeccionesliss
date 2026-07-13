@@ -15,9 +15,8 @@ import { getProductReviews } from "@/lib/reviewsService";
 import { testimonials } from "@/lib/seo-data";
 
 // ── SSG + On-Demand Revalidation (ISR) ──────────────────────────────────────
-// revalidate = 86400 (24h) habilita la infraestructura de ISR en Vercel,
-// permitiendo que revalidatePath() purgue el CDN en caché bajo demanda.
-export const revalidate = 86400;
+// revalidate = false: cachear indefinidamente, solo revalidar bajo demanda vía revalidatePath().
+export const revalidate = false;
 
 // ── dynamicParams: true (default) — productos nuevos post-build se generan
 // on-demand la primera vez y luego se cachean como estáticos (SSG diferido) ──
