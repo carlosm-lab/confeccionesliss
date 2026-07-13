@@ -202,22 +202,17 @@ export function getProductUrl(
   return `/catalogo/${sector}/${slug}`;
 }
 
-// -- Crear cliente Supabase con Data Cache + tags (para RSC) --------
-// Pasa tags para habilitar invalidación on-demand via updateTag/revalidateTag.
-// cache: "force-cache" es OBLIGATORIO en Next.js 16 para que next: { tags } surta efecto.
-function createServerClient(tags: string[] = []) {
+// -- Crear cliente Supabase para RSC ------------------------------------------------
+// ARQUITECTURA: Usamos el comportamiento por defecto de Next.js 16 (auto no cache).
+// Los datos se obtienen una vez durante el build → HTML se guarda en el Full Route Cache (CDN).
+// Cuando el admin muta datos, revalidatePath() invalida el Full Route Cache.
+// El siguiente request al Home dispara un re-render que va directo a Supabase (sin Data Cache),
+// genera HTML fresco y lo vuelve a guardar en el CDN. No se necesita revalidateTag.
+
+function createServerClient(_tags: string[] = []) {
   const url = env.NEXT_PUBLIC_SUPABASE_URL;
   const key = env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  return createClient(url, key, {
-    global: {
-      fetch: (input: RequestInfo | URL, init?: RequestInit) =>
-        fetch(input, {
-          ...init,
-          cache: "force-cache",
-          next: { tags } as NextFetchRequestConfig,
-        } as RequestInit),
-    },
-  });
+  return createClient(url, key);
 }
 
 // ── Selects reutilizables ─────────────────────────────────

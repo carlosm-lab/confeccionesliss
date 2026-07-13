@@ -20,7 +20,7 @@
  */
 
 import { createServerClient } from "@supabase/ssr";
-import { revalidatePath, revalidateTag, refresh } from "next/cache";
+import { revalidatePath, refresh } from "next/cache";
 import { cookies } from "next/headers";
 
 interface RevalidateProductParams {
@@ -69,16 +69,9 @@ export async function revalidateAfterProductSave({
     }
   }
 
-  // 1. Expirar inmediatamente los datos en el Data Cache via cache tags (Next.js 16 revalidateTag).
-  revalidateTag("products", { expire: 0 });
-  revalidateTag("product-counts", { expire: 0 });
-
-  // 2. Invalidar Full Route Cache de las páginas principales con el formato de grupos de Next.js 16.
-  // Rutas URL literales (públicas)
+  // Invalidar Full Route Cache de las páginas principales.
   revalidatePath("/");
   revalidatePath("/catalogo");
-
-  // Estructura de archivos de Next.js
   revalidatePath("/(public)", "page");
   revalidatePath("/(public)/catalogo", "page");
   revalidatePath("/", "layout");

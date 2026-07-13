@@ -9,7 +9,7 @@
  */
 
 import { createServerClient } from "@supabase/ssr";
-import { revalidatePath, revalidateTag, refresh } from "next/cache";
+import { revalidatePath, refresh } from "next/cache";
 import { cookies } from "next/headers";
 
 const MAX_FEATURED = 10;
@@ -137,22 +137,16 @@ export async function toggleFeaturedProduct(
     console.error("[toggleFeaturedProduct] Audit log warning:", auditErr);
   }
 
-  // Paso 1: Expirar inmediatamente los datos en el Data Cache (Next.js 16 revalidateTag).
-  // Esto hace que la siguiente request espere datos frescos en vez de servir caché viejo.
-  revalidateTag("products", { expire: 0 });
-  revalidateTag("product-counts", { expire: 0 });
-
-  // Paso 2: Invalidar el Full Route Cache (HTML pre-renderizado) de las rutas afectadas con el formato de grupos de Next.js 16.
-  // Rutas URL literales (públicas)
+  // Invalidar el Full Route Cache (HTML pre-renderizado) de las rutas afectadas.
+  // Sin force-cache en el fetch de Supabase, revalidatePath() basta: el siguiente
+  // re-render va directo a Supabase y obtiene datos frescos sin revalidateTag.
   revalidatePath("/");
   revalidatePath("/catalogo");
-  // Estructura de archivos de Next.js
   revalidatePath("/(public)", "page");
   revalidatePath("/(public)/catalogo", "page");
   revalidatePath("/", "layout");
 
-  // Paso 3: Invalidar el Client Router Cache del browser.
-  // Sin esto, el usuario ve el HTML viejo si navega via <Link> sin recargar.
+  // Forzar al cliente a re-fetch del router (invalida el Client Router Cache del browser).
   refresh();
   revalidatePath("/admin/products");
 

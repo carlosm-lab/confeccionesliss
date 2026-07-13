@@ -201,16 +201,7 @@ function createServerClient(tags: string[] = []) {
   const key =
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
     env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  return createClient(url, key, {
-    global: {
-      fetch: (input: RequestInfo | URL, init?: RequestInit) =>
-        fetch(input, {
-          ...init,
-          cache: "force-cache",
-          next: { tags } as NextFetchRequestConfig,
-        } as RequestInit),
-    },
-  });
+  return createClient(url, key);
 }
 
 export async function getGoogleReviews(): Promise<GoogleReview[]> {

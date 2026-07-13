@@ -9,7 +9,7 @@
  * públicas afectadas.
  */
 
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 
 /**
  * Invalida las rutas de Next.js afectadas por la creación, edición o eliminación
@@ -17,16 +17,9 @@ import { revalidatePath, revalidateTag } from "next/cache";
  * en la tabla `categories`.
  */
 export async function revalidateAfterCategorySave(): Promise<void> {
-  // 1. Expirar datos de categorías en el Data Cache (instantáneo).
-  revalidateTag("categories", { expire: 0 });
-  revalidateTag("product-counts", { expire: 0 });
-
-  // 2. Invalidar Full Route Cache de las rutas que muestran categorías con el formato de grupos de Next.js 16.
-  // Rutas URL literales (públicas)
+  // Invalidar Full Route Cache de las rutas que muestran categorías.
   revalidatePath("/");
   revalidatePath("/catalogo");
-
-  // Estructura de archivos de Next.js
   revalidatePath("/(public)", "page");
   revalidatePath("/(public)/catalogo", "page");
   revalidatePath("/", "layout");
