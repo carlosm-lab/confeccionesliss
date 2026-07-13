@@ -7,8 +7,7 @@
     "next-safe-action",
     "server-only",
     "zustand",
-    "@testing-library/react",
-    "lucide-react"
+    "@testing-library/react"
   ],
   "ignore": [
     ".agents/**",

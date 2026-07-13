@@ -8,34 +8,35 @@ interface HeroImageCarouselProps {
   priority?: boolean;
 }
 
+// WebP para todas las imágenes del carousel — reducción de ~97% en tamaño
 const IMAGES = [
   {
     src: "/images/uniformes/portada.webp",
     alt: "Confección de uniformes a la medida en el taller de Confecciones Liss, San Miguel, El Salvador",
   },
   {
-    src: "/images/uniformes/001.png",
+    src: "/images/uniformes/001.webp",
     alt: "Scrub médico azul marino con detalles blancos, confeccionado por Confecciones Liss",
   },
   {
-    src: "/images/uniformes/002.png",
+    src: "/images/uniformes/002.webp",
     alt: "Uniforme médico con escudo bordado de la Universidad de Oriente (UNIVO), confeccionado en San Miguel",
   },
   {
-    src: "/images/uniformes/003.png",
+    src: "/images/uniformes/003.webp",
     alt: "Uniforme médico verde con bordado UNAB de la Universidad Dr. Andrés Bello, confeccionado en San Miguel",
   },
   {
-    src: "/images/uniformes/004.png",
+    src: "/images/uniformes/004.webp",
     alt: "Uniforme clínico blanco con logo bordado de la Universidad Gerardo Barrios (UGB), confeccionado en San Miguel",
   },
   {
-    src: "/images/uniformes/005.png",
+    src: "/images/uniformes/005.webp",
     alt: "Scrub médico negro de corte moderno, confeccionado a la medida por Confecciones Liss",
   },
 ];
 
-const INTERVAL_MS = 2000;
+const INTERVAL_MS = 2500;
 /** Mínimo de px horizontales para considerar un swipe */
 const SWIPE_THRESHOLD = 40;
 
@@ -112,28 +113,38 @@ export function HeroImageCarousel({
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {/* ── Imágenes con su propio overflow-hidden ─────── */}
+      {/* ── Imágenes: solo se renderiza la activa + adyacentes ─────── */}
       <div className="absolute inset-0 overflow-hidden rounded-xl">
-        {IMAGES.map((item, idx) => (
-          <div
-            key={item.src}
-            className={`absolute inset-0 transition-opacity duration-700 ${
-              idx === currentIndex ? "z-10 opacity-100" : "z-0 opacity-0"
-            }`}
-          >
-            <Image
-              src={item.src}
-              fill
-              alt={item.alt}
-              className="rounded-xl object-cover object-center"
-              sizes={sizes}
-              quality={75}
-              priority={priority && idx === 0}
-              loading={priority && idx === 0 ? undefined : "lazy"}
-              {...(priority && idx === 0 ? { fetchPriority: "high" } : {})}
-            />
-          </div>
-        ))}
+        {IMAGES.map((item, idx) => {
+          const isActive = idx === currentIndex;
+          const isNext = idx === (currentIndex + 1) % IMAGES.length;
+          const isPrev =
+            idx === (currentIndex - 1 + IMAGES.length) % IMAGES.length;
+          // Solo renderizar el slide activo y sus adyacentes (preload)
+          // El resto no se incluye en el DOM hasta que sean necesarios
+          if (!isActive && !isNext && !isPrev && idx !== 0) return null;
+
+          return (
+            <div
+              key={item.src}
+              className={`absolute inset-0 transition-opacity duration-700 ${
+                isActive ? "z-10 opacity-100" : "z-0 opacity-0"
+              }`}
+            >
+              <Image
+                src={item.src}
+                fill
+                alt={item.alt}
+                className="rounded-xl object-cover object-center"
+                sizes={sizes}
+                quality={80}
+                priority={priority && idx === 0}
+                loading={priority && idx === 0 ? undefined : "lazy"}
+                {...(priority && idx === 0 ? { fetchPriority: "high" } : {})}
+              />
+            </div>
+          );
+        })}
       </div>
 
       {/* ── Flecha Izquierda ─────────────────────────────

@@ -45,14 +45,14 @@ const nextConfig = {
     ];
 
     const scriptSrc = isDev
-      ? "'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com"
-      : "'self' 'unsafe-inline' https://challenges.cloudflare.com";
+      ? "'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://www.googletagmanager.com https://www.google-analytics.com"
+      : "'self' 'unsafe-inline' https://challenges.cloudflare.com https://www.googletagmanager.com https://www.google-analytics.com";
 
     const securityHeaders = [
       ...(isDev ? [] : [{ key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' }]),
       {
         key: 'Content-Security-Policy',
-        value: `default-src 'self'; script-src ${scriptSrc}; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' data: https://lh3.googleusercontent.com https://cvbdqsxjfrbwovzpydng.supabase.co; font-src 'self' data: https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' ws: wss: https://cvbdqsxjfrbwovzpydng.supabase.co https://cvbdqsxjfrbwovzpydng.supabase.in; frame-src 'self' https://challenges.cloudflare.com https://www.google.com; report-uri /api/csp-report;`,
+        value: `default-src 'self'; script-src ${scriptSrc}; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' data: https://lh3.googleusercontent.com https://cvbdqsxjfrbwovzpydng.supabase.co https://www.google-analytics.com; font-src 'self' data: https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self' ws: wss: https://cvbdqsxjfrbwovzpydng.supabase.co https://cvbdqsxjfrbwovzpydng.supabase.in https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net; frame-src 'self' https://challenges.cloudflare.com https://www.google.com; report-uri /api/csp-report;`,
       },
       {
         key: 'Permissions-Policy',
@@ -62,7 +62,28 @@ const nextConfig = {
 
     return [
       {
-        // 1. Rutas dinámicas / privadas / interactivas (evitar cache por completo)
+        // 1. Assets estáticos Next.js — inmutables, cachear 1 año
+        source: '/_next/static/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      {
+        // 2. Imágenes públicas — cachear 7 días
+        source: '/images/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=604800, stale-while-revalidate=86400' },
+        ],
+      },
+      {
+        // 3. Iconos y fuentes públicas — cachear 30 días
+        source: '/(icons|fonts)/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=2592000, immutable' },
+        ],
+      },
+      {
+        // 4. Rutas dinámicas / privadas / interactivas (evitar cache por completo)
         source: '/(admin|cuenta|api|auth)/:path*',
         headers: [
           { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate, proxy-revalidate' },
@@ -74,7 +95,7 @@ const nextConfig = {
         ],
       },
       {
-        // 2. Rutas públicas (SSG optimizado para CDNs y navegadores) — Dejar que Next.js maneje Cache-Control para no romper ISR
+        // 5. Rutas públicas (SSG optimizado para CDNs y navegadores) — Next.js maneja Cache-Control para no romper ISR
         source: '/((?!admin|cuenta|api|auth|_next/static|_next/image|favicon.ico|.*\\.(?:png|jpg|jpeg|gif|webp|svg|ico|woff2?|ttf|eot|otf|css|js|map)).*)',
         headers: [
           ...alwaysOnHeaders,
@@ -101,6 +122,11 @@ const nextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
     qualities: [75, 90],
+    // Cachear imágenes optimizadas por 1 año en el servidor
+    minimumCacheTTL: 31536000,
+    // Tamaños de dispositivo mobile-first optimizados
+    deviceSizes: [360, 414, 480, 640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     remotePatterns: [
       {
         protocol: "https",

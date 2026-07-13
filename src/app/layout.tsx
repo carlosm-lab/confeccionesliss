@@ -107,70 +107,14 @@ export default function RootLayout({
           href="https://cvbdqsxjfrbwovzpydng.supabase.co"
           crossOrigin="anonymous"
         />
-        {/* Material Symbols se carga via MaterialSymbolsLoader (Client Component)
-            en el body para evitar bloqueo de render. Ver:
-            src/components/layout/MaterialSymbolsLoader.tsx */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  var SW_KEY   = '__liss_sw_ok__';
-                  var BFKEY    = '__liss_bfc__';
-
-                  // ── 1. Service Worker purge (once per browser session) ──────────────
-                  if (!sessionStorage.getItem(SW_KEY) && 'serviceWorker' in navigator) {
-                    sessionStorage.setItem(SW_KEY, '1');
-                    navigator.serviceWorker.getRegistrations().then(function(regs) {
-                      if (regs.length === 0) return;
-                      Promise.all(regs.map(function(r) { return r.unregister(); }))
-                        .then(function() {
-                          if ('caches' in window) {
-                            return caches.keys().then(function(keys) {
-                              return Promise.all(keys.map(function(k) { return caches.delete(k); }));
-                            });
-                          }
-                        })
-                        .then(function() { window.location.reload(); });
-                    });
-                  }
-
-                  // ── 2. Disk-cache detection via PerformanceNavigationTiming ─────────
-                  window.addEventListener('load', function() {
-                    try {
-                      var nav = performance.getEntriesByType('navigation')[0];
-                      if (nav && nav.transferSize === 0 && nav.encodedBodySize > 0) {
-                        window.location.reload();
-                      }
-                    } catch(_) {}
-                  });
-
-                  // ── 3. Hydration watchdog ────────────────────────────────────────────
-                  var WAS_ALIVE_KEY  = '__liss_was_alive__';
-                  var ALIVE_THIS_KEY = '__liss_alive__';
-                  var wasAlive = localStorage.getItem(WAS_ALIVE_KEY);
-                  var isAliveNow = sessionStorage.getItem(ALIVE_THIS_KEY);
-
-                  if (wasAlive && !isAliveNow) {
-                    setTimeout(function() {
-                      if (!sessionStorage.getItem(ALIVE_THIS_KEY)) {
-                        window.location.reload();
-                      }
-                    }, 5000);
-                  }
-
-                  // ── 4. bfcache bust ──────────────────────────────────────────────────
-                  window.addEventListener('pageshow', function(e) {
-                    if (e.persisted) {
-                      sessionStorage.removeItem(SW_KEY);
-                      window.location.reload();
-                    }
-                  });
-
-                } catch(e) {}
-              })();
-            `,
-          }}
+        {/* Preload del LCP hero image — crítico para PageSpeed */}
+        <link
+          rel="preload"
+          as="image"
+          href="/images/uniformes/portada.webp"
+          // @ts-expect-error fetchpriority es válido en HTML5 pero no está en los tipos de React todavía
+          fetchpriority="high"
+          imageSizes="(max-width: 768px) 80vw, 40vw"
         />
         <script
           type="application/ld+json"

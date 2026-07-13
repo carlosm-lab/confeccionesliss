@@ -423,3 +423,36 @@ El catálogo universitario existía en `/catalogo/universitario` con filtrado **
 - **Compatibilidad con Next.js 16:** Se evitan fallos de tipo firma o deprecaciones de firmas antiguas al implementar la doble validación (ruta literal para el cliente + estructura del componente para el servidor).
   **Consequences:**
 - Las actualizaciones de productos, productos destacados y categorías son inmediatas. Un refresco normal de página en el navegador (F5) recupera la vista actualizada instantáneamente sin requerir recargas forzadas (`Ctrl+Shift+R`). El motor de Vercel purga la caché CDN de manera óptima.
+
+---
+
+**Date:** 2026-07-13
+**Decision:** Optimización de Rendimiento Web — PageSpeed Score 55 → 95+ (Mobile)
+**Context:** El sitio tenía tiempos de carga de hasta 22 segundos en mobile según PageSpeed Insights (score 55). El objetivo es pasar a 95+.
+
+**Root Cause Analysis:**
+Los tres problemas críticos identificados que causaban los 22s de carga:
+
+1. **5 imágenes PNG del hero carousel pesando 1.4–5.4 MB cada una** (21+ MB total) — todas cargadas simultáneamente aunque solo una es visible
+2. **Script inline con `window.location.reload()` en el evento `load`** — el watchdog de hidratación, el SW purge y el bust de BFCache disparaban recargas en cada medición de PageSpeed, arruinando el TBT
+3. **Sin preload del LCP image** (portada.webp) — el LCP no podía iniciar hasta que el browser descubría la imagen en el HTML del componente hijo
+
+**Decisions Made:**
+
+- **PNG → WebP para el carousel:** Converted `001-005.png` (1.4–5.4 MB c/u) a WebP (47–134 KB c/u). Reducción del 97.6%. Las PNGs originales se conservan en `/public/images/uniformes/` pero ya no se usan.
+- **Renderizado perezoso del carousel:** `HeroImageCarousel.tsx` ahora solo monta en el DOM el slide activo + sus adyacentes (prev/next). Todos los demás slides no se renderizan hasta que el carousel avanza hacia ellos.
+- **Eliminación del script de reload:** Se removió el inline script de `layout.tsx` que contenía: SW purge + reload, disk-cache detection + reload, hydration watchdog + reload, y BFCache bust + reload. Estos eran los culpables directos del score bajo en TBT/LCP.
+- **Eliminación del heartbeat en Providers:** Se removió el `useEffect` que escribía en sessionStorage/localStorage para el watchdog (ya no existe).
+- **Eliminación de useServiceWorker:** Se removió del Providers ya que no existe `public/sw.js` — el hook solo generaba una petición fallida en cada carga.
+- **LCP preload:** Se agregó `<link rel="preload" as="image" fetchpriority="high" href="/images/uniformes/portada.webp">` en el `<head>` del root layout.
+- **Caching headers en `next.config.mjs`:** `/_next/static/**` → 1 año immutable, `/images/**` → 7 días stale-while-revalidate, `/icons|fonts/**` → 30 días immutable.
+- **CSP ampliado:** Se añadieron `https://www.googletagmanager.com` y `https://www.google-analytics.com` a `script-src` y `connect-src` para permitir el funcionamiento correcto de Google Analytics (que ya estaba instalado pero bloqueado por CSP).
+- **GoogleReviews como Server Component:** Se removió `"use client"` de `GoogleReviews.tsx` — no usa hooks ni eventos de cliente. Reduce el bundle JS enviado al browser.
+- **Image optimization settings:** `minimumCacheTTL: 31536000`, `deviceSizes` mobile-first `[360, 414, 480, 640, 750, 828, 1080, 1200, 1920]`.
+
+**Consequences:**
+
+- Los PNGs originales del carousel se conservan pero ya no se usan en el código — son candidatos para eliminación futura.
+- El carousel ya no pre-carga todos los slides; la transición del primer al segundo slide puede tener un pequeño delay de carga en la primera visita (las demás serán inmediatas gracias al caché del browser).
+- Sin watchdog de hidratación: si hay un bug de hidratación de React en el futuro, ya no habrá reload automático. Esto es aceptable dado que React 19 es muy estable.
+- El service worker ha sido removido completamente del setup. Si en el futuro se quiere soporte offline, requiere crear el `public/sw.js` y re-añadir el hook.

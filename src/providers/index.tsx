@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from "./theme-provider";
@@ -10,21 +9,9 @@ import { CartProvider } from "@/context/CartContext";
 import { FavoritesProvider } from "@/context/FavoritesContext";
 import { ConfirmProvider } from "@/context/ConfirmContext";
 import { NotificationProvider } from "@/context/NotificationContext";
-import { useServiceWorker } from "@/hooks/useServiceWorker";
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  useServiceWorker();
-
-  // ── Hydration heartbeat ──────────────────────────────────────────────────────
-  // Señaliza al watchdog inline de layout.tsx que React montó correctamente.
-  // CRÍTICO: debe estar en Providers (no en Navbar) para cubrir también /admin,
-  // que no renderiza Navbar. Sin esto, el watchdog recargaba /admin cada ~5s.
-  useEffect(() => {
-    try {
-      sessionStorage.setItem("__liss_alive__", "1");
-      localStorage.setItem("__liss_was_alive__", "1");
-    } catch (_) {}
-  }, []);
+  // (Hydration watchdog heartbeat removido — watchdog eliminado de layout.tsx)
 
   const [queryClient] = React.useState(
     () =>
