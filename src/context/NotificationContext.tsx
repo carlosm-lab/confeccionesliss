@@ -401,6 +401,8 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 
   // ── Notificaciones DB en tiempo real ──────────────────────────
   useEffect(() => {
+    if (!hasInteracted) return;
+
     const supabase = getSupabaseClient();
 
     async function fetchDbNotifs() {
@@ -443,8 +445,6 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     }
 
     fetchDbNotifs();
-
-    if (!hasInteracted) return;
 
     // Suscripcion en tiempo real — se re-establece al cambiar auth/interacción
     // Los eventos INSERT son siempre posteriores a la primera visita ✓
