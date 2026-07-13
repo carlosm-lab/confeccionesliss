@@ -8,6 +8,10 @@ export const env = createEnv({
       .default("development"),
     VAPID_PRIVATE_KEY: z.string().min(1).default("placeholder_vapid_private"),
     VAPID_SUBJECT: z.string().default("mailto:contacto@confeccionesliss.com"),
+    REVALIDATE_SECRET: z
+      .string()
+      .min(16)
+      .default("dev_revalidate_secret_local"),
   },
   client: {
     NEXT_PUBLIC_SUPABASE_URL: z
