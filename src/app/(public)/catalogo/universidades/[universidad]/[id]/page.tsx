@@ -13,8 +13,10 @@ import { testimonials } from "@/lib/seo-data";
 import { CATEGORIES } from "@/data/categories";
 import type { Sector } from "@/data/types";
 
-// ── SSG puro + On-Demand Revalidation ──────────────────────────────────────
-// No ISR por tiempo. Revalidación on-demand vía src/actions/catalog.ts.
+// ── SSG + On-Demand Revalidation (ISR) ──────────────────────────────────────
+// revalidate = 86400 (24h) habilita la infraestructura de ISR en Vercel,
+// permitiendo que revalidatePath() purgue el CDN en caché bajo demanda.
+export const revalidate = 86400;
 export const dynamicParams = true;
 
 // ── Static params: pre-genera páginas de detalle para cada universidad ─────────

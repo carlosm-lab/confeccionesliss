@@ -9,8 +9,10 @@ import {
 import { OffersReadTracker } from "@/components/ui/OffersReadTracker";
 import type { CategoryConfig } from "@/data/types";
 
-// ── SSG puro + On-Demand Revalidation ──────────────────────────────────────
-// No ISR por tiempo. Revalidación on-demand vía src/actions/catalog.ts.
+// ── SSG + On-Demand Revalidation (ISR) ──────────────────────────────────────
+// revalidate = 86400 (24h) habilita la infraestructura de ISR en Vercel,
+// permitiendo que revalidatePath() purgue el CDN en caché bajo demanda.
+export const revalidate = 86400;
 
 // ── Configuración estática de cada universidad ─────────────────────────────────
 // Datos de presentación. Los productos reales vienen de Supabase en tiempo de build.

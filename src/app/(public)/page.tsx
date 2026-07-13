@@ -48,9 +48,10 @@ export const metadata: Metadata = {
   },
 };
 
-// ── SSG puro + On-Demand Revalidation ──────────────────────────────────────
-// No ISR por tiempo. Se regenera vía revalidatePath('/') / updateTag('products')
-// desde las Server Actions cuando el admin guarda, elimina o fija un producto.
+// ── SSG + On-Demand Revalidation (ISR) ──────────────────────────────────────
+// revalidate = 86400 (24h) habilita la infraestructura de ISR en Vercel,
+// permitiendo que revalidatePath('/') purgue el CDN en caché bajo demanda.
+export const revalidate = 86400;
 
 export default async function HomePage() {
   // Load recent products from Supabase (server-side, no hardcoding)

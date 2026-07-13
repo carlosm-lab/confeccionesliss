@@ -10,9 +10,10 @@ import {
 } from "@/lib/catalogService";
 import { OffersReadTracker } from "@/components/ui/OffersReadTracker";
 
-// ── SSG puro + On-Demand Revalidation ──────────────────────────────────────
-// No ISR por tiempo. Las páginas se regeneran on-demand vía revalidatePath()
-// en src/actions/catalog.ts cuando el admin guarda o elimina un producto.
+// ── SSG + On-Demand Revalidation (ISR) ──────────────────────────────────────
+// revalidate = 86400 (24h) habilita la infraestructura de ISR en Vercel,
+// permitiendo que revalidatePath() purgue el CDN en caché bajo demanda.
+export const revalidate = 86400;
 
 // ── Static params: genera una página por sector ───────────────────────────────
 // "universitario" se excluye: la ruta fue eliminada, ahora existe /catalogo/universidades.

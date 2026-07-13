@@ -9,6 +9,11 @@ const PAGE_TITLE =
 const PAGE_DESCRIPTION =
   "Scrubs médicos y uniformes universitarios confeccionados a la medida para estudiantes de UNIVO, IEPROES, UGB, UNAB, UES y UMA en San Miguel, El Salvador. Tela Sincatex, bordado de escudo de carrera incluido. Desde $35.";
 
+// ── SSG + On-Demand Revalidation (ISR) ──────────────────────────────────────
+// revalidate = 86400 (24h) habilita la infraestructura de ISR en Vercel,
+// permitiendo que revalidatePath() purgue el CDN en caché bajo demanda.
+export const revalidate = 86400;
+
 export const metadata: Metadata = {
   title: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
