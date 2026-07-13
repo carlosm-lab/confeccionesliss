@@ -74,14 +74,23 @@ export async function revalidateAfterProductSave({
   revalidateTag("product-counts", { expire: 0 });
 
   // 2. Invalidar Full Route Cache de las páginas principales con el formato de grupos de Next.js 16.
-  revalidatePath("/(public)/page", "page");
+  // Rutas URL literales (públicas)
+  revalidatePath("/");
+  revalidatePath("/catalogo");
+
+  // Estructura de archivos de Next.js
+  revalidatePath("/(public)", "page");
   revalidatePath("/(public)/catalogo", "page");
   revalidatePath("/", "layout");
   refresh();
 
   if (sector === "universitario") {
-    // Hub universitario
-    revalidatePath("/(public)/catalogo/universidades", "page");
+    // Rutas URL literales
+    revalidatePath("/catalogo/universidades");
+    if (category) {
+      revalidatePath(`/catalogo/universidades/${category}`);
+      revalidatePath(`/catalogo/universidades/${category}/${slug}`);
+    }
 
     const validUniversitySlugs = [
       "univo",
@@ -95,12 +104,25 @@ export async function revalidateAfterProductSave({
     // de una universidad a otra (ej. de UNAB a UNIVO), la página de la universidad anterior
     // se limpie y no muestre duplicados en la caché de Next.js.
     for (const u of validUniversitySlugs) {
-      revalidatePath(`/(public)/catalogo/universidades/${u}`, "page");
-      revalidatePath(`/(public)/catalogo/universidades/${u}/${slug}`, "page");
+      revalidatePath(`/catalogo/universidades/${u}`);
+      revalidatePath(`/catalogo/universidades/${u}/${slug}`);
     }
+
+    // Estructura de archivos de Next.js (plantillas)
+    revalidatePath("/(public)/catalogo/universidades", "page");
+    revalidatePath("/(public)/catalogo/universidades/[universidad]", "page");
+    revalidatePath(
+      "/(public)/catalogo/universidades/[universidad]/[id]",
+      "page"
+    );
   } else {
     // Sector estándar (scrubs, escolar, corporativo, etc.)
-    revalidatePath(`/(public)/catalogo/${sector}`, "page");
-    revalidatePath(`/(public)/catalogo/${sector}/${slug}`, "page");
+    // Rutas URL literales
+    revalidatePath(`/catalogo/${sector}`);
+    revalidatePath(`/catalogo/${sector}/${slug}`);
+
+    // Estructura de archivos de Next.js (plantillas)
+    revalidatePath("/(public)/catalogo/[sector]", "page");
+    revalidatePath("/(public)/catalogo/[sector]/[id]", "page");
   }
 }

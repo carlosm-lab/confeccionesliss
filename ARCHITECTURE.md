@@ -20,6 +20,7 @@ This document tracks important architectural decisions made during the project l
 **Decision:** Prohibición Estricta de SSR — Estrategia de SSG Puro + Revalidación Bajo Demanda (On-Demand Revalidation)
 **Context:** El cliente exige que la plataforma funcione en su totalidad mediante SSG (Static Site Generation), eliminando cualquier ruta SSR (`force-dynamic`). Se realizó una auditoría completa del proyecto para garantizar que todas las páginas se generen estáticamente y se revaliden bajo demanda (`revalidatePath`).
 **Decision:**
+
 - **Todas las Páginas Públicas son SSG:** Las vistas principales (`/`, `/catalogo`, `/catalogo/[sector]`, `/catalogo/[sector]/[id]`, `/catalogo/universidades/[universidad]`, `/catalogo/universidades/[universidad]/[id]`, `/servicios/[slug]`) utilizan `generateStaticParams()` o pre-renderizado estático de RSC en build time.
 - **On-Demand Revalidation:** Ante mutaciones en el panel de administración (alta, baja, modificación de productos o toggling de productos fijados), se invoca `revalidatePath(...)` desde las Server Actions para actualizar el HTML estático en caché de forma inmediata.
 - **Prohibición de SSR:** Cero uso de `export const dynamic = 'force-dynamic'`. Ninguna página pública realiza lecturas dinámicas por petición en el servidor.
@@ -409,3 +410,16 @@ El catálogo universitario existía en `/catalogo/universitario` con filtrado **
 - (3) Si `category` no sigue el patrón slug, las páginas de universidad aparecerán vacías. La única ruta de debug es verificar en Supabase que los productos tengan el campo `category` correcto.
 - (4) ISR con `revalidate = 3600` — las páginas de universidad se regeneran cada hora. Si se implementa on-demand revalidation en las Server Actions de admin, se debe llamar `revalidatePath('/catalogo/universidades')` y `revalidatePath('/catalogo/universidades/${slug}')` al guardar un producto universitario.
 - (5) `UNIVERSITY_CONFIG` en el archivo de la ruta es la fuente de verdad para slugs válidos. Para agregar una nueva universidad: agregar entrada en `UNIVERSITY_CONFIG` → el `generateStaticParams` la incluye automáticamente.
+
+---
+
+**Date:** 2026-07-12
+**Decision:** Corrección de Rutas de Revalidación bajo Demanda (`revalidatePath`) en Next.js 16
+**Context:** Se detectó que las actualizaciones de los administradores (como fijar/desfijar productos en el home) no invalidaban correctamente la caché en el perimetral de Vercel ni en el Data Cache. El problema principal residía en el uso incorrecto de `revalidatePath` con el argumento `"page"`, enviando rutas que no correspondían a la plantilla del componente físico (como `/(public)/page` en lugar de `/(public)`) o enviando rutas con segmentos dinámicos resueltos en lugar del patrón de ruta oficial (`/(public)/catalogo/[sector]` en lugar de `/catalogo/${sector}`).
+**Decision:**
+
+- **Uso de Rutas URL Literales:** Para invalidar URLs del cliente de manera inmediata y consistente en producción y desarrollo, se inyectan llamadas explícitas a `revalidatePath` con la URL final (ej. `revalidatePath("/")`, `revalidatePath("/catalogo")`, `revalidatePath("/catalogo/scrubs")`).
+- **Uso de Estructura de Archivos del App Router:** Para invalidar las plantillas del componente y su árbol de renderizado a nivel de servidor, se utilizan los paths con formato de grupos de Next.js y los nombres de las variables dinámicas de carpeta en corchetes, pasándole el segundo argumento `"page"` (ej. `revalidatePath("/(public)", "page")`, `revalidatePath("/(public)/catalogo/[sector]", "page")`).
+- **Compatibilidad con Next.js 16:** Se evitan fallos de tipo firma o deprecaciones de firmas antiguas al implementar la doble validación (ruta literal para el cliente + estructura del componente para el servidor).
+  **Consequences:**
+- Las actualizaciones de productos, productos destacados y categorías son inmediatas. Un refresco normal de página en el navegador (F5) recupera la vista actualizada instantáneamente sin requerir recargas forzadas (`Ctrl+Shift+R`). El motor de Vercel purga la caché CDN de manera óptima.

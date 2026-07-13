@@ -143,7 +143,11 @@ export async function toggleFeaturedProduct(
   revalidateTag("product-counts", { expire: 0 });
 
   // Paso 2: Invalidar el Full Route Cache (HTML pre-renderizado) de las rutas afectadas con el formato de grupos de Next.js 16.
-  revalidatePath("/(public)/page", "page");
+  // Rutas URL literales (públicas)
+  revalidatePath("/");
+  revalidatePath("/catalogo");
+  // Estructura de archivos de Next.js
+  revalidatePath("/(public)", "page");
   revalidatePath("/(public)/catalogo", "page");
   revalidatePath("/", "layout");
 

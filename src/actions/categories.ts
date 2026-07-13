@@ -22,7 +22,12 @@ export async function revalidateAfterCategorySave(): Promise<void> {
   revalidateTag("product-counts", { expire: 0 });
 
   // 2. Invalidar Full Route Cache de las rutas que muestran categorías con el formato de grupos de Next.js 16.
-  revalidatePath("/(public)/page", "page");
+  // Rutas URL literales (públicas)
+  revalidatePath("/");
+  revalidatePath("/catalogo");
+
+  // Estructura de archivos de Next.js
+  revalidatePath("/(public)", "page");
   revalidatePath("/(public)/catalogo", "page");
   revalidatePath("/", "layout");
 
@@ -35,13 +40,18 @@ export async function revalidateAfterCategorySave(): Promise<void> {
     "bordados",
   ];
   for (const sector of sectors) {
-    revalidatePath(`/(public)/catalogo/${sector}`, "page");
+    // Ruta URL literal
+    revalidatePath(`/catalogo/${sector}`);
   }
+  revalidatePath("/(public)/catalogo/[sector]", "page");
 
   // Revalidar hub universitario y todas las universidades.
-  revalidatePath("/(public)/catalogo/universidades", "page");
+  revalidatePath("/catalogo/universidades");
   const universities = ["univo", "ieproes", "ugb", "unab", "ues", "uma"];
   for (const uni of universities) {
-    revalidatePath(`/(public)/catalogo/universidades/${uni}`, "page");
+    // Ruta URL literal
+    revalidatePath(`/catalogo/universidades/${uni}`);
   }
+  revalidatePath("/(public)/catalogo/universidades", "page");
+  revalidatePath("/(public)/catalogo/universidades/[universidad]", "page");
 }
