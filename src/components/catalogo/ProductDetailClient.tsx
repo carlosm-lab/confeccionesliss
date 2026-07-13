@@ -325,7 +325,7 @@ export function ProductDetailClient({
                   width={96}
                   height={120}
                   className="h-full w-full object-cover object-center"
-                  unoptimized
+                  quality={75}
                 />
               </button>
             ))}
@@ -358,8 +358,7 @@ export function ProductDetailClient({
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 55vw, 45vw"
                   className="object-cover object-center"
                   priority
-                  quality={90}
-                  unoptimized
+                  quality={80}
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center bg-slate-100 text-slate-300">
@@ -979,7 +978,7 @@ export function ProductDetailClient({
               sizes="90vw"
               className="object-contain"
               priority
-              unoptimized
+              quality={85}
             />
           </div>
         </div>

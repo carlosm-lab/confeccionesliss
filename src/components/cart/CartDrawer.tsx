@@ -662,7 +662,7 @@ export function CartDrawer() {
                             width={100}
                             height={125}
                             className="h-full w-full object-cover transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover/item:scale-105"
-                            unoptimized
+                            quality={70}
                           />
                         </Link>
 

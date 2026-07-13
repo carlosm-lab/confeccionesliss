@@ -2,7 +2,6 @@
 @plugin "@designbycode/tailwindcss-text-stroke";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "material-symbols/outlined.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -62,11 +61,6 @@
   --font-body: "Manrope", sans-serif;
   --font-label: "Manrope", sans-serif;
   --font-sans: "Manrope", sans-serif;
-
-  /* Fonts - 8-bit playground */
-  --font-focal: var(--font-focal);
-  --font-chivo-mono: var(--font-chivo-mono);
-  --font-publicsansrounded: var(--font-publicsansrounded);
 
   /* Colors - 8-bit playground */
   --color-pixel-lime: #f1ffd2;

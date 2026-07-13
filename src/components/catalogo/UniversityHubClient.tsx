@@ -483,11 +483,17 @@ export function UniversityHubClient() {
       void h1.offsetWidth;
       const verifyW = h1.offsetWidth - h1PL - h1PR;
       spans.forEach((span) => {
-        while (span.scrollWidth > Math.ceil(verifyW)) {
+        const scrollW = span.scrollWidth;
+        if (scrollW > Math.ceil(verifyW)) {
           const fs = parseFloat(span.style.fontSize);
-          if (fs <= 8) break;
-          span.style.fontSize = `${fs - 1}px`;
-          void span.offsetWidth;
+          if (!isNaN(fs) && fs > 8) {
+            // Proportional scaling with safety margin to fit verifyW
+            const targetFs = Math.max(
+              8,
+              Math.floor(fs * (verifyW / scrollW) * 0.96)
+            );
+            span.style.fontSize = `${targetFs}px`;
+          }
         }
       });
     };

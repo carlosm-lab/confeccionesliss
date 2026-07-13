@@ -1,10 +1,4 @@
-import {
-  Manrope,
-  Noto_Serif,
-  Inter_Tight,
-  Chivo_Mono,
-  Public_Sans,
-} from "next/font/google";
+import { Manrope, Noto_Serif } from "next/font/google";
 import "./globals.css";
 import "@aejkatappaja/phantom-ui/ssr.css";
 
@@ -20,27 +14,6 @@ const notoSerif = Noto_Serif({
   display: "swap",
   weight: ["400", "700"],
   style: ["normal", "italic"],
-});
-
-const interTight = Inter_Tight({
-  subsets: ["latin"],
-  variable: "--font-focal",
-  display: "swap",
-  weight: ["400", "500", "600", "700"],
-});
-
-const chivoMono = Chivo_Mono({
-  subsets: ["latin"],
-  variable: "--font-chivo-mono",
-  display: "swap",
-  weight: ["400"],
-});
-
-const publicSans = Public_Sans({
-  subsets: ["latin"],
-  variable: "--font-publicsansrounded",
-  display: "swap",
-  weight: ["400", "600", "700"],
 });
 
 import { siteConfig } from "@/config/site";
@@ -118,10 +91,20 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${manrope.variable} ${notoSerif.variable} ${interTight.variable} ${chivoMono.variable} ${publicSans.variable}`}
+      className={`${manrope.variable} ${notoSerif.variable}`}
       suppressHydrationWarning
     >
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `

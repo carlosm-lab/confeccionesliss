@@ -335,8 +335,8 @@ export function Navbar() {
               <Image
                 src="/logo.png"
                 alt="Confecciones Liss"
-                width={180}
-                height={180}
+                width={96}
+                height={96}
                 className="h-12 w-auto"
                 priority
               />
@@ -563,7 +563,7 @@ export function Navbar() {
                           height={40}
                           className="h-full w-full object-cover"
                           referrerPolicy="no-referrer"
-                          unoptimized
+                          quality={70}
                         />
                       ) : (
                         <span

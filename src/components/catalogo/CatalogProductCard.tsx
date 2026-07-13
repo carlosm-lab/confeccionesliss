@@ -129,8 +129,7 @@ export function CatalogProductCard({
             sizes="(max-width: 480px) 50vw, (max-width: 768px) 40vw, (max-width: 1280px) 30vw, 320px"
             className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
             priority={priority}
-            quality={90}
-            unoptimized
+            quality={75}
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-gray-50">

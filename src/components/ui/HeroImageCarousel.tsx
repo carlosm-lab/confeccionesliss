@@ -127,7 +127,8 @@ export function HeroImageCarousel({
               alt={item.alt}
               className="rounded-xl object-cover object-center"
               sizes={sizes}
-              priority={priority || idx === 0}
+              priority={priority && idx === 0}
+              {...(priority && idx === 0 ? { fetchPriority: "high" } : {})}
             />
           </div>
         ))}

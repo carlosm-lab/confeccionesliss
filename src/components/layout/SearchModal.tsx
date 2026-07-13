@@ -381,7 +381,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                             fill
                             sizes="56px"
                             className="object-cover"
-                            unoptimized
+                            quality={70}
                           />
                         ) : (
                           <div className="flex h-full w-full items-center justify-center">

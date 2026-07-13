@@ -145,8 +145,8 @@ export function Footer() {
               <Image
                 src="/logo.png"
                 alt="Confecciones Liss"
-                width={180}
-                height={180}
+                width={144}
+                height={144}
                 className="h-[72px] w-auto brightness-0 invert"
               />
             </Link>
@@ -312,8 +312,8 @@ export function Footer() {
               <Image
                 src="/logo.png"
                 alt="Confecciones Liss"
-                width={180}
-                height={180}
+                width={144}
+                height={144}
                 className="h-[72px] w-auto brightness-0 invert"
               />
             </Link>
@@ -488,8 +488,8 @@ export function Footer() {
                 <Image
                   src="/logo.png"
                   alt="Confecciones Liss"
-                  width={180}
-                  height={180}
+                  width={96}
+                  height={96}
                   className="h-12 w-auto brightness-0 invert"
                 />
               </Link>
