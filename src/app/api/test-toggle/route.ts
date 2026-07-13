@@ -5,9 +5,9 @@ export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    // Try to trigger cache invalidation and capture any errors
-    revalidateTag("products");
-    revalidateTag("product-counts");
+    // Trigger cache invalidation using revalidateTag with the required 2-argument signature
+    revalidateTag("products", "max");
+    revalidateTag("product-counts", "max");
     revalidatePath("/");
     revalidatePath("/catalogo");
 
