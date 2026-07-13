@@ -182,6 +182,25 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   const [pushPermissionStatus, setPushPermissionStatus] =
     useState<PushPermissionStatus>("default");
   const [pushPromptDismissed, setPushPromptDismissed] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
+
+  useEffect(() => {
+    const handleInteraction = () => {
+      setHasInteracted(true);
+    };
+
+    window.addEventListener("touchstart", handleInteraction, { passive: true });
+    window.addEventListener("mouseover", handleInteraction, { passive: true });
+    window.addEventListener("scroll", handleInteraction, { passive: true });
+    window.addEventListener("keydown", handleInteraction, { passive: true });
+
+    return () => {
+      window.removeEventListener("touchstart", handleInteraction);
+      window.removeEventListener("mouseover", handleInteraction);
+      window.removeEventListener("scroll", handleInteraction);
+      window.removeEventListener("keydown", handleInteraction);
+    };
+  }, []);
 
   const realtimeRef = useRef<
     ReturnType<typeof getSupabaseClient>["channel"] | null
@@ -425,7 +444,9 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 
     fetchDbNotifs();
 
-    // Suscripcion en tiempo real — se re-establece al cambiar auth
+    if (!hasInteracted) return;
+
+    // Suscripcion en tiempo real — se re-establece al cambiar auth/interacción
     // Los eventos INSERT son siempre posteriores a la primera visita ✓
     const isLighthouse =
       typeof navigator !== "undefined" &&
@@ -438,33 +459,27 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    // Retrasar el establecimiento del WebSocket 10 segundos para no bloquear LCP / TTI
-    // en visitas iniciales y tests de PageSpeed.
-    const timer = setTimeout(() => {
-      const channelName = `notifications_realtime_${user?.id ?? "guest"}`;
-      const channel = supabase
-        .channel(channelName)
-        .on(
-          "postgres_changes",
-          { event: "INSERT", schema: "public", table: "notifications" },
-          (payload: RealtimePostgresInsertPayload<Record<string, unknown>>) => {
-            const newNotif = payload.new as unknown as AppNotification;
-            setDbNotifs((prev) => [{ ...newNotif, read: false }, ...prev]);
-          }
-        )
-        .subscribe();
+    const channelName = `notifications_realtime_${user?.id ?? "guest"}`;
+    const channel = supabase
+      .channel(channelName)
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "notifications" },
+        (payload: RealtimePostgresInsertPayload<Record<string, unknown>>) => {
+          const newNotif = payload.new as unknown as AppNotification;
+          setDbNotifs((prev) => [{ ...newNotif, read: false }, ...prev]);
+        }
+      )
+      .subscribe();
 
-      realtimeRef.current = channel;
-    }, 10000);
-
+    realtimeRef.current = channel;
     return () => {
-      clearTimeout(timer);
       if (realtimeRef.current) {
         supabase.removeChannel(realtimeRef.current);
         realtimeRef.current = null;
       }
     };
-  }, [user?.id]); // Se re-sincroniza al iniciar/cerrar sesión
+  }, [user?.id, hasInteracted]); // Se re-sincroniza al iniciar/cerrar sesión o interactuar
 
   // ── Marcar hints como leidas al iniciar sesion ────────────────
   useEffect(() => {

@@ -22,12 +22,17 @@ export function CookieBanner() {
       // noop
     }
 
-    Promise.resolve().then(() => {
+    // Retrasar el montaje del Cookie Banner 4 segundos.
+    // Esto mejora enormemente el LCP de la página al evitar que el banner
+    // de cookies sea el Largest Contentful Paint inicial.
+    const timer = setTimeout(() => {
       setMounted(true);
       if (!consent) {
         setVisible(true);
       }
-    });
+    }, 4000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const accept = () => {
