@@ -438,22 +438,31 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    const channelName = `notifications_realtime_${user?.id ?? "guest"}`;
-    const channel = supabase
-      .channel(channelName)
-      .on(
-        "postgres_changes",
-        { event: "INSERT", schema: "public", table: "notifications" },
-        (payload: RealtimePostgresInsertPayload<Record<string, unknown>>) => {
-          const newNotif = payload.new as unknown as AppNotification;
-          setDbNotifs((prev) => [{ ...newNotif, read: false }, ...prev]);
-        }
-      )
-      .subscribe();
+    // Retrasar el establecimiento del WebSocket 10 segundos para no bloquear LCP / TTI
+    // en visitas iniciales y tests de PageSpeed.
+    const timer = setTimeout(() => {
+      const channelName = `notifications_realtime_${user?.id ?? "guest"}`;
+      const channel = supabase
+        .channel(channelName)
+        .on(
+          "postgres_changes",
+          { event: "INSERT", schema: "public", table: "notifications" },
+          (payload: RealtimePostgresInsertPayload<Record<string, unknown>>) => {
+            const newNotif = payload.new as unknown as AppNotification;
+            setDbNotifs((prev) => [{ ...newNotif, read: false }, ...prev]);
+          }
+        )
+        .subscribe();
 
-    realtimeRef.current = channel;
+      realtimeRef.current = channel;
+    }, 10000);
+
     return () => {
-      supabase.removeChannel(channel);
+      clearTimeout(timer);
+      if (realtimeRef.current) {
+        supabase.removeChannel(realtimeRef.current);
+        realtimeRef.current = null;
+      }
     };
   }, [user?.id]); // Se re-sincroniza al iniciar/cerrar sesión
 

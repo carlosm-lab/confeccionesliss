@@ -89,9 +89,29 @@ export function HeroImageCarousel({
     setCurrentIndex((prev) => (prev + 1) % IMAGES.length);
   }, []);
 
+  const [hasInteracted, setHasInteracted] = useState(false);
+
+  useEffect(() => {
+    const handleInteraction = () => {
+      setHasInteracted(true);
+    };
+
+    window.addEventListener("touchstart", handleInteraction, { passive: true });
+    window.addEventListener("mouseover", handleInteraction, { passive: true });
+    window.addEventListener("scroll", handleInteraction, { passive: true });
+    window.addEventListener("keydown", handleInteraction, { passive: true });
+
+    return () => {
+      window.removeEventListener("touchstart", handleInteraction);
+      window.removeEventListener("mouseover", handleInteraction);
+      window.removeEventListener("scroll", handleInteraction);
+      window.removeEventListener("keydown", handleInteraction);
+    };
+  }, []);
+
   // ── Auto-avance ──────────────────────────────────────────
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || !hasInteracted) return;
 
     // Evitar rotación automática en Lighthouse / PageSpeed Insights
     // para prevenir que cada cambio de slide cuente como un nuevo LCP.
@@ -108,7 +128,7 @@ export function HeroImageCarousel({
       setCurrentIndex((prev) => (prev + 1) % IMAGES.length);
     }, INTERVAL_MS);
     return () => clearInterval(interval);
-  }, [isPaused]);
+  }, [isPaused, hasInteracted]);
 
   return (
     /*
