@@ -13,9 +13,8 @@ import { testimonials } from "@/lib/seo-data";
 import { CATEGORIES } from "@/data/categories";
 import type { Sector } from "@/data/types";
 
-// ── ISR + On-Demand Revalidation ────────────────────────────────────────────
-// Red de seguridad: regenera cada 30s. Invalidación instantánea via updateTag.
-export const revalidate = 30;
+// ── SSG puro + On-Demand Revalidation ──────────────────────────────────────
+// No ISR por tiempo. Revalidación on-demand vía src/actions/catalog.ts.
 export const dynamicParams = true;
 
 // ── Static params: pre-genera páginas de detalle para cada universidad ─────────

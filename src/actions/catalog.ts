@@ -20,7 +20,7 @@
  */
 
 import { createServerClient } from "@supabase/ssr";
-import { revalidatePath, refresh } from "next/cache";
+import { revalidatePath, updateTag, refresh } from "next/cache";
 import { cookies } from "next/headers";
 
 interface RevalidateProductParams {
@@ -69,9 +69,13 @@ export async function revalidateAfterProductSave({
     }
   }
 
-  // ISR on-demand: marcar home y catalogo como obsoletos.
-  // La siguiente request regenerara el HTML con datos frescos de Supabase.
+  // 1. Expirar inmediatamente los datos en el Data Cache via cache tags (Next.js 16 updateTag).
+  updateTag("products");
+  updateTag("product-counts");
+
+  // 2. Invalidar Full Route Cache de las páginas principales de catálogo e inicio (SSG).
   revalidatePath("/");
+  revalidatePath("/catalogo");
   refresh();
 
   if (sector === "universitario") {

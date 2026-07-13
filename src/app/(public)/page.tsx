@@ -48,11 +48,9 @@ export const metadata: Metadata = {
   },
 };
 
-// ── ISR + On-Demand Revalidation ────────────────────────────────────────────
-// Red de seguridad: regenera automáticamente cada 30s como máximo.
-// La invalidación instantánea sigue funcionando via updateTag("products") desde
-// src/actions/featuredProducts.ts y src/actions/catalog.ts.
-export const revalidate = 30;
+// ── SSG puro + On-Demand Revalidation ──────────────────────────────────────
+// No ISR por tiempo. Se regenera vía revalidatePath('/') / updateTag('products')
+// desde las Server Actions cuando el admin guarda, elimina o fija un producto.
 
 export default async function HomePage() {
   // Load recent products from Supabase (server-side, no hardcoding)
