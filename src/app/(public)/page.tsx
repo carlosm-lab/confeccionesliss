@@ -153,6 +153,7 @@ export default async function HomePage() {
                 <div className="flex w-full flex-col gap-3 sm:flex-row sm:gap-4">
                   <Link
                     href="/catalogo"
+                    prefetch={false}
                     className="animate-fade-in-up btn-gradient font-body ambient-shadow flex h-12 w-full items-center justify-center rounded-md px-12 text-center text-base font-semibold whitespace-nowrap text-white transition hover:opacity-90 active:scale-[0.97] sm:flex-1"
                     style={{ animationDelay: "400ms" }}
                   >
@@ -196,6 +197,7 @@ export default async function HomePage() {
               </h2>
               <Link
                 href="/catalogo"
+                prefetch={false}
                 className="text-primary text-sm font-bold hover:underline"
               >
                 <span className="hidden lg:inline">Ver catálogo completo</span>
