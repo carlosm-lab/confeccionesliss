@@ -12,7 +12,7 @@ import { useCart } from "@/context/CartContext";
 import { useFavorites } from "@/context/FavoritesContext";
 import { useAuth } from "@/context/AuthContext";
 import { useNotifications } from "@/context/NotificationContext";
-import { env } from "@/env";
+import { clientEnv } from "@/lib/clientEnv";
 
 interface NavLink {
   href: string;
@@ -153,7 +153,7 @@ export function Navbar() {
     !isMenuOpen &&
     (safeUnreadCount > 0 || safeFavoritesCount > 0 || safeCartCount > 0);
 
-  const isHomeOnly = env.NEXT_PUBLIC_HOME_ONLY === "true";
+  const isHomeOnly = clientEnv.NEXT_PUBLIC_HOME_ONLY === "true";
 
   const lastScrollY = useRef(
     typeof window !== "undefined" ? window.scrollY : 0

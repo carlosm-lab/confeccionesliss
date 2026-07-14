@@ -8,8 +8,8 @@ import { formatPrice } from "@/lib/formatPrice";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import { buildWhatsAppUrl, buildCartWhatsAppMessage } from "@/lib/whatsapp";
 import { getSupabaseClient } from "@/lib/supabaseClient";
+import { clientEnv } from "@/lib/clientEnv";
 import { logger } from "@/lib/logger";
-import { env } from "@/env";
 import toast from "react-hot-toast";
 import FocusLock from "react-focus-lock";
 import { DEPARTMENTS, getShippingInfo } from "@/lib/shipping";
@@ -222,7 +222,7 @@ export function CartDrawer() {
     }
 
     let url = "";
-    const rawPhoneNumber = env.NEXT_PUBLIC_WHATSAPP_NUMBER;
+    const rawPhoneNumber = clientEnv.NEXT_PUBLIC_WHATSAPP_NUMBER;
 
     try {
       const { url: safeUrl, usedFallback } = buildWhatsAppUrl(

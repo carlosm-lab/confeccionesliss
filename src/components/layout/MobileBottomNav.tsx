@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { env } from "@/env";
+import { clientEnv } from "@/lib/clientEnv";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
@@ -21,7 +21,7 @@ export function MobileBottomNav() {
   const [scrollVisible, setScrollVisible] = useState(true);
   const lastScrollY = useRef(0);
   const [isMounted, setIsMounted] = useState(false);
-  const isHomeOnly = env.NEXT_PUBLIC_HOME_ONLY === "true";
+  const isHomeOnly = clientEnv.NEXT_PUBLIC_HOME_ONLY === "true";
 
   const { cartCount, setIsCartOpen } = useCart();
   const { user, showAuthModal } = useAuth();

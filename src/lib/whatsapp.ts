@@ -7,7 +7,7 @@
 // práctico de ~2000 caracteres. Si el carrito tiene muchos
 // productos, el truncamiento inteligente acorta el mensaje.
 // ──────────────────────────────────────────────────────────────
-import { env } from "@/env";
+import { clientEnv } from "@/lib/clientEnv";
 
 const MAX_MESSAGE_LENGTH = 1800;
 
@@ -23,7 +23,7 @@ export function buildWhatsAppUrl(
   phone: string | undefined | null,
   rawMessage: string | null | undefined
 ): { url: string; usedFallback: boolean; isMobile: boolean } {
-  const fallbackPhone = env.NEXT_PUBLIC_WHATSAPP_NUMBER;
+  const fallbackPhone = clientEnv.NEXT_PUBLIC_WHATSAPP_NUMBER;
   const formattedPhone = phone
     ? phone.toString().replace(/\D/g, "")
     : fallbackPhone.replace(/\D/g, "");
@@ -163,7 +163,7 @@ export function buildQuoteUrl(
 ): string {
   const message = buildQuoteMessage(opts);
   const { url } = buildWhatsAppUrl(
-    phone ?? env.NEXT_PUBLIC_WHATSAPP_NUMBER,
+    phone ?? clientEnv.NEXT_PUBLIC_WHATSAPP_NUMBER,
     message
   );
   return url;

@@ -18,8 +18,8 @@ import type {
   AuthError,
 } from "@supabase/supabase-js";
 import { getSupabaseClient } from "@/lib/supabaseClient";
+import { clientEnv } from "@/lib/clientEnv";
 import { logger } from "@/lib/logger";
-import { env } from "@/env";
 
 interface Profile {
   id: string;
@@ -409,7 +409,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const supabase = getSupabaseClient();
       // Usar URL explícita del env var — evita problemas con window.location.origin
       // y garantiza que coincida exactamente con el allowlist de Supabase.
-      const callbackUrl = `${env.NEXT_PUBLIC_SITE_URL}/auth/callback`;
+      const callbackUrl = `${clientEnv.NEXT_PUBLIC_SITE_URL}/auth/callback`;
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {

@@ -26,7 +26,7 @@ import {
 } from "react";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import { useAuth } from "@/context/AuthContext";
-import { env } from "@/env";
+import { clientEnv } from "@/lib/clientEnv";
 import { logger } from "@/lib/logger";
 import { STORAGE_FAVORITES_KEY, STORAGE_CART_KEY } from "@/lib/constants";
 import type { RealtimePostgresInsertPayload } from "@supabase/supabase-js";
@@ -775,7 +775,9 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
       if (permission !== "granted") return false;
 
       const reg = await navigator.serviceWorker.ready;
-      const vapidKey = urlBase64ToUint8Array(env.NEXT_PUBLIC_VAPID_PUBLIC_KEY);
+      const vapidKey = urlBase64ToUint8Array(
+        clientEnv.NEXT_PUBLIC_VAPID_PUBLIC_KEY
+      );
       const sub = await reg.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: vapidKey.buffer as ArrayBuffer,
