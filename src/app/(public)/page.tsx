@@ -181,7 +181,7 @@ export default async function HomePage() {
 
       {/* ═══ NOVEDADES (productos reales desde Supabase) ═══ */}
       {recentProducts.length > 0 && (
-        <section className="bg-surface px-5 py-14 md:px-8 md:py-20">
+        <section className="bg-surface lazy-section px-5 py-14 md:px-8 md:py-20">
           <div className="mx-auto max-w-screen-2xl">
             <div className="mb-12 flex items-end justify-between lg:pr-12">
               <h2 className="animate-fade-in-up text-primary font-serif text-4xl">
@@ -224,7 +224,7 @@ export default async function HomePage() {
       <ServiciosPrincipales />
 
       {/* ═══ ¿POR QUÉ ELEGIRNOS? (updated content) ═══ */}
-      <section className="bg-surface-container-low border-surface-variant/50 border-t border-b px-5 py-14 md:px-8 md:py-24">
+      <section className="bg-surface-container-low border-surface-variant/50 lazy-section border-t border-b px-5 py-14 md:px-8 md:py-24">
         <div className="mx-auto max-w-screen-2xl">
           <div className="mb-12 flex flex-col items-center">
             <h2 className="animate-fade-in-up section-title">
@@ -265,7 +265,7 @@ export default async function HomePage() {
       <UniversidadesCoverage />
 
       {/* ═══ PROCESO DE PEDIDO (updated content) ═══ */}
-      <section className="bg-primary px-5 py-14 text-white md:px-8 md:py-24">
+      <section className="bg-primary lazy-section px-5 py-14 text-white md:px-8 md:py-24">
         <div className="mx-auto max-w-screen-2xl">
           <div className="mb-12 flex flex-col items-center">
             <h2 className="animate-fade-in-up section-title mb-4 text-white">

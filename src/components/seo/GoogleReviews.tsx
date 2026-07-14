@@ -36,7 +36,7 @@ export function GoogleReviews({ reviews }: GoogleReviewsProps) {
 
   return (
     <section
-      className="bg-surface px-5 py-16 md:px-8 md:py-24"
+      className="bg-surface lazy-section px-5 py-16 md:px-8 md:py-24"
       aria-labelledby="google-reviews-title"
     >
       <div className="mx-auto max-w-screen-2xl">

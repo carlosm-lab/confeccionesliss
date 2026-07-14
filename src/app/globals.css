@@ -650,3 +650,9 @@
     transform: scale(1);
   }
 }
+
+/* LAZY SECTIONS — content-visibility: auto optimiza el cálculo del DOM inicial */
+.lazy-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
+}

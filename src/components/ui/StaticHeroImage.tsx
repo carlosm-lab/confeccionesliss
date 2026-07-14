@@ -17,12 +17,13 @@ interface StaticHeroImageProps {
 }
 
 export function StaticHeroImage({ sizes }: StaticHeroImageProps) {
-  // Preload the LCP image using ReactDOM.preload() — emits a correct <link rel="preload">
-  // in the SSR HTML. 750w matches Moto G Power (DPR 1.75, 412px × 80vw × 1.75 ≈ 577px).
   preload("/_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=750&q=75", {
     as: "image",
     fetchPriority: "high",
-  });
+    imageSrcSet:
+      "/_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=640&q=75 640w, /_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=750&q=75 750w, /_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=1200&q=75 1200w",
+    imageSizes: sizes,
+  } as any); // cast to any to bypass react-dom experimental type definition limits if any
   return (
     <div className="absolute inset-0 overflow-hidden rounded-xl">
       {/* eslint-disable-next-line @next/next/no-img-element */}
