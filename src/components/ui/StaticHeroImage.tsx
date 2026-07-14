@@ -13,17 +13,6 @@ interface StaticHeroImageProps {
 export function StaticHeroImage({ sizes: _sizes }: StaticHeroImageProps) {
   return (
     <div className="absolute inset-0 overflow-hidden rounded-xl">
-      {/* 
-        Inyectamos el preload de manera cruda para evitar que el runtime de React 19
-        lo intercepte, intente optimizarlo y genere un preload básico duplicado
-        e ineficiente sin fetchpriority/srcset en el head del documento.
-      */}
-      <div
-        style={{ display: "none" }}
-        dangerouslySetInnerHTML={{
-          __html: `<link rel="preload" as="image" href="/images/uniformes/portada-640.webp" imagesrcset="/images/uniformes/portada-640.webp 640w, /images/uniformes/portada-750.webp 750w, /images/uniformes/portada-1080.webp 1080w, /images/uniformes/portada-1200.webp 1200w" imagesizes="(max-width:768px) 80vw, 40vw" fetchpriority="high" />`,
-        }}
-      />
       <picture>
         <source
           media="(max-width: 640px)"
