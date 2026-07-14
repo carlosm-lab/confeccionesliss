@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { unstable_cache } from "next/cache";
 import { logger } from "@/lib/logger";
 import { env } from "@/env";
 
@@ -204,7 +205,7 @@ function createServerClient(tags: string[] = []) {
   return createClient(url, key);
 }
 
-export async function getGoogleReviews(): Promise<GoogleReview[]> {
+async function fetchGoogleReviews(): Promise<GoogleReview[]> {
   try {
     const supabase = createServerClient(["reviews"]);
     const { data, error } = await supabase
@@ -236,3 +237,10 @@ export async function getGoogleReviews(): Promise<GoogleReview[]> {
     return REAL_GOOGLE_REVIEWS_FALLBACK;
   }
 }
+
+// Cache Google reviews for 24h — revalidate on demand via revalidateTag('reviews')
+export const getGoogleReviews = unstable_cache(
+  fetchGoogleReviews,
+  ["google-reviews"],
+  { revalidate: 86400, tags: ["reviews"] }
+);

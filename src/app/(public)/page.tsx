@@ -50,9 +50,12 @@ export const metadata: Metadata = {
 };
 
 // ── SSG + On-Demand Revalidation (ISR) ──────────────────────────────────────
-// revalidate = 86400 (24h) habilita la infraestructura de ISR en Vercel,
-// permitiendo que revalidatePath('/') purgue el CDN en caché bajo demanda.
-export const revalidate = false;
+// revalidate = 3600 (1h) habilita ISR real en Vercel:
+//   - La página se pre-renderiza en build time y se distribuye a TODOS los CDN edges.
+//   - Se regenera automáticamente cada hora y también bajo demanda via revalidatePath('/').
+// revalidate = false causaba que cada edge node renderizara la página en su primer hit
+// (lazy cold-start), produciendo FCP variable de 1.5s vs 2.4s entre audits consecutivos.
+export const revalidate = 3600;
 
 export default async function HomePage() {
   // Load recent products from Supabase (server-side, no hardcoding)
