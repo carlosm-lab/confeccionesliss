@@ -243,10 +243,7 @@ export default async function HomePage() {
                     className={`animate-fade-in-up h-full w-full ${visibilityClass}`}
                     style={{ animationDelay: `${index * 50 + 150}ms` }}
                   >
-                    <CatalogProductCard
-                      product={product}
-                      priority={index < 2}
-                    />
+                    <CatalogProductCard product={product} priority={false} />
                   </div>
                 );
               })}
