@@ -92,7 +92,7 @@ export function FilterSidebar({
             </label>
           </div>
 
-          <div className="elegant-scrollbar flex max-h-[300px] flex-col gap-[0.25rem] overflow-y-auto pr-1">
+          <div className="flex flex-col gap-[0.25rem]">
             {/* Todos option */}
             <button
               type="button"
