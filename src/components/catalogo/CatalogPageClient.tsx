@@ -156,12 +156,18 @@ export function CatalogPageClient({
       return { ...prev, [field]: next };
     });
     setCurrentPage(1);
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   }
 
   function handleClearFilters() {
     setActiveFilters({});
     setOnSaleOnly(false);
     setCurrentPage(1);
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   }
 
   const hasActiveFilters = useMemo(() => {
