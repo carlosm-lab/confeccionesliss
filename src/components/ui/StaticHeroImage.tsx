@@ -1,5 +1,3 @@
-﻿import Image from "next/image";
-
 /**
  * StaticHeroImage — Server Component
  * ─────────────────────────────────────────────────────────────────────────────
@@ -19,14 +17,13 @@ interface StaticHeroImageProps {
 export function StaticHeroImage({ sizes }: StaticHeroImageProps) {
   return (
     <div className="absolute inset-0 overflow-hidden rounded-xl">
-      <Image
-        src="/images/uniformes/portada.webp"
-        fill
-        alt="Confeccion de uniformes a la medida en el taller de Confecciones Liss, San Miguel, El Salvador"
-        className="rounded-xl object-cover object-center"
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=640&q=75"
+        srcSet="/_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=640&q=75 640w, /_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=1080&q=75 1080w"
         sizes={sizes}
-        quality={80}
-        priority
+        alt="Confeccion de uniformes a la medida en el taller de Confecciones Liss, San Miguel, El Salvador"
+        className="h-full w-full rounded-xl object-cover object-center"
         fetchPriority="high"
       />
     </div>
