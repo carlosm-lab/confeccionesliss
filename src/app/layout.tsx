@@ -113,11 +113,14 @@ export default function RootLayout({
          * delay" del LCP breakdown. Carga la variante 640w (mobile-first).
          */}
         <link
-          rel="preload"
-          as="image"
-          imageSrcSet="/_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=640&q=75 640w, /_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=1080&q=75 1080w"
-          imageSizes="(max-width:768px) 80vw, 40vw"
-          fetchPriority="high"
+          {...({
+            rel: "preload",
+            as: "image",
+            imagesrcset:
+              "/_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=640&q=75 640w, /_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=1080&q=75 1080w",
+            imagesizes: "(max-width:768px) 80vw, 40vw",
+            fetchPriority: "high",
+          } as any)}
         />
 
         <script
