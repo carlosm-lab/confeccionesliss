@@ -128,7 +128,7 @@ export default function RootLayout({
             media: "(max-width: 768px)",
             imagesrcset:
               "/_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=640&q=75 640w, /_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=750&q=75 750w",
-            imagesizes: "80vw",
+            imagesizes: "(max-width: 768px) 80vw, 40vw",
             fetchPriority: "high",
           } as any)}
         />
@@ -140,7 +140,7 @@ export default function RootLayout({
             media: "(min-width: 769px)",
             imagesrcset:
               "/_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=1200&q=75 1200w",
-            imagesizes: "40vw",
+            imagesizes: "(max-width: 768px) 80vw, 40vw",
             fetchPriority: "high",
           } as any)}
         />

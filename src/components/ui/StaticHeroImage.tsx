@@ -19,7 +19,7 @@ export function StaticHeroImage({ sizes }: StaticHeroImageProps) {
     <div className="absolute inset-0 overflow-hidden rounded-xl">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=640&q=75"
+        src="/_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=750&q=75"
         srcSet="/_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=640&q=75 640w, /_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=750&q=75 750w, /_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=1200&q=75 1200w"
         sizes={sizes}
         alt="Confeccion de uniformes a la medida en el taller de Confecciones Liss, San Miguel, El Salvador"
