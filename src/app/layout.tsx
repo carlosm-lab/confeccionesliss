@@ -21,7 +21,6 @@ import { siteConfig } from "@/config/site";
 import { env } from "@/env";
 import { AnalyticsScripts } from "@/components/analytics/AnalyticsScripts";
 import { MaterialSymbolsLoader } from "@/components/layout/MaterialSymbolsLoader";
-import { preload } from "react-dom";
 
 export const metadata = {
   title: {
@@ -110,16 +109,9 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         {/*
-         * Preload explícito del hero image (LCP) mediante ReactDOM.preload().
-         * A diferencia de <link> JSX (que convierte imagesrcset→imageSrcSet rompiendo
-         * el preload), preload() emite el <link> correctamente en el HTML SSR.
-         * Precarga la variante 750w — tamaño correcto para Moto G Power (DPR 1.75,
-         * 412px viewport × 80vw × 1.75 = ~577px → 750w).
+         * Preload explícito del hero image (LCP) — emitido desde StaticHeroImage.tsx
+         * (Server Component) usando ReactDOM.preload() para evitar aplicarlo globalmente.
          */}
-        {preload(
-          "/_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=750&q=75",
-          { as: "image", fetchPriority: "high" }
-        )}
 
         <script
           type="application/ld+json"

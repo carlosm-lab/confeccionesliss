@@ -10,11 +10,19 @@
  *
  * The full carousel progressively replaces this once JS hydrates.
  */
+import { preload } from "react-dom";
+
 interface StaticHeroImageProps {
   sizes: string;
 }
 
 export function StaticHeroImage({ sizes }: StaticHeroImageProps) {
+  // Preload the LCP image using ReactDOM.preload() — emits a correct <link rel="preload">
+  // in the SSR HTML. 750w matches Moto G Power (DPR 1.75, 412px × 80vw × 1.75 ≈ 577px).
+  preload("/_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=750&q=75", {
+    as: "image",
+    fetchPriority: "high",
+  });
   return (
     <div className="absolute inset-0 overflow-hidden rounded-xl">
       {/* eslint-disable-next-line @next/next/no-img-element */}
