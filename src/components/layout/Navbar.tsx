@@ -255,6 +255,8 @@ export function Navbar() {
     if (typeof window === "undefined" || isHomeOnly) return;
 
     const calculateVisibleLinks = () => {
+      if (window.innerWidth < 768) return;
+
       const container = navContainerRef.current;
       const pillsContainer = navPillsRef.current;
       if (!container || !pillsContainer) return;

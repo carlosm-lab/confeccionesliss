@@ -1,9 +1,19 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
-import { GlobalModals } from "@/components/layout/GlobalModals";
-import { CookieBanner } from "@/components/ui/CookieBanner";
-import { ScrollToTop } from "@/components/layout/ScrollToTop";
+import dynamic from "next/dynamic";
+
+const GlobalModals = dynamic(() =>
+  import("@/components/layout/GlobalModals").then((mod) => mod.GlobalModals)
+);
+
+const CookieBanner = dynamic(() =>
+  import("@/components/ui/CookieBanner").then((mod) => mod.CookieBanner)
+);
+
+const ScrollToTop = dynamic(() =>
+  import("@/components/layout/ScrollToTop").then((mod) => mod.ScrollToTop)
+);
 
 export default function PublicLayout({
   children,

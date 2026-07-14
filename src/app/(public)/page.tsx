@@ -7,18 +7,53 @@ import {
   buildBreadcrumbSchema,
 } from "@/lib/schemas";
 import { heroTrustBadges, whyItems, processSteps } from "@/lib/seo-data";
-import { ServiciosPrincipales } from "@/components/seo/ServiciosPrincipales";
-import { UniversidadesCoverage } from "@/components/seo/UniversidadesCoverage";
-import { FaqSection } from "@/components/seo/FaqSection";
-import { CoberturaNacional } from "@/components/seo/CoberturaNacional";
-import { ProfesionesMedicas } from "@/components/seo/ProfesionesMedicas";
-import { NapContacto } from "@/components/seo/NapContacto";
-import { KeywordsSeoFooter } from "@/components/seo/KeywordsSeoFooter";
 import { CatalogProductCard } from "@/components/catalogo/CatalogProductCard";
 import { siteConfig } from "@/config/site";
 import { getRecentProducts } from "@/lib/catalogService";
-import { GoogleReviews } from "@/components/seo/GoogleReviews";
 import { getGoogleReviews } from "@/lib/googleReviewsService";
+import dynamic from "next/dynamic";
+
+const ServiciosPrincipales = dynamic(() =>
+  import("@/components/seo/ServiciosPrincipales").then(
+    (mod) => mod.ServiciosPrincipales
+  )
+);
+
+const UniversidadesCoverage = dynamic(() =>
+  import("@/components/seo/UniversidadesCoverage").then(
+    (mod) => mod.UniversidadesCoverage
+  )
+);
+
+const FaqSection = dynamic(() =>
+  import("@/components/seo/FaqSection").then((mod) => mod.FaqSection)
+);
+
+const CoberturaNacional = dynamic(() =>
+  import("@/components/seo/CoberturaNacional").then(
+    (mod) => mod.CoberturaNacional
+  )
+);
+
+const ProfesionesMedicas = dynamic(() =>
+  import("@/components/seo/ProfesionesMedicas").then(
+    (mod) => mod.ProfesionesMedicas
+  )
+);
+
+const NapContacto = dynamic(() =>
+  import("@/components/seo/NapContacto").then((mod) => mod.NapContacto)
+);
+
+const KeywordsSeoFooter = dynamic(() =>
+  import("@/components/seo/KeywordsSeoFooter").then(
+    (mod) => mod.KeywordsSeoFooter
+  )
+);
+
+const GoogleReviews = dynamic(() =>
+  import("@/components/seo/GoogleReviews").then((mod) => mod.GoogleReviews)
+);
 
 import type { Metadata } from "next";
 

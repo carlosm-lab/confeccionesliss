@@ -40,11 +40,11 @@ export function ServiciosPrincipales() {
             >
               <div className="bg-primary/5 relative h-44 sm:h-48">
                 <Image
-                  width={800}
-                  height={400}
-                  alt={s.imgAlt}
-                  className="h-full w-full object-cover"
                   src={s.imgSrc}
+                  alt={s.imgAlt}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover"
                 />
               </div>
               <div className="flex flex-col p-6">

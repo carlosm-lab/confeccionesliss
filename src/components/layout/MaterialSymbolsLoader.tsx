@@ -12,17 +12,29 @@ import { useEffect } from "react";
  */
 export function MaterialSymbolsLoader() {
   useEffect(() => {
-    // Inyectar el stylesheet de Material Symbols DESPUÉS de la hidratación
-    const existing = document.querySelector(
-      'link[href*="Material+Symbols+Outlined"]'
-    );
-    if (existing) return; // ya existe, no duplicar
+    const loadStyles = () => {
+      const existing = document.querySelector(
+        'link[href*="Material+Symbols+Outlined"]'
+      );
+      if (existing) return; // ya existe, no duplicar
 
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href =
-      "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap";
-    document.head.appendChild(link);
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href =
+        "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap";
+      document.head.appendChild(link);
+    };
+
+    if (document.readyState === "complete") {
+      const timer = setTimeout(loadStyles, 1000);
+      return () => clearTimeout(timer);
+    } else {
+      const handleLoad = () => {
+        setTimeout(loadStyles, 1000);
+      };
+      window.addEventListener("load", handleLoad);
+      return () => window.removeEventListener("load", handleLoad);
+    }
   }, []);
 
   return null;
