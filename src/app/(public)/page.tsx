@@ -109,10 +109,7 @@ export default async function HomePage() {
           </div>
 
           {/* IMAGEN HERO ÚNICA - OPTIMIZADA RESPONSIVE (Evita duplicación de descargas) */}
-          <div
-            className="animate-fade-in-up order-2 flex w-full max-w-sm self-center md:order-3 md:col-span-1 md:h-full md:max-w-none md:self-stretch lg:order-none lg:col-span-5 lg:row-span-2 lg:h-full lg:items-center"
-            style={{ animationDelay: "300ms" }}
-          >
+          <div className="order-2 flex w-full max-w-sm self-center md:order-3 md:col-span-1 md:h-full md:max-w-none md:self-stretch lg:order-none lg:col-span-5 lg:row-span-2 lg:h-full lg:items-center">
             <div className="border-primary/35 relative z-10 flex w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:h-full">
               <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
               <div className="relative aspect-[4/5] w-full rounded-xl md:aspect-auto md:h-full md:w-full">
