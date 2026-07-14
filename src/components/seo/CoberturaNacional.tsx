@@ -2,12 +2,12 @@ import { geoZonaOriental, geoRestoPais } from "@/lib/seo-data";
 
 function MuniList({ items, prefix }: { items: string[]; prefix: string }) {
   return (
-    <ul className="text-on-surface-variant space-y-1 text-xs">
+    <ul
+      className="text-on-surface-variant space-y-1 text-xs"
+      aria-label={`${prefix} en: ${items.join(", ")}`}
+    >
       {items.map((m) => (
-        <li key={m}>
-          <span className="sr-only">{prefix} </span>
-          {m}
-        </li>
+        <li key={m}>{m}</li>
       ))}
     </ul>
   );

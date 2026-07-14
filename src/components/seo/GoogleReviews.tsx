@@ -92,166 +92,80 @@ export function GoogleReviews({ reviews }: GoogleReviewsProps) {
           </div>
         </div>
 
-        {/* Mobile/Tablet: horizontal snap-scroll row */}
-        <div className="block lg:hidden">
-          <div className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 sm:-mx-8 sm:px-8">
-            {[...reviews]
-              .sort((a, b) => {
-                const hasCommentA = a.comment ? 1 : 0;
-                const hasCommentB = b.comment ? 1 : 0;
-                if (hasCommentA !== hasCommentB)
-                  return hasCommentB - hasCommentA;
-                return (
-                  new Date(b.created_at).getTime() -
-                  new Date(a.created_at).getTime()
-                );
-              })
-              .map((r, index) => {
-                const href =
-                  reviewLinksByName[r.author_name] ||
-                  siteConfig.links.googleMaps;
-                return (
-                  <a
-                    key={r.id || index}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group border-primary/10 hover:border-primary/30 focus-visible:ring-primary flex w-[78vw] max-w-[300px] shrink-0 snap-start flex-col justify-between rounded-2xl border bg-white p-5 shadow-[0_4px_20px_rgba(20,48,103,0.05)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(20,48,103,0.1)] focus-visible:ring-2 focus-visible:outline-none sm:w-[320px] sm:max-w-none"
-                  >
-                    <div>
-                      <div className="mb-4 flex items-center justify-between">
-                        <div
-                          className="flex text-amber-400"
-                          aria-label={`${r.rating} estrellas`}
-                        >
-                          {Array.from({ length: r.rating }).map((_, i) => (
-                            <span
-                              key={i}
-                              className="material-symbols-outlined text-sm"
-                              style={{ fontVariationSettings: "'FILL' 1" }}
-                            >
-                              star
-                            </span>
-                          ))}
-                        </div>
-                        <span className="group-hover:text-primary text-slate-300 transition-colors">
-                          <Image
-                            src="/icons/google.svg"
-                            alt="Google"
-                            width={16}
-                            height={16}
-                            className="h-4 w-auto opacity-60 group-hover:opacity-100"
-                          />
-                        </span>
-                      </div>
-                      {r.comment && (
-                        <blockquote className="text-on-surface-variant mb-4 font-sans text-sm leading-relaxed italic">
-                          &quot;{r.comment}&quot;
-                        </blockquote>
-                      )}
-                    </div>
-                    <div className="mt-6 flex items-center gap-3">
-                      <div className="bg-primary/5 text-primary flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-serif text-sm font-bold uppercase">
-                        {r.author_name.charAt(0)}
-                      </div>
-                      <div>
-                        <cite className="text-on-surface block font-sans text-sm font-semibold not-italic">
-                          {r.author_name}
-                        </cite>
-                        <span className="flex items-center gap-1 text-xs text-slate-400">
-                          Cliente verificado
-                          <span className="material-symbols-outlined text-[12px] font-bold text-emerald-500">
-                            verified
+        {/* Responsivo: contenedor único de scroll que se adapta a desktop y móvil */}
+        <div className="scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent -mx-5 -mt-3 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 py-3 pb-5 sm:-mx-8 sm:px-8 lg:mx-0 lg:gap-6 lg:px-0">
+          {[...reviews]
+            .sort((a, b) => {
+              const hasCommentA = a.comment ? 1 : 0;
+              const hasCommentB = b.comment ? 1 : 0;
+              if (hasCommentA !== hasCommentB) return hasCommentB - hasCommentA;
+              return (
+                new Date(b.created_at).getTime() -
+                new Date(a.created_at).getTime()
+              );
+            })
+            .map((r, index) => {
+              const href =
+                reviewLinksByName[r.author_name] || siteConfig.links.googleMaps;
+              return (
+                <a
+                  key={r.id || index}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group border-primary/10 hover:border-primary/30 focus-visible:ring-primary flex w-[78vw] max-w-[300px] shrink-0 snap-start flex-col justify-between rounded-2xl border bg-white p-5 shadow-[0_4px_20px_rgba(20,48,103,0.05)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(20,48,103,0.1)] focus-visible:ring-2 focus-visible:outline-none sm:w-[320px] sm:max-w-none lg:p-6"
+                >
+                  <div>
+                    <div className="mb-4 flex items-center justify-between">
+                      <div
+                        className="flex text-amber-400"
+                        aria-label={`${r.rating} estrellas`}
+                      >
+                        {Array.from({ length: r.rating }).map((_, i) => (
+                          <span
+                            key={i}
+                            className="material-symbols-outlined text-sm"
+                            style={{ fontVariationSettings: "'FILL' 1" }}
+                          >
+                            star
                           </span>
-                        </span>
+                        ))}
                       </div>
+                      <span className="group-hover:text-primary text-slate-300 transition-colors">
+                        <Image
+                          src="/icons/google.svg"
+                          alt="Google"
+                          width={16}
+                          height={16}
+                          className="h-4 w-auto opacity-60 group-hover:opacity-100"
+                        />
+                      </span>
                     </div>
-                  </a>
-                );
-              })}
-          </div>
-        </div>
-
-        {/* Desktop: single horizontal scroll row.
-             -mt-3 + py-3 trick: overflow-x-auto clips vertically too, so we give
-             extra vertical padding so hover lift + shadow are never cut off. */}
-        <div className="hidden lg:block">
-          <div className="scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent -mt-3 flex snap-x snap-mandatory gap-6 overflow-x-auto py-3 pb-5">
-            {[...reviews]
-              .sort((a, b) => {
-                const hasCommentA = a.comment ? 1 : 0;
-                const hasCommentB = b.comment ? 1 : 0;
-                if (hasCommentA !== hasCommentB)
-                  return hasCommentB - hasCommentA;
-                return (
-                  new Date(b.created_at).getTime() -
-                  new Date(a.created_at).getTime()
-                );
-              })
-              .map((r, index) => {
-                const href =
-                  reviewLinksByName[r.author_name] ||
-                  siteConfig.links.googleMaps;
-                return (
-                  <a
-                    key={r.id || index}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group border-primary/10 hover:border-primary/30 focus-visible:ring-primary flex w-[320px] shrink-0 snap-start flex-col justify-between rounded-2xl border bg-white p-6 shadow-[0_4px_20px_rgba(20,48,103,0.05)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(20,48,103,0.1)] focus-visible:ring-2 focus-visible:outline-none"
-                  >
+                    {r.comment && (
+                      <blockquote className="text-on-surface-variant mb-4 font-sans text-sm leading-relaxed italic">
+                        &quot;{r.comment}&quot;
+                      </blockquote>
+                    )}
+                  </div>
+                  <div className="mt-6 flex items-center gap-3">
+                    <div className="bg-primary/5 text-primary flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-serif text-sm font-bold uppercase">
+                      {r.author_name.charAt(0)}
+                    </div>
                     <div>
-                      <div className="mb-4 flex items-center justify-between">
-                        <div
-                          className="flex text-amber-400"
-                          aria-label={`${r.rating} estrellas`}
-                        >
-                          {Array.from({ length: r.rating }).map((_, i) => (
-                            <span
-                              key={i}
-                              className="material-symbols-outlined text-sm"
-                              style={{ fontVariationSettings: "'FILL' 1" }}
-                            >
-                              star
-                            </span>
-                          ))}
-                        </div>
-                        <span className="group-hover:text-primary text-slate-300 transition-colors">
-                          <Image
-                            src="/icons/google.svg"
-                            alt="Google"
-                            width={16}
-                            height={16}
-                            className="h-4 w-auto opacity-60 group-hover:opacity-100"
-                          />
+                      <cite className="text-on-surface block font-sans text-sm font-semibold not-italic">
+                        {r.author_name}
+                      </cite>
+                      <span className="flex items-center gap-1 text-xs text-slate-400">
+                        Cliente verificado
+                        <span className="material-symbols-outlined text-[12px] font-bold text-emerald-500">
+                          verified
                         </span>
-                      </div>
-                      {r.comment && (
-                        <blockquote className="text-on-surface-variant mb-4 font-sans text-sm leading-relaxed italic">
-                          &quot;{r.comment}&quot;
-                        </blockquote>
-                      )}
+                      </span>
                     </div>
-                    <div className="mt-6 flex items-center gap-3">
-                      <div className="bg-primary/5 text-primary flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-serif text-sm font-bold uppercase">
-                        {r.author_name.charAt(0)}
-                      </div>
-                      <div>
-                        <cite className="text-on-surface block font-sans text-sm font-semibold not-italic">
-                          {r.author_name}
-                        </cite>
-                        <span className="flex items-center gap-1 text-xs text-slate-400">
-                          Cliente verificado
-                          <span className="material-symbols-outlined text-[12px] font-bold text-emerald-500">
-                            verified
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                  </a>
-                );
-              })}
-          </div>
+                  </div>
+                </a>
+              );
+            })}
         </div>
 
         <div className="mt-12 text-center">
