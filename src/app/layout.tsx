@@ -97,24 +97,6 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        {/*
-         * LCP PRELOAD — Hero image móvil/desktop
-         * CRÍTICO: Los atributos deben estar en MINÚSCULA (imagesrcset, imagesizes)
-         * React 19 pasa atributos desconocidos sin normalizar → imageSrcSet en el HTML
-         * lo ignoran los browsers. El preload scanner solo opera sobre el <head>
-         * y solo reconoce las variantes lowercase del spec HTML.
-         */}
-        <link
-          rel="preload"
-          as="image"
-          href="/_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=750&q=80"
-          {...({
-            imagesrcset:
-              "/_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=640&q=80 640w, /_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=750&q=80 750w, /_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=1080&q=80 1080w, /_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=1200&q=80 1200w",
-            imagesizes: "(max-width:768px) 80vw, 40vw",
-            fetchpriority: "high",
-          } as React.HTMLAttributes<HTMLLinkElement>)}
-        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
