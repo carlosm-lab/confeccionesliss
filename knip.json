@@ -11,6 +11,7 @@
   ],
   "ignore": [
     ".agents/**",
+    ".gemini/**",
     "public/sw.js",
     "supabase/**",
     "src/config/mediaKit.ts",
