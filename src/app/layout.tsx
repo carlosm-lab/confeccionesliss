@@ -21,6 +21,7 @@ import { siteConfig } from "@/config/site";
 import { env } from "@/env";
 import { AnalyticsScripts } from "@/components/analytics/AnalyticsScripts";
 import { MaterialSymbolsLoader } from "@/components/layout/MaterialSymbolsLoader";
+import { preload } from "react-dom";
 
 export const metadata = {
   title: {
@@ -109,41 +110,16 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         {/*
-         * Preload explícito del hero image (LCP) — descarga desde el primer byte del HTML,
-         * sin esperar a que React renderice StaticHeroImage. Esto elimina la "resource load
-         * delay" del LCP breakdown. Carga la variante 640w/750w (mobile-first).
-         *
-         * NOTA TÉCNICA: imagesrcset/imagesizes son atributos HTML válidos del elemento
-         * <link rel="preload" as="image">. React emite un warning en DEV porque no los
-         * reconoce como props camelCase, pero en producción el HTML se sirve correctamente
-         * y el Preload Scanner del browser los detecta desde el primer byte del documento.
-         * Moverlos a un <script> rompería el Preload Scanner y degradaría el LCP.
-         * El cast `as any` silencia TypeScript sin afectar el output HTML final.
+         * Preload explícito del hero image (LCP) mediante ReactDOM.preload().
+         * A diferencia de <link> JSX (que convierte imagesrcset→imageSrcSet rompiendo
+         * el preload), preload() emite el <link> correctamente en el HTML SSR.
+         * Precarga la variante 750w — tamaño correcto para Moto G Power (DPR 1.75,
+         * 412px viewport × 80vw × 1.75 = ~577px → 750w).
          */}
-        {}
-        <link
-          {...({
-            rel: "preload",
-            as: "image",
-            media: "(max-width: 768px)",
-            imagesrcset:
-              "/_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=640&q=75 640w, /_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=750&q=75 750w",
-            imagesizes: "(max-width: 768px) 80vw, 40vw",
-            fetchPriority: "high",
-          } as any)}
-        />
-        {}
-        <link
-          {...({
-            rel: "preload",
-            as: "image",
-            media: "(min-width: 769px)",
-            imagesrcset:
-              "/_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=1080&q=75 1080w, /_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=1200&q=75 1200w",
-            imagesizes: "(max-width: 768px) 80vw, 40vw",
-            fetchPriority: "high",
-          } as any)}
-        />
+        {preload(
+          "/_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=750&q=75",
+          { as: "image", fetchPriority: "high" }
+        )}
 
         <script
           type="application/ld+json"
