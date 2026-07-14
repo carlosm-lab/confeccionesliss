@@ -53,19 +53,19 @@ export function FilterSidebar({
   const selected = activeFilters[field] ?? [];
 
   return (
-    <aside className="hidden min-w-[200px] flex-col gap-6 self-start pr-2 lg:flex lg:w-64 lg:shrink-0">
-      <div className="relative flex flex-col gap-6 rounded-2xl border border-[rgba(20,48,103,0.35)] bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),_0_0_10px_2px_rgba(20,48,103,0.1)]">
+    <aside className="hidden max-h-full min-w-[200px] flex-col gap-6 self-start pr-2 lg:flex lg:w-64 lg:shrink-0">
+      <div className="relative flex max-h-full flex-col gap-6 overflow-hidden rounded-2xl border border-[rgba(20,48,103,0.35)] bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),_0_0_10px_2px_rgba(20,48,103,0.1)]">
         {/* Marco de bordes punteados (estilo /links) */}
         <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed opacity-60" />
 
         {/* Categories Section */}
-        <div className="relative z-30">
-          <h3 className="mb-3 font-sans text-[11px] font-bold tracking-wider text-slate-800 uppercase">
+        <div className="relative z-30 flex min-h-0 flex-1 flex-col">
+          <h3 className="mb-3 shrink-0 font-sans text-[11px] font-bold tracking-wider text-slate-800 uppercase">
             Categorías
           </h3>
 
           {/* Seleccionar Varios Toggle */}
-          <div className="mb-4 border-b border-slate-100 pb-3">
+          <div className="mb-4 shrink-0 border-b border-slate-100 pb-3">
             <label className="group flex cursor-pointer items-center justify-between">
               <span className="text-[12px] font-bold text-slate-700 transition-colors select-none">
                 Seleccionar Varios
@@ -92,7 +92,7 @@ export function FilterSidebar({
             </label>
           </div>
 
-          <div className="flex flex-col gap-[0.25rem]">
+          <div className="elegant-scrollbar flex min-h-0 flex-1 flex-col gap-[0.25rem] overflow-y-auto pr-1">
             {/* Todos option */}
             <button
               type="button"
@@ -151,7 +151,7 @@ export function FilterSidebar({
         </div>
 
         {/* Filtros Especiales */}
-        <div className="relative z-30 border-t border-slate-100 pt-5">
+        <div className="relative z-30 shrink-0 border-t border-slate-100 pt-5">
           <h3 className="mb-3 font-sans text-[11px] font-bold tracking-wider text-slate-800 uppercase">
             Filtros Especiales
           </h3>
