@@ -42,12 +42,28 @@ interface AuthContextValue {
   hideAuthModal: () => void;
 }
 
+// Estado por defecto para cuando AuthProvider aún no se ha montado
+// (durante la ventana de DeferredProviders antes del primer frame)
+const AUTH_GUEST_DEFAULT: AuthContextValue = {
+  user: null,
+  session: null,
+  profile: null,
+  isAdmin: false,
+  loading: false,
+  signInWithGoogle: async () => {},
+  signOut: async () => {},
+  authModalContext: null,
+  showAuthModal: () => {},
+  hideAuthModal: () => {},
+};
+
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
-export const useAuth = () => {
+export const useAuth = (): AuthContextValue => {
   const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth must be used within AuthProvider");
-  return ctx;
+  // Null-safe: cuando DeferredProviders no ha montado AuthProvider aún,
+  // devolvemos el estado guest en lugar de lanzar un error.
+  return ctx ?? AUTH_GUEST_DEFAULT;
 };
 
 // Cache keys

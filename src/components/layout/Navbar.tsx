@@ -349,7 +349,6 @@ export function Navbar() {
                 height={96}
                 sizes="48px"
                 className="h-12 w-auto"
-                priority
               />
               {/* Texto del logo — siempre en DOM para SEO; visible en sm+ */}
               <span className="sr-only">

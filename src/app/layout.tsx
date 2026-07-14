@@ -107,6 +107,19 @@ export default function RootLayout({
           href="https://cvbdqsxjfrbwovzpydng.supabase.co"
           crossOrigin="anonymous"
         />
+        {/*
+         * Preload explícito del hero image (LCP) — descarga desde el primer byte del HTML,
+         * sin esperar a que React renderice StaticHeroImage. Esto elimina la "resource load
+         * delay" del LCP breakdown. Carga la variante 640w (mobile-first).
+         */}
+        <link
+          rel="preload"
+          as="image"
+          imageSrcSet="/_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=640&q=75 640w, /_next/image?url=%2Fimages%2Funiformes%2Fportada.webp&w=1080&q=75 1080w"
+          imageSizes="(max-width:768px) 80vw, 40vw"
+          fetchPriority="high"
+        />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

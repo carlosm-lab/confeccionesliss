@@ -54,11 +54,16 @@ const FavoritesContext = createContext<FavoritesContextValue | undefined>(
   undefined
 );
 
-export const useFavorites = () => {
+// Estado por defecto — favoritos vacíos cuando el provider no está montado
+const FAVORITES_EMPTY_DEFAULT: FavoritesContextValue = {
+  favorites: [],
+  toggleFavorite: async () => {},
+  isFavorite: () => false,
+};
+
+export const useFavorites = (): FavoritesContextValue => {
   const ctx = useContext(FavoritesContext);
-  if (!ctx)
-    throw new Error("useFavorites must be used within FavoritesProvider");
-  return ctx;
+  return ctx ?? FAVORITES_EMPTY_DEFAULT;
 };
 
 export function FavoritesProvider({ children }: { children: ReactNode }) {

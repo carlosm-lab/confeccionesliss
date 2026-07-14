@@ -153,11 +153,23 @@ const NotificationContext = createContext<NotificationContextValue | null>(
   null
 );
 
+// Estado por defecto — sin notificaciones cuando el provider aún no está montado
+const NOTIF_EMPTY_DEFAULT: NotificationContextValue = {
+  notifications: [],
+  unreadCount: 0,
+  markRead: () => {},
+  markAllHintsRead: () => {},
+  dismissNotification: () => {},
+  addLocalNotification: () => {},
+  subscribeToPush: async () => false,
+  pushPermissionStatus: "default",
+  pushPromptDismissed: false,
+};
+
 export function useNotifications(): NotificationContextValue {
   const ctx = useContext(NotificationContext);
-  if (!ctx)
-    throw new Error("useNotifications must be inside NotificationProvider");
-  return ctx;
+  // Null-safe: devuelve estado vacío cuando NotificationProvider aún no se ha montado
+  return ctx ?? NOTIF_EMPTY_DEFAULT;
 }
 
 /**

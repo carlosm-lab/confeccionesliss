@@ -103,10 +103,29 @@ interface CartContextValue {
 
 const CartContext = createContext<CartContextValue | undefined>(undefined);
 
-export const useCart = () => {
+// Estado por defecto — carrito vacío para cuando CartProvider aún no se ha montado
+const CART_EMPTY_DEFAULT: CartContextValue = {
+  cartItems: [],
+  addToCart: () => {},
+  removeFromCart: () => {},
+  updateQuantity: () => {},
+  clearCart: () => {},
+  cartTotal: 0,
+  cartCount: 0,
+  isCartOpen: false,
+  setIsCartOpen: () => {},
+  refreshCartPrices: async () => {},
+  isRefreshingPrices: false,
+  arePricesStale: false,
+  consecutiveRefreshFailures: 0,
+  shippingInfo: null,
+  setShippingInfo: () => {},
+};
+
+export const useCart = (): CartContextValue => {
   const ctx = useContext(CartContext);
-  if (!ctx) throw new Error("useCart must be used within CartProvider");
-  return ctx;
+  // Null-safe: devuelve carrito vacío cuando CartProvider aún no se ha montado
+  return ctx ?? CART_EMPTY_DEFAULT;
 };
 
 /**
