@@ -53,7 +53,7 @@ export function FilterSidebar({
   const selected = activeFilters[field] ?? [];
 
   return (
-    <aside className="sticky top-24 hidden min-w-[200px] flex-col gap-6 self-start pr-2 lg:flex lg:w-64 lg:shrink-0">
+    <aside className="hidden min-w-[200px] flex-col gap-6 self-start pr-2 lg:flex lg:w-64 lg:shrink-0">
       <div className="relative flex flex-col gap-6 rounded-2xl border border-[rgba(20,48,103,0.35)] bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),_0_0_10px_2px_rgba(20,48,103,0.1)]">
         {/* Marco de bordes punteados (estilo /links) */}
         <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed opacity-60" />

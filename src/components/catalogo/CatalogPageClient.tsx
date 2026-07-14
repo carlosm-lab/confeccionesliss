@@ -220,7 +220,7 @@ export function CatalogPageClient({
       <div className="mx-auto flex w-full max-w-screen-2xl flex-1 flex-col gap-[var(--space-lg)] px-5 pt-6 pb-[var(--space-lg)] md:px-8 lg:flex-row lg:gap-12">
         {/* Desktop sidebar */}
         <div
-          className="animate-fade-in-up w-full shrink-0 select-none lg:w-72 lg:self-start"
+          className="animate-fade-in-up sticky top-24 w-full shrink-0 select-none lg:w-72 lg:self-start"
           style={{ animationDelay: "150ms" }}
         >
           <FilterSidebar
