@@ -130,6 +130,8 @@ export function HeroImageCarousel({
     return () => clearInterval(interval);
   }, [isPaused, hasInteracted]);
 
+  if (!hasInteracted) return null;
+
   return (
     /*
      * El wrapper externo NO tiene overflow-hidden, para que las burbujas
