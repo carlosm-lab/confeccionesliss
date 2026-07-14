@@ -111,8 +111,16 @@ export default function RootLayout({
         {/*
          * Preload explícito del hero image (LCP) — descarga desde el primer byte del HTML,
          * sin esperar a que React renderice StaticHeroImage. Esto elimina la "resource load
-         * delay" del LCP breakdown. Carga la variante 640w (mobile-first).
+         * delay" del LCP breakdown. Carga la variante 640w/750w (mobile-first).
+         *
+         * NOTA TÉCNICA: imagesrcset/imagesizes son atributos HTML válidos del elemento
+         * <link rel="preload" as="image">. React emite un warning en DEV porque no los
+         * reconoce como props camelCase, pero en producción el HTML se sirve correctamente
+         * y el Preload Scanner del browser los detecta desde el primer byte del documento.
+         * Moverlos a un <script> rompería el Preload Scanner y degradaría el LCP.
+         * El cast `as any` silencia TypeScript sin afectar el output HTML final.
          */}
+        {}
         <link
           {...({
             rel: "preload",
@@ -124,6 +132,7 @@ export default function RootLayout({
             fetchPriority: "high",
           } as any)}
         />
+        {}
         <link
           {...({
             rel: "preload",

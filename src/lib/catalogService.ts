@@ -6,6 +6,7 @@
 // NO importar en Client Components — usar el hook useProducts.ts.
 // ──────────────────────────────────────────────────────────────
 import { createClient } from "@supabase/supabase-js";
+import { unstable_cache } from "next/cache";
 import { logger } from "@/lib/logger";
 import { env } from "@/env";
 
@@ -325,59 +326,71 @@ export async function getProductBySlug(
 
 // -- Obtener productos para la seccion Novedades del home (ISR on-demand) -----
 // La revalidacion funciona via revalidatePath("/") en los Server Actions.
-// Next.js 15/16: fetch no usa cache por defecto (no-store), por lo que
-// cada regeneracion de ISR siempre obtiene datos frescos de Supabase.
+// Los resultados se cachean en el servidor (unstable_cache) por 5 minutos para
+// que los renders SSR fríos (CDN cache miss) no incurran en roundtrip a Supabase.
+// La etiqueta "recent-products" permite invalidar el cache on-demand.
+const _fetchRecentProducts = unstable_cache(
+  async (limit: number): Promise<DbProduct[]> => {
+    const supabase = createServerClient(["products"]);
+
+    // 1. Obtener todos los productos fijados activos
+    const { data: featured, error: featuredError } = await supabase
+      .from("products")
+      .select(PRODUCT_SELECT)
+      .eq("is_active", true)
+      .eq("is_featured", true)
+      .order("updated_at", { ascending: false })
+      .limit(limit);
+
+    if (featuredError) {
+      logger.error(
+        "[catalogService] getRecentProducts (featured) error:",
+        featuredError
+      );
+      return [];
+    }
+
+    const featuredList = (featured ?? []) as unknown as DbProduct[];
+
+    if (featuredList.length >= limit) {
+      return featuredList.slice(0, limit);
+    }
+
+    const remaining = limit - featuredList.length;
+    const featuredIds = featuredList.map((p) => p.id).filter(Boolean);
+
+    let recentsQuery = supabase
+      .from("products")
+      .select(PRODUCT_SELECT)
+      .eq("is_active", true)
+      .order("created_at", { ascending: false })
+      .limit(remaining);
+
+    if (featuredIds.length > 0) {
+      recentsQuery = recentsQuery.not("id", "in", `(${featuredIds.join(",")})`);
+    }
+
+    const { data: recents, error: recentsError } = await recentsQuery;
+
+    if (recentsError) {
+      logger.error(
+        "[catalogService] getRecentProducts (recents) error:",
+        recentsError
+      );
+      return featuredList;
+    }
+
+    return [...featuredList, ...((recents ?? []) as unknown as DbProduct[])];
+  },
+  ["recent-products"],
+  {
+    revalidate: 300, // 5 minutos — suficiente frescura para novedades
+    tags: ["recent-products"],
+  }
+);
+
 export async function getRecentProducts(limit = 10): Promise<DbProduct[]> {
-  const supabase = createServerClient(["products"]);
-
-  // 1. Obtener todos los productos fijados activos
-  const { data: featured, error: featuredError } = await supabase
-    .from("products")
-    .select(PRODUCT_SELECT)
-    .eq("is_active", true)
-    .eq("is_featured", true)
-    .order("updated_at", { ascending: false })
-    .limit(limit);
-
-  if (featuredError) {
-    logger.error(
-      "[catalogService] getRecentProducts (featured) error:",
-      featuredError
-    );
-    return [];
-  }
-
-  const featuredList = (featured ?? []) as unknown as DbProduct[];
-
-  if (featuredList.length >= limit) {
-    return featuredList.slice(0, limit);
-  }
-
-  const remaining = limit - featuredList.length;
-  const featuredIds = featuredList.map((p) => p.id).filter(Boolean);
-
-  let recentsQuery = supabase
-    .from("products")
-    .select(PRODUCT_SELECT)
-    .eq("is_active", true)
-    .order("created_at", { ascending: false })
-    .limit(remaining);
-
-  if (featuredIds.length > 0) {
-    recentsQuery = recentsQuery.not("id", "in", `(${featuredIds.join(",")})`);
-  }
-
-  const { data: recents, error: recentsError } = await recentsQuery;
-
-  if (recentsError) {
-    logger.error(
-      "[catalogService] getRecentProducts (recents) error:",
-      recentsError
-    );
-    return featuredList;
-  }
-
-  return [...featuredList, ...((recents ?? []) as unknown as DbProduct[])];
+  return _fetchRecentProducts(limit);
 }
 
 // ── Obtener conteo de productos activos por sector ────────────

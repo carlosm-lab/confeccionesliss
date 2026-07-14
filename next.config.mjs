@@ -121,7 +121,7 @@ const nextConfig = {
   },
   images: {
     formats: ["image/avif", "image/webp"],
-    qualities: [75, 90],
+    qualities: [75, 80, 90],
     // Cachear imágenes optimizadas por 1 año en el servidor
     minimumCacheTTL: 31536000,
     // Tamaños de dispositivo mobile-first optimizados
