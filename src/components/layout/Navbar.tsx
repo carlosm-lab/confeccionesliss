@@ -5,8 +5,21 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { SearchModal } from "@/components/layout/SearchModal";
-import { FavoritesModal } from "@/components/cart/FavoritesModal";
+import dynamic from "next/dynamic";
+
+const SearchModal = dynamic(
+  () =>
+    import("@/components/layout/SearchModal").then((mod) => mod.SearchModal),
+  { ssr: false }
+);
+
+const FavoritesModal = dynamic(
+  () =>
+    import("@/components/cart/FavoritesModal").then(
+      (mod) => mod.FavoritesModal
+    ),
+  { ssr: false }
+);
 import { GuestBell } from "@/components/ui/GuestBell";
 import { useCart } from "@/context/CartContext";
 import { useFavorites } from "@/context/FavoritesContext";

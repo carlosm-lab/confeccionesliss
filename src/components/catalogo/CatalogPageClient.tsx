@@ -12,8 +12,8 @@ import { MobileFilterDrawer, type SortOption } from "./MobileFilterDrawer";
 import { CatalogProductCard } from "./CatalogProductCard";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import type { CategoryConfig, Sector } from "@/data/types";
-import type { DbProduct } from "@/lib/catalogService";
-import { isProductOnSale } from "@/lib/catalogService";
+import type { DbProduct } from "@/lib/productShared";
+import { isProductOnSale } from "@/lib/productShared";
 
 const ITEMS_PER_PAGE = 15;
 
@@ -268,7 +268,7 @@ export function CatalogPageClient({
 
           {/* Desktop sort bar */}
           <div
-            className="animate-fade-in-up mb-[var(--space-lg)] hidden items-center justify-between lg:flex"
+            className="animate-fade-in-up relative z-30 mb-[var(--space-lg)] hidden items-center justify-between lg:flex"
             style={{ animationDelay: "250ms" }}
           >
             <p className="font-medium text-[var(--text-sm)] text-slate-500">

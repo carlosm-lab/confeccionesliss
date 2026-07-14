@@ -31,7 +31,7 @@ import {
   isProductOnSale,
   getProductSector,
   type DbProduct,
-} from "@/lib/catalogService";
+} from "@/lib/productShared";
 import type { DbReview } from "@/lib/reviewsService";
 import { buildQuoteUrl } from "@/lib/whatsapp";
 

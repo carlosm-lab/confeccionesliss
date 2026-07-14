@@ -12,7 +12,7 @@ import {
   getProductSector,
   getProductUrl,
   type DbProduct,
-} from "@/lib/catalogService";
+} from "@/lib/productShared";
 
 /* ─── Typewriter placeholder ─── */
 const SEARCH_PHRASES = [

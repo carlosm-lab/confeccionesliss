@@ -15,7 +15,8 @@
     "public/sw.js",
     "supabase/**",
     "src/config/mediaKit.ts",
-    "src/components/empresa/PerfilDetalleClient.tsx"
+    "src/components/empresa/PerfilDetalleClient.tsx",
+    "scratch/**"
   ],
   "entry": [
     "src/app/**/*.{ts,tsx}",

@@ -10,198 +10,21 @@ import { unstable_cache } from "next/cache";
 import { logger } from "@/lib/logger";
 import { env } from "@/env";
 
-// ── Tipo de producto proveniente de la base de datos ─────────
+// ── Importar tipos y utilidades compartidas de productos ──────
+import {
+  type DbProduct as SharedDbProduct,
+  type DbCategory as SharedDbCategory,
+  getProductMainImage as sharedGetProductMainImage,
+  getProductSector as sharedGetProductSector,
+  getProductUniversity as sharedGetProductUniversity,
+} from "./productShared";
 
-// ── Tipo de producto proveniente de la base de datos ─────────
-export interface DbProduct {
-  id: string;
-  name: string;
-  description: string | null;
-  short_description: string | null;
-  price: number;
-  old_price: number | null;
-  offer_ends_at: string | null;
-  offer_starts_at: string | null;
-  /** Tipo de oferta (campo legacy). Ver product_offer_rules para multi-tipo. */
-  offer_type: string | null;
-  category: string | null; // slug de la categoría
-  category_id: string | null;
-  tags: string[] | null;
-  image_path: string | null;
-  images: string[] | null;
-  is_active: boolean;
-  slug: string | null;
-  sector: string | null; // catálogo/sector (scrubs, escolar, etc.)
-  tallas: string[] | null; // ["S","M","L","XL"]
-  colores: { name: string; hex: string }[] | null;
-  /** Etiqueta editable para la sección de colores en la ficha pública */
-  colores_label: string | null;
-  material: string | null;
-  caracteristicas: string[] | null;
-  created_at: string | null;
-  updated_at: string | null;
-  // Precio por talla — mapa { talla: precio } (null si no aplica)
-  price_by_size: Record<string, number> | null;
-  // Oferta por talla — mapa { talla: precio_oferta } (null si no hay ofertas en ninguna talla)
-  offer_by_size: Record<string, number> | null;
-  // Join from categories table
-  categories?: { name: string; catalog: string } | null;
-  /** Términos de la oferta — texto libre para mostrar al cliente */
-  offer_terms?: string | null;
-  // ── Campos SEO manuales (opcionales por producto) ─────────────
-  /** Título SEO manual — si null, se usa el automático (product.name | subtitle) */
-  seo_title?: string | null;
-  /** Meta description manual — si null, se usa short_description ?? description */
-  seo_description?: string | null;
-  /** Keywords SEO — texto libre separado por comas */
-  seo_keywords?: string | null;
-  /** Directiva de indexación: 'index, follow' | 'noindex, follow' | 'index, nofollow' | 'noindex, nofollow' */
-  seo_robots?: string | null;
-  /** Publisher manual — si null, se usa siteConfig.name */
-  seo_publisher?: string | null;
-  /** Precio único para productos sin variantes de talla.
-   * Cuando price_by_size es null/vacío, este campo es el precio definitivo del producto. */
-  base_price?: number | null;
-  /** Etiquetas de ocasión: San Valentín, Cumpleaños, Boda, etc. */
-  ocasion?: string[] | null;
-  /** Dimensiones físicas en texto libre. Ej: "30cm × 20cm" */
-  dimensiones?: string | null;
-  /** Cantidad mínima de pedido. Default 1. */
-  cantidad_minima?: number | null;
-  /** Si hay envío disponible a nivel nacional. */
-  envio_nacional?: boolean | null;
-  /** Si el producto solo se entrega en San Miguel. */
-  solo_san_miguel?: boolean | null;
-  /** Si TRUE, el producto aparece fijado en la sección Novedades del home */
-  is_featured?: boolean;
-}
+type DbProduct = SharedDbProduct;
+type DbCategory = SharedDbCategory;
 
-/**
- * Convierte cualquier ruta de imagen (relativa, absoluta o de Supabase Storage)
- * a una URL completa y accesible para el navegador.
- */
-export function resolveImageUrl(url: string | null | undefined): string {
-  if (!url) return "";
-  const trimmed = url.trim();
-  if (!trimmed) return "";
-
-  // 1. URL HTTP/HTTPS completa
-  if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
-    return trimmed;
-  }
-
-  // 2. Data URL o Blob
-  if (trimmed.startsWith("data:") || trimmed.startsWith("blob:")) {
-    return trimmed;
-  }
-
-  // 3. Ruta relativa local que empieza por /
-  if (trimmed.startsWith("/")) {
-    return trimmed;
-  }
-
-  // 4. Ruta relativa almacenada en Supabase Storage (bucket `product-images` o `products`)
-  const supabaseUrl =
-    process.env.NEXT_PUBLIC_SUPABASE_URL ||
-    "https://cvbdqsxjfrbwovzpydng.supabase.co";
-  const cleanPath = trimmed.startsWith("product-images/")
-    ? trimmed.replace("product-images/", "")
-    : trimmed;
-
-  return `${supabaseUrl}/storage/v1/object/public/product-images/${cleanPath}`;
-}
-
-// ── Imagen principal resuelta ─────────────────────────────────
-export function getProductMainImage(product: DbProduct): string {
-  let raw: string | null = null;
-  if (
-    product.images &&
-    Array.isArray(product.images) &&
-    product.images.length > 0
-  ) {
-    raw = product.images[0];
-  } else {
-    raw = product.image_path ?? null;
-  }
-  return resolveImageUrl(raw);
-}
-
-// ── Determinar si el producto tiene oferta activa ─────────────
-// Verifica si existe offer_by_size con al menos una talla, O el old_price global,
-// y que las fechas de oferta sean válidas (o indefinida).
-export function isProductOnSale(product: DbProduct): boolean {
-  // Verificar si hay oferta en alguna talla (nuevo modelo) o precio global (legacy)
-  const hasOfferBySize =
-    product.offer_by_size && Object.keys(product.offer_by_size).length > 0;
-  const hasGlobalOldPrice =
-    product.old_price && product.old_price > product.price;
-  if (!hasOfferBySize && !hasGlobalOldPrice) return false;
-
-  // Verificar vigencia temporal
-  const now = new Date();
-  if (product.offer_starts_at && new Date(product.offer_starts_at) > now)
-    return false;
-  if (product.offer_ends_at && new Date(product.offer_ends_at) <= now)
-    return false;
-  return true;
-}
-
-// ── Resolver el sector de un producto ────────────────────────
-export function getProductSector(product: DbProduct): string {
-  return (
-    product.sector ??
-    product.categories?.catalog ??
-    product.category?.split("-")[0] ??
-    "scrubs"
-  );
-}
-
-const VALID_UNIVERSITY_SLUGS = new Set([
-  "univo",
-  "ieproes",
-  "ugb",
-  "unab",
-  "ues",
-  "uma",
-]);
-
-export function getProductUniversity(
-  product: Pick<DbProduct, "category" | "categories">
-): string | null {
-  if (
-    product.categories?.catalog &&
-    VALID_UNIVERSITY_SLUGS.has(product.categories.catalog)
-  ) {
-    return product.categories.catalog;
-  }
-  if (product.category) {
-    const prefix = product.category.split("-")[0];
-    if (VALID_UNIVERSITY_SLUGS.has(prefix)) {
-      return prefix;
-    }
-  }
-  return null;
-}
-
-// ── Resolver la URL de un producto ───────────────────────────
-export function getProductUrl(
-  product: Pick<DbProduct, "id" | "slug" | "sector" | "category" | "categories">
-): string {
-  const sector = getProductSector(product as DbProduct);
-
-  // Si viene con prefijo sector/slug, limpiar la primera parte para evitar duplicados
-  let slug = product.slug ?? product.id;
-  if (slug.includes("/")) {
-    slug = slug.split("/").pop() || slug;
-  }
-
-  if (sector === "universitario") {
-    const universitySlug = getProductUniversity(product) ?? "univo";
-    return `/catalogo/universidades/${universitySlug}/${slug}`;
-  }
-
-  return `/catalogo/${sector}/${slug}`;
-}
+export const getProductMainImage = sharedGetProductMainImage;
+export const getProductSector = sharedGetProductSector;
+export const getProductUniversity = sharedGetProductUniversity;
 
 // -- Crear cliente Supabase para RSC ------------------------------------------------
 // ARQUITECTURA: Usamos el comportamiento por defecto de Next.js 16 (auto no cache).
@@ -525,14 +348,6 @@ export async function getAllProductsForSitemap(): Promise<
 }
 
 // ── Categorías de un sector — alimenta los filtros dinámicos ──
-
-/** Categoría tal como viene de la tabla `categories` de Supabase */
-interface DbCategory {
-  id: string;
-  name: string;
-  slug: string;
-  catalog: string | null;
-}
 
 /**
  * Devuelve las categorías activas del catalog/sector desde Supabase.

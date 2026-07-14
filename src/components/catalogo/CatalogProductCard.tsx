@@ -16,7 +16,7 @@ import {
   getProductSector,
   getProductUrl,
   type DbProduct,
-} from "@/lib/catalogService";
+} from "@/lib/productShared";
 
 interface CatalogProductCardProps {
   product: DbProduct;

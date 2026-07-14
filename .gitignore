@@ -49,3 +49,7 @@ CLAUDE.md
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# gemini & performance temp logs
+.gemini/
+pagespeed-*.json

@@ -13,7 +13,7 @@ import { logger } from "@/lib/logger";
 import toast from "react-hot-toast";
 import FocusLock from "react-focus-lock";
 import { DEPARTMENTS, getShippingInfo } from "@/lib/shipping";
-import { getProductUrl } from "@/lib/catalogService";
+import { getProductUrl } from "@/lib/productShared";
 
 // Pasos del checkout
 type DrawerStep = "cart" | "shipping" | "confirm" | "sent";

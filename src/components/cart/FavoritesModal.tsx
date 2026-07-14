@@ -12,7 +12,7 @@ import { useModal } from "@/hooks/useModal";
 import { logger } from "@/lib/logger";
 import { FAVORITES_SELECT_COLUMNS } from "@/lib/constants";
 import FocusLock from "react-focus-lock";
-import { getProductUrl } from "@/lib/catalogService";
+import { getProductUrl } from "@/lib/productShared";
 
 interface FavoriteProduct {
   id: string;
