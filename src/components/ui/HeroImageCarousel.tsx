@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 "use client";
 
 import React, { useState, useEffect, useCallback, useRef } from "react";
@@ -46,12 +47,16 @@ export function HeroImageCarousel({
 }: HeroImageCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
   // ── Touch swipe ─────────────────────────────────────────
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
 
   const handleTouchStart = (e: React.TouchEvent) => {
+    if (!hasInteracted) {
+      setHasInteracted(true);
+    }
     touchStartX.current = e.touches[0].clientX;
     touchStartY.current = e.touches[0].clientY;
     setIsPaused(true);
@@ -89,61 +94,6 @@ export function HeroImageCarousel({
     setCurrentIndex((prev) => (prev + 1) % IMAGES.length);
   }, []);
 
-  const [hasInteracted, setHasInteracted] = useState(false);
-
-  useEffect(() => {
-    // Detectar headless/Lighthouse
-    const isLighthouse =
-      typeof navigator !== "undefined" &&
-      (navigator.webdriver ||
-        /HeadlessChrome/i.test(navigator.userAgent) ||
-        /Chrome-Lighthouse/i.test(navigator.userAgent) ||
-        /Lighthouse/i.test(navigator.userAgent));
-
-    if (isLighthouse) return;
-
-    let active = true;
-    let added = false;
-
-    const handleInteraction = () => {
-      if (!active) return;
-      setHasInteracted(true);
-      cleanup();
-    };
-
-    const cleanup = () => {
-      if (added) {
-        window.removeEventListener("touchstart", handleInteraction);
-        window.removeEventListener("mouseover", handleInteraction);
-        window.removeEventListener("scroll", handleInteraction);
-        window.removeEventListener("keydown", handleInteraction);
-        added = false;
-      }
-    };
-
-    // Retrasar el registro de listeners 2 segundos.
-    // Esto evita que las interacciones simuladas tempranas de Lighthouse/PageSpeed
-    // (como scroll/mouseover en los primeros ms) monten el carousel y arruinen el LCP.
-    const timer = setTimeout(() => {
-      if (!active) return;
-      window.addEventListener("touchstart", handleInteraction, {
-        passive: true,
-      });
-      window.addEventListener("mouseover", handleInteraction, {
-        passive: true,
-      });
-      window.addEventListener("scroll", handleInteraction, { passive: true });
-      window.addEventListener("keydown", handleInteraction, { passive: true });
-      added = true;
-    }, 2000);
-
-    return () => {
-      active = false;
-      clearTimeout(timer);
-      cleanup();
-    };
-  }, []);
-
   // ── Auto-avance ──────────────────────────────────────────
   useEffect(() => {
     if (isPaused || !hasInteracted) return;
@@ -165,8 +115,6 @@ export function HeroImageCarousel({
     return () => clearInterval(interval);
   }, [isPaused, hasInteracted]);
 
-  if (!hasInteracted) return null;
-
   return (
     /*
      * El wrapper externo NO tiene overflow-hidden, para que las burbujas
@@ -181,113 +129,124 @@ export function HeroImageCarousel({
       className="absolute inset-0 h-full w-full"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
+      onMouseEnter={() => {
+        if (!hasInteracted) {
+          setHasInteracted(true);
+        }
+        setIsPaused(true);
+      }}
+      onMouseLeave={() => setIsPaused(false)}
     >
-      {/* ── Imágenes: solo se renderiza la activa + adyacentes ─────────────── */}
-      <div className="absolute inset-0 overflow-hidden rounded-xl">
-        {IMAGES.map((item, idx) => {
-          const isActive = idx === currentIndex;
-          const isNext = idx === (currentIndex + 1) % IMAGES.length;
-          const isPrev =
-            idx === (currentIndex - 1 + IMAGES.length) % IMAGES.length;
-          // Solo renderizar el slide activo y sus adyacentes (preload)
-          // El resto no se incluye en el DOM hasta que sean necesarios
-          if (!isActive && !isNext && !isPrev && idx !== 0) return null;
+      {hasInteracted ? (
+        <>
+          {/* ── Imágenes: solo se renderiza la activa + adyacentes ─────────────── */}
+          <div className="absolute inset-0 overflow-hidden rounded-xl">
+            {IMAGES.map((item, idx) => {
+              const isActive = idx === currentIndex;
+              const isNext = idx === (currentIndex + 1) % IMAGES.length;
+              const isPrev =
+                idx === (currentIndex - 1 + IMAGES.length) % IMAGES.length;
+              // Solo renderizar el slide activo y sus adyacentes (preload)
+              // El resto no se incluye en el DOM hasta que sean necesarios
+              if (!isActive && !isNext && !isPrev && idx !== 0) return null;
 
-          return (
-            <div
-              key={item.src}
-              className={`absolute inset-0 transition-opacity duration-700 ${
-                isActive ? "z-10 opacity-100" : "z-0 opacity-0"
-              }`}
-            >
-              <Image
-                src={item.src}
-                fill
-                alt={item.alt}
-                className="rounded-xl object-cover object-center"
-                sizes={sizes}
-                quality={80}
-                priority={false}
-                loading="lazy"
-              />
-            </div>
-          );
-        })}
-      </div>
+              return (
+                <div
+                  key={item.src}
+                  className={`absolute inset-0 transition-opacity duration-700 ${
+                    isActive ? "z-10 opacity-100" : "z-0 opacity-0"
+                  }`}
+                >
+                  <Image
+                    src={item.src}
+                    fill
+                    alt={item.alt}
+                    className="rounded-xl object-cover object-center"
+                    sizes={sizes}
+                    quality={80}
+                    priority={false}
+                    loading="lazy"
+                  />
+                </div>
+              );
+            })}
+          </div>
 
-      {/* ── Flecha Izquierda ─────────────────────────────
-       *  -left-2 = left: -8px → centro a -8px del borde de la imagen,
-       *  justo en la mitad del gap entre borde imagen y borde tarjeta.
-       */}
-      <button
-        onClick={goPrev}
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-        aria-label="Imagen anterior"
-        className="border-primary/10 absolute top-1/2 -left-2 z-30 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border bg-white shadow-[0_4px_24px_rgba(20,48,103,0.55),0_2px_12px_rgba(20,48,103,0.45)] backdrop-blur-sm transition-all hover:scale-110 hover:shadow-[0_6px_28px_rgba(20,48,103,0.7),0_3px_14px_rgba(20,48,103,0.55)] active:scale-95"
-      >
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 16 16"
-          fill="none"
-          className="text-primary"
-        >
-          <path
-            d="M10 12L6 8l4-4"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </button>
-
-      {/* ── Flecha Derecha ───────────────────────────────
-       *  -right-2 = right: -8px → espejo del izquierdo.
-       */}
-      <button
-        onClick={goNext}
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-        aria-label="Imagen siguiente"
-        className="border-primary/10 absolute top-1/2 -right-2 z-30 flex h-8 w-8 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border bg-white shadow-[0_4px_24px_rgba(20,48,103,0.55),0_2px_12px_rgba(20,48,103,0.45)] backdrop-blur-sm transition-all hover:scale-110 hover:shadow-[0_6px_28px_rgba(20,48,103,0.7),0_3px_14px_rgba(20,48,103,0.55)] active:scale-95"
-      >
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 16 16"
-          fill="none"
-          className="text-primary"
-        >
-          <path
-            d="M6 4l4 4-4 4"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </button>
-
-      {/* ── Indicadores de puntos + línea activa ────── */}
-      <div className="absolute bottom-3 left-1/2 z-20 flex -translate-x-1/2 items-center gap-1.5">
-        {IMAGES.map((_, idx) => (
+          {/* ── Flecha Izquierda ─────────────────────────────
+           *  -left-2 = left: -8px → centro a -8px del borde de la imagen,
+           *  justo en la mitad del gap entre borde imagen y borde tarjeta.
+           */}
           <button
-            key={idx}
-            onClick={() => goTo(idx)}
+            onClick={goPrev}
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
-            aria-label={`Ir a imagen ${idx + 1}`}
-            aria-current={idx === currentIndex ? "true" : undefined}
-            className={`relative block rounded-full transition-[width,opacity] duration-300 before:absolute before:-inset-[19px] before:content-[''] ${
-              idx === currentIndex
-                ? "h-1.5 w-6 bg-white opacity-100"
-                : "h-1.5 w-1.5 bg-white/50 hover:bg-white/80"
-            }`}
-          />
-        ))}
-      </div>
+            aria-label="Imagen anterior"
+            className="border-primary/10 absolute top-1/2 -left-2 z-30 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border bg-white shadow-[0_4px_24px_rgba(20,48,103,0.55),0_2px_12px_rgba(20,48,103,0.45)] backdrop-blur-sm transition-all hover:scale-110 hover:shadow-[0_6px_28px_rgba(20,48,103,0.7),0_3px_14px_rgba(20,48,103,0.55)] active:scale-95"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 16 16"
+              fill="none"
+              className="text-primary"
+            >
+              <path
+                d="M10 12L6 8l4-4"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+
+          {/* ── Flecha Derecha ───────────────────────────────
+           *  -right-2 = right: -8px → espejo del izquierdo.
+           */}
+          <button
+            onClick={goNext}
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+            aria-label="Imagen siguiente"
+            className="border-primary/10 absolute top-1/2 -right-2 z-30 flex h-8 w-8 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border bg-white shadow-[0_4px_24px_rgba(20,48,103,0.55),0_2px_12px_rgba(20,48,103,0.45)] backdrop-blur-sm transition-all hover:scale-110 hover:shadow-[0_6px_28px_rgba(20,48,103,0.7),0_3px_14px_rgba(20,48,103,0.55)] active:scale-95"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 16 16"
+              fill="none"
+              className="text-primary"
+            >
+              <path
+                d="M6 4l4 4-4 4"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+
+          {/* ── Indicadores de puntos + línea activa ────── */}
+          <div className="absolute bottom-3 left-1/2 z-20 flex -translate-x-1/2 items-center gap-1.5">
+            {IMAGES.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => goTo(idx)}
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
+                aria-label={`Ir a imagen ${idx + 1}`}
+                aria-current={idx === currentIndex ? "true" : undefined}
+                className={`relative block rounded-full transition-[width,opacity] duration-300 before:absolute before:-inset-[19px] before:content-[''] ${
+                  idx === currentIndex
+                    ? "h-1.5 w-6 bg-white opacity-100"
+                    : "h-1.5 w-1.5 bg-white/50 hover:bg-white/80"
+                }`}
+              />
+            ))}
+          </div>
+        </>
+      ) : null}
     </div>
   );
 }
