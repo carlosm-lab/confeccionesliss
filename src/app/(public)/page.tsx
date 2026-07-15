@@ -58,8 +58,29 @@ export const metadata: Metadata = {
 export const revalidate = 3600;
 
 export default async function HomePage() {
-  // Load recent products from Supabase (server-side, no hardcoding)
-  const recentProducts = await getRecentProducts(10);
+  // Load recent products from Supabase and strip unused properties for client serialization
+  const rawRecentProducts = await getRecentProducts(10);
+  const recentProducts = rawRecentProducts.map((p) => ({
+    id: p.id,
+    name: p.name,
+    price: p.price,
+    old_price: p.old_price,
+    image_path: p.image_path,
+    images: p.images,
+    slug: p.slug,
+    sector: p.sector,
+    price_by_size: p.price_by_size,
+    offer_by_size: p.offer_by_size,
+    offer_ends_at: p.offer_ends_at,
+    offer_starts_at: p.offer_starts_at,
+    categories: p.categories
+      ? {
+          name: p.categories.name,
+          catalog: p.categories.catalog,
+        }
+      : null,
+  })) as unknown as typeof rawRecentProducts;
+
   // Fetch dynamic Google Reviews from Supabase / fallback service
   const reviews = await getGoogleReviews();
   return (
