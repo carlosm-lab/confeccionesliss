@@ -136,6 +136,7 @@ export default async function HomePage() {
       offer_ends_at: onSale ? "active" : null,
       offer_starts_at: null,
       categories: null,
+      category: p.category,
     };
   }) as unknown as typeof rawRecentProducts;
 
