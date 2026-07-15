@@ -3,21 +3,8 @@ import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { buildWebPageSchema, buildBreadcrumbSchema } from "@/lib/schemas";
+import { ContactForm } from "@/components/contacto/ContactForm";
 import { LazyMap } from "@/components/contacto/LazyMap";
-import dynamic from "next/dynamic";
-
-const ContactForm = dynamic(
-  () =>
-    import("@/components/contacto/ContactForm").then((mod) => mod.ContactForm),
-  {
-    ssr: true,
-    loading: () => (
-      <div className="flex h-[450px] w-full animate-pulse items-center justify-center rounded-2xl bg-gray-50 text-sm text-gray-400">
-        Cargando formulario...
-      </div>
-    ),
-  }
-);
 
 export const revalidate = 3600;
 
