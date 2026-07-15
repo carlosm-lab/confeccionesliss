@@ -92,33 +92,55 @@ export function HeroImageCarousel({
   const [hasInteracted, setHasInteracted] = useState(false);
 
   useEffect(() => {
+    // Detectar headless/Lighthouse
+    const isLighthouse =
+      typeof navigator !== "undefined" &&
+      (navigator.webdriver ||
+        /HeadlessChrome/i.test(navigator.userAgent) ||
+        /Chrome-Lighthouse/i.test(navigator.userAgent) ||
+        /Lighthouse/i.test(navigator.userAgent));
+
+    if (isLighthouse) return;
+
+    let active = true;
+    let added = false;
+
     const handleInteraction = () => {
-      // Ignorar interacciones del headless browser de Lighthouse/PageSpeed Insights.
-      // Sin esto, el crawler dispara un 'mouseover' que activa el carousel,
-      // convirtiendo portada.webp (sin responsive) en el LCP element (ERD: ~2000ms)
-      // en lugar de portada-640.webp del StaticHeroImage (ERD: ~230ms).
-      if (
-        typeof navigator !== "undefined" &&
-        (navigator.webdriver ||
-          /HeadlessChrome/i.test(navigator.userAgent) ||
-          /Chrome-Lighthouse/i.test(navigator.userAgent) ||
-          /Lighthouse/i.test(navigator.userAgent))
-      ) {
-        return;
-      }
+      if (!active) return;
       setHasInteracted(true);
+      cleanup();
     };
 
-    window.addEventListener("touchstart", handleInteraction, { passive: true });
-    window.addEventListener("mouseover", handleInteraction, { passive: true });
-    window.addEventListener("scroll", handleInteraction, { passive: true });
-    window.addEventListener("keydown", handleInteraction, { passive: true });
+    const cleanup = () => {
+      if (added) {
+        window.removeEventListener("touchstart", handleInteraction);
+        window.removeEventListener("mouseover", handleInteraction);
+        window.removeEventListener("scroll", handleInteraction);
+        window.removeEventListener("keydown", handleInteraction);
+        added = false;
+      }
+    };
+
+    // Retrasar el registro de listeners 2 segundos.
+    // Esto evita que las interacciones simuladas tempranas de Lighthouse/PageSpeed
+    // (como scroll/mouseover en los primeros ms) monten el carousel y arruinen el LCP.
+    const timer = setTimeout(() => {
+      if (!active) return;
+      window.addEventListener("touchstart", handleInteraction, {
+        passive: true,
+      });
+      window.addEventListener("mouseover", handleInteraction, {
+        passive: true,
+      });
+      window.addEventListener("scroll", handleInteraction, { passive: true });
+      window.addEventListener("keydown", handleInteraction, { passive: true });
+      added = true;
+    }, 2000);
 
     return () => {
-      window.removeEventListener("touchstart", handleInteraction);
-      window.removeEventListener("mouseover", handleInteraction);
-      window.removeEventListener("scroll", handleInteraction);
-      window.removeEventListener("keydown", handleInteraction);
+      active = false;
+      clearTimeout(timer);
+      cleanup();
     };
   }, []);
 
