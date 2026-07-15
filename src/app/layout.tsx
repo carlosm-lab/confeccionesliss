@@ -97,17 +97,20 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        {/* 
-          Inyectamos el preload de manera cruda para evitar que el runtime de React 19
-          lo intercepte, intente optimizarlo y genere un preload básico duplicado
-          e ineficiente sin fetchpriority/srcset en el head del documento.
-          Al estar al inicio del head, garantiza máxima prioridad de red en móviles.
-        */}
-        <div
-          style={{ display: "none" }}
-          dangerouslySetInnerHTML={{
-            __html: `<link rel="preload" as="image" href="/images/uniformes/portada-640.webp" imagesrcset="/images/uniformes/portada-640.webp 640w, /images/uniformes/portada-750.webp 750w, /images/uniformes/portada-1080.webp 1080w, /images/uniformes/portada-1200.webp 1200w" imagesizes="(max-width:768px) 80vw, 40vw" fetchpriority="high" />`,
-          }}
+        {/*
+         * Preload del hero image (LCP) — backup para preload scanner.
+         * El preload principal se envía via HTTP Link header en next.config.mjs
+         * antes de que el browser reciba el HTML. Esta etiqueta sirve como
+         * respaldo para navegadores que no procesen el header HTTP correctamente.
+         */}
+        <link
+          rel="preload"
+          as="image"
+          href="/images/uniformes/portada-640.webp"
+          // @ts-expect-error — imagesrcset/imagesizes son atributos HTML válidos pero no tipados en React
+          imagesrcset="/images/uniformes/portada-640.webp 640w, /images/uniformes/portada-750.webp 750w, /images/uniformes/portada-1080.webp 1080w, /images/uniformes/portada-1200.webp 1200w"
+          imagesizes="(max-width:768px) 80vw, 40vw"
+          fetchPriority="high"
         />
         <link
           rel="preconnect"

@@ -62,6 +62,20 @@ const nextConfig = {
 
     return [
       {
+        // 0. HTTP Link preload para imagen LCP del hero en homepage.
+        // Este header llega al navegador ANTES del HTML, activando la descarga
+        // del recurso al primer byte de la conexión TCP, sin dependencia del
+        // preload scanner ni del comportamiento de React 19.
+        source: '/',
+        headers: [
+          {
+            key: 'Link',
+            value:
+              '</images/uniformes/portada-640.webp>; rel=preload; as=image; fetchpriority=high',
+          },
+        ],
+      },
+      {
         // 1. Assets estáticos Next.js — inmutables, cachear 1 año
         source: '/_next/static/:path*',
         headers: [
