@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { contactSchema } from "@/schemas/contactSchema";
 import { sendContactMessage } from "@/actions/contact";
 import { cn } from "@/lib/utils";
 
@@ -71,6 +70,7 @@ export function ContactForm() {
     };
 
     // Client-side validation first
+    const { contactSchema } = await import("@/schemas/contactSchema");
     const parsed = contactSchema.safeParse(raw);
     if (!parsed.success) {
       const errs: FieldErrors = {};
