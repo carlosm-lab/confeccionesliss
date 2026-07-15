@@ -4,6 +4,9 @@ import { siteConfig } from "@/config/site";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { buildWebPageSchema, buildBreadcrumbSchema } from "@/lib/schemas";
 import { ContactForm } from "@/components/contacto/ContactForm";
+import { LazyMap } from "@/components/contacto/LazyMap";
+
+export const revalidate = 3600;
 
 const PAGE_URL = `${siteConfig.url}/contacto`;
 const PAGE_TITLE =
@@ -339,16 +342,9 @@ export default function ContactoPage() {
               style={{ animationDelay: "350ms" }}
             >
               <div className="group border-primary/35 hover:border-primary/55 relative h-full min-h-[400px] overflow-hidden rounded-2xl border bg-white shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]">
-                <iframe
+                <LazyMap
                   title="Ubicación de Confecciones Liss en Google Maps"
                   src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d861!2d${siteConfig.geo.lng}!3d${siteConfig.geo.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f7b2bcd05889217%3A0x9e418141663f87ef!2sConfecciones%20Liss!5e0!3m2!1ses!2ssv!4v1`}
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0, minHeight: "400px" }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  className="h-full w-full"
                 />
               </div>
             </div>

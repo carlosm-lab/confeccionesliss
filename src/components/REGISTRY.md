@@ -647,3 +647,23 @@ Cada ruta del proyecto tiene un `loading.tsx` propio que Next.js muestra automá
   - `gaId?: string` — Measurement ID opcional de Google Analytics.
   - `pixelId?: string` — Pixel ID opcional de Meta.
 - **Ejemplo:** `<AnalyticsScripts gaId={env.NEXT_PUBLIC_GA_MEASUREMENT_ID} pixelId={env.NEXT_PUBLIC_META_PIXEL_ID} />`
+
+---
+
+## Contacto Components
+
+### LazyMap
+
+- **Ruta:** `src/components/contacto/LazyMap.tsx`
+- **Descripción:** Componente cliente que difiere la carga de `iframe` de Google Maps para evitar el bloqueo del hilo principal de JavaScript durante el renderizado inicial y mejorar el score de PageSpeed. Muestra un esqueleto de carga temporal.
+- **Props:**
+  - `src: string` — URL de inserción del mapa de Google Maps.
+  - `title: string` — Título descriptivo para accesibilidad.
+- **Ejemplo:** `<LazyMap title="Mapa de Google Maps" src="https://www.google.com/maps/embed..." />`
+
+### ContactForm
+
+- **Ruta:** `src/components/contacto/ContactForm.tsx`
+- **Descripción:** Formulario interactivo de contacto. Realiza validaciones en el cliente con Zod y envía los datos mediante un Server Action (`sendContactMessage`).
+- **Props:** No recibe props.
+- **Ejemplo:** `<ContactForm />`
