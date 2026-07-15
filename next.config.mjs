@@ -6,12 +6,6 @@ import path from 'path';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const nextConfig = {
-  // Inline all CSS into the HTML response to eliminate render-blocking CSS
-  // chunks from Vercel's CDN. FCP/LCP no longer waits for CSS from cold edge.
-  // Tradeoff: HTML is ~32KB heavier, but always cached at Vercel edge (SSG).
-  experimental: {
-    inlineCss: true,
-  },
   turbopack: {
     // Fija el workspace root explícitamente para evitar que Turbopack
     // detecte erróneamente .next/dev/ como root (los package.json que
