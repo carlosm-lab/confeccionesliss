@@ -1,5 +1,11 @@
 import type { CategoryConfig, Sector } from "./types";
-import { siteConfig } from "@/config/site";
+
+/**
+ * URL directa de WhatsApp — hardcodeada para evitar arrastrar el módulo
+ * config/site → env.ts → Zod al bundle del cliente (ahorra ~50KB en LCP).
+ * Si el número cambia, actualizar también en: clientEnv.ts y config/site.ts
+ */
+const WHATSAPP_DIRECT = "https://wa.me/50373317181";
 
 export const CATEGORIES: Record<Sector, CategoryConfig> = {
   scrubs: {
@@ -28,7 +34,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       description:
         "Ofrecemos precios especiales para hospitales, clínicas y grupos de estudiantes. Bordado de logo institucional incluido.",
       ctaText: "Solicitar Cotización Grupal",
-      ctaHref: siteConfig.links.whatsappDirect,
+      ctaHref: WHATSAPP_DIRECT,
     },
     filterGroups: [
       {
@@ -84,7 +90,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       description:
         "Ofrecemos precios especiales para grupos de más de 10 unidades. Incluye bordado de carrera.",
       ctaText: "Cotizar para mi grupo",
-      ctaHref: siteConfig.links.whatsappDirect,
+      ctaHref: WHATSAPP_DIRECT,
     },
     filterGroups: [
       {
@@ -138,7 +144,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       description:
         "Producimos uniformes en volumen para instituciones educativas con precios especiales y bordado incluido.",
       ctaText: "Solicitar cotización institucional",
-      ctaHref: siteConfig.links.whatsappDirect,
+      ctaHref: WHATSAPP_DIRECT,
     },
     filterGroups: [
       {
@@ -194,7 +200,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       description:
         "Cotiza uniformes con tu logo bordado. Precios especiales desde 10 unidades.",
       ctaText: "Solicitar cotización corporativa",
-      ctaHref: siteConfig.links.whatsappDirect,
+      ctaHref: WHATSAPP_DIRECT,
     },
     filterGroups: [
       {
@@ -249,7 +255,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       description:
         "Sublimación completa con diseño personalizado. Cotiza para tu liga o academia.",
       ctaText: "Cotizar uniformes deportivos",
-      ctaHref: siteConfig.links.whatsappDirect,
+      ctaHref: WHATSAPP_DIRECT,
     },
     filterGroups: [
       {
@@ -292,7 +298,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       description:
         "Todos los accesorios para completar tu uniforme profesional o institucional.",
       ctaText: "Ver accesorios disponibles",
-      ctaHref: siteConfig.links.whatsappDirect,
+      ctaHref: WHATSAPP_DIRECT,
     },
     filterGroups: [
       {
@@ -336,7 +342,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       description:
         "Diseñamos y confeccionamos lencería a tu medida exacta para garantizar la máxima comodidad y elegancia.",
       ctaText: "Consultar diseño a medida",
-      ctaHref: siteConfig.links.whatsappDirect,
+      ctaHref: WHATSAPP_DIRECT,
     },
     filterGroups: [
       {
@@ -380,7 +386,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       description:
         "Sublimamos tazas, gorras y camisetas para eventos, empresas y regalos institucionales a precios de mayoreo.",
       ctaText: "Solicitar cotización de sublimados",
-      ctaHref: siteConfig.links.whatsappDirect,
+      ctaHref: WHATSAPP_DIRECT,
     },
     filterGroups: [
       {
@@ -424,7 +430,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       description:
         "Combina nuestra ropa y calzado para lograr el estilo perfecto. Atención personalizada para ayudarte a elegir.",
       ctaText: "Contactar a un asesor de moda",
-      ctaHref: siteConfig.links.whatsappDirect,
+      ctaHref: WHATSAPP_DIRECT,
     },
     filterGroups: [
       {
@@ -468,7 +474,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       description:
         "Confeccionamos crop tops ajustados a tus medidas y en la paleta de colores de tu elección.",
       ctaText: "Personalizar mi Top",
-      ctaHref: siteConfig.links.whatsappDirect,
+      ctaHref: WHATSAPP_DIRECT,
     },
     filterGroups: [
       {
@@ -513,7 +519,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
       description:
         "Personalizamos ramos completos de flores de limpiapipas con tus colores favoritos y tarjetas personalizadas.",
       ctaText: "Encargar ramo personalizado",
-      ctaHref: siteConfig.links.whatsappDirect,
+      ctaHref: WHATSAPP_DIRECT,
     },
     filterGroups: [
       {

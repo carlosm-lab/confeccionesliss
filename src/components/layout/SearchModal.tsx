@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { CATEGORIES } from "@/data/categories";
 import type { Sector } from "@/data/types";
-import { siteConfig } from "@/config/site";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import {
   getProductMainImage,
