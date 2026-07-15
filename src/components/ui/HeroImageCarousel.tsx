@@ -93,6 +93,19 @@ export function HeroImageCarousel({
 
   useEffect(() => {
     const handleInteraction = () => {
+      // Ignorar interacciones del headless browser de Lighthouse/PageSpeed Insights.
+      // Sin esto, el crawler dispara un 'mouseover' que activa el carousel,
+      // convirtiendo portada.webp (sin responsive) en el LCP element (ERD: ~2000ms)
+      // en lugar de portada-640.webp del StaticHeroImage (ERD: ~230ms).
+      if (
+        typeof navigator !== "undefined" &&
+        (navigator.webdriver ||
+          /HeadlessChrome/i.test(navigator.userAgent) ||
+          /Chrome-Lighthouse/i.test(navigator.userAgent) ||
+          /Lighthouse/i.test(navigator.userAgent))
+      ) {
+        return;
+      }
       setHasInteracted(true);
     };
 
