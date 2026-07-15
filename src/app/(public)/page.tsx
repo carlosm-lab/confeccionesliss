@@ -58,8 +58,12 @@ export const metadata: Metadata = {
 export const revalidate = 3600;
 
 export default async function HomePage() {
-  // Load recent products from Supabase and simplify to the absolute minimum for client hydration
-  const rawRecentProducts = await getRecentProducts(10);
+  // Load recent products and reviews in parallel to minimize TTFB on cold starts
+  const [rawRecentProducts, rawReviews] = await Promise.all([
+    getRecentProducts(10),
+    getGoogleReviews(),
+  ]);
+
   const recentProducts = rawRecentProducts.map((p) => {
     // 1. Resolve LCP image in server
     let rawImg = null;
@@ -135,8 +139,7 @@ export default async function HomePage() {
     };
   }) as unknown as typeof rawRecentProducts;
 
-  // Load reviews and slice to top 8 with real comments to reduce HTML size by ~30KB
-  const rawReviews = await getGoogleReviews();
+  // Process reviews, slicing to top 8 with real comments to reduce HTML size by ~30KB
   const reviews = [...rawReviews]
     .sort((a, b) => {
       const hasCommentA = a.comment ? 1 : 0;
