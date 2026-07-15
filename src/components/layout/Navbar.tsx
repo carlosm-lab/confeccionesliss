@@ -62,8 +62,10 @@ function TypewriterPlaceholder() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMounted(true);
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 3000);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
