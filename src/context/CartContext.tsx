@@ -31,8 +31,6 @@ import {
   useRef,
   ReactNode,
 } from "react";
-import { toast } from "react-hot-toast";
-import { getSupabaseClient } from "@/lib/supabaseClient";
 import { useAuth } from "./AuthContext";
 import { logger } from "@/lib/logger";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -165,6 +163,13 @@ function generateId(): string {
 export function CartProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
   const { addLocalNotification } = useNotifications();
+  const toastRef = useRef<any>(null);
+
+  useEffect(() => {
+    import("react-hot-toast").then((mod) => {
+      toastRef.current = mod.toast;
+    });
+  }, []);
 
   // ── Inicialización desde localStorage ────────────────────────
   // Incluye expiración de 7 días de inactividad.
@@ -248,7 +253,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     // Toast si el carrito expiró (flag del init)
     if (localStorage.getItem(STORAGE_CART_EXPIRED_KEY) === "true") {
-      setTimeout(() => {
+      setTimeout(async () => {
+        const { toast } = await import("react-hot-toast");
         toast("Tu carrito ha expirado por inactividad.", {
           icon: "🕒",
           duration: 4000,
@@ -280,47 +286,56 @@ export function CartProvider({ children }: { children: ReactNode }) {
       )
         return;
 
-      const supabase = getSupabaseClient();
-      supabase
-        .from("user_carts")
-        .upsert(
-          {
-            user_id: user.id,
-            cart_items: debouncedCartItems,
-            updated_at: new Date().toISOString(),
-          },
-          { onConflict: "user_id" }
-        )
-        .then(
-          ({
-            error,
-          }: {
-            error: { message?: string; code?: string } | null;
-          }) => {
-            if (error) {
-              const isEmptyError =
-                typeof error === "object" && Object.keys(error).length === 0;
+      const sync = async () => {
+        try {
+          const { getSupabaseClient } = await import("@/lib/supabaseClient");
+          const supabase = getSupabaseClient();
+          supabase
+            .from("user_carts")
+            .upsert(
+              {
+                user_id: user.id,
+                cart_items: debouncedCartItems,
+                updated_at: new Date().toISOString(),
+              },
+              { onConflict: "user_id" }
+            )
+            .then(
+              ({
+                error,
+              }: {
+                error: { message?: string; code?: string } | null;
+              }) => {
+                if (error) {
+                  const isEmptyError =
+                    typeof error === "object" &&
+                    Object.keys(error).length === 0;
 
-              const isDuplicateKeyError =
-                (error as { code?: string })?.code === "23505";
+                  const isDuplicateKeyError =
+                    (error as { code?: string })?.code === "23505";
 
-              if (isEmptyError || isDuplicateKeyError) {
-                logger.warn(
-                  "Cart sync silently blocked (RLS / missing table / duplicate key). Cart is local-only."
-                );
-              } else {
-                // Error real de Supabase — logueamos pero NO hacemos rollback.
-                // El carrito en localStorage es la fuente de verdad.
-                // El usuario mantiene sus productos; se reintentará en el próximo debounce.
-                logger.error("Error syncing cart to DB:", error);
+                  if (isEmptyError || isDuplicateKeyError) {
+                    logger.warn(
+                      "Cart sync silently blocked (RLS / missing table / duplicate key). Cart is local-only."
+                    );
+                  } else {
+                    // Error real de Supabase — logueamos pero NO hacemos rollback.
+                    // El carrito en localStorage es la fuente de verdad.
+                    // El usuario mantiene sus productos; se reintentará en el próximo debounce.
+                    logger.error("Error syncing cart to DB:", error);
+                  }
+                  // En todos los casos de error, actualizar ref para evitar re-intentos en bucle
+                  lastSyncedCartRef.current = debouncedCartItems;
+                } else {
+                  lastSyncedCartRef.current = debouncedCartItems;
+                }
               }
-              // En todos los casos de error, actualizar ref para evitar re-intentos en bucle
-              lastSyncedCartRef.current = debouncedCartItems;
-            } else {
-              lastSyncedCartRef.current = debouncedCartItems;
-            }
-          }
-        );
+            );
+        } catch (err) {
+          logger.error("Error importing supabase during cart sync:", err);
+        }
+      };
+      sync();
     }
   }, [debouncedCartItems, user]);
 
@@ -330,6 +345,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     let isMounted = true;
 
     const syncAndRevalidate = async () => {
+      const { getSupabaseClient } = await import("@/lib/supabaseClient");
       const supabase = getSupabaseClient();
 
       // Caso 1: Usuario logueado + carrito local vacío → hidratar desde DB
@@ -420,6 +436,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     setIsRefreshingPrices(true);
     try {
+      const { getSupabaseClient } = await import("@/lib/supabaseClient");
       const supabase = getSupabaseClient();
       const idsToCheck = [...new Set(snapshotCart.map((i) => i.product.id))];
       const { data, error } = await supabase
@@ -502,10 +519,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
       });
 
       if (itemsRemovedFlag) {
-        toast("Un producto en tu carrito se ha agotado o desactivado.", {
-          icon: "⚠️",
-          duration: 5000,
-        });
+        toastRef.current?.(
+          "Un producto en tu carrito se ha agotado o desactivado.",
+          {
+            icon: "⚠️",
+            duration: 5000,
+          }
+        );
       }
 
       setConsecutiveRefreshFailures(0);
@@ -568,7 +588,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
       if (existing) {
         if (existing.quantity + quantity > MAX_CART_QUANTITY) {
-          toast.error(
+          toastRef.current?.error(
             `Límite máximo por producto: ${MAX_CART_QUANTITY} unidades`
           );
           return prev;
@@ -581,14 +601,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }
 
       if (quantity > MAX_CART_QUANTITY) {
-        toast.error(
+        toastRef.current?.error(
           `Límite máximo por producto: ${MAX_CART_QUANTITY} unidades`
         );
         return prev;
       }
 
       if (prev.length >= MAX_TOTAL_ITEMS) {
-        toast.error(
+        toastRef.current?.error(
           `Límite máximo en el carrito: ${MAX_TOTAL_ITEMS} productos diferentes`
         );
         return prev;
@@ -620,10 +640,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
       });
     }
 
-    toast.success(`${quantity}x ${product.name} agregado al carrito`, {
-      id: "cart-add-toast",
-      icon: "🛍️",
-    });
+    toastRef.current?.success(
+      `${quantity}x ${product.name} agregado al carrito`,
+      {
+        id: "cart-add-toast",
+        icon: "🛍️",
+      }
+    );
   };
 
   const removeFromCart = (itemId: string) => {
@@ -636,7 +659,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       return;
     }
     if (quantity > MAX_CART_QUANTITY) {
-      toast.error(
+      toastRef.current?.error(
         `Límite máximo por producto es ${MAX_CART_QUANTITY} unidades`
       );
       return;

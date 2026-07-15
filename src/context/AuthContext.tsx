@@ -17,7 +17,6 @@ import type {
   AuthChangeEvent,
   AuthError,
 } from "@supabase/supabase-js";
-import { getSupabaseClient } from "@/lib/supabaseClient";
 import { clientEnv } from "@/lib/clientEnv";
 import { logger } from "@/lib/logger";
 
@@ -162,6 +161,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setProfileLoading(true);
 
     try {
+      const { getSupabaseClient } = await import("@/lib/supabaseClient");
       const supabase = getSupabaseClient();
 
       // Verificar rol desde JWT app_metadata (sin queries a la BD — sin recursión)
@@ -244,10 +244,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Effect 1: Inicializar sesión + escuchar cambios
   useEffect(() => {
     let mounted = true;
-    const supabase = getSupabaseClient();
+    let subscription: any = null;
 
     const initSession = async () => {
       try {
+        const { getSupabaseClient } = await import("@/lib/supabaseClient");
+        const supabase = getSupabaseClient();
+
         const {
           data: { session: currentSession },
           error,
@@ -307,6 +310,47 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           sessionStorage.removeItem(CACHE_TIME_KEY);
           sessionStorage.removeItem(USER_CACHE_KEY);
         }
+
+        // Suscribirse a cambios después de obtener la sesión inicial
+        const {
+          data: { subscription: sub },
+        } = supabase.auth.onAuthStateChange(
+          (event: AuthChangeEvent, currentSession: Session | null) => {
+            if (!mounted) return;
+
+            if (
+              event === "SIGNED_OUT" ||
+              (event === "TOKEN_REFRESHED" && !currentSession)
+            ) {
+              setSession(null);
+              setUser(null);
+              setProfile(null);
+              setIsAdmin(false);
+              setLoading(false);
+              sessionStorage.removeItem(PROFILE_CACHE_KEY);
+              sessionStorage.removeItem(CACHE_TIME_KEY);
+              sessionStorage.removeItem(USER_CACHE_KEY);
+              return;
+            }
+
+            if (currentSession) {
+              setSession(currentSession);
+              setUser(currentSession.user ?? null);
+              if (currentSession.user) {
+                try {
+                  sessionStorage.setItem(
+                    USER_CACHE_KEY,
+                    JSON.stringify(currentSession.user)
+                  );
+                } catch {
+                  /* ignore */
+                }
+              }
+              setLoading(false);
+            }
+          }
+        );
+        subscription = sub;
       } catch (err) {
         // AuthApiError lanzado por supabase-js cuando el refresh falla completamente
         const msg = (err as Error)?.message ?? "";
@@ -319,6 +363,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             "Caught stale refresh token exception — signing out locally."
           );
           try {
+            const { getSupabaseClient } = await import("@/lib/supabaseClient");
+            const supabase = getSupabaseClient();
             await supabase.auth.signOut({ scope: "local" });
           } catch {
             /* ignore */
@@ -346,48 +392,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     initSession();
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(
-      (event: AuthChangeEvent, currentSession: Session | null) => {
-        if (!mounted) return;
-
-        if (
-          event === "SIGNED_OUT" ||
-          (event === "TOKEN_REFRESHED" && !currentSession)
-        ) {
-          setSession(null);
-          setUser(null);
-          setProfile(null);
-          setIsAdmin(false);
-          setLoading(false);
-          sessionStorage.removeItem(PROFILE_CACHE_KEY);
-          sessionStorage.removeItem(CACHE_TIME_KEY);
-          sessionStorage.removeItem(USER_CACHE_KEY);
-          return;
-        }
-
-        if (currentSession) {
-          setSession(currentSession);
-          setUser(currentSession.user ?? null);
-          if (currentSession.user) {
-            try {
-              sessionStorage.setItem(
-                USER_CACHE_KEY,
-                JSON.stringify(currentSession.user)
-              );
-            } catch {
-              /* ignore */
-            }
-          }
-          setLoading(false);
-        }
-      }
-    );
-
     return () => {
       mounted = false;
-      subscription.unsubscribe();
+      if (subscription) subscription.unsubscribe();
     };
   }, []);
 
@@ -406,6 +413,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signInWithGoogle = async () => {
     try {
+      const { getSupabaseClient } = await import("@/lib/supabaseClient");
       const supabase = getSupabaseClient();
       // Usar URL explícita del env var — evita problemas con window.location.origin
       // y garantiza que coincida exactamente con el allowlist de Supabase.
@@ -438,6 +446,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     try {
+      const { getSupabaseClient } = await import("@/lib/supabaseClient");
       const supabase = getSupabaseClient();
       await supabase.auth.signOut();
     } catch (err) {

@@ -34,10 +34,8 @@ import {
   useMemo,
   ReactNode,
 } from "react";
-import toast from "react-hot-toast";
 import { useAuth } from "./AuthContext";
 import { useNotificationsSafe } from "@/context/NotificationContext";
-import { getSupabaseClient } from "@/lib/supabaseClient";
 import { logger } from "@/lib/logger";
 import { STORAGE_FAVORITES_KEY } from "@/lib/constants";
 
@@ -109,6 +107,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 
     const syncFavorites = async () => {
       try {
+        const { getSupabaseClient } = await import("@/lib/supabaseClient");
         const supabase = getSupabaseClient();
         const { data, error } = await supabase
           .from("user_favorites")
@@ -238,6 +237,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 
             target_url: null,
           });
+          const { default: toast } = await import("react-hot-toast");
           toast(
             "¡Guardado! Inicia sesión para sincronizarlo en otros dispositivos",
 
@@ -258,6 +258,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
       );
 
       try {
+        const { getSupabaseClient } = await import("@/lib/supabaseClient");
         const supabase = getSupabaseClient();
         if (isFav) {
           const { error } = await supabase

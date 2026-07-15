@@ -24,13 +24,14 @@ import {
   useCallback,
   type ReactNode,
 } from "react";
-import { getSupabaseClient } from "@/lib/supabaseClient";
 import { useAuth } from "@/context/AuthContext";
 import { clientEnv } from "@/lib/clientEnv";
 import { logger } from "@/lib/logger";
 import { STORAGE_FAVORITES_KEY, STORAGE_CART_KEY } from "@/lib/constants";
-import type { RealtimePostgresInsertPayload } from "@supabase/supabase-js";
-import toast from "react-hot-toast";
+import type {
+  RealtimePostgresInsertPayload,
+  RealtimeChannel,
+} from "@supabase/supabase-js";
 
 // ── Tipos ──────────────────────────────────────────────────────
 
@@ -214,9 +215,8 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  const realtimeRef = useRef<
-    ReturnType<typeof getSupabaseClient>["channel"] | null
-  >(null);
+  const toastRef = useRef<any>(null);
+  const realtimeRef = useRef<RealtimeChannel | null>(null);
   const prevUserIdRef = useRef<string | null>(null);
   // Ref para detectar transición granted → otro estado (revocación de permisos)
   const prevPushStatusRef = useRef<PushPermissionStatus>("default");
@@ -238,7 +238,6 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 
   // ── Hidratacion ───────────────────────────────────────────────
   useEffect(() => {
-    /* eslint-disable react-hooks/set-state-in-effect */
     // Patrón intencional: hidratación de estado desde localStorage.
     // No existe otra forma de inicializar estado cliente-only en SSR.
     setLocalNotifs(loadLocalNotifs());
@@ -261,7 +260,6 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     }
 
     setMounted(true);
-    /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
 
   // ── Sincronizar refs de estado (no deben ser deps de effects mount-once) ──
@@ -284,7 +282,10 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!mounted) return;
 
-    const timer = setTimeout(() => {
+    const triggerToast = async () => {
+      const { default: activeToast } = await import("react-hot-toast");
+      toastRef.current = activeToast;
+
       const {
         pushPromptDismissed: dismissed,
         pushPermissionStatus: status,
@@ -303,8 +304,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         target_url: null,
       });
 
-      // Toast visual proactivo con CTA
-      toast(
+      activeToast(
         (t) => (
           <div
             style={{
@@ -351,7 +351,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
               <div style={{ display: "flex", gap: "8px" }}>
                 <button
                   onClick={async () => {
-                    toast.dismiss(t.id);
+                    activeToast.dismiss(t.id);
                     await subscribeToPushRef.current();
                   }}
                   style={{
@@ -370,7 +370,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
                 </button>
                 <button
                   onClick={() => {
-                    toast.dismiss(t.id);
+                    activeToast.dismiss(t.id);
                     localStorage.setItem(LS_PUSH_DISMISSED, "1");
                     setPushPromptDismissed(true);
                   }}
@@ -406,6 +406,10 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
           position: "bottom-right",
         }
       );
+    };
+
+    const timer = setTimeout(() => {
+      triggerToast();
     }, 3000);
 
     return () => clearTimeout(timer);
@@ -415,79 +419,96 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!hasInteracted) return;
 
-    const supabase = getSupabaseClient();
+    let mounted = true;
+    let channel: RealtimeChannel | null = null;
+    let sb: any = null;
 
-    async function fetchDbNotifs() {
-      // ─────────────────────────────────────────────────────────
-      // PROBLEMA 1: Usuarios nuevos no deben ver notificaciones
-      // históricas. Filtramos por la fecha de primera visita.
-      // LS_FIRST_VISIT_TS se establece síncronamente en el efecto
-      // de hidratación (que corre antes que este efecto async),
-      // por lo que al resolver esta promesa el valor ya existe.
-      // ─────────────────────────────────────────────────────────
-      const firstVisitTs = localStorage.getItem(LS_FIRST_VISIT_TS);
+    const setup = async () => {
+      try {
+        const { getSupabaseClient } = await import("@/lib/supabaseClient");
+        const supabase = getSupabaseClient();
+        sb = supabase;
 
-      let query = supabase
-        .from("notifications")
-        .select(
-          "id, type, title, message, image_url, target_url, cta_label, created_at"
-        )
-        .order("created_at", { ascending: false })
-        .limit(50);
+        async function fetchDbNotifs() {
+          const firstVisitTs = localStorage.getItem(LS_FIRST_VISIT_TS);
 
-      if (firstVisitTs) {
-        // Solo notificaciones creadas DESPUÉS de la primera visita del usuario
-        const isoTs = new Date(parseInt(firstVisitTs, 10)).toISOString();
-        query = query.gte("created_at", isoTs);
-      }
+          let query = supabase
+            .from("notifications")
+            .select(
+              "id, type, title, message, image_url, target_url, cta_label, created_at"
+            )
+            .order("created_at", { ascending: false })
+            .limit(50);
 
-      const { data, error } = await query;
+          if (firstVisitTs) {
+            const isoTs = new Date(parseInt(firstVisitTs, 10)).toISOString();
+            query = query.gte("created_at", isoTs);
+          }
 
-      if (error) {
-        logger.error("Error cargando notificaciones:", error);
-        return;
-      }
+          const { data, error } = await query;
 
-      setDbNotifs(
-        (data ?? []).map((n: Record<string, unknown>) => ({
-          ...n,
-          read: false,
-        })) as AppNotification[]
-      );
-    }
+          if (error) {
+            logger.error("Error cargando notificaciones:", error);
+            return;
+          }
 
-    fetchDbNotifs();
-
-    // Suscripcion en tiempo real — se re-establece al cambiar auth/interacción
-    // Los eventos INSERT son siempre posteriores a la primera visita ✓
-    const isLighthouse =
-      typeof navigator !== "undefined" &&
-      (navigator.webdriver ||
-        /Lighthouse/i.test(navigator.userAgent) ||
-        /Chrome-Lighthouse/i.test(navigator.userAgent) ||
-        /HeadlessChrome/i.test(navigator.userAgent));
-
-    if (isLighthouse) {
-      return;
-    }
-
-    const channelName = `notifications_realtime_${user?.id ?? "guest"}`;
-    const channel = supabase
-      .channel(channelName)
-      .on(
-        "postgres_changes",
-        { event: "INSERT", schema: "public", table: "notifications" },
-        (payload: RealtimePostgresInsertPayload<Record<string, unknown>>) => {
-          const newNotif = payload.new as unknown as AppNotification;
-          setDbNotifs((prev) => [{ ...newNotif, read: false }, ...prev]);
+          if (mounted) {
+            setDbNotifs(
+              (data ?? []).map((n: Record<string, unknown>) => ({
+                ...n,
+                read: false,
+              })) as AppNotification[]
+            );
+          }
         }
-      )
-      .subscribe();
 
-    realtimeRef.current = channel;
+        await fetchDbNotifs();
+
+        const isLighthouse =
+          typeof navigator !== "undefined" &&
+          (navigator.webdriver ||
+            /Lighthouse/i.test(navigator.userAgent) ||
+            /Chrome-Lighthouse/i.test(navigator.userAgent) ||
+            /HeadlessChrome/i.test(navigator.userAgent));
+
+        if (isLighthouse || !mounted) {
+          return;
+        }
+
+        const channelName = `notifications_realtime_${user?.id ?? "guest"}`;
+        const newChannel = supabase
+          .channel(channelName)
+          .on(
+            "postgres_changes",
+            { event: "INSERT", schema: "public", table: "notifications" },
+            (
+              payload: RealtimePostgresInsertPayload<Record<string, unknown>>
+            ) => {
+              if (mounted) {
+                const newNotif = payload.new as unknown as AppNotification;
+                setDbNotifs((prev) => [{ ...newNotif, read: false }, ...prev]);
+              }
+            }
+          )
+          .subscribe();
+
+        channel = newChannel;
+        realtimeRef.current = newChannel;
+      } catch (err) {
+        logger.error("Error setting up realtime notifications:", err);
+      }
+    };
+
+    setup();
+
     return () => {
-      if (realtimeRef.current) {
-        supabase.removeChannel(realtimeRef.current);
+      mounted = false;
+      if (realtimeRef.current && sb) {
+        try {
+          sb.removeChannel(realtimeRef.current);
+        } catch (e) {
+          /* ignore */
+        }
         realtimeRef.current = null;
       }
     };
@@ -500,7 +521,6 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     const isNowLoggedIn = currentUserId !== null;
 
     if (wasGuest && isNowLoggedIn) {
-      /* eslint-disable react-hooks/set-state-in-effect */
       // Sincronización intencional: transición guest→user, el estado externo cambió.
       setLocalNotifs((prev) => {
         const updated = prev.map((n) =>
@@ -518,7 +538,6 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         saveReadIds(next);
         return next;
       });
-      /* eslint-enable react-hooks/set-state-in-effect */
     }
 
     prevUserIdRef.current = currentUserId;
@@ -538,7 +557,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         /* silent */
       }
       // Intencional: sincronizar estado React con el permiso del navegador (externo).
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+
       setPushPromptDismissed(false);
     }
     prevPushStatusRef.current = pushPermissionStatus;
@@ -679,7 +698,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!mounted) return;
     // Intencional: re-evaluar condiciones condicionales e inyectar hints al panel.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+
     reevaluateConditionalHints();
     // pushPromptDismissed eliminado de deps: ya no condiciona el hint del panel
   }, [user, pushPermissionStatus, mounted, reevaluateConditionalHints]);
@@ -783,6 +802,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         applicationServerKey: vapidKey.buffer as ArrayBuffer,
       });
 
+      const { getSupabaseClient } = await import("@/lib/supabaseClient");
       const supabase = getSupabaseClient();
       const { error } = await supabase.from("push_subscriptions").upsert(
         {
