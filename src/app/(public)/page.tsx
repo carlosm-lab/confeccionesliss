@@ -58,31 +58,96 @@ export const metadata: Metadata = {
 export const revalidate = 3600;
 
 export default async function HomePage() {
-  // Load recent products from Supabase and strip unused properties for client serialization
+  // Load recent products from Supabase and simplify to the absolute minimum for client hydration
   const rawRecentProducts = await getRecentProducts(10);
-  const recentProducts = rawRecentProducts.map((p) => ({
-    id: p.id,
-    name: p.name,
-    price: p.price,
-    old_price: p.old_price,
-    image_path: p.image_path,
-    images: p.images,
-    slug: p.slug,
-    sector: p.sector,
-    price_by_size: p.price_by_size,
-    offer_by_size: p.offer_by_size,
-    offer_ends_at: p.offer_ends_at,
-    offer_starts_at: p.offer_starts_at,
-    categories: p.categories
-      ? {
-          name: p.categories.name,
-          catalog: p.categories.catalog,
-        }
-      : null,
-  })) as unknown as typeof rawRecentProducts;
+  const recentProducts = rawRecentProducts.map((p) => {
+    // 1. Resolve LCP image in server
+    let rawImg = null;
+    if (p.images && Array.isArray(p.images) && p.images.length > 0) {
+      rawImg = p.images[0];
+    } else {
+      rawImg = p.image_path ?? null;
+    }
 
-  // Fetch dynamic Google Reviews from Supabase / fallback service
-  const reviews = await getGoogleReviews();
+    // 2. Compute sector in server
+    const sector =
+      p.sector ??
+      p.categories?.catalog ??
+      p.category?.split("-")[0] ??
+      "scrubs";
+
+    // 3. Resolve display and list prices in server
+    const priceBySize = p.price_by_size;
+    const offerBySize = p.offer_by_size;
+    const minBasePrice =
+      priceBySize && Object.keys(priceBySize).length > 0
+        ? Math.min(...Object.values(priceBySize))
+        : Number(p.price);
+
+    const validOfferEntries =
+      offerBySize && priceBySize
+        ? Object.entries(offerBySize).filter(([talla, offerP]) => {
+            const baseP = priceBySize[talla];
+            return baseP !== undefined && offerP < baseP;
+          })
+        : [];
+    const minOfferPrice =
+      validOfferEntries.length > 0
+        ? Math.min(...validOfferEntries.map(([, price]) => price))
+        : null;
+
+    const finalPrice = minOfferPrice !== null ? minOfferPrice : minBasePrice;
+
+    const rawOldPrice =
+      minOfferPrice !== null
+        ? minBasePrice
+        : p.old_price
+          ? Number(p.old_price)
+          : null;
+    const finalOldPrice =
+      rawOldPrice !== null && rawOldPrice > finalPrice ? rawOldPrice : null;
+
+    // 4. Determine sale status in server
+    let onSale = false;
+    const hasOfferBySize = offerBySize && Object.keys(offerBySize).length > 0;
+    const hasGlobalOldPrice = p.old_price && p.old_price > p.price;
+    if (hasOfferBySize || hasGlobalOldPrice) {
+      const now = new Date();
+      const startOk = !p.offer_starts_at || new Date(p.offer_starts_at) <= now;
+      const endOk = !p.offer_ends_at || new Date(p.offer_ends_at) > now;
+      onSale = startOk && endOk;
+    }
+
+    return {
+      id: p.id,
+      name: p.name,
+      price: finalPrice,
+      old_price: finalOldPrice,
+      image_path: rawImg,
+      images: null,
+      slug: p.slug ?? p.id,
+      sector,
+      price_by_size: null,
+      offer_by_size: null,
+      offer_ends_at: onSale ? "active" : null,
+      offer_starts_at: null,
+      categories: null,
+    };
+  }) as unknown as typeof rawRecentProducts;
+
+  // Load reviews and slice to top 8 with real comments to reduce HTML size by ~30KB
+  const rawReviews = await getGoogleReviews();
+  const reviews = [...rawReviews]
+    .sort((a, b) => {
+      const hasCommentA = a.comment ? 1 : 0;
+      const hasCommentB = b.comment ? 1 : 0;
+      if (hasCommentA !== hasCommentB) return hasCommentB - hasCommentA;
+      return (
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
+    })
+    .slice(0, 8);
+
   return (
     <>
       {/* ═══ JSON-LD STRUCTURED DATA ═══ */}
