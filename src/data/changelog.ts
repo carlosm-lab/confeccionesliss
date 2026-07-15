@@ -42,7 +42,130 @@ export interface VersionGroup {
 
 export const CHANGELOG: VersionGroup[] = [
   {
-    version: "v1.3",
+    version: "v1.4.1",
+    label:
+      "Rendimiento Móvil PageSpeed 95+ · Carga Paralela · HTTP Link Preload",
+    dateRange: "14 de julio de 2026",
+    entries: [
+      {
+        id: "e-160",
+        date: "2026-07-14",
+        category: "perf",
+        title:
+          "Optimización integral de carga y renderizado móvil (PageSpeed 95+)",
+        description:
+          "Se resolvió la variabilidad en los análisis de rendimiento móvil retrasando el procesamiento de eventos interactivos no críticos y eliminando llamadas redundantes en el hilo principal.",
+      },
+      {
+        id: "e-161",
+        date: "2026-07-14",
+        category: "perf",
+        title:
+          "Paralelización de consultas asíncronas en el servidor (TTFB mínimo)",
+        description:
+          "Se optimizó la obtención de datos en la página de inicio agrupando las consultas a la base de datos de productos destacados y las reseñas de clientes a través de solicitudes concurrentes, reduciendo el tiempo de respuesta inicial del servidor (TTFB) a solo 10ms.",
+      },
+      {
+        id: "e-162",
+        date: "2026-07-14",
+        category: "perf",
+        title: "Montaje perezoso y asíncrono para el carrusel de imágenes",
+        description:
+          "Se rediseñó el carrusel del Hero para posponer su inicialización y carga de imágenes secundarias hasta que se detecte una interacción directa (hover o toque) por parte del usuario, evitando transferencias innecesarias de datos al cargar la página.",
+      },
+      {
+        id: "e-163",
+        date: "2026-07-14",
+        category: "perf",
+        title: "Remoción de dependencias CSS estáticas bloqueantes",
+        description:
+          "Se retiró la hoja de estilos sintonizada para pre-hidratación de esqueletos de carga que bloqueaba el renderizado inicial, migrando todo el estilo de carga a transiciones fluidas de Tailwind CSS nativas.",
+      },
+      {
+        id: "e-164",
+        date: "2026-07-14",
+        category: "perf",
+        title: "Precarga acelerada por cabeceras HTTP Link",
+        description:
+          "Se configuró el servidor para enviar instrucciones de precarga de la imagen de portada móvil en los primeros bytes de la conexión TCP, logrando que el navegador descargue el recurso LCP de inmediato sin esperar a procesar el HTML completo.",
+      },
+    ],
+  },
+  {
+    version: "v1.4.0",
+    label:
+      "Imagen Hero SSR · Carga de Contextos Diferida · Reducción de Peso HTML",
+    dateRange: "13 de julio de 2026",
+    entries: [
+      {
+        id: "e-155",
+        date: "2026-07-13",
+        category: "perf",
+        title: "Visualización instantánea con imagen hero estática en SSR",
+        description:
+          "Se incorporó un contenedor de imagen estático optimizado en el servidor para el primer renderizado, asegurando que el contenido principal del Hero se pinte de inmediato en pantalla antes de que el JavaScript de cliente sea descargado.",
+      },
+      {
+        id: "e-156",
+        date: "2026-07-13",
+        category: "perf",
+        title: "Inicialización asíncrona de proveedores de contexto globales",
+        description:
+          "Se movió la carga de dependencias de conexión a bases de datos y utilidades de alertas visuales fuera del flujo inicial, montándolas después de que la interfaz de usuario se haya renderizado por completo.",
+      },
+      {
+        id: "e-157",
+        date: "2026-07-13",
+        category: "perf",
+        title: "Compresión y reducción de payload HTML de inicio",
+        description:
+          "Se limitó la entrega de testimonios de Google a las 8 entradas más relevantes y se depuraron campos no utilizados en el catálogo destacado, disminuyendo el peso del HTML de inicio en 66KB para acelerar la velocidad de carga en dispositivos móviles.",
+      },
+    ],
+  },
+  {
+    version: "v1.3.5",
+    label:
+      "Caché de Datos ISR · API de Revalidación Bajo Demanda · Seguridad OWASP 360",
+    dateRange: "6 – 12 de julio de 2026",
+    entries: [
+      {
+        id: "e-150",
+        date: "2026-07-12",
+        category: "perf",
+        title: "Estrategia avanzada de caché para el catálogo y reseñas",
+        description:
+          "Se implementó el almacenamiento en caché del servidor mediante etiquetas en las consultas de catálogo y reseñas de Google Maps, minimizando la latencia y la cantidad de lecturas directas a la base de datos.",
+      },
+      {
+        id: "e-151",
+        date: "2026-07-12",
+        category: "feat",
+        title: "API segura de revalidación de caché bajo demanda",
+        description:
+          "Se creó un endpoint de revalidación seguro en la ruta `/api/revalidate` que permite forzar la actualización selectiva de páginas específicas (como portada y catálogo) en los servidores del CDN de forma instantánea al actualizar el inventario.",
+      },
+      {
+        id: "e-152",
+        date: "2026-07-06",
+        category: "seo",
+        title:
+          "Metadata de servidor y datos estructurados para el Hub de Universidades",
+        description:
+          "Se integraron descripciones automáticas, títulos de búsqueda amigables y esquemas estructurados de catalogación en las secciones de uniformes universitarios para mejorar el posicionamiento en buscadores.",
+      },
+      {
+        id: "e-153",
+        date: "2026-07-05",
+        category: "security",
+        title: "Remediación e inmunización de seguridad OWASP de 360 grados",
+        description:
+          "Se fortalecieron las directivas de seguridad CSP en las cabeceras HTTP, se restringieron accesos en el cargador de imágenes y se limpiaron tokens fallbacks estáticos de la configuración del entorno para garantizar una plataforma robusta.",
+      },
+    ],
+  },
+  {
+    version: "v1.3.0",
     label:
       "Catálogo Universitario · Multicarreras · Analíticas · Rendimiento LCP",
     dateRange: "4 – 5 de julio de 2026",
@@ -99,7 +222,82 @@ export const CHANGELOG: VersionGroup[] = [
     ],
   },
   {
-    version: "v1.2",
+    version: "v1.2.5",
+    label: "Páginas de Empresa · Buscador de Ayuda · Rediseño de Cabeceras",
+    dateRange: "21 – 29 de junio de 2026",
+    entries: [
+      {
+        id: "e-136",
+        date: "2026-06-29",
+        category: "feat",
+        title:
+          "Lanzamiento del directorio de páginas corporativas de la empresa",
+        description:
+          "Se crearon y organizaron las secciones de Sobre nosotros, Equipo de trabajo, Instalaciones, Proceso de Confección, Filosofía corporativa, Transparencia, Calidad y Certificaciones para detallar la experiencia e infraestructura del taller.",
+      },
+      {
+        id: "e-137",
+        date: "2026-06-23",
+        category: "feat",
+        title: "Página de ayuda interactiva con motor de búsqueda y filtros",
+        description:
+          "Se diseñó una nueva página de Ayuda y FAQs en `/ayuda` con un motor de búsqueda instantáneo con normalización de caracteres, junto a un panel dinámico de categorías y cajón de filtros para celulares.",
+      },
+      {
+        id: "e-138",
+        date: "2026-06-29",
+        category: "style",
+        title: "Unificación y estandarización visual de cabeceras de sección",
+        description:
+          "Se rediseñaron los componentes de encabezado de todas las páginas de servicios y empresa para reflejar la misma estructura visual, tipografías fluidas y espaciados simétricos de la portada principal.",
+      },
+      {
+        id: "e-139",
+        date: "2026-06-23",
+        category: "refactor",
+        title:
+          "Migración de la ruta del perfil de usuario y control de accesos",
+        description:
+          "Se trasladó de forma segura la gestión de cuenta de `/mi-cuenta` a `/cuenta` y se implementaron redirecciones en el servidor para evitar enlaces rotos.",
+      },
+    ],
+  },
+  {
+    version: "v1.2.1",
+    label:
+      "Notificaciones GuestBell · Gestos Táctiles Móviles · Killswitch de Seguridad",
+    dateRange: "19 – 20 de junio de 2026",
+    entries: [
+      {
+        id: "e-134",
+        date: "2026-06-20",
+        category: "feat",
+        title:
+          "Buzón de notificaciones en tiempo real para visitantes (GuestBell)",
+        description:
+          "Se implementó el sistema GuestBell en la barra de navegación superior, permitiendo a los usuarios no registrados ver notificaciones, guardar el estado de su carrito y favoritos de forma local y recibir alertas animadas.",
+      },
+      {
+        id: "e-135",
+        date: "2026-06-20",
+        category: "a11y",
+        title:
+          "Gestos de deslizamiento táctil (Swipe-to-dismiss) para cerrar paneles",
+        description:
+          "Se programó el soporte para cerrar mediante deslizamiento el CartDrawer, el modal de Favoritos, las notificaciones y el menú desplegable en celulares, con controladores de inercia y prevención de desplazamiento de fondo.",
+      },
+      {
+        id: "e-136",
+        date: "2026-06-19",
+        category: "security",
+        title: "Sistema de killswitch y auditoría de alertas de seguridad",
+        description:
+          "Se implementó un interruptor de emergencia y registro de incidentes en el panel de administrador, conectado mediante funciones RPC seguras a Supabase, para mitigar intentos de intrusión y vigilar el estado del sitio.",
+      },
+    ],
+  },
+  {
+    version: "v1.2.0",
     label:
       "Gestión de Admins · Ofertas Simplificadas · Vista de Producto Mejorada",
     dateRange: "18 de junio de 2026",
@@ -155,10 +353,18 @@ export const CHANGELOG: VersionGroup[] = [
     ],
   },
   {
-    version: "v1.1",
+    version: "v1.1.0",
     label: "SEO Avanzado · Estructura de Datos · Lector Legal Responsivo",
     dateRange: "17 de junio de 2026",
     entries: [
+      {
+        id: "e-118",
+        date: "2026-06-17",
+        category: "feat",
+        title: "Hub central de documentos legales con lector adaptativo",
+        description:
+          "Se programó una sección unificada para las 16 políticas de privacidad, garantía y términos del sitio web, la cual presenta un visor de lectura cómodo y flotante en computadoras y un layout secuencial en móviles.",
+      },
       {
         id: "e-119",
         date: "2026-06-17",
@@ -258,7 +464,7 @@ export const CHANGELOG: VersionGroup[] = [
     ],
   },
   {
-    version: "v1.0",
+    version: "v1.0.0",
     label:
       "Animaciones de Interfaz · Cuadrícula de Novedades · Presentación de Imágenes",
     dateRange: "13 – 14 de junio de 2026",
@@ -353,7 +559,7 @@ export const CHANGELOG: VersionGroup[] = [
     ],
   },
   {
-    version: "v0.9",
+    version: "v0.9.0",
     label: "Lanzamiento · Página de Novedades · Rediseño 404",
     dateRange: "10 – 12 de junio de 2026",
     entries: [
@@ -432,7 +638,7 @@ export const CHANGELOG: VersionGroup[] = [
     ],
   },
   {
-    version: "v0.8",
+    version: "v0.8.0",
     label: "Navegación Móvil Curva · Ajustes Visuales",
     dateRange: "10 de junio de 2026",
     entries: [
@@ -488,7 +694,7 @@ export const CHANGELOG: VersionGroup[] = [
     ],
   },
   {
-    version: "v0.7",
+    version: "v0.7.0",
     label: "Página de Enlaces Directos · Accesos Rápidos",
     dateRange: "9 de junio de 2026",
     entries: [
@@ -583,7 +789,7 @@ export const CHANGELOG: VersionGroup[] = [
     ],
   },
   {
-    version: "v0.6",
+    version: "v0.6.0",
     label: "Optimización SEO · Configuración de Servidor",
     dateRange: "7 – 8 de junio de 2026",
     entries: [
@@ -638,7 +844,7 @@ export const CHANGELOG: VersionGroup[] = [
     ],
   },
   {
-    version: "v0.5",
+    version: "v0.5.0",
     label: "Exploración Visual de Categorías",
     dateRange: "7 de junio de 2026",
     entries: [
@@ -669,7 +875,7 @@ export const CHANGELOG: VersionGroup[] = [
     ],
   },
   {
-    version: "v0.4",
+    version: "v0.4.0",
     label: "Modal de Búsqueda · Centro de Categorías",
     dateRange: "12 de mayo de 2026",
     entries: [
@@ -700,7 +906,7 @@ export const CHANGELOG: VersionGroup[] = [
     ],
   },
   {
-    version: "v0.3",
+    version: "v0.3.0",
     label: "Búsqueda, Filtros y Paginación",
     dateRange: "7 – 8 de mayo de 2026",
     entries: [
@@ -763,7 +969,7 @@ export const CHANGELOG: VersionGroup[] = [
     ],
   },
   {
-    version: "v0.2",
+    version: "v0.2.0",
     label: "Diseño Mobile-First · Presencia en Motores de Búsqueda",
     dateRange: "26 – 27 de abril de 2026",
     entries: [
@@ -826,7 +1032,7 @@ export const CHANGELOG: VersionGroup[] = [
     ],
   },
   {
-    version: "v0.1",
+    version: "v0.1.0",
     label: "Fundación de la Plataforma Web",
     dateRange: "8 – 25 de abril de 2026",
     entries: [
