@@ -1,6 +1,8 @@
 import { Manrope, Noto_Serif } from "next/font/google";
 import "./globals.css";
-import "@aejkatappaja/phantom-ui/ssr.css";
+// phantom-ui/ssr.css eliminado: el Web Component <phantom-ui> nunca se usa en JSX
+// (los loading.tsx usan Shimmer propio con animate-pulse de Tailwind).
+// Este import añadía un chunk CSS render-blocking innecesario.
 
 const manrope = Manrope({
   subsets: ["latin"],
