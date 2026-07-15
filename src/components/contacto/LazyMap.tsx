@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 interface LazyMapProps {
   src: string;
@@ -9,23 +9,38 @@ interface LazyMapProps {
 
 export function LazyMap({ src, title }: LazyMapProps) {
   const [shouldLoad, setShouldLoad] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Defer loading of Google Maps by 1500ms to allow Core Web Vitals to complete
-    const timer = setTimeout(() => {
-      setShouldLoad(true);
-    }, 1500);
+    const container = containerRef.current;
+    if (!container) return;
 
-    return () => clearTimeout(timer);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setShouldLoad(true);
+          observer.disconnect();
+        }
+      },
+      {
+        rootMargin: "300px 0px", // Load when map gets within 300px of viewport
+      }
+    );
+
+    observer.observe(container);
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <div className="relative flex h-full min-h-[400px] w-full items-center justify-center bg-gray-50">
+    <div
+      ref={containerRef}
+      className="relative flex h-full min-h-[400px] w-full items-center justify-center bg-gray-50"
+    >
       {!shouldLoad && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
           <div className="flex flex-col items-center gap-2">
             <span
-              className="border-primary/30 border-t-primary h-8 w-8 animate-spin rounded-full border-4"
+              className="border-primary/30 border-t-primary h-8 w-8 rounded-full border-4"
               aria-hidden="true"
             />
             <span className="text-xs font-medium text-gray-400">
