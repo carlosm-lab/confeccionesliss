@@ -49,6 +49,20 @@ export default async function CatalogoPage() {
 
   return (
     <>
+      {/* LCP preloads for category hub page */}
+      <link
+        rel="preload"
+        as="image"
+        href="/images/categorias/scrubs.webp"
+        fetchPriority="high"
+      />
+      <link
+        rel="preload"
+        as="image"
+        href="/images/categorias/universitarios.webp"
+        fetchPriority="high"
+      />
+
       <OffersReadTracker />
       <CategoryHubClient productCounts={productCounts} />
 
