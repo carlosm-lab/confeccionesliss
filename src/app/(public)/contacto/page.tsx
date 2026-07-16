@@ -247,15 +247,12 @@ export default function ContactoPage() {
               className="animate-fade-in-up mb-6 justify-start"
             />
 
-            <h1
-              className="animate-fade-in-up text-primary font-serif text-3xl font-bold md:text-4xl lg:text-5xl"
-              style={{ animationDelay: "50ms" }}
-            >
+            <h1 className="animate-fade-in-up text-primary font-serif text-3xl font-bold md:text-4xl lg:text-5xl">
               Contáctanos o visítanos
             </h1>
             <p
               className="animate-fade-in-up mt-4 max-w-xl text-base leading-relaxed text-gray-500 md:text-lg"
-              style={{ animationDelay: "100ms" }}
+              style={{ animationDelay: "50ms" }}
             >
               Estamos listos para atender tus dudas y asesorarte en la
               cotización de tus uniformes personalizados en San Miguel. Puedes
