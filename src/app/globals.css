@@ -400,7 +400,7 @@
 
   .animate-fade-in-up {
     opacity: 0;
-    animation: fadeInUp 750ms var(--ease-out-expo) forwards;
+    animation: fadeInUp 300ms var(--ease-out-expo) forwards;
   }
 
   @media (prefers-reduced-motion: reduce) {

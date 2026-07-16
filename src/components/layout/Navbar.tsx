@@ -64,7 +64,7 @@ function TypewriterPlaceholder() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setMounted(true);
-    }, 3000);
+    }, 6000);
     return () => clearTimeout(timer);
   }, []);
 
