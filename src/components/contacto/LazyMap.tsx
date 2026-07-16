@@ -23,7 +23,7 @@ export function LazyMap({ src, title }: LazyMapProps) {
         }
       },
       {
-        rootMargin: "300px 0px", // Load when map gets within 300px of viewport
+        rootMargin: "50px 0px", // Load when map gets within 50px of viewport
       }
     );
 
