@@ -16,9 +16,9 @@ export function MaterialSymbolsLoader() {
     const FULL_FONT_URL =
       "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap";
 
-    // Subconjunto optimizado de 13 iconos exactos utilizados en la homepage (~6.2 KB)
+    // Subconjunto optimizado de iconos utilizados en la homepage y catálogo (~8.5 KB)
     const HOMEPAGE_SUBSET_URL =
-      "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL,wght@0..1,400..700&icon_names=arrow_right_alt,checkroom,cookie,expand_more,favorite,location_on,mail,open_in_new,phone,schedule,star,star_half,verified&display=swap";
+      "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL,wght@0..1,400..700&icon_names=arrow_right_alt,business_center,checkroom,cookie,domain,eco,expand_more,favorite,health_and_safety,local_shipping,location_on,mail,open_in_new,payments,phone,print,schedule,school,shopping_bag,sports_soccer,star,star_half,support_agent,verified&display=swap";
 
     const loadStyles = (url: string, id: string) => {
       const existing = document.getElementById(id);
@@ -32,9 +32,8 @@ export function MaterialSymbolsLoader() {
     };
 
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    const isHomepage = window.location.pathname === "/";
 
-    if (isMobile && isHomepage) {
+    if (isMobile) {
       // 1. Cargar el subconjunto de 6KB inmediatamente tras 1s
       const loadInitial = () => {
         loadStyles(HOMEPAGE_SUBSET_URL, "material-symbols-subset");
