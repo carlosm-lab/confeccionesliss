@@ -59,14 +59,7 @@ function CategoryCard({
           // evita la latencia del pipeline /_next/image en cold-start post-deploy.
           loading="eager"
           unoptimized
-          priority={
-            sector === "scrubs" ||
-            sector === "universitario" ||
-            sector === "escolar" ||
-            sector === "corporativo" ||
-            sector === "deportivo" ||
-            sector === "accesorios"
-          }
+          priority={sector === "scrubs" || sector === "universitario"}
         />
 
         <div className="bg-primary absolute top-3 right-3 z-20 flex h-7 w-7 items-center justify-center rounded-full text-white shadow-md transition-all duration-300">
@@ -148,7 +141,9 @@ export function CategoryHubClient({ productCounts }: CategoryHubClientProps) {
               <div
                 key={sector}
                 className="animate-fade-in-up h-full w-full"
-                style={{ animationDelay: `${index * 50 + 300}ms` }}
+                style={{
+                  animationDelay: `${index < 4 ? index * 50 + 100 : (index - 4) * 50 + 300}ms`,
+                }}
               >
                 <CategoryCard
                   sector={sector}
