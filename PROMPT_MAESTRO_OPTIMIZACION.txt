@@ -1,0 +1,56 @@
+# PROMPT DE CONTEXTO Y DIRECTRICES DE OPTIMIZACIÓN — CONFECCIONES LISS
+
+Estás trabajando en el proyecto de Confecciones Liss (Next.js App Router). Tu objetivo es optimizar el rendimiento móvil y desktop del 100% de las subpáginas públicas de la aplicación (aproximadamente 117 rutas entre catálogo, categorías por sector, detalles de producto, universidades, servicios, empresa, ayuda y legal).
+
+La página Home ya está optimizada y cuenta con estadísticas excelentes (92-95+ estables en móvil). Debes replicar los mismos métodos, técnicas y la misma obsesión por los detalles para que el resto de las páginas alcancen obligatoriamente un score móvil estable superior a 91 puntos en Google PageSpeed Insights. Cualquier score menor a 91 se considera un fallo de implementación y debes seguir intentando e iterando.
+
+---
+
+## 1. MÉTODOS Y TÉCNICAS DE OPTIMIZACIÓN APLICADOS (Tu Caja de Herramientas)
+
+Para optimizar las páginas anteriores, se implementaron con éxito los siguientes patrones. Debes auditar y aplicar estas mismas técnicas en cada subpágina que abordes:
+
+### A. Eliminación de Bloqueos de Renderizado (Render-Blocking Assets)
+* **CSS e Imports Huérfanos**: Se eliminaron imports CSS pesados del layout global (como `phantom-ui/ssr.css`) que no se usaban en las vistas principales pero añadían un chunk de bloqueo inicial. Audita que las páginas no estén importando componentes cliente que inyecten hojas de estilo bloqueantes en el viewport inicial.
+* **Iconos Diferidos**: Las fuentes de iconos pesadas (como Material Symbols) se cargan de forma diferida post-hidratación (`MaterialSymbolsLoader`) para no retrasar el First Contentful Paint (FCP).
+
+### B. Paralelización de Consultas Asíncronas en el Servidor
+* **Eliminar Cascadas (Waterfall)**: En Server Components que realizan fetches a Supabase (como la portada, catálogos, productos o servicios), está estrictamente prohibido usar consultas asíncronas consecutivas con `await`. Se implementa `Promise.all` para ejecutar de manera simultánea todas las llamadas al servidor (ej. productos, reseñas, recuentos). Esto reduce el Time to First Byte (TTFB) al mínimo (~10ms en Edge).
+
+### C. Precargas de LCP Dinámicas y Específicas por Ruta
+* **Preloads Locales, No Globales**: No permitas preloads globales en `RootLayout` (`src/app/layout.tsx`) de imágenes que solo pertenezcan a una página específica. La imagen LCP del Home se movió del layout raíz a su componente específico de página.
+* **Precarga de Imágenes LCP**: En cada subpágina, identifica cuál es el recurso LCP visible (el banner del sector, la primera imagen del catálogo, o la galería del detalle de producto). Aplica la etiqueta `<link rel="preload" as="image" ... />` o la propiedad `priority` de Next.js `<Image>` únicamente a esas primeras imágenes (las que queden "above the fold"). Para las primeras tarjetas del grid del catálogo, pásales `priority={index < 4}` de modo que el navegador inicie su descarga de inmediato sin esperar a procesar el JS.
+
+### D. Poda de Payloads y Reducción del Tamaño del HTML (Hydration Size)
+* **Serialización Manual y Rigurosa**: Next.js inyecta en el HTML inicial (`__NEXT_DATA__`) todos los datos devueltos por las consultas del servidor para la hidratación de componentes cliente. Si devuelves un objeto de base de datos entero con descripciones largas, arrays de imágenes, o metadatos pesados, el HTML pesará cientos de KB y retrasará el FCP.
+* **Poda de Datos**: Limita y limpia manualmente los objetos que devuelvas del servidor al cliente. Retorna únicamente las propiedades necesarias (ej: `id`, `name`, `price`, `slug`, `image_path` y `category`), seteando a `null` o suprimiendo el resto de campos innecesarios para la vista rápida de tarjetas.
+* **Optimización de Reseñas/Listas**: En páginas que listan testimonios o bitácoras (como `/updates`), reduce o pagina los elementos a renderizar inicialmente para evitar que el procesamiento de CPU en el navegador congele el hilo de JS (lo que dispara el Total Blocking Time - TBT).
+
+### E. Infraestructura Estática y Regeneración (SSG + ISR)
+* **ISR Controlado**: Usa `export const revalidate = 3600` (o `false` para SSG puro) en rutas dinámicas para permitir la regeneración estática. Esto asegura que la página se sirva pre-renderizada desde el CDN de Vercel en milisegundos en lugar de procesar SSR en frío.
+* **Prohibición de Elementos Dinámicos Críticos**: Asegúrate de no invocar `headers()` ni `cookies()` en Server Components de acceso público, ya que esto degrada la página a Server-Side Rendering (SSR) dinámico en cada request, destruyendo los tiempos de respuesta del CDN.
+
+---
+
+## 2. FLUJO DE TRABAJO OBLIGATORIO (Ciclo Iterativo en Loop)
+
+Debes ejecutar tu trabajo en un loop cerrado y riguroso. Trabaja de la siguiente manera paso a paso, página por página:
+
+### El Paso a Paso del Ciclo:
+1. **Analizar la Página**: Abre el código de la ruta y su componente cliente. Identifica consultas lentas, imágenes de carga tardía y preloads erróneos.
+2. **Aplicar las Correcciones**: Implementa paralelización, poda de datos, precarga de LCP y eliminación de JS/CSS redundantes.
+3. **Validar Localmente**: Compila el proyecto con `npm run build` para asegurar que no haya errores de tipado de TypeScript o de generación estática.
+4. **Dar Formato**: Ejecuta `npm run agent:sync` para formatear los archivos y pasar el linter.
+5. **Subir Cambios**: Haz commit (siguiendo Conventional Commits) y push **únicamente a la rama `master`**.
+6. **Esperar a Vercel**: Deja transcurrir de 1 a 2 minutos para que el pipeline de Vercel compile y publique la optimización en producción.
+7. **Auditar mediante la API de PageSpeed**: Ejecuta pruebas de velocidad en producción usando la API oficial de Google PageSpeed Insights (puedes apoyarte en scripts locales que consuman `PAGESPEED_API_KEY` del archivo `.env`). Audita tanto la estrategia **móvil** como desktop.
+8. **Evaluar y Re-intentar**: Si el score móvil de la página es menor a **91**, analiza el log de PageSpeed, encuentra el cuello de botella (FCP lento, LCP alto o TBT bloqueante) y vuelve al paso 2. **No pases a otra página hasta alcanzar y consolidar una métrica superior a 91.**
+
+---
+
+## 3. REGLAS ADICIONALES CRÍTICAS
+* **Preservación Visual Absoluta**: Tienes estrictamente prohibido realizar cambios visuales, alterar los diseños, colores, fuentes, espaciados, animaciones, sliders o efectos interactivos. La UI final resultante de cara al usuario debe ser pixel-perfect e idéntica a la original. La optimización es meramente técnica, estructural y a nivel de red.
+* **Mocking con MSW**: Si necesitas simular datos de red, recuerda que todos los interceptores de desarrollo van en `src/mocks/handlers.ts`.
+* **Sincronización Git**: Trabaja siempre sobre la rama `master`. Nunca realices commits directos a `main` o a ramas secundarias.
+
+Comienza mapeando las páginas del catálogo, categorías y subpáginas de servicios, aplicando el flujo iterativo de inmediato.

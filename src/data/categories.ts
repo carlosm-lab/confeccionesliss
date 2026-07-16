@@ -355,7 +355,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
     ],
     // Poblado dinámicamente en [sector]/page.tsx con las categorías de Supabase
     categoryChips: [{ label: "Todo", icon: "grid_view" }],
-    hubImage: "/images/categorias/lenceria.png",
+    hubImage: "/images/categorias/lenceria.webp",
     hubTagline:
       "Lencería fina blanca en algodón y encaje para hombres y mujeres",
   },
@@ -399,7 +399,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
     ],
     // Poblado dinámicamente en [sector]/page.tsx con las categorías de Supabase
     categoryChips: [{ label: "Todo", icon: "grid_view" }],
-    hubImage: "/images/categorias/sublimados.png",
+    hubImage: "/images/categorias/sublimados.webp",
     hubTagline:
       "Prendas y artículos personalizados con sublimación de alta definición",
   },
@@ -443,7 +443,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
     ],
     // Poblado dinámicamente en [sector]/page.tsx con las categorías de Supabase
     categoryChips: [{ label: "Todo", icon: "grid_view" }],
-    hubImage: "/images/categorias/ropa-calzado.png",
+    hubImage: "/images/categorias/ropa-calzado.webp",
     hubTagline:
       "Vestuario casual y calzado de tendencia para damas y caballeros",
   },
@@ -487,7 +487,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
     ],
     // Poblado dinámicamente en [sector]/page.tsx con las categorías de Supabase
     categoryChips: [{ label: "Todo", icon: "grid_view" }],
-    hubImage: "/images/categorias/tops.png",
+    hubImage: "/images/categorias/tops.webp",
     hubTagline:
       "Crop tops y blusas cortas con patrones modernos de excelente ajuste",
   },
@@ -532,7 +532,7 @@ export const CATEGORIES: Record<Sector, CategoryConfig> = {
     ],
     // Poblado dinámicamente en [sector]/page.tsx con las categorías de Supabase
     categoryChips: [{ label: "Todo", icon: "grid_view" }],
-    hubImage: "/images/categorias/limpiapipas.png",
+    hubImage: "/images/categorias/limpiapipas.webp",
     hubTagline:
       "Flores y ramos de limpiapipas hechos a mano que duran para siempre",
   },

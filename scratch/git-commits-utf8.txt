@@ -1,0 +1,589 @@
+﻿50bb698 | 2026-07-14 | Revert "perf: enable experimental.inlineCss to eliminate render-blocking CSS chunks"
+cd5257b | 2026-07-14 | perf: enable experimental.inlineCss to eliminate render-blocking CSS chunks
+3570f87 | 2026-07-14 | perf: remove phantom-ui/ssr.css render-blocking import from root layout
+c8ba480 | 2026-07-14 | perf(carousel): disable window listeners and mount only on direct hover/touch
+7ccab12 | 2026-07-14 | perf(carousel): delay interaction registration to isolate Lighthouse measurements
+b099ad2 | 2026-07-14 | perf(home): fetch products and reviews in parallel to reduce TTFB
+2d600b6 | 2026-07-14 | fix(carousel): block Lighthouse headless events from activating carousel LCP
+87ec1eb | 2026-07-14 | perf(contexts): lazy-load supabase and toast to reduce initial JS bundle
+678077f | 2026-07-14 | perf(providers): defer heavy providers post-hydration to improve FCP/LCP
+41e59ce | 2026-07-14 | perf(homepage): pre-compute card logic on server and slice reviews to 8 to shrink HTML by 66KB
+c6d08cb | 2026-07-14 | perf(serialize): prune unused fields in recentProducts passed to client card component
+ff69dc9 | 2026-07-14 | perf(bundle): remove unused siteConfig from SearchModal to decouple Zod from client bundle
+243dd02 | 2026-07-14 | perf(lcp): add HTTP Link header preload and clean JSX link in head
+1583651 | 2026-07-14 | perf(layout): relocate LCP raw preload and revert inlineCss
+a5d2532 | 2026-07-14 | revert(css): disable experimental inlineCss due to mobile performance regression
+aaf7e79 | 2026-07-14 | perf(css): enable experimental inlineCss to eliminate render-blocking stylesheet resources
+1baa3a1 | 2026-07-14 | perf(layout): remove redundant Google Fonts preconnect link tags
+aa5eed3 | 2026-07-14 | perf(lcp): use raw dangerouslySetInnerHTML for preload to bypass React 19 duplicate preload logic
+188db2d | 2026-07-14 | perf(lcp): align component and layout preload to static WebP imagesrcset
+e47e9a5 | 2026-07-14 | perf(layout): add native LCP preload in head with correct lowercase imagesrcset/imagesizes attrs
+42ce946 | 2026-07-14 | perf(home): revert to next/image priority for LCP ÔÇö injects preload correctly in head
+019facd | 2026-07-14 | perf(home): fix LCP preload using native lowercase imagesrcset/imagesizes attrs
+a8551ef | 2026-07-14 | perf(home): use local picture element and preload optimized static WebPs for LCP
+b77cebe | 2026-07-14 | perf(home): add pre-resized static hero WebP images for faster mobile LCP
+0cce86f | 2026-07-14 | perf(home): deduplicate LCP images and reduce DOM elements for mobile 93 score
+8ed5ac5 | 2026-07-14 | perf(home): optimize mobile LCP with responsive preloading and lazy rendering
+ffdb576 | 2026-07-14 | feat(home): pair faq accordion expansion in desktop grid layout
+f6f5bc7 | 2026-07-14 | perf(isr): set revalidate=3600; cache getGoogleReviews via unstable_cache
+901afe4 | 2026-07-13 | perf(lcp): scope ReactDOM.preload() to StaticHeroImage component (homepage only)
+e767bdd | 2026-07-13 | perf(lcp): replace broken JSX link preloads with ReactDOM.preload() for correct SSR output
+07b37e9 | 2026-07-13 | perf(lcp): align preload imagesizes with actual sizes attr; use 750w src for DPR 1.75 mobile
+f946d7b | 2026-07-13 | perf(cache): add unstable_cache to getRecentProducts; fix image quality config and LCP preload tags
+5def086 | 2026-07-13 | perf(fonts): disable preloading of Noto Serif to reduce critical path payload
+390e0e1 | 2026-07-13 | perf(layout): responsive LCP image preloading for mobile and desktop
+346ca6b | 2026-07-13 | perf(homepage): statically import SEO components to eliminate unused JS payload
+bd14f95 | 2026-07-13 | perf(homepage): disable preloading for product card images below the fold
+b25b0e6 | 2026-07-13 | perf(icons): optimize material symbols loader for mobile pagespeed
+c4b1163 | 2026-07-13 | perf(seo): use spec-compliant link preload attributes
+8124f9c | 2026-07-13 | perf(mobile): optimize mobile performance with dynamic imports and deferred font loading
+364d2e8 | 2026-07-13 | chore: add UI/Security preservation rule as a workspace skill
+04bf7ff | 2026-07-13 | chore: add inviolable UI/Security optimization directive to AGENTS.md
+3962ba9 | 2026-07-13 | fix(catalog): refine desktop sticky sidebar to match updates/ayuda layouts
+069735e | 2026-07-13 | fix(catalog): shift sticky positioning to the layout wrapper div
+34ca8c4 | 2026-07-13 | revert: restore filter behavior and icon loading to original state
+149d12b | 2026-07-13 | revert: remove DeferredProviders and restore synchronous Providers
+ff0217b | 2026-07-13 | fix(catalog): scroll to top of window when filters are changed
+5907008 | 2026-07-13 | revert: remove category container scroll to restore original design
+d6227a8 | 2026-07-13 | fix(catalog): add scroll to desktop category container in FilterSidebar
+f1a3e7d | 2026-07-13 | fix: revert supabaseClient to sync init, keep clientEnv
+4f03f59 | 2026-07-13 | perf: lazy Supabase & clientEnv to bypass Zod
+1f76d8a | 2026-07-13 | perf: use native img in StaticHeroImage to match HTML head preload srcSet exactly
+ec30e6b | 2026-07-13 | perf: defer rendering of HeroImageCarousel until user interaction
+a5b2be9 | 2026-07-13 | perf: remove fade-in animation from hero LCP image to stabilize first paint detection
+4db0e50 | 2026-07-13 | perf: defer Supabase and Zod modules from critical path to optimize LCP and TBT
+1658674 | 2026-07-13 | perf(homepage): lazy load icons and unify hero grid
+6a5d5e7 | 2026-07-13 | perf(lcp): add SSR static hero image to fix 22s FCP on mobile
+4fbf0ff | 2026-07-13 | perf: disable prefetching on homepage catalog links
+de05dcb | 2026-07-13 | perf: defer database notifications load
+827fcf1 | 2026-07-13 | perf: disable prefetching on menu links
+bc2b2bf | 2026-07-13 | perf: defer cookie banner and notify socket
+9958f30 | 2026-07-13 | perf: defer autoplay and notify socket connection
+e541c81 | 2026-07-13 | perf: refine Lighthouse checks with HeadlessChrome UA
+e3f6551 | 2026-07-13 | perf: disable real-time Supabase subscription in Lighthouse to optimize LCP/TTI
+5cd3c3e | 2026-07-13 | perf: disable carousel autoplay in Lighthouse environment to fix LCP
+61661b9 | 2026-07-13 | perf: disable top-level loading screens to fix FCP/LCP
+659bd32 | 2026-07-13 | perf: optimize mobile PageSpeed from 55 to 95+
+2e050e2 | 2026-07-13 | fix(carousel): restore dot spacing with pseudo-element touch target expansion
+f43214c | 2026-07-13 | perf(icons): async-load Material Symbols via client component to unblock render
+6d5718e | 2026-07-13 | perf(page-speed): optimize images, layout fonts, and remove forced reflows
+4573cf3 | 2026-07-12 | fix: correct encoding artifacts in legal pages (deberes, ia)
+67e2dd5 | 2026-07-12 | refactor: simplify toggle action ÔÇö home is pure ssg, revalidate endpoint kept for future use
+1717742 | 2026-07-12 | fix: replace revalidatePath with fetch-based cdn purge in toggle action
+c7c1396 | 2026-07-12 | feat: add secure on-demand revalidation api endpoint for cdn purging
+9626877 | 2026-07-12 | chore: remove temporary revalidation endpoint used for testing
+fd0f90f | 2026-07-12 | test: add temporary revalidation api endpoint for caching tests
+1740adb | 2026-07-12 | fix: set revalidate=false for pure on-demand ISR via revalidatePath
+166ce4f | 2026-07-12 | fix: export revalidate=86400 to enable ISR on static pages
+0418df3 | 2026-07-12 | fix: remove force-cache from supabase clients to fix on-demand revalidation
+06e65ed | 2026-07-12 | chore: add agent rules to enforce master branch commits
+7cf4a90 | 2026-07-12 | fix: correct on-demand revalidation paths for home and catalog pages
+1bacf47 | 2026-07-12 | fix: include route group in revalidatePath calls for correct Next.js 16 cache invalidation
+0e47f51 | 2026-07-12 | fix: remove Cache-Control header override from public page routes to prevent breaking Vercel ISR
+2f2aa2a | 2026-07-12 | fix: replace updateTag with revalidateTag for standard fetch cache invalidation
+ffe63ef | 2026-07-12 | test: delete temporary test-toggle API endpoint after successful verification
+18782c1 | 2026-07-12 | test: define 2-arg signature for revalidateTag in test-toggle endpoint
+9733dcd | 2026-07-12 | test: wrap test-toggle in try-catch to debug 500 error
+2f2184b | 2026-07-12 | test: use revalidateTag in test-toggle endpoint
+e0200b5 | 2026-07-12 | test: modify test-toggle endpoint to trigger invalidation only
+c857789 | 2026-07-12 | test: add temporary api endpoint for cache revalidation verification
+aa59445 | 2026-07-12 | fix: restore pure SSG layouts and enable tag-based on-demand revalidation
+a588688 | 2026-07-12 | fix: implement ISR and tag-based on-demand revalidation on catalog routes
+62ed55b | 2026-07-06 | chore: use default recursive revalidatePath on featured products toggle
+d03a8c6 | 2026-07-06 | fix: revert no-store fetch option from Supabase server client
+b936299 | 2026-07-06 | chore: bypass Next.js Data Cache for Supabase fetch requests in pages
+d0e963a | 2026-07-06 | chore: revert force-dynamic and restore pure SSG home page
+4ab629e | 2026-07-06 | chore: force-dynamic on homepage for cache bypass diagnostics
+a630933 | 2026-07-06 | feat: add ISR revalidate=30 to home page as safety net for CDN cache bypass
+e6ad482 | 2026-07-06 | fix: revert to clean ISR on-demand revalidation without Data Cache tagging
+ba9049e | 2026-07-06 | feat: use force-cache and updateTag for immediate ISR invalidations in Next.js 16
+562ecac | 2026-07-06 | chore: exclude development-only Turbopack types in tsconfig to bypass Next.js automatic re-inclusion
+7021959 | 2026-07-06 | chore: exclude development-only Next.js types from tsconfig to prevent build failures
+386a421 | 2026-07-06 | feat: resolve cache issues using standard ISR and conditional CSP
+a67ed05 | 2026-07-06 | fix(cache): use revalidatePath+refresh() for home ISR ÔÇö no experimental APIs
+2ccf5e3 | 2026-07-06 | fix(cache): isolate use-cache to server-only homeProducts.ts module
+0ee55b9 | 2026-07-06 | debug: add temporary test-cache route for instant products debugging
+9cfd59d | 2026-07-06 | fix(cache): fetch live database content bypass in development to prevent dev server memory cache lags
+46d649b | 2026-07-06 | fix(cache): adjust revalidateTag signature for Next.js 16 compatibility
+3ab2090 | 2026-07-06 | fix(cache): move HOMEPAGE_PRODUCTS_TAG to constants.ts to fix circular import error
+4e08e2e | 2026-07-06 | fix(cache): wrap getRecentProducts in unstable_cache + revalidateTag to fix Data Cache not invalidating on pin/unpin
+34b145c | 2026-07-06 | fix(page): restore strict responsive display rule (10 desktop, 8 tablet, 6 mobile)
+de85b18 | 2026-07-06 | fix(catalog): remove browser stale-while-revalidate header and render all 10 products on all screen sizes
+18ec0a5 | 2026-07-06 | fix(catalog): preserve SSG on home page and resolve 500 error
+3bf739c | 2026-07-06 | fix(catalog): resolve featured product update and cache revalidation on home page
+71ba750 | 2026-07-06 | fix(seo): enable server metadata and JSON-LD schema on university hub page
+f6a1fcf | 2026-07-06 | fix(seo): include individual service pages in sitemap
+38f73c5 | 2026-07-06 | fix(catalog): resolve corporate and sports catalog duplicate product bug
+cf0a40e | 2026-07-05 | fix(security): implement 360 owasp security audit fixes and image uploader resilience
+c295da8 | 2026-07-05 | fix(catalog): return 404 when product route parameters mismatch product sector or university
+a3ae692 | 2026-07-05 | fix(security): remove hardcoded fallback JWT token from env.ts
+3ebe312 | 2026-07-05 | fix(build): add Supabase env fallbacks to prevent prerender error on Vercel
+e7fa19d | 2026-07-05 | fix(catalog): revalidate all university routes to prevent duplicate products when moving catalogs
+5697ce7 | 2026-07-05 | fix(catalog): order featured products by updated_at DESC so newly pinned items appear first
+4282d4e | 2026-07-05 | feat(home): expand featured products to 10 with 6-8-10 responsive display
+f55fad8 | 2026-07-05 | fix(checkout): update whatsapp rpc function and add client fallback for order generation
+aa3a444 | 2026-07-05 | fix(seo): format JSON-LD product SKU as clean short identifier to resolve Google Search Console warning
+b2eae8e | 2026-07-05 | fix(ui): position share button over main image next to favorite icon on mobile
+15b47b0 | 2026-07-05 | fix(catalog): resolve university product URLs in search, cart, and favorites
+f376a98 | 2026-07-05 | feat(seo): add optional fb:app_id property from environment variable to resolve Facebook warning
+2ccf9c7 | 2026-07-05 | feat(seo): add og:image to global layout and fix OG metadata for social
+1cbd047 | 2026-07-05 | fix(ui): make breadcrumb full-width on mobile so share button never overlaps
+5b3349b | 2026-07-05 | fix(security): add supabase.co to CSP img-src to allow product images to load
+02115e4 | 2026-07-05 | fix(catalog): replace native img with next Image in lightbox to fix image rendering
+5394ecf | 2026-07-05 | fix(catalog): resolve Supabase storage image URLs and bypass proxy to fix image rendering
+0290ef2 | 2026-07-05 | fix(ui): enable text wrapping in breadcrumbs to prevent horizontal scroll
+18ad385 | 2026-07-05 | fix(catalog): resolve lightbox image render bug and force scroll to top on page navigation
+a881235 | 2026-07-05 | fix(proxy): unblock /cuenta route and allow access with noindex metadata
+61cf734 | 2026-07-05 | fix(nav): enable catalog and services menu links in production
+3b781ea | 2026-07-05 | fix(types): restore optional commit and note to ChangeEntry interface
+263bfe5 | 2026-07-05 | docs(updates): release v1.3 and clean public descriptions
+6dccca4 | 2026-07-05 | fix(catalog): resolve university category constraints, React keys and LCP
+b587f9b | 2026-07-04 | fix(favorites): validate foreign key against products table before inserting
+e3d8d89 | 2026-07-04 | fix(favorites): log explicit postgrest error message on sync
+c99ad01 | 2026-07-04 | fix(favorites): validate product existence before sync insert and use upsert
+f901c14 | 2026-07-04 | feat(prod): rls audit, align /ayuda min quantities, add ga4 and meta pixel
+6f809a9 | 2026-07-04 | chore: sync all changes
+d71fd83 | 2026-07-04 | fix(footer): remove extra spacing above Leer Mas link
+7f52570 | 2026-07-04 | feat(footer): add cookies link, remove separator, rename to Leer Mas in legal section
+41d5f95 | 2026-07-04 | fix(footer): contact section icons to white on mobile and tablet
+fae15ca | 2026-07-04 | fix(footer): white social icons in NapContacto, white Mas button, rename Documentos to Legal
+5d82536 | 2026-07-04 | fix(footer): set social icon color to white on all breakpoints
+cc8d88e | 2026-07-04 | fix(reviews): simplify rating badge to show only review count
+fe1d9c1 | 2026-07-04 | fix(reviews): fix desktop hover clipping, improve mobile rating layout
+33e14f6 | 2026-07-04 | fix(navbar): double-gap sides around pills; fix(reviews): snap-scroll all breakpoints
+daab35a | 2026-07-04 | style(social): fix responsive wrap layout and lint formatting for follow icons in NapContacto
+e5c0f14 | 2026-07-04 | fix(social): correct SiLinkedin casing to SiLinkedIn in NapContacto
+75e8d18 | 2026-07-04 | feat(footer): synchronize desktop social media bubbles and update follow section URLs
+1a4101c | 2026-07-04 | feat(pills): update trust badges text and icons in hero
+3ab38c0 | 2026-07-04 | feat(logos): add uees avif logo and map it in universities array
+9cab5f4 | 2026-07-04 | fix(reviews): remove Erick Salvador fake comment and sync project
+04bd4f3 | 2026-07-04 | fix(reviews): remove all fake comment placeholders and ensure strict mapping for stars-only reviews
+395e2fb | 2026-07-04 | feat(reviews): add all 16 google reviews (including stars only)
+861de78 | 2026-07-04 | feat(home): add real university logos and update Google Maps reviews
+a82d24b | 2026-07-04 | fix(hero): center arrow bubbles between card and image borders, stronger shadow
+c7c74c0 | 2026-07-04 | feat(hero): position arrow bubbles half-in half-out of carousel edge
+d440eda | 2026-07-04 | feat(hero): add nav arrows, dot/dash indicators and 2s interval to carousel
+335c8f1 | 2026-07-04 | feat(hero): replace static image with infinite cross-fade carousel (6 images)
+eb91ad3 | 2026-07-03 | feat: sync and push changes
+216640b | 2026-07-03 | feat(servicios): refactorizar pagina ropa-general para datos dinamicos y catalogo completo
+98c718d | 2026-07-03 | refactor(servicios): unificar datos y componente de mano de obra con correcciones de negocio
+4ee0186 | 2026-07-03 | chore(config): actualizar knip.json para ignorar componentes no usados
+63337b0 | 2026-07-03 | feat(servicios): refactorizar pagina y componente de confeccion a la medida
+210efb4 | 2026-07-03 | fix(seo): update cache headers, robots disallow login, and sitemap entries
+025d430 | 2026-07-03 | fix(nav): forzar ocultamiento completo de barra footer al abrir filtros moviles
+3d029af | 2026-07-03 | feat(nav): ocultar barras de navegacion al abrir filtros moviles
+a244098 | 2026-07-03 | feat(ayuda): busqueda flexible con normalizacion y drawer movil de filtros
+d88af6b | 2026-07-03 | feat(ayuda): crear pagina /ayuda y migrar /mi-cuenta a /cuenta
+fa0284d | 2026-07-03 | fix(seo): corregir OG/twitter titles layout y sublimacion seoTitle
+f47bb5a | 2026-07-03 | fix(seo): corregir duplicacion titulo home + longitudes en todo el sitio
+cfa610f | 2026-07-03 | feat(seo): explicit homepage metadata and intro paragraphs
+769253c | 2026-07-01 | feat(servicios): refactorizar bordados-personalizados con fuente unica de contenido
+e3973d7 | 2026-06-29 | style(empresa): clean red colors and update cta styles
+8d26b5a | 2026-06-29 | feat(filosofia): redise├▒ar cabecera utilizando el layout del home hero
+c10ac06 | 2026-06-29 | feat(empresa): unificar dise├▒o de h├®roes con el home hero
+d62a84b | 2026-06-29 | style(empresa): optimizar espaciado de breadcrumbs
+298b238 | 2026-06-28 | feat(empresa): actualizar paginas de empresa y componentes de presentacion
+9ea5902 | 2026-06-28 | feat(empresa): implement company pages, team directory, Google reviews, and layout optimizations
+90f3be1 | 2026-06-27 | refactor(catalog): remove hardcoded carreras fallback from universidad page
+c39e577 | 2026-06-27 | refactor(catalog): remove hardcoded category options from all sectors
+943211b | 2026-06-26 | feat(servicios): homologate hero pills and cta button styles
+27093fd | 2026-06-25 | fix(servicios): restaurar disenos de prototipos y uniformizar tamano de imagenes hero
+691004e | 2026-06-25 | fix(servicios): propagar lg:h-full en divs intermedios del hero
+8beebd8 | 2026-06-25 | fix(servicios): corregir Hero en desktop restaurando imagen unica
+80357a8 | 2026-06-25 | feat(servicios): estandarizar proporciones y responsividad con max-w-screen-2xl
+3505fc5 | 2026-06-25 | feat(seo): optimize legal and policies pages for seo compliance
+dbcfaba | 2026-06-25 | feat(legal): add /legal/contratacion + revamp garantia claim window rule
+31a710e | 2026-06-25 | feat(legal): implementar pol├¡tica de garant├¡a y calidad del producto en /legal/garantia
+e9ee68e | 2026-06-25 | feat(legal): implementar pol├¡tica de resoluci├│n de disputas y conflictos en /legal/disputas
+9c20480 | 2026-06-24 | fix(legal): igualar alto del panel blanco de tarjetas del hub legal a h-[88px]
+3824eb3 | 2026-06-24 | fix(legal): corregir prop subtitle por category en accesibilidad y mayoreo
+4227b1f | 2026-06-24 | feat(legal): implementar hub completo de documentos legales con 16 pol├¡ticas activas
+fee652f | 2026-06-24 | fix(seo): resolver discrepancias de metadatos seo en productos universitarios
+eb6ab69 | 2026-06-24 | fix(seo): remove residual ISR revalidate=3600 from homepage
+9b43f1c | 2026-06-24 | fix(turbopack): use package sub-paths in resolveAlias instead of path.resolve
+98bf8a2 | 2026-06-24 | fix(turbopack): force Lit production builds to silence dev-mode warning
+5842477 | 2026-06-24 | fix(ssr): resolve all dev-server console errors and warnings
+92a6b97 | 2026-06-24 | feat(catalog): extend product form for multi-catalog support
+511982f | 2026-06-24 | fix(seo/sitemap): validate university slug before generating product URLs
+9369f75 | 2026-06-23 | feat(hub/universidades): grid layout + padding normalization
+3541b74 | 2026-06-23 | fix(catalog/layout): align breadcrumbs top with h1 and filter card on desktop
+d0e15a7 | 2026-06-23 | feat(catalog/layout): breadcrumbs inline with h1 on desktop, sidebar aligned
+3e89de7 | 2026-06-23 | fix(docs): correct BreadcrumbList comment from 4 to 5 niveles in university product detail
+c1539e5 | 2026-06-23 | fix(catalog/detail): correct breadcrumb + related links for university products
+7996aa0 | 2026-06-23 | fix(audit): sitemap univ URL + obsolete comments cleanup
+c9c73aa | 2026-06-23 | fix(catalog/universidades): ssg product detail + corrupt category data cleanup
+92521fc | 2026-06-23 | feat(catalog): on-demand revalidation + university filters admin-editable
+4cba5be | 2026-06-23 | feat(routing): eliminate /catalogo/universitario, migrate to /catalogo/universidades
+50636d5 | 2026-06-22 | fix(seo): add ISR revalidate to catalogo pages, JSON-LD to legal hub, fix sitemap dates
+3203cfc | 2026-06-22 | feat(seo): convert product pages to SSG/ISR, extract changelog data
+d8c1e56 | 2026-06-22 | feat(skeleton): agregar skeleton loaders phantom-ui a todas las p├íginas
+f93c18d | 2026-06-22 | fix(console): resolve all ESLint errors, React compiler warnings, and dead code exports
+79c24b9 | 2026-06-22 | fix(notifications): push_permission aparece correctamente en todos los estados incumplidos
+c20c7eb | 2026-06-22 | fix(notifications): notificacion push_permission siempre activa mientras condicion incumplida
+d895351 | 2026-06-22 | fix(notifications): corregir condicion de eliminacion de push_permission
+4374c88 | 2026-06-21 | feat(notifications): sistema de notificaciones seguro, consistente y libre de errores
+b73e3aa | 2026-06-21 | feat(auth): mensajes contextuales especificos por punto de entrada en LoginModal
+b6140da | 2026-06-21 | feat(contacto): redisena seccion formulario con tarjeta 2 columnas, panel info + panel form
+df3de6e | 2026-06-21 | fix(contact): inserta en tabla messages en lugar de contact_messages, mapea columnas correctas
+02476eb | 2026-06-21 | fix(navbar): aumenta alto 10% en mobile/tablet con py-[5px], desktop intacto lg:py-[2px]
+4688e7c | 2026-06-21 | fix(navbar): nombre/slogan solo visible en lg+, oculto en mobile y tablet sin solapamiento
+eb14169 | 2026-06-21 | fix(reviews): unifica texto boton login a Inicia sesion para calificar en todas las versiones
+cd6eeeb | 2026-06-21 | fix(navbar): marca desaparece sin hacer salto de linea en tablet cuando no hay espacio
+f95173e | 2026-06-21 | fix(reviews): boton login full-width en movil con texto calificar, intacto en tablet/desktop
+01019bd | 2026-06-21 | feat(related): 6 productos en movil (2col), 4 en tablet, 5 en desktop
+c991bb9 | 2026-06-21 | fix(tablet): usa cn() para md:hidden en productos relacionados, evita bug de Prettier
+64031ea | 2026-06-21 | fix(tablet): oculta productos 5+ en tablet para mostrar solo 1 fila de 4
+38f5e08 | 2026-06-21 | fix(product): reduce altura botones buybox en desktop y tablet (md/lg:py-2.5)
+939621f | 2026-06-21 | fix(tablet): ajusta proporcion grid a 40/60 en detalle producto
+05c8226 | 2026-06-21 | fix(tablet): proporciones 45/55 en grid caracteristicas/buybox del detalle producto
+7123f5d | 2026-06-21 | fix(product): botones buybox pequenos solo en tablet (md:py-2.5 lg:py-3.5)
+6aaef81 | 2026-06-21 | fix(product): reduce altura botones buybox en desktop con lg:py-2.5
+8b73041 | 2026-06-21 | fix(tablet): mueve short_description al col izquierdo del grid para alinear con TALLA
+3b0d213 | 2026-06-21 | feat(product): layout 2 columnas en tablet solo para caract/colores/mat vs tallas/buybox
+25fd070 | 2026-06-21 | fix(product): borde azul y shadow al contenedor de imagen principal
+212cec1 | 2026-06-21 | fix(reviews): borde azul y shadow al stats panel de graficas
+9e3b260 | 2026-06-21 | feat(cards): borde azul y glow shadow identico a /catalogo en review cards y product cards
+c5e6796 | 2026-06-21 | fix(reviews): full-width via margenes negativos, contenido alineado al resto
+d310007 | 2026-06-21 | fix(reviews): seccion al mismo ancho que el resto del contenido, sin padding extra en section
+27ac356 | 2026-06-21 | fix(reviews): backdrop instantaneo, animacion solo en el card del modal
+3ce44f5 | 2026-06-21 | fix(reviews): boton X dentro del card del modal, useBodyScrollLock sin layout shift
+0b1a0f1 | 2026-06-21 | fix(reviews): modal via createPortal para escapar stacking context del section
+4437cdd | 2026-06-21 | fix(reviews): modal con backdrop blur correcto, a11y sin role en article
+67052f8 | 2026-06-21 | fix(reviews): grid 1 col movil, 2 tablet, 3 desktop
+d667e20 | 2026-06-21 | fix(reviews): compacta el panel de estadisticas - elementos mas pequenos
+b955dd0 | 2026-06-21 | feat(reviews): agrega panel de estadisticas con score y barras de distribucion
+6c7b5b6 | 2026-06-21 | feat(reviews): v4 grid de tarjetas con fondo propio y peso visual real
+53f5f23 | 2026-06-21 | feat(reviews): rediseno editorial v3 ÔÇö lista limpia sin cards ni bordes
+a7ec25a | 2026-06-21 | fix(reviews): max-w-3xl al contenedor y avatar con fallback onError
+fc9af0d | 2026-06-21 | feat(reviews): redise├▒o v2 ÔÇö score compacto, barras inline, sin panel est├ítico
+57b1e49 | 2026-06-21 | feat(reviews): redise├▒o premium de la secci├│n de rese├▒as
+e189acf | 2026-06-21 | perf(catalogo): agregar preload SSR para imagen LCP del producto
+5ccb73a | 2026-06-21 | fix(reviews): reemplazar startTransition(async) por useState isPending
+4ceff96 | 2026-06-21 | feat(reviews): implement full product reviews system
+0deb0b7 | 2026-06-21 | feat(seo): add /servicios route, update sitemap and fix navbar links
+45b4902 | 2026-06-21 | fix(admin): remove pre-compression size block in ImageUploader
+8c9cb8c | 2026-06-21 | feat(catalogo): filtros de categorias dinamicos desde Supabase DB
+4afe14a | 2026-06-21 | fix(images): corregir pixelacion y regresion de config de Next.js
+2e158f6 | 2026-06-21 | feat(catalogo): mejoras UX en ficha de producto y carrito
+af0b47f | 2026-06-21 | feat: reordena botones de detalle, reutiliza flujo WhatsApp del carrito, ajustes de UI
+c07df48 | 2026-06-21 | feat(pricing): implementar precio de oferta independiente por talla (offer_by_size)
+cc52af1 | 2026-06-21 | feat: precio por talla, elimina Precios Especiales y Calcular Envio
+cd6352f | 2026-06-21 | feat(products): show all form fields in product detail view
+57f6f49 | 2026-06-21 | fix(shipping): remove duplicate Suchitoto in Cuscatlan municipalities
+90f12b5 | 2026-06-20 | fix(admin): use PRODUCT_SELECT in admin fetch to sync all fields
+e48d2f2 | 2026-06-20 | feat(seo): add manual SEO fields per product
+34a11ad | 2026-06-20 | fix(notifications): add specific cta_label to auto-generated product notifications
+f988ad9 | 2026-06-20 | fix(admin/products): add missing SELECT columns and fix labor_price payload on edit
+81f7b84 | 2026-06-20 | feat(notifications): add custom cta_label field; remove quick-notif widget from dashboard
+e0ef666 | 2026-06-20 | style(notifications): rename detail header from Detalle to Regresar
+394980c | 2026-06-20 | style(notifications): align modal backdrop to system standard bg-black/30 backdrop-blur-[2px]
+3ea6440 | 2026-06-20 | fix(notifications): render confirm modals as independent portals at z-[300]
+2c0d1e3 | 2026-06-20 | style(notifications): shrink ConfirmModal card to 264px to match pre-refactor visual size
+33c1cd5 | 2026-06-20 | style(notifications): add frosted-glass backdrop to ConfirmModal overlay
+1590924 | 2026-06-20 | fix(notifications): move confirm modals inside panelRef; fix Escape key stack order
+c246926 | 2026-06-20 | fix(cart): move guest guard inside refreshCartPrices, restore stable dep array
+9d23f61 | 2026-06-20 | fix(cart): skip price refresh for guests; fix(sw): bump version to v2
+323d113 | 2026-06-20 | fix(notifications): restore canDelete logic, fix unicode bug, fix cancel behavior
+34bd1ae | 2026-06-20 | fix(notifications): remove delete restriction, cancel closes panel
+7c14bf5 | 2026-06-20 | fix(notifications): sync db on login, fix modal state persistence, simplify tabs
+9ff4ae0 | 2026-06-20 | feat(notifications): guestbell tabs, detail panel y dismiss system
+3449cf8 | 2026-06-20 | fix(product,admin,notif): breadcrumb, notify toggle, form reset, dashboard widget
+6b23fcc | 2026-06-20 | revert(navbar): restore original w-64 compact dropdown size
+e65fcd9 | 2026-06-20 | feat(search,navbar): typewriter in SearchModal, no autofocus, wider mobile menu
+d340256 | 2026-06-20 | feat(search): add swipe-up-to-dismiss with drag handle on mobile SearchModal
+26f81a2 | 2026-06-20 | style(global): standardize all modal backdrops to bg-black/30 backdrop-blur-[2px] sm:bg-black/20
+c59e758 | 2026-06-20 | feat(navbar): add backdrop blur overlay when mobile menu is open
+1e02815 | 2026-06-20 | fix(navbar): move swipe handle to bottom of dropdown + add pill indicator + prevent page scroll
+cfc4d9b | 2026-06-20 | feat(mobile): swipe-to-dismiss on CartDrawer, FavoritesModal, and Navbar menu
+e170204 | 2026-06-20 | fix(notifications): implement real swipe-to-dismiss touch gesture on mobile bottom sheet
+b979fcb | 2026-06-20 | feat(ui): admin back-to-store link + mobile bottom sheet notifications modal
+c609aed | 2026-06-20 | feat(notifications): full click routing + dashed card layout + inline CTA spans
+bf63d33 | 2026-06-20 | feat(notifications): unified notification system with dedup, hints, push CTA toast
+3975eca | 2026-06-20 | feat: real notification system ÔÇö typed list, timestamps, cart+favorites, dedup with count
+143bed0 | 2026-06-20 | fix: use createPortal to escape header backdrop-blur stacking context
+6a62148 | 2026-06-20 | fix: copy exact backup branch notification modal design to GuestBell
+0644dfd | 2026-06-20 | fix: add placehold.co to next/image remotePatterns
+b6c8167 | 2026-06-20 | fix: use animate-ping (proven) for bell notification pulse
+dcd16b8 | 2026-06-20 | fix: replace subtle bell pulse with aggressive ring+wiggle animation
+31dad73 | 2026-06-20 | feat: remove all auth guards from favorites and cart for guest users
+49eada2 | 2026-06-20 | feat: contact form + guest notification bell
+411cad6 | 2026-06-19 | fix(admin/usuarios): replace invalid shield_minus icon with remove_moderator
+829cd76 | 2026-06-19 | fix(admin/usuarios): widen ACCIONES column to prevent button overflow
+e56a830 | 2026-06-19 | fix(admin/settings): move phrase to always-visible header
+4e47a85 | 2026-06-19 | style(admin/settings): phrase visible + bold warning + auto-activation note
+47b1587 | 2026-06-19 | style(admin/settings): killswitch copy ÔÇö destructive and irrecoverable
+5e46d5c | 2026-06-19 | feat(admin): institutional security panel + proxy RPC fix
+9c8bde3 | 2026-06-19 | fix(security): use SECURITY DEFINER RPCs in admin settings page
+14f15a6 | 2026-06-19 | fix(security): revert insecure grants, implement SECURITY DEFINER RPCs for admin panel
+a0cf464 | 2026-06-19 | fix(db): grant table-level permissions on site_config and security_events
+7e60329 | 2026-06-19 | fix(hydration): eliminate React SSR/client mismatch in CartDrawer and CategoryHubClient
+856d7a8 | 2026-06-19 | fix(turbopack): add explicit root path to prevent workspace detection panic
+ffdbae4 | 2026-06-19 | feat(security): sistema de alerta y killswitch operacional
+3c43a3e | 2026-06-19 | fix(security): auditoria de seguridad total ÔÇö lectura forense completa, cierre de brechas
+d49ef89 | 2026-06-19 | fix(security): update Next.js to 16.2.9 and patch 38 npm vulnerabilities
+fe2350c | 2026-06-19 | fix(security): auditoria completa de seguridad ÔÇö cierre de brechas sin regresiones
+4facd30 | 2026-06-19 | fix(security): fusionar middleware.ts en proxy.ts, resolver conflicto
+a3277ec | 2026-06-19 | docs(security): register SEC-001 and SEC-002 architectural decisions in ARCHITECTURE.md
+399e6f9 | 2026-06-19 | fix(security): add server-side admin middleware and fix NULL bypass in RPC functions
+4d4f4a3 | 2026-06-19 | fix(security): auditoria completa de seguridad sin regresiones
+5ee4636 | 2026-06-19 | fix(security): auditoria completa de seguridad sin regresiones
+9704b89 | 2026-06-18 | fix(security): auditoria completa ÔÇö cierre de brechas sin regresiones
+3d14149 | 2026-06-18 | fix(security): auditoria completa de seguridad sin regresiones
+185c1d7 | 2026-06-18 | chore: eliminar ruta /carrito completamente
+4e749d5 | 2026-06-18 | refactor: /carrito como redirect 308 en next.config ÔÇö sin penalizacion SEO
+102bfe4 | 2026-06-18 | feat: ruta /carrito abre CartDrawer en lugar de pagina separada
+b2288e9 | 2026-06-18 | fix: hydration mismatch en /carrito con isMounted guard
+dc28738 | 2026-06-18 | feat: auditoria y testing total del sistema
+6af30a8 | 2026-06-18 | fix(nav): add isMounted guard to cart badge to prevent hydration mismatch
+ed08dea | 2026-06-18 | fix: rename exported function from middleware to proxy in proxy.ts
+5516bef | 2026-06-18 | chore: migrate middleware.ts to proxy.ts (Next.js 16 convention)
+1bd1c79 | 2026-06-18 | fix(gallery): add relative to button and sizes prop to fill Image
+88ad2ad | 2026-06-18 | fix(gallery): anchor main image to aspect-[4/5] to prevent stretching when info column expands
+965aee3 | 2026-06-18 | chore: add v1.2 changelog entry and admin_delete_user RPC migration
+373e78e | 2026-06-18 | feat: offer system simplification, admin user management, product improvements
+9e9f720 | 2026-06-17 | feat: admin usuarios, correcciones carrito, auth context y UI updates
+78ad3c6 | 2026-06-17 | fix(ui): make all icon buttons round with centered icons across project
+67ba2be | 2026-06-17 | fix(cart): delete button always visible for mobile usability
+1a1f5b2 | 2026-06-17 | style(cart): prominent badge pill for item count
+7d94c14 | 2026-06-17 | fix(cart): use brand primary blue for CTA, reserve green for WhatsApp only
+1b0813c | 2026-06-17 | style(cart): premium redesign with brand tokens and divider layout
+1350c50 | 2026-06-17 | fix(cart): full-width on mobile, larger touch targets
+3f7a281 | 2026-06-17 | style(cart): elegant minimal cart drawer redesign
+d1025d0 | 2026-06-17 | style(cart): redise├▒o premium del CartDrawer con identidad de marca
+94010aa | 2026-06-17 | style(cart): redise├▒ar tarjetas del carrito con colores de marca y spacing compacto
+cd1e862 | 2026-06-17 | style(catalog): redise├▒ar tarjetas de producto con colores de marca y mejor contraste
+c171dc6 | 2026-06-17 | fix(cart): polyfill crypto.randomUUID para movil sin HTTPS
+b7c00fc | 2026-06-17 | fix(cart): corregir 3 bugs criticos del carrito y movil
+f054feb | 2026-06-17 | fix(cart): agregar onConflict en upsert user_carts para evitar rollback en sesion activa
+30d4f62 | 2026-06-17 | fix(context): cart sync no longer rolls back on empty Supabase error ÔÇö prevents critical cart reset when user_carts table is missing or RLS blocks upsert
+de7f42a | 2026-06-17 | docs: update correction report with build verification and incognito flow test results
+ce0de4e | 2026-06-17 | fix: resolve 9 critical errors ÔÇö PGRST100, user_carts, RLS, SVG, LCP, domains
+f262b49 | 2026-06-17 | feat(offers): sistema multi-tipo de oferta con precios individuales y fix next/image hostname
+34c8860 | 2026-06-17 | fix(rpc): cast UUID en generate_whatsapp_message; docs: REGISTRY y ARCHITECTURE
+ccd9543 | 2026-06-17 | feat(pricing): sistema avanzado de precios, tipos de oferta, mayoreo y envios regionalizados
+c203c22 | 2026-06-17 | feat(seo): enriquecer JSON-LD producto con aggregateRating y Merchant Listing
+60f584c | 2026-06-17 | feat(ui): CustomSelect ÔÇö premium dropdown replaces all native selects in admin (products filter, product modal, categories form); fix validation for catalog/category on form submit
+4624705 | 2026-06-17 | feat(admin): catalog filter in ProductModal ÔÇö catalog selector cascades categories; fix(context): type CartContext .then() error param
+08a5180 | 2026-06-17 | fix(admin): corregir reload infinito por watchdog de hidratacion
+085168a | 2026-06-17 | fix(ux): corregir hydration mismatch Navbar y error {} en refreshCartPrices
+c7a9af0 | 2026-06-17 | chore(constants): eliminar PRODUCT_SELECT_COLUMNS sin consumidores
+ffc471b | 2026-06-17 | fix(cart): reemplazar ultimo uso de PRODUCT_SELECT_COLUMNS en CartContext
+a5f63ad | 2026-06-17 | fix(modal): corregir 3 errores criticos de carrito y favoritos
+94fba8c | 2026-06-17 | fix(globals): cursor pointer global para todos los botones habilitados
+c269e2c | 2026-06-17 | fix(navbar): agregar cursor-pointer a botones de accion del navbar
+f4f2d90 | 2026-06-17 | fix(cart): corregir bug SSR localStorage y fallos de auditoria
+40c1720 | 2026-06-17 | feat(cart): migrar carrito, favoritos y login modal desde pages
+81a7c10 | 2026-06-17 | fix(ci): add --passWithNoTests to vitest ÔÇö prevents deploy failure with no test files
+449fc46 | 2026-06-17 | chore(seo): pre-production audit ÔÇö noindex dev routes, complete legal metadata, robots.txt fix
+843a8e0 | 2026-06-17 | fix(legal): skip hub animations on return from article (sessionStorage flag + lazy useState)
+d10cb2b | 2026-06-17 | docs: register LegalArticleReader + LegalHubBackground in REGISTRY.md and ARCHITECTURE.md
+d924fb9 | 2026-06-17 | feat(legal): hub background in article pages, btn top:20, overlay opacity 0.82
+d4ef60d | 2026-06-17 | fix(legal): restore scrollbar, margins +8px compensation (right:20, padding:72px)
+bd109dc | 2026-06-17 | fix(legal): paddingLeft 64px = paddingRight 64px ÔÇö symmetric page margins
+f142151 | 2026-06-17 | fix(legal): paddingRight 64px clears btn, paddingLeft 40px original, scrollbar hidden
+15f8f5a | 2026-06-17 | fix(legal): hide scrollbar ÔÇö eliminates btn/border margin interference
+bf679e8 | 2026-06-17 | fix(legal): restore position:absolute btn, padding 40px symmetric, cursor pointer
+534e753 | 2026-06-17 | fix(legal): paddingLeft 12px symmetric, cursor pointer on close btn
+58f57cc | 2026-06-17 | fix(legal): position:absolute on relative paper ÔÇö right:12px from real border, not scrollbar
+116f34c | 2026-06-17 | fix(legal): symmetric 64px padding ÔÇö 12px gap btn-to-text matches 12px btn-to-edge
+e917e0a | 2026-06-17 | fix(legal): height-zero sticky button ÔÇö no scroll, symmetric margins 12px top=right=left=right content
+822a643 | 2026-06-17 | fix(legal): css grid 2-col sticky button, no header bar; fix breadcrumbs href all pages
+4f1782f | 2026-06-17 | fix(legal): absolute close bubble no white bar; fix breadcrumb links all pages; fix updates crash
+7edca3b | 2026-06-17 | fix(legal): roman badge height emÔåÆrem; center mobile header; tablet margins; close btn flex-column
+d4945a5 | 2026-06-17 | fix(legal): remove pricing sections; fix close btn margins; update changelog
+2803f08 | 2026-06-17 | fix(legal): breadcrumbs omit current page; Roman numerals + badge alignment fix
+643c231 | 2026-06-17 | fix(legal): desktop maxHeight 98vh + restore padding + remove mobile nav
+67a2b3a | 2026-06-17 | feat(legal): responsive reader + breadcrumbs; docs(updates): v1.1 changelog
+cd48b80 | 2026-06-16 | refactor(seo): consolidate JSON-LD into single global @graph per Google best practices
+a06d164 | 2026-06-16 | fix(seo): sync all schemas and metadata with new description and UES university
+21591b5 | 2026-06-16 | fix(seo): update home description with IEPROES, UES, UMA keywords (150 chars)
+62baf45 | 2026-06-16 | fix(seo): restore original descriptions for home, contacto, updates, links adapted to 150-155 chars
+0c6dcb4 | 2026-06-16 | fix(seo): trim all descriptions to strict 150-155 char range
+ba26a19 | 2026-06-16 | fix(seo): fix Google snippet generation across all pages
+64bcef4 | 2026-06-16 | feat: add self-referencing canonical URLs to /legal sub-pages
+a60045e | 2026-06-16 | perf: expand /legal page titles to 60-65 char optimal SEO range
+20fa574 | 2026-06-16 | fix: restore card icons in /legal banner and remove duplicate page titles
+f84a1ae | 2026-06-16 | feat: add /admin, /legal hub, auth context, footer legal links, and UI homologation
+3b4b495 | 2026-06-16 | fix(seo): corregir descriptions, titles y h1 de /contacto, /links, /updates
+c12da87 | 2026-06-16 | fix(nav): hide /catalogo and /servicios from navbar and mobile bottom nav in production
+a43e0a9 | 2026-06-16 | fix(sitemap): remove /catalogo and /servicios from production sitemap
+bdcd4b0 | 2026-06-16 | feat(middleware): block /catalogo and /servicios in production
+7266d8b | 2026-06-16 | fix(seo): differentiate /contacto and /links page titles in Google
+bf1c93e | 2026-06-16 | feat(og): implement static opengraph images from real screenshots
+6c2b0b4 | 2026-06-16 | fix(home): hero tablet ÔÇö md:min-h-0 so section shrinks to content
+a15a7bb | 2026-06-16 | fix(home): hero tablet ÔÇö propagate flex-1 height chain at md breakpoint
+30cd49d | 2026-06-16 | fix(home): hero tablet height ÔÇö replace min-h with fixed h at md breakpoint
+532efef | 2026-06-16 | chore: remove all Satori/next-og opengraph-image files and og-helper utility
+9a5fb20 | 2026-06-16 | fix(seo): agrega og:image explicito en paginas estaticas
+b3a9c4c | 2026-06-15 | fix(seo): remueve overrides manuales de og:image en paginas
+215861d | 2026-06-15 | fix(seo): corrige sistema Open Graph y metadatos
+6f5c839 | 2026-06-15 | docs(updates): registrar creacion del catalogo, filtros multi-select y toast fix
+6dc0de0 | 2026-06-13 | feat(updates): integrar animaciones, unificar grid de productos y corregir toast en links
+b17a382 | 2026-06-13 | style(catalogo): mathematical calc columns ratio for gallery heights alignment
+ff25ea8 | 2026-06-13 | style(catalogo): adjust desktop gallery column ratio and thumbnail gap
+be2a259 | 2026-06-13 | style(catalogo): remove max-height constraints from thumbnails container to prevent scroll cut-offs
+06ae62f | 2026-06-13 | style(catalogo): restore mobile and desktop details layout, custom stacked tablet gallery
+d8639e9 | 2026-06-13 | style(catalogo): increase thumbnails width and space in product detail gallery
+ee7cecd | 2026-06-13 | style(catalogo): set container min-height exactly relative to navbar height
+887ed4b | 2026-06-13 | feat(catalogo): replace native select sorting element with a premium custom dropdown
+353c919 | 2026-06-13 | style(catalogo): add cursor-pointer class to action buttons in product details page
+13e1128 | 2026-06-13 | fix(catalogo): update share button in product detail page to use share component logic
+2344a7a | 2026-06-13 | feat(catalogo): show 5 related product cards on desktop instead of 4
+8de00fd | 2026-06-13 | style(catalogo): change product detail image and thumbnails aspect ratio to 4:5
+e38a9b1 | 2026-06-13 | feat(catalogo): reset filters to 'Todos' when turning off multi-select with multiple filters active
+f09009b | 2026-06-13 | feat(catalogo): add 'Todos' category filter option with clean toggle logic
+f3eabb1 | 2026-06-13 | feat(catalogo): add select multiple toggle to filter sidebar and drawer
+48f02d0 | 2026-06-13 | feat(catalogo): style filter sidebar as floating card and adjust product grid scaling
+931cc26 | 2026-06-12 | feat(servicios): remove service sub-routes and components
+fa50fa7 | 2026-06-12 | feat(data): empty ALL_PRODUCTS list in products.ts
+9e98e0d | 2026-06-12 | feat(catalogo): remove catalog filter sub-routes and components
+cdfa4cc | 2026-06-12 | style(contacto): left-align header on mobile and register production releases in updates
+4d04880 | 2026-06-12 | docs(updates): register commit hash for 404 GSC fix
+4a4d426 | 2026-06-12 | feat(prod): prep release with seo, 404 fix, updates & blocking
+81ddb8b | 2026-06-11 | style(404): simplificar dise├▒o y centrar n├║meros con t├¡tulo
+ed93689 | 2026-06-11 | style(servicios): reducir la altura de la cabecera de las tarjetas
+4a83c6b | 2026-06-11 | style(servicios): reducir tama├▒o de im├ígenes ajustando relaci├│n de aspecto a 2:1
+1ee9bfc | 2026-06-11 | style(servicios): cambiar fotos de servicios y a├▒adir borde de contraste negro
+ca96ad9 | 2026-06-11 | style(404,servicios): restaurar contorno de 404 y cambiar overlay de servicios a azul
+6ced7fb | 2026-06-11 | style(404): fijar min-height 100dvh-56px inline en 404
+244d423 | 2026-06-11 | style(404): fijar altura responsiva del contenedor y restaurar dise├▒o de outline del 404
+d967772 | 2026-06-11 | style(404): aplicar layout responsivo side-by-side e info a la izquierda con 404 a la derecha
+40b5494 | 2026-06-11 | style(404): eliminar boton de inicio e incrementar contraste de 404 decorativo
+fbe08cd | 2026-06-11 | style(404): redise├▒ar pagina 404, mejorar contraste y homologar header y footer
+0535439 | 2026-06-11 | style(servicios): eliminar tarjeta CTA de proyecto especial
+d3df668 | 2026-06-11 | style(servicios): ajustar descripciones para tener exactamente 132 caracteres
+14420d6 | 2026-06-11 | style(servicios): eliminar boton de leer mas de las tarjetas
+61d2676 | 2026-06-11 | style(servicios): unificar responsividad y dise├▒o de cuadricula con catalogo
+b86c90f | 2026-06-11 | style: mostrar siempre indicador de navegacion en tarjetas de catalogo y servicios
+00166da | 2026-06-11 | style(servicios): cambiar fondo de banner de tarjetas a blanco
+2c4e630 | 2026-06-11 | fix: homologar migas de pan y corregir animacion ShareButton
+e23248c | 2026-06-10 | refactor(layout): standardize margins to px-8 and restore updates layout
+4e41089 | 2026-06-10 | feat(updates): add updates page, share button component, and link card contrast improvements
+da33046 | 2026-06-10 | fix(links): increase card contrast to match catalog card shadow style
+79061e8 | 2026-06-10 | fix(nav): resolve lint and route issue on bottom bar
+894a7c6 | 2026-06-10 | fix(nav): port exact bezier geometry from susonthapa source, white fab bubble, add mi-cuenta page
+abd354f | 2026-06-10 | docs(registry): update MobileBottomNav entry with no-prop signature and tab layout
+fac005d | 2026-06-10 | fix(nav): fix svg fill color bug, deepen notch, swap search/profile between navbar and bottom nav
+96de615 | 2026-06-10 | feat(nav): implement svg curved bottom nav with notch and sliding bubble
+5fd25b9 | 2026-06-09 | feat(nav): redesign MobileBottomNav with floating bubble and notch effect
+cda963e | 2026-06-09 | feat(nav): add MobileBottomNav, hide cart/search from mobile header
+2c38271 | 2026-06-09 | feat(layout): remove floating WhatsAppButton from all pages
+db46171 | 2026-06-09 | style(nav): hide logo text on mobile, keep actions in header and unify dropdown
+7b4120c | 2026-06-09 | style(links): update Threads logo SVG path to official version
+28cfa1e | 2026-06-09 | fix(nav): limit click-outside menu closing to desktop viewports
+edd997a | 2026-06-09 | feat(nav): homologate mobile and desktop menus, including navigation items and /links page
+8d18b79 | 2026-06-09 | style(nav): justify brand slogan using inter-character letter-spacing
+13df7fc | 2026-06-09 | style(nav): adjust brand slogan font-sizes and tracking to 0.25em
+09ab107 | 2026-06-09 | style(nav): justify logo brand slogan to match exact parent width
+414f23f | 2026-06-09 | style(nav): display brand slogan on mobile viewports
+6b60de3 | 2026-06-09 | fix(nav): truncate typewriter text with ellipsis to prevent line break in search bar
+3d9fce9 | 2026-06-09 | feat(nav): show full search bar from md (768px), collapse hamburger below sm (640px)
+7863904 | 2026-06-09 | feat(nav): update responsive breakpoints and collapse search to icon on tablet
+da5dbe4 | 2026-06-09 | style(home): rename hero CTA button from Comprar to Cat├ílogo
+3e87455 | 2026-06-09 | feat(home): redirect hero buy button to catalog
+6c3cb11 | 2026-06-09 | feat(nav): remove inline desktop links to leave only menu button navigation
+6a4e4ae | 2026-06-09 | feat(nav): add premium styled menu button to desktop and mobile layouts
+2e2231c | 2026-06-09 | feat(links): implement links-in-bio page, fix android chrome crash, and update SEO metadata
+b66fb94 | 2026-06-08 | fix(sitemap): make sitemap conditional and resolve duplicate product URLs
+efd6282 | 2026-06-08 | fix(middleware): exclude sitemap.xml and robots.txt from home-only redirect
+2fa87df | 2026-06-08 | fix(seo): improve layout metadata, social links, robots, and schema
+03c3cf9 | 2026-06-07 | style(hero): make image fill container space symmetrically, remove lateral white spacing
+3cea0ed | 2026-06-07 | style(hero): full-viewport height, aspect-ratio preserved image, catalog-style card container with rounded corners
+db33241 | 2026-06-07 | fix(env): set home-only mode ON by default to block sub-pages in production
+b6dd569 | 2026-06-07 | feat(nav): add home-only middleware and conditional navbar rendering
+b3e27c7 | 2026-06-07 | feat(catalogo): introduce 5 new product categories with configs and samples
+a7f5bd4 | 2026-06-07 | style(catalogo): move emoji from title to description text
+3816717 | 2026-06-07 | style(catalogo): align catalog header to left and change title
+2df5422 | 2026-06-07 | style(catalogo): consolidate category title and style next to icon
+6ad34de | 2026-06-07 | style(catalogo): remove gradient and use 8-way text outline
+f25a604 | 2026-06-07 | style(catalogo): refine text outline shadow and ensure always-visible action link
+aa86c24 | 2026-06-07 | style(catalogo): remove image gradient overlay and rely on outline shadow
+2afe1f9 | 2026-06-07 | style(catalogo): reduce image height by 25 percent and add outline for floating text
+d23ee22 | 2026-06-07 | style(catalogo): reduce category image height by 20 percent and improve text contrast
+32af2cf | 2026-06-07 | style(catalogo): change floating button to text only link in category cards
+850ee4b | 2026-06-07 | style(catalogo): add arbitrary min-[480px] breakpoint to responsive grid
+82e5446 | 2026-06-07 | style(catalogo): refine category grid to cols-2 mobile, cols-3 tablet, cols-4 desktop
+0938eef | 2026-06-07 | style(catalogo): refactor category grid to pure Tailwind and apply image mobile max-height
+58aadc9 | 2026-06-07 | style(catalogo): implement fluid responsive grid layout and compact category card descriptions
+30314b6 | 2026-06-07 | style(catalogo): restore standard grid classes for strict columns layout
+fe97c33 | 2026-06-07 | style(catalogo): implement container queries for category cards
+65c496e | 2026-06-07 | style(catalogo): set cols 1, 2, 4 grid with mobile max-width limit
+90f334c | 2026-06-07 | style(catalogo): optimize card height on mobile with 21/9 aspect and compact tagline
+59014d3 | 2026-06-07 | style(catalogo): limit maximum width of category cards in auto-fill grid to 340px and center grid
+1fb6e2d | 2026-06-07 | style(catalogo): change category hub grid to auto-fill dynamic columns with min-width
+5d6faec | 2026-06-07 | style(catalogo): fluidly scale card typography for 2-column mobile view
+b1e8371 | 2026-06-07 | style(catalogo): reorder category hub grid to 2-col mobile, 3-col tablet, and 4-col desktop
+ad9e584 | 2026-06-07 | style(catalogo): restore original card borders alongside 360-degree eclipse shadow
+01dbc57 | 2026-06-07 | style(catalogo): apply 360-degree eclipse shadow to CategoryCard cards
+641057b | 2026-06-07 | style(catalog): enhance category card layout contrast and shadows
+aeddbfd | 2026-06-07 | chore(git): resolve merge conflicts in Navbar.tsx
+2d4c375 | 2026-06-07 | style(hero): fix tablet lines and button symmetry
+85b4dda | 2026-05-12 | feat(search): replace inline TypewriterSearch with fullscreen SearchModal
+cd6b4e8 | 2026-05-12 | fix(env): add default fallbacks for public variables to fix CI builds
+4e86f41 | 2026-05-12 | feat(catalog): implement Category Hub and smart search dropdown
+7248475 | 2026-05-12 | feat(ui): improve search placeholder and refine UI aesthetics
+41c2b62 | 2026-05-09 | refactor(catalog): migrate sector salud nomenclature to scrubs
+8f43ba7 | 2026-05-08 | feat(catalog): unified catalog with search, filters, sort, pagination and expanded navbar
+67bedf4 | 2026-05-08 | fix(catalog): and/or filter logic, a11y improvements, contacto page
+5b4be76 | 2026-05-08 | chore: remove dead code flagged by knip
+6d8c5d2 | 2026-05-08 | feat(seo): add JSON-LD + dynamic sitemap
+b1b1cd7 | 2026-05-08 | feat(ux): add FilterDrawer mobile + touch targets
+83365a9 | 2026-05-08 | refactor(catalog): unify categories into dynamic route
+3815fd3 | 2026-05-08 | feat(data): centralize product data and implement dynamic catalog routes
+462286f | 2026-05-08 | fix: catalog audit remediation - 16 fixes for functionality and WCAG 2.2 accessibility
+062f5b7 | 2026-05-07 | fix: implement security, SEO, and performance audit remediations
+c0ca62d | 2026-04-27 | fix(seo): replace generated OG images with real website screenshot
+993c1c5 | 2026-04-27 | feat(seo): add dynamic OG and Twitter images with Next.js ImageResponse
+ccad6e8 | 2026-04-27 | fix(seo): resolve GSC redirect, sitemap, OG image, keyword stuffing and 404 links
+60c9325 | 2026-04-27 | revert: undo hero layout changes
+6eb0a0b | 2026-04-27 | fix(layout): remove unnecessary break line from hero title
+2fc8071 | 2026-04-27 | feat(layout): move hero title above text and photo grid
+d09f1f1 | 2026-04-27 | fix(accessibility): improve icon contrast in hero section
+4a41182 | 2026-04-27 | fix(accessibility): improve color contrast in SEO components
+092df35 | 2026-04-26 | style: change process steps to list layout on mobile
+cfc6dc5 | 2026-04-26 | style: add text-align center to section-title on mobile
+ad4d6d4 | 2026-04-26 | style: center section titles and left-align descriptions on mobile
+28d4506 | 2026-04-26 | style: remove text-wrap balance to prevent early line breaks
+4c4482a | 2026-04-26 | style(mobile): reduce title font size and add bold weight
+00fdc63 | 2026-04-26 | style(mobile): restore original long titles
+cf96ba6 | 2026-04-26 | style(mobile): optimize layout, padding and typography
+7897c0f | 2026-04-26 | style: restructure mobile headers to left-aligned with decorative accents
+97bca20 | 2026-04-26 | style: optimize mobile heading typography with text-balance
+e992430 | 2026-04-26 | feat: replace artesanal with profesional, use local category banners
+2732b0c | 2026-04-26 | style: hero buttons full width adaptive, shorten text
+e43168b | 2026-04-26 | chore: deep cleanup - remove private/, mocks, unused supabase/auth/zustand code, junk files
+da26da4 | 2026-04-26 | chore: cleanup junk files, use SVG logo as favicon
+e1675b8 | 2026-04-26 | style: fix hero mobile title size and spacing
+3aceb73 | 2026-04-26 | Revert "style: improve hero mobile layout and title sizing"
+8754265 | 2026-04-26 | style: improve hero mobile layout and title sizing
+c4db0b5 | 2026-04-26 | style: hero buttons side-by-side full width on mobile
+32ff64f | 2026-04-26 | style: reduce hero top padding by 75%
+25fa22f | 2026-04-26 | fix: use real logo.svg from private folder
+67a3771 | 2026-04-26 | fix: replace material-symbols with official icons in NapContacto
+d0e9452 | 2026-04-26 | fix: restore logo and use official brand icons everywhere
+6f69276 | 2026-04-26 | fix: use official brand icons and fix hero image crop
+6788f50 | 2026-04-26 | fix: reemplazar imagen del hero por portada.webp
+1e94dcb | 2026-04-26 | feat: optimizacion de pagina de inicio, estrategia SEO, y logo principal
+11a995e | 2026-04-26 | feat: optimizaci├│n de p├ígina de inicio y estrategia SEO
+528875d | 2026-04-26 | chore: cambiar wording a 'Confeccion profesional a la medida'
+cf08e1f | 2026-04-26 | feat(seo): integrate full SEO strategy from plan.tsx
+cb1f112 | 2026-04-26 | refactor: remove unused references and links in UI
+1fe13b7 | 2026-04-26 | refactor: strip project to home page only
+1017d63 | 2026-04-26 | chore(env): update site url for production redirects
+2fbbc3d | 2026-04-26 | fix(ui): remove construction modal to allow testing login flow
+4c2e0e5 | 2026-04-26 | feat(auth): remediate auth security and finalize onboarding flow
+35a4f62 | 2026-04-25 | fix: remove deprecated middleware.ts in favor of proxy.ts for Next.js 16.2.3 compliance
+43dba41 | 2026-04-25 | feat: implement construction mode and clinical audit fixes (security, seo, a11y)
+4bd9151 | 2026-04-25 | feat: finalize onboarding flow persistence and stabilize build
+42d6439 | 2026-04-24 | feat(lobby): improve UX with delayed open, localStorage persistence, idle countdown, arrow hint and 80vw width
+2ffcca6 | 2026-04-24 | feat: refactor landing to modal and merge storefront into root
+9584f24 | 2026-04-24 | fix: force rebuild to inject Vercel environment variables
+63e5d36 | 2026-04-24 | fix(middleware): restore standard middleware filename and export
+4051ff7 | 2026-04-24 | chore(build): force Vercel to use Next.js preset and .next output directory
+19e8094 | 2026-04-24 | fix(core): resolve typed routes and migrate middleware to proxy
+9f50e70 | 2026-04-23 | fix(build): bypass typedRoutes error in router.push for dynamic routes
+698e263 | 2026-04-23 | feat(infra): setup supabase, server actions, and schemas for Phase 1
+ea57f83 | 2026-04-23 | feat: initial ui-first prototype with resolved routing conflicts
+8dfeec9 | 2026-04-08 | chore: inicializar plantilla base optimizada para agentes de IA
+c8b37a0 | 2026-04-08 | feat: initial commit
+991bb6c | 2026-04-08 | Initial commit from Create Next App
