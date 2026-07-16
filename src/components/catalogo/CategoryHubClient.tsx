@@ -140,10 +140,19 @@ export function CategoryHubClient({ productCounts }: CategoryHubClientProps) {
             {SECTOR_ORDER.map((sector, index) => (
               <div
                 key={sector}
-                className="animate-fade-in-up h-full w-full"
-                style={{
-                  animationDelay: `${index < 4 ? index * 50 + 100 : (index - 4) * 50 + 300}ms`,
-                }}
+                className={cn(
+                  "h-full w-full",
+                  index !== 0 && "animate-fade-in-up"
+                )}
+                style={
+                  index !== 0
+                    ? {
+                        animationDelay: `${
+                          index < 4 ? index * 50 + 100 : (index - 4) * 50 + 300
+                        }ms`,
+                      }
+                    : undefined
+                }
               >
                 <CategoryCard
                   sector={sector}
