@@ -55,7 +55,10 @@ function CategoryCard({
           // loading="eager" evita que Next.js reporte LCP warning:
           // estas imágenes están siempre above-the-fold en el hub de categorías.
           // priority se aplica a los primeros 6 sectores (2 filas de 3 en desktop).
+          // unoptimized: las imágenes ya son WebP optimizadas — servir directo del CDN
+          // evita la latencia del pipeline /_next/image en cold-start post-deploy.
           loading="eager"
+          unoptimized
           priority={
             sector === "scrubs" ||
             sector === "universitario" ||
