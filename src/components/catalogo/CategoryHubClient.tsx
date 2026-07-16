@@ -23,9 +23,11 @@ const SECTOR_ORDER: Sector[] = [
 function CategoryCard({
   sector,
   productCount,
+  isPriority,
 }: {
   sector: Sector;
   productCount: number;
+  isPriority: boolean;
 }) {
   const config = CATEGORIES[sector];
 
@@ -52,14 +54,12 @@ function CategoryCard({
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-103"
-          // loading="eager" evita que Next.js reporte LCP warning:
-          // estas imágenes están siempre above-the-fold en el hub de categorías.
-          // priority se aplica a los primeros 6 sectores (2 filas de 3 en desktop).
-          // unoptimized: las imágenes ya son WebP optimizadas — servir directo del CDN
-          // evita la latencia del pipeline /_next/image en cold-start post-deploy.
-          loading="eager"
+          // isPriority controla loading: solo las 2 primeras cargan eager para no
+          // saturar el ancho de banda mobile. El resto carga lazy al hacer scroll.
+          // unoptimized: WebPs ya optimizados, servir directo del CDN sin /_next/image.
+          loading={isPriority ? "eager" : "lazy"}
           unoptimized
-          priority={sector === "scrubs" || sector === "universitario"}
+          priority={isPriority}
         />
 
         <div className="bg-primary absolute top-3 right-3 z-20 flex h-7 w-7 items-center justify-center rounded-full text-white shadow-md transition-all duration-300">
@@ -157,6 +157,7 @@ export function CategoryHubClient({ productCounts }: CategoryHubClientProps) {
                 <CategoryCard
                   sector={sector}
                   productCount={productCounts[sector] ?? 0}
+                  isPriority={sector === "scrubs" || sector === "universitario"}
                 />
               </div>
             ))}
