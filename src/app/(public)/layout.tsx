@@ -1,7 +1,15 @@
 import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import dynamic from "next/dynamic";
+
+const Footer = dynamic(() =>
+  import("@/components/layout/Footer").then((mod) => mod.Footer)
+);
+
+const MobileBottomNav = dynamic(() =>
+  import("@/components/layout/MobileBottomNav").then(
+    (mod) => mod.MobileBottomNav
+  )
+);
 
 const GlobalModals = dynamic(() =>
   import("@/components/layout/GlobalModals").then((mod) => mod.GlobalModals)
