@@ -142,10 +142,10 @@ export function CategoryHubClient({ productCounts }: CategoryHubClientProps) {
                 key={sector}
                 className={cn(
                   "h-full w-full",
-                  index !== 0 && "animate-fade-in-up"
+                  index >= 2 && "animate-fade-in-up"
                 )}
                 style={
-                  index !== 0
+                  index >= 2
                     ? {
                         animationDelay: `${
                           index < 4 ? index * 50 + 100 : (index - 4) * 50 + 300
