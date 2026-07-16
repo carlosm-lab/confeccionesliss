@@ -11,10 +11,6 @@ function Shimmer({ className }: { className?: string }) {
 }
 
 export default function ContactoLoading() {
-  useEffect(() => {
-    import("@aejkatappaja/phantom-ui");
-  }, []);
-
   return (
     <div
       aria-busy="true"
