@@ -1,5 +1,6 @@
-﻿"use client";
+"use client";
 import { useEffect } from "react";
+import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 
 interface ConfirmDialogProps {
   isOpen: boolean;
@@ -22,6 +23,8 @@ export function ConfirmDialog({
   onConfirm,
   onCancel,
 }: ConfirmDialogProps) {
+  useBodyScrollLock(isOpen);
+
   useEffect(() => {
     if (!isOpen) return;
     const handleKeyDown = (e: KeyboardEvent) => {

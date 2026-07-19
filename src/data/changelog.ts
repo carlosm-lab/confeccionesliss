@@ -42,6 +42,46 @@ export interface VersionGroup {
 
 export const CHANGELOG: VersionGroup[] = [
   {
+    version: "v1.4.2",
+    label:
+      "Optimización de Datos de Entrega · Bloqueo de Desplazamiento en Modales",
+    dateRange: "19 de julio de 2026",
+    entries: [
+      {
+        id: "e-165",
+        date: "2026-07-19",
+        category: "fix",
+        title: "Optimización lógica de la animación de tarifas",
+        description:
+          "Se ajustó el comportamiento de la animación de cálculo de tarifa de envío a domicilio para que no se dispare de forma prematura ni ilógica antes de seleccionar un departamento de destino.",
+      },
+      {
+        id: "e-166",
+        date: "2026-07-19",
+        category: "fix",
+        title: "Actualización de advertencia de variación de precios",
+        description:
+          "Se modificó el texto de advertencia sobre la vigencia de precios para mayor claridad y seriedad: 'Los precios se actualizan periódicamente. En caso de alguna variación, confirmaremos el precio antes de procesar tu pedido.'",
+      },
+      {
+        id: "e-167",
+        date: "2026-07-19",
+        category: "a11y",
+        title: "Bloqueo de scroll detrás de modales abiertos",
+        description:
+          "Se integró el hook useBodyScrollLock en los modales de visualización de imágenes, formularios de entrega y diálogos de confirmación del panel de administración para evitar el desplazamiento no deseado del fondo al interactuar con ellos.",
+      },
+      {
+        id: "e-168",
+        date: "2026-07-19",
+        category: "style",
+        title: "Método de entrega sin selección por defecto",
+        description:
+          "Se configuró el modal de entrega del carrito para que se inicie sin ningún método de entrega preseleccionado por defecto, alineándose con el comportamiento del flujo de compra directa.",
+      },
+    ],
+  },
+  {
     version: "v1.4.1",
     label:
       "Rendimiento Móvil PageSpeed 95+ · Carga Paralela · HTTP Link Preload",

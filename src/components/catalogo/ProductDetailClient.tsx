@@ -41,6 +41,7 @@ import {
 import { DeliveryForm } from "@/components/cart/DeliveryFormModal";
 import type { ShippingInfo } from "@/lib/shipping";
 import { clientEnv } from "@/lib/clientEnv";
+import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 
 interface ProductDetailClientProps {
   product: DbProduct;
@@ -86,6 +87,8 @@ export function ProductDetailClient({
   // Estados para el modal de datos de entrega del botón "Pedir ahora"
   const [isDeliveryModalOpen, setIsDeliveryModalOpen] = useState(false);
   const [deliveryInfo, setDeliveryInfo] = useState<ShippingInfo | null>(null);
+
+  useBodyScrollLock(isImageModalOpen || isDeliveryModalOpen);
 
   // Shipping state removed — la calculadora de envío fue eliminada (ver correcciones.txt)
 

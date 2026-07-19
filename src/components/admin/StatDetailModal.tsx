@@ -1,8 +1,9 @@
-﻿"use client";
+"use client";
 import { useState, useEffect } from "react";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import { logger } from "@/lib/logger";
 import FocusLock from "react-focus-lock";
+import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 
 /** ── Types ────────────────────────────────────────────────── */
 type ModalType =
@@ -70,6 +71,8 @@ export default function StatDetailModal({
   onClose,
   type,
 }: StatDetailModalProps) {
+  useBodyScrollLock(isOpen);
+
   const [data, setData] = useState<DataItem[]>([]);
   const [loading, setLoading] = useState(false);
 

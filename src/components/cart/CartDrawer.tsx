@@ -548,7 +548,7 @@ export function CartDrawer() {
                   addressNumber: shippingInfo?.addressNumber ?? "",
                   addressReference: shippingInfo?.addressReference ?? "",
                   termsAccepted: shippingInfo?.termsAccepted ?? false,
-                  deliveryMethod: shippingInfo?.deliveryMethod ?? "domicilio",
+                  deliveryMethod: shippingInfo?.deliveryMethod ?? "",
                 }}
                 hasALaMedidaItem={safeCartItems.some(
                   (item) =>

@@ -140,41 +140,18 @@ export function DeliveryForm({
         municipality: nextMuni,
       };
     });
-    triggerCalculationAnim(method);
+    if (method !== "domicilio" || form.department) {
+      triggerCalculationAnim(
+        method,
+        method === "domicilio" ? form.department : undefined
+      );
+    }
   };
 
   const handleConfirm = () => {
     if (!form.deliveryMethod) {
       toast.error("Por favor selecciona un método de entrega.");
       return;
-    }
-
-    // Validaciones condicionales según el método de entrega
-    if (form.deliveryMethod === "domicilio") {
-      if (!form.department) {
-        toast.error("Por favor selecciona un departamento.");
-        return;
-      }
-      if (!form.municipality) {
-        toast.error("Por favor selecciona un municipio.");
-        return;
-      }
-      if (!form.addressColonia.trim()) {
-        toast.error("Por favor ingresa la colonia o residencial.");
-        return;
-      }
-      if (!form.addressStreet.trim()) {
-        toast.error("Por favor ingresa la calle o avenida.");
-        return;
-      }
-      if (!form.addressNumber.trim()) {
-        toast.error("Por favor ingresa el número de casa o apartamento.");
-        return;
-      }
-      if (!form.addressReference.trim()) {
-        toast.error("Por favor ingresa un punto de referencia.");
-        return;
-      }
     }
 
     // Datos comunes del destinatario/cliente
@@ -187,76 +164,62 @@ export function DeliveryForm({
       return;
     }
     if (!form.termsAccepted) {
-      toast.error("Debes aceptar los términos de envío y devoluciones.");
+      toast.error("Debes aceptar los términos de envío y devolución.");
       return;
     }
 
-    // Construir la información de envío
-    const baseInfo = getShippingInfo(
-      form.department || "San Miguel",
-      form.municipality || "San Miguel",
-      form.deliveryMethod
+    // Calcular costo final
+    const finalInfo = getShippingInfo(
+      form.department,
+      form.municipality,
+      form.deliveryMethod === "domicilio" ||
+        form.deliveryMethod === "punto_medio" ||
+        form.deliveryMethod === "taller"
+        ? form.deliveryMethod
+        : "domicilio"
     );
 
-    const fullInfo: ShippingInfo = {
-      ...baseInfo,
-      recipientName: form.recipientName.trim(),
-      recipientPhone: form.recipientPhone.trim(),
-      alternatePhone: form.alternatePhone.trim() || undefined,
-      addressColonia:
-        form.deliveryMethod === "domicilio"
-          ? form.addressColonia.trim()
-          : undefined,
-      addressStreet:
-        form.deliveryMethod === "domicilio"
-          ? form.addressStreet.trim()
-          : undefined,
-      addressPolygon:
-        form.deliveryMethod === "domicilio" && form.addressPolygon.trim()
-          ? form.addressPolygon.trim()
-          : undefined,
-      addressNumber:
-        form.deliveryMethod === "domicilio"
-          ? form.addressNumber.trim()
-          : undefined,
-      addressReference:
-        form.deliveryMethod === "domicilio"
-          ? form.addressReference.trim()
-          : undefined,
-      termsAccepted: true,
-    };
+    // Adjuntar datos del destinatario
+    finalInfo.recipientName = form.recipientName;
+    finalInfo.recipientPhone = form.recipientPhone;
+    finalInfo.alternatePhone = form.alternatePhone;
+    finalInfo.termsAccepted = form.termsAccepted;
 
-    onConfirm(fullInfo);
+    // Adjuntar dirección completa si es a domicilio
+    if (form.deliveryMethod === "domicilio") {
+      finalInfo.addressColonia = form.addressColonia;
+      finalInfo.addressStreet = form.addressStreet;
+      finalInfo.addressPolygon = form.addressPolygon;
+      finalInfo.addressNumber = form.addressNumber;
+      finalInfo.addressReference = form.addressReference;
+    }
+
+    onConfirm(finalInfo);
   };
 
   const previewInfo = useMemo(() => {
     if (!form.deliveryMethod) return null;
-    if (
-      form.deliveryMethod === "domicilio" &&
-      (!form.department || !form.municipality)
-    ) {
-      return null;
-    }
     return getShippingInfo(
       form.department || "San Miguel",
       form.municipality || "San Miguel",
-      form.deliveryMethod
+      form.deliveryMethod === "domicilio" ||
+        form.deliveryMethod === "punto_medio" ||
+        form.deliveryMethod === "taller"
+        ? form.deliveryMethod
+        : "domicilio"
     );
-  }, [form.deliveryMethod, form.department, form.municipality]);
+  }, [form.department, form.municipality, form.deliveryMethod]);
 
   return (
-    <div className="flex flex-col gap-4">
-      {/* ── Botón de Atrás ──────────────────────────────────── */}
+    <div className="flex flex-col gap-5 text-left">
+      {/* ── Botón Atrás (Solo si se provee onBack) ── */}
       {onBack && (
         <button
           onClick={onBack}
-          className="group mb-1 flex w-max items-center gap-1 text-sm font-medium text-[var(--color-on-surface-variant)] transition-colors duration-200 hover:text-[var(--color-primary)]"
+          className="flex w-fit items-center gap-1 text-xs font-semibold text-[var(--color-on-surface-variant)] transition-colors hover:text-[var(--color-on-surface)]"
         >
-          <span
-            className="material-symbols-outlined transition-transform duration-200 group-hover:-translate-x-0.5"
-            style={{ fontSize: "18px" }}
-          >
-            arrow_back
+          <span className="material-symbols-outlined text-sm">
+            arrow_back_ios
           </span>
           Atrás
         </button>
@@ -348,7 +311,10 @@ export function DeliveryForm({
           >
             warning
           </span>
-          <p>Los precios podrían estar desactualizados.</p>
+          <p>
+            Los precios se actualizan periódicamente. En caso de alguna
+            variación, confirmaremos el precio antes de procesar tu pedido.
+          </p>
         </div>
       )}
 
@@ -438,7 +404,9 @@ export function DeliveryForm({
                       department: value,
                       municipality: "",
                     }));
-                    triggerCalculationAnim("domicilio", value);
+                    if (value) {
+                      triggerCalculationAnim("domicilio", value);
+                    }
                   }}
                   className={inputClass}
                 >
