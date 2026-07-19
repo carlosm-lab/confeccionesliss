@@ -527,6 +527,25 @@ export function DeliveryForm({
             </div>
           )}
 
+          {/* E. Costo de entrega — aparece SOLO cuando la dirección está completa (domicilio) o siempre (taller/punto_medio) */}
+          {previewInfo && !hasALaMedidaItem && (
+            <div className="animate-fade-in rounded-xl border border-[var(--color-primary)]/10 bg-[var(--color-primary-container)]/20 p-3">
+              <div className="flex items-center justify-between text-xs sm:text-sm">
+                <div>
+                  <p className="font-semibold text-[var(--color-on-surface)]">
+                    Costo de entrega:
+                  </p>
+                  <p className="mt-0.5 text-[11px] text-[var(--color-on-surface-variant)]">
+                    {previewInfo.method}
+                  </p>
+                </div>
+                <span className="text-base font-black text-[var(--color-primary)]">
+                  {previewInfo.label}
+                </span>
+              </div>
+            </div>
+          )}
+
           {/* D. Datos del CLIENTE / DESTINATARIO */}
           <div className="flex flex-col gap-3 rounded-2xl border border-[var(--color-outline-variant)]/20 bg-[var(--color-surface)] p-4">
             <p className="mb-1 flex items-center gap-1.5 text-[11px] font-bold tracking-wider text-[var(--color-primary)] uppercase">
@@ -594,25 +613,6 @@ export function DeliveryForm({
               </div>
             </div>
           </div>
-
-          {/* E. Costo de entrega — aparece SOLO cuando la dirección está completa (domicilio) o siempre (taller/punto_medio) */}
-          {previewInfo && !hasALaMedidaItem && (
-            <div className="animate-fade-in rounded-xl border border-[var(--color-primary)]/10 bg-[var(--color-primary-container)]/20 p-3">
-              <div className="flex items-center justify-between text-xs sm:text-sm">
-                <div>
-                  <p className="font-semibold text-[var(--color-on-surface)]">
-                    Costo de entrega:
-                  </p>
-                  <p className="mt-0.5 text-[11px] text-[var(--color-on-surface-variant)]">
-                    {previewInfo.method}
-                  </p>
-                </div>
-                <span className="text-base font-black text-[var(--color-primary)]">
-                  {previewInfo.label}
-                </span>
-              </div>
-            </div>
-          )}
 
           {/* F. Términos y condiciones */}
           <label
