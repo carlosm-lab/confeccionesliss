@@ -140,11 +140,10 @@ export function DeliveryForm({
         municipality: nextMuni,
       };
     });
-    if (method !== "domicilio" || form.department) {
-      triggerCalculationAnim(
-        method,
-        method === "domicilio" ? form.department : undefined
-      );
+    // La animación SOLO tiene sentido en domicilio y cuando ya hay departamento elegido.
+    // Para taller/punto_medio la tarifa es fija y no depende de ningún input del usuario.
+    if (method === "domicilio" && form.department) {
+      triggerCalculationAnim("domicilio", form.department);
     }
   };
 
@@ -199,6 +198,9 @@ export function DeliveryForm({
 
   const previewInfo = useMemo(() => {
     if (!form.deliveryMethod) return null;
+    // Para domicilio: solo mostrar el costo cuando ya se eligió un departamento.
+    // Para taller/punto_medio: la tarifa es fija (San Miguel), mostrarla siempre.
+    if (form.deliveryMethod === "domicilio" && !form.department) return null;
     return getShippingInfo(
       form.department || "San Miguel",
       form.municipality || "San Miguel",
