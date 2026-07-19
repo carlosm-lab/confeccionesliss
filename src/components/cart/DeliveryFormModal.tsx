@@ -302,9 +302,6 @@ export function DeliveryForm({
                 store
               </span>
               <span className="text-xs font-bold">Retiro en Taller</span>
-              <span className="mt-1 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
-                Gratis
-              </span>
             </button>
 
             {/* Punto Medio */}
@@ -318,12 +315,9 @@ export function DeliveryForm({
               }`}
             >
               <span className="material-symbols-outlined mb-1.5 text-xl">
-                meetups
+                handshake
               </span>
               <span className="text-xs font-bold">Punto Medio (Finde)</span>
-              <span className="mt-1 text-[10px] font-semibold text-slate-500 dark:text-slate-400">
-                $1.00
-              </span>
             </button>
 
             {/* Domicilio */}
@@ -340,9 +334,6 @@ export function DeliveryForm({
                 local_shipping
               </span>
               <span className="text-xs font-bold">A Domicilio</span>
-              <span className="mt-1 text-[10px] font-semibold text-slate-500 dark:text-slate-400">
-                $3.00 / $6.00
-              </span>
             </button>
           </div>
         </div>
@@ -357,10 +348,7 @@ export function DeliveryForm({
           >
             warning
           </span>
-          <p>
-            Los precios aquí especificados pueden estar desactualizados, se
-            deben tomar específicamente como referencia.
-          </p>
+          <p>Los precios podrían estar desactualizados.</p>
         </div>
       )}
 
@@ -409,7 +397,7 @@ export function DeliveryForm({
               <div className="flex items-center justify-between text-xs sm:text-sm">
                 <div>
                   <p className="font-semibold text-[var(--color-on-surface)]">
-                    Costo de entrega calculado:
+                    Costo de entrega:
                   </p>
                   <p className="mt-0.5 text-[11px] text-[var(--color-on-surface-variant)]">
                     {previewInfo.method}
