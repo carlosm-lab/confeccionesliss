@@ -42,6 +42,47 @@ export interface VersionGroup {
 
 export const CHANGELOG: VersionGroup[] = [
   {
+    version: "v1.4.3",
+    label:
+      "Animación de Cálculo Localizada · Reordenación de Campos · Enlaces de WhatsApp",
+    dateRange: "19 de julio de 2026",
+    entries: [
+      {
+        id: "e-169",
+        date: "2026-07-19",
+        category: "fix",
+        title: "Restablecimiento de dirección al cambiar método de entrega",
+        description:
+          "Se configuró el selector de métodos para vaciar por completo el departamento y municipio al cambiar a entrega a domicilio, garantizando que el usuario deba seleccionar su ubicación manualmente sin cargar datos por defecto.",
+      },
+      {
+        id: "e-170",
+        date: "2026-07-19",
+        category: "fix",
+        title: "Animación de cálculo localizada y no invasiva",
+        description:
+          "Se implementó un spinner interno localizado dentro del bloque de costo de entrega que simula el cálculo durante 900ms antes de revelar la tarifa, evitando la desaparición o recarga de los demás campos del formulario.",
+      },
+      {
+        id: "e-171",
+        date: "2026-07-19",
+        category: "fix",
+        title: "Reorganización estructural del formulario de entrega",
+        description:
+          "Se ordenaron los campos de forma secuencial: primero los datos del destinatario, segundo la dirección de envío y tercero el costo de entrega calculado, logrando un flujo de lectura más intuitivo.",
+      },
+      {
+        id: "e-172",
+        date: "2026-07-19",
+        category: "fix",
+        title:
+          "Persistencia de tallas y enlaces de producto en pedido de WhatsApp",
+        description:
+          "Se corrigió la transferencia de la talla seleccionada al carrito de compras y se incorporó la generación automática de enlaces directos a cada prenda al final del mensaje de WhatsApp.",
+      },
+    ],
+  },
+  {
     version: "v1.4.2",
     label:
       "Optimización de Datos de Entrega · Bloqueo de Desplazamiento en Modales",
