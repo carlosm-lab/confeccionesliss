@@ -4,13 +4,13 @@
 // Lógica de cálculo de costos de envío por zona geográfica.
 //
 // Zonas y precios actualizados:
-//   LOCAL    → San Miguel (gratis — taller o punto medio)
+//   LOCAL    → San Miguel ($3.00 — taller o punto medio)
 //   ORIENTAL → Usulután, La Unión, Morazán ($3.00 fijo)
-//   NACIONAL → Resto del país ($5.00 fijo)
+//   NACIONAL → Resto del país ($6.00 fijo)
 //
 // Tipos de entrega disponibles:
-//   taller      → Recoger en el taller (solo LOCAL, gratis)
-//   punto_medio → Punto de entrega acordado en San Miguel (solo LOCAL, gratis)
+//   taller      → Recoger en el taller (solo LOCAL, $3.00)
+//   punto_medio → Punto de entrega acordado en San Miguel (solo LOCAL, $3.00)
 //   domicilio   → Envío a domicilio (ORIENTAL y NACIONAL)
 // ──────────────────────────────────────────────────────────────
 
@@ -29,6 +29,31 @@ export interface ShippingInfo {
   label: string;
   /** Descripción del método de entrega */
   method: string;
+
+  // ── Datos del destinatario (llenados en el formulario de entrega) ──
+  /** Nombre completo del destinatario */
+  recipientName?: string;
+  /** Teléfono principal del destinatario */
+  recipientPhone?: string;
+  /** Teléfono o WhatsApp de contacto alterno */
+  alternatePhone?: string;
+
+  // ── Dirección completa ──────────────────────────────────────────────
+  /** Colonia o Residencial */
+  addressColonia?: string;
+  /** Calle o Avenida */
+  addressStreet?: string;
+  /** Polígono (opcional) */
+  addressPolygon?: string;
+  /** Número de casa o apartamento */
+  addressNumber?: string;
+  /** Punto de referencia descriptivo */
+  addressReference?: string;
+
+  /** Si el usuario aceptó los términos de envío y devoluciones */
+  termsAccepted?: boolean;
+  /** Método de entrega seleccionado */
+  deliveryMethod?: "taller" | "punto_medio" | "domicilio";
 }
 
 /** Labels amigables para mostrar en la UI */
@@ -55,19 +80,19 @@ interface Department {
 
 /** Costo exacto por zona en USD */
 const SHIPPING_ZONE_COST: Record<ShippingZone, number> = {
-  LOCAL: 0,
+  LOCAL: 3,
   ORIENTAL: 3,
-  NACIONAL: 5,
+  NACIONAL: 6,
 };
 
 const SHIPPING_ZONE_LABEL: Record<ShippingZone, string> = {
-  LOCAL: "Gratis",
+  LOCAL: "$3.00",
   ORIENTAL: "$3.00",
-  NACIONAL: "$5.00",
+  NACIONAL: "$6.00",
 };
 
 const SHIPPING_ZONE_METHOD: Record<ShippingZone, string> = {
-  LOCAL: "Recoger en el taller o punto de entrega acordado en San Miguel",
+  LOCAL: "Entrega en punto acordado — San Miguel",
   ORIENTAL: "Envío a domicilio — Zona Oriental",
   NACIONAL: "Envío a domicilio — Nacional",
 };
@@ -405,21 +430,48 @@ export const DEPARTMENTS: Department[] = [
 ];
 
 /**
- * Obtiene la información de envío dado un departamento y municipio.
+ * Obtiene la información de envío dado un departamento, municipio y método de entrega.
  */
 export function getShippingInfo(
   department: string,
-  municipality: string
+  municipality: string,
+  deliveryMethod: "taller" | "punto_medio" | "domicilio" = "domicilio"
 ): ShippingInfo {
   const dept = DEPARTMENTS.find((d) => d.name === department);
   const zone: ShippingZone = dept?.zone ?? "NACIONAL";
+
+  let cost = 6;
+  let label = "$6.00";
+  let method = "Envío a domicilio";
+
+  if (department === "San Miguel") {
+    if (deliveryMethod === "taller") {
+      cost = 0;
+      label = "Gratis";
+      method = "Recoger en el taller (San Miguel)";
+    } else if (deliveryMethod === "punto_medio") {
+      cost = 1;
+      label = "$1.00";
+      method =
+        "Punto de entrega en San Miguel (Fines de semana, centros comerciales/lugares céntricos a acordar)";
+    } else {
+      cost = 3;
+      label = "$3.00";
+      method = "Envío a domicilio en San Miguel";
+    }
+  } else {
+    cost = 6;
+    label = "$6.00";
+    method = `Envío a domicilio a ${department}`;
+  }
 
   return {
     department,
     municipality,
     zone,
-    cost: SHIPPING_ZONE_COST[zone],
-    label: SHIPPING_ZONE_LABEL[zone],
-    method: SHIPPING_ZONE_METHOD[zone],
+    cost,
+    label,
+    method,
+    deliveryMethod,
   };
 }

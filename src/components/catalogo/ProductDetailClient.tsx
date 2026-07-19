@@ -33,7 +33,14 @@ import {
   type DbProduct,
 } from "@/lib/productShared";
 import type { DbReview } from "@/lib/reviewsService";
-import { buildQuoteUrl } from "@/lib/whatsapp";
+import {
+  buildQuoteUrl,
+  buildWhatsAppUrl,
+  buildCartWhatsAppMessage,
+} from "@/lib/whatsapp";
+import { DeliveryForm } from "@/components/cart/DeliveryFormModal";
+import type { ShippingInfo } from "@/lib/shipping";
+import { clientEnv } from "@/lib/clientEnv";
 
 interface ProductDetailClientProps {
   product: DbProduct;
@@ -75,6 +82,10 @@ export function ProductDetailClient({
   const [customNote, setCustomNote] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
+
+  // Estados para el modal de datos de entrega del botón "Pedir ahora"
+  const [isDeliveryModalOpen, setIsDeliveryModalOpen] = useState(false);
+  const [deliveryInfo, setDeliveryInfo] = useState<ShippingInfo | null>(null);
 
   // Shipping state removed — la calculadora de envío fue eliminada (ver correcciones.txt)
 
@@ -238,8 +249,63 @@ export function ProductDetailClient({
 
   // ── Pedir ahora ──────────────────────────────────────────────
   function handlePedirAhora() {
-    handleAddToCart();
-    handleCotizar();
+    if (tallas.length > 0 && !selectedSize) {
+      toast.error(
+        "Por favor selecciona una talla antes de pedir por WhatsApp.",
+        { id: "no-size-toast", duration: 3000 }
+      );
+      return;
+    }
+    setIsDeliveryModalOpen(true);
+  }
+
+  function handleFinishPedirAhora(info: ShippingInfo) {
+    setIsDeliveryModalOpen(false);
+
+    const originUrl = typeof window !== "undefined" ? window.location.href : "";
+    const sizePart = selectedSize ? `Talla: ${selectedSize}` : "";
+    const notePart = customNote ? `Nota: ${customNote}` : "";
+    const aLaMedida = selectedSize === "A la medida";
+    const quotePart = aLaMedida
+      ? "⚠️ Sin precio fijo — requiere cotización por WhatsApp"
+      : "";
+    const noteText = [quotePart, sizePart, notePart]
+      .filter(Boolean)
+      .join(" · ");
+
+    const rawMessage = buildCartWhatsAppMessage({
+      items: [
+        {
+          product: {
+            name: product.name,
+            price: aLaMedida ? 0 : cartPrice,
+          },
+          quantity: 1,
+          productSize: selectedSize,
+          note: noteText,
+        },
+      ],
+      shippingInfo: {
+        department: info.department,
+        municipality: info.municipality,
+        cost: info.cost,
+        label: info.label,
+        recipientName: info.recipientName,
+        recipientPhone: info.recipientPhone,
+        alternatePhone: info.alternatePhone,
+        addressColonia: info.addressColonia,
+        addressStreet: info.addressStreet,
+        addressPolygon: info.addressPolygon,
+        addressNumber: info.addressNumber,
+        addressReference: info.addressReference,
+      },
+      originUrl,
+    });
+
+    const rawPhoneNumber = clientEnv.NEXT_PUBLIC_WHATSAPP_NUMBER;
+    const { url } = buildWhatsAppUrl(rawPhoneNumber, rawMessage);
+
+    window.open(url, "_blank", "noopener,noreferrer");
   }
 
   // ── Compartir ─────────────────────────────────────────────────
@@ -692,6 +758,25 @@ export function ProductDetailClient({
                       </button>
                     ))}
                   </div>
+                  {selectedSize === "A la medida" && (
+                    <div className="text-blue-955 mt-3 flex animate-pulse items-start gap-2.5 rounded-xl border border-blue-400/40 bg-blue-50/80 p-3 text-xs dark:bg-blue-900/20 dark:text-blue-300">
+                      <span
+                        className="material-symbols-outlined shrink-0 animate-bounce text-blue-500"
+                        style={{ fontSize: "18px" }}
+                      >
+                        info
+                      </span>
+                      <p>
+                        <span className="font-semibold">Nota:</span> Al elegir
+                        la opción{" "}
+                        <span className="font-bold">
+                          &quot;A la medida&quot;
+                        </span>
+                        , será necesario que visites nuestro taller para la toma
+                        de medidas exactas.
+                      </p>
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -980,6 +1065,32 @@ export function ProductDetailClient({
               priority
               quality={85}
             />
+          </div>
+        </div>
+      )}
+
+      {/* Modal Datos de Entrega (Pedir ahora por WhatsApp) */}
+      {isDeliveryModalOpen && (
+        <div className="animate-in fade-in fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4 backdrop-blur-[2px] duration-200">
+          <div className="animate-in zoom-in-95 relative flex max-h-[90vh] w-full max-w-lg flex-col rounded-2xl bg-white p-6 shadow-2xl duration-200">
+            <button
+              onClick={() => setIsDeliveryModalOpen(false)}
+              className="absolute top-4 right-4 z-10 text-slate-400 transition-colors hover:text-slate-600"
+              aria-label="Cerrar modal"
+            >
+              <span className="material-symbols-outlined text-2xl">close</span>
+            </button>
+            <div className="elegant-scrollbar overflow-y-auto pt-2 pr-1">
+              <DeliveryForm
+                initialState={deliveryInfo || undefined}
+                onConfirm={(info) => {
+                  setDeliveryInfo(info);
+                  handleFinishPedirAhora(info);
+                }}
+                confirmLabel="Confirmar y pedir por WhatsApp"
+                hasALaMedidaItem={selectedSize === "A la medida"}
+              />
+            </div>
           </div>
         </div>
       )}

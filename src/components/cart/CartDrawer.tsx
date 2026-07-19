@@ -14,6 +14,8 @@ import toast from "react-hot-toast";
 import FocusLock from "react-focus-lock";
 import { DEPARTMENTS, getShippingInfo } from "@/lib/shipping";
 import { getProductUrl } from "@/lib/productShared";
+import { DeliveryForm } from "./DeliveryFormModal";
+import type { ShippingInfo } from "@/lib/shipping";
 
 // Pasos del checkout
 type DrawerStep = "cart" | "shipping" | "confirm" | "sent";
@@ -37,6 +39,9 @@ export function CartDrawer() {
   const [isGeneratingMessage, setIsGeneratingMessage] = useState(false);
   const [selectedDept, setSelectedDept] = useState("");
   const [selectedMunicipality, setSelectedMunicipality] = useState("");
+
+  // Datos adicionales de entrega — guardados del formulario extendido
+  const [deliveryFormKey, setDeliveryFormKey] = useState(0);
 
   // Guard de hidratación: cartItems viene de localStorage (solo disponible en cliente).
   // En SSR cartItems = [], en el cliente puede tener items.
@@ -62,6 +67,7 @@ export function CartDrawer() {
       setStep("cart");
       setSelectedDept("");
       setSelectedMunicipality("");
+      setDeliveryFormKey((k) => k + 1); // resetear formulario
     }
   }, [isCartOpen]);
 
@@ -163,6 +169,8 @@ export function CartDrawer() {
 
     setIsGeneratingMessage(true);
     let rawMessage = "";
+    const originUrl =
+      typeof window !== "undefined" ? window.location.origin : "";
 
     try {
       const supabase = getSupabaseClient();
@@ -191,7 +199,23 @@ export function CartDrawer() {
             note: item.note,
             productSize: item.product.selectedSize,
           })),
-          shippingInfo,
+          shippingInfo: shippingInfo
+            ? {
+                department: shippingInfo.department,
+                municipality: shippingInfo.municipality,
+                cost: shippingInfo.cost,
+                label: shippingInfo.label,
+                recipientName: shippingInfo.recipientName,
+                recipientPhone: shippingInfo.recipientPhone,
+                alternatePhone: shippingInfo.alternatePhone,
+                addressColonia: shippingInfo.addressColonia,
+                addressStreet: shippingInfo.addressStreet,
+                addressPolygon: shippingInfo.addressPolygon,
+                addressNumber: shippingInfo.addressNumber,
+                addressReference: shippingInfo.addressReference,
+              }
+            : null,
+          originUrl,
         });
       } else {
         rawMessage = serverMessage as string;
@@ -209,7 +233,23 @@ export function CartDrawer() {
           note: item.note,
           productSize: item.product.selectedSize,
         })),
-        shippingInfo,
+        shippingInfo: shippingInfo
+          ? {
+              department: shippingInfo.department,
+              municipality: shippingInfo.municipality,
+              cost: shippingInfo.cost,
+              label: shippingInfo.label,
+              recipientName: shippingInfo.recipientName,
+              recipientPhone: shippingInfo.recipientPhone,
+              alternatePhone: shippingInfo.alternatePhone,
+              addressColonia: shippingInfo.addressColonia,
+              addressStreet: shippingInfo.addressStreet,
+              addressPolygon: shippingInfo.addressPolygon,
+              addressNumber: shippingInfo.addressNumber,
+              addressReference: shippingInfo.addressReference,
+            }
+          : null,
+        originUrl,
       });
     } finally {
       setIsGeneratingMessage(false);
@@ -494,122 +534,34 @@ export function CartDrawer() {
               </div>
             ) : /* ─ PASO: ENVÍO ─ */
             step === "shipping" ? (
-              <div className="flex flex-col gap-4">
-                <BackButton onClick={() => setStep("cart")} />
-
-                <div>
-                  <h3 className="mb-1 font-serif text-lg font-bold text-[var(--color-on-surface)]">
-                    ¿A dónde enviamos?
-                  </h3>
-                  <p className="text-sm text-[var(--color-on-surface-variant)]">
-                    Selecciona tu ubicación para calcular el envío.
-                  </p>
-                </div>
-
-                {/* Referencia de zonas */}
-                <div className="space-y-2 rounded-xl bg-[var(--color-surface-container-low)] p-4 text-xs">
-                  <div className="flex items-center gap-2.5">
-                    <span className="h-2 w-2 shrink-0 rounded-full bg-[var(--color-whatsapp)]" />
-                    <span className="text-[var(--color-on-surface-variant)]">
-                      <span className="font-semibold text-[var(--color-on-surface)]">
-                        San Miguel
-                      </span>{" "}
-                      — Gratis
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <span className="h-2 w-2 shrink-0 rounded-full bg-amber-400" />
-                    <span className="text-[var(--color-on-surface-variant)]">
-                      <span className="font-semibold text-[var(--color-on-surface)]">
-                        Zona Oriental
-                      </span>{" "}
-                      — $1 a $3
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <span className="h-2 w-2 shrink-0 rounded-full bg-[var(--color-primary)]" />
-                    <span className="text-[var(--color-on-surface-variant)]">
-                      <span className="font-semibold text-[var(--color-on-surface)]">
-                        Resto del país
-                      </span>{" "}
-                      — $3 a $5
-                    </span>
-                  </div>
-                </div>
-
-                {/* Selector departamento */}
-                <div className="flex flex-col gap-1.5">
-                  <label
-                    htmlFor="shipping-dept"
-                    className="text-xs font-semibold tracking-wide text-[var(--color-on-surface-variant)] uppercase"
-                  >
-                    Departamento
-                  </label>
-                  <select
-                    id="shipping-dept"
-                    value={selectedDept}
-                    onChange={(e) => setSelectedDept(e.target.value)}
-                    className="w-full rounded-xl border border-[var(--color-outline-variant)]/40 bg-[var(--color-surface)] px-4 py-3 text-sm text-[var(--color-on-surface)] transition-all duration-200 focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary-container)] focus:outline-none"
-                  >
-                    <option value="">Selecciona departamento</option>
-                    {DEPARTMENTS.map((d) => (
-                      <option key={d.name} value={d.name}>
-                        {d.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Selector municipio */}
-                {selectedDept && (
-                  <div className="flex flex-col gap-1.5">
-                    <label
-                      htmlFor="shipping-muni"
-                      className="text-xs font-semibold tracking-wide text-[var(--color-on-surface-variant)] uppercase"
-                    >
-                      Municipio
-                    </label>
-                    <select
-                      id="shipping-muni"
-                      value={selectedMunicipality}
-                      onChange={(e) => setSelectedMunicipality(e.target.value)}
-                      className="w-full rounded-xl border border-[var(--color-outline-variant)]/40 bg-[var(--color-surface)] px-4 py-3 text-sm text-[var(--color-on-surface)] transition-all duration-200 focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary-container)] focus:outline-none"
-                    >
-                      <option value="">Selecciona municipio</option>
-                      {municipalities.map((m) => (
-                        <option key={m} value={m}>
-                          {m}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+              <DeliveryForm
+                key={deliveryFormKey}
+                initialState={{
+                  department: shippingInfo?.department ?? "",
+                  municipality: shippingInfo?.municipality ?? "",
+                  recipientName: shippingInfo?.recipientName ?? "",
+                  recipientPhone: shippingInfo?.recipientPhone ?? "",
+                  alternatePhone: shippingInfo?.alternatePhone ?? "",
+                  addressColonia: shippingInfo?.addressColonia ?? "",
+                  addressStreet: shippingInfo?.addressStreet ?? "",
+                  addressPolygon: shippingInfo?.addressPolygon ?? "",
+                  addressNumber: shippingInfo?.addressNumber ?? "",
+                  addressReference: shippingInfo?.addressReference ?? "",
+                  termsAccepted: shippingInfo?.termsAccepted ?? false,
+                  deliveryMethod: shippingInfo?.deliveryMethod ?? "domicilio",
+                }}
+                hasALaMedidaItem={safeCartItems.some(
+                  (item) =>
+                    item.product.selectedSize === "A la medida" ||
+                    (item.note && item.note.includes("A la medida"))
                 )}
-
-                {/* Preview costo */}
-                {selectedDept && selectedMunicipality && (
-                  <div className="rounded-xl bg-[var(--color-primary-container)]/30 p-3.5 text-sm">
-                    <p className="font-semibold text-[var(--color-on-surface)]">
-                      Envío a {selectedMunicipality}
-                    </p>
-                    <p className="text-[var(--color-on-surface-variant)]">
-                      {
-                        getShippingInfo(selectedDept, selectedMunicipality)
-                          .label
-                      }
-                    </p>
-                  </div>
-                )}
-
-                <div className="mt-auto pt-2">
-                  <button
-                    onClick={handleConfirmShipping}
-                    disabled={!selectedDept || !selectedMunicipality}
-                    className="w-full rounded-xl bg-[var(--color-primary)] py-3.5 text-sm font-bold text-[var(--color-on-primary)] transition-all duration-200 hover:bg-[var(--color-on-primary-container)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-35"
-                  >
-                    Confirmar ubicación
-                  </button>
-                </div>
-              </div>
+                onConfirm={(info) => {
+                  setShippingInfo(info);
+                  setStep("confirm");
+                }}
+                onBack={() => setStep("cart")}
+                confirmLabel="Confirmar datos de entrega"
+              />
             ) : /* ─ CARRITO VACÍO ─ */
             safeCartItems.length === 0 ? (
               <div className="flex h-full flex-col items-center justify-center text-center">

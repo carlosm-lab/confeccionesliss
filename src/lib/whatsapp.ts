@@ -189,11 +189,23 @@ interface CartMessageShippingInfo {
   municipality?: string | null;
   cost?: number;
   label?: string | null;
+  // ── Datos del destinatario ──
+  recipientName?: string | null;
+  recipientPhone?: string | null;
+  alternatePhone?: string | null;
+  // ── Dirección completa ──
+  addressColonia?: string | null;
+  addressStreet?: string | null;
+  addressPolygon?: string | null;
+  addressNumber?: string | null;
+  addressReference?: string | null;
 }
 
 interface CartMessageOptions {
   items: CartMessageItem[];
   shippingInfo?: CartMessageShippingInfo | null;
+  /** URL de la página donde se originó el pedido (para incluir enlace en el mensaje) */
+  originUrl?: string | null;
 }
 
 /**
@@ -201,35 +213,39 @@ interface CartMessageOptions {
  * cuando la RPC server-side de Supabase no está accesible o falla por incompatibilidad de esquema.
  */
 export function buildCartWhatsAppMessage(opts: CartMessageOptions): string {
-  const { items, shippingInfo } = opts;
+  const { items, shippingInfo, originUrl } = opts;
   if (!items || items.length === 0) return "";
 
-  const lines: string[] = ["¡Hola! Quisiera realizar el siguiente pedido:"];
+  const lines: string[] = ["\uD83D\uDED2 *NUEVO PEDIDO — Confecciones Liss*"];
   let subtotal = 0;
 
+  // ── Productos ────────────────────────────────────────────────────────────
+  lines.push("\n*Productos:*");
   items.forEach((item) => {
     const unitPrice = item.product.price || 0;
     const itemTotal = unitPrice * item.quantity;
     subtotal += itemTotal;
 
-    let line = `• ${item.quantity}x ${item.product.name} ($${unitPrice.toFixed(2)} c/u)`;
+    let line = `\u2022 ${item.quantity}x *${item.product.name}* ($${unitPrice.toFixed(2)} c/u)`;
     const details: string[] = [];
     if (item.productSize) details.push(`Talla: ${item.productSize}`);
     if (item.color) details.push(`Color: ${item.color}`);
     if (item.note?.trim()) details.push(`Nota: ${item.note.trim()}`);
 
     if (details.length > 0) {
-      line += ` - ${details.join(", ")}`;
+      line += `\n  _${details.join(" · ")}_`;
     }
     lines.push(line);
   });
 
-  lines.push(`\nSubtotal: $${subtotal.toFixed(2)}`);
+  // ── Totales ─────────────────────────────────────────────────────────────
+  lines.push("");
+  lines.push(`Subtotal: $${subtotal.toFixed(2)}`);
 
   const shippingCost = shippingInfo?.cost ?? 0;
   if (shippingInfo?.department) {
     const loc = shippingInfo.municipality
-      ? `${shippingInfo.department}, ${shippingInfo.municipality}`
+      ? `${shippingInfo.municipality}, ${shippingInfo.department}`
       : shippingInfo.department;
     lines.push(`Envío (${loc}): $${shippingCost.toFixed(2)}`);
   } else if (shippingInfo?.label) {
@@ -238,6 +254,60 @@ export function buildCartWhatsAppMessage(opts: CartMessageOptions): string {
 
   const total = subtotal + shippingCost;
   lines.push(`*Total a pagar: $${total.toFixed(2)}*`);
+
+  // ── Datos del destinatario ──────────────────────────────────────────────────
+  if (shippingInfo?.recipientName) {
+    lines.push("");
+    lines.push("\uD83D\uDC64 *Datos del destinatario:*");
+    lines.push(`\u2022 Nombre: ${shippingInfo.recipientName}`);
+    if (shippingInfo.recipientPhone) {
+      lines.push(`\u2022 Teléfono principal: ${shippingInfo.recipientPhone}`);
+    }
+    if (shippingInfo.alternatePhone) {
+      lines.push(`\u2022 Contacto alterno: ${shippingInfo.alternatePhone}`);
+    }
+  }
+
+  // ── Dirección de entrega ──────────────────────────────────────────────────
+  if (
+    shippingInfo?.department ||
+    shippingInfo?.addressColonia ||
+    shippingInfo?.addressStreet
+  ) {
+    lines.push("");
+    lines.push("\uD83D\uDCCD *Dirección de entrega:*");
+    if (shippingInfo.department) {
+      const loc = shippingInfo.municipality
+        ? `${shippingInfo.municipality}, ${shippingInfo.department}`
+        : shippingInfo.department;
+      lines.push(`\u2022 Departamento/Municipio: ${loc}`);
+    }
+    if (shippingInfo.addressColonia) {
+      lines.push(`\u2022 Colonia/Residencial: ${shippingInfo.addressColonia}`);
+    }
+    if (shippingInfo.addressStreet) {
+      lines.push(`\u2022 Calle/Avenida: ${shippingInfo.addressStreet}`);
+    }
+    if (shippingInfo.addressPolygon) {
+      lines.push(`\u2022 Polígono: ${shippingInfo.addressPolygon}`);
+    }
+    if (shippingInfo.addressNumber) {
+      lines.push(
+        `\u2022 Número de casa/apartamento: ${shippingInfo.addressNumber}`
+      );
+    }
+    if (shippingInfo.addressReference) {
+      lines.push(
+        `\u2022 Punto de referencia: _"${shippingInfo.addressReference}"_`
+      );
+    }
+  }
+
+  // ── Enlace origen (si aplica) ─────────────────────────────────────────────
+  if (originUrl) {
+    lines.push("");
+    lines.push(`\uD83D\uDD17 Ver tienda: ${originUrl}`);
+  }
 
   return lines.join("\n");
 }
