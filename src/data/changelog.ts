@@ -80,6 +80,14 @@ export const CHANGELOG: VersionGroup[] = [
         description:
           "Se corrigió la transferencia de la talla seleccionada al carrito de compras y se incorporó la generación automática de enlaces directos a cada prenda al final del mensaje de WhatsApp.",
       },
+      {
+        id: "e-173",
+        date: "2026-07-19",
+        category: "fix",
+        title: "Inclusión de datos de entrega y destinatario en checkout",
+        description:
+          "Se garantizó que el nombre del destinatario, números de teléfono y dirección completa (colonia, calle, polígono, número y punto de referencia) se adjunten correctamente al mensaje de WhatsApp cuando la orden se procesa desde el carrito.",
+      },
     ],
   },
   {
