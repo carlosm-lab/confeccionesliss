@@ -195,9 +195,18 @@ export function DeliveryForm({
 
   const previewInfo = useMemo(() => {
     if (!form.deliveryMethod) return null;
-    // Para domicilio: solo mostrar el costo cuando ya se eligió un departamento.
-    // Para taller/punto_medio: la tarifa es fija (San Miguel), mostrarla siempre.
-    if (form.deliveryMethod === "domicilio" && !form.department) return null;
+    // Para taller/punto_medio: tarifa fija, mostrar siempre.
+    // Para domicilio: mostrar SOLO cuando la dirección está COMPLETA.
+    if (form.deliveryMethod === "domicilio") {
+      const addressComplete =
+        form.department &&
+        form.municipality &&
+        form.addressColonia.trim() &&
+        form.addressStreet.trim() &&
+        form.addressNumber.trim() &&
+        form.addressReference.trim();
+      if (!addressComplete) return null;
+    }
     return getShippingInfo(
       form.department || "San Miguel",
       form.municipality || "San Miguel",
@@ -207,7 +216,15 @@ export function DeliveryForm({
         ? form.deliveryMethod
         : "domicilio"
     );
-  }, [form.department, form.municipality, form.deliveryMethod]);
+  }, [
+    form.department,
+    form.municipality,
+    form.deliveryMethod,
+    form.addressColonia,
+    form.addressStreet,
+    form.addressNumber,
+    form.addressReference,
+  ]);
 
   return (
     <div className="flex flex-col gap-5 text-left">
