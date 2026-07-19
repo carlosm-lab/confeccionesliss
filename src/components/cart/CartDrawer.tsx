@@ -261,6 +261,22 @@ export function CartDrawer() {
       return;
     }
 
+    // ── Agregar enlaces de producto al final del mensaje ──────────
+    // El RPC no incluye URLs de producto. Los construimos aquí desde item.product.slug.
+    const storeOrigin =
+      typeof window !== "undefined" ? window.location.origin : "";
+    const productLinks = cartItems
+      .filter((item) => item.product.slug)
+      .map(
+        (item) =>
+          `• ${item.product.name}: ${storeOrigin}/catalogo/${item.product.slug}`
+      )
+      .join("\n");
+
+    if (productLinks) {
+      rawMessage += `\n\n🔗 *Enlace(s) de producto:*\n${productLinks}`;
+    }
+
     let url = "";
     const rawPhoneNumber = clientEnv.NEXT_PUBLIC_WHATSAPP_NUMBER;
 

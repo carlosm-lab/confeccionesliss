@@ -16,7 +16,7 @@
  *    - Se actualiza la advertencia de precios según lo indicado por el usuario.
  */
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { DEPARTMENTS, getShippingInfo } from "@/lib/shipping";
@@ -93,6 +93,11 @@ export function DeliveryForm({
   const [calculationText, setCalculationText] = useState(
     "Calculando tarifa..."
   );
+
+  // Estado local para la animación interna del bloque de precio.
+  // Se activa SOLO cuando previewInfo pasa de null → no-null (precio listo).
+  const [isPriceLoading, setIsPriceLoading] = useState(false);
+  const prevPreviewRef = useRef<boolean>(false);
 
   const municipalities = useMemo(() => {
     const dept = DEPARTMENTS.find((d) => d.name === form.department);
@@ -225,6 +230,21 @@ export function DeliveryForm({
     form.addressNumber,
     form.addressReference,
   ]);
+
+  // Disparar animación de precio cuando previewInfo aparece por primera vez.
+  useEffect(() => {
+    const hasInfo = previewInfo !== null;
+    if (!prevPreviewRef.current && hasInfo) {
+      // Ambas setState dentro de callbacks para evitar react-hooks/set-state-in-effect.
+      const tStart = setTimeout(() => setIsPriceLoading(true), 0);
+      const tEnd = setTimeout(() => setIsPriceLoading(false), 900);
+      return () => {
+        clearTimeout(tStart);
+        clearTimeout(tEnd);
+      };
+    }
+    prevPreviewRef.current = hasInfo;
+  }, [previewInfo]);
 
   return (
     <div className="flex flex-col gap-5 text-left">
@@ -596,22 +616,42 @@ export function DeliveryForm({
             </div>
           )}
 
-          {/* E. Costo de entrega (Tercero) — aparece SOLO cuando la dirección está completa (domicilio) o siempre (taller/punto_medio) */}
-          {previewInfo && !hasALaMedidaItem && (
-            <div className="animate-fade-in rounded-xl border border-[var(--color-primary)]/10 bg-[var(--color-primary-container)]/20 p-3">
-              <div className="flex items-center justify-between text-xs sm:text-sm">
-                <div>
-                  <p className="font-semibold text-[var(--color-on-surface)]">
-                    Costo de entrega:
-                  </p>
-                  <p className="mt-0.5 text-[11px] text-[var(--color-on-surface-variant)]">
-                    {previewInfo.method}
-                  </p>
+          {/* E. Costo de entrega — animación local al aparecer por primera vez */}
+          {(previewInfo || isPriceLoading) && !hasALaMedidaItem && (
+            <div className="animate-fade-in overflow-hidden rounded-xl border border-[var(--color-primary)]/10 bg-[var(--color-primary-container)]/20">
+              {isPriceLoading ? (
+                /* Spinner interno — solo el bloque de precio se anima */
+                <div className="flex flex-col items-center justify-center gap-2 py-5">
+                  <div className="relative flex h-8 w-8 items-center justify-center">
+                    <div className="absolute h-full w-full animate-spin rounded-full border-4 border-slate-200 border-t-[var(--color-primary)]" />
+                    <span
+                      className="material-symbols-outlined animate-pulse text-xs text-[var(--color-primary)]"
+                      style={{ fontSize: "13px" }}
+                    >
+                      payments
+                    </span>
+                  </div>
+                  <span className="animate-pulse text-[11px] font-semibold tracking-wide text-[var(--color-primary)]">
+                    Calculando tarifa...
+                  </span>
                 </div>
-                <span className="text-base font-black text-[var(--color-primary)]">
-                  {previewInfo.label}
-                </span>
-              </div>
+              ) : (
+                previewInfo && (
+                  <div className="flex items-center justify-between p-3 text-xs sm:text-sm">
+                    <div>
+                      <p className="font-semibold text-[var(--color-on-surface)]">
+                        Costo de entrega:
+                      </p>
+                      <p className="mt-0.5 text-[11px] text-[var(--color-on-surface-variant)]">
+                        {previewInfo.method}
+                      </p>
+                    </div>
+                    <span className="text-base font-black text-[var(--color-primary)]">
+                      {previewInfo.label}
+                    </span>
+                  </div>
+                )
+              )}
             </div>
           )}
 

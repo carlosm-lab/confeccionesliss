@@ -242,6 +242,7 @@ export function ProductDetailClient({
         sector: product.sector,
         category: product.category,
         categories: product.categories,
+        selectedSize: selectedSize ?? null,
       },
       1,
       null,
