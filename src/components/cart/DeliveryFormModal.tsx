@@ -6,13 +6,14 @@
  * Formulario de datos de entrega optimizado y limpio.
  *
  * Mejoras aplicadas:
- * 1. Selección inicial obligatoria del Tipo de Entrega.
+ * 1. Selección inicial obligatoria del Tipo de Entrega (se oculta si es "A la medida").
  * 2. Visualización condicional inteligente:
  *    - A domicilio: Formulario completo (Dirección y Destinatario).
  *    - Punto medio / Taller / A la medida: Solo datos del destinatario/cliente.
  * 3. Animación premium "Calculando tarifa..." al seleccionar/cambiar el método o ubicación.
- * 4. Eliminación de la tabla estática de tarifas de entrega.
- * 5. Advertencias contextuales específicas (Toma de medidas obligatoria solo en taller/a la medida).
+ * 4. Advertencias contextuales específicas:
+ *    - Se unifica el aviso de toma de medidas obligatoria para "A la medida" en un solo banner visible.
+ *    - Se actualiza la advertencia de precios según lo indicado por el usuario.
  */
 
 import { useState, useEffect, useMemo } from "react";
@@ -74,7 +75,7 @@ export function DeliveryForm({
   confirmLabel = "Confirmar y continuar",
   hasALaMedidaItem = false,
 }: DeliveryFormProps) {
-  // Inicializamos el formulario. Si tiene ítems "A la medida", forzamos el método a "taller".
+  // Inicializamos el formulario. Si tiene ítems "A la medida", forzamos a taller.
   const [form, setForm] = useState<DeliveryFormState>(() => {
     const base = {
       ...INITIAL_STATE,
@@ -267,40 +268,25 @@ export function DeliveryForm({
           Método y Datos de Entrega
         </h3>
         <p className="text-sm text-[var(--color-on-surface-variant)]">
-          Selecciona cómo deseas recibir tu pedido y completa los datos
-          requeridos.
+          {hasALaMedidaItem
+            ? "Completa tus datos para agendar la confección a la medida en nuestro taller."
+            : "Selecciona cómo deseas recibir tu pedido y completa los datos requeridos."}
         </p>
       </div>
 
-      {/* ── PASO 1: Selección de Método de Entrega (Siempre visible) ── */}
-      <div className="rounded-2xl border border-[var(--color-outline-variant)]/20 bg-[var(--color-surface-container-lowest)] p-4">
-        <p className="mb-3 flex items-center gap-1.5 text-[11px] font-bold tracking-wider text-[var(--color-primary)] uppercase">
-          <span
-            className="material-symbols-outlined"
-            style={{ fontSize: "14px" }}
-          >
-            local_shipping
-          </span>
-          Selecciona el Tipo de Entrega
-        </p>
-
-        {hasALaMedidaItem ? (
-          <div className="rounded-xl border border-blue-200 bg-blue-50/50 p-3 text-center dark:border-blue-900/30 dark:bg-blue-950/20">
+      {/* ── PASO 1: Selección de Método de Entrega (Se oculta por completo si es "A la medida") ── */}
+      {!hasALaMedidaItem && (
+        <div className="rounded-2xl border border-[var(--color-outline-variant)]/20 bg-[var(--color-surface-container-lowest)] p-4">
+          <p className="mb-3 flex items-center gap-1.5 text-[11px] font-bold tracking-wider text-[var(--color-primary)] uppercase">
             <span
-              className="material-symbols-outlined mb-1 text-blue-600"
-              style={{ fontSize: "28px" }}
+              className="material-symbols-outlined"
+              style={{ fontSize: "14px" }}
             >
-              straighten
+              local_shipping
             </span>
-            <p className="text-xs font-bold text-blue-900 dark:text-blue-300">
-              Entrega Exclusiva en Taller (A la Medida)
-            </p>
-            <p className="mt-1 text-[11px] text-blue-700/80 dark:text-blue-400/80">
-              Tu pedido incluye prendas con confección a la medida. Es
-              obligatorio visitar nuestro taller para la toma de medidas.
-            </p>
-          </div>
-        ) : (
+            Selecciona el Tipo de Entrega
+          </p>
+
           <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
             {/* Taller */}
             <button
@@ -359,10 +345,10 @@ export function DeliveryForm({
               </span>
             </button>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
-      {/* ── ⚠️ Warning de precios desactualizados (Solo si hay un método seleccionado) ── */}
+      {/* ── ⚠️ Warning de precios desactualizados (Siempre visible si se ha seleccionado o asignado método) ── */}
       {form.deliveryMethod && (
         <div className="flex items-start gap-2.5 rounded-xl border border-amber-400/20 bg-amber-50/50 p-3 text-xs text-amber-800 dark:bg-amber-950/10 dark:text-amber-300">
           <span
@@ -372,17 +358,16 @@ export function DeliveryForm({
             warning
           </span>
           <p>
-            Los precios mostrados son de referencia. Confirmaremos el costo
-            final al procesar tu pedido.
+            Los precios aquí especificados pueden estar desactualizados, se
+            deben tomar específicamente como referencia.
           </p>
         </div>
       )}
 
       {/* ── ANIMACIÓN PREMIUM: Calculando tarifa de entrega ── */}
-      {isCalculating && (
+      {isCalculating && !hasALaMedidaItem && (
         <div className="animate-fade-in flex flex-col items-center justify-center gap-3 rounded-2xl border border-[var(--color-primary)]/10 bg-[var(--color-primary-container)]/5 py-8">
           <div className="relative flex h-10 w-10 items-center justify-center">
-            {/* Círculo rotativo de carga */}
             <div className="absolute h-full w-full animate-spin rounded-full border-4 border-slate-200 border-t-[var(--color-primary)]" />
             <span className="material-symbols-outlined animate-pulse text-sm text-[var(--color-primary)]">
               payments
@@ -394,11 +379,11 @@ export function DeliveryForm({
         </div>
       )}
 
-      {/* ── PASO 2: Formularios dinámicos (Ocultos durante la carga) ── */}
-      {!isCalculating && form.deliveryMethod && (
+      {/* ── PASO 2: Formularios dinámicos ── */}
+      {(!isCalculating || hasALaMedidaItem) && form.deliveryMethod && (
         <div className="animate-fade-in flex flex-col gap-4">
-          {/* A. Warning A LA MEDIDA (Solo si aplica y se selecciona Taller) */}
-          {hasALaMedidaItem && form.deliveryMethod === "taller" && (
+          {/* A. Warning ÚNICO de A LA MEDIDA */}
+          {hasALaMedidaItem && (
             <div className="flex items-start gap-2.5 rounded-xl border border-blue-400/40 bg-blue-50/80 p-3.5 text-xs text-blue-900 dark:bg-blue-900/20 dark:text-blue-300">
               <span
                 className="material-symbols-outlined mt-0.5 shrink-0 text-blue-500"
@@ -412,14 +397,14 @@ export function DeliveryForm({
                 </span>{" "}
                 Has seleccionado prendas{" "}
                 <span className="font-bold">&quot;A la medida&quot;</span>. Es
-                indispensable que agendes una visita a nuestro taller para la
-                toma exacta de tus medidas.
+                obligatorio visitar nuestro taller para realizar la toma de
+                medidas de forma correcta.
               </p>
             </div>
           )}
 
-          {/* B. Vista Previa del Costo Calculado */}
-          {previewInfo && (
+          {/* B. Vista Previa del Costo Calculado (No se muestra si es A la Medida ya que es implícito en Taller gratis) */}
+          {previewInfo && !hasALaMedidaItem && (
             <div className="rounded-xl border border-[var(--color-primary)]/10 bg-[var(--color-primary-container)]/20 p-3">
               <div className="flex items-center justify-between text-xs sm:text-sm">
                 <div>
@@ -438,7 +423,7 @@ export function DeliveryForm({
           )}
 
           {/* C. Campos de UBICACIÓN / DIRECCIÓN (Solo para envío a domicilio) */}
-          {form.deliveryMethod === "domicilio" && (
+          {form.deliveryMethod === "domicilio" && !hasALaMedidaItem && (
             <div className="flex flex-col gap-3 rounded-2xl border border-[var(--color-outline-variant)]/20 bg-[var(--color-surface)] p-4">
               <p className="mb-1 flex items-center gap-1.5 text-[11px] font-bold tracking-wider text-[var(--color-primary)] uppercase">
                 <span
@@ -593,7 +578,7 @@ export function DeliveryForm({
             </div>
           )}
 
-          {/* D. Datos del CLIENTE / DESTINATARIO (Siempre visible si se ha seleccionado método) */}
+          {/* D. Datos del CLIENTE / DESTINATARIO */}
           <div className="flex flex-col gap-3 rounded-2xl border border-[var(--color-outline-variant)]/20 bg-[var(--color-surface)] p-4">
             <p className="mb-1 flex items-center gap-1.5 text-[11px] font-bold tracking-wider text-[var(--color-primary)] uppercase">
               <span
