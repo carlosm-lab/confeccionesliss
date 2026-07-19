@@ -373,6 +373,75 @@ export function DeliveryForm({
             </div>
           )}
 
+          {/* D. Datos del CLIENTE / DESTINATARIO (Primero) */}
+          <div className="flex flex-col gap-3 rounded-2xl border border-[var(--color-outline-variant)]/20 bg-[var(--color-surface)] p-4">
+            <p className="mb-1 flex items-center gap-1.5 text-[11px] font-bold tracking-wider text-[var(--color-primary)] uppercase">
+              <span
+                className="material-symbols-outlined"
+                style={{ fontSize: "14px" }}
+              >
+                person
+              </span>
+              {form.deliveryMethod === "domicilio"
+                ? "Datos del Destinatario"
+                : "Datos del Cliente"}
+            </p>
+
+            <div className="flex flex-col gap-3">
+              {/* Nombre completo */}
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="delivery-name" className={labelClass}>
+                  Nombre completo *
+                </label>
+                <input
+                  id="delivery-name"
+                  type="text"
+                  placeholder="Nombre y apellidos de quien recibe"
+                  value={form.recipientName}
+                  onChange={(e) => set("recipientName", e.target.value)}
+                  className={inputClass}
+                  maxLength={120}
+                />
+              </div>
+
+              {/* Teléfono principal */}
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="delivery-phone" className={labelClass}>
+                  Teléfono de contacto *
+                </label>
+                <input
+                  id="delivery-phone"
+                  type="tel"
+                  placeholder="Ej. 7123-4567"
+                  value={form.recipientPhone}
+                  onChange={(e) => set("recipientPhone", e.target.value)}
+                  className={inputClass}
+                  maxLength={20}
+                />
+              </div>
+
+              {/* Contacto alterno */}
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="delivery-alt-phone" className={labelClass}>
+                  Teléfono o WhatsApp alterno{" "}
+                  <span className="font-normal text-[var(--color-on-surface-variant)] normal-case">
+                    (opcional)
+                  </span>
+                </label>
+                <input
+                  id="delivery-alt-phone"
+                  type="tel"
+                  placeholder="Contacto de respaldo si no logramos comunicarnos"
+                  value={form.alternatePhone}
+                  onChange={(e) => set("alternatePhone", e.target.value)}
+                  className={inputClass}
+                  maxLength={20}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* C. Campos de UBICACIÓN / DIRECCIÓN (Segundo, solo para domicilio) */}
           {form.deliveryMethod === "domicilio" && !hasALaMedidaItem && (
             <div className="flex flex-col gap-3 rounded-2xl border border-[var(--color-outline-variant)]/20 bg-[var(--color-surface)] p-4">
               <p className="mb-1 flex items-center gap-1.5 text-[11px] font-bold tracking-wider text-[var(--color-primary)] uppercase">
@@ -527,7 +596,7 @@ export function DeliveryForm({
             </div>
           )}
 
-          {/* E. Costo de entrega — aparece SOLO cuando la dirección está completa (domicilio) o siempre (taller/punto_medio) */}
+          {/* E. Costo de entrega (Tercero) — aparece SOLO cuando la dirección está completa (domicilio) o siempre (taller/punto_medio) */}
           {previewInfo && !hasALaMedidaItem && (
             <div className="animate-fade-in rounded-xl border border-[var(--color-primary)]/10 bg-[var(--color-primary-container)]/20 p-3">
               <div className="flex items-center justify-between text-xs sm:text-sm">
@@ -545,74 +614,6 @@ export function DeliveryForm({
               </div>
             </div>
           )}
-
-          {/* D. Datos del CLIENTE / DESTINATARIO */}
-          <div className="flex flex-col gap-3 rounded-2xl border border-[var(--color-outline-variant)]/20 bg-[var(--color-surface)] p-4">
-            <p className="mb-1 flex items-center gap-1.5 text-[11px] font-bold tracking-wider text-[var(--color-primary)] uppercase">
-              <span
-                className="material-symbols-outlined"
-                style={{ fontSize: "14px" }}
-              >
-                person
-              </span>
-              {form.deliveryMethod === "domicilio"
-                ? "Datos del Destinatario"
-                : "Datos del Cliente"}
-            </p>
-
-            <div className="flex flex-col gap-3">
-              {/* Nombre completo */}
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="delivery-name" className={labelClass}>
-                  Nombre completo *
-                </label>
-                <input
-                  id="delivery-name"
-                  type="text"
-                  placeholder="Nombre y apellidos de quien recibe"
-                  value={form.recipientName}
-                  onChange={(e) => set("recipientName", e.target.value)}
-                  className={inputClass}
-                  maxLength={120}
-                />
-              </div>
-
-              {/* Teléfono principal */}
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="delivery-phone" className={labelClass}>
-                  Teléfono de contacto *
-                </label>
-                <input
-                  id="delivery-phone"
-                  type="tel"
-                  placeholder="Ej. 7123-4567"
-                  value={form.recipientPhone}
-                  onChange={(e) => set("recipientPhone", e.target.value)}
-                  className={inputClass}
-                  maxLength={20}
-                />
-              </div>
-
-              {/* Contacto alterno */}
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="delivery-alt-phone" className={labelClass}>
-                  Teléfono o WhatsApp alterno{" "}
-                  <span className="font-normal text-[var(--color-on-surface-variant)] normal-case">
-                    (opcional)
-                  </span>
-                </label>
-                <input
-                  id="delivery-alt-phone"
-                  type="tel"
-                  placeholder="Contacto de respaldo si no logramos comunicarnos"
-                  value={form.alternatePhone}
-                  onChange={(e) => set("alternatePhone", e.target.value)}
-                  className={inputClass}
-                  maxLength={20}
-                />
-              </div>
-            </div>
-          </div>
 
           {/* F. Términos y condiciones */}
           <label
