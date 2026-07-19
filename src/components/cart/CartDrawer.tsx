@@ -183,6 +183,7 @@ export function CartDrawer() {
           shipping_municipality: shippingInfo?.municipality ?? null,
           shipping_cost: shippingInfo?.cost ?? 0,
           shipping_label: shippingInfo?.label ?? null,
+          delivery_method: shippingInfo?.deliveryMethod ?? null,
         }
       );
 
@@ -201,6 +202,7 @@ export function CartDrawer() {
           })),
           shippingInfo: shippingInfo
             ? {
+                deliveryMethod: shippingInfo.deliveryMethod,
                 department: shippingInfo.department,
                 municipality: shippingInfo.municipality,
                 cost: shippingInfo.cost,
@@ -235,6 +237,7 @@ export function CartDrawer() {
         })),
         shippingInfo: shippingInfo
           ? {
+              deliveryMethod: shippingInfo.deliveryMethod,
               department: shippingInfo.department,
               municipality: shippingInfo.municipality,
               cost: shippingInfo.cost,
@@ -263,61 +266,93 @@ export function CartDrawer() {
 
     // ── Agregar datos de entrega y destinatario si no están en el mensaje (omitidos por RPC) ──
     if (shippingInfo) {
+      const deliveryMethod = shippingInfo.deliveryMethod;
       const extraLines: string[] = [];
 
-      // Si el mensaje no contiene datos del destinatario, los agregamos.
+      // Datos del destinatario/cliente — se añaden si el RPC no los incluyó
       if (
-        shippingInfo.recipientName &&
+        (shippingInfo.recipientName?.trim() ||
+          shippingInfo.recipientPhone?.trim()) &&
         !rawMessage.includes("destinatario") &&
-        !rawMessage.includes("Destinatario")
+        !rawMessage.includes("Destinatario") &&
+        !rawMessage.includes("cliente") &&
+        !rawMessage.includes("Cliente")
       ) {
-        extraLines.push("\n👤 *Datos del destinatario:*");
-        extraLines.push(`• Nombre: ${shippingInfo.recipientName}`);
-        if (shippingInfo.recipientPhone) {
-          extraLines.push(
-            `• Teléfono principal: ${shippingInfo.recipientPhone}`
-          );
+        const recipientHeader =
+          deliveryMethod === "domicilio"
+            ? "\n👤 *Datos del destinatario:*"
+            : "\n👤 *Datos del cliente:*";
+        extraLines.push(recipientHeader);
+        if (shippingInfo.recipientName?.trim()) {
+          extraLines.push(`• Nombre: ${shippingInfo.recipientName.trim()}`);
         }
-        if (shippingInfo.alternatePhone) {
-          extraLines.push(`• Contacto alterno: ${shippingInfo.alternatePhone}`);
+        if (shippingInfo.recipientPhone?.trim()) {
+          extraLines.push(`• Teléfono: ${shippingInfo.recipientPhone.trim()}`);
+        }
+        if (shippingInfo.alternatePhone?.trim()) {
+          extraLines.push(
+            `• Contacto alterno: ${shippingInfo.alternatePhone.trim()}`
+          );
         }
       }
 
-      // Si el mensaje no contiene dirección de entrega detallada, la agregamos.
-      if (
-        (shippingInfo.addressColonia ||
-          shippingInfo.addressStreet ||
-          shippingInfo.addressReference) &&
-        !rawMessage.includes("Dirección de entrega") &&
-        !rawMessage.includes("dirección de entrega")
-      ) {
-        extraLines.push("\n📍 *Dirección de entrega:*");
-        if (shippingInfo.department) {
-          const loc = shippingInfo.municipality
-            ? `${shippingInfo.municipality}, ${shippingInfo.department}`
-            : shippingInfo.department;
-          extraLines.push(`• Departamento/Municipio: ${loc}`);
-        }
-        if (shippingInfo.addressColonia) {
+      // Método de entrega / dirección — solo si el RPC no los incluyó
+      const hasDeliveryInfo =
+        rawMessage.includes("Método de entrega") ||
+        rawMessage.includes("Dirección de entrega") ||
+        rawMessage.includes("dirección de entrega") ||
+        rawMessage.includes("Punto Medio") ||
+        rawMessage.includes("Retiro en taller");
+
+      if (!hasDeliveryInfo) {
+        if (deliveryMethod === "taller") {
+          extraLines.push("\n🏪 *Método de entrega: Retiro en taller*");
           extraLines.push(
-            `• Colonia/Residencial: ${shippingInfo.addressColonia}`
+            "• El cliente retirará el pedido directamente en nuestro taller en San Miguel."
           );
-        }
-        if (shippingInfo.addressStreet) {
-          extraLines.push(`• Calle/Avenida: ${shippingInfo.addressStreet}`);
-        }
-        if (shippingInfo.addressPolygon) {
-          extraLines.push(`• Polígono: ${shippingInfo.addressPolygon}`);
-        }
-        if (shippingInfo.addressNumber) {
+        } else if (deliveryMethod === "punto_medio") {
+          extraLines.push("\n🤝 *Método de entrega: Punto Medio (Finde)*");
           extraLines.push(
-            `• Número de casa/apartamento: ${shippingInfo.addressNumber}`
+            "• Se acordará un punto de entrega en San Miguel con el cliente."
           );
-        }
-        if (shippingInfo.addressReference) {
-          extraLines.push(
-            `• Punto de referencia: _"${shippingInfo.addressReference}"_`
-          );
+        } else if (
+          deliveryMethod === "domicilio" &&
+          (shippingInfo.addressColonia?.trim() ||
+            shippingInfo.addressStreet?.trim() ||
+            shippingInfo.department)
+        ) {
+          extraLines.push("\n📍 *Dirección de entrega:*");
+          if (shippingInfo.department) {
+            const loc = shippingInfo.municipality
+              ? `${shippingInfo.municipality}, ${shippingInfo.department}`
+              : shippingInfo.department;
+            extraLines.push(`• Departamento/Municipio: ${loc}`);
+          }
+          if (shippingInfo.addressColonia?.trim()) {
+            extraLines.push(
+              `• Colonia/Residencial: ${shippingInfo.addressColonia!.trim()}`
+            );
+          }
+          if (shippingInfo.addressStreet?.trim()) {
+            extraLines.push(
+              `• Calle/Avenida: ${shippingInfo.addressStreet!.trim()}`
+            );
+          }
+          if (shippingInfo.addressPolygon?.trim()) {
+            extraLines.push(
+              `• Polígono: ${shippingInfo.addressPolygon!.trim()}`
+            );
+          }
+          if (shippingInfo.addressNumber?.trim()) {
+            extraLines.push(
+              `• Número de casa/apartamento: ${shippingInfo.addressNumber!.trim()}`
+            );
+          }
+          if (shippingInfo.addressReference?.trim()) {
+            extraLines.push(
+              `• Punto de referencia: _"${shippingInfo.addressReference!.trim()}"_`
+            );
+          }
         }
       }
 

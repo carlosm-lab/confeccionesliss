@@ -18,7 +18,8 @@
     "src/config/mediaKit.ts",
     "src/components/empresa/PerfilDetalleClient.tsx",
     "src/providers/DeferredProviders.tsx",
-    "scratch/**"
+    "scratch/**",
+    "scripts/**"
   ],
   "entry": [
     "src/app/**/*.{ts,tsx}",

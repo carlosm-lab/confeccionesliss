@@ -216,7 +216,7 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 ### ServiciosPrincipales
 
 - **Ruta:** `src/components/seo/ServiciosPrincipales.tsx`
-- **Descripción:** Componente que expone los servicios clave mediante Schema.org validado para SEO. Utiliza `isomorphic-dompurify` para inyectar JSON-LD de manera segura previniendo XSS.
+- **Descripción:** Componente que expone los servicios clave mediante Schema.org validado para SEO. Consume datos estáticos predefinidos seguros desde `lib/seo-data` para evitar inyecciones XSS y resolver problemas de carga de JSDOM en el runtime de Vercel.
 - **Props:** No recibe props.
 
 ### CategoryHubClient

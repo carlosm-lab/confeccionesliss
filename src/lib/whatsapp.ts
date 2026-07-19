@@ -185,6 +185,8 @@ interface CartMessageItem {
 }
 
 interface CartMessageShippingInfo {
+  /** Tipo de entrega seleccionado por el usuario */
+  deliveryMethod?: "taller" | "punto_medio" | "domicilio" | null;
   department?: string | null;
   municipality?: string | null;
   cost?: number;
@@ -193,7 +195,7 @@ interface CartMessageShippingInfo {
   recipientName?: string | null;
   recipientPhone?: string | null;
   alternatePhone?: string | null;
-  // ── Dirección completa ──
+  // ── Dirección completa (solo para domicilio) ──
   addressColonia?: string | null;
   addressStreet?: string | null;
   addressPolygon?: string | null;
@@ -233,7 +235,7 @@ export function buildCartWhatsAppMessage(opts: CartMessageOptions): string {
     if (item.note?.trim()) details.push(`Nota: ${item.note.trim()}`);
 
     if (details.length > 0) {
-      line += `\n  _${details.join(" · ")}_`;
+      line += `\n  _${details.join(" \u00b7 ")}_`;
     }
     lines.push(line);
   });
@@ -243,11 +245,22 @@ export function buildCartWhatsAppMessage(opts: CartMessageOptions): string {
   lines.push(`Subtotal: $${subtotal.toFixed(2)}`);
 
   const shippingCost = shippingInfo?.cost ?? 0;
-  if (shippingInfo?.department) {
+  const deliveryMethod = shippingInfo?.deliveryMethod;
+
+  // Línea de costo de envío adaptada al método
+  if (deliveryMethod === "taller") {
+    lines.push(
+      `Entrega (Retiro en taller — San Miguel): $${shippingCost.toFixed(2)}`
+    );
+  } else if (deliveryMethod === "punto_medio") {
+    lines.push(
+      `Entrega (Punto de entrega acordado — San Miguel): $${shippingCost.toFixed(2)}`
+    );
+  } else if (shippingInfo?.department) {
     const loc = shippingInfo.municipality
       ? `${shippingInfo.municipality}, ${shippingInfo.department}`
       : shippingInfo.department;
-    lines.push(`Envío (${loc}): $${shippingCost.toFixed(2)}`);
+    lines.push(`Envío a domicilio (${loc}): $${shippingCost.toFixed(2)}`);
   } else if (shippingInfo?.label) {
     lines.push(`Envío (${shippingInfo.label}): $${shippingCost.toFixed(2)}`);
   }
@@ -255,51 +268,97 @@ export function buildCartWhatsAppMessage(opts: CartMessageOptions): string {
   const total = subtotal + shippingCost;
   lines.push(`*Total a pagar: $${total.toFixed(2)}*`);
 
-  // ── Datos del destinatario ──────────────────────────────────────────────────
-  if (shippingInfo?.recipientName) {
+  // ── Datos del cliente / destinatario ───────────────────────────────────────
+  // Solo se imprime si hay al menos nombre o teléfono ingresado.
+  const hasRecipientData =
+    shippingInfo?.recipientName?.trim() || shippingInfo?.recipientPhone?.trim();
+
+  if (hasRecipientData) {
     lines.push("");
-    lines.push("\uD83D\uDC64 *Datos del destinatario:*");
-    lines.push(`\u2022 Nombre: ${shippingInfo.recipientName}`);
-    if (shippingInfo.recipientPhone) {
-      lines.push(`\u2022 Teléfono principal: ${shippingInfo.recipientPhone}`);
+    // La etiqueta cambia según el método de entrega
+    const recipientHeader =
+      deliveryMethod === "domicilio"
+        ? "\uD83D\uDC64 *Datos del destinatario:*"
+        : "\uD83D\uDC64 *Datos del cliente:*";
+    lines.push(recipientHeader);
+
+    if (shippingInfo!.recipientName?.trim()) {
+      lines.push(`\u2022 Nombre: ${shippingInfo!.recipientName.trim()}`);
     }
-    if (shippingInfo.alternatePhone) {
-      lines.push(`\u2022 Contacto alterno: ${shippingInfo.alternatePhone}`);
+    if (shippingInfo!.recipientPhone?.trim()) {
+      lines.push(
+        `\u2022 Tel\u00e9fono: ${shippingInfo!.recipientPhone.trim()}`
+      );
+    }
+    if (shippingInfo!.alternatePhone?.trim()) {
+      lines.push(
+        `\u2022 Contacto alterno: ${shippingInfo!.alternatePhone.trim()}`
+      );
     }
   }
 
-  // ── Dirección de entrega ──────────────────────────────────────────────────
-  if (
-    shippingInfo?.department ||
-    shippingInfo?.addressColonia ||
-    shippingInfo?.addressStreet
-  ) {
+  // ── Método de entrega / Dirección ────────────────────────────────────────
+  // Bloque SOLO para domicilio: muestra la dirección completa.
+  // Para taller/punto_medio: solo un aviso contextual, sin datos de dirección vacíos.
+  if (deliveryMethod === "taller") {
     lines.push("");
-    lines.push("\uD83D\uDCCD *Dirección de entrega:*");
-    if (shippingInfo.department) {
-      const loc = shippingInfo.municipality
-        ? `${shippingInfo.municipality}, ${shippingInfo.department}`
-        : shippingInfo.department;
-      lines.push(`\u2022 Departamento/Municipio: ${loc}`);
-    }
-    if (shippingInfo.addressColonia) {
-      lines.push(`\u2022 Colonia/Residencial: ${shippingInfo.addressColonia}`);
-    }
-    if (shippingInfo.addressStreet) {
-      lines.push(`\u2022 Calle/Avenida: ${shippingInfo.addressStreet}`);
-    }
-    if (shippingInfo.addressPolygon) {
-      lines.push(`\u2022 Polígono: ${shippingInfo.addressPolygon}`);
-    }
-    if (shippingInfo.addressNumber) {
-      lines.push(
-        `\u2022 Número de casa/apartamento: ${shippingInfo.addressNumber}`
-      );
-    }
-    if (shippingInfo.addressReference) {
-      lines.push(
-        `\u2022 Punto de referencia: _"${shippingInfo.addressReference}"_`
-      );
+    lines.push("\uD83C\uDFEA *Método de entrega: Retiro en taller*");
+    lines.push(
+      "\u2022 El cliente retirará el pedido directamente en nuestro taller en San Miguel."
+    );
+  } else if (deliveryMethod === "punto_medio") {
+    lines.push("");
+    lines.push("\uD83E\uDD1D *Método de entrega: Punto Medio (Finde)*");
+    lines.push(
+      "\u2022 Se acordará un punto de entrega en San Miguel con el cliente."
+    );
+  } else if (
+    deliveryMethod === "domicilio" ||
+    (!deliveryMethod &&
+      (shippingInfo?.addressColonia?.trim() ||
+        shippingInfo?.addressStreet?.trim() ||
+        shippingInfo?.department))
+  ) {
+    // Entrega a domicilio — mostrar dirección solo si hay campos no vacíos
+    const hasAddressData =
+      shippingInfo?.department ||
+      shippingInfo?.addressColonia?.trim() ||
+      shippingInfo?.addressStreet?.trim();
+
+    if (hasAddressData) {
+      lines.push("");
+      lines.push("\uD83D\uDCCD *Direcci\u00f3n de entrega:*");
+      if (shippingInfo!.department) {
+        const loc = shippingInfo!.municipality
+          ? `${shippingInfo!.municipality}, ${shippingInfo!.department}`
+          : shippingInfo!.department;
+        lines.push(`\u2022 Departamento/Municipio: ${loc}`);
+      }
+      if (shippingInfo!.addressColonia?.trim()) {
+        lines.push(
+          `\u2022 Colonia/Residencial: ${shippingInfo!.addressColonia!.trim()}`
+        );
+      }
+      if (shippingInfo!.addressStreet?.trim()) {
+        lines.push(
+          `\u2022 Calle/Avenida: ${shippingInfo!.addressStreet!.trim()}`
+        );
+      }
+      if (shippingInfo!.addressPolygon?.trim()) {
+        lines.push(
+          `\u2022 Pol\u00edgono: ${shippingInfo!.addressPolygon!.trim()}`
+        );
+      }
+      if (shippingInfo!.addressNumber?.trim()) {
+        lines.push(
+          `\u2022 N\u00famero de casa/apartamento: ${shippingInfo!.addressNumber!.trim()}`
+        );
+      }
+      if (shippingInfo!.addressReference?.trim()) {
+        lines.push(
+          `\u2022 Punto de referencia: _"${shippingInfo!.addressReference!.trim()}"_`
+        );
+      }
     }
   }
 

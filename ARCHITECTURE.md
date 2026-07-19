@@ -456,3 +456,19 @@ Los tres problemas críticos identificados que causaban los 22s de carga:
 - El carousel ya no pre-carga todos los slides; la transición del primer al segundo slide puede tener un pequeño delay de carga en la primera visita (las demás serán inmediatas gracias al caché del browser).
 - Sin watchdog de hidratación: si hay un bug de hidratación de React en el futuro, ya no habrá reload automático. Esto es aceptable dado que React 19 es muy estable.
 - El service worker ha sido removido completamente del setup. Si en el futuro se quiere soporte offline, requiere crear el `public/sw.js` y re-añadir el hook.
+
+---
+
+**Date:** 2026-07-19
+**Decision:** MIGRATION-001 — Estrategia de Migración de Precios por Talla (Talla L: 35 ➔ 38)
+**Context:** Se solicitó actualizar todos los uniformes y scrubs de la talla "L" que tuvieran el precio en 35 a 38. Debido a que las políticas de RLS en la tabla `products` restringen la escritura (updates) a usuarios administradores autenticados y que el archivo `.env` local por seguridad no incluye `SUPABASE_SERVICE_ROLE_KEY`, se requería diseñar métodos alternativos y seguros para ejecutar la migración.
+**Decisions Made:**
+
+1. **Consulta SQL Directa (`scripts/migrate-prices.sql`):** Se redactó una consulta SQL optimizada para el SQL Editor del dashboard de Supabase: `UPDATE products SET price_by_size = jsonb_set(price_by_size, '{L}', '38') WHERE (price_by_size->>'L')::numeric = 35;`. Esto permite que el propietario del proyecto aplique el cambio directamente en la base de datos de producción con privilegios totales de forma segura.
+2. **Script de Node.js Automatizado (`scripts/migrate-prices.mjs`):** Se creó un script que lee las variables de entorno locales, detecta si `SUPABASE_SERVICE_ROLE_KEY` está provista en el `.env`, y ejecuta la migración mediante llamadas `fetch` a la API REST de Supabase con validaciones completas sobre los 26 registros identificados.
+3. **Herramienta Interactiva de Sandbox (`src/app/(dev)/sandbox/page.tsx`):** Se implementó una interfaz interactiva de migración en la página privada de desarrollo de sandbox (`/sandbox`). La herramienta hace fetch y filtra localmente los productos coincidentes y permite que un administrador logueado en la aplicación web ejecute la migración pulsando un botón, utilizando el token de sesión de Supabase del propio navegador.
+   **Consequences:**
+
+- Se proporciona triple redundancia para la migración de la base de datos de producción (SQL, script de Node, y consola interactiva de Sandbox).
+- La actualización de la talla L no afecta el precio base de los productos (`price`), permitiendo que las tallas más pequeñas (XS, S, M) sigan valiendo 35.
+- La herramienta de sandbox solo debe utilizarse en entornos de desarrollo y pruebas locales.

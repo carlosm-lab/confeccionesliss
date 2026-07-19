@@ -185,6 +185,13 @@ export function DeliveryForm({
     finalInfo.recipientPhone = form.recipientPhone;
     finalInfo.alternatePhone = form.alternatePhone;
     finalInfo.termsAccepted = form.termsAccepted;
+    // ⚠️ Guardar el método de entrega seleccionado — esencial para el mensaje de WhatsApp
+    finalInfo.deliveryMethod =
+      form.deliveryMethod === "domicilio" ||
+      form.deliveryMethod === "punto_medio" ||
+      form.deliveryMethod === "taller"
+        ? form.deliveryMethod
+        : "domicilio";
 
     // Adjuntar dirección completa si es a domicilio
     if (form.deliveryMethod === "domicilio") {

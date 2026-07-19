@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { services } from "@/lib/seo-data";
-import DOMPurify from "isomorphic-dompurify";
 import { siteConfig } from "@/config/site";
 
 export function ServiciosPrincipales() {
@@ -54,7 +53,7 @@ export function ServiciosPrincipales() {
                 <p
                   className="text-on-surface-variant mb-4 text-sm leading-relaxed"
                   dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(s.description),
+                    __html: s.description,
                   }}
                 />
                 <ul className="text-secondary mb-6 space-y-1 text-xs">
