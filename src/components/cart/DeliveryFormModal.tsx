@@ -129,19 +129,16 @@ export function DeliveryForm({
   const handleMethodChange = (
     method: "taller" | "punto_medio" | "domicilio"
   ) => {
-    setForm((prev) => {
-      const nextDept = method === "domicilio" ? prev.department : "San Miguel";
-      const nextMuni =
-        method === "domicilio" ? prev.municipality : "San Miguel";
-      return {
-        ...prev,
-        deliveryMethod: method,
-        department: nextDept,
-        municipality: nextMuni,
-      };
-    });
-    // La animación SOLO tiene sentido en domicilio y cuando ya hay departamento elegido.
-    // Para taller/punto_medio la tarifa es fija y no depende de ningún input del usuario.
+    setForm((prev) => ({
+      ...prev,
+      deliveryMethod: method,
+      // Taller/Punto Medio son siempre San Miguel.
+      // Domicilio: siempre limpia la dirección para que el usuario la seleccione manualmente.
+      department: method === "domicilio" ? "" : "San Miguel",
+      municipality: method === "domicilio" ? "" : "San Miguel",
+    }));
+    // Animación SOLO para domicilio y SOLO después de elegir departamento.
+    // Taller/Punto Medio tienen tarifa fija — no hay nada que "calcular".
     if (method === "domicilio" && form.department) {
       triggerCalculationAnim("domicilio", form.department);
     }
