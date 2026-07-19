@@ -261,6 +261,71 @@ export function CartDrawer() {
       return;
     }
 
+    // ── Agregar datos de entrega y destinatario si no están en el mensaje (omitidos por RPC) ──
+    if (shippingInfo) {
+      const extraLines: string[] = [];
+
+      // Si el mensaje no contiene datos del destinatario, los agregamos.
+      if (
+        shippingInfo.recipientName &&
+        !rawMessage.includes("destinatario") &&
+        !rawMessage.includes("Destinatario")
+      ) {
+        extraLines.push("\n👤 *Datos del destinatario:*");
+        extraLines.push(`• Nombre: ${shippingInfo.recipientName}`);
+        if (shippingInfo.recipientPhone) {
+          extraLines.push(
+            `• Teléfono principal: ${shippingInfo.recipientPhone}`
+          );
+        }
+        if (shippingInfo.alternatePhone) {
+          extraLines.push(`• Contacto alterno: ${shippingInfo.alternatePhone}`);
+        }
+      }
+
+      // Si el mensaje no contiene dirección de entrega detallada, la agregamos.
+      if (
+        (shippingInfo.addressColonia ||
+          shippingInfo.addressStreet ||
+          shippingInfo.addressReference) &&
+        !rawMessage.includes("Dirección de entrega") &&
+        !rawMessage.includes("dirección de entrega")
+      ) {
+        extraLines.push("\n📍 *Dirección de entrega:*");
+        if (shippingInfo.department) {
+          const loc = shippingInfo.municipality
+            ? `${shippingInfo.municipality}, ${shippingInfo.department}`
+            : shippingInfo.department;
+          extraLines.push(`• Departamento/Municipio: ${loc}`);
+        }
+        if (shippingInfo.addressColonia) {
+          extraLines.push(
+            `• Colonia/Residencial: ${shippingInfo.addressColonia}`
+          );
+        }
+        if (shippingInfo.addressStreet) {
+          extraLines.push(`• Calle/Avenida: ${shippingInfo.addressStreet}`);
+        }
+        if (shippingInfo.addressPolygon) {
+          extraLines.push(`• Polígono: ${shippingInfo.addressPolygon}`);
+        }
+        if (shippingInfo.addressNumber) {
+          extraLines.push(
+            `• Número de casa/apartamento: ${shippingInfo.addressNumber}`
+          );
+        }
+        if (shippingInfo.addressReference) {
+          extraLines.push(
+            `• Punto de referencia: _"${shippingInfo.addressReference}"_`
+          );
+        }
+      }
+
+      if (extraLines.length > 0) {
+        rawMessage += "\n" + extraLines.join("\n");
+      }
+    }
+
     // ── Agregar enlaces de producto al final del mensaje ──────────
     // El RPC no incluye URLs de producto. Los construimos aquí desde item.product.slug.
     const storeOrigin =
