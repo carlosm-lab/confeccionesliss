@@ -667,3 +667,35 @@ Cada ruta del proyecto tiene un `loading.tsx` propio que Next.js muestra automá
 - **Descripción:** Formulario interactivo de contacto. Realiza validaciones en el cliente con Zod y envía los datos mediante un Server Action (`sendContactMessage`).
 - **Props:** No recibe props.
 - **Ejemplo:** `<ContactForm />`
+
+## Cart Components
+
+### DeliveryForm
+
+- **Ruta:** `src/components/cart/DeliveryFormModal.tsx`
+- **Descripción:** Formulario completo de datos de entrega y destinatario para el flujo de compra. Gestiona la selección de método de envío (con opciones de San Miguel / Nacional), los datos del destinatario (nombre, teléfonos), la dirección completa y la aceptación de los términos legales. Muestra avisos contextuales según el método elegido (visita al taller para "A la medida", distancia para "Punto Medio").
+- **Props:**
+  - `initialState?: Partial<DeliveryFormState>` — Valores iniciales del formulario (ej. para pre-cargar departamento).
+  - `hasALaMedidaItem?: boolean` — Si `true`, muestra advertencia de toma de medidas en el taller cuando corresponde.
+  - `onConfirm: (info: ShippingInfo) => void` — Callback que recibe los datos validados al confirmar.
+- **Métodos de entrega disponibles:**
+  - San Miguel — Recolección en Taller: **$0 (gratis)**
+  - San Miguel — Punto Medio (fines de semana, área metro): **$1**
+  - San Miguel — A Domicilio: **$3**
+  - Resto del país — Envío Nacional: **$6**
+- **Términos obligatorios:** El usuario debe aceptar los términos de envío (`/legal/envios`) y devoluciones (`/legal/devoluciones`) antes de poder confirmar.
+- **Ejemplo de uso (carrito):**
+  ```tsx
+  <DeliveryForm
+    hasALaMedidaItem={cartItems.some((i) => i.category === "a-la-medida")}
+    onConfirm={(info) => handleWhatsApp(info)}
+  />
+  ```
+- **Ejemplo de uso (sandbox):**
+  ```tsx
+  <DeliveryForm
+    initialState={{ department: "San Miguel", municipality: "San Miguel" }}
+    hasALaMedidaItem={true}
+    onConfirm={(info) => console.log(info)}
+  />
+  ```
