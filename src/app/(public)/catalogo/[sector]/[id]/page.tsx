@@ -41,32 +41,269 @@ export async function generateStaticParams(): Promise<
   }
 }
 
-// ── Constantes de Schema para Google Rich Results ─────────────────────────────
-// Fuente: testimonios reales de Google Maps verificados (src/lib/seo-data.ts)
+// ── Calificación agregada — 21 reseñas reales de Google Maps ─────────────────
 const PRODUCT_AGGREGATE_RATING = {
   "@type": "AggregateRating",
-  ratingValue: "5.0",
-  ratingCount: "3",
-  reviewCount: "3",
+  ratingValue: "4.9",
+  ratingCount: "21",
+  reviewCount: "21",
   bestRating: "5",
   worstRating: "1",
 } as const;
 
-const PRODUCT_REVIEWS = testimonials.map((t) => ({
-  "@type": "Review",
-  author: {
-    "@type": "Person",
-    name: t.nombre,
+// ── Reseñas reales de Google Maps — fuente verificada ────────────────────────
+// Recuperadas del historial de commits tras optimizaciones de rendimiento
+const PRODUCT_REVIEWS = [
+  {
+    "@type": "Review",
+    author: { "@type": "Person", name: "Juan Carlos Garcia" },
+    reviewBody:
+      "Pedí uniformes para un grupo de compañeras de enfermería y todo salió perfecto todos los scrubs quedaron bien hechos, en las medidas exactas de cada una, y los entregaron en el tiempo acordado ña atención por WhatsApp fue rápida y clara durante todo el proceso. ademas la señora me recuerda a mi abuelita :)",
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    datePublished: "2025-06-01",
   },
-  reviewBody: t.texto,
-  reviewRating: {
-    "@type": "Rating",
-    ratingValue: String(t.stars),
-    bestRating: "5",
-    worstRating: "1",
+  {
+    "@type": "Review",
+    author: { "@type": "Person", name: "José Antonio dias" },
+    reviewBody:
+      "Excelente taller de uniformes médicos y scrubs en San Miguel, la atención rápida por WhatsApp, precios justos y lo más importante es que hacen los uniformes a la medida de cada persona. Yo tengo una talla difícil de encontrar y aquí no fue ningún problema ademas ni me cobraron demas por talla extra.",
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    datePublished: "2025-06-01",
   },
-  datePublished: "2025-06-01",
-}));
+  {
+    "@type": "Review",
+    author: { "@type": "Person", name: "Kairo Boutique" },
+    reviewBody:
+      "Mandamos a hacer los uniformes de la tienda en Confecciones Liss y la verdad es que quedamos muy satisfechos, precios comodos, nos hicieron descuento por mayoreo, en fin, encantados.",
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    datePublished: "2025-06-01",
+  },
+  {
+    "@type": "Review",
+    author: { "@type": "Person", name: "Iris M." },
+    reviewBody: "Uniformes confeccionados a la perfección",
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    datePublished: "2026-05-15",
+  },
+  {
+    "@type": "Review",
+    author: { "@type": "Person", name: "RUTH MEJIA" },
+    reviewBody:
+      "Excelente calidad, me encanta su trabajo y sobre todo la responsabilisad",
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    datePublished: "2026-06-10",
+  },
+  {
+    "@type": "Review",
+    author: { "@type": "Person", name: "Marlyn Antonio Palacio Reyes" },
+    reviewBody:
+      "Una confección 10/10, muy recomendable me ha ayudado demasiado para mis uniformes de la universidad",
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    datePublished: "2026-07-03",
+  },
+  {
+    "@type": "Review",
+    author: { "@type": "Person", name: "ツツ" },
+    reviewBody:
+      "¡Excelente servicio en Confección Liss! El trabajo que hacen es de primera calidad, con acabados impecables y mucha atención al detalle. Además, la atención al cliente es muy amable y cumplen con los tiempos de entrega. Totalmente recomendados.",
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    datePublished: "2026-07-01",
+  },
+  {
+    "@type": "Review",
+    author: { "@type": "Person", name: "Manuel Godoy" },
+    reviewBody:
+      "Excelente , uniformes a la medida confecciones segun los gustos personalizados y tela de alta calidad y confeccion",
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    datePublished: "2026-07-01",
+  },
+  {
+    "@type": "Review",
+    author: { "@type": "Person", name: "Damaris Navarrete" },
+    reviewBody: "Excelente atención y calidad en las confecciones",
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    datePublished: "2026-07-01",
+  },
+  {
+    "@type": "Review",
+    author: { "@type": "Person", name: "Gerardo Vargas" },
+    reviewBody: "buena atención y exelente trabajo.",
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    datePublished: "2026-07-02",
+  },
+  {
+    "@type": "Review",
+    author: { "@type": "Person", name: "Erick Josue fuentes" },
+    reviewBody: "Buenos trabajos",
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    datePublished: "2026-07-01",
+  },
+  {
+    "@type": "Review",
+    author: { "@type": "Person", name: "Erick Salvador" },
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    datePublished: "2026-06-20",
+  },
+  {
+    "@type": "Review",
+    author: { "@type": "Person", name: "Carlitos" },
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    datePublished: "2026-07-02",
+  },
+  {
+    "@type": "Review",
+    author: { "@type": "Person", name: "Antonio Guzmán" },
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    datePublished: "2026-07-03",
+  },
+  {
+    "@type": "Review",
+    author: { "@type": "Person", name: "José Menéndez" },
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    datePublished: "2026-07-02",
+  },
+  {
+    "@type": "Review",
+    author: { "@type": "Person", name: "Jackelline Lisseth Molina Villacorta" },
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    datePublished: "2026-07-02",
+  },
+  {
+    "@type": "Review",
+    author: { "@type": "Person", name: "Carlos Molina" },
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    datePublished: "2026-07-01",
+  },
+  {
+    "@type": "Review",
+    author: { "@type": "Person", name: "Karla Vanessa Perla Blanco" },
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    datePublished: "2026-07-01",
+  },
+  {
+    "@type": "Review",
+    author: { "@type": "Person", name: "Isaac Padilla" },
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    datePublished: "2026-07-01",
+  },
+  {
+    "@type": "Review",
+    author: { "@type": "Person", name: "Kenia Yaritza Pérez Martínez" },
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    datePublished: "2026-07-01",
+  },
+  {
+    "@type": "Review",
+    author: { "@type": "Person", name: "Enmanuel Mejía" },
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    datePublished: "2026-07-03",
+  },
+];
 
 // Política de envío para El Salvador (OfferShippingDetails)
 const SHIPPING_DETAILS_SV = {
