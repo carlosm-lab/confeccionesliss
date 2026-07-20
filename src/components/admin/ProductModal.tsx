@@ -648,14 +648,7 @@ export default function ProductModal({
 
         {/* Content */}
         <div className="elegant-scrollbar flex-1 overflow-y-auto p-6">
-          <form
-            id="productForm"
-            onSubmit={handleSubmit}
-            data-webmcp-tool="manage_product"
-            data-webmcp-name="Gestión de Productos"
-            data-webmcp-description="Formulario administrativo para crear o editar productos en el catálogo"
-            className="space-y-6"
-          >
+          <form id="productForm" onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               {/* Basic Info */}
               <div className="space-y-4 md:col-span-2">

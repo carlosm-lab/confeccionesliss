@@ -274,9 +274,6 @@ export default function AdminCategoriesPage() {
             </h2>
             <form
               onSubmit={handleSubmit}
-              data-webmcp-tool="manage_category"
-              data-webmcp-name="Gestión de Categorías"
-              data-webmcp-description="Formulario administrativo para crear o editar categorías de catálogo"
               className="flex flex-1 flex-col gap-4"
             >
               {/* Catalogo */}

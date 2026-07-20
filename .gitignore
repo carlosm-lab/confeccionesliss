@@ -53,6 +53,3 @@ next-env.d.ts
 # gemini & performance temp logs
 .gemini/
 pagespeed-*.json
-scratch/
-error-logs/
-
