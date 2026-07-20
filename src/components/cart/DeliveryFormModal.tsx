@@ -280,449 +280,465 @@ export function DeliveryForm({
         </p>
       </div>
 
-      {/* ── PASO 1: Selección de Método de Entrega (Se oculta por completo si es "A la medida") ── */}
-      {!hasALaMedidaItem && (
-        <div className="rounded-2xl border border-[var(--color-outline-variant)]/20 bg-[var(--color-surface-container-lowest)] p-4">
-          <p className="mb-3 flex items-center gap-1.5 text-[11px] font-bold tracking-wider text-[var(--color-primary)] uppercase">
-            <span
-              className="material-symbols-outlined"
-              style={{ fontSize: "14px" }}
-            >
-              local_shipping
-            </span>
-            Selecciona el Tipo de Entrega
-          </p>
-
-          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
-            {/* Taller */}
-            <button
-              type="button"
-              onClick={() => handleMethodChange("taller")}
-              className={`flex flex-col items-center justify-center rounded-xl border p-3.5 text-center transition-all duration-300 ${
-                form.deliveryMethod === "taller"
-                  ? "border-[var(--color-primary)] bg-[var(--color-primary-container)]/20 text-[var(--color-primary)] shadow-sm ring-2 ring-[var(--color-primary)]/20"
-                  : "border-[var(--color-outline-variant)]/40 bg-[var(--color-surface)] hover:border-slate-400"
-              }`}
-            >
-              <span className="material-symbols-outlined mb-1.5 text-xl">
-                store
-              </span>
-              <span className="text-xs font-bold">Retiro en Taller</span>
-            </button>
-
-            {/* Punto Medio */}
-            <button
-              type="button"
-              onClick={() => handleMethodChange("punto_medio")}
-              className={`flex flex-col items-center justify-center rounded-xl border p-3.5 text-center transition-all duration-300 ${
-                form.deliveryMethod === "punto_medio"
-                  ? "border-[var(--color-primary)] bg-[var(--color-primary-container)]/20 text-[var(--color-primary)] shadow-sm ring-2 ring-[var(--color-primary)]/20"
-                  : "border-[var(--color-outline-variant)]/40 bg-[var(--color-surface)] hover:border-slate-400"
-              }`}
-            >
-              <span className="material-symbols-outlined mb-1.5 text-xl">
-                handshake
-              </span>
-              <span className="text-xs font-bold">Punto Medio (Finde)</span>
-            </button>
-
-            {/* Domicilio */}
-            <button
-              type="button"
-              onClick={() => handleMethodChange("domicilio")}
-              className={`flex flex-col items-center justify-center rounded-xl border p-3.5 text-center transition-all duration-300 ${
-                form.deliveryMethod === "domicilio"
-                  ? "border-[var(--color-primary)] bg-[var(--color-primary-container)]/20 text-[var(--color-primary)] shadow-sm ring-2 ring-[var(--color-primary)]/20"
-                  : "border-[var(--color-outline-variant)]/40 bg-[var(--color-surface)] hover:border-slate-400"
-              }`}
-            >
-              <span className="material-symbols-outlined mb-1.5 text-xl">
-                local_shipping
-              </span>
-              <span className="text-xs font-bold">A Domicilio</span>
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* ── ⚠️ Warning de precios desactualizados (Siempre visible si se ha seleccionado o asignado método) ── */}
-      {form.deliveryMethod && (
-        <div className="flex items-start gap-2.5 rounded-xl border border-amber-400/20 bg-amber-50/50 p-3 text-xs text-amber-800 dark:bg-amber-950/10 dark:text-amber-300">
-          <span
-            className="material-symbols-outlined shrink-0 text-amber-500"
-            style={{ fontSize: "16px" }}
-          >
-            warning
-          </span>
-          <p>
-            Los precios se actualizan periódicamente. En caso de alguna
-            variación, confirmaremos el precio antes de procesar tu pedido.
-          </p>
-        </div>
-      )}
-
-      {/* ── ANIMACIÓN PREMIUM: Calculando tarifa de entrega ── */}
-      {isCalculating && !hasALaMedidaItem && (
-        <div className="animate-fade-in flex flex-col items-center justify-center gap-3 rounded-2xl border border-[var(--color-primary)]/10 bg-[var(--color-primary-container)]/5 py-8">
-          <div className="relative flex h-10 w-10 items-center justify-center">
-            <div className="absolute h-full w-full animate-spin rounded-full border-4 border-slate-200 border-t-[var(--color-primary)]" />
-            <span className="material-symbols-outlined animate-pulse text-sm text-[var(--color-primary)]">
-              payments
-            </span>
-          </div>
-          <span className="animate-pulse text-xs font-semibold tracking-wide text-[var(--color-primary)]">
-            {calculationText}
-          </span>
-        </div>
-      )}
-
-      {/* ── PASO 2: Formularios dinámicos ── */}
-      {(!isCalculating || hasALaMedidaItem) && form.deliveryMethod && (
-        <div className="animate-fade-in flex flex-col gap-4">
-          {/* A. Warning ÚNICO de A LA MEDIDA */}
-          {hasALaMedidaItem && (
-            <div className="flex items-start gap-2.5 rounded-xl border border-blue-400/40 bg-blue-50/80 p-3.5 text-xs text-blue-900 dark:bg-blue-900/20 dark:text-blue-300">
-              <span
-                className="material-symbols-outlined mt-0.5 shrink-0 text-blue-500"
-                style={{ fontSize: "18px" }}
-              >
-                straighten
-              </span>
-              <p>
-                <span className="font-semibold">
-                  Toma de medidas obligatoria:
-                </span>{" "}
-                Has seleccionado prendas{" "}
-                <span className="font-bold">&quot;A la medida&quot;</span>. Es
-                obligatorio visitar nuestro taller para realizar la toma de
-                medidas de forma correcta.
-              </p>
-            </div>
-          )}
-
-          {/* D. Datos del CLIENTE / DESTINATARIO (Primero) */}
-          <div className="flex flex-col gap-3 rounded-2xl border border-[var(--color-outline-variant)]/20 bg-[var(--color-surface)] p-4">
-            <p className="mb-1 flex items-center gap-1.5 text-[11px] font-bold tracking-wider text-[var(--color-primary)] uppercase">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleConfirm();
+        }}
+        data-webmcp-tool="request_quote"
+        data-webmcp-name="Solicitud de Cotización y Datos de Entrega"
+        data-webmcp-description="Formulario para la toma de datos del cliente, dirección y método de entrega para la confección y despacho de uniformes"
+        className="flex flex-col gap-5 text-left"
+      >
+        {/* ── PASO 1: Selección de Método de Entrega (Se oculta por completo si es "A la medida") ── */}
+        {!hasALaMedidaItem && (
+          <div className="rounded-2xl border border-[var(--color-outline-variant)]/20 bg-[var(--color-surface-container-lowest)] p-4">
+            <p className="mb-3 flex items-center gap-1.5 text-[11px] font-bold tracking-wider text-[var(--color-primary)] uppercase">
               <span
                 className="material-symbols-outlined"
                 style={{ fontSize: "14px" }}
               >
-                person
+                local_shipping
               </span>
-              {form.deliveryMethod === "domicilio"
-                ? "Datos del Destinatario"
-                : "Datos del Cliente"}
+              Selecciona el Tipo de Entrega
             </p>
 
-            <div className="flex flex-col gap-3">
-              {/* Nombre completo */}
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="delivery-name" className={labelClass}>
-                  Nombre completo *
-                </label>
-                <input
-                  id="delivery-name"
-                  type="text"
-                  placeholder="Nombre y apellidos de quien recibe"
-                  value={form.recipientName}
-                  onChange={(e) => set("recipientName", e.target.value)}
-                  className={inputClass}
-                  maxLength={120}
-                />
-              </div>
+            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+              {/* Taller */}
+              <button
+                type="button"
+                onClick={() => handleMethodChange("taller")}
+                className={`flex flex-col items-center justify-center rounded-xl border p-3.5 text-center transition-all duration-300 ${
+                  form.deliveryMethod === "taller"
+                    ? "border-[var(--color-primary)] bg-[var(--color-primary-container)]/20 text-[var(--color-primary)] shadow-sm ring-2 ring-[var(--color-primary)]/20"
+                    : "border-[var(--color-outline-variant)]/40 bg-[var(--color-surface)] hover:border-slate-400"
+                }`}
+              >
+                <span className="material-symbols-outlined mb-1.5 text-xl">
+                  store
+                </span>
+                <span className="text-xs font-bold">Retiro en Taller</span>
+              </button>
 
-              {/* Teléfono principal */}
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="delivery-phone" className={labelClass}>
-                  Teléfono de contacto *
-                </label>
-                <input
-                  id="delivery-phone"
-                  type="tel"
-                  placeholder="Ej. 7123-4567"
-                  value={form.recipientPhone}
-                  onChange={(e) => set("recipientPhone", e.target.value)}
-                  className={inputClass}
-                  maxLength={20}
-                />
-              </div>
+              {/* Punto Medio */}
+              <button
+                type="button"
+                onClick={() => handleMethodChange("punto_medio")}
+                className={`flex flex-col items-center justify-center rounded-xl border p-3.5 text-center transition-all duration-300 ${
+                  form.deliveryMethod === "punto_medio"
+                    ? "border-[var(--color-primary)] bg-[var(--color-primary-container)]/20 text-[var(--color-primary)] shadow-sm ring-2 ring-[var(--color-primary)]/20"
+                    : "border-[var(--color-outline-variant)]/40 bg-[var(--color-surface)] hover:border-slate-400"
+                }`}
+              >
+                <span className="material-symbols-outlined mb-1.5 text-xl">
+                  handshake
+                </span>
+                <span className="text-xs font-bold">Punto Medio (Finde)</span>
+              </button>
 
-              {/* Contacto alterno */}
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="delivery-alt-phone" className={labelClass}>
-                  Teléfono o WhatsApp alterno{" "}
-                  <span className="font-normal text-[var(--color-on-surface-variant)] normal-case">
-                    (opcional)
-                  </span>
-                </label>
-                <input
-                  id="delivery-alt-phone"
-                  type="tel"
-                  placeholder="Contacto de respaldo si no logramos comunicarnos"
-                  value={form.alternatePhone}
-                  onChange={(e) => set("alternatePhone", e.target.value)}
-                  className={inputClass}
-                  maxLength={20}
-                />
-              </div>
+              {/* Domicilio */}
+              <button
+                type="button"
+                onClick={() => handleMethodChange("domicilio")}
+                className={`flex flex-col items-center justify-center rounded-xl border p-3.5 text-center transition-all duration-300 ${
+                  form.deliveryMethod === "domicilio"
+                    ? "border-[var(--color-primary)] bg-[var(--color-primary-container)]/20 text-[var(--color-primary)] shadow-sm ring-2 ring-[var(--color-primary)]/20"
+                    : "border-[var(--color-outline-variant)]/40 bg-[var(--color-surface)] hover:border-slate-400"
+                }`}
+              >
+                <span className="material-symbols-outlined mb-1.5 text-xl">
+                  local_shipping
+                </span>
+                <span className="text-xs font-bold">A Domicilio</span>
+              </button>
             </div>
           </div>
+        )}
 
-          {/* C. Campos de UBICACIÓN / DIRECCIÓN (Segundo, solo para domicilio) */}
-          {form.deliveryMethod === "domicilio" && !hasALaMedidaItem && (
+        {/* ── ⚠️ Warning de precios desactualizados (Siempre visible si se ha seleccionado o asignado método) ── */}
+        {form.deliveryMethod && (
+          <div className="flex items-start gap-2.5 rounded-xl border border-amber-400/20 bg-amber-50/50 p-3 text-xs text-amber-800 dark:bg-amber-950/10 dark:text-amber-300">
+            <span
+              className="material-symbols-outlined shrink-0 text-amber-500"
+              style={{ fontSize: "16px" }}
+            >
+              warning
+            </span>
+            <p>
+              Los precios se actualizan periódicamente. En caso de alguna
+              variación, confirmaremos el precio antes de procesar tu pedido.
+            </p>
+          </div>
+        )}
+
+        {/* ── ANIMACIÓN PREMIUM: Calculando tarifa de entrega ── */}
+        {isCalculating && !hasALaMedidaItem && (
+          <div className="animate-fade-in flex flex-col items-center justify-center gap-3 rounded-2xl border border-[var(--color-primary)]/10 bg-[var(--color-primary-container)]/5 py-8">
+            <div className="relative flex h-10 w-10 items-center justify-center">
+              <div className="absolute h-full w-full animate-spin rounded-full border-4 border-slate-200 border-t-[var(--color-primary)]" />
+              <span className="material-symbols-outlined animate-pulse text-sm text-[var(--color-primary)]">
+                payments
+              </span>
+            </div>
+            <span className="animate-pulse text-xs font-semibold tracking-wide text-[var(--color-primary)]">
+              {calculationText}
+            </span>
+          </div>
+        )}
+
+        {/* ── PASO 2: Formularios dinámicos ── */}
+        {(!isCalculating || hasALaMedidaItem) && form.deliveryMethod && (
+          <div className="animate-fade-in flex flex-col gap-4">
+            {/* A. Warning ÚNICO de A LA MEDIDA */}
+            {hasALaMedidaItem && (
+              <div className="flex items-start gap-2.5 rounded-xl border border-blue-400/40 bg-blue-50/80 p-3.5 text-xs text-blue-900 dark:bg-blue-900/20 dark:text-blue-300">
+                <span
+                  className="material-symbols-outlined mt-0.5 shrink-0 text-blue-500"
+                  style={{ fontSize: "18px" }}
+                >
+                  straighten
+                </span>
+                <p>
+                  <span className="font-semibold">
+                    Toma de medidas obligatoria:
+                  </span>{" "}
+                  Has seleccionado prendas{" "}
+                  <span className="font-bold">&quot;A la medida&quot;</span>. Es
+                  obligatorio visitar nuestro taller para realizar la toma de
+                  medidas de forma correcta.
+                </p>
+              </div>
+            )}
+
+            {/* D. Datos del CLIENTE / DESTINATARIO (Primero) */}
             <div className="flex flex-col gap-3 rounded-2xl border border-[var(--color-outline-variant)]/20 bg-[var(--color-surface)] p-4">
               <p className="mb-1 flex items-center gap-1.5 text-[11px] font-bold tracking-wider text-[var(--color-primary)] uppercase">
                 <span
                   className="material-symbols-outlined"
                   style={{ fontSize: "14px" }}
                 >
-                  location_on
+                  person
                 </span>
-                Dirección de Envío
+                {form.deliveryMethod === "domicilio"
+                  ? "Datos del Destinatario"
+                  : "Datos del Cliente"}
               </p>
 
-              {/* Departamento */}
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="delivery-dept" className={labelClass}>
-                  Departamento *
-                </label>
-                <select
-                  id="delivery-dept"
-                  value={form.department}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    setForm((prev) => ({
-                      ...prev,
-                      department: value,
-                      municipality: "",
-                    }));
-                  }}
-                  className={inputClass}
-                >
-                  <option value="">Selecciona departamento</option>
-                  {DEPARTMENTS.map((d) => (
-                    <option key={d.name} value={d.name}>
-                      {d.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Municipio */}
-              {form.department && (
+              <div className="flex flex-col gap-3">
+                {/* Nombre completo */}
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="delivery-muni" className={labelClass}>
-                    Municipio *
+                  <label htmlFor="delivery-name" className={labelClass}>
+                    Nombre completo *
+                  </label>
+                  <input
+                    id="delivery-name"
+                    type="text"
+                    placeholder="Nombre y apellidos de quien recibe"
+                    value={form.recipientName}
+                    onChange={(e) => set("recipientName", e.target.value)}
+                    className={inputClass}
+                    maxLength={120}
+                  />
+                </div>
+
+                {/* Teléfono principal */}
+                <div className="flex flex-col gap-1.5">
+                  <label htmlFor="delivery-phone" className={labelClass}>
+                    Teléfono de contacto *
+                  </label>
+                  <input
+                    id="delivery-phone"
+                    type="tel"
+                    placeholder="Ej. 7123-4567"
+                    value={form.recipientPhone}
+                    onChange={(e) => set("recipientPhone", e.target.value)}
+                    className={inputClass}
+                    maxLength={20}
+                  />
+                </div>
+
+                {/* Contacto alterno */}
+                <div className="flex flex-col gap-1.5">
+                  <label htmlFor="delivery-alt-phone" className={labelClass}>
+                    Teléfono o WhatsApp alterno{" "}
+                    <span className="font-normal text-[var(--color-on-surface-variant)] normal-case">
+                      (opcional)
+                    </span>
+                  </label>
+                  <input
+                    id="delivery-alt-phone"
+                    type="tel"
+                    placeholder="Contacto de respaldo si no logramos comunicarnos"
+                    value={form.alternatePhone}
+                    onChange={(e) => set("alternatePhone", e.target.value)}
+                    className={inputClass}
+                    maxLength={20}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* C. Campos de UBICACIÓN / DIRECCIÓN (Segundo, solo para domicilio) */}
+            {form.deliveryMethod === "domicilio" && !hasALaMedidaItem && (
+              <div className="flex flex-col gap-3 rounded-2xl border border-[var(--color-outline-variant)]/20 bg-[var(--color-surface)] p-4">
+                <p className="mb-1 flex items-center gap-1.5 text-[11px] font-bold tracking-wider text-[var(--color-primary)] uppercase">
+                  <span
+                    className="material-symbols-outlined"
+                    style={{ fontSize: "14px" }}
+                  >
+                    location_on
+                  </span>
+                  Dirección de Envío
+                </p>
+
+                {/* Departamento */}
+                <div className="flex flex-col gap-1.5">
+                  <label htmlFor="delivery-dept" className={labelClass}>
+                    Departamento *
                   </label>
                   <select
-                    id="delivery-muni"
-                    value={form.municipality}
-                    onChange={(e) => set("municipality", e.target.value)}
+                    id="delivery-dept"
+                    value={form.department}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setForm((prev) => ({
+                        ...prev,
+                        department: value,
+                        municipality: "",
+                      }));
+                    }}
                     className={inputClass}
                   >
-                    <option value="">Selecciona municipio</option>
-                    {municipalities.map((m) => (
-                      <option key={m} value={m}>
-                        {m}
+                    <option value="">Selecciona departamento</option>
+                    {DEPARTMENTS.map((d) => (
+                      <option key={d.name} value={d.name}>
+                        {d.name}
                       </option>
                     ))}
                   </select>
                 </div>
-              )}
 
-              {/* Dirección de Calle, Colonia, etc. */}
-              {form.municipality && (
-                <div className="mt-1 flex flex-col gap-3 border-t border-[var(--color-outline-variant)]/10 pt-3">
-                  {/* Colonia / Residencial */}
+                {/* Municipio */}
+                {form.department && (
                   <div className="flex flex-col gap-1.5">
-                    <label htmlFor="delivery-colonia" className={labelClass}>
-                      Colonia o Residencial *
+                    <label htmlFor="delivery-muni" className={labelClass}>
+                      Municipio *
                     </label>
-                    <input
-                      id="delivery-colonia"
-                      type="text"
-                      placeholder="Ej. Col. San Francisco, Res. Los Almendros..."
-                      value={form.addressColonia}
-                      onChange={(e) => set("addressColonia", e.target.value)}
+                    <select
+                      id="delivery-muni"
+                      value={form.municipality}
+                      onChange={(e) => set("municipality", e.target.value)}
                       className={inputClass}
-                      maxLength={120}
-                    />
-                  </div>
-
-                  {/* Calle / Avenida */}
-                  <div className="flex flex-col gap-1.5">
-                    <label htmlFor="delivery-street" className={labelClass}>
-                      Calle o Avenida *
-                    </label>
-                    <input
-                      id="delivery-street"
-                      type="text"
-                      placeholder="Ej. 5a Calle Oriente, Av. Roosevelt..."
-                      value={form.addressStreet}
-                      onChange={(e) => set("addressStreet", e.target.value)}
-                      className={inputClass}
-                      maxLength={120}
-                    />
-                  </div>
-
-                  {/* Polígono (opcional) */}
-                  <div className="flex flex-col gap-1.5">
-                    <label htmlFor="delivery-polygon" className={labelClass}>
-                      Polígono{" "}
-                      <span className="font-normal text-[var(--color-on-surface-variant)] normal-case">
-                        (opcional)
-                      </span>
-                    </label>
-                    <input
-                      id="delivery-polygon"
-                      type="text"
-                      placeholder="Ej. Polígono B, Manzana 4..."
-                      value={form.addressPolygon}
-                      onChange={(e) => set("addressPolygon", e.target.value)}
-                      className={inputClass}
-                      maxLength={80}
-                    />
-                  </div>
-
-                  {/* Número de casa / apartamento */}
-                  <div className="flex flex-col gap-1.5">
-                    <label htmlFor="delivery-number" className={labelClass}>
-                      Número de casa o apartamento *
-                    </label>
-                    <input
-                      id="delivery-number"
-                      type="text"
-                      placeholder="Ej. #15, Apto. 3B, Local 5..."
-                      value={form.addressNumber}
-                      onChange={(e) => set("addressNumber", e.target.value)}
-                      className={inputClass}
-                      maxLength={60}
-                    />
-                  </div>
-
-                  {/* Punto de referencia */}
-                  <div className="flex flex-col gap-1.5">
-                    <label htmlFor="delivery-reference" className={labelClass}>
-                      Punto de referencia *
-                    </label>
-                    <textarea
-                      id="delivery-reference"
-                      placeholder={`Ej. "Casa verde de dos pisos con portón morado, jardín en el patio, es la única casa con paneles solares y está frente a la tienda La Fe"`}
-                      value={form.addressReference}
-                      onChange={(e) => set("addressReference", e.target.value)}
-                      className={`${inputClass} resize-none`}
-                      rows={3}
-                      maxLength={400}
-                    />
-                    <p className="text-right text-[10px] text-[var(--color-on-surface-variant)]">
-                      {form.addressReference.length}/400
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* E. Costo de entrega — animación local al aparecer por primera vez */}
-          {(previewInfo || isPriceLoading) && !hasALaMedidaItem && (
-            <div className="animate-fade-in overflow-hidden rounded-xl border border-[var(--color-primary)]/10 bg-[var(--color-primary-container)]/20">
-              {isPriceLoading ? (
-                /* Spinner interno — solo el bloque de precio se anima */
-                <div className="flex flex-col items-center justify-center gap-2 py-5">
-                  <div className="relative flex h-8 w-8 items-center justify-center">
-                    <div className="absolute h-full w-full animate-spin rounded-full border-4 border-slate-200 border-t-[var(--color-primary)]" />
-                    <span
-                      className="material-symbols-outlined animate-pulse text-xs text-[var(--color-primary)]"
-                      style={{ fontSize: "13px" }}
                     >
-                      payments
-                    </span>
+                      <option value="">Selecciona municipio</option>
+                      {municipalities.map((m) => (
+                        <option key={m} value={m}>
+                          {m}
+                        </option>
+                      ))}
+                    </select>
                   </div>
-                  <span className="animate-pulse text-[11px] font-semibold tracking-wide text-[var(--color-primary)]">
-                    Calculando tarifa...
-                  </span>
-                </div>
-              ) : (
-                previewInfo && (
-                  <div className="flex items-center justify-between p-3 text-xs sm:text-sm">
-                    <div>
-                      <p className="font-semibold text-[var(--color-on-surface)]">
-                        Costo de entrega:
-                      </p>
-                      <p className="mt-0.5 text-[11px] text-[var(--color-on-surface-variant)]">
-                        {previewInfo.method}
+                )}
+
+                {/* Dirección de Calle, Colonia, etc. */}
+                {form.municipality && (
+                  <div className="mt-1 flex flex-col gap-3 border-t border-[var(--color-outline-variant)]/10 pt-3">
+                    {/* Colonia / Residencial */}
+                    <div className="flex flex-col gap-1.5">
+                      <label htmlFor="delivery-colonia" className={labelClass}>
+                        Colonia o Residencial *
+                      </label>
+                      <input
+                        id="delivery-colonia"
+                        type="text"
+                        placeholder="Ej. Col. San Francisco, Res. Los Almendros..."
+                        value={form.addressColonia}
+                        onChange={(e) => set("addressColonia", e.target.value)}
+                        className={inputClass}
+                        maxLength={120}
+                      />
+                    </div>
+
+                    {/* Calle / Avenida */}
+                    <div className="flex flex-col gap-1.5">
+                      <label htmlFor="delivery-street" className={labelClass}>
+                        Calle o Avenida *
+                      </label>
+                      <input
+                        id="delivery-street"
+                        type="text"
+                        placeholder="Ej. 5a Calle Oriente, Av. Roosevelt..."
+                        value={form.addressStreet}
+                        onChange={(e) => set("addressStreet", e.target.value)}
+                        className={inputClass}
+                        maxLength={120}
+                      />
+                    </div>
+
+                    {/* Polígono (opcional) */}
+                    <div className="flex flex-col gap-1.5">
+                      <label htmlFor="delivery-polygon" className={labelClass}>
+                        Polígono{" "}
+                        <span className="font-normal text-[var(--color-on-surface-variant)] normal-case">
+                          (opcional)
+                        </span>
+                      </label>
+                      <input
+                        id="delivery-polygon"
+                        type="text"
+                        placeholder="Ej. Polígono B, Manzana 4..."
+                        value={form.addressPolygon}
+                        onChange={(e) => set("addressPolygon", e.target.value)}
+                        className={inputClass}
+                        maxLength={80}
+                      />
+                    </div>
+
+                    {/* Número de casa / apartamento */}
+                    <div className="flex flex-col gap-1.5">
+                      <label htmlFor="delivery-number" className={labelClass}>
+                        Número de casa o apartamento *
+                      </label>
+                      <input
+                        id="delivery-number"
+                        type="text"
+                        placeholder="Ej. #15, Apto. 3B, Local 5..."
+                        value={form.addressNumber}
+                        onChange={(e) => set("addressNumber", e.target.value)}
+                        className={inputClass}
+                        maxLength={60}
+                      />
+                    </div>
+
+                    {/* Punto de referencia */}
+                    <div className="flex flex-col gap-1.5">
+                      <label
+                        htmlFor="delivery-reference"
+                        className={labelClass}
+                      >
+                        Punto de referencia *
+                      </label>
+                      <textarea
+                        id="delivery-reference"
+                        placeholder={`Ej. "Casa verde de dos pisos con portón morado, jardín en el patio, es la única casa con paneles solares y está frente a la tienda La Fe"`}
+                        value={form.addressReference}
+                        onChange={(e) =>
+                          set("addressReference", e.target.value)
+                        }
+                        className={`${inputClass} resize-none`}
+                        rows={3}
+                        maxLength={400}
+                      />
+                      <p className="text-right text-[10px] text-[var(--color-on-surface-variant)]">
+                        {form.addressReference.length}/400
                       </p>
                     </div>
-                    <span className="text-base font-black text-[var(--color-primary)]">
-                      {previewInfo.label}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* E. Costo de entrega — animación local al aparecer por primera vez */}
+            {(previewInfo || isPriceLoading) && !hasALaMedidaItem && (
+              <div className="animate-fade-in overflow-hidden rounded-xl border border-[var(--color-primary)]/10 bg-[var(--color-primary-container)]/20">
+                {isPriceLoading ? (
+                  /* Spinner interno — solo el bloque de precio se anima */
+                  <div className="flex flex-col items-center justify-center gap-2 py-5">
+                    <div className="relative flex h-8 w-8 items-center justify-center">
+                      <div className="absolute h-full w-full animate-spin rounded-full border-4 border-slate-200 border-t-[var(--color-primary)]" />
+                      <span
+                        className="material-symbols-outlined animate-pulse text-xs text-[var(--color-primary)]"
+                        style={{ fontSize: "13px" }}
+                      >
+                        payments
+                      </span>
+                    </div>
+                    <span className="animate-pulse text-[11px] font-semibold tracking-wide text-[var(--color-primary)]">
+                      Calculando tarifa...
                     </span>
                   </div>
-                )
-              )}
-            </div>
-          )}
+                ) : (
+                  previewInfo && (
+                    <div className="flex items-center justify-between p-3 text-xs sm:text-sm">
+                      <div>
+                        <p className="font-semibold text-[var(--color-on-surface)]">
+                          Costo de entrega:
+                        </p>
+                        <p className="mt-0.5 text-[11px] text-[var(--color-on-surface-variant)]">
+                          {previewInfo.method}
+                        </p>
+                      </div>
+                      <span className="text-base font-black text-[var(--color-primary)]">
+                        {previewInfo.label}
+                      </span>
+                    </div>
+                  )
+                )}
+              </div>
+            )}
 
-          {/* F. Términos y condiciones */}
-          <label
-            htmlFor="delivery-terms"
-            className="flex cursor-pointer items-start gap-3 rounded-xl border border-[var(--color-outline-variant)]/30 bg-[var(--color-surface-container-low)] p-4"
-          >
-            <div className="relative mt-0.5 shrink-0">
-              <input
-                id="delivery-terms"
-                type="checkbox"
-                checked={form.termsAccepted}
-                onChange={(e) => set("termsAccepted", e.target.checked)}
-                className="peer h-4 w-4 cursor-pointer appearance-none rounded border border-[var(--color-outline-variant)] bg-[var(--color-surface)] transition-all checked:border-[var(--color-primary)] checked:bg-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary-container)] focus:outline-none"
-              />
-              <span className="pointer-events-none absolute top-0 left-0 hidden h-4 w-4 items-center justify-center peer-checked:flex">
-                <span
-                  className="material-symbols-outlined text-white"
-                  style={{
-                    fontSize: "11px",
-                    fontVariationSettings: "'FILL' 1",
-                  }}
-                >
-                  check
-                </span>
-              </span>
-            </div>
-            <p className="text-xs leading-relaxed text-[var(--color-on-surface-variant)]">
-              He leído y acepto los{" "}
-              <Link
-                href="/legal/envios"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="font-semibold text-[var(--color-primary)] underline underline-offset-2 hover:opacity-80"
-              >
-                términos de envíos
-              </Link>{" "}
-              y los{" "}
-              <Link
-                href="/legal/devoluciones"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="font-semibold text-[var(--color-primary)] underline underline-offset-2 hover:opacity-80"
-              >
-                términos de devoluciones
-              </Link>{" "}
-              de Confecciones Liss.
-            </p>
-          </label>
-
-          {/* F. Botón de Confirmación */}
-          <div className="mt-1">
-            <button
-              onClick={handleConfirm}
-              className="w-full rounded-xl bg-[var(--color-primary)] py-3.5 text-sm font-bold text-[var(--color-on-primary)] transition-all duration-200 hover:bg-[var(--color-on-primary-container)] active:scale-[0.98]"
+            {/* F. Términos y condiciones */}
+            <label
+              htmlFor="delivery-terms"
+              className="flex cursor-pointer items-start gap-3 rounded-xl border border-[var(--color-outline-variant)]/30 bg-[var(--color-surface-container-low)] p-4"
             >
-              {confirmLabel}
-            </button>
+              <div className="relative mt-0.5 shrink-0">
+                <input
+                  id="delivery-terms"
+                  type="checkbox"
+                  checked={form.termsAccepted}
+                  onChange={(e) => set("termsAccepted", e.target.checked)}
+                  className="peer h-4 w-4 cursor-pointer appearance-none rounded border border-[var(--color-outline-variant)] bg-[var(--color-surface)] transition-all checked:border-[var(--color-primary)] checked:bg-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary-container)] focus:outline-none"
+                />
+                <span className="pointer-events-none absolute top-0 left-0 hidden h-4 w-4 items-center justify-center peer-checked:flex">
+                  <span
+                    className="material-symbols-outlined text-white"
+                    style={{
+                      fontSize: "11px",
+                      fontVariationSettings: "'FILL' 1",
+                    }}
+                  >
+                    check
+                  </span>
+                </span>
+              </div>
+              <p className="text-xs leading-relaxed text-[var(--color-on-surface-variant)]">
+                He leído y acepto los{" "}
+                <Link
+                  href="/legal/envios"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="font-semibold text-[var(--color-primary)] underline underline-offset-2 hover:opacity-80"
+                >
+                  términos de envíos
+                </Link>{" "}
+                y los{" "}
+                <Link
+                  href="/legal/devoluciones"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="font-semibold text-[var(--color-primary)] underline underline-offset-2 hover:opacity-80"
+                >
+                  términos de devoluciones
+                </Link>{" "}
+                de Confecciones Liss.
+              </p>
+            </label>
+
+            {/* F. Botón de Confirmación */}
+            <div className="mt-1">
+              <button
+                type="submit"
+                className="w-full rounded-xl bg-[var(--color-primary)] py-3.5 text-sm font-bold text-[var(--color-on-primary)] transition-all duration-200 hover:bg-[var(--color-on-primary-container)] active:scale-[0.98]"
+              >
+                {confirmLabel}
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </form>
     </div>
   );
 }

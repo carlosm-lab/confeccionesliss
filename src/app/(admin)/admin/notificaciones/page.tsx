@@ -202,7 +202,13 @@ export default function NotificacionesAdminPage() {
           <h2 className="mb-5 text-base font-bold text-slate-900">
             Nueva notificación
           </h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form
+            onSubmit={handleSubmit}
+            data-webmcp-tool="create_notification"
+            data-webmcp-name="Creación de Notificaciones"
+            data-webmcp-description="Formulario administrativo para crear y difundir notificaciones del sistema"
+            className="space-y-4"
+          >
             <div className="grid grid-cols-2 gap-4">
               {/* Tipo */}
               <div>

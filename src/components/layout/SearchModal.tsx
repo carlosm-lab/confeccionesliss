@@ -242,7 +242,13 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
         }}
       >
         {/* ── Search Input Header ── */}
-        <div className="flex items-center gap-3 border-b border-gray-100 px-5 py-4">
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          data-webmcp-tool="search_catalog"
+          data-webmcp-name="Búsqueda de Catálogo"
+          data-webmcp-description="Permite buscar productos, scrubs, uniformes y categorías"
+          className="flex items-center gap-3 border-b border-gray-100 px-5 py-4"
+        >
           <span
             className="material-symbols-outlined text-primary shrink-0 text-[22px]"
             aria-hidden="true"
@@ -252,11 +258,16 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           <div className="relative min-w-0 flex-1">
             <input
               ref={inputRef}
+              id="search-modal-query"
+              name="query"
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
+              data-webmcp-field="query"
+              data-webmcp-type="string"
+              data-webmcp-required={true}
               className="w-full text-base text-gray-800 outline-none"
               aria-label="Buscar productos, categorías o servicios"
             />
@@ -279,7 +290,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
               close
             </span>
           </button>
-        </div>
+        </form>
 
         {/* ── Body ── */}
         <div className="max-h-[60vh] overflow-y-auto px-5 py-4">
