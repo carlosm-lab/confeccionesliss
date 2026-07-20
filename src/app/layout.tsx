@@ -232,11 +232,11 @@ export default function RootLayout({
             }).replace(/</g, "\\u003c"),
           }}
         />
+        <WebMCPRegistration />
       </head>
       <body className="flex min-h-screen flex-col antialiased">
         {/* Material Symbols: carga async post-hidratación, no bloquea LCP/FCP */}
         <MaterialSymbolsLoader />
-        <WebMCPRegistration />
         <Providers>{children}</Providers>
         <AnalyticsScripts
           gaId={env.NEXT_PUBLIC_GA_MEASUREMENT_ID}

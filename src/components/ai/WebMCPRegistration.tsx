@@ -187,7 +187,6 @@ export function WebMCPRegistration() {
   return (
     <>
       <script
-        id="webmcp-json-schema"
         type="application/webmcp+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({

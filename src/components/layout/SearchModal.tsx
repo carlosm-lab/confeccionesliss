@@ -279,7 +279,6 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
             )}
           </div>
           <button
-            type="button"
             onClick={onClose}
             className="text-primary/60 hover:bg-primary/5 flex size-8 shrink-0 items-center justify-center rounded-full transition-colors"
             aria-label="Cerrar buscador"
