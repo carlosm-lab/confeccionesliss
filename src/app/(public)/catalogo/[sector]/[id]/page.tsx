@@ -325,6 +325,8 @@ export default async function ProductDetailPage({
                   : "https://schema.org/OutOfStock",
               itemCondition: "https://schema.org/NewCondition",
               url: PAGE_URL,
+              // Fecha de inicio de la oferta — requerido por Google Merchant Listing
+              validFrom: `${new Date().getFullYear()}-01-01`,
               // Precio válido hasta fin del año corriente
               priceValidUntil: `${new Date().getFullYear()}-12-31`,
               seller: {

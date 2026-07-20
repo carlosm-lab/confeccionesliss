@@ -40,6 +40,33 @@ const REAL_GOOGLE_REVIEWS_FALLBACK: GoogleReview[] = [
     created_at: "2026-06-20T15:15:00.000Z",
   },
   {
+    id: "jcg1a2b3-c4d5-6e7f-8a9b-0c1d2e3f4a5b",
+    author_name: "Juan Carlos Garcia",
+    comment:
+      "Pedí uniformes para un grupo de compañeras de enfermería y todo salió perfecto todos los scrubs quedaron bien hechos, en las medidas exactas de cada una, y los entregaron en el tiempo acordado ña atención por WhatsApp fue rápida y clara durante todo el proceso. ademas la señora me recuerda a mi abuelita :)",
+    rating: 5,
+    author_avatar: null,
+    created_at: "2025-06-01T12:00:00.000Z",
+  },
+  {
+    id: "jad2b3c4-d5e6-7f8a-9b0c-1d2e3f4a5b6c",
+    author_name: "José Antonio dias",
+    comment:
+      "Excelente taller de uniformes médicos y scrubs en San Miguel, la atención rápida por WhatsApp, precios justos y lo más importante es que hacen los uniformes a la medida de cada persona. Yo tengo una talla difícil de encontrar y aquí no fue ningún problema ademas ni me cobraron demas por talla extra.",
+    rating: 5,
+    author_avatar: null,
+    created_at: "2025-06-01T12:00:00.000Z",
+  },
+  {
+    id: "kb3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e",
+    author_name: "Kairo Boutique",
+    comment:
+      "Mandamos a hacer los uniformes de la tienda en Confecciones Liss y la verdad es que quedamos muy satisfechos, precios comodos, nos hicieron descuento por mayoreo, en fin, encantados.",
+    rating: 5,
+    author_avatar: null,
+    created_at: "2025-06-01T12:00:00.000Z",
+  },
+  {
     id: "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
     author_name: "Carlitos",
     comment: null,

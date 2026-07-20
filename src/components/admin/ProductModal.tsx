@@ -22,6 +22,17 @@ import { isValidOffer } from "@/lib/productUtils";
 import { CATALOGS, CATALOGS_UNIVERSITY } from "@/config/catalogs";
 import { CustomSelect } from "@/components/ui/CustomSelect";
 
+/** Precios predeterminados por talla para agilizar la carga de productos */
+const DEFAULT_PRICE_BY_SIZE: Record<string, string> = {
+  XS: "35",
+  S: "35",
+  M: "35",
+  L: "38",
+  XL: "40",
+  XXL: "45",
+  "3XL": "50",
+};
+
 interface ProductModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -724,264 +735,6 @@ export default function ProductModal({
                 </div>
               </div>
 
-              {/* Precio por talla + oferta opcional por talla */}
-              {formData.tallas.length > 0 && (
-                <div className="space-y-4 rounded-xl border border-indigo-200 bg-indigo-50 p-4 md:col-span-2 dark:border-indigo-500/20 dark:bg-indigo-500/5">
-                  <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400">
-                    <span
-                      className="material-symbols-outlined"
-                      style={{ fontSize: "20px" }}
-                    >
-                      sell
-                    </span>
-                    <h4 className="text-sm font-bold">Precio por Talla</h4>
-                    <span className="ml-auto text-[10px] font-normal text-slate-400">
-                      Obligatorio (excepto A la medida)
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                    Asigna un precio a cada talla. En &ldquo;Oferta&rdquo;
-                    puedes ingresar un precio menor opcional — solo las tallas
-                    con oferta mostrarán precio tachado.{" "}
-                    <strong>&ldquo;A la medida&rdquo;</strong> siempre se cotiza
-                    por WhatsApp.
-                  </p>
-
-                  {/* Cabecera de columnas */}
-                  <div className="grid grid-cols-2 gap-x-3 gap-y-0 sm:grid-cols-3">
-                    {formData.tallas
-                      .filter((t) => t !== "A la medida")
-                      .map((talla) => (
-                        <div key={talla} className="mb-3">
-                          <p className="mb-1 text-xs font-bold text-indigo-700 dark:text-indigo-400">
-                            Talla {talla}
-                          </p>
-                          {/* Precio base */}
-                          <label
-                            htmlFor={`price-size-${talla}`}
-                            className="mb-0.5 block text-[10px] font-medium text-slate-500"
-                          >
-                            Precio base ($)
-                          </label>
-                          <input
-                            id={`price-size-${talla}`}
-                            type="number"
-                            step="0.01"
-                            min="0"
-                            value={formData.price_by_size[talla] ?? ""}
-                            onChange={(e) =>
-                              setFormData((prev) => ({
-                                ...prev,
-                                price_by_size: {
-                                  ...prev.price_by_size,
-                                  [talla]: e.target.value,
-                                },
-                              }))
-                            }
-                            placeholder="0.00"
-                            onWheel={(e) =>
-                              (e.target as HTMLInputElement).blur()
-                            }
-                            className="focus:ring-primary/20 focus:border-primary w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 transition-all outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
-                          />
-                          {/* Oferta opcional */}
-                          <label
-                            htmlFor={`offer-size-${talla}`}
-                            className="mt-1 mb-0.5 flex items-center gap-1 text-[10px] font-medium text-amber-600 dark:text-amber-400"
-                          >
-                            <span
-                              className="material-symbols-outlined"
-                              style={{ fontSize: "11px" }}
-                            >
-                              local_offer
-                            </span>
-                            Precio oferta ($)
-                            <span className="font-normal text-slate-400">
-                              — opcional
-                            </span>
-                          </label>
-                          <input
-                            id={`offer-size-${talla}`}
-                            type="number"
-                            step="0.01"
-                            min="0"
-                            value={formData.offer_by_size[talla] ?? ""}
-                            onChange={(e) => {
-                              const val = e.target.value;
-                              setFormData((prev) => {
-                                const newObs = { ...prev.offer_by_size };
-                                if (val === "") {
-                                  delete newObs[talla];
-                                } else {
-                                  newObs[talla] = val;
-                                }
-                                return { ...prev, offer_by_size: newObs };
-                              });
-                            }}
-                            placeholder=""
-                            onWheel={(e) =>
-                              (e.target as HTMLInputElement).blur()
-                            }
-                            className="w-full rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-slate-900 transition-all outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 dark:border-amber-500/20 dark:bg-amber-500/5 dark:text-white"
-                          />
-                        </div>
-                      ))}
-                  </div>
-
-                  {formData.tallas.includes("A la medida") && (
-                    <p className="flex items-center gap-1.5 text-[11px] text-indigo-600 dark:text-indigo-400">
-                      <span
-                        className="material-symbols-outlined"
-                        style={{ fontSize: "14px" }}
-                      >
-                        info
-                      </span>
-                      &ldquo;A la medida&rdquo; no tiene precio fijo — se cotiza
-                      exclusivamente por WhatsApp.
-                    </p>
-                  )}
-                </div>
-              )}
-
-              {/* Configuración de Oferta — aparece cuando hay al menos una talla con oferta */}
-              {Object.keys(formData.offer_by_size).length > 0 && (
-                <div className="space-y-4 rounded-xl border border-amber-200 bg-amber-50 p-4 md:col-span-2 dark:border-amber-500/20 dark:bg-amber-500/5">
-                  <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400">
-                    <span
-                      className="material-symbols-outlined"
-                      style={{ fontSize: "20px" }}
-                    >
-                      local_offer
-                    </span>
-                    <h4 className="text-sm font-bold">
-                      Configuración de Oferta
-                    </h4>
-                  </div>
-
-                  {/* Términos de la oferta — texto libre */}
-                  <div className="space-y-2">
-                    <p className="text-xs font-medium text-slate-600 dark:text-slate-400">
-                      Describe los términos de la oferta
-                      <span className="ml-1 font-normal text-slate-400">
-                        (condiciones, restricciones, etc.)
-                      </span>
-                    </p>
-                    <textarea
-                      name="offer_terms"
-                      id="offer-terms"
-                      value={formData.offer_terms}
-                      onChange={handleChange}
-                      rows={3}
-                      maxLength={500}
-                      placeholder="Ej: Solo válido para clientes nuevos. Presenta este descuento al momento del pedido. No acumulable con otras promociones."
-                      className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs text-slate-900 placeholder-slate-400 transition-all outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/40 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder-white/30"
-                    />
-                    <p className="text-[10px] text-slate-400">
-                      {(formData.offer_terms || "").length}/500 caracteres
-                    </p>
-                  </div>
-
-                  {/* Toggle oferta indefinida */}
-                  <label className="flex cursor-pointer items-center gap-3">
-                    <input
-                      type="checkbox"
-                      checked={formData.offer_indefinida}
-                      onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          offer_indefinida: e.target.checked,
-                        }))
-                      }
-                      className="h-4 w-4 rounded border-slate-300 accent-amber-600"
-                    />
-                    <span className="text-xs font-medium text-slate-700 dark:text-slate-300">
-                      Oferta indefinida (sin fecha de vencimiento)
-                    </span>
-                  </label>
-
-                  {/* Duración — solo si no es indefinida */}
-                  {!formData.offer_indefinida && (
-                    <div>
-                      <span className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400">
-                        Duración de la oferta (desde el inicio)
-                      </span>
-                      <div className="grid grid-cols-3 gap-2">
-                        {[
-                          {
-                            name: "offer_days",
-                            label: "Días",
-                            max: undefined,
-                          },
-                          { name: "offer_hours", label: "Horas", max: 23 },
-                          {
-                            name: "offer_minutes",
-                            label: "Minutos",
-                            max: 59,
-                          },
-                        ].map((field) => (
-                          <div key={field.name}>
-                            <input
-                              type="number"
-                              name={field.name}
-                              value={
-                                (formData as unknown as Record<string, string>)[
-                                  field.name
-                                ]
-                              }
-                              onChange={handleChange}
-                              min="0"
-                              max={field.max}
-                              placeholder="0"
-                              onWheel={(e) =>
-                                (e.target as HTMLInputElement).blur()
-                              }
-                              aria-label={`${field.label} de duración de oferta`}
-                              className="focus:ring-primary/20 w-full rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
-                            />
-                            <span className="mt-0.5 block text-center text-[10px] text-slate-500 dark:text-slate-400">
-                              {field.label}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                      <p className="mt-1 text-[10px] text-slate-500 dark:text-slate-400">
-                        Si dejas todo en 0, la oferta no expirará
-                        automáticamente.
-                      </p>
-                    </div>
-                  )}
-
-                  <div>
-                    <label
-                      htmlFor="product-offer-starts-at"
-                      className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
-                    >
-                      <span className="flex items-center gap-1">
-                        <span
-                          className="material-symbols-outlined"
-                          style={{ fontSize: "14px" }}
-                        >
-                          schedule
-                        </span>
-                        Programar inicio (Opcional)
-                      </span>
-                    </label>
-                    <input
-                      id="product-offer-starts-at"
-                      type="datetime-local"
-                      name="offer_starts_at"
-                      value={formData.offer_starts_at}
-                      onChange={handleChange}
-                      className="focus:ring-primary/20 w-full rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
-                    />
-                    <p className="mt-1 text-[10px] text-slate-500 dark:text-slate-400">
-                      Si dejas vacío, la oferta inicia inmediatamente al
-                      guardar.
-                    </p>
-                  </div>
-                </div>
-              )}
-
               {/* Catálogo — filtra las categorías disponibles */}
               <div>
                 <label
@@ -1224,6 +977,15 @@ export default function ProductModal({
                               if (isSelected) {
                                 delete newPriceBySize[talla];
                                 delete newOfferBySize[talla];
+                              } else if (
+                                talla !== "A la medida" &&
+                                talla !== "Única" &&
+                                !newPriceBySize[talla] &&
+                                DEFAULT_PRICE_BY_SIZE[talla]
+                              ) {
+                                // Aplicar precio predeterminado si no hay uno ya asignado
+                                newPriceBySize[talla] =
+                                  DEFAULT_PRICE_BY_SIZE[talla];
                               }
                               return {
                                 ...prev,
@@ -1598,6 +1360,264 @@ export default function ProductModal({
                   </div>
                 </div>
               </div>
+
+              {/* Precio por talla + oferta opcional por talla */}
+              {formData.tallas.length > 0 && (
+                <div className="space-y-4 rounded-xl border border-indigo-200 bg-indigo-50 p-4 md:col-span-2 dark:border-indigo-500/20 dark:bg-indigo-500/5">
+                  <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400">
+                    <span
+                      className="material-symbols-outlined"
+                      style={{ fontSize: "20px" }}
+                    >
+                      sell
+                    </span>
+                    <h4 className="text-sm font-bold">Precio por Talla</h4>
+                    <span className="ml-auto text-[10px] font-normal text-slate-400">
+                      Obligatorio (excepto A la medida)
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    Asigna un precio a cada talla. En &ldquo;Oferta&rdquo;
+                    puedes ingresar un precio menor opcional — solo las tallas
+                    con oferta mostrarán precio tachado.{" "}
+                    <strong>&ldquo;A la medida&rdquo;</strong> siempre se cotiza
+                    por WhatsApp.
+                  </p>
+
+                  {/* Cabecera de columnas */}
+                  <div className="grid grid-cols-2 gap-x-3 gap-y-0 sm:grid-cols-3">
+                    {formData.tallas
+                      .filter((t) => t !== "A la medida")
+                      .map((talla) => (
+                        <div key={talla} className="mb-3">
+                          <p className="mb-1 text-xs font-bold text-indigo-700 dark:text-indigo-400">
+                            Talla {talla}
+                          </p>
+                          {/* Precio base */}
+                          <label
+                            htmlFor={`price-size-${talla}`}
+                            className="mb-0.5 block text-[10px] font-medium text-slate-500"
+                          >
+                            Precio base ($)
+                          </label>
+                          <input
+                            id={`price-size-${talla}`}
+                            type="number"
+                            step="0.01"
+                            min="0"
+                            value={formData.price_by_size[talla] ?? ""}
+                            onChange={(e) =>
+                              setFormData((prev) => ({
+                                ...prev,
+                                price_by_size: {
+                                  ...prev.price_by_size,
+                                  [talla]: e.target.value,
+                                },
+                              }))
+                            }
+                            placeholder="0.00"
+                            onWheel={(e) =>
+                              (e.target as HTMLInputElement).blur()
+                            }
+                            className="focus:ring-primary/20 focus:border-primary w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 transition-all outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                          />
+                          {/* Oferta opcional */}
+                          <label
+                            htmlFor={`offer-size-${talla}`}
+                            className="mt-1 mb-0.5 flex items-center gap-1 text-[10px] font-medium text-amber-600 dark:text-amber-400"
+                          >
+                            <span
+                              className="material-symbols-outlined"
+                              style={{ fontSize: "11px" }}
+                            >
+                              local_offer
+                            </span>
+                            Precio oferta ($)
+                            <span className="font-normal text-slate-400">
+                              — opcional
+                            </span>
+                          </label>
+                          <input
+                            id={`offer-size-${talla}`}
+                            type="number"
+                            step="0.01"
+                            min="0"
+                            value={formData.offer_by_size[talla] ?? ""}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setFormData((prev) => {
+                                const newObs = { ...prev.offer_by_size };
+                                if (val === "") {
+                                  delete newObs[talla];
+                                } else {
+                                  newObs[talla] = val;
+                                }
+                                return { ...prev, offer_by_size: newObs };
+                              });
+                            }}
+                            placeholder=""
+                            onWheel={(e) =>
+                              (e.target as HTMLInputElement).blur()
+                            }
+                            className="w-full rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-slate-900 transition-all outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 dark:border-amber-500/20 dark:bg-amber-500/5 dark:text-white"
+                          />
+                        </div>
+                      ))}
+                  </div>
+
+                  {formData.tallas.includes("A la medida") && (
+                    <p className="flex items-center gap-1.5 text-[11px] text-indigo-600 dark:text-indigo-400">
+                      <span
+                        className="material-symbols-outlined"
+                        style={{ fontSize: "14px" }}
+                      >
+                        info
+                      </span>
+                      &ldquo;A la medida&rdquo; no tiene precio fijo — se cotiza
+                      exclusivamente por WhatsApp.
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {/* Configuración de Oferta — aparece cuando hay al menos una talla con oferta */}
+              {Object.keys(formData.offer_by_size).length > 0 && (
+                <div className="space-y-4 rounded-xl border border-amber-200 bg-amber-50 p-4 md:col-span-2 dark:border-amber-500/20 dark:bg-amber-500/5">
+                  <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400">
+                    <span
+                      className="material-symbols-outlined"
+                      style={{ fontSize: "20px" }}
+                    >
+                      local_offer
+                    </span>
+                    <h4 className="text-sm font-bold">
+                      Configuración de Oferta
+                    </h4>
+                  </div>
+
+                  {/* Términos de la oferta — texto libre */}
+                  <div className="space-y-2">
+                    <p className="text-xs font-medium text-slate-600 dark:text-slate-400">
+                      Describe los términos de la oferta
+                      <span className="ml-1 font-normal text-slate-400">
+                        (condiciones, restricciones, etc.)
+                      </span>
+                    </p>
+                    <textarea
+                      name="offer_terms"
+                      id="offer-terms"
+                      value={formData.offer_terms}
+                      onChange={handleChange}
+                      rows={3}
+                      maxLength={500}
+                      placeholder="Ej: Solo válido para clientes nuevos. Presenta este descuento al momento del pedido. No acumulable con otras promociones."
+                      className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs text-slate-900 placeholder-slate-400 transition-all outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/40 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder-white/30"
+                    />
+                    <p className="text-[10px] text-slate-400">
+                      {(formData.offer_terms || "").length}/500 caracteres
+                    </p>
+                  </div>
+
+                  {/* Toggle oferta indefinida */}
+                  <label className="flex cursor-pointer items-center gap-3">
+                    <input
+                      type="checkbox"
+                      checked={formData.offer_indefinida}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          offer_indefinida: e.target.checked,
+                        }))
+                      }
+                      className="h-4 w-4 rounded border-slate-300 accent-amber-600"
+                    />
+                    <span className="text-xs font-medium text-slate-700 dark:text-slate-300">
+                      Oferta indefinida (sin fecha de vencimiento)
+                    </span>
+                  </label>
+
+                  {/* Duración — solo si no es indefinida */}
+                  {!formData.offer_indefinida && (
+                    <div>
+                      <span className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400">
+                        Duración de la oferta (desde el inicio)
+                      </span>
+                      <div className="grid grid-cols-3 gap-2">
+                        {[
+                          {
+                            name: "offer_days",
+                            label: "Días",
+                            max: undefined,
+                          },
+                          { name: "offer_hours", label: "Horas", max: 23 },
+                          {
+                            name: "offer_minutes",
+                            label: "Minutos",
+                            max: 59,
+                          },
+                        ].map((field) => (
+                          <div key={field.name}>
+                            <input
+                              type="number"
+                              name={field.name}
+                              value={
+                                (formData as unknown as Record<string, string>)[
+                                  field.name
+                                ]
+                              }
+                              onChange={handleChange}
+                              min="0"
+                              max={field.max}
+                              placeholder="0"
+                              onWheel={(e) =>
+                                (e.target as HTMLInputElement).blur()
+                              }
+                              aria-label={`${field.label} de duración de oferta`}
+                              className="focus:ring-primary/20 w-full rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                            />
+                            <span className="mt-0.5 block text-center text-[10px] text-slate-500 dark:text-slate-400">
+                              {field.label}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                      <p className="mt-1 text-[10px] text-slate-500 dark:text-slate-400">
+                        Si dejas todo en 0, la oferta no expirará
+                        automáticamente.
+                      </p>
+                    </div>
+                  )}
+
+                  <div>
+                    <label
+                      htmlFor="product-offer-starts-at"
+                      className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
+                    >
+                      <span className="flex items-center gap-1">
+                        <span
+                          className="material-symbols-outlined"
+                          style={{ fontSize: "14px" }}
+                        >
+                          schedule
+                        </span>
+                        Programar inicio (Opcional)
+                      </span>
+                    </label>
+                    <input
+                      id="product-offer-starts-at"
+                      type="datetime-local"
+                      name="offer_starts_at"
+                      value={formData.offer_starts_at}
+                      onChange={handleChange}
+                      className="focus:ring-primary/20 w-full rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-900 outline-none focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                    />
+                    <p className="mt-1 text-[10px] text-slate-500 dark:text-slate-400">
+                      Si dejas vacío, la oferta inicia inmediatamente al
+                      guardar.
+                    </p>
+                  </div>
+                </div>
+              )}
 
               {/* Tags */}
               <div className="md:col-span-2">
