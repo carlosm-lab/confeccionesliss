@@ -532,7 +532,13 @@ function ReviewForm({
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form
+        onSubmit={handleSubmit}
+        data-webmcp-tool="submit_review"
+        data-webmcp-name="Formulario de Reseñas"
+        data-webmcp-description="Permite a los usuarios enviar calificaciones y comentarios de productos"
+        className="space-y-4"
+      >
         <div>
           <p className="mb-2 text-xs font-semibold tracking-wider text-slate-400 uppercase">
             Calificación <span className="text-red-400">*</span>

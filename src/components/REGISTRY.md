@@ -28,6 +28,15 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 - **Descripción:** Pie de página principal que incluye información de contacto, logo optimizado, y enlaces a recursos legales.
 - **Props:** No recibe props.
 
+## AI & Protocol Components
+
+### WebMCPRegistration
+
+- **Ruta:** `src/components/ai/WebMCPRegistration.tsx`
+- **Descripción:** Componente de registro declarativo y runtime para herramientas y esquemas de WebMCP (Web Model Context Protocol). Permite a agentes de IA (Chrome AI, PageSpeed Insights, navegadores de LLM) descubrir e inspeccionar esquemas JSON Schema válidos.
+- **Props:** No recibe props.
+- **Ejemplo:** `<WebMCPRegistration />`
+
 ## UI Components
 
 ### Breadcrumb

@@ -23,6 +23,7 @@ import { siteConfig } from "@/config/site";
 import { env } from "@/env";
 import { AnalyticsScripts } from "@/components/analytics/AnalyticsScripts";
 import { MaterialSymbolsLoader } from "@/components/layout/MaterialSymbolsLoader";
+import { WebMCPRegistration } from "@/components/ai/WebMCPRegistration";
 
 export const metadata = {
   title: {
@@ -235,6 +236,7 @@ export default function RootLayout({
       <body className="flex min-h-screen flex-col antialiased">
         {/* Material Symbols: carga async post-hidratación, no bloquea LCP/FCP */}
         <MaterialSymbolsLoader />
+        <WebMCPRegistration />
         <Providers>{children}</Providers>
         <AnalyticsScripts
           gaId={env.NEXT_PUBLIC_GA_MEASUREMENT_ID}

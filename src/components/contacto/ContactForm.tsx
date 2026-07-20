@@ -131,6 +131,9 @@ export function ContactForm() {
       ref={formRef}
       onSubmit={handleSubmit}
       noValidate
+      data-webmcp-tool="contact_support"
+      data-webmcp-name="Formulario de Contacto"
+      data-webmcp-description="Formulario para enviar consultas directas sobre uniformes y servicios de confección"
       className="space-y-4"
     >
       {/* Text fields */}
