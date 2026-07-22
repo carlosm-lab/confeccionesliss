@@ -16,8 +16,7 @@ import { GoogleReviews } from "@/components/seo/GoogleReviews";
 
 import type { Metadata } from "next";
 
-// Metadata explícita para la homepage — usa { absolute } para evitar que el template
-// del layout raíz duplique "| Confecciones Liss" al final del título.
+// Metadata explícita para la homepage
 export const metadata: Metadata = {
   title: {
     absolute: "Scrubs y Uniformes Médicos en San Miguel, El Salvador | Liss",
@@ -47,14 +46,12 @@ export const metadata: Metadata = {
 export const revalidate = 3600;
 
 export default async function HomePage() {
-  // Load recent products and reviews in parallel to minimize TTFB on cold starts
   const [rawRecentProducts, rawReviews] = await Promise.all([
     getRecentProducts(10),
     getGoogleReviews(),
   ]);
 
   const recentProducts = rawRecentProducts.map((p) => {
-    // 1. Resolve LCP image in server
     let rawImg = null;
     if (p.images && Array.isArray(p.images) && p.images.length > 0) {
       rawImg = p.images[0];
@@ -62,14 +59,12 @@ export default async function HomePage() {
       rawImg = p.image_path ?? null;
     }
 
-    // 2. Compute sector in server
     const sector =
       p.sector ??
       p.categories?.catalog ??
       p.category?.split("-")[0] ??
       "scrubs";
 
-    // 3. Resolve display and list prices in server
     const priceBySize = p.price_by_size;
     const offerBySize = p.offer_by_size;
     const minBasePrice =
@@ -100,7 +95,6 @@ export default async function HomePage() {
     const finalOldPrice =
       rawOldPrice !== null && rawOldPrice > finalPrice ? rawOldPrice : null;
 
-    // 4. Determine sale status in server
     let onSale = false;
     const hasOfferBySize = offerBySize && Object.keys(offerBySize).length > 0;
     const hasGlobalOldPrice = p.old_price && p.old_price > p.price;
@@ -129,7 +123,6 @@ export default async function HomePage() {
     };
   }) as unknown as typeof rawRecentProducts;
 
-  // Process reviews, slicing to top 8 with real comments to reduce HTML size by ~30KB
   const reviews = [...rawReviews]
     .sort((a, b) => {
       const hasCommentA = a.comment ? 1 : 0;
@@ -163,12 +156,12 @@ export default async function HomePage() {
         }}
       />
 
-      {/* ═══ HERO ═══ */}
+      {/* ═══ HERO (Estructura de 3 divs idéntica a 3d12cbd con min-h flexible) ═══ */}
       <section className="bg-surface-container-low relative flex min-h-[calc(100dvh-56px)] flex-col overflow-x-hidden px-5 pt-4 pb-10 md:min-h-0 md:px-8 md:pt-6 md:pb-14 lg:min-h-[calc(100dvh-56px)] lg:pb-4">
         <div className="mx-auto grid h-full w-full max-w-screen-2xl grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2 lg:grid-cols-12 lg:items-center lg:gap-x-16 lg:gap-y-0">
           {/* TÍTULO HERO (Ocupa ancho completo en móvil/tablet, 7 cols en desktop) */}
           <div className="z-10 order-1 w-full md:col-span-2 lg:order-none lg:col-span-7 lg:row-span-1">
-            <h1 className="animate-fade-in-up text-primary mb-4 w-full text-center font-serif text-2xl leading-[1.15] tracking-tight sm:text-3xl md:mb-6 md:flex md:flex-col md:items-center md:text-4xl lg:mb-3 lg:block lg:text-left lg:text-4xl xl:text-5xl xl:leading-[1.1]">
+            <h1 className="animate-fade-in-up text-primary mb-4 w-full text-center font-serif text-2xl leading-[1.15] tracking-tight sm:text-3xl md:mb-6 md:flex md:flex-col md:items-center md:text-4xl lg:mb-2 lg:block lg:text-left lg:text-4xl xl:text-5xl xl:leading-[1.1]">
               <span className="text-center lg:text-left">
                 Scrubs &amp; Uniformes Para el Sector Salud y Universidades{" "}
               </span>
