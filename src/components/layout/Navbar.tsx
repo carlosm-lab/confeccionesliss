@@ -417,8 +417,8 @@ export function Navbar() {
                 {visiblePills.map((link) => {
                   const isActive =
                     link.href === "/"
-                      ? pathname === "/"
-                      : pathname.startsWith(link.href);
+                      ? !pathname || pathname === "/" || pathname === ""
+                      : pathname?.startsWith(link.href);
 
                   return (
                     <Link
@@ -611,8 +611,8 @@ export function Navbar() {
                       {navLinks.map((link) => {
                         const isActive =
                           link.href === "/"
-                            ? pathname === "/"
-                            : pathname.startsWith(link.href);
+                            ? !pathname || pathname === "/" || pathname === ""
+                            : pathname?.startsWith(link.href);
 
                         const isOnBottomBar = [
                           "/",
@@ -656,8 +656,8 @@ export function Navbar() {
                       {hiddenPills.map((link) => {
                         const isActive =
                           link.href === "/"
-                            ? pathname === "/"
-                            : pathname.startsWith(link.href);
+                            ? !pathname || pathname === "/" || pathname === ""
+                            : pathname?.startsWith(link.href);
 
                         return (
                           <li key={link.href}>

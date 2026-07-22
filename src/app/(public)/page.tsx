@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { HeroImageCarousel } from "@/components/ui/HeroImageCarousel";
 import { StaticHeroImage } from "@/components/ui/StaticHeroImage";
 import {
   schemaFAQ,
@@ -12,12 +11,7 @@ import { siteConfig } from "@/config/site";
 import { getRecentProducts } from "@/lib/catalogService";
 import { getGoogleReviews } from "@/lib/googleReviewsService";
 import { ServiciosPrincipales } from "@/components/seo/ServiciosPrincipales";
-import { UniversidadesCoverage } from "@/components/seo/UniversidadesCoverage";
-import { FaqSection } from "@/components/seo/FaqSection";
-import { CoberturaNacional } from "@/components/seo/CoberturaNacional";
-import { ProfesionesMedicas } from "@/components/seo/ProfesionesMedicas";
 import { NapContacto } from "@/components/seo/NapContacto";
-import { KeywordsSeoFooter } from "@/components/seo/KeywordsSeoFooter";
 import { GoogleReviews } from "@/components/seo/GoogleReviews";
 
 import type { Metadata } from "next";
@@ -50,11 +44,6 @@ export const metadata: Metadata = {
 };
 
 // ── SSG + On-Demand Revalidation (ISR) ──────────────────────────────────────
-// revalidate = 3600 (1h) habilita ISR real en Vercel:
-//   - La página se pre-renderiza en build time y se distribuye a TODOS los CDN edges.
-//   - Se regenera automáticamente cada hora y también bajo demanda via revalidatePath('/').
-// revalidate = false causaba que cada edge node renderizara la página en su primer hit
-// (lazy cold-start), produciendo FCP variable de 1.5s vs 2.4s entre audits consecutivos.
 export const revalidate = 3600;
 
 export default async function HomePage() {
@@ -201,20 +190,12 @@ export default async function HomePage() {
             </h1>
           </div>
 
-          {/* IMAGEN HERO ÚNICA - OPTIMIZADA RESPONSIVE (Evita duplicación de descargas) */}
+          {/* IMAGEN HERO ÚNICA - OPTIMIZADA ESTÁTICA WEBP */}
           <div className="order-2 flex w-full max-w-sm self-center md:order-3 md:col-span-1 md:h-full md:max-w-none md:self-stretch lg:order-none lg:col-span-5 lg:row-span-2 lg:h-full lg:items-center">
             <div className="border-primary/35 relative z-10 flex w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:h-full">
               <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
               <div className="relative aspect-[4/5] w-full rounded-xl md:aspect-auto md:h-full md:w-full">
-                {/* SSR static image — visible before JS hydrates (fixes LCP) */}
                 <StaticHeroImage sizes="(max-width:768px) 80vw, 40vw" />
-                {/* Carousel progressively replaces once hydrated */}
-                <div className="absolute inset-0">
-                  <HeroImageCarousel
-                    sizes="(max-width:768px) 80vw, 40vw"
-                    priority
-                  />
-                </div>
               </div>
             </div>
           </div>
@@ -310,10 +291,10 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* ═══ SERVICIOS PRINCIPALES (NEW) ═══ */}
+      {/* ═══ SERVICIOS PRINCIPALES ═══ */}
       <ServiciosPrincipales />
 
-      {/* ═══ ¿POR QUÉ ELEGIRNOS? (updated content) ═══ */}
+      {/* ═══ ¿POR QUÉ ELEGIRNOS? ═══ */}
       <section className="bg-surface-container-low border-surface-variant/50 lazy-section border-t border-b px-5 py-14 md:px-8 md:py-24">
         <div className="mx-auto max-w-screen-2xl">
           <div className="mb-12 flex flex-col items-center">
@@ -351,10 +332,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ═══ UNIVERSIDADES (NEW) ═══ */}
-      <UniversidadesCoverage />
-
-      {/* ═══ PROCESO DE PEDIDO (updated content) ═══ */}
+      {/* ═══ PROCESO DE PEDIDO ═══ */}
       <section className="bg-primary lazy-section px-5 py-14 text-white md:px-8 md:py-24">
         <div className="mx-auto max-w-screen-2xl">
           <div className="mb-12 flex flex-col items-center">
@@ -394,19 +372,10 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ═══ FAQ (NEW) ═══ */}
-      <FaqSection />
-
       {/* ═══ GOOGLE REVIEWS (dynamic) ═══ */}
       <GoogleReviews reviews={reviews} />
 
-      {/* ═══ COBERTURA NACIONAL (NEW) ═══ */}
-      <CoberturaNacional />
-
-      {/* ═══ PROFESIONES MÉDICAS (NEW) ═══ */}
-      <ProfesionesMedicas />
-
-      {/* ═══ CTA INSTITUCIONAL (updated content) ═══ */}
+      {/* ═══ CTA INSTITUCIONAL ═══ */}
       <section
         aria-labelledby="institucional-heading"
         className="bg-primary px-5 py-14 text-white md:px-8 md:py-20"
@@ -441,11 +410,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ═══ NAP + CONTACTO (NEW) ═══ */}
+      {/* ═══ NAP + CONTACTO ═══ */}
       <NapContacto />
-
-      {/* ═══ KEYWORDS SEO FOOTER (HOT RELOAD) ═══ */}
-      <KeywordsSeoFooter />
     </>
   );
 }

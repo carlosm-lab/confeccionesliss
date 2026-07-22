@@ -92,8 +92,8 @@ export function MobileBottomNav() {
         {visibleItems.map((item) => {
           const isActive =
             item.href === "/"
-              ? pathname === "/"
-              : pathname.startsWith(item.href);
+              ? !pathname || pathname === "/" || pathname === ""
+              : pathname?.startsWith(item.href);
 
           const isCartTab = (item.href as string) === "/carrito";
           const isProfileTab = (item.href as string) === "/cuenta";
