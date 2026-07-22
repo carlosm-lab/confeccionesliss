@@ -6,16 +6,15 @@ export function KeywordsSeoFooter() {
     >
       <div className="mx-auto max-w-screen-2xl">
         <h2 className="text-on-surface-variant mb-6 font-serif text-lg">
-          Confecciones Liss — Taller de uniformes en San Miguel, El Salvador
+          Confecciones Liss — Empresa de uniformes en San Miguel, El Salvador
         </h2>
         <div className="prose prose-sm text-on-surface-variant max-w-none columns-1 gap-8 text-xs leading-relaxed md:columns-2 lg:columns-3">
           <p>
-            <strong>Confecciones Liss</strong> es el principal taller de
-            confección de{" "}
+            <strong>Confecciones Liss</strong> es la empresa líder en{" "}
             <strong>
-              scrubs médicos a la medida en San Miguel, El Salvador
+              uniformes médicos y universitarios en San Miguel, El Salvador
             </strong>
-            . Fabricamos{" "}
+            . Distribuimos y confeccionamos{" "}
             <strong>uniformes médicos en tela Sincatex y Lino Oxford</strong>{" "}
             para doctores, enfermeras, odontólogos, laboratoristas,
             fisioterapeutas y todo el personal del sector salud de la zona
@@ -34,7 +33,7 @@ export function KeywordsSeoFooter() {
             Fisioterapia, Nutrición, Farmacia, Radiología y más.
           </p>
           <p>
-            Además de <strong>scrubs médicos</strong>, confeccionamos{" "}
+            Además de <strong>scrubs médicos</strong>, ofrecemos{" "}
             <strong>
               uniformes escolares para colegios y escuelas de El Salvador
             </strong>

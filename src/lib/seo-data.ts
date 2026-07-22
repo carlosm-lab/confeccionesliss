@@ -1,7 +1,7 @@
 // SEO content data extracted from plan.tsx strategy
 
 export const heroTrustBadges = [
-  { icon: "straighten", text: "Confección a la medida" },
+  { icon: "straighten", text: "Tallas S a XXL disponibles" },
   { icon: "local_shipping", text: "Envíos a todo El Salvador" },
   { icon: "payments", text: "Pago al recibir" },
   { icon: "star", text: "Bordados en cualquier prenda" },
@@ -11,26 +11,26 @@ export const heroTrustBadges = [
 
 export const services = [
   {
-    title: "Scrubs Médicos a la Medida",
+    title: "Scrubs Médicos Profesionales",
     description:
-      "Fabricamos <strong>scrubs en tela Sincatex anti-fluidos y Lino Oxford</strong> para médicos, enfermeras, odontólogos, laboratoristas, fisioterapeutas y todo el personal de salud. Confección a la medida en San Miguel. Enviamos por tallas a todo El Salvador.",
+      "Contamos con <strong>scrubs en tela Sincatex anti-fluidos y Lino Oxford</strong> para médicos, enfermeras, odontólogos, laboratoristas, fisioterapeutas y todo el personal de salud. Disponibles en tallas S a XXL o a la medida en San Miguel. Enviamos a todo El Salvador.",
     features: [
       "Tela Sincatex anti-fluidos certificada",
       "Lino Oxford de alta calidad",
-      "A la medida o por tallas S-M-L-XL-XXL",
+      "Tallas S-M-L-XL-XXL o a la medida",
       "Bordado de nombre/especialidad disponible",
       "Desde $35.00 USD",
     ],
-    cta: "Cotizar scrubs médicos",
-    waText: "Hola,%20quisiera%20cotizar%20scrubs%20médicos",
+    cta: "Ver scrubs médicos",
+    waText: "Hola,%20quisiera%20ver%20los%20scrubs%20médicos",
     imgSrc: "/images/categorias/scrubs.webp",
     imgAlt:
-      "Scrubs médicos confeccionados a la medida en tela Sincatex - San Miguel El Salvador",
+      "Scrubs médicos disponibles en talla y a la medida en tela Sincatex - San Miguel El Salvador",
   },
   {
     title: "Uniformes Universitarios",
     description:
-      "Confeccionamos <strong>uniformes oficiales para todas las universidades de San Miguel y zona oriental</strong>. Especialidades de salud: medicina, enfermería, odontología, fisioterapia, laboratorio clínico y más. Precio especial para grupos de sección.",
+      "Proveemos <strong>uniformes oficiales para todas las universidades de San Miguel y zona oriental</strong>. Especialidades de salud: medicina, enfermería, odontología, fisioterapia, laboratorio clínico y más. Precio especial para grupos de sección.",
     features: [
       "UNIVO — Universidad de Oriente",
       "UNAB — Universidad Dr. Andrés Bello",
@@ -40,7 +40,7 @@ export const services = [
       "UES — Universidad de El Salvador",
       "UEES y más instituciones",
     ],
-    cta: "Cotizar uniformes universitarios",
+    cta: "Ver uniformes universitarios",
     waText: "Hola,%20necesito%20uniformes%20universitarios",
     imgSrc: "/images/categorias/universitarios.webp",
     imgAlt:
@@ -49,7 +49,7 @@ export const services = [
   {
     title: "Escolares, Corporativos y Bordados",
     description:
-      "Confeccionamos <strong>uniformes escolares para colegios y escuelas</strong>, uniformes corporativos con bordado de logo para empresas e instituciones, ropa deportiva personalizada con sublimación y ropa general para damas, caballeros y niños.",
+      "Ofrecemos <strong>uniformes escolares para colegios y escuelas</strong>, uniformes corporativos con bordado de logo para empresas e instituciones, ropa deportiva personalizada con sublimación y ropa general para damas, caballeros y niños.",
     features: [
       "Uniformes escolares cualquier color/diseño",
       "Uniformes corporativos con logo bordado",
@@ -57,7 +57,7 @@ export const services = [
       "Crop tops y ropa femenina a la medida",
       "Ropa para niños, damas y caballeros",
     ],
-    cta: "Cotizar ahora",
+    cta: "Ver catálogo",
     waText: "Hola,%20necesito%20uniformes%20escolares%20o%20corporativos",
     imgSrc: "/images/categorias/escolares.webp",
     imgAlt:
@@ -67,19 +67,19 @@ export const services = [
 
 export const whyItems = [
   {
-    icon: "straighten",
-    title: "100% A la medida",
-    desc: "No vendemos tallas importadas. Confeccionamos según tus medidas exactas para un ajuste perfecto en cada turno de trabajo.",
+    icon: "storefront",
+    title: "Catálogo disponible",
+    desc: "Tallas S a XXL en stock. También fabricamos a la medida para un ajuste perfecto. Tú eliges la opción que más te conviene.",
   },
   {
     icon: "location_on",
     title: "En San Miguel, para San Miguel",
-    desc: "Taller físico en el Barrio La Merced. Puedes venir a probarte, a recoger tu pedido o enviamos a todo El Salvador.",
+    desc: "Local físico en el Barrio La Merced. Puedes visitarnos, recoger tu pedido o recibir tu uniforme en cualquier parte de El Salvador.",
   },
   {
     icon: "payments",
     title: "Pago al recibir",
-    desc: "Enviamos por tallas a todo El Salvador con pago al recibir. Sin riesgo para ti. También aceptamos transferencia bancaria.",
+    desc: "Enviamos a todo El Salvador con pago al recibir. Sin riesgo para ti. También aceptamos transferencia bancaria.",
   },
   {
     icon: "local_hospital",
@@ -136,18 +136,18 @@ export const universities = [
 export const processSteps = [
   {
     n: "1",
-    title: "Escríbenos al WhatsApp",
-    desc: "Cuéntanos qué necesitas: tipo de uniforme, tela, colores y cantidad. Al +503 7331-7181.",
+    title: "Elige tu uniforme",
+    desc: "Explora el catálogo en línea o escríbenos por WhatsApp al +503 7331-7181. Cuéntanos qué necesitas.",
   },
   {
     n: "2",
     title: "Recibe tu cotización",
-    desc: "En pocas horas te enviamos el precio y tiempo de entrega según tu pedido específico.",
+    desc: "En pocas horas te enviamos el precio y tiempo de entrega según tu pedido.",
   },
   {
     n: "3",
-    title: "Confirmamos medidas",
-    desc: "Visita el taller en San Miguel para toma de medidas, o pide por tallas si es envío nacional.",
+    title: "Confirma tu talla o medidas",
+    desc: "Pide por tallas estándar para envío nacional, o visita nuestro local en San Miguel si prefieres medida exacta.",
   },
   {
     n: "4",
@@ -159,7 +159,7 @@ export const processSteps = [
 export const faqItems = [
   {
     q: "¿Dónde comprar scrubs en San Miguel El Salvador?",
-    a: "En Confecciones Liss, ubicados en el Barrio La Merced, 5A Calle Poniente & 1A Avenida Sur, San Miguel — a la par del edificio anexo de la UNAB. Somos el único taller de scrubs a la medida en la zona oriental. Horario: lunes a sábado de 8:00 a.m. a 5:00 p.m. WhatsApp: 7331-7181.",
+    a: "En Confecciones Liss, empresa especializada en uniformes médicos y universitarios, ubicada en el Barrio La Merced, 5A Calle Poniente & 1A Avenida Sur, San Miguel — a la par del edificio anexo de la UNAB. Horario: lunes a sábado de 8:00 a.m. a 5:00 p.m. WhatsApp: 7331-7181.",
   },
   {
     q: "¿Hacen uniformes para UNIVO, UNAB, UGB, UMA, IEPROES y UES?",
@@ -183,7 +183,7 @@ export const faqItems = [
   },
   {
     q: "¿Cómo pagar los uniformes?",
-    a: "Aceptamos efectivo al entregar en el taller, pago al recibir para envíos nacionales y transferencia bancaria. No cobramos anticipos en la mayoría de pedidos individuales. Para pedidos grandes se solicita anticipo.",
+    a: "Aceptamos efectivo al recoger en nuestro local, pago al recibir para envíos nacionales y transferencia bancaria. No cobramos anticipos en la mayoría de pedidos individuales. Para pedidos grandes se solicita anticipo.",
   },
   {
     q: "¿Cuánto tiempo tardan en hacer los uniformes?",

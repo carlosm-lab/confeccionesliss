@@ -35,7 +35,7 @@ export function CoberturaNacional() {
         {/* ZONA ORIENTAL */}
         <div className="mb-8">
           <h3 className="text-primary mb-4 font-serif text-xl font-semibold">
-            🔵 Zona Oriental — Entrega rápida y recogida en taller
+            🔵 Zona Oriental — Entrega rápida y recogida en nuestro local
           </h3>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             <div>

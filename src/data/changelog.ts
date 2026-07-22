@@ -322,7 +322,7 @@ export const CHANGELOG: VersionGroup[] = [
         title:
           "Lanzamiento del directorio de páginas corporativas de la empresa",
         description:
-          "Se crearon y organizaron las secciones de Sobre nosotros, Equipo de trabajo, Instalaciones, Proceso de Confección, Filosofía corporativa, Transparencia, Calidad y Certificaciones para detallar la experiencia e infraestructura del taller.",
+          "Se crearon y organizaron las secciones de Sobre nosotros, Equipo de trabajo, Instalaciones, Proceso de Confección, Filosofía corporativa, Transparencia, Calidad y Certificaciones para detallar la experiencia e infraestructura de la empresa.",
       },
       {
         id: "e-137",

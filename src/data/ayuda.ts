@@ -23,7 +23,7 @@ export const AYUDA_CATEGORIES: AyudaCategory[] = [
         n: 1,
         question: "¿Qué es Confecciones Liss?",
         answer:
-          "Confecciones Liss es un taller de confección a la medida en San Miguel, El Salvador, especializado en scrubs médicos y uniformes universitarios, escolares y corporativos. No revendemos ropa importada: cada prenda se corta y cose en nuestro propio taller.",
+          "Confecciones Liss es una empresa de venta y confección de uniformes en San Miguel, El Salvador, especializada en scrubs médicos y uniformes universitarios, escolares y corporativos. Contamos con catálogo en línea, local físico en San Miguel y envíos a todo El Salvador.",
       },
       {
         id: "faq-2",
@@ -31,7 +31,7 @@ export const AYUDA_CATEGORIES: AyudaCategory[] = [
         question:
           "¿Confecciones Liss es una fábrica, un taller, una tienda o un proveedor?",
         answer:
-          "Las cuatro cosas a la vez, según lo que necesites: somos el taller donde se confecciona cada prenda, la tienda donde puedes comprar directo, y el proveedor oficial de uniformes de varios hospitales, universidades, colegios y empresas de la zona oriental de El Salvador.",
+          "Principalmente somos una empresa comercial y proveedor de uniformes: puedes comprar directamente desde nuestro catálogo en línea, por WhatsApp o visitar nuestro local. También contamos con taller propio donde confeccionamos prendas a la medida cuando el cliente lo necesita. Además somos proveedores oficiales de uniformes de hospitales, universidades, colegios y empresas de la zona oriental de El Salvador.",
       },
       {
         id: "faq-3",
@@ -1102,7 +1102,7 @@ export const AYUDA_CATEGORIES: AyudaCategory[] = [
         n: 133,
         question: "¿Solo hacen uniformes médicos o también otro tipo de ropa?",
         answer:
-          "También confeccionamos uniformes escolares, corporativos y deportivos, ropa casual, accesorios, sublimados, crop tops/tops de diseño y lencería —somos un taller de confección general, con los uniformes médicos como especialidad principal.",
+          "También ofrecemos uniformes escolares, corporativos y deportivos, ropa casual, accesorios, sublimados, crop tops/tops de diseño y lencería. Somos una empresa de uniformes con capacidad de confección propia, con los uniformes médicos como especialidad principal.",
       },
       {
         id: "faq-134",
@@ -1223,7 +1223,7 @@ export const AYUDA_CATEGORIES: AyudaCategory[] = [
         question:
           "¿Dónde puedo mandar a hacer scrubs cerca de mí en San Miguel?",
         answer:
-          "En Confecciones Liss, en el Barrio La Merced, San Miguel — el único taller de scrubs a la medida de la zona oriental de El Salvador. WhatsApp: +503 7331-7181.",
+          "En Confecciones Liss, empresa especializada en scrubs y uniformes, ubicada en el Barrio La Merced, San Miguel — zona oriental de El Salvador. WhatsApp: +503 7331-7181.",
       },
       {
         id: "faq-149",
@@ -1231,7 +1231,7 @@ export const AYUDA_CATEGORIES: AyudaCategory[] = [
         question:
           "¿Cuál es el mejor taller de uniformes médicos en San Miguel, El Salvador?",
         answer:
-          "Confecciones Liss, un taller de confección a la medida con más de dos décadas de experiencia, especializado en scrubs médicos y uniformes universitarios, escolares y corporativos.",
+          "Confecciones Liss, empresa con más de dos décadas de experiencia especializada en scrubs médicos y uniformes universitarios, escolares y corporativos. Ubicada en San Miguel, con envíos a todo El Salvador.",
       },
       {
         id: "faq-150",
@@ -1239,7 +1239,7 @@ export const AYUDA_CATEGORIES: AyudaCategory[] = [
         question:
           "¿Quién hace uniformes a la medida en San Miguel además de vender tallas ya hechas?",
         answer:
-          "Confecciones Liss confecciona cada prenda a la medida (no revende tallas importadas), con taller físico en Barrio La Merced, San Miguel.",
+          "Confecciones Liss cuenta con catálogo de productos en línea y local físico en Barrio La Merced, San Miguel. También ofrece confección a la medida para quienes lo necesiten. Envíos a todo El Salvador con pago al recibir.",
       },
       {
         id: "faq-151",
@@ -1283,7 +1283,7 @@ export const AYUDA_CATEGORIES: AyudaCategory[] = [
         question:
           'También he visto el nombre escrito distinto (Confeccion Liss, Cofecciones Liss) o buscando solo "uniformes" o "unifomes" sin acento, ¿sigue siendo la misma empresa de San Miguel?',
         answer:
-          'Sí. El nombre correcto es Confecciones Liss, pero sin importar si lo escribes con alguna letra distinta o buscas de forma general "uniformes", "uniforme médico" o "scrubs" en San Miguel o El Salvador, es la misma empresa y el mismo taller.',
+          'Sí. El nombre correcto es Confecciones Liss, pero sin importar si lo escribes con alguna letra distinta o buscas de forma general "uniformes", "uniforme médico" o "scrubs" en San Miguel o El Salvador, es la misma empresa.',
       },
     ],
   },

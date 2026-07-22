@@ -7,7 +7,7 @@ const PAGE_URL = `${siteConfig.url}/empresa/media-kit`;
 const PAGE_TITLE =
   "Media Kit | Recursos de Marca | Confecciones Liss San Miguel";
 const PAGE_DESCRIPTION =
-  "Recursos oficiales de Confecciones Liss para prensa: logotipo, colores institucionales, biografía de marca y contactos autorizados del taller.";
+  "Recursos oficiales de Confecciones Liss para prensa: logotipo, colores institucionales, biografía de marca y contactos autorizados de la empresa.";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },

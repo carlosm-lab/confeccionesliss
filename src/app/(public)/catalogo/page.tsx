@@ -7,7 +7,7 @@ import { OffersReadTracker } from "@/components/ui/OffersReadTracker";
 const PAGE_URL = `${siteConfig.url}/catalogo`;
 const PAGE_TITLE = "Catálogo de Uniformes por Categoría";
 const PAGE_DESCRIPTION =
-  "Catálogo de uniformes en Confecciones Liss: scrubs médicos, universitarios, escolares y más. Confección a la medida desde $8, envíos a todo El Salvador.";
+  "Catálogo de uniformes en Confecciones Liss: scrubs médicos, universitarios, escolares y más. Disponibles para compra desde $8, envíos a todo El Salvador.";
 
 // ── SSG + On-Demand Revalidation (ISR) ──────────────────────────────────────
 // revalidate = 86400 (24h) habilita la infraestructura de ISR en Vercel,
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Catálogo de Uniformes | Confecciones Liss",
     description:
-      "Encuentra uniformes y scrubs médicos a la medida para el sector salud, universidades, colegios y empresas. Bordado, sublimación y precios por volumen.",
+      "Encuentra uniformes y scrubs médicos disponibles en catálogo para el sector salud, universidades, colegios y empresas. Bordado, sublimación y precios por volumen.",
     url: PAGE_URL,
     siteName: siteConfig.name,
     locale: "es_SV",

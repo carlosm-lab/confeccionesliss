@@ -50,7 +50,7 @@ export const mediaKitData = {
         url: "/media-kit/guia-estilo-liss.pdf",
       },
       {
-        name: "Galería de Fotos de Taller (Alta Res)",
+        name: "Galería de Fotos del Local y Producción (Alta Res)",
         format: "ZIP",
         url: "/media-kit/fotos-taller-liss.zip",
       },
@@ -60,9 +60,9 @@ export const mediaKitData = {
   // Official Brand Copy
   brandBio: {
     short:
-      "Confecciones Liss es un taller familiar de confección a la medida ubicado en el Barrio La Merced, San Miguel, El Salvador. Fundado en 2005 por Iris Lisseth Villacorta de Molina, nos especializamos en scrubs médicos de alta resistencia y uniformes universitarios, fusionando técnica industrial con precisión artesanal.",
+      "Confecciones Liss es una empresa familiar de uniformes médicos y universitarios, ubicada en el Barrio La Merced, San Miguel, El Salvador. Fundada en 2005 por Iris Lisseth Villacorta de Molina, se especializa en scrubs médicos de alta resistencia y uniformes universitarios, fusionando calidad industrial con precisión artesanal.",
     medium:
-      "Fundado en 2005 en San Miguel, El Salvador, Confecciones Liss es un taller textil familiar enfocado en redefinir el uniforme profesional. Nos especializamos en la toma de medidas individuales y la confección de indumentaria médica (scrubs), escolar y corporativa utilizando materiales de alta durabilidad como Sincatex. Con dos décadas de experiencia, vestimos a las universidades, hospitales y empresas líderes de la zona oriental.",
+      "Fundada en 2005 en San Miguel, El Salvador, Confecciones Liss es una empresa textil familiar enfocada en redefinir el uniforme profesional. Especialistas en scrubs médicos, uniformes universitarios, escolares y corporativos con materiales de alta durabilidad como Sincatex. Con dos décadas de experiencia, vestimos a las universidades, hospitales y empresas líderes de la zona oriental. Contamos con catálogo en línea, local físico en San Miguel y envíos a todo El Salvador.",
   },
 
   // Audience & Business Statistics
@@ -96,7 +96,7 @@ export const mediaKitData = {
       {
         platform: "TikTok",
         reach:
-          "Videos de taller, procesos de empaque y demostración de uniformes",
+          "Videos del local, procesos de producción y demostración de uniformes",
       },
     ],
   },

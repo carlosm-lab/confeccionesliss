@@ -282,14 +282,15 @@ export default function EmpresaPage() {
                     style={{ animationDelay: "150ms" }}
                   >
                     <p>
-                      Empezamos Confeccionando prendas desde casa. Hoy somos un
-                      taller especializado en uniformes escolares, médicos y
-                      empresariales, con más de 20 años de experiencia
-                      respaldada por contratos con el Ministerio de Educación y
-                      talleres de la región. Conozca el equipo, los procesos, la
-                      filosofía y la infraestructura que nos permiten entregar
-                      uniformes de calidad con toma de medidas, bordado
-                      personalizado y control de calidad en cada prenda.
+                      Empezamos confeccionando prendas desde casa. Hoy somos una
+                      empresa consolidada, especializada en la venta de
+                      uniformes escolares, médicos y empresariales, con más de
+                      20 años de experiencia respaldada por contratos con el
+                      Ministerio de Educación e instituciones de la región.
+                      Conozca el equipo, los procesos, la filosofía y la
+                      infraestructura que nos permiten entregar uniformes de
+                      calidad con bordado personalizado y control de calidad en
+                      cada prenda.
                     </p>
                   </div>
                 </div>

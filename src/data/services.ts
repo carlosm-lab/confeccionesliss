@@ -20,7 +20,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     seoDescription:
       "Bordado de logos institucionales para IEPROES, UNIVO, UNAB, UES, UGB, UMA, colegios, hospitales y empresas en San Miguel, El Salvador.",
     description:
-      "Personalizamos prendas con bordado computarizado de alta precisión en nuestro taller de San Miguel, El Salvador. La mayoría de nuestros bordados forman parte de un pedido de uniforme, pero también aceptamos bordado individual sobre prendas que el cliente ya tiene.",
+      "Personalizamos prendas con bordado computarizado de alta precisión en nuestra empresa en San Miguel, El Salvador. La mayoría de nuestros bordados forman parte de un pedido de uniforme, pero también aceptamos bordado individual sobre prendas que el cliente ya tiene.",
     cardDescription:
       "Bordado computarizado de alta precisión para escudos, logotipos y nombres sobre uniformes y prendas individuales.",
     heroGradient: "bg-indigo-900 text-white",
@@ -206,7 +206,7 @@ export const SERVICE_PAGES: ServicePage[] = [
       },
       {
         heading: "Uniformes deportivos e institucionales",
-        body: "Somos el mismo taller que confecciona uniformes institucionales para escuelas y universidades de San Miguel. Eso significa que entendemos las tallas, cortes y necesidades reales de equipos deportivos —no solo de impresión. Sublimamos camisetas y uniformes deportivos con nombre, número y escudo de equipo para ligas, academias y torneos escolares.",
+        body: "Confecciones Liss es la misma empresa que provee uniformes institucionales para escuelas y universidades de San Miguel. Eso significa que entendemos las tallas, cortes y necesidades reales de equipos deportivos —no solo de impresión. Sublimamos camisetas y uniformes deportivos con nombre, número y escudo de equipo para ligas, academias y torneos escolares.",
       },
       {
         heading: "¿Traes tu objeto o lo compras con nosotros?",
@@ -225,8 +225,8 @@ export const SERVICE_PAGES: ServicePage[] = [
         body: "Ambas técnicas tienen usos distintos y en Confecciones Liss ofrecemos las dos, así que te recomendamos la que mejor se ajuste a tu proyecto.",
       },
       {
-        heading: "El mismo taller que confecciona uniformes institucionales",
-        body: "La sublimación es uno de los servicios de un taller con más de 20 años de trayectoria en confección, ubicado en el Barrio La Merced, San Miguel. El mismo equipo que confecciona uniformes escolares, médicos y empresariales —incluyendo trabajo institucional para el Ministerio de Educación y universidades como UNIVO, UNAB, UGB, UES, UMA e IEPROES— es quien sublima tu proyecto. Esto significa que entendemos de tallas, cortes y necesidades reales, no solo de impresión.",
+        heading: "La misma empresa que provee uniformes institucionales",
+        body: "La sublimación es uno de los servicios de Confecciones Liss, empresa con más de 20 años de trayectoria en uniformes, ubicada en el Barrio La Merced, San Miguel. El mismo equipo que entrega uniformes escolares, médicos y empresariales —incluyendo trabajo institucional para el Ministerio de Educación y universidades como UNIVO, UNAB, UGB, UES, UMA e IEPROES— es quien sublima tu proyecto. Esto significa que entendemos de tallas, cortes y necesidades reales, no solo de impresión.",
       },
       {
         heading: "¿Puedo pedir sublimación si no vivo en San Miguel?",
@@ -279,11 +279,11 @@ export const SERVICE_PAGES: ServicePage[] = [
         id: "ropa-uniformes",
         icon: "checkroom",
         title: "Camisetas y uniformes deportivos",
-        body: "Sublimamos camisetas y uniformes deportivos full color, incluyendo nombre, número y escudo de equipo. Es la opción ideal para ligas, academias deportivas, torneos escolares y equipos empresariales que buscan un diseño único sin límite de colores. Al ser el mismo taller que confecciona uniformes institucionales para escuelas y universidades de San Miguel, entendemos las tallas, cortes y necesidades reales de equipos deportivos.",
+        body: "Sublimamos camisetas y uniformes deportivos full color, incluyendo nombre, número y escudo de equipo. Es la opción ideal para ligas, academias deportivas, torneos escolares y equipos empresariales que buscan un diseño único sin límite de colores. Al ser la misma empresa que provee uniformes institucionales para escuelas y universidades de San Miguel, entendemos las tallas, cortes y necesidades reales de equipos deportivos.",
         bulletPoints: [
           "Nombre y número personalizados por jugador",
           "Escudos y logos de equipo a color completo",
-          "Camisetas propias o proporcionadas por el taller",
+          "Camisetas propias o proporcionadas por Confecciones Liss",
         ],
       },
       {
@@ -422,7 +422,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     seoDescription:
       "¿No encuentras tu talla? En Confecciones Liss tomamos tus medidas exactas y creamos prendas perfectas para tu cuerpo. Plus size y petite.",
     description:
-      "Olvídate de comprar ropa estándar que no te favorece. Visita nuestro taller en Barrio La Merced; tomamos más de 12 medidas anatómicas para crear una prenda que se adapta a tu cuerpo real, sin importar tu talla.",
+      "Olvídate de comprar ropa estándar que no te favorece. Visita nuestro local en Barrio La Merced; tomamos más de 12 medidas anatómicas para crear una prenda que se adapta a tu cuerpo real, sin importar tu talla.",
     cardDescription:
       "Confección a medida con más de 12 medidas anatómicas, para un entalle que la ropa de talla estándar no puede ofrecer.",
     heroGradient: "bg-pink-900 text-white",

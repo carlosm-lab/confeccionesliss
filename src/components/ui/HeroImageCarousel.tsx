@@ -13,7 +13,7 @@ interface HeroImageCarouselProps {
 const IMAGES = [
   {
     src: "/images/uniformes/portada.webp",
-    alt: "Confección de uniformes a la medida en el taller de Confecciones Liss, San Miguel, El Salvador",
+    alt: "Uniformes médicos y universitarios de Confecciones Liss, empresa de uniformes en San Miguel, El Salvador",
   },
   {
     src: "/images/uniformes/001.webp",

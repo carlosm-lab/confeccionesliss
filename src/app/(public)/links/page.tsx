@@ -55,7 +55,7 @@ export default function LinksPage() {
           "@type": "Organization",
           name: siteConfig.name,
           description:
-            "Taller de confección a la medida en San Miguel, El Salvador. Scrubs médicos y uniformes universitarios para IEPROES, UNIVO, UNAB, UGB, UES, UMA y más.",
+            "Empresa de uniformes médicos y universitarios en San Miguel, El Salvador. Scrubs, uniformes para IEPROES, UNIVO, UNAB, UGB, UES, UMA y más. Desde $35.",
           url: siteConfig.url,
           logo: `${siteConfig.url}/logo.png`,
           sameAs: [

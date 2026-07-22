@@ -9,7 +9,7 @@ const PAGE_URL = `${siteConfig.url}/servicios`;
 const PAGE_TITLE =
   "Servicios de Confección y Personalización | Confecciones Liss";
 const PAGE_DESCRIPTION =
-  "Bordado computarizado, sublimación textil, confección a la medida y mano de obra en San Miguel. Servicios profesionales de costura y uniformes a medida.";
+  "Bordado computarizado, sublimación textil, confección a la medida y mano de obra en San Miguel. Servicios complementarios de Confecciones Liss, empresa de uniformes en El Salvador.";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Servicios de Confección | Confecciones Liss",
     description:
-      "Bordado, sublimación, confección a medida y más servicios profesionales de costura en San Miguel.",
+      "Bordado, sublimación, confección a medida y más servicios profesionales en San Miguel — Confecciones Liss, empresa de uniformes médicos y universitarios.",
     url: PAGE_URL,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -130,7 +130,7 @@ export default function ServiciosPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "ItemList",
-            name: "Servicios de Confección — Confecciones Liss",
+            name: "Servicios Profesionales — Confecciones Liss",
             description:
               "Servicios profesionales de bordado, sublimación, confección a medida y mano de obra en San Miguel.",
             url: `${siteConfig.url}/servicios`,

@@ -1,0 +1,548 @@
+[
+  {
+    "id": "4f27fa90-022b-4f83-8466-f69d195d5543",
+    "name": "Uniforme de Enfermería de la UNAB",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "4473733f-2c10-4771-82b3-0e2cfb9d245e",
+    "name": "Uniforme de Técnico en Salud Ambiental de IEPROES",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "2656c3f1-fd1c-472c-a952-81bff0085c51",
+    "name": "Uniforme de Licenciatura en Enfermería de IEPROES",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "44f3d8a0-68ee-4ef6-9e48-8c4be5dde712",
+    "name": "Uniforme de Profesorado en Parvularia de la UNIVO",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "3c805b96-f009-4cbd-966d-67cae82b9ad3",
+    "name": "Uniforme de Doctorado en Medicina de la UNIVO",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "431950e1-a206-4f09-bdfe-f6f57ee9bd1d",
+    "name": "Uniforme de Enfermería de la UMA",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "a4eafb0a-4b9c-45bd-ae71-1889245179d0",
+    "name": "Uniforme de Doctorado en Medicina Interna de la UNIVO",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "34568314-1b9c-444d-9491-171239d761ee",
+    "name": "Gabacha Blanca de la UNIVO, para Estudiantes.",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "cf8fe8ff-47d3-462d-98f3-717c4611d9ae",
+    "name": "Uniforme de Licenciatura en Enfermería de la UNIVO",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "ae259bd1-0483-4bfd-b180-4e624ba320b4",
+    "name": "Uniforme de Doctorado en Medicina General de la UNIVO, Azul Marino",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "078f25e3-6fe7-4f58-a3b4-37534fc49042",
+    "name": "Uniforme de Enfermería de la UES",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "becf6809-1b7a-4fdf-b32f-497d43189ee3",
+    "name": "Uniforme de Técnico en Enfermería de IEPROES",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "4ae6dd6e-ddad-4a29-8957-b085a6142355",
+    "name": "Uniforme de Doctorado en Cirugía Dental de la UNIVO",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "bf06fc26-a399-4e68-9903-2418a9d58a64",
+    "name": "Uniforme de Doctorado en Cirugía General de la UNIVO",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "0b8b9b9a-d081-42b4-869a-ece3960e72f4",
+    "name": "Uniforme de Enfermería Blanco con Bordado de Corazón Unisex",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "ce34cb1c-b447-49ff-aa2e-8859defae4a1",
+    "name": "Uniforme de Enfermería Manga Larga de Color Beige Unisex",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "dcc722d0-31ac-4b64-b399-c9f7151f1f5d",
+    "name": "Uniforme de Pediatría de la UNIVO",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "3f3a7b8a-4adb-4156-9fc4-649b2c3eaa30",
+    "name": "Uniforme de Licenciatura en Enfermería de la UNIVO, Blanco y Azul Marino, para Caballero",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "4edbff4e-e58a-448b-a169-c8d0d7613279",
+    "name": "Uniforme de Licenciatura en Psicología de la Salud de IEPROES",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "aa70566d-8b58-4178-b67a-c3d390fcc325",
+    "name": "Uniforme de Licenciatura en Nutrición de IEPROES",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "251fb77f-b4a4-4d0c-998d-c473df36d617",
+    "name": "Uniforme de Tecnólogo en Enfermería de IEPROES",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "57c842f4-079c-43e2-93c3-76e165d54a66",
+    "name": "Uniforme Escolar del LIBAP",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "529d1e0b-27b3-487f-a3c4-fa73ce19fdd3",
+    "name": "Uniforme de Licenciatura en Salud Ambiental de IEPROES",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "5c518204-fd08-4c02-b2f0-9ea77188ea73",
+    "name": "Uniforme de Tecnólogo en Enfermería UNIVO, Blanco y Azul.",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "75b9cdcd-05b8-4f86-bec1-ca50160badac",
+    "name": "Uniforme de Tecnólogo en Enfermería UNIVO",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  },
+  {
+    "id": "462a50d2-bc6c-4b0a-bea9-7ac8a6173f4c",
+    "name": "Gabacha Blanca UNAB, para Estudiantes y Profesionales",
+    "price": 35,
+    "tallas": ["XS", "S", "M", "L", "XL", "XXL", "3XL", "A la medida"],
+    "price_by_size": {
+      "L": 35,
+      "M": 35,
+      "S": 35,
+      "XL": 40,
+      "XS": 35,
+      "3XL": 50,
+      "XXL": 45
+    },
+    "offer_by_size": null,
+    "reasons": [
+      "Precio base es 35 y tiene talla L en lista",
+      "price_by_size['L'] es 35"
+    ],
+    "currentPriceL": 35
+  }
+]

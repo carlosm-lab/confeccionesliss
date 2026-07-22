@@ -12,11 +12,11 @@ export function ServiciosPrincipales() {
         <div className="animate-fade-in-up mb-12 flex flex-col items-center">
           <div className="mb-4">
             <span className="bg-primary/10 text-primary rounded-full px-4 py-1 text-xs font-bold tracking-widest uppercase">
-              ¿Qué fabricamos?
+              ¿Qué ofrecemos?
             </span>
           </div>
           <h2 id="servicios-heading" className="section-title">
-            Confección profesional de uniformes a la medida en El Salvador
+            Uniformes profesionales y scrubs médicos en El Salvador
           </h2>
           <div className="bg-tertiary mt-6 h-1 w-16 rounded-full"></div>
         </div>
@@ -24,10 +24,10 @@ export function ServiciosPrincipales() {
           className="animate-fade-in-up text-on-surface-variant mb-10 max-w-2xl text-sm leading-relaxed md:mx-auto md:text-center md:text-base"
           style={{ animationDelay: "100ms" }}
         >
-          Somos el único taller de{" "}
-          <strong>scrubs a la medida en la zona oriental</strong> de El
-          Salvador. Atendemos médicos, enfermeras, estudiantes, empresas y
-          colegios de todo el país.
+          Empresa especializada en{" "}
+          <strong>scrubs médicos y uniformes universitarios</strong> de la zona
+          oriental de El Salvador. Atendemos médicos, enfermeras, estudiantes,
+          empresas y colegios de todo el país.
         </p>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">

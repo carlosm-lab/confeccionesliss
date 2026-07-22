@@ -4,10 +4,9 @@ import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import FilosofiaClient from "@/components/empresa/FilosofiaClient";
 
 const PAGE_URL = `${siteConfig.url}/empresa/filosofia`;
-const PAGE_TITLE =
-  "Filosofía, Misión y Valores del Taller | Confecciones Liss SV";
+const PAGE_TITLE = "Filosofía, Misión y Valores | Confecciones Liss SV";
 const PAGE_DESCRIPTION =
-  "Conoce la filosofía, misión, visión y valores de Confecciones Liss, taller comprometido con la calidad técnica y la mejora continua desde 2005.";
+  "Conoce la filosofía, misión, visión y valores de Confecciones Liss, empresa comprometida con la calidad y la mejora continua desde 2005.";
 
 export const metadata: Metadata = {
   title: { absolute: PAGE_TITLE },

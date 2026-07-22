@@ -29,12 +29,12 @@ export const metadata: Metadata = {
     absolute: "Scrubs y Uniformes Médicos en San Miguel, El Salvador | Liss",
   },
   description:
-    "Taller de confección a la medida en San Miguel: scrubs médicos y uniformes universitarios para IEPROES, UNIVO, UNAB, UGB, UES y UMA. Desde $35.",
+    "Empresa de uniformes médicos y universitarios en San Miguel, El Salvador. Scrubs, uniformes para IEPROES, UNIVO, UNAB, UGB, UES y UMA. Desde $35.",
   alternates: { canonical: siteConfig.url },
   openGraph: {
     title: "Scrubs y Uniformes Médicos en San Miguel, El Salvador | Liss",
     description:
-      "Taller de confección a la medida en San Miguel: scrubs médicos y uniformes universitarios para IEPROES, UNIVO, UNAB, UGB, UES y UMA. Desde $35.",
+      "Empresa de uniformes médicos y universitarios en San Miguel. Scrubs, uniformes para IEPROES, UNIVO, UNAB, UGB, UES y UMA. Desde $35.",
     url: siteConfig.url,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Scrubs y Uniformes Médicos en San Miguel, El Salvador | Liss",
     description:
-      "Taller de confección a la medida en San Miguel: scrubs médicos y uniformes universitarios para IEPROES, UNIVO, UNAB, UGB, UES y UMA. Desde $35.",
+      "Empresa de uniformes médicos y universitarios en San Miguel. Scrubs, uniformes para IEPROES, UNIVO, UNAB, UGB, UES y UMA. Desde $35.",
     creator: siteConfig.twitterHandle,
   },
 };
@@ -165,7 +165,7 @@ export default async function HomePage() {
                 url: siteConfig.url,
                 name: "Scrubs y Uniformes Médicos en San Miguel, El Salvador | Liss",
                 description:
-                  "Taller de confección a la medida en San Miguel: scrubs médicos y uniformes universitarios para IEPROES, UNIVO, UNAB, UGB, UES y UMA. Desde $35.",
+                  "Empresa de uniformes médicos y universitarios en San Miguel, El Salvador. Scrubs, uniformes para IEPROES, UNIVO, UNAB, UGB, UES y UMA. Desde $35.",
               }),
               buildBreadcrumbSchema([{ name: "Inicio", item: siteConfig.url }]),
               schemaFAQ,
@@ -181,7 +181,7 @@ export default async function HomePage() {
           <div className="z-10 order-1 w-full md:col-span-2 lg:order-none lg:col-span-7 lg:row-span-1">
             <h1 className="animate-fade-in-up text-primary mb-6 w-full text-center font-serif text-3xl leading-[1.15] tracking-tight sm:text-4xl md:mb-10 md:flex md:flex-col md:items-center md:text-5xl lg:mb-6 lg:block lg:text-left lg:text-5xl xl:text-6xl xl:leading-[1.1]">
               <span className="text-center lg:text-left">
-                Scrubs y Uniformes a la Medida{" "}
+                Scrubs y Uniformes para Salud y Universidad{" "}
               </span>
               <span className="text-secondary font-serif md:mt-2 md:flex md:w-full md:items-center md:justify-center md:gap-4 lg:mt-0 lg:inline lg:gap-0">
                 {/* LÍNEA DECORATIVA IZQUIERDA (Solo Tablet) */}
@@ -225,10 +225,10 @@ export default async function HomePage() {
               className="animate-fade-in-up text-on-surface-variant font-body mb-6 w-full text-base leading-relaxed md:text-lg lg:mb-6 lg:text-xl"
               style={{ animationDelay: "150ms" }}
             >
-              Confección profesional de scrubs médicos en tela Sincatex y Lino
-              Oxford. Uniformes para UNIVO, UNAB, UGB, colegios y empresas.
-              Bordados, sublimación y envío a todo El Salvador.{" "}
-              <strong>Desde $35 USD.</strong>
+              Empresa especializada en scrubs médicos y uniformes universitarios
+              en tela Sincatex y Lino Oxford. Uniformes para UNIVO, UNAB, UGB,
+              colegios y empresas. Bordados, sublimación y envío a todo El
+              Salvador. <strong>Desde $35 USD.</strong>
             </p>
             <div className="mb-8 grid w-full grid-cols-2 gap-x-3 gap-y-2.5 md:grid-cols-1 lg:grid-cols-2">
               {heroTrustBadges.map((b, index) => (
