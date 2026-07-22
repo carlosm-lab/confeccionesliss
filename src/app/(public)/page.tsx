@@ -168,9 +168,9 @@ export default async function HomePage() {
         <div className="mx-auto grid h-full w-full max-w-screen-2xl grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2 lg:grid-cols-12 lg:items-center lg:gap-x-16 lg:gap-y-0">
           {/* TÍTULO HERO (Ocupa ancho completo en móvil/tablet, 7 cols en desktop) */}
           <div className="z-10 order-1 w-full md:col-span-2 lg:order-none lg:col-span-7 lg:row-span-1">
-            <h1 className="animate-fade-in-up text-primary mb-6 w-full text-center font-serif text-3xl leading-[1.15] tracking-tight sm:text-4xl md:mb-10 md:flex md:flex-col md:items-center md:text-5xl lg:mb-6 lg:block lg:text-left lg:text-5xl xl:text-6xl xl:leading-[1.1]">
+            <h1 className="animate-fade-in-up text-primary mb-6 w-full text-center font-serif text-2xl leading-[1.15] tracking-tight sm:text-3xl md:mb-10 md:flex md:flex-col md:items-center md:text-4xl lg:mb-6 lg:block lg:text-left lg:text-4xl xl:text-5xl xl:leading-[1.1]">
               <span className="text-center lg:text-left">
-                Scrubs y Uniformes para Salud y Universidad{" "}
+                Scrubs &amp; Uniformes Para el Sector Salud y Universidades{" "}
               </span>
               <span className="text-secondary font-serif md:mt-2 md:flex md:w-full md:items-center md:justify-center md:gap-4 lg:mt-0 lg:inline lg:gap-0">
                 {/* LÍNEA DECORATIVA IZQUIERDA (Solo Tablet) */}
@@ -179,7 +179,7 @@ export default async function HomePage() {
                   <span className="bg-secondary/50 h-1.5 w-1.5 shrink-0 rotate-45" />
                 </span>
 
-                <span className="shrink-0">en San Miguel</span>
+                <span className="shrink-0">en El Salvador</span>
 
                 {/* LÍNEA DECORATIVA DERECHA (Solo Tablet) */}
                 <span className="hidden md:flex md:flex-1 md:items-center md:gap-2 lg:hidden">
