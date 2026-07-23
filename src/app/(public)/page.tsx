@@ -168,8 +168,8 @@ export default async function HomePage() {
         }}
       />
 
-      {/* ═══ HERO (100% alto de vista: h-[calc(100dvh-56px)] sin scroll) ═══ */}
-      <section className="bg-surface-container-low relative flex h-[calc(100dvh-56px)] min-h-[calc(100dvh-56px)] flex-col justify-center overflow-hidden px-5 py-4 md:px-8 lg:h-[calc(100dvh-56px)] lg:py-6">
+      {/* ═══ HERO (100% min-h de vista, se expande a scroll natural si el contenido colapsa) ═══ */}
+      <section className="bg-surface-container-low relative flex min-h-[calc(100dvh-56px)] flex-col justify-center px-5 py-6 md:px-8 md:py-8 lg:min-h-[calc(100dvh-56px)] lg:py-10">
         <div className="mx-auto grid h-full w-full max-w-screen-2xl grid-cols-1 items-center gap-x-8 gap-y-6 md:grid-cols-2 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-0">
           {/* COLUMNA IZQUIERDA: TÍTULO, DESCRIPCIÓN, BADGES Y BOTONES UNIFICADOS (Sin brechas de Grid) */}
           <div className="z-10 order-1 flex w-full flex-col items-start justify-center md:col-span-2 lg:order-none lg:col-span-7">
