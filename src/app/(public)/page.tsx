@@ -169,11 +169,11 @@ export default async function HomePage() {
       />
 
       {/* ═══ HERO (100% alto de vista: h-[calc(100dvh-56px)] sin scroll) ═══ */}
-      <section className="bg-surface-container-low relative flex h-[calc(100dvh-56px)] min-h-[calc(100dvh-56px)] flex-col justify-center overflow-hidden px-5 py-3 md:px-8 md:py-4 lg:h-[calc(100dvh-56px)] lg:py-6">
-        <div className="mx-auto grid h-full w-full max-w-screen-2xl grid-cols-1 items-center gap-x-8 gap-y-3 md:grid-cols-2 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-0">
-          {/* COLUMNA IZQUIERDA: TÍTULO, DESCRIPCIÓN, BADGES Y BOTONES */}
+      <section className="bg-surface-container-low relative flex h-[calc(100dvh-56px)] min-h-[calc(100dvh-56px)] flex-col justify-center overflow-hidden px-5 py-4 md:px-8 lg:h-[calc(100dvh-56px)] lg:py-6">
+        <div className="mx-auto grid h-full w-full max-w-screen-2xl grid-cols-1 items-center gap-x-8 gap-y-6 md:grid-cols-2 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-0">
+          {/* COLUMNA IZQUIERDA: TÍTULO, DESCRIPCIÓN, BADGES Y BOTONES UNIFICADOS (Sin brechas de Grid) */}
           <div className="z-10 order-1 flex w-full flex-col items-start justify-center md:col-span-2 lg:order-none lg:col-span-7">
-            <h1 className="animate-fade-in-up text-primary mb-3 w-full text-center font-serif text-2xl leading-[1.15] tracking-tight sm:text-3xl md:text-left md:text-4xl lg:mb-4 lg:text-4xl xl:text-5xl xl:leading-[1.1]">
+            <h1 className="animate-fade-in-up text-primary mb-4 w-full text-center font-serif text-2xl leading-[1.15] tracking-tight sm:text-3xl md:text-left md:text-4xl lg:mb-4 lg:text-4xl xl:text-5xl xl:leading-[1.1]">
               <span className="text-center md:text-left">
                 Scrubs y Uniformes para Salud y Universidad{" "}
               </span>
@@ -209,7 +209,7 @@ export default async function HomePage() {
               ))}
             </div>
 
-            <div className="flex w-full flex-col gap-2.5 sm:flex-row sm:gap-4">
+            <div className="flex w-full flex-col gap-3 sm:flex-row sm:gap-4">
               <Link
                 href="/catalogo"
                 prefetch={false}
@@ -230,11 +230,11 @@ export default async function HomePage() {
             </div>
           </div>
 
-          {/* COLUMNA DERECHA: IMAGEN HERO ESTÁTICA WEBP (Ajustada al alto máximo disponible) */}
-          <div className="order-2 flex h-full max-h-full w-full max-w-sm self-center justify-self-center overflow-hidden md:order-2 md:col-span-1 md:max-w-none lg:order-none lg:col-span-5 lg:items-center lg:justify-center">
-            <div className="border-primary/35 relative z-10 flex h-full max-h-[calc(100dvh-100px)] w-full flex-col items-center justify-center rounded-2xl border bg-white p-3 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] sm:p-4">
+          {/* COLUMNA DERECHA: PROPIEDADES, SOMBRA Y PADDING EXACTOS ORIGINALES DE LA TARJETA (3d12cbd) */}
+          <div className="order-2 flex w-full max-w-sm self-center justify-self-center md:order-2 md:col-span-1 md:h-full md:max-w-none md:self-stretch lg:order-none lg:col-span-5 lg:h-full lg:items-center">
+            <div className="border-primary/35 relative z-10 flex w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:h-full">
               <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
-              <div className="relative aspect-[4/5] h-full max-h-full w-full overflow-hidden rounded-xl">
+              <div className="relative aspect-[4/5] max-h-[calc(100dvh-120px)] w-full rounded-xl md:aspect-auto md:h-full md:w-full">
                 <StaticHeroImage sizes="(max-width:768px) 80vw, 40vw" />
               </div>
             </div>
