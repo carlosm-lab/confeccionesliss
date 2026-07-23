@@ -36,7 +36,7 @@ export function GoogleReviews({ reviews }: GoogleReviewsProps) {
 
   return (
     <section
-      className="bg-surface lazy-section px-5 py-16 md:px-8 md:py-24"
+      className="bg-surface lazy-section w-full overflow-hidden px-5 py-16 md:px-8 md:py-24"
       aria-labelledby="google-reviews-title"
     >
       <div className="mx-auto max-w-screen-2xl">
@@ -92,8 +92,8 @@ export function GoogleReviews({ reviews }: GoogleReviewsProps) {
           </div>
         </div>
 
-        {/* Responsivo: contenedor único de scroll que se adapta a desktop y móvil */}
-        <div className="scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent -mx-5 -mt-3 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 py-3 pb-5 sm:-mx-8 sm:px-8 lg:mx-0 lg:gap-6 lg:px-0">
+        {/* Responsivo: contenedor de scroll que evita desbordamiento horizontal global */}
+        <div className="scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent -mt-3 flex w-full snap-x snap-mandatory gap-4 overflow-x-auto py-3 pb-5 lg:gap-6">
           {[...reviews]
             .sort((a, b) => {
               const hasCommentA = a.comment ? 1 : 0;
