@@ -168,48 +168,22 @@ export default async function HomePage() {
         }}
       />
 
-      {/* ═══ HERO ═══ */}
-      <section className="bg-surface-container-low relative flex min-h-[calc(100dvh-56px)] flex-col overflow-x-hidden px-5 pt-4 pb-10 md:min-h-0 md:px-8 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:pb-4">
-        <div className="mx-auto grid h-full w-full max-w-screen-2xl grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2 lg:grid-cols-12 lg:items-center lg:gap-x-16 lg:gap-y-0">
-          {/* TÍTULO HERO (Ocupa ancho completo en móvil/tablet, 7 cols en desktop) */}
-          <div className="z-10 order-1 w-full md:col-span-2 lg:order-none lg:col-span-7 lg:row-span-1">
-            <h1 className="animate-fade-in-up text-primary mb-5 w-full text-center font-serif text-2xl leading-[1.15] tracking-tight sm:text-3xl md:mb-8 md:flex md:flex-col md:items-center md:text-4xl lg:mb-5 lg:block lg:text-left lg:text-4xl xl:text-5xl xl:leading-[1.1]">
-              <span className="text-center lg:text-left">
+      {/* ═══ HERO (100% alto de vista: h-[calc(100dvh-56px)] sin scroll) ═══ */}
+      <section className="bg-surface-container-low relative flex h-[calc(100dvh-56px)] min-h-[calc(100dvh-56px)] flex-col justify-center overflow-hidden px-5 py-3 md:px-8 md:py-4 lg:h-[calc(100dvh-56px)] lg:py-6">
+        <div className="mx-auto grid h-full w-full max-w-screen-2xl grid-cols-1 items-center gap-x-8 gap-y-3 md:grid-cols-2 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-0">
+          {/* COLUMNA IZQUIERDA: TÍTULO, DESCRIPCIÓN, BADGES Y BOTONES */}
+          <div className="z-10 order-1 flex w-full flex-col items-start justify-center md:col-span-2 lg:order-none lg:col-span-7">
+            <h1 className="animate-fade-in-up text-primary mb-3 w-full text-center font-serif text-2xl leading-[1.15] tracking-tight sm:text-3xl md:text-left md:text-4xl lg:mb-4 lg:text-4xl xl:text-5xl xl:leading-[1.1]">
+              <span className="text-center md:text-left">
                 Scrubs y Uniformes para Salud y Universidad{" "}
               </span>
-              <span className="text-secondary font-serif md:mt-2 md:flex md:w-full md:items-center md:justify-center md:gap-4 lg:mt-0 lg:inline lg:gap-0">
-                {/* LÍNEA DECORATIVA IZQUIERDA (Solo Tablet) */}
-                <span className="hidden md:flex md:flex-1 md:items-center md:gap-2 lg:hidden">
-                  <span className="to-secondary/30 h-[1.5px] flex-1 bg-gradient-to-r from-transparent" />
-                  <span className="bg-secondary/50 h-1.5 w-1.5 shrink-0 rotate-45" />
-                </span>
-
+              <span className="text-secondary font-serif md:mt-2 md:inline md:gap-0">
                 <span className="shrink-0">en El Salvador</span>
-
-                {/* LÍNEA DECORATIVA DERECHA (Solo Tablet) */}
-                <span className="hidden md:flex md:flex-1 md:items-center md:gap-2 lg:hidden">
-                  <span className="bg-secondary/50 h-1.5 w-1.5 shrink-0 rotate-45" />
-                  <span className="from-secondary/30 h-[1.5px] flex-1 bg-gradient-to-r to-transparent" />
-                </span>
               </span>
             </h1>
-          </div>
 
-          {/* IMAGEN HERO ÚNICA - OPTIMIZADA RESPONSIVE (Evita duplicación de descargas) */}
-          <div className="order-2 flex w-full max-w-sm self-center md:order-3 md:col-span-1 md:h-full md:max-w-none md:self-stretch lg:order-none lg:col-span-5 lg:row-span-2 lg:h-full lg:items-center">
-            <div className="border-primary/35 relative z-10 flex w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:h-full">
-              <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
-              <div className="relative aspect-[4/5] w-full rounded-xl md:aspect-auto md:h-full md:w-full">
-                {/* SSR static image — visible before JS hydrates (fixes LCP) */}
-                <StaticHeroImage sizes="(max-width:768px) 80vw, 40vw" />
-              </div>
-            </div>
-          </div>
-
-          {/* COLUMNA DE TEXTO Y ACCIONES */}
-          <div className="order-3 flex w-full flex-col items-start md:order-2 md:col-span-1 md:justify-center lg:order-none lg:col-span-7 lg:row-span-1">
             <p
-              className="animate-fade-in-up text-on-surface-variant font-body mb-5 w-full text-sm leading-relaxed sm:text-base md:text-base lg:mb-5 lg:text-lg"
+              className="animate-fade-in-up text-on-surface-variant font-body mb-4 w-full text-center text-sm leading-relaxed sm:text-base md:text-left md:text-base lg:mb-5 lg:text-lg"
               style={{ animationDelay: "150ms" }}
             >
               Empresa especializada en scrubs médicos y uniformes universitarios
@@ -217,14 +191,15 @@ export default async function HomePage() {
               colegios y empresas. Bordados, sublimación y envío a todo El
               Salvador. <strong>Desde $35 USD.</strong>
             </p>
-            <div className="mb-8 grid w-full grid-cols-2 gap-x-3 gap-y-2.5 md:grid-cols-1 lg:grid-cols-2">
+
+            <div className="mb-5 grid w-full grid-cols-2 gap-x-3 gap-y-2 md:grid-cols-1 lg:mb-6 lg:grid-cols-2 lg:gap-y-2.5">
               {heroTrustBadges.map((b, index) => (
                 <div
                   key={b.text}
                   className="animate-fade-in-up border-primary/5 text-secondary flex w-full items-center gap-2 rounded-full border bg-white/60 px-2.5 py-1.5 text-xs font-medium shadow-xs backdrop-blur-xs sm:text-sm"
                   style={{ animationDelay: `${index * 50 + 200}ms` }}
                 >
-                  <span className="material-symbols-outlined text-primary flex h-6 w-6 shrink-0 items-center justify-center text-[16px] font-bold">
+                  <span className="material-symbols-outlined text-primary flex h-5 w-5 shrink-0 items-center justify-center text-[15px] font-bold">
                     {b.icon}
                   </span>
                   <span className="leading-tight font-semibold text-gray-700">
@@ -233,11 +208,12 @@ export default async function HomePage() {
                 </div>
               ))}
             </div>
-            <div className="flex w-full flex-col gap-3 sm:flex-row sm:gap-4">
+
+            <div className="flex w-full flex-col gap-2.5 sm:flex-row sm:gap-4">
               <Link
                 href="/catalogo"
                 prefetch={false}
-                className="animate-fade-in-up btn-gradient font-body ambient-shadow flex h-12 w-full items-center justify-center rounded-md px-12 text-center text-base font-semibold whitespace-nowrap text-white transition hover:opacity-90 active:scale-[0.97] sm:flex-1"
+                className="animate-fade-in-up btn-gradient font-body ambient-shadow flex h-11 w-full items-center justify-center rounded-md px-10 text-center text-base font-semibold whitespace-nowrap text-white transition hover:opacity-90 active:scale-[0.97] sm:h-12 sm:flex-1"
                 style={{ animationDelay: "400ms" }}
               >
                 Catálogo
@@ -246,11 +222,21 @@ export default async function HomePage() {
                 href="https://maps.app.goo.gl/XSs2vgjLG8uvJGoQ7"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="animate-fade-in-up border-outline text-primary hover:bg-surface-variant/50 flex h-12 w-full items-center justify-center rounded-md border bg-transparent px-12 text-center font-serif text-base font-medium whitespace-nowrap transition active:scale-[0.97] sm:flex-1"
+                className="animate-fade-in-up border-outline text-primary hover:bg-surface-variant/50 flex h-11 w-full items-center justify-center rounded-md border bg-transparent px-10 text-center font-serif text-base font-medium whitespace-nowrap transition active:scale-[0.97] sm:h-12 sm:flex-1"
                 style={{ animationDelay: "450ms" }}
               >
                 Cómo llegar
               </a>
+            </div>
+          </div>
+
+          {/* COLUMNA DERECHA: IMAGEN HERO ESTÁTICA WEBP (Ajustada al alto máximo disponible) */}
+          <div className="order-2 flex h-full max-h-full w-full max-w-sm self-center justify-self-center overflow-hidden md:order-2 md:col-span-1 md:max-w-none lg:order-none lg:col-span-5 lg:items-center lg:justify-center">
+            <div className="border-primary/35 relative z-10 flex h-full max-h-[calc(100dvh-100px)] w-full flex-col items-center justify-center rounded-2xl border bg-white p-3 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] sm:p-4">
+              <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
+              <div className="relative aspect-[4/5] h-full max-h-full w-full overflow-hidden rounded-xl">
+                <StaticHeroImage sizes="(max-width:768px) 80vw, 40vw" />
+              </div>
             </div>
           </div>
         </div>
