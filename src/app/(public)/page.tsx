@@ -169,7 +169,7 @@ export default async function HomePage() {
       />
 
       {/* ═══ HERO (100% alto de vista rígido lg:h-[calc(100dvh-56px)] en desktop; solo cambia a h-auto si el alto colapsa) ═══ */}
-      <section className="bg-surface-container-low @max-h-[750px]:h-auto @max-h-[750px]:min-h-[calc(100dvh-56px)] @max-h-[750px]:overflow-visible @max-h-[750px]:py-8 relative flex min-h-[calc(100dvh-56px)] flex-col justify-center px-5 pt-4 pb-10 md:min-h-0 md:px-8 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:overflow-hidden lg:pb-4">
+      <section className="bg-surface @max-h-[750px]:h-auto @max-h-[750px]:min-h-[calc(100dvh-56px)] @max-h-[750px]:overflow-visible @max-h-[750px]:py-8 relative flex min-h-[calc(100dvh-56px)] flex-col justify-center px-5 pt-4 pb-10 md:min-h-0 md:px-8 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:overflow-hidden lg:pb-4">
         <div className="mx-auto grid h-full w-full max-w-screen-2xl grid-cols-1 items-center gap-x-8 gap-y-6 md:grid-cols-2 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-0">
           {/* COLUMNA IZQUIERDA: TÍTULO, DESCRIPCIÓN, BADGES Y BOTONES UNIFICADOS (Sin brechas de Grid) */}
           <div className="z-10 order-1 flex w-full flex-col items-start justify-center md:col-span-2 lg:order-none lg:col-span-7">
