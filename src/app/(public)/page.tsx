@@ -173,7 +173,7 @@ export default async function HomePage() {
         <div className="mx-auto grid h-full w-full max-w-screen-2xl grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2 lg:grid-cols-12 lg:items-center lg:gap-x-16 lg:gap-y-0">
           {/* TÍTULO HERO (Ocupa ancho completo en móvil/tablet, 7 cols en desktop) */}
           <div className="z-10 order-1 w-full md:col-span-2 lg:order-none lg:col-span-7 lg:row-span-1">
-            <h1 className="animate-fade-in-up text-primary mb-6 w-full text-center font-serif text-3xl leading-[1.15] tracking-tight sm:text-4xl md:mb-10 md:flex md:flex-col md:items-center md:text-5xl lg:mb-6 lg:block lg:text-left lg:text-5xl xl:text-6xl xl:leading-[1.1]">
+            <h1 className="animate-fade-in-up text-primary mb-5 w-full text-center font-serif text-2xl leading-[1.15] tracking-tight sm:text-3xl md:mb-8 md:flex md:flex-col md:items-center md:text-4xl lg:mb-5 lg:block lg:text-left lg:text-4xl xl:text-5xl xl:leading-[1.1]">
               <span className="text-center lg:text-left">
                 Scrubs y Uniformes para Salud y Universidad{" "}
               </span>
@@ -209,7 +209,7 @@ export default async function HomePage() {
           {/* COLUMNA DE TEXTO Y ACCIONES */}
           <div className="order-3 flex w-full flex-col items-start md:order-2 md:col-span-1 md:justify-center lg:order-none lg:col-span-7 lg:row-span-1">
             <p
-              className="animate-fade-in-up text-on-surface-variant font-body mb-6 w-full text-base leading-relaxed md:text-lg lg:mb-6 lg:text-xl"
+              className="animate-fade-in-up text-on-surface-variant font-body mb-5 w-full text-sm leading-relaxed sm:text-base md:text-base lg:mb-5 lg:text-lg"
               style={{ animationDelay: "150ms" }}
             >
               Empresa especializada en scrubs médicos y uniformes universitarios
