@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { HeroImageCarousel } from "@/components/ui/HeroImageCarousel";
 import { StaticHeroImage } from "@/components/ui/StaticHeroImage";
 import {
   schemaFAQ,
@@ -203,13 +202,6 @@ export default async function HomePage() {
               <div className="relative aspect-[4/5] w-full rounded-xl md:aspect-auto md:h-full md:w-full">
                 {/* SSR static image — visible before JS hydrates (fixes LCP) */}
                 <StaticHeroImage sizes="(max-width:768px) 80vw, 40vw" />
-                {/* Carousel progressively replaces once hydrated */}
-                <div className="absolute inset-0">
-                  <HeroImageCarousel
-                    sizes="(max-width:768px) 80vw, 40vw"
-                    priority
-                  />
-                </div>
               </div>
             </div>
           </div>
