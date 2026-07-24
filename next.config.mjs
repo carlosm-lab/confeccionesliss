@@ -6,6 +6,9 @@ import path from 'path';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const nextConfig = {
+  experimental: {
+    optimizePackageImports: ['lucide-react'],
+  },
   turbopack: {
     // Fija el workspace root explícitamente para evitar que Turbopack
     // detecte erróneamente .next/dev/ como root (los package.json que
