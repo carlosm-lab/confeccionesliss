@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @plugin "@designbycode/tailwindcss-text-stroke";
-@import "shadcn/tailwind.css";
 
 @keyframes fadeIn {
   from {
