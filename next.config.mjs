@@ -74,7 +74,7 @@ const nextConfig = {
           {
             key: 'Link',
             value:
-              '</images/uniformes/portada-640.webp>; rel=preload; as=image; fetchpriority=high',
+              '</images/hero/hero-home-440.webp>; rel=preload; as=image; fetchpriority=high',
           },
         ],
       },
