@@ -225,7 +225,7 @@ const ICON_MAP: Record<string, React.ComponentType<any>> = {
   favorite: Heart,
   favorite_border: Heart,
   local_shipping: Truck,
-  payments: Wallet,
+  payments: CreditCard,
   attach_money: DollarSign,
   savings: PiggyBank,
   local_offer: Tag,
@@ -234,6 +234,7 @@ const ICON_MAP: Record<string, React.ComponentType<any>> = {
   add_photo_alternate: Camera,
   photo_camera: Camera,
   credit_card: CreditCard,
+  wallet: Wallet,
 
   // Product / Catalog
   draw: Edit3,
