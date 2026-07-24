@@ -14,13 +14,17 @@ export function StaticHeroImage({ sizes: _sizes }: StaticHeroImageProps) {
       <link
         rel="preload"
         as="image"
-        href="/images/hero/hero-home-640.webp"
-        imageSrcSet="/images/hero/hero-home-640.webp 640w, /images/hero/hero-home-800.webp 800w, /images/hero/hero-home.webp 1122w"
-        imageSizes="(max-width:768px) 80vw, 40vw"
+        href="/images/hero/hero-home-440.webp"
+        imageSrcSet="/images/hero/hero-home-440.webp 440w, /images/hero/hero-home-640.webp 640w, /images/hero/hero-home-800.webp 800w, /images/hero/hero-home.webp 1122w"
+        imageSizes="(max-width:480px) 100vw, (max-width:768px) 80vw, 40vw"
         fetchPriority="high"
       />
       <div className="absolute inset-0 overflow-hidden rounded-xl">
         <picture>
+          <source
+            media="(max-width: 480px)"
+            srcSet="/images/hero/hero-home-440.webp"
+          />
           <source
             media="(max-width: 640px)"
             srcSet="/images/hero/hero-home-640.webp"
