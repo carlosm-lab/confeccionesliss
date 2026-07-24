@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import type { LucideProps } from "lucide-react";
 import {
   Home,
   Store,
@@ -57,7 +58,6 @@ import {
   Trash2,
   Check,
   CheckSquare,
-  CheckCheck,
   Info,
   AlertTriangle,
   AlertCircle,
@@ -79,6 +79,7 @@ import {
   LogIn,
   BadgeCheck,
   Tag,
+  Tags,
   Gift,
   FileText,
   Sliders,
@@ -99,7 +100,6 @@ import {
   HardHat,
   BookOpen,
   Pin,
-  Star as StarOutline,
   Edit,
   Edit3,
   Power,
@@ -107,7 +107,6 @@ import {
   Zap,
   ShieldX,
   ShieldUser,
-  Tags,
   Ban,
   Blocks,
   ListChecks,
@@ -139,25 +138,24 @@ import {
   PiggyBank,
   TrendingUp,
   Video,
-  Rows,
-  type LucideProps,
+  Rows3,
 } from "lucide-react";
 
-// ─── Type ───────────────────────────────────────────────────────────────────
+// ─── Type ─────────────────────────────────────────────────────────────────────
 
 type IconName = string;
 
 interface IconProps extends Omit<LucideProps, "ref" | "fill"> {
   name: IconName;
   /** true = fill currentColor, false = none (default) */
-  fill?: boolean;
+  fill?: boolean | string;
   className?: string;
   size?: number | string;
 }
 
-// ─── Map: Material Symbols / String name → Lucide component ─────────────
+// ─── Map: Material Symbols / String name → Lucide component ──────────────────
 
-const ICON_MAP: Record<string, React.ComponentType<LucideProps>> = {
+const ICON_MAP: Record<string, React.ComponentType<any>> = {
   // Navigation & Layout
   home: Home,
   storefront: Store,
@@ -235,6 +233,7 @@ const ICON_MAP: Record<string, React.ComponentType<LucideProps>> = {
   inventory_2: Package,
   add_photo_alternate: Camera,
   photo_camera: Camera,
+  credit_card: CreditCard,
 
   // Product / Catalog
   draw: Edit3,
@@ -361,7 +360,7 @@ const ICON_MAP: Record<string, React.ComponentType<LucideProps>> = {
   // Stars
   star: Star,
   star_half: StarHalf,
-  star_outline: StarOutline,
+  star_outline: Star,
 
   // Interactive & Features
   auto_awesome: Sparkles,
@@ -377,11 +376,17 @@ const ICON_MAP: Record<string, React.ComponentType<LucideProps>> = {
   radar: Radar,
   rocket_launch: Rocket,
   bookmark: Bookmark,
-  view_agenda: Rows,
+  view_agenda: Rows3,
   terminal: Terminal,
+
+  // Extra
+  eye: Eye,
+  eye_off: EyeOff,
+  zap: Zap,
+  shield_user: ShieldUser,
 };
 
-// ─── Component ──────────────────────────────────────────────────────────────
+// ─── Component ────────────────────────────────────────────────────────────────
 
 export function Icon({
   name,
