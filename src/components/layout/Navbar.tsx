@@ -456,7 +456,7 @@ export function Navbar() {
               <button
                 type="button"
                 onClick={openSearch}
-                aria-label="Abrir buscador"
+                aria-label="Buscar producto... — Abrir buscador"
                 className="border-primary/10 hidden cursor-pointer items-center gap-2.5 rounded-full border bg-white px-4 py-2 shadow-[0_4px_12px_-1px_rgba(20,48,103,0.2),0_2px_6px_-1px_rgba(20,48,103,0.15)] transition-all hover:shadow-[0_8px_20px_-3px_rgba(20,48,103,0.3),0_4px_10px_-2px_rgba(20,48,103,0.2)] md:flex"
               >
                 <Icon
@@ -474,7 +474,7 @@ export function Navbar() {
               <button
                 type="button"
                 onClick={openSearch}
-                aria-label="Abrir buscador"
+                aria-label="Buscar producto... — Abrir buscador"
                 className="border-primary/10 flex min-w-0 flex-1 cursor-pointer items-center gap-2 rounded-full border bg-white px-3 py-2 shadow-[0_4px_12px_-1px_rgba(20,48,103,0.2),0_2px_6px_-1px_rgba(20,48,103,0.15)] transition-all hover:shadow-[0_8px_20px_-3px_rgba(20,48,103,0.3),0_4px_10px_-2px_rgba(20,48,103,0.2)] md:hidden"
               >
                 <Icon

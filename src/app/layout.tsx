@@ -100,11 +100,6 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <link
-          rel="preconnect"
-          href="https://cvbdqsxjfrbwovzpydng.supabase.co"
-          crossOrigin="anonymous"
-        />
         {/*
          * Preload explícito del hero image (LCP) — emitido desde StaticHeroImage.tsx
          * (Server Component) usando ReactDOM.preload() para evitar aplicarlo globalmente.

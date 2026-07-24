@@ -174,7 +174,7 @@ export default async function HomePage() {
         <div className="mx-auto grid h-full w-full max-w-screen-2xl grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2 lg:grid-cols-12 lg:items-center lg:gap-x-16 lg:gap-y-0">
           {/* TÍTULO HERO (Ocupa ancho completo en móvil/tablet, 7 cols en desktop) */}
           <div className="z-10 order-1 w-full md:col-span-2 lg:order-none lg:col-span-7 lg:row-span-1">
-            <h1 className="animate-fade-in-up text-primary mb-6 w-full text-center font-serif text-2xl leading-[1.15] tracking-tight sm:text-3xl md:mb-8 md:flex md:flex-col md:items-center md:text-4xl lg:mb-4 lg:block lg:text-left lg:text-4xl xl:text-5xl xl:leading-[1.1]">
+            <h1 className="text-primary mb-6 w-full text-center font-serif text-2xl leading-[1.15] tracking-tight sm:text-3xl md:mb-8 md:flex md:flex-col md:items-center md:text-4xl lg:mb-4 lg:block lg:text-left lg:text-4xl xl:text-5xl xl:leading-[1.1]">
               <span className="text-center lg:text-left">
                 Scrubs y Uniformes para Salud y Universidad{" "}
               </span>
@@ -208,21 +208,17 @@ export default async function HomePage() {
 
           {/* COLUMNA DE TEXTO Y ACCIONES (ESTRUCTURA ORIGINAL 3d12cbd) */}
           <div className="order-3 flex w-full flex-col items-start md:order-2 md:col-span-1 md:justify-center lg:order-none lg:col-span-7 lg:row-span-1">
-            <p
-              className="animate-fade-in-up text-on-surface-variant font-body mb-5 w-full text-sm leading-relaxed sm:text-base md:text-base lg:mb-5 lg:text-lg"
-              style={{ animationDelay: "150ms" }}
-            >
+            <p className="text-on-surface-variant font-body mb-5 w-full text-sm leading-relaxed sm:text-base md:text-base lg:mb-5 lg:text-lg">
               Empresa especializada en scrubs médicos y uniformes universitarios
               en tela Sincatex y Lino Oxford. Uniformes para UNIVO, UNAB, UGB,
               colegios y empresas. Bordados, sublimación y envío a todo El
               Salvador. <strong>Desde $35 USD.</strong>
             </p>
             <div className="mb-6 grid w-full grid-cols-2 gap-x-3 gap-y-2.5 md:grid-cols-1 lg:grid-cols-2">
-              {heroTrustBadges.map((b, index) => (
+              {heroTrustBadges.map((b) => (
                 <div
                   key={b.text}
-                  className="animate-fade-in-up border-primary/5 text-secondary flex w-full items-center gap-2 rounded-full border bg-white/60 px-2.5 py-1.5 text-xs font-medium shadow-xs backdrop-blur-xs sm:text-sm"
-                  style={{ animationDelay: `${index * 50 + 200}ms` }}
+                  className="border-primary/5 text-secondary flex w-full items-center gap-2 rounded-full border bg-white/60 px-2.5 py-1.5 text-xs font-medium shadow-xs backdrop-blur-xs sm:text-sm"
                 >
                   <Icon
                     name={b.icon}
@@ -240,16 +236,14 @@ export default async function HomePage() {
                 href="https://maps.app.goo.gl/XSs2vgjLG8uvJGoQ7"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="animate-fade-in-up border-outline text-primary hover:bg-surface-variant/50 flex h-11 w-full items-center justify-center rounded-md border bg-transparent px-10 text-center font-serif text-base font-medium whitespace-nowrap transition active:scale-[0.97] sm:h-12 sm:flex-1"
-                style={{ animationDelay: "400ms" }}
+                className="border-outline text-primary hover:bg-surface-variant/50 flex h-11 w-full items-center justify-center rounded-md border bg-transparent px-10 text-center font-serif text-base font-medium whitespace-nowrap transition active:scale-[0.97] sm:h-12 sm:flex-1"
               >
                 Cómo llegar
               </a>
               <Link
                 href="/catalogo"
                 prefetch={false}
-                className="animate-fade-in-up btn-gradient font-body ambient-shadow flex h-11 w-full items-center justify-center rounded-md px-10 text-center text-base font-semibold whitespace-nowrap text-white transition hover:opacity-90 active:scale-[0.97] sm:h-12 sm:flex-1"
-                style={{ animationDelay: "450ms" }}
+                className="btn-gradient font-body ambient-shadow flex h-11 w-full items-center justify-center rounded-md px-10 text-center text-base font-semibold whitespace-nowrap text-white transition hover:opacity-90 active:scale-[0.97] sm:h-12 sm:flex-1"
               >
                 Catálogo
               </Link>
