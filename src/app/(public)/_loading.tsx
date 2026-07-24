@@ -140,7 +140,7 @@ export default function HomeLoading() {
   }, []);
 
   return (
-    <div aria-busy="true" aria-label="Cargando página de inicio">
+    <div role="status" aria-busy="true" aria-label="Cargando página de inicio">
       <HeroSkeleton />
       <ProductGridSkeleton />
       <SectionSkeleton cols={4} />

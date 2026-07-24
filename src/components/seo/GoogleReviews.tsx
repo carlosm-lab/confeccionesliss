@@ -68,6 +68,7 @@ export function GoogleReviews({ reviews }: GoogleReviewsProps) {
               <span className="text-xl font-bold text-slate-800">4.8</span>
               <div
                 className="flex items-center gap-1 text-amber-500"
+                role="img"
                 aria-label="4.8 de 5 estrellas"
               >
                 {[1, 2, 3, 4].map((s) => (
