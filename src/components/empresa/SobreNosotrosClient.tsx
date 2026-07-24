@@ -1,5 +1,6 @@
-"use client";
+﻿"use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 import { motion, Variants } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -314,9 +315,11 @@ export default function SobreNosotrosClient() {
             >
               <ul className="space-y-6">
                 <li className="flex items-start gap-4">
-                  <span className="material-symbols-outlined mt-0.5 shrink-0 text-2xl text-[#143067]">
-                    check_box
-                  </span>
+                  <Icon
+                    name="check_box"
+                    size={24}
+                    className="mt-0.5 shrink-0 text-[#143067]"
+                  />
                   <div>
                     <h4 className="font-sans font-bold text-[#143067]">
                       Precisión a escala
@@ -329,9 +332,11 @@ export default function SobreNosotrosClient() {
                   </div>
                 </li>
                 <li className="flex items-start gap-4">
-                  <span className="material-symbols-outlined mt-0.5 shrink-0 text-2xl text-[#143067]">
-                    inventory_2
-                  </span>
+                  <Icon
+                    name="inventory_2"
+                    size={24}
+                    className="mt-0.5 shrink-0 text-[#143067]"
+                  />
                   <div>
                     <h4 className="font-sans font-bold text-[#143067]">
                       Control logístico
@@ -343,9 +348,11 @@ export default function SobreNosotrosClient() {
                   </div>
                 </li>
                 <li className="flex items-start gap-4">
-                  <span className="material-symbols-outlined mt-0.5 shrink-0 text-2xl font-bold text-[#143067]">
-                    workspace_premium
-                  </span>
+                  <Icon
+                    name="workspace_premium"
+                    size={24}
+                    className="mt-0.5 shrink-0 font-bold text-[#143067]"
+                  />
                   <div>
                     <h4 className="font-sans font-bold text-[#143067]">
                       Estándar de durabilidad
@@ -652,9 +659,11 @@ export default function SobreNosotrosClient() {
               transition={{ duration: 0.8 }}
             >
               <div className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-4xl font-bold text-[#143067]">
-                  monitoring
-                </span>
+                <Icon
+                  name="monitoring"
+                  size={36}
+                  className="font-bold text-[#143067]"
+                />
                 <h4 className="font-serif text-lg font-bold">
                   Presencia digital regional
                 </h4>

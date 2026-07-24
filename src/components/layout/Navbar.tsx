@@ -26,6 +26,7 @@ import { useFavorites } from "@/context/FavoritesContext";
 import { useAuth } from "@/context/AuthContext";
 import { useNotifications } from "@/context/NotificationContext";
 import { clientEnv } from "@/lib/clientEnv";
+import { Icon } from "@/components/ui/icons/Icon";
 
 interface NavLink {
   href: string;
@@ -346,7 +347,7 @@ export function Navbar() {
       <header
         data-nosnippet
         className={cn(
-          "nav-scroll-hide sticky top-0 z-50 bg-white/90 shadow-sm backdrop-blur-md",
+          "nav-scroll-hide sticky top-0 z-50 w-full max-w-full bg-white/90 shadow-sm backdrop-blur-md",
           !scrollVisible && "nav-scroll-hidden-top"
         )}
       >
@@ -454,12 +455,12 @@ export function Navbar() {
                 aria-label="Abrir buscador"
                 className="border-primary/10 hidden cursor-pointer items-center gap-2.5 rounded-full border bg-white px-4 py-2 shadow-[0_4px_12px_-1px_rgba(20,48,103,0.2),0_2px_6px_-1px_rgba(20,48,103,0.15)] transition-all hover:shadow-[0_8px_20px_-3px_rgba(20,48,103,0.3),0_4px_10px_-2px_rgba(20,48,103,0.2)] md:flex"
               >
-                <span
-                  className="material-symbols-outlined text-primary text-[20px]"
+                <Icon
+                  name="search"
+                  size={20}
+                  className="text-primary shrink-0"
                   aria-hidden="true"
-                >
-                  search
-                </span>
+                />
                 <span className="w-36 min-w-0 flex-1 overflow-hidden lg:w-44 xl:w-56">
                   <TypewriterPlaceholder />
                 </span>
@@ -472,12 +473,12 @@ export function Navbar() {
                 aria-label="Abrir buscador"
                 className="border-primary/10 flex min-w-0 flex-1 cursor-pointer items-center gap-2 rounded-full border bg-white px-3 py-2 shadow-[0_4px_12px_-1px_rgba(20,48,103,0.2),0_2px_6px_-1px_rgba(20,48,103,0.15)] transition-all hover:shadow-[0_8px_20px_-3px_rgba(20,48,103,0.3),0_4px_10px_-2px_rgba(20,48,103,0.2)] md:hidden"
               >
-                <span
-                  className="material-symbols-outlined text-primary shrink-0 text-[20px]"
+                <Icon
+                  name="search"
+                  size={20}
+                  className="text-primary shrink-0"
                   aria-hidden="true"
-                >
-                  search
-                </span>
+                />
                 <span className="min-w-0 flex-1 overflow-hidden">
                   <TypewriterPlaceholder />
                 </span>
@@ -496,12 +497,11 @@ export function Navbar() {
                     aria-hidden="true"
                   />
                 )}
-                <span
-                  className="material-symbols-outlined text-[24px]"
+                <Icon
+                  name={isMenuOpen ? "close" : "menu"}
+                  size={22}
                   aria-hidden="true"
-                >
-                  {isMenuOpen ? "close" : "menu"}
-                </span>
+                />
               </button>
 
               {/* Mobile dropdown menu */}
@@ -535,12 +535,7 @@ export function Navbar() {
                       onClick={handleCartClick}
                       className="border-primary/10 text-primary relative flex size-10 cursor-pointer items-center justify-center rounded-full border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 dark:bg-slate-800"
                     >
-                      <span
-                        className="material-symbols-outlined text-[22px]"
-                        aria-hidden="true"
-                      >
-                        shopping_cart
-                      </span>
+                      <Icon name="shopping_cart" size={20} aria-hidden="true" />
                       {safeCartCount > 0 && (
                         <span className="bg-primary absolute -top-1.5 -right-1.5 flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-black text-white ring-2 ring-white">
                           {safeCartCount > 99 ? "99+" : safeCartCount}
@@ -555,16 +550,12 @@ export function Navbar() {
                       onClick={handleFavoritesClick}
                       className="border-primary/10 text-primary relative flex size-10 cursor-pointer items-center justify-center rounded-full border bg-white shadow-[0_2px_8px_-2px_rgba(20,48,103,0.12),0_1px_4px_-1px_rgba(20,48,103,0.08)] transition-all hover:-translate-y-0.5 hover:opacity-80 dark:bg-slate-800"
                     >
-                      <span
-                        className="material-symbols-outlined text-[22px]"
+                      <Icon
+                        name="favorite"
+                        size={20}
+                        fill={safeFavoritesCount > 0}
                         aria-hidden="true"
-                        style={{
-                          fontVariationSettings:
-                            safeFavoritesCount > 0 ? "'FILL' 1" : "'FILL' 0",
-                        }}
-                      >
-                        favorite
-                      </span>
+                      />
                       {safeFavoritesCount > 0 && (
                         <span className="bg-primary absolute -top-1.5 -right-1.5 flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-black text-white ring-2 ring-white">
                           {safeFavoritesCount > 99 ? "99+" : safeFavoritesCount}
@@ -594,12 +585,12 @@ export function Navbar() {
                           quality={70}
                         />
                       ) : (
-                        <span
-                          className="material-symbols-outlined text-primary text-[24px]"
+                        <Icon
+                          name={isMounted && user ? "user" : "person"}
+                          size={20}
+                          className="text-primary"
                           aria-hidden="true"
-                        >
-                          {isMounted && user ? "account_circle" : "person"}
-                        </span>
+                        />
                       )}
                     </button>
                   </div>
@@ -638,12 +629,11 @@ export function Navbar() {
                                   : "hover:bg-primary/5 hover:text-primary text-gray-700"
                               )}
                             >
-                              <span
-                                className="material-symbols-outlined text-[18px]"
+                              <Icon
+                                name={link.mobileIcon}
+                                size={18}
                                 aria-hidden="true"
-                              >
-                                {link.mobileIcon}
-                              </span>
+                              />
                               {link.label}
                             </Link>
                           </li>
@@ -672,12 +662,11 @@ export function Navbar() {
                                   : "hover:bg-primary/5 hover:text-primary text-gray-700"
                               )}
                             >
-                              <span
-                                className="material-symbols-outlined text-[18px]"
+                              <Icon
+                                name={link.mobileIcon}
+                                size={18}
                                 aria-hidden="true"
-                              >
-                                {link.mobileIcon}
-                              </span>
+                              />
                               {link.label}
                             </Link>
                           </li>
@@ -698,12 +687,7 @@ export function Navbar() {
                             "bg-primary text-on-primary shadow-sm"
                         )}
                       >
-                        <span
-                          className="material-symbols-outlined text-[18px]"
-                          aria-hidden="true"
-                        >
-                          alternate_email
-                        </span>
+                        <Icon name="mail" size={18} aria-hidden="true" />
                         Redes Sociales
                       </Link>
                     </li>
@@ -718,12 +702,7 @@ export function Navbar() {
                             "bg-primary text-on-primary shadow-sm"
                         )}
                       >
-                        <span
-                          className="material-symbols-outlined text-[18px]"
-                          aria-hidden="true"
-                        >
-                          update
-                        </span>
+                        <Icon name="refresh" size={18} aria-hidden="true" />
                         Actualizaciones
                       </Link>
                     </li>

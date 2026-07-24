@@ -1,5 +1,6 @@
 import { socialLinks } from "@/lib/seo-data";
 import { siteConfig } from "@/config/site";
+import { Icon } from "@/components/ui/icons/Icon";
 import {
   SiFacebook,
   SiGooglemaps,
@@ -51,7 +52,7 @@ export function NapContacto() {
             style={{ animationDelay: "150ms" }}
           >
             <div className="bg-primary text-on-primary flex h-12 w-12 shrink-0 items-center justify-center rounded-full transition-transform active:scale-95">
-              <span className="material-symbols-outlined">location_on</span>
+              <Icon name="location_on" size={24} />
             </div>
             <div>
               <h3 className="text-primary mb-1 font-serif text-lg font-semibold">
@@ -82,7 +83,7 @@ export function NapContacto() {
             style={{ animationDelay: "200ms" }}
           >
             <div className="bg-primary text-on-primary flex h-12 w-12 shrink-0 items-center justify-center rounded-full transition-transform active:scale-95">
-              <span className="material-symbols-outlined">phone</span>
+              <Icon name="phone" size={24} />
             </div>
             <div>
               <h3 className="text-primary mb-1 font-serif text-lg font-semibold">
@@ -126,7 +127,7 @@ export function NapContacto() {
             style={{ animationDelay: "250ms" }}
           >
             <div className="bg-primary text-on-primary flex h-12 w-12 shrink-0 items-center justify-center rounded-full transition-transform active:scale-95">
-              <span className="material-symbols-outlined">schedule</span>
+              <Icon name="schedule" size={24} />
             </div>
             <div>
               <h3 className="text-primary mb-1 font-serif text-lg font-semibold">

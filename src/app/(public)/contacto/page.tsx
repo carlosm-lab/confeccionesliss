@@ -1,3 +1,4 @@
+import { Icon } from "@/components/ui/icons/Icon";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
@@ -283,12 +284,7 @@ export default function ContactoPage() {
                     <div
                       className={`${ch.iconBg} ${ch.iconColor} flex h-12 w-12 shrink-0 items-center justify-center rounded-full`}
                     >
-                      <span
-                        className="material-symbols-outlined text-xl"
-                        aria-hidden="true"
-                      >
-                        {ch.icon}
-                      </span>
+                      <Icon name={ch.icon} size={20} aria-hidden="true" />
                     </div>
                     <div className="min-w-0">
                       <h3 className="text-sm font-bold text-gray-900">
@@ -317,12 +313,11 @@ export default function ContactoPage() {
                           }`}
                         >
                           {"descIcon" in ch && ch.descIcon && (
-                            <span
-                              className="material-symbols-outlined text-xs"
+                            <Icon
+                              name={ch.descIcon}
+                              size={12}
                               aria-hidden="true"
-                            >
-                              {ch.descIcon}
-                            </span>
+                            />
                           )}
                           {ch.description}
                         </p>
@@ -401,12 +396,12 @@ export default function ContactoPage() {
               style={{ animationDelay: "500ms" }}
             >
               <div className="text-primary flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-blue-50">
-                <span
-                  className="material-symbols-outlined text-2xl"
+                <Icon
+                  name="location_on"
+                  size={24}
+                  className="text-2xl"
                   aria-hidden="true"
-                >
-                  location_on
-                </span>
+                />
               </div>
               <div>
                 <h3 className="text-primary mb-2 font-semibold">
@@ -424,12 +419,12 @@ export default function ContactoPage() {
                   rel="noopener noreferrer"
                   className="text-primary mt-3 inline-flex items-center gap-1 text-sm font-medium transition-transform hover:underline active:scale-[0.98]"
                 >
-                  <span
-                    className="material-symbols-outlined text-base"
+                  <Icon
+                    name="near_me"
+                    size={16}
+                    className="text-base"
                     aria-hidden="true"
-                  >
-                    near_me
-                  </span>
+                  />
                   Abrir en Google Maps
                 </a>
               </div>
@@ -482,12 +477,12 @@ export default function ContactoPage() {
                   ].map((item) => (
                     <div key={item.icon} className="flex items-center gap-3">
                       <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10">
-                        <span
-                          className="material-symbols-outlined text-[18px] text-white/90"
+                        <Icon
+                          name={item.icon}
+                          size={18}
+                          className="text-white/90"
                           aria-hidden="true"
-                        >
-                          {item.icon}
-                        </span>
+                        />
                       </span>
                       <p className="text-sm font-medium text-white/80">
                         {item.text}

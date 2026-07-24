@@ -1,5 +1,6 @@
-"use client";
+﻿"use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -264,9 +265,10 @@ export default function CertificacionesClient() {
                 <div className="space-y-4 font-sans text-sm text-[#444650]">
                   {/* Certificaciones formales */}
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined font-bold text-[#143067] select-none">
-                      verified_user
-                    </span>
+                    <Icon
+                      name="verified_user"
+                      className="font-bold text-[#143067] select-none"
+                    />
                     <div>
                       <strong className="block text-[#191c1e]">
                         Técnico Certificado en Corte y Confección
@@ -278,9 +280,10 @@ export default function CertificacionesClient() {
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined font-bold text-[#143067] select-none">
-                      verified_user
-                    </span>
+                    <Icon
+                      name="verified_user"
+                      className="font-bold text-[#143067] select-none"
+                    />
                     <div>
                       <strong className="block text-[#191c1e]">
                         Creación de Prendas Médicas
@@ -292,9 +295,10 @@ export default function CertificacionesClient() {
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined font-bold text-[#143067] select-none">
-                      verified_user
-                    </span>
+                    <Icon
+                      name="verified_user"
+                      className="font-bold text-[#143067] select-none"
+                    />
                     <div>
                       <strong className="block text-[#191c1e]">
                         Confección de Ropa Interior
@@ -305,9 +309,10 @@ export default function CertificacionesClient() {
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined font-bold text-[#143067] select-none">
-                      verified_user
-                    </span>
+                    <Icon
+                      name="verified_user"
+                      className="font-bold text-[#143067] select-none"
+                    />
                     <div>
                       <strong className="block text-[#191c1e]">
                         Manejo de Equipo Industrial
@@ -320,9 +325,10 @@ export default function CertificacionesClient() {
                   </div>
                   {/* Experiencia práctica */}
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined font-bold text-[#143067]/60 select-none">
-                      work_history
-                    </span>
+                    <Icon
+                      name="work_history"
+                      className="font-bold text-[#143067]/60 select-none"
+                    />
                     <div>
                       <strong className="block text-[#191c1e]">
                         Experiencia en Confección de Uniformes Institucionales
@@ -335,9 +341,10 @@ export default function CertificacionesClient() {
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined font-bold text-[#143067]/60 select-none">
-                      work_history
-                    </span>
+                    <Icon
+                      name="work_history"
+                      className="font-bold text-[#143067]/60 select-none"
+                    />
                     <div>
                       <strong className="block text-[#191c1e]">
                         Experiencia en Producción de Gran Volumen

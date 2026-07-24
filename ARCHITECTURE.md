@@ -16,6 +16,19 @@ This document tracks important architectural decisions made during the project l
 
 ## Logged Decisions
 
+**Date:** 2026-07-23
+**Decision:** Migración 100% Completa de Iconos a SVG Inline (`lucide-react` + `<Icon />`) y Eliminación Total de FOUT
+**Context:** Se identificó que la carga diferida de la fuente de Google Fonts (`Material Symbols Outlined` ~3.8 MB) generaba un parpadeo de texto (FOUT) al cargar o recargar el sitio web, haciendo que los iconos se mostraran temporalmente como texto llano (ej. "shopping_bag", "favorite") hasta que la fuente terminaba de descargarse.
+**Decision:**
+
+- Se creó el componente centralizado `<Icon />` en `src/components/ui/icons/Icon.tsx` respaldado por `lucide-react`.
+- Se migraron los 300+ usos de `material-symbols-outlined` distribuidos en 63+ archivos de toda la aplicación (navbar, footer, catálogo, servicios, modales, carrito, admin, etc.) a SVG inline utilizando `<Icon />`.
+- Se configuró un mapa dinámico con más de 100 equivalencias de nombres de iconos de Material Symbols a Lucide SVG con un fallback seguro.
+- Se desactivó por completo la descarga de fuentes externas (`MaterialSymbolsLoader`), eliminando 3.8 MB de descarga de fuentes, erradicando el FOUT al 100% y mejorando los puntajes de LCP/FCP.
+  **Consequences:** Renderizado instantáneo de iconos sin FOUT, cero peticiones HTTP de fuentes externas, SVG pixel-perfect escalables vectorialmente y compatibilidad total con Server-Side Rendering / SSG.
+
+---
+
 **Date:** 2026-07-06
 **Decision:** Prohibición Estricta de SSR — Estrategia de SSG Puro + Revalidación Bajo Demanda (On-Demand Revalidation)
 **Context:** El cliente exige que la plataforma funcione en su totalidad mediante SSG (Static Site Generation), eliminando cualquier ruta SSR (`force-dynamic`). Se realizó una auditoría completa del proyecto para garantizar que todas las páginas se generen estáticamente y se revaliden bajo demanda (`revalidatePath`).

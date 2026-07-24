@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -431,12 +432,10 @@ export function CartDrawer() {
       onClick={onClick}
       className="group mb-5 flex w-max items-center gap-1 text-sm font-medium text-[var(--color-on-surface-variant)] transition-colors duration-200 hover:text-[var(--color-primary)]"
     >
-      <span
-        className="material-symbols-outlined transition-transform duration-200 group-hover:-translate-x-0.5"
-        style={{ fontSize: "18px" }}
-      >
-        arrow_back
-      </span>
+      <Icon
+        name="arrow_back"
+        className="transition-transform duration-200 group-hover:-translate-x-0.5"
+      />
       Atrás
     </button>
   );
@@ -501,12 +500,7 @@ export function CartDrawer() {
               className="flex h-8 w-8 items-center justify-center rounded-full text-[var(--color-on-surface-variant)] transition-all duration-200 hover:bg-[var(--color-surface-container)] hover:text-[var(--color-on-surface)] active:scale-95"
               aria-label="Cerrar carrito"
             >
-              <span
-                className="material-symbols-outlined"
-                style={{ fontSize: "20px" }}
-              >
-                close
-              </span>
+              <Icon name="close" />
             </button>
           </header>
 
@@ -519,15 +513,11 @@ export function CartDrawer() {
             {step === "sent" ? (
               <div className="flex h-full flex-col items-center justify-center text-center">
                 <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--color-whatsapp)]/10">
-                  <span
-                    className="material-symbols-outlined text-[var(--color-whatsapp)]"
-                    style={{
-                      fontSize: "28px",
-                      fontVariationSettings: "'FILL' 1",
-                    }}
-                  >
-                    check_circle
-                  </span>
+                  <Icon
+                    name="check_circle"
+                    fill
+                    className="text-[var(--color-whatsapp)]"
+                  />
                 </div>
                 <h3 className="mb-1 font-serif text-lg font-bold text-[var(--color-on-surface)]">
                   Pedido generado
@@ -582,12 +572,10 @@ export function CartDrawer() {
                   {/* Info de envío */}
                   {shippingInfo && (
                     <div className="mb-4 flex items-start gap-2 text-xs text-[var(--color-on-surface-variant)]">
-                      <span
-                        className="material-symbols-outlined mt-0.5 shrink-0 text-[var(--color-primary)]"
-                        style={{ fontSize: "16px" }}
-                      >
-                        local_shipping
-                      </span>
+                      <Icon
+                        name="local_shipping"
+                        className="mt-0.5 shrink-0 text-[var(--color-primary)]"
+                      />
                       <div>
                         <p className="font-semibold text-[var(--color-on-surface)]">
                           {shippingInfo.municipality}, {shippingInfo.department}
@@ -630,12 +618,10 @@ export function CartDrawer() {
                     disabled={isGeneratingMessage || cartItems.length === 0}
                     className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-whatsapp)] py-3.5 text-sm font-bold text-white shadow-[0_4px_14px_rgba(37,211,102,0.18)] transition-all duration-200 hover:bg-[var(--color-whatsapp-hover)] hover:shadow-[0_6px_20px_rgba(37,211,102,0.28)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
                   >
-                    <span
-                      className="material-symbols-outlined"
-                      style={{ fontSize: "18px" }}
-                    >
-                      {isGeneratingMessage ? "hourglass_top" : "chat"}
-                    </span>
+                    <Icon
+                      name={isGeneratingMessage ? "pending" : "chat"}
+                      size={18}
+                    />
                     {isGeneratingMessage
                       ? "Verificando..."
                       : "Confirmar e ir a WhatsApp"}
@@ -682,12 +668,10 @@ export function CartDrawer() {
             safeCartItems.length === 0 ? (
               <div className="flex h-full flex-col items-center justify-center text-center">
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--color-primary-container)]/40">
-                  <span
-                    className="material-symbols-outlined text-[var(--color-primary)]"
-                    style={{ fontSize: "32px" }}
-                  >
-                    shopping_bag
-                  </span>
+                  <Icon
+                    name="shopping_bag"
+                    className="text-[var(--color-primary)]"
+                  />
                 </div>
                 <p className="mb-1 font-serif text-base font-bold text-[var(--color-on-surface)]">
                   Tu carrito está vacío
@@ -746,12 +730,7 @@ export function CartDrawer() {
                                 aria-label="Eliminar producto"
                                 className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[var(--color-outline)] transition-all duration-200 hover:bg-[var(--color-tertiary)]/8 hover:text-[var(--color-tertiary)] active:scale-90"
                               >
-                                <span
-                                  className="material-symbols-outlined"
-                                  style={{ fontSize: "18px" }}
-                                >
-                                  delete
-                                </span>
+                                <Icon name="delete" />
                               </button>
                             </div>
                             {(item.color || item.note) && (
@@ -777,12 +756,7 @@ export function CartDrawer() {
                                 disabled={item.quantity <= 1}
                                 className="flex h-8 w-8 items-center justify-center rounded-full text-[var(--color-on-surface-variant)] transition-all duration-150 hover:bg-[var(--color-surface-container-high)] hover:text-[var(--color-primary)] active:scale-90 disabled:opacity-20"
                               >
-                                <span
-                                  className="material-symbols-outlined"
-                                  style={{ fontSize: "16px" }}
-                                >
-                                  remove
-                                </span>
+                                <Icon name="remove" />
                               </button>
                               <span className="w-7 text-center text-sm font-bold text-[var(--color-on-surface)] tabular-nums">
                                 {item.quantity}
@@ -794,12 +768,7 @@ export function CartDrawer() {
                                 aria-label="Aumentar cantidad"
                                 className="flex h-8 w-8 items-center justify-center rounded-full text-[var(--color-on-surface-variant)] transition-all duration-150 hover:bg-[var(--color-surface-container-high)] hover:text-[var(--color-primary)] active:scale-90"
                               >
-                                <span
-                                  className="material-symbols-outlined"
-                                  style={{ fontSize: "16px" }}
-                                >
-                                  add
-                                </span>
+                                <Icon name="add" />
                               </button>
                             </div>
 
@@ -838,12 +807,7 @@ export function CartDrawer() {
             >
               {/* Reservation notice */}
               <div className="mb-3 flex items-center gap-2 text-[11px] text-[var(--color-on-surface-variant)]">
-                <span
-                  className="material-symbols-outlined text-[var(--color-outline)]"
-                  style={{ fontSize: "14px" }}
-                >
-                  schedule
-                </span>
+                <Icon name="schedule" className="text-[var(--color-outline)]" />
                 <p>
                   Reservado en este dispositivo por{" "}
                   <span className="font-semibold text-[var(--color-on-surface)]">
@@ -854,12 +818,7 @@ export function CartDrawer() {
 
               {arePricesStale && (
                 <div className="mb-3 flex items-center gap-2 rounded-lg bg-[var(--color-tertiary)]/5 p-2.5 text-[11px] text-[var(--color-tertiary)]">
-                  <span
-                    className="material-symbols-outlined shrink-0"
-                    style={{ fontSize: "14px" }}
-                  >
-                    error
-                  </span>
+                  <Icon name="error" className="shrink-0" />
                   <p>
                     No pudimos verificar precios.{" "}
                     <button
@@ -895,12 +854,10 @@ export function CartDrawer() {
                   ? "Actualizando..."
                   : "Continuar con el pedido"}
                 {!isRefreshingPrices && (
-                  <span
-                    className="material-symbols-outlined transition-transform duration-200 group-hover:translate-x-0.5"
-                    style={{ fontSize: "18px" }}
-                  >
-                    arrow_forward
-                  </span>
+                  <Icon
+                    name="arrow_forward"
+                    className="transition-transform duration-200 group-hover:translate-x-0.5"
+                  />
                 )}
               </button>
             </div>

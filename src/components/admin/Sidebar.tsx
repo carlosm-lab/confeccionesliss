@@ -1,4 +1,6 @@
 "use client";
+
+import { Icon } from "@/components/ui/icons/Icon";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
@@ -60,9 +62,7 @@ export default function AdminSidebar() {
                   : "hover:text-primary text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-white"
               )}
             >
-              <span className="material-symbols-outlined text-[20px]">
-                {item.icon}
-              </span>
+              <Icon name={item.icon} size={20} />
               {item.label}
             </Link>
           );
@@ -82,9 +82,7 @@ export default function AdminSidebar() {
                 className="h-full w-full rounded-full object-cover"
               />
             ) : (
-              <span className="material-symbols-outlined text-primary text-[16px]">
-                person
-              </span>
+              <Icon name="person" size={16} className="text-primary" />
             )}
           </div>
           <div className="min-w-0">
@@ -100,16 +98,14 @@ export default function AdminSidebar() {
           href="/"
           className="mb-1 flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-white"
         >
-          <span className="material-symbols-outlined text-[20px]">
-            storefront
-          </span>
+          <Icon name="storefront" size={20} />
           Ir a la tienda
         </Link>
         <button
           onClick={signOut}
           className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-red-500 transition-colors hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-500/10"
         >
-          <span className="material-symbols-outlined text-[20px]">logout</span>
+          <Icon name="logout" size={20} />
           Cerrar sesión
         </button>
       </div>

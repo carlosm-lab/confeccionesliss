@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 /**
  * /admin/settings — Panel de Control del Sistema
  * ──────────────────────────────────────────────────
@@ -189,15 +190,15 @@ export default function AdminSettingsPage() {
                     : "bg-slate-100 dark:bg-white/10"
                 }`}
               >
-                <span
-                  className={`material-symbols-outlined text-xl ${
+                <Icon
+                  name={killswitchActive ? "power_off" : "shield_lock"}
+                  size={20}
+                  className={
                     killswitchActive
                       ? "text-red-400"
                       : "text-slate-500 dark:text-slate-400"
-                  }`}
-                >
-                  {killswitchActive ? "power_off" : "shield_lock"}
-                </span>
+                  }
+                />
               </span>
               <div>
                 <h2
@@ -260,9 +261,7 @@ export default function AdminSettingsPage() {
                   disabled={togglingKS}
                   className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-800 py-3 text-sm font-semibold text-white transition hover:bg-emerald-700 disabled:opacity-40"
                 >
-                  <span className="material-symbols-outlined text-base">
-                    check_circle
-                  </span>
+                  <Icon name="check_circle" size={16} className="text-base" />
                   {togglingKS ? "Procesando..." : "Levantar servicio"}
                 </button>
               </div>
@@ -293,9 +292,7 @@ export default function AdminSettingsPage() {
                     disabled={loadingKS || togglingKS}
                     className="flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 bg-white py-3 text-sm font-semibold text-red-700 transition hover:border-red-300 hover:bg-red-50 disabled:opacity-40 dark:border-red-900/40 dark:bg-transparent dark:text-red-500 dark:hover:bg-red-950/30"
                   >
-                    <span className="material-symbols-outlined text-base">
-                      power_off
-                    </span>
+                    <Icon name="power_off" size={16} className="text-base" />
                     Terminar servicio
                   </button>
                 ) : (
@@ -333,9 +330,11 @@ export default function AdminSettingsPage() {
                         disabled={togglingKS || confirmText !== CONFIRM_PHRASE}
                         className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-red-800 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-30"
                       >
-                        <span className="material-symbols-outlined text-base">
-                          power_off
-                        </span>
+                        <Icon
+                          name="power_off"
+                          size={16}
+                          className="text-base"
+                        />
                         {togglingKS ? "Ejecutando..." : "Confirmar"}
                       </button>
                       <button
@@ -374,9 +373,7 @@ export default function AdminSettingsPage() {
             }}
             className="flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-medium text-slate-500 transition hover:bg-slate-100 dark:hover:bg-white/5"
           >
-            <span className="material-symbols-outlined text-[15px]">
-              refresh
-            </span>
+            <Icon name="refresh" size={15} />
             Actualizar
           </button>
         </div>
@@ -387,9 +384,7 @@ export default function AdminSettingsPage() {
           </div>
         ) : events.length === 0 ? (
           <div className="flex flex-col items-center gap-3 rounded-2xl border border-slate-100 bg-slate-50 py-16 dark:border-white/5 dark:bg-white/5">
-            <span className="material-symbols-outlined text-3xl text-slate-300">
-              shield_lock
-            </span>
+            <Icon name="shield_lock" size={30} className="text-slate-300" />
             <p className="text-sm text-slate-400">Sin eventos registrados</p>
           </div>
         ) : (
@@ -405,9 +400,7 @@ export default function AdminSettingsPage() {
                   key={event.id}
                   className={`flex items-start gap-3 rounded-xl border px-4 py-3 text-xs ${meta.color}`}
                 >
-                  <span className="material-symbols-outlined mt-0.5 text-base">
-                    {meta.icon}
-                  </span>
+                  <Icon name={meta.icon} size={16} className="mt-0.5" />
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between gap-2">
                       <span className="font-semibold">{meta.label}</span>

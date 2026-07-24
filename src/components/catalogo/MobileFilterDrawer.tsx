@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 /**
  * MobileFilterDrawer — Catálogo de Confecciones Liss
  * Réplica exacta del MobileFilterDrawer de Padilla Store, adaptada a TypeScript.
@@ -126,12 +127,7 @@ export function MobileFilterDrawer({
             className="hover:text-primary flex h-9 w-9 items-center justify-center rounded-full text-slate-500 transition-colors hover:bg-slate-100"
             aria-label="Cerrar filtros"
           >
-            <span
-              className="material-symbols-outlined"
-              style={{ fontSize: "20px" }}
-            >
-              close
-            </span>
+            <Icon name="close" />
           </button>
         </div>
 
@@ -164,13 +160,7 @@ export function MobileFilterDrawer({
                       : "text-slate-700 hover:bg-slate-50"
                   )}
                 >
-                  <span
-                    className="material-symbols-outlined"
-                    style={{ fontSize: "var(--icon-md)" }}
-                    aria-hidden="true"
-                  >
-                    {opt.icon}
-                  </span>
+                  <Icon name={opt.icon} aria-hidden="true" />
                   <span
                     className={cn(
                       "text-[var(--text-sm)]",
@@ -233,13 +223,7 @@ export function MobileFilterDrawer({
                 )}
               >
                 <div className="flex items-center gap-[var(--space-sm)]">
-                  <span
-                    className="material-symbols-outlined"
-                    style={{ fontSize: "var(--icon-md)" }}
-                    aria-hidden="true"
-                  >
-                    grid_view
-                  </span>
+                  <Icon name="grid_view" aria-hidden="true" />
                   <span
                     className={cn(
                       "text-[var(--text-sm)]",
@@ -250,13 +234,7 @@ export function MobileFilterDrawer({
                   </span>
                 </div>
                 {selected.length === 0 && (
-                  <span
-                    className="material-symbols-outlined"
-                    style={{ fontSize: "var(--icon-sm)" }}
-                    aria-hidden="true"
-                  >
-                    check
-                  </span>
+                  <Icon name="check" aria-hidden="true" />
                 )}
               </button>
 
@@ -281,13 +259,7 @@ export function MobileFilterDrawer({
                     )}
                   >
                     <div className="flex items-center gap-[var(--space-sm)]">
-                      <span
-                        className="material-symbols-outlined"
-                        style={{ fontSize: "var(--icon-md)" }}
-                        aria-hidden="true"
-                      >
-                        {icon}
-                      </span>
+                      <Icon name={icon} aria-hidden="true" />
                       <span
                         className={cn(
                           "text-[var(--text-sm)]",
@@ -297,15 +269,7 @@ export function MobileFilterDrawer({
                         {opt.label}
                       </span>
                     </div>
-                    {isActive && (
-                      <span
-                        className="material-symbols-outlined"
-                        style={{ fontSize: "var(--icon-sm)" }}
-                        aria-hidden="true"
-                      >
-                        check
-                      </span>
-                    )}
+                    {isActive && <Icon name="check" aria-hidden="true" />}
                   </button>
                 );
               })}

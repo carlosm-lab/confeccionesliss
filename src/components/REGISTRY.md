@@ -39,6 +39,19 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 
 ## UI Components
 
+### Icon
+
+- **Ruta:** `src/components/ui/icons/Icon.tsx`
+- **Descripción:** Componente centralizado de renderizado de iconos SVG basado en `lucide-react`. Reemplaza por completo las fuentes externas y fuentes pesadas (como Material Symbols Outlined), garantizando renderizado instantáneo sin parpadeo de texto (FOUT), cero peticiones de red adicionales y pixel-perfección. Soporta mapeo dinámico de nombres de iconos de Material Symbols a Lucide SVG.
+- **Props:**
+  - `name: string` — Nombre del icono (soporta nombres de Material Symbols como "shopping_bag", "favorite", "star", "search", etc.).
+  - `size?: number | string` — Tamaño en píxeles.
+  - `fill?: boolean` — `true` para relleno sólido de color actual (`currentColor`).
+  - `color?: string` — Color personalizado.
+  - `strokeWidth?: number` — Ancho de trazo.
+  - `className?: string` — Clases CSS adicionales.
+- **Ejemplo:** `<Icon name="shopping_bag" size={20} className="text-primary" />`
+
 ### Breadcrumb
 
 - **Ruta:** `src/components/ui/Breadcrumb.tsx`

@@ -1,3 +1,4 @@
+import { Icon } from "@/components/ui/icons/Icon";
 import Image from "next/image";
 import Link from "next/link";
 import { CATEGORIES } from "@/data/categories";
@@ -63,12 +64,12 @@ function CategoryCard({
         />
 
         <div className="bg-primary absolute top-3 right-3 z-20 flex h-7 w-7 items-center justify-center rounded-full text-white shadow-md transition-all duration-300">
-          <span
-            className="material-symbols-outlined text-[15px] font-semibold @[280px]:text-[17px]"
+          <Icon
+            name="open_in_new"
+            size={15}
+            className="@[280px]: font-semibold"
             aria-hidden="true"
-          >
-            open_in_new
-          </span>
+          />
         </div>
       </div>
 
@@ -76,12 +77,12 @@ function CategoryCard({
       <div className="p-3 @[280px]:p-3.5 @[320px]:p-4">
         <div className="mb-2 flex items-center justify-between gap-2">
           <div className="flex items-center gap-1.5">
-            <span
-              className="material-symbols-outlined text-primary group-hover:text-tertiary text-[13px] transition-colors duration-300 @[280px]:text-[15px] @[320px]:text-[17px]"
+            <Icon
+              name={config.icon}
+              size={13}
+              className="text-primary group-hover:text-tertiary transition-colors duration-300 @[280px]:w-[15px] @[320px]:w-[17px]"
               aria-hidden="true"
-            >
-              {config.icon}
-            </span>
+            />
             <h2 className="text-primary group-hover:text-tertiary text-[11px] font-extrabold tracking-wider uppercase transition-colors duration-300 @[280px]:text-[12.5px] @[320px]:text-[14px] @[360px]:text-[15px]">
               {config.subtitle}
             </h2>
@@ -182,12 +183,12 @@ export function CategoryHubClient({ productCounts }: CategoryHubClientProps) {
               key={item.text}
               className="flex items-center gap-3 text-sm text-gray-600"
             >
-              <span
-                className="material-symbols-outlined text-primary text-xl"
+              <Icon
+                name={item.icon}
+                size={20}
+                className="text-primary"
                 aria-hidden="true"
-              >
-                {item.icon}
-              </span>
+              />
               <span className="font-medium">{item.text}</span>
             </div>
           ))}

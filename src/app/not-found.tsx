@@ -1,3 +1,4 @@
+﻿import { Icon } from "@/components/ui/icons/Icon";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
@@ -62,9 +63,7 @@ export default function NotFound() {
                 className="text-primary hover:text-primary/80 inline-flex items-center gap-1 font-sans text-sm font-semibold transition hover:underline"
               >
                 Escribir por WhatsApp
-                <span className="material-symbols-outlined text-[16px]">
-                  arrow_forward
-                </span>
+                <Icon name="arrow_forward" size={16} />
               </a>
             </div>
           </div>

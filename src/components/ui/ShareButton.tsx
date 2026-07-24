@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Icon } from "@/components/ui/icons/Icon";
 import { logger } from "@/lib/logger";
 
 export function ShareButton() {
@@ -70,12 +71,7 @@ export function ShareButton() {
         }}
         className="hover:border-primary/40 focus:ring-primary/20 hover:scale-105 hover:bg-white focus:ring-2 active:scale-95"
       >
-        <span
-          className="material-symbols-outlined"
-          style={{ fontSize: "1.1rem" }}
-        >
-          share
-        </span>
+        <Icon name="share" size={18} />
       </button>
 
       {/* Toast Notification */}
@@ -103,16 +99,7 @@ export function ShareButton() {
               "toastFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards",
           }}
         >
-          <span
-            className="material-symbols-outlined"
-            style={{
-              color: "#10b981",
-              fontSize: "1.25rem",
-              fontWeight: "bold",
-            }}
-          >
-            check_circle
-          </span>
+          <Icon name="check_circle" size={20} className="text-emerald-500" />
           <span>Enlace copiado</span>
         </div>
       )}

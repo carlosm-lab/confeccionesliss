@@ -1,4 +1,6 @@
 "use client";
+
+import { Icon } from "@/components/ui/icons/Icon";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { getSupabaseClient } from "@/lib/supabaseClient";
@@ -395,9 +397,7 @@ export default function AdminProductsPage() {
         <div
           className={`fixed top-4 right-4 z-[300] flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold shadow-lg transition-all ${toast.ok ? "bg-green-600 text-white" : "bg-red-600 text-white"}`}
         >
-          <span className="material-symbols-outlined text-[18px]">
-            {toast.ok ? "check_circle" : "error"}
-          </span>
+          <Icon name={toast.ok ? "check_circle" : "error"} size={18} />
           {toast.msg}
         </div>
       )}
@@ -416,7 +416,7 @@ export default function AdminProductsPage() {
           onClick={() => handleOpenModal()}
           className="bg-primary hover:bg-primary/90 flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 font-bold text-white shadow-sm transition-colors"
         >
-          <span className="material-symbols-outlined text-[20px]">add</span>
+          <Icon name="add" size={20} />
           Nuevo Producto
         </button>
       </div>
@@ -426,9 +426,7 @@ export default function AdminProductsPage() {
         {/* Search */}
         <div className="relative min-w-[220px] flex-1">
           <span className="pointer-events-none absolute top-1/2 left-3 flex -translate-y-1/2 items-center leading-[0] text-slate-400">
-            <span className="material-symbols-outlined text-[20px] leading-[0]">
-              search
-            </span>
+            <Icon name="search" size={20} className="leading-[0]" />
           </span>
           <input
             type="text"
@@ -512,9 +510,7 @@ export default function AdminProductsPage() {
             {isLoading ? (
               <span className="h-5 w-5 animate-spin rounded-full border-2 border-slate-500 border-t-transparent"></span>
             ) : (
-              <span className="material-symbols-outlined text-[20px]">
-                expand_more
-              </span>
+              <Icon name="expand_more" size={20} />
             )}
             Cargar más productos
           </button>

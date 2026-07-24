@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { Icon } from "@/components/ui/icons/Icon";
 
 interface BreadcrumbItem {
   label: string;
@@ -39,9 +40,11 @@ export function Breadcrumb({
             className="inline-flex min-w-0 items-center"
           >
             {index > 0 && (
-              <span
+              <Icon
+                name="chevron_right"
+                size={14}
                 className={cn(
-                  "material-symbols-outlined mx-0.5 shrink-0 text-sm",
+                  "mx-0.5 shrink-0",
                   isLight
                     ? "text-white/40"
                     : isPrimary
@@ -49,9 +52,7 @@ export function Breadcrumb({
                       : "text-gray-400"
                 )}
                 aria-hidden="true"
-              >
-                chevron_right
-              </span>
+              />
             )}
             {item.href ? (
               <Link

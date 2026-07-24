@@ -1,4 +1,6 @@
-"use client";
+﻿"use client";
+
+import { Icon } from "@/components/ui/icons/Icon";
 import { useState } from "react";
 import Image from "next/image";
 import { formatPrice } from "@/lib/formatPrice";
@@ -54,9 +56,7 @@ export default function ProductTable({
     return (
       <div className="border-primary/30 dark:border-primary/20 flex w-full flex-col items-center justify-center rounded-2xl border bg-white p-12 shadow-[0_0_25px_6px_rgba(20,48,103,0.12),0_0_10px_2px_rgba(20,48,103,0.08)] dark:bg-white/5">
         <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-50 text-slate-400 dark:bg-transparent">
-          <span className="material-symbols-outlined text-[32px]">
-            inventory_2
-          </span>
+          <Icon name="inventory_2" size={32} />
         </div>
         <h3 className="mb-1 text-lg font-bold text-slate-900 dark:text-white">
           No hay productos
@@ -81,9 +81,7 @@ export default function ProductTable({
             }}
             className="flex items-center gap-1 text-sm font-bold text-red-600 hover:text-red-700 dark:text-red-400"
           >
-            <span className="material-symbols-outlined text-[18px]">
-              delete
-            </span>
+            <Icon name="delete" size={18} />
             Eliminar seleccionados
           </button>
         </div>
@@ -165,9 +163,7 @@ export default function ProductTable({
                         }
                       />
                     ) : (
-                      <span className="material-symbols-outlined text-slate-400">
-                        image
-                      </span>
+                      <Icon name="image" className="text-slate-400" />
                     )}
                   </div>
                 </td>
@@ -290,16 +286,7 @@ export default function ProductTable({
                             : "text-slate-400 hover:bg-amber-50 hover:text-amber-500 dark:hover:bg-amber-900/20",
                       ].join(" ")}
                     >
-                      <span
-                        className="material-symbols-outlined text-[20px]"
-                        style={{
-                          fontVariationSettings: product.is_featured
-                            ? "'FILL' 1"
-                            : "'FILL' 0",
-                        }}
-                      >
-                        push_pin
-                      </span>
+                      <Icon name="push_pin" size={20} fill />
                     </button>
                     <button
                       onClick={() => onEdit(product)}
@@ -307,9 +294,7 @@ export default function ProductTable({
                       title="Editar"
                       aria-label={`Editar producto ${product.name}`}
                     >
-                      <span className="material-symbols-outlined text-[20px]">
-                        edit
-                      </span>
+                      <Icon name="edit" size={20} />
                     </button>
                     <button
                       onClick={() => onDelete(product.id || "")}
@@ -317,9 +302,7 @@ export default function ProductTable({
                       title="Eliminar"
                       aria-label={`Eliminar producto ${product.name}`}
                     >
-                      <span className="material-symbols-outlined text-[20px]">
-                        delete
-                      </span>
+                      <Icon name="delete" size={20} />
                     </button>
                   </div>
                 </td>

@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
@@ -502,9 +503,7 @@ export function GuestBell() {
                   className="flex h-8 w-8 items-center justify-center rounded-full text-slate-500 transition-colors hover:bg-slate-100"
                   aria-label="Volver a lista"
                 >
-                  <span className="material-symbols-outlined text-[20px]">
-                    arrow_back
-                  </span>
+                  <Icon name="arrow_back" size={20} />
                 </button>
                 <span className="text-sm font-bold text-slate-900">
                   Regresar
@@ -515,18 +514,14 @@ export function GuestBell() {
                     className="flex h-8 w-8 items-center justify-center rounded-full text-slate-400 transition-colors hover:bg-red-50 hover:text-red-500"
                     aria-label="Eliminar notificación"
                   >
-                    <span className="material-symbols-outlined text-[18px]">
-                      delete
-                    </span>
+                    <Icon name="delete" size={18} />
                   </button>
                   <button
                     onClick={closePanel}
                     className="flex h-8 w-8 items-center justify-center rounded-full text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700"
                     aria-label="Cerrar"
                   >
-                    <span className="material-symbols-outlined text-[18px]">
-                      close
-                    </span>
+                    <Icon name="close" size={18} />
                   </button>
                 </div>
               </div>
@@ -534,15 +529,13 @@ export function GuestBell() {
               /* List header */
               <div className="flex shrink-0 items-center justify-between border-b border-slate-100 px-5 py-4">
                 <div className="flex items-center gap-2.5">
-                  <span
-                    className="material-symbols-outlined text-primary text-[20px]"
+                  <Icon
+                    name="notifications"
+                    size={20}
+                    fill
+                    className="text-primary"
                     aria-hidden="true"
-                    style={{
-                      fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0",
-                    }}
-                  >
-                    notifications
-                  </span>
+                  />
                   <div>
                     <h2 className="text-sm font-bold text-slate-900">
                       Notificaciones
@@ -559,9 +552,7 @@ export function GuestBell() {
                   className="flex h-8 w-8 items-center justify-center rounded-full text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700"
                   aria-label="Cerrar notificaciones"
                 >
-                  <span className="material-symbols-outlined text-[18px]">
-                    close
-                  </span>
+                  <Icon name="close" size={18} />
                 </button>
               </div>
             )}
@@ -619,14 +610,15 @@ export function GuestBell() {
                 /* ── Empty state ──────────────────────────────── */
                 <div className="flex flex-col items-center gap-4 px-6 py-12 text-center">
                   <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100">
-                    <span
-                      className="material-symbols-outlined text-[28px] text-slate-400"
-                      style={{ fontVariationSettings: "'FILL' 0" }}
-                    >
-                      {activeTab === "read"
-                        ? "mark_email_read"
-                        : "notifications_none"}
-                    </span>
+                    <Icon
+                      name={
+                        activeTab === "read"
+                          ? "mark_email_read"
+                          : "notifications_none"
+                      }
+                      size={28}
+                      className="text-slate-400"
+                    />
                   </div>
                   <div className="space-y-1">
                     <p className="text-sm font-semibold text-slate-700">
@@ -772,13 +764,13 @@ export function GuestBell() {
             aria-hidden="true"
           />
         )}
-        <span
-          className="material-symbols-outlined relative z-10 text-[22px]"
+        <Icon
+          name="notifications"
+          size={22}
+          fill
+          className="relative z-10"
           aria-hidden="true"
-          style={{ fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0" }}
-        >
-          notifications
-        </span>
+        />
         {/* Badge */}
         {isActive && (
           <span
@@ -833,16 +825,13 @@ function NotifRow({ notif, cfg, onOpen, onTrash }: NotifRowProps) {
               cfg.iconRing
             )}
           >
-            <span
-              className={cn(
-                "material-symbols-outlined text-[18px]",
-                cfg.iconColor
-              )}
-              style={{ fontVariationSettings: "'FILL' 1" }}
+            <Icon
+              name={cfg.icon}
+              size={18}
+              fill
+              className={cfg.iconColor}
               aria-hidden="true"
-            >
-              {cfg.icon}
-            </span>
+            />
           </div>
 
           {/* Content */}
@@ -890,9 +879,7 @@ function NotifRow({ notif, cfg, onOpen, onTrash }: NotifRowProps) {
             className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-slate-300 transition-colors hover:bg-red-50 hover:text-red-400"
             aria-label="Eliminar notificación"
           >
-            <span className="material-symbols-outlined text-[16px]">
-              delete
-            </span>
+            <Icon name="delete" size={16} />
           </button>
         </div>
       </div>
@@ -921,16 +908,13 @@ function DetailView({ notif, cta }: DetailViewProps) {
             cfg.iconRing
           )}
         >
-          <span
-            className={cn(
-              "material-symbols-outlined text-[24px]",
-              cfg.iconColor
-            )}
-            style={{ fontVariationSettings: "'FILL' 1" }}
+          <Icon
+            name={cfg.icon}
+            size={24}
+            fill
+            className={cfg.iconColor}
             aria-hidden="true"
-          >
-            {cfg.icon}
-          </span>
+          />
         </div>
         <div>
           <span
@@ -949,9 +933,7 @@ function DetailView({ notif, cta }: DetailViewProps) {
         {/* Read indicator */}
         {notif.read ? (
           <span className="ml-auto flex items-center gap-1 text-[10px] text-emerald-500">
-            <span className="material-symbols-outlined text-[14px]">
-              check_circle
-            </span>
+            <Icon name="check_circle" size={14} />
             Leída
           </span>
         ) : (
@@ -985,12 +967,7 @@ function DetailView({ notif, cta }: DetailViewProps) {
           onClick={cta.action}
           className="bg-primary hover:bg-primary/90 flex items-center justify-center gap-2 rounded-xl px-4 py-3 font-bold text-white shadow-sm transition-colors"
         >
-          <span
-            className="material-symbols-outlined text-[18px]"
-            aria-hidden="true"
-          >
-            {cta.icon}
-          </span>
+          <Icon name={cta.icon} size={18} aria-hidden="true" />
           {cta.label}
         </button>
       )}

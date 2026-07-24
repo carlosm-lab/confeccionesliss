@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 import { useState, useEffect, useRef, useMemo, useTransition } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -243,12 +244,12 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
       >
         {/* ── Search Input Header ── */}
         <div className="flex items-center gap-3 border-b border-gray-100 px-5 py-4">
-          <span
-            className="material-symbols-outlined text-primary shrink-0 text-[22px]"
+          <Icon
+            name={isLoading ? "refresh" : "search"}
+            size={22}
+            className="text-primary shrink-0"
             aria-hidden="true"
-          >
-            {isLoading ? "sync" : "search"}
-          </span>
+          />
           <div className="relative min-w-0 flex-1">
             <input
               ref={inputRef}
@@ -272,12 +273,12 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
             className="text-primary/60 hover:bg-primary/5 flex size-8 shrink-0 items-center justify-center rounded-full transition-colors"
             aria-label="Cerrar buscador"
           >
-            <span
-              className="material-symbols-outlined text-xl"
+            <Icon
+              name="close"
+              size={20}
+              className="text-xl"
               aria-hidden="true"
-            >
-              close
-            </span>
+            />
           </button>
         </div>
 
@@ -298,12 +299,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                       onClick={() => handleChipClick(sector)}
                       className="border-primary/15 text-primary hover:bg-primary hover:text-on-primary flex items-center gap-1.5 rounded-full border px-3.5 py-2 text-sm font-medium transition-colors"
                     >
-                      <span
-                        className="material-symbols-outlined text-[16px]"
-                        aria-hidden="true"
-                      >
-                        {config.icon}
-                      </span>
+                      <Icon name={config.icon} size={16} aria-hidden="true" />
                       {config.subtitle}
                     </button>
                   );
@@ -315,24 +311,24 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           {/* State: Loading */}
           {isLoading && (
             <div className="flex items-center justify-center py-10">
-              <span
-                className="material-symbols-outlined text-primary animate-spin text-4xl"
+              <Icon
+                name="progress_activity"
+                size={36}
+                className="text-primary animate-spin text-4xl"
                 aria-hidden="true"
-              >
-                progress_activity
-              </span>
+              />
             </div>
           )}
 
           {/* State: No results */}
           {noResults && (
             <div className="flex flex-col items-center py-10 text-center">
-              <span
-                className="material-symbols-outlined mb-3 text-5xl text-gray-300"
+              <Icon
+                name="search_off"
+                size={48}
+                className="mb-3 text-gray-300"
                 aria-hidden="true"
-              >
-                search_off
-              </span>
+              />
               <p className="text-sm font-semibold text-gray-600">
                 No encontramos resultados para &quot;{query}&quot;
               </p>
@@ -384,12 +380,12 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                           />
                         ) : (
                           <div className="flex h-full w-full items-center justify-center">
-                            <span
-                              className="material-symbols-outlined text-2xl text-gray-300"
+                            <Icon
+                              name="image"
+                              size={24}
+                              className="text-gray-300"
                               aria-hidden="true"
-                            >
-                              image
-                            </span>
+                            />
                           </div>
                         )}
                       </div>
@@ -409,12 +405,12 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                       </div>
 
                       {/* Arrow */}
-                      <span
-                        className="material-symbols-outlined shrink-0 text-lg text-gray-300 transition-all group-hover:translate-x-0.5 group-hover:text-gray-500"
+                      <Icon
+                        name="arrow_forward_ios"
+                        size={18}
+                        className="shrink-0 text-gray-300 transition-all group-hover:translate-x-0.5 group-hover:text-gray-500"
                         aria-hidden="true"
-                      >
-                        arrow_forward_ios
-                      </span>
+                      />
                     </button>
                   );
                 })}

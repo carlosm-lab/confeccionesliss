@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -39,15 +40,11 @@ function FAQItem({ question, answer }: FAQItemProps) {
         <span className="text-primary font-serif text-lg font-bold">
           {question}
         </span>
-        <span
-          className={cn(
-            "material-symbols-outlined transition-transform duration-300",
-            isOpen && "rotate-180"
-          )}
+        <Icon
+          name="expand_more"
+          className="transition-transform duration-300"
           aria-hidden="true"
-        >
-          expand_more
-        </span>
+        />
       </button>
       <div
         className={cn(
@@ -152,9 +149,11 @@ export function ServicioManoObraDetalle({
                         className="border-primary/12 text-primary animate-fade-in-up flex w-full items-center gap-2 rounded-full border bg-white px-4 py-2 font-sans text-sm font-medium shadow-xs"
                         style={{ animationDelay: `${index * 50 + 200}ms` }}
                       >
-                        <span className="material-symbols-outlined text-secondary mr-2 shrink-0 text-[16px]">
-                          {b.icon}
-                        </span>
+                        <Icon
+                          name={b.icon}
+                          size={16}
+                          className="text-secondary mr-2 shrink-0"
+                        />
                         <span className="leading-tight">{b.text}</span>
                       </div>
                     ))}
@@ -218,28 +217,26 @@ export function ServicioManoObraDetalle({
               {/* Connectors (Hidden on mobile) */}
               <div className="bg-primary/10 absolute top-1/2 right-[15%] left-[15%] -z-10 hidden h-0.5 -translate-y-1/2 md:block" />
               <div className="border-primary/10 text-secondary absolute top-1/2 left-[30%] z-20 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border bg-white shadow-sm md:flex">
-                <span
-                  className="material-symbols-outlined text-sm font-bold"
+                <Icon
+                  name="arrow_forward"
+                  size={14}
+                  className="font-bold"
                   aria-hidden="true"
-                >
-                  arrow_forward
-                </span>
+                />
               </div>
               <div className="border-primary/10 text-secondary absolute top-1/2 right-[30%] z-20 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border bg-white shadow-sm md:flex">
-                <span
-                  className="material-symbols-outlined text-sm font-bold"
+                <Icon
+                  name="arrow_forward"
+                  size={14}
+                  className="font-bold"
                   aria-hidden="true"
-                >
-                  arrow_forward
-                </span>
+                />
               </div>
 
               {/* Step 1 */}
               <div className="border-primary/12 relative z-10 flex flex-col items-center rounded-xl border bg-white p-6 text-center shadow-sm md:translate-y-4">
                 <div className="bg-surface-container-low text-primary border-primary/5 mb-4 flex h-16 w-16 items-center justify-center rounded-full border shadow-inner">
-                  <span className="material-symbols-outlined text-secondary text-[32px]">
-                    texture
-                  </span>
+                  <Icon name="texture" size={32} className="text-secondary" />
                 </div>
                 <span className="text-secondary mb-2 font-sans text-[10px] font-semibold tracking-wider">
                   PASO 1
@@ -256,9 +253,7 @@ export function ServicioManoObraDetalle({
               {/* Step 2 (Prominent) */}
               <div className="border-primary/20 relative z-10 flex transform flex-col items-center rounded-xl border-2 bg-white p-8 text-center shadow-md md:-translate-y-4 md:scale-105">
                 <div className="bg-primary mb-6 flex h-20 w-20 items-center justify-center rounded-full text-white shadow-md">
-                  <span className="material-symbols-outlined text-[40px]">
-                    content_cut
-                  </span>
+                  <Icon name="content_cut" size={40} />
                 </div>
                 <span className="text-secondary mb-2 font-sans text-[10px] font-semibold tracking-wider">
                   PASO 2
@@ -275,9 +270,7 @@ export function ServicioManoObraDetalle({
               {/* Step 3 */}
               <div className="border-primary/12 relative z-10 flex flex-col items-center rounded-xl border bg-white p-6 text-center shadow-sm md:translate-y-4">
                 <div className="bg-surface-container-low text-primary border-primary/5 mb-4 flex h-16 w-16 items-center justify-center rounded-full border shadow-inner">
-                  <span className="material-symbols-outlined text-secondary text-[32px]">
-                    checkroom
-                  </span>
+                  <Icon name="checkroom" size={32} className="text-secondary" />
                 </div>
                 <span className="text-secondary mb-2 font-sans text-[10px] font-semibold tracking-wider">
                   PASO 3
@@ -300,9 +293,7 @@ export function ServicioManoObraDetalle({
               <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
                 <div className="max-w-3xl space-y-4">
                   <div className="bg-primary/10 text-primary inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-sans text-xs font-semibold">
-                    <span className="material-symbols-outlined text-sm">
-                      category
-                    </span>
+                    <Icon name="category" size={14} className="text-sm" />
                     Flexibilidad total de materiales
                   </div>
                   <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
@@ -313,9 +304,11 @@ export function ServicioManoObraDetalle({
                   </p>
                 </div>
                 <div className="border-primary/10 text-primary flex shrink-0 items-center justify-center rounded-xl border bg-white p-6 shadow-xs">
-                  <span className="material-symbols-outlined text-secondary text-5xl">
-                    texture
-                  </span>
+                  <Icon
+                    name="texture"
+                    size={48}
+                    className="text-secondary text-5xl"
+                  />
                 </div>
               </div>
             </div>
@@ -339,9 +332,7 @@ export function ServicioManoObraDetalle({
                 </div>
                 <div className="space-y-4">
                   <div className="bg-secondary/10 text-secondary inline-flex items-center gap-2 rounded-full px-3 py-1 font-sans text-xs font-semibold">
-                    <span className="material-symbols-outlined text-sm">
-                      straighten
-                    </span>
+                    <Icon name="straighten" size={14} className="text-sm" />
                     Confirmación de metraje
                   </div>
                   <h2 className="text-primary font-serif text-xl font-bold md:text-2xl">
@@ -414,12 +405,12 @@ export function ServicioManoObraDetalle({
                         key={idx}
                         className="border-primary/5 flex items-start gap-3 rounded-lg border bg-white p-3 shadow-sm"
                       >
-                        <span
-                          className="material-symbols-outlined text-primary text-lg font-bold"
+                        <Icon
+                          name="check_circle"
+                          size={18}
+                          className="text-primary font-bold"
                           aria-hidden="true"
-                        >
-                          check_circle
-                        </span>
+                        />
                         <span>
                           <strong>{item.title}:</strong> {item.desc}
                         </span>
@@ -432,9 +423,7 @@ export function ServicioManoObraDetalle({
                   {secPrecioVolumen ? (
                     <div className="space-y-4">
                       <div className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 font-sans text-xs font-semibold text-amber-900">
-                        <span className="material-symbols-outlined text-sm">
-                          groups
-                        </span>
+                        <Icon name="groups" size={14} className="text-sm" />
                         Condiciones de Mayoreo
                       </div>
                       <h3 className="text-primary font-serif text-xl font-bold">
@@ -515,13 +504,7 @@ export function ServicioManoObraDetalle({
             rel="noopener noreferrer"
             className="mt-4 inline-flex cursor-pointer items-center gap-2 rounded-lg bg-white px-8 py-4 font-sans text-base font-semibold text-[#143067] shadow-lg transition-colors hover:bg-white/90"
           >
-            <span
-              className="material-symbols-outlined"
-              style={{ fontVariationSettings: "'FILL' 1" }}
-              aria-hidden="true"
-            >
-              chat
-            </span>
+            <Icon name="chat" fill aria-hidden="true" />
             {service.ctaBanner?.ctaText || "Cotizar Costura"}
           </a>
         </div>

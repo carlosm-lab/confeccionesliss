@@ -75,13 +75,20 @@ const nextConfig = {
           },
         ],
       },
-      {
-        // 1. Assets estáticos Next.js — inmutables, cachear 1 año
-        source: '/_next/static/:path*',
-        headers: [
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
-        ],
-      },
+      ...(isDev
+        ? []
+        : [
+            {
+              // 1. Assets estáticos Next.js en producción — inmutables, cachear 1 año
+              source: '/_next/static/:path*',
+              headers: [
+                {
+                  key: 'Cache-Control',
+                  value: 'public, max-age=31536000, immutable',
+                },
+              ],
+            },
+          ]),
       {
         // 2. Imágenes públicas — cachear 7 días
         source: '/images/:path*',

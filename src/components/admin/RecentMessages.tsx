@@ -1,4 +1,6 @@
-"use client";
+﻿"use client";
+
+import { Icon } from "@/components/ui/icons/Icon";
 import Link from "next/link";
 
 interface Message {
@@ -55,9 +57,11 @@ export default function RecentMessages({
       {messages.length === 0 ? (
         <div className="flex flex-1 items-center justify-center p-6 text-center">
           <div className="flex flex-col items-center text-slate-400 dark:text-slate-500">
-            <span className="material-symbols-outlined mb-2 text-4xl opacity-50">
-              mark_email_read
-            </span>
+            <Icon
+              name="mark_email_read"
+              size={36}
+              className="mb-2 opacity-50"
+            />
             <p className="text-sm">No hay mensajes nuevos.</p>
           </div>
         </div>

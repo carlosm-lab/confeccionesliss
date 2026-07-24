@@ -1,3 +1,4 @@
+﻿import { Icon } from "@/components/ui/icons/Icon";
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 import { buildWebPageSchema, buildBreadcrumbSchema } from "@/lib/schemas";
@@ -671,12 +672,11 @@ export default function ContratacionPage() {
           <div className="my-6 space-y-6">
             <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950">
               <h3 className="flex items-center gap-2 text-base font-bold text-slate-900 dark:text-white">
-                <span
-                  className="material-symbols-outlined text-primary"
+                <Icon
+                  name="person_search"
+                  className="text-primary"
                   aria-hidden="true"
-                >
-                  person_search
-                </span>
+                />
                 ¿Qué buscamos?
               </h3>
               <Ul
@@ -690,12 +690,7 @@ export default function ContratacionPage() {
 
             <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950">
               <h3 className="flex items-center gap-2 text-base font-bold text-slate-900 dark:text-white">
-                <span
-                  className="material-symbols-outlined text-primary"
-                  aria-hidden="true"
-                >
-                  send
-                </span>
+                <Icon name="send" className="text-primary" aria-hidden="true" />
                 ¿Cómo aplicar?
               </h3>
               <P>
@@ -708,12 +703,11 @@ export default function ContratacionPage() {
 
             <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950">
               <h3 className="flex items-center gap-2 text-base font-bold text-slate-900 dark:text-white">
-                <span
-                  className="material-symbols-outlined text-primary"
+                <Icon
+                  name="payments"
+                  className="text-primary"
                   aria-hidden="true"
-                >
-                  payments
-                </span>
+                />
                 ¿Cuánto se gana?
               </h3>
               <Ul
@@ -729,12 +723,11 @@ export default function ContratacionPage() {
 
             <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950">
               <h3 className="flex items-center gap-2 text-base font-bold text-slate-900 dark:text-white">
-                <span
-                  className="material-symbols-outlined text-primary"
+                <Icon
+                  name="schedule"
+                  className="text-primary"
                   aria-hidden="true"
-                >
-                  schedule
-                </span>
+                />
                 Horario de referencia
               </h3>
               <Ul
@@ -748,12 +741,7 @@ export default function ContratacionPage() {
 
             <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950">
               <h3 className="flex items-center gap-2 text-base font-bold text-slate-900 dark:text-white">
-                <span
-                  className="material-symbols-outlined text-primary"
-                  aria-hidden="true"
-                >
-                  work
-                </span>
+                <Icon name="work" className="text-primary" aria-hidden="true" />
                 Modalidades disponibles
               </h3>
               <Ul

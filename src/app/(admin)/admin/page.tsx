@@ -1,4 +1,6 @@
-"use client";
+﻿"use client";
+
+import { Icon } from "@/components/ui/icons/Icon";
 import { useEffect, useState } from "react";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import StatsCards from "@/components/admin/StatsCards";
@@ -193,9 +195,7 @@ export default function AdminDashboardPage() {
           className="group flex items-center justify-between rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-white/5 dark:bg-slate-900"
         >
           <div className="flex items-center gap-3">
-            <span className="material-symbols-outlined text-primary text-[24px]">
-              campaign
-            </span>
+            <Icon name="campaign" size={24} className="text-primary" />
             <div>
               <p className="text-sm font-bold text-slate-900 dark:text-white">
                 Notificaciones
@@ -205,9 +205,11 @@ export default function AdminDashboardPage() {
               </p>
             </div>
           </div>
-          <span className="material-symbols-outlined text-primary/40 group-hover:text-primary text-[20px] transition-colors">
-            arrow_forward
-          </span>
+          <Icon
+            name="arrow_forward"
+            size={20}
+            className="text-primary/40 group-hover:text-primary transition-colors"
+          />
         </Link>
       </div>
     </div>

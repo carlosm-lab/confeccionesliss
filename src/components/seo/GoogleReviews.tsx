@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { siteConfig } from "@/config/site";
+import { Icon } from "@/components/ui/icons/Icon";
 import type { GoogleReview } from "@/lib/googleReviewsService";
 
 interface GoogleReviewsProps {
@@ -66,24 +67,24 @@ export function GoogleReviews({ reviews }: GoogleReviewsProps) {
             <div className="flex items-center gap-2">
               <span className="text-xl font-bold text-slate-800">4.8</span>
               <div
-                className="flex text-amber-400"
+                className="flex items-center gap-1 text-amber-500"
                 aria-label="4.8 de 5 estrellas"
               >
                 {[1, 2, 3, 4].map((s) => (
-                  <span
+                  <Icon
+                    name="star"
                     key={s}
-                    className="material-symbols-outlined font-fill-1 text-lg leading-none"
-                    style={{ fontVariationSettings: "'FILL' 1" }}
-                  >
-                    star
-                  </span>
+                    size={18}
+                    fill
+                    className="text-amber-500"
+                  />
                 ))}
-                <span
-                  className="material-symbols-outlined font-fill-1 text-lg leading-none"
-                  style={{ fontVariationSettings: "'FILL' 1" }}
-                >
-                  star_half
-                </span>
+                <Icon
+                  name="star_half"
+                  size={18}
+                  fill
+                  className="text-amber-500"
+                />
               </div>
             </div>
             <span className="rounded-full bg-slate-100 px-3 py-0.5 font-sans text-xs font-medium text-slate-500">
@@ -122,13 +123,13 @@ export function GoogleReviews({ reviews }: GoogleReviewsProps) {
                         aria-label={`${r.rating} estrellas`}
                       >
                         {Array.from({ length: r.rating }).map((_, i) => (
-                          <span
+                          <Icon
+                            name="star"
                             key={i}
-                            className="material-symbols-outlined text-sm"
-                            style={{ fontVariationSettings: "'FILL' 1" }}
-                          >
-                            star
-                          </span>
+                            size={14}
+                            fill
+                            className="text-amber-400"
+                          />
                         ))}
                       </div>
                       <span className="group-hover:text-primary text-slate-300 transition-colors">
@@ -157,9 +158,11 @@ export function GoogleReviews({ reviews }: GoogleReviewsProps) {
                       </cite>
                       <span className="flex items-center gap-1 text-xs text-slate-400">
                         Cliente verificado
-                        <span className="material-symbols-outlined text-[12px] font-bold text-emerald-500">
-                          verified
-                        </span>
+                        <Icon
+                          name="verified"
+                          size={14}
+                          className="text-emerald-500"
+                        />
                       </span>
                     </div>
                   </div>
@@ -176,9 +179,7 @@ export function GoogleReviews({ reviews }: GoogleReviewsProps) {
             className="border-primary text-primary hover:bg-primary/5 focus-visible:ring-primary inline-flex items-center gap-2 rounded-xl border px-6 py-3 font-sans text-sm font-bold transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
           >
             <span>Ver más opiniones en Google Maps</span>
-            <span className="material-symbols-outlined text-sm">
-              open_in_new
-            </span>
+            <Icon name="open_in_new" size={14} />
           </a>
         </div>
       </div>

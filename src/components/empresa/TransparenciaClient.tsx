@@ -1,5 +1,6 @@
-"use client";
+﻿"use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -312,9 +313,11 @@ export default function TransparenciaClient() {
                     {/* Flecha conectora (solo visible en desktop) */}
                     {index < arr.length - 1 && (
                       <div className="pointer-events-none absolute top-1/2 -right-3 z-10 hidden -translate-y-1/2 rounded-full border border-[#e1e2e5] bg-white p-1 font-bold text-[#143067] select-none md:block">
-                        <span className="material-symbols-outlined text-xs">
-                          arrow_forward
-                        </span>
+                        <Icon
+                          name="arrow_forward"
+                          size={12}
+                          className="text-xs"
+                        />
                       </div>
                     )}
                   </div>
@@ -414,9 +417,7 @@ export default function TransparenciaClient() {
                           : "border-[#e1e2e5] bg-white text-[#143067] hover:bg-[#f8f9fb]"
                       }`}
                     >
-                      <span className="material-symbols-outlined text-sm">
-                        folder
-                      </span>
+                      <Icon name="folder" size={14} className="text-sm" />
                       <span className="truncate font-serif text-xs leading-none font-bold">
                         {folder.name}
                       </span>

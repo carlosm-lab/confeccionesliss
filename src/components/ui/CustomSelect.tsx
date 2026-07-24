@@ -1,4 +1,6 @@
 "use client";
+
+import { Icon } from "@/components/ui/icons/Icon";
 // ─────────────────────────────────────────────────────────────────────────────
 // CustomSelect — Premium dropdown to replace native <select> elements.
 //
@@ -115,23 +117,22 @@ export function CustomSelect({
         )}
       >
         {leadingIcon && (
-          <span className="material-symbols-outlined shrink-0 text-[20px] leading-none text-slate-400">
-            {leadingIcon}
-          </span>
+          <Icon
+            name={leadingIcon}
+            size={20}
+            className="shrink-0 text-slate-400"
+          />
         )}
 
         <span className="flex-1 truncate">
           {selectedOption?.label ?? placeholder}
         </span>
 
-        <span
-          className={cn(
-            "material-symbols-outlined shrink-0 text-[20px] leading-none text-slate-400 transition-transform duration-200",
-            isOpen && "-rotate-180"
-          )}
-        >
-          expand_more
-        </span>
+        <Icon
+          name="expand_more"
+          size={20}
+          className="shrink-0 text-slate-400 transition-transform duration-200"
+        />
       </button>
 
       {/* ── Dropdown panel ───────────────────────────────────────────────── */}
@@ -173,13 +174,13 @@ export function CustomSelect({
                 >
                   <span className="flex-1">{opt.label}</span>
                   {isSelected && (
-                    <span
+                    <Icon
+                      name="check_circle"
+                      size={16}
+                      fill
+                      className="text-primary shrink-0 leading-none"
                       aria-hidden="true"
-                      className="material-symbols-outlined text-primary shrink-0 text-[16px] leading-none"
-                      style={{ fontVariationSettings: "'FILL' 1" }}
-                    >
-                      check_circle
-                    </span>
+                    />
                   )}
                 </button>
               );

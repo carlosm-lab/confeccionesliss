@@ -1,5 +1,6 @@
-"use client";
+﻿"use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 import { useEffect, useState, useCallback, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -148,12 +149,7 @@ export function FavoritesModal({ isOpen, onClose }: FavoritesModalProps) {
                   id="favorites-modal-title"
                   className="flex items-center gap-2 font-serif text-2xl font-bold"
                 >
-                  <span
-                    className="material-symbols-outlined text-primary"
-                    style={{ fontVariationSettings: "'FILL' 1" }}
-                  >
-                    favorite
-                  </span>
+                  <Icon name="favorite" fill className="text-primary" />
                   Mis Favoritos
                 </h2>
                 <button
@@ -161,12 +157,7 @@ export function FavoritesModal({ isOpen, onClose }: FavoritesModalProps) {
                   className="flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-gray-100"
                   aria-label="Cerrar favoritos"
                 >
-                  <span
-                    className="material-symbols-outlined"
-                    style={{ fontSize: "20px" }}
-                  >
-                    close
-                  </span>
+                  <Icon name="close" />
                 </button>
               </div>
 
@@ -174,15 +165,18 @@ export function FavoritesModal({ isOpen, onClose }: FavoritesModalProps) {
               <div className="custom-scrollbar flex-1 overflow-y-auto p-6">
                 {loading ? (
                   <div className="flex justify-center p-12">
-                    <span className="material-symbols-outlined text-primary animate-spin text-5xl">
-                      progress_activity
-                    </span>
+                    <Icon
+                      name="progress_activity"
+                      size={48}
+                      className="text-primary animate-spin text-5xl"
+                    />
                   </div>
                 ) : products.length === 0 ? (
                   <div className="p-12 text-center">
-                    <span className="material-symbols-outlined mb-4 block text-6xl text-gray-300">
-                      favorite_border
-                    </span>
+                    <Icon
+                      name="favorite_border"
+                      className="mb-4 block text-6xl text-gray-300"
+                    />
                     <p className="text-gray-500">
                       Aún no tienes productos favoritos guardados.
                     </p>
@@ -239,12 +233,11 @@ export function FavoritesModal({ isOpen, onClose }: FavoritesModalProps) {
                             className="absolute top-1/2 right-4 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 shadow-sm backdrop-blur-sm transition-transform hover:scale-110 active:scale-95"
                             aria-label="Quitar de favoritos"
                           >
-                            <span
-                              className="material-symbols-outlined text-primary"
-                              style={{ fontVariationSettings: "'FILL' 1" }}
-                            >
-                              favorite
-                            </span>
+                            <Icon
+                              name="favorite"
+                              fill
+                              className="text-primary"
+                            />
                           </button>
                         </Link>
                       ))}

@@ -1,5 +1,6 @@
-"use client";
+﻿"use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 import { useState, useRef } from "react";
 import { sendContactMessage } from "@/actions/contact";
 import { cn } from "@/lib/utils";
@@ -100,13 +101,13 @@ export function ContactForm() {
   if (state === "success") {
     return (
       <div className="flex flex-col items-center justify-center gap-4 rounded-2xl border border-green-100 bg-green-50 px-6 py-12 text-center">
-        <span
-          className="material-symbols-outlined text-5xl text-green-500"
-          style={{ fontVariationSettings: "'FILL' 1" }}
+        <Icon
+          name="check_circle"
+          size={48}
+          fill
+          className="text-green-500"
           aria-hidden="true"
-        >
-          check_circle
-        </span>
+        />
         <div>
           <p className="font-serif text-xl font-bold text-gray-800">
             ¡Mensaje enviado!
@@ -231,12 +232,12 @@ export function ContactForm() {
           role="alert"
           className="flex items-center gap-2 rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-700"
         >
-          <span
-            className="material-symbols-outlined text-base"
+          <Icon
+            name="error"
+            size={16}
+            className="text-base"
             aria-hidden="true"
-          >
-            error
-          </span>
+          />
           {serverError}
         </div>
       )}
@@ -257,12 +258,7 @@ export function ContactForm() {
           </>
         ) : (
           <>
-            <span
-              className="material-symbols-outlined text-[18px]"
-              aria-hidden="true"
-            >
-              send
-            </span>
+            <Icon name="send" size={18} aria-hidden="true" />
             Enviar mensaje
           </>
         )}

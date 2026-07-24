@@ -38,7 +38,10 @@ export default function PublicLayout({
         Saltar al contenido
       </a>
       <Navbar />
-      <main id="main-content" className="flex-grow pb-20 sm:pb-0">
+      <main
+        id="main-content"
+        className="w-full max-w-full flex-grow overflow-x-clip pb-20 sm:pb-0"
+      >
         {children}
       </main>
       <Footer />

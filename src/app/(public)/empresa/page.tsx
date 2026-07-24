@@ -1,3 +1,4 @@
+﻿import { Icon } from "@/components/ui/icons/Icon";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -512,9 +513,7 @@ export default function EmpresaPage() {
                     href="/empresa/proceso-de-confeccion"
                   >
                     <div className="bg-surface flex h-16 w-16 shrink-0 items-center justify-center rounded text-[#001b4a]">
-                      <span className="material-symbols-outlined text-3xl">
-                        factory
-                      </span>
+                      <Icon name="factory" size={30} className="text-3xl" />
                     </div>
                     <div>
                       <h4 className="font-title-lg text-title-lg text-[#001b4a]">
@@ -531,9 +530,7 @@ export default function EmpresaPage() {
                     href="/empresa/calidad"
                   >
                     <div className="bg-surface flex h-16 w-16 shrink-0 items-center justify-center rounded text-[#001b4a]">
-                      <span className="material-symbols-outlined text-3xl">
-                        verified
-                      </span>
+                      <Icon name="verified" size={30} className="text-3xl" />
                     </div>
                     <div>
                       <h4 className="font-title-lg text-title-lg text-[#001b4a]">
@@ -550,9 +547,11 @@ export default function EmpresaPage() {
                     href="/empresa/certificaciones"
                   >
                     <div className="bg-surface flex h-16 w-16 shrink-0 items-center justify-center rounded text-[#001b4a]">
-                      <span className="material-symbols-outlined text-3xl">
-                        workspace_premium
-                      </span>
+                      <Icon
+                        name="workspace_premium"
+                        size={30}
+                        className="text-3xl"
+                      />
                     </div>
                     <div>
                       <h4 className="font-title-lg text-title-lg text-[#001b4a]">
@@ -596,9 +595,10 @@ export default function EmpresaPage() {
                     </h4>
                   </div>
                   <div className="flex justify-end">
-                    <span className="material-symbols-outlined text-[#001b4a] transition-transform group-hover:translate-x-1">
-                      arrow_forward
-                    </span>
+                    <Icon
+                      name="arrow_forward"
+                      className="text-[#001b4a] transition-transform group-hover:translate-x-1"
+                    />
                   </div>
                 </Link>
 
@@ -631,9 +631,10 @@ export default function EmpresaPage() {
                     </h4>
                   </div>
                   <div className="flex justify-end">
-                    <span className="material-symbols-outlined text-[#001b4a] transition-transform group-hover:translate-x-1">
-                      arrow_forward
-                    </span>
+                    <Icon
+                      name="arrow_forward"
+                      className="text-[#001b4a] transition-transform group-hover:translate-x-1"
+                    />
                   </div>
                 </Link>
 
@@ -666,9 +667,10 @@ export default function EmpresaPage() {
                     </h4>
                   </div>
                   <div className="flex justify-end">
-                    <span className="material-symbols-outlined text-[#001b4a] transition-transform group-hover:translate-x-1">
-                      arrow_forward
-                    </span>
+                    <Icon
+                      name="arrow_forward"
+                      className="text-[#001b4a] transition-transform group-hover:translate-x-1"
+                    />
                   </div>
                 </Link>
               </div>

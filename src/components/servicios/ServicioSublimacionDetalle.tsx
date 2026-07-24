@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -34,15 +35,11 @@ function FAQItem({ question, answer }: FAQItemProps) {
         <span className="text-primary font-serif text-lg font-bold">
           {question}
         </span>
-        <span
-          className={cn(
-            "material-symbols-outlined transition-transform duration-300",
-            isOpen && "rotate-180"
-          )}
+        <Icon
+          name="expand_more"
+          className="transition-transform duration-300"
           aria-hidden="true"
-        >
-          expand_more
-        </span>
+        />
       </button>
       <div
         className={cn(
@@ -130,9 +127,11 @@ export function ServicioSublimacionDetalle({
                       className="border-primary/12 text-primary animate-fade-in-up flex w-full items-center gap-2 rounded-full border bg-white px-4 py-2 font-sans text-sm font-medium shadow-xs"
                       style={{ animationDelay: `${index * 50 + 200}ms` }}
                     >
-                      <span className="material-symbols-outlined text-secondary mr-2 shrink-0 text-[16px]">
-                        {b.icon}
-                      </span>
+                      <Icon
+                        name={b.icon}
+                        size={16}
+                        className="text-secondary mr-2 shrink-0"
+                      />
                       <span className="leading-tight">{b.text}</span>
                     </div>
                   ))}
@@ -196,9 +195,7 @@ export function ServicioSublimacionDetalle({
                     className="border-primary/12 group flex flex-col items-center gap-2 rounded-2xl border bg-white p-4 text-center shadow-sm transition hover:shadow-md"
                   >
                     <div className="bg-primary/5 text-primary group-hover:bg-primary/10 flex h-11 w-11 items-center justify-center rounded-full transition">
-                      <span className="material-symbols-outlined text-[22px]">
-                        {cat.icon}
-                      </span>
+                      <Icon name={cat.icon} size={22} />
                     </div>
                     <span className="text-primary font-sans text-xs leading-tight font-semibold">
                       {cat.title}
@@ -224,7 +221,7 @@ export function ServicioSublimacionDetalle({
                 <div className="space-y-6">
                   <div className="mb-4 flex items-center gap-4">
                     <div className="border-primary/12 text-primary flex h-12 w-12 items-center justify-center rounded-full border bg-white">
-                      <span className="material-symbols-outlined">layers</span>
+                      <Icon name="layers" />
                     </div>
                     <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
                       {sec(0)!.heading}
@@ -240,9 +237,7 @@ export function ServicioSublimacionDetalle({
                 <div className="space-y-6">
                   <div className="mb-4 flex items-center gap-4">
                     <div className="border-primary/12 text-primary flex h-12 w-12 items-center justify-center rounded-full border bg-white">
-                      <span className="material-symbols-outlined">
-                        category
-                      </span>
+                      <Icon name="category" />
                     </div>
                     <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
                       {sec(1)!.heading}
@@ -258,7 +253,7 @@ export function ServicioSublimacionDetalle({
                 <div className="space-y-6">
                   <div className="mb-4 flex items-center gap-4">
                     <div className="border-primary/12 text-primary flex h-12 w-12 items-center justify-center rounded-full border bg-white">
-                      <span className="material-symbols-outlined">sports</span>
+                      <Icon name="sports" />
                     </div>
                     <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
                       {sec(2)!.heading}
@@ -274,9 +269,7 @@ export function ServicioSublimacionDetalle({
                 <div className="space-y-6">
                   <div className="mb-4 flex items-center gap-4">
                     <div className="border-primary/12 text-primary flex h-12 w-12 items-center justify-center rounded-full border bg-white">
-                      <span className="material-symbols-outlined">
-                        shopping_bag
-                      </span>
+                      <Icon name="shopping_bag" />
                     </div>
                     <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
                       {sec(3)!.heading}
@@ -292,7 +285,7 @@ export function ServicioSublimacionDetalle({
                 <div className="space-y-6">
                   <div className="mb-4 flex items-center gap-4">
                     <div className="border-primary/12 text-primary flex h-12 w-12 items-center justify-center rounded-full border bg-white">
-                      <span className="material-symbols-outlined">shield</span>
+                      <Icon name="shield" />
                     </div>
                     <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
                       {sec(4)!.heading}
@@ -313,23 +306,23 @@ export function ServicioSublimacionDetalle({
                   <div className="bg-primary/5 border-primary/12 border-r p-4 text-center">
                     <span className="text-primary flex items-center justify-center gap-2 font-sans text-sm font-bold">
                       Sublimación{" "}
-                      <span
-                        className="material-symbols-outlined text-[18px] font-bold text-green-600"
-                        style={{ fontVariationSettings: "'FILL' 1" }}
-                      >
-                        check_circle
-                      </span>
+                      <Icon
+                        name="check_circle"
+                        size={18}
+                        fill
+                        className="font-bold text-green-600"
+                      />
                     </span>
                   </div>
                   <div className="bg-surface-container-lowest p-4 text-center">
                     <span className="text-on-surface-variant flex items-center justify-center gap-2 font-sans text-sm font-bold">
                       Tradicional{" "}
-                      <span
-                        className="material-symbols-outlined text-primary text-[18px] font-bold"
-                        style={{ fontVariationSettings: "'FILL' 1" }}
-                      >
-                        cancel
-                      </span>
+                      <Icon
+                        name="cancel"
+                        size={18}
+                        fill
+                        className="text-primary font-bold"
+                      />
                     </span>
                   </div>
                 </div>
@@ -396,9 +389,7 @@ export function ServicioSublimacionDetalle({
                 >
                   <div className="mb-3 flex items-center gap-4">
                     <div className="bg-primary/5 text-primary flex h-10 w-10 items-center justify-center rounded-full">
-                      <span className="material-symbols-outlined">
-                        {card.icon}
-                      </span>
+                      <Icon name={card.icon} />
                     </div>
                     <div>
                       <div className="text-outline text-xs font-semibold tracking-wider uppercase">
@@ -442,9 +433,7 @@ export function ServicioSublimacionDetalle({
                 >
                   <div className="mb-4 flex items-center gap-3">
                     <div className="bg-primary/5 text-primary flex h-11 w-11 shrink-0 items-center justify-center rounded-full">
-                      <span className="material-symbols-outlined text-[22px]">
-                        {detail.icon}
-                      </span>
+                      <Icon name={detail.icon} size={22} />
                     </div>
                     <h3 className="text-primary font-serif text-lg leading-tight font-bold">
                       {detail.title}
@@ -460,12 +449,12 @@ export function ServicioSublimacionDetalle({
                           key={pi}
                           className="text-on-surface-variant flex items-start gap-2 font-sans text-sm"
                         >
-                          <span
-                            className="material-symbols-outlined text-secondary mt-0.5 shrink-0 text-[16px]"
-                            style={{ fontVariationSettings: "'FILL' 1" }}
-                          >
-                            check_circle
-                          </span>
+                          <Icon
+                            name="check_circle"
+                            size={16}
+                            fill
+                            className="text-secondary mt-0.5 shrink-0"
+                          />
                           {point}
                         </li>
                       ))}
@@ -501,15 +490,18 @@ export function ServicioSublimacionDetalle({
               <div key={idx} className="contents">
                 <div className="border-primary/12 relative z-10 flex w-full flex-col items-center rounded-xl border bg-white p-6 shadow-sm md:w-1/4 md:border-none md:shadow-none">
                   <div className="bg-primary mb-4 flex h-16 w-16 items-center justify-center rounded-full border-4 border-white text-white shadow-md">
-                    <span className="material-symbols-outlined text-[28px]">
-                      {idx === 0
-                        ? "design_services"
-                        : idx === 1
-                          ? "print"
-                          : idx === 2
-                            ? "heat_pump"
-                            : "checkroom"}
-                    </span>
+                    <Icon
+                      name={
+                        idx === 0
+                          ? "design_services"
+                          : idx === 1
+                            ? "print"
+                            : idx === 2
+                              ? "layers"
+                              : "checkroom"
+                      }
+                      size={28}
+                    />
                   </div>
                   <h4 className="text-primary mb-2 font-serif text-lg font-bold">
                     {step.step}. {step.title}
@@ -519,17 +511,16 @@ export function ServicioSublimacionDetalle({
                   </p>
                   {idx < (service.processSteps?.length ?? 0) - 1 && (
                     <div className="md:hidden">
-                      <span className="material-symbols-outlined text-secondary mt-4">
-                        arrow_downward
-                      </span>
+                      <Icon
+                        name="arrow_downward"
+                        className="text-secondary mt-4"
+                      />
                     </div>
                   )}
                 </div>
                 {idx < (service.processSteps?.length ?? 0) - 1 && (
                   <div className="text-secondary border-primary/5 relative z-10 hidden rounded-full border bg-white p-1 shadow-sm md:flex">
-                    <span className="material-symbols-outlined text-[24px]">
-                      arrow_forward
-                    </span>
+                    <Icon name="arrow_forward" size={24} />
                   </div>
                 )}
               </div>
@@ -617,9 +608,7 @@ export function ServicioSublimacionDetalle({
                   href={service.ctaBanner.secondaryCtaHref}
                   className="border-primary text-primary hover:bg-primary/5 inline-flex items-center gap-2 rounded-lg border px-6 py-3 font-sans text-sm font-semibold transition"
                 >
-                  <span className="material-symbols-outlined text-[18px]">
-                    arrow_forward
-                  </span>
+                  <Icon name="arrow_forward" size={18} />
                   {service.ctaBanner.secondaryCtaText ??
                     "Ver servicio de bordado"}
                 </Link>
@@ -652,9 +641,7 @@ export function ServicioSublimacionDetalle({
                       key={inst}
                       className="border-primary/12 flex items-center gap-3 rounded-xl border bg-white p-4 shadow-sm"
                     >
-                      <span className="material-symbols-outlined text-primary text-[20px]">
-                        school
-                      </span>
+                      <Icon name="school" size={20} className="text-primary" />
                       <span className="text-primary font-sans text-sm font-semibold">
                         {inst}
                       </span>
@@ -673,9 +660,7 @@ export function ServicioSublimacionDetalle({
           <div className="mx-auto max-w-screen-2xl">
             <div className="border-primary/12 flex flex-col gap-6 rounded-2xl border bg-white p-8 shadow-sm md:flex-row md:items-center md:gap-10">
               <div className="bg-primary/5 text-primary flex h-16 w-16 shrink-0 items-center justify-center rounded-full">
-                <span className="material-symbols-outlined text-[32px]">
-                  local_shipping
-                </span>
+                <Icon name="local_shipping" size={32} />
               </div>
               <div>
                 <h2 className="text-primary mb-2 font-serif text-xl font-bold md:text-2xl">
@@ -730,12 +715,7 @@ export function ServicioSublimacionDetalle({
                   rel="noopener noreferrer"
                   className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-white px-8 py-4 font-sans text-base font-bold text-[#143067] shadow-sm transition-colors duration-300 hover:bg-white/90"
                 >
-                  <span
-                    className="material-symbols-outlined"
-                    aria-hidden="true"
-                  >
-                    chat
-                  </span>
+                  <Icon name="chat" aria-hidden="true" />
                   {service.ctaBanner.ctaText}
                 </a>
                 {service.ctaBanner.secondaryCtaHref && (

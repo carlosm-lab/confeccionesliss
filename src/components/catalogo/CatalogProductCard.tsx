@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 /**
  * CatalogProductCard — Confecciones Liss
  * Usa DbProduct (schema de Supabase) directamente.
@@ -109,14 +110,12 @@ export function CatalogProductCard({
         className="absolute top-2 right-2 z-[20] flex h-7 w-7 items-center justify-center rounded-full bg-white/90 shadow-md backdrop-blur-sm transition hover:scale-110 active:scale-95"
         aria-label={isFavorited ? "Quitar de favoritos" : "Agregar a favoritos"}
       >
-        <span
-          className="material-symbols-outlined text-[17px] text-red-500"
-          style={{
-            fontVariationSettings: isFavorited ? "'FILL' 1" : "'FILL' 0",
-          }}
-        >
-          favorite
-        </span>
+        <Icon
+          name={isFavorited ? "favorite" : "favorite_border"}
+          size={17}
+          fill={isFavorited}
+          className={isFavorited ? "text-red-500" : "text-slate-400"}
+        />
       </button>
 
       {/* Imagen — aspect-ratio 4/5 para uniformes (retrato natural) */}
@@ -133,12 +132,12 @@ export function CatalogProductCard({
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-gray-50">
-            <span
-              className="material-symbols-outlined text-4xl text-gray-300"
+            <Icon
+              name="checkroom"
+              size={36}
+              className="text-gray-300"
               aria-hidden="true"
-            >
-              checkroom
-            </span>
+            />
           </div>
         )}
       </div>

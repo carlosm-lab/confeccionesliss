@@ -1,4 +1,6 @@
-﻿"use client";
+"use client";
+
+import { Icon } from "@/components/ui/icons/Icon";
 import { useState, useEffect, useCallback } from "react";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import MessageCard from "@/components/admin/MessageCard";
@@ -114,9 +116,7 @@ export default function AdminMessagesPage() {
         <div
           className={`fixed top-4 right-4 z-[300] flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold shadow-lg ${toast.ok ? "bg-green-600 text-white" : "bg-red-600 text-white"}`}
         >
-          <span className="material-symbols-outlined text-[18px]">
-            {toast.ok ? "check_circle" : "error"}
-          </span>
+          <Icon name={toast.ok ? "check_circle" : "error"} size={18} />
           {toast.msg}
         </div>
       )}
@@ -162,9 +162,7 @@ export default function AdminMessagesPage() {
           ) : messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center p-12 text-center">
               <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-50 text-slate-400 dark:bg-transparent">
-                <span className="material-symbols-outlined text-[32px]">
-                  mark_email_read
-                </span>
+                <Icon name="mark_email_read" size={32} />
               </div>
               <h3 className="mb-1 text-lg font-bold text-slate-900 dark:text-white">
                 ¡Bandeja vacía!
@@ -252,9 +250,7 @@ function MessageDetailModal({
               id="message-detail-title"
               className="flex items-center gap-2 text-xl font-bold text-slate-900 dark:text-white"
             >
-              <span className="material-symbols-outlined text-primary">
-                mail
-              </span>
+              <Icon name="mail" className="text-primary" />
               {message.subject || "Sin asunto"}
             </h2>
             <button
@@ -262,7 +258,7 @@ function MessageDetailModal({
               aria-label="Cerrar mensaje"
               className="rounded-full p-2 text-slate-500 transition-colors hover:bg-slate-100 dark:hover:bg-white/10"
             >
-              <span className="material-symbols-outlined">close</span>
+              <Icon name="close" />
             </button>
           </div>
 
@@ -299,9 +295,7 @@ function MessageDetailModal({
               }}
               className="flex items-center gap-2 rounded-xl px-4 py-2 font-medium text-red-600 transition-colors hover:bg-red-50 dark:hover:bg-red-900/20"
             >
-              <span className="material-symbols-outlined text-[18px]">
-                delete
-              </span>
+              <Icon name="delete" size={18} />
               Eliminar
             </button>
           </div>

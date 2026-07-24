@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 
+import { Icon } from "@/components/ui/icons/Icon";
+
 const ITEMS = [
   { href: "/", icon: "home", label: "Inicio" },
   { href: "/catalogo", icon: "storefront", label: "Catálogo" },
@@ -118,18 +120,20 @@ export function MobileBottomNav() {
                 "relative flex h-full w-full flex-col items-center justify-center gap-0.5 transition-colors",
                 isActive
                   ? "text-primary font-bold"
-                  : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+                  : "text-slate-700 hover:text-slate-900 dark:text-slate-300"
               )}
             >
-              <span
-                className="material-symbols-outlined"
-                style={{
-                  fontSize: "24px",
-                  fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0",
-                }}
-              >
-                {item.icon}
-              </span>
+              <Icon
+                name={item.icon}
+                size={22}
+                strokeWidth={isActive ? 2.5 : 1.75}
+                className={cn(
+                  "transition-all duration-200",
+                  isActive
+                    ? "text-primary scale-110 opacity-100"
+                    : "scale-100 text-slate-600 opacity-40 hover:opacity-80"
+                )}
+              />
               {isCartTab && isMounted && cartCount > 0 && (
                 <span className="bg-primary absolute top-1.5 right-1/2 flex h-4 w-4 translate-x-4 items-center justify-center rounded-full text-[8px] font-bold text-white">
                   {cartCount > 99 ? "99+" : cartCount}

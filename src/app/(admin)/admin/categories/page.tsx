@@ -1,4 +1,6 @@
 "use client";
+
+import { Icon } from "@/components/ui/icons/Icon";
 import { useState, useEffect, useCallback } from "react";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import { logger } from "@/lib/logger";
@@ -226,9 +228,7 @@ export default function AdminCategoriesPage() {
         <div
           className={`fixed top-4 right-4 z-[300] flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold shadow-lg ${toast.ok ? "bg-green-600 text-white" : "bg-red-600 text-white"}`}
         >
-          <span className="material-symbols-outlined text-[18px]">
-            {toast.ok ? "check_circle" : "error"}
-          </span>
+          <Icon name={toast.ok ? "check_circle" : "error"} size={18} />
           {toast.msg}
         </div>
       )}
@@ -244,9 +244,7 @@ export default function AdminCategoriesPage() {
       </div>
 
       <div className="bg-primary/5 border-primary/20 mb-6 flex shrink-0 gap-3 rounded-2xl border p-4">
-        <span className="material-symbols-outlined text-primary mt-0.5 shrink-0 text-[22px]">
-          info
-        </span>
+        <Icon name="info" size={22} className="text-primary mt-0.5 shrink-0" />
         <div className="text-primary/90 dark:text-primary/70 text-sm">
           <p className="mb-1 font-bold">Arquitectura de catalogos</p>
           <p>
@@ -310,9 +308,7 @@ export default function AdminCategoriesPage() {
                 />
                 {isUniversityCatalog && (
                   <p className="mt-1 text-xs text-violet-600 dark:text-violet-400">
-                    <span className="material-symbols-outlined align-middle text-[13px]">
-                      school
-                    </span>{" "}
+                    <Icon name="school" size={13} className="align-middle" />{" "}
                     Catalogo universitario — las categorias creadas aqui
                     apareceran como carreras en la pagina de esa universidad.
                   </p>
@@ -481,9 +477,11 @@ export default function AdminCategoriesPage() {
               </div>
             ) : filteredCategories.length === 0 ? (
               <div className="p-12 text-center">
-                <span className="material-symbols-outlined mb-3 block text-4xl text-slate-300">
-                  category
-                </span>
+                <Icon
+                  name="category"
+                  size={36}
+                  className="mb-3 block text-slate-300"
+                />
                 <p className="text-slate-500">
                   {filterCatalog
                     ? "No hay categorias en este catalogo."
@@ -508,9 +506,7 @@ export default function AdminCategoriesPage() {
                             <span
                               className={`inline-flex shrink-0 items-center gap-1 rounded-lg px-2 py-0.5 text-[10px] font-bold uppercase ${isUniv ? "bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300" : "bg-primary/10 text-primary"}`}
                             >
-                              <span className="material-symbols-outlined text-[12px]">
-                                {catalogInfo.icon}
-                              </span>
+                              <Icon name={catalogInfo.icon} size={12} />
                               {cat.catalog}
                             </span>
                           ) : (
@@ -532,18 +528,14 @@ export default function AdminCategoriesPage() {
                           aria-label={`Editar ${cat.name}`}
                           className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900/20"
                         >
-                          <span className="material-symbols-outlined text-[20px]">
-                            edit
-                          </span>
+                          <Icon name="edit" size={20} />
                         </button>
                         <button
                           onClick={() => handleDelete(cat.id)}
                           aria-label={`Eliminar ${cat.name}`}
                           className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20"
                         >
-                          <span className="material-symbols-outlined text-[20px]">
-                            delete
-                          </span>
+                          <Icon name="delete" size={20} />
                         </button>
                       </div>
                     </li>

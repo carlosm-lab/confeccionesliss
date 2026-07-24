@@ -1,4 +1,5 @@
 "use client";
+import { Icon } from "@/components/ui/icons/Icon";
 import { useEffect } from "react";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 
@@ -71,13 +72,16 @@ export function ConfirmDialog({
                   : "bg-primary/10 text-primary"
             }`}
           >
-            <span className="material-symbols-outlined text-[22px]">
-              {type === "danger"
-                ? "warning"
-                : type === "warning"
-                  ? "info"
-                  : "help"}
-            </span>
+            <Icon
+              name={
+                type === "danger"
+                  ? "warning"
+                  : type === "warning"
+                    ? "info"
+                    : "help"
+              }
+              size={22}
+            />
           </div>
           <h2
             id="confirm-title"

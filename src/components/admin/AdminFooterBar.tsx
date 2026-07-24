@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { Icon } from "@/components/ui/icons/Icon";
 
 const navItems = [
   { to: "/admin", icon: "dashboard", label: "Inicio", exact: true },
@@ -36,12 +37,7 @@ export default function AdminFooterBar() {
                   : "text-slate-400 dark:text-slate-400/70"
               )}
             >
-              <span
-                className="material-symbols-outlined"
-                style={{ fontSize: "24px" }}
-              >
-                {item.icon}
-              </span>
+              <Icon name={item.icon} size={24} />
               <span className="text-[10px] font-semibold">{item.label}</span>
             </Link>
           );

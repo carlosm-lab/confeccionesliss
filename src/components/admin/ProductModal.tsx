@@ -1,4 +1,6 @@
 "use client";
+
+import { Icon } from "@/components/ui/icons/Icon";
 /**
  * NOTA:
  * Este formulario NO incluye campo de stock intencionalmente.
@@ -622,9 +624,10 @@ export default function ProductModal({
           <div
             className={`absolute top-3 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold shadow-lg ${toastMsg.type === "error" ? "bg-red-600 text-white" : "bg-primary text-white"}`}
           >
-            <span className="material-symbols-outlined text-[16px]">
-              {toastMsg.type === "error" ? "error" : "info"}
-            </span>
+            <Icon
+              name={toastMsg.type === "error" ? "error" : "info"}
+              size={16}
+            />
             {toastMsg.text}
           </div>
         )}
@@ -642,7 +645,7 @@ export default function ProductModal({
             aria-label="Cerrar modal"
             className="text-slate-400 transition-colors hover:text-slate-600 dark:hover:text-slate-200"
           >
-            <span className="material-symbols-outlined">close</span>
+            <Icon name="close" />
           </button>
         </div>
 
@@ -851,9 +854,11 @@ export default function ProductModal({
                           aria-label={`Eliminar imagen ${idx + 1}`}
                           className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 transition-opacity group-hover:opacity-100"
                         >
-                          <span className="material-symbols-outlined text-[18px] text-white">
-                            delete
-                          </span>
+                          <Icon
+                            name="delete"
+                            size={18}
+                            className="text-white"
+                          />
                         </button>
                         {idx === 0 && (
                           <span className="bg-primary absolute top-0.5 left-0.5 rounded px-1 text-[9px] font-bold text-white">
@@ -1114,12 +1119,7 @@ export default function ProductModal({
                                 className="text-primary/60 hover:text-red-500"
                                 aria-label={`Eliminar talla ${talla}`}
                               >
-                                <span
-                                  className="material-symbols-outlined"
-                                  style={{ fontSize: "12px" }}
-                                >
-                                  close
-                                </span>
+                                <Icon name="close" />
                               </button>
                             </span>
                           ))}
@@ -1223,12 +1223,10 @@ export default function ProductModal({
                             className="flex items-center justify-between gap-2 rounded-lg bg-white px-3 py-1.5 text-xs text-slate-700 shadow-sm dark:bg-white/5 dark:text-slate-300"
                           >
                             <span className="flex items-center gap-1.5">
-                              <span
-                                className="material-symbols-outlined text-primary"
-                                style={{ fontSize: "14px" }}
-                              >
-                                check_circle
-                              </span>
+                              <Icon
+                                name="check_circle"
+                                className="text-primary"
+                              />
                               {item}
                             </span>
                             <button
@@ -1244,12 +1242,7 @@ export default function ProductModal({
                               className="text-slate-400 hover:text-red-500"
                               aria-label={`Eliminar característica: ${item}`}
                             >
-                              <span
-                                className="material-symbols-outlined"
-                                style={{ fontSize: "14px" }}
-                              >
-                                close
-                              </span>
+                              <Icon name="close" />
                             </button>
                           </li>
                         ))}
@@ -1353,12 +1346,7 @@ export default function ProductModal({
                               className="text-slate-400 hover:text-red-500"
                               aria-label={`Eliminar color: ${color.name}`}
                             >
-                              <span
-                                className="material-symbols-outlined"
-                                style={{ fontSize: "12px" }}
-                              >
-                                close
-                              </span>
+                              <Icon name="close" />
                             </button>
                           </div>
                         ))}
@@ -1372,12 +1360,7 @@ export default function ProductModal({
               {formData.tallas.length > 0 && (
                 <div className="space-y-4 rounded-xl border border-indigo-200 bg-indigo-50 p-4 md:col-span-2 dark:border-indigo-500/20 dark:bg-indigo-500/5">
                   <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400">
-                    <span
-                      className="material-symbols-outlined"
-                      style={{ fontSize: "20px" }}
-                    >
-                      sell
-                    </span>
+                    <Icon name="sell" />
                     <h4 className="text-sm font-bold">Precio por Talla</h4>
                     <span className="ml-auto text-[10px] font-normal text-slate-400">
                       Obligatorio (excepto A la medida)
@@ -1433,12 +1416,7 @@ export default function ProductModal({
                             htmlFor={`offer-size-${talla}`}
                             className="mt-1 mb-0.5 flex items-center gap-1 text-[10px] font-medium text-amber-600 dark:text-amber-400"
                           >
-                            <span
-                              className="material-symbols-outlined"
-                              style={{ fontSize: "11px" }}
-                            >
-                              local_offer
-                            </span>
+                            <Icon name="local_offer" />
                             Precio oferta ($)
                             <span className="font-normal text-slate-400">
                               — opcional
@@ -1474,12 +1452,7 @@ export default function ProductModal({
 
                   {formData.tallas.includes("A la medida") && (
                     <p className="flex items-center gap-1.5 text-[11px] text-indigo-600 dark:text-indigo-400">
-                      <span
-                        className="material-symbols-outlined"
-                        style={{ fontSize: "14px" }}
-                      >
-                        info
-                      </span>
+                      <Icon name="info" />
                       &ldquo;A la medida&rdquo; no tiene precio fijo — se cotiza
                       exclusivamente por WhatsApp.
                     </p>
@@ -1491,12 +1464,7 @@ export default function ProductModal({
               {Object.keys(formData.offer_by_size).length > 0 && (
                 <div className="space-y-4 rounded-xl border border-amber-200 bg-amber-50 p-4 md:col-span-2 dark:border-amber-500/20 dark:bg-amber-500/5">
                   <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400">
-                    <span
-                      className="material-symbols-outlined"
-                      style={{ fontSize: "20px" }}
-                    >
-                      local_offer
-                    </span>
+                    <Icon name="local_offer" />
                     <h4 className="text-sm font-bold">
                       Configuración de Oferta
                     </h4>
@@ -1601,12 +1569,7 @@ export default function ProductModal({
                       className="mb-1 block text-xs font-medium text-slate-600 dark:text-slate-400"
                     >
                       <span className="flex items-center gap-1">
-                        <span
-                          className="material-symbols-outlined"
-                          style={{ fontSize: "14px" }}
-                        >
-                          schedule
-                        </span>
+                        <Icon name="schedule" />
                         Programar inicio (Opcional)
                       </span>
                     </label>
@@ -1656,12 +1619,7 @@ export default function ProductModal({
                         className="text-primary/60 hover:text-red-500"
                         aria-label={`Quitar etiqueta ${tag}`}
                       >
-                        <span
-                          className="material-symbols-outlined"
-                          style={{ fontSize: "14px" }}
-                        >
-                          close
-                        </span>
+                        <Icon name="close" />
                       </button>
                     </span>
                   ))}
@@ -1671,12 +1629,7 @@ export default function ProductModal({
               {/* ─── Detalles del Artículo — campos multi-catálogo ──────────────── */}
               <div className="space-y-4 rounded-xl border border-violet-200 bg-violet-50 p-4 md:col-span-2 dark:border-violet-500/20 dark:bg-violet-500/5">
                 <div className="flex items-center gap-2 text-violet-700 dark:text-violet-400">
-                  <span
-                    className="material-symbols-outlined"
-                    style={{ fontSize: "20px" }}
-                  >
-                    info
-                  </span>
+                  <Icon name="info" />
                   <h4 className="text-sm font-bold">Detalles del Artículo</h4>
                   <span className="ml-auto text-[10px] font-normal text-slate-400">
                     Opcional
@@ -1819,12 +1772,7 @@ export default function ProductModal({
               {/* ─── SEO Manual ─────────────────────────────────────────── */}
               <div className="space-y-4 rounded-xl border border-emerald-200 bg-emerald-50 p-4 md:col-span-2 dark:border-emerald-500/20 dark:bg-emerald-500/5">
                 <div className="flex items-center gap-2 text-emerald-700 dark:text-emerald-400">
-                  <span
-                    className="material-symbols-outlined"
-                    style={{ fontSize: "20px" }}
-                  >
-                    manage_search
-                  </span>
+                  <Icon name="manage_search" />
                   <h4 className="text-sm font-bold">SEO del Producto</h4>
                   <span className="ml-auto text-[10px] font-normal text-slate-400">
                     Opcional
@@ -1986,21 +1934,13 @@ export default function ProductModal({
             >
               <label className="flex cursor-pointer items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
-                  <span
-                    className={`material-symbols-outlined text-[22px] transition-colors ${
-                      formData.is_active
-                        ? "text-emerald-600 dark:text-emerald-400"
-                        : "text-slate-400"
-                    }`}
+                  <Icon
+                    name={formData.is_active ? "visibility" : "visibility_off"}
+                    size={22}
+                    fill={formData.is_active}
+                    className={`transition-colors ${formData.is_active ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400"}`}
                     aria-hidden="true"
-                    style={{
-                      fontVariationSettings: formData.is_active
-                        ? "'FILL' 1"
-                        : "'FILL' 0",
-                    }}
-                  >
-                    {formData.is_active ? "visibility" : "visibility_off"}
-                  </span>
+                  />
                   <div>
                     <p
                       className={`text-sm font-bold ${
@@ -2082,17 +2022,16 @@ export default function ProductModal({
               className="sr-only"
               aria-label="Notificar a suscriptores"
             />
-            <span
-              className="material-symbols-outlined text-[20px]"
+            <Icon
+              name={
+                Object.keys(formData.offer_by_size).length > 0
+                  ? "local_offer"
+                  : "campaign"
+              }
+              size={20}
+              fill={notifyOnSave}
               aria-hidden="true"
-              style={{
-                fontVariationSettings: notifyOnSave ? "'FILL' 1" : "'FILL' 0",
-              }}
-            >
-              {Object.keys(formData.offer_by_size).length > 0
-                ? "local_offer"
-                : "campaign"}
-            </span>
+            />
             {Object.keys(formData.offer_by_size).length > 0
               ? "Notificar como oferta"
               : "Notificar a suscriptores"}

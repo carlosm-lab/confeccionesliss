@@ -1,4 +1,6 @@
-"use client";
+﻿"use client";
+
+import { Icon } from "@/components/ui/icons/Icon";
 import { useState, useEffect } from "react";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import { logger } from "@/lib/logger";
@@ -281,9 +283,7 @@ export default function StatDetailModal({
               {f.name}
             </p>
             <div className="flex items-center gap-1 text-pink-500">
-              <span className="material-symbols-outlined text-[16px]">
-                favorite
-              </span>
+              <Icon name="favorite" size={16} />
               <span className="font-bold">{f.count}</span>
             </div>
           </div>
@@ -384,7 +384,7 @@ export default function StatDetailModal({
               aria-label="Cerrar detalles"
               className="rounded-full p-2 text-slate-500 transition-colors hover:bg-slate-100 dark:hover:bg-white/10"
             >
-              <span className="material-symbols-outlined">close</span>
+              <Icon name="close" />
             </button>
           </div>
           <div className="custom-scrollbar flex-1 overflow-y-auto">

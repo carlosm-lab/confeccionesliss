@@ -1,5 +1,6 @@
-"use client";
+﻿"use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -66,12 +67,12 @@ export function CookieBanner() {
     >
       <div className="border-primary/15 bg-background/95 shadow-ambient rounded-2xl border p-5 backdrop-blur-md">
         <div className="mb-3 flex items-start gap-3">
-          <span
-            className="material-symbols-outlined text-secondary mt-0.5 shrink-0 text-[22px]"
+          <Icon
+            name="cookie"
+            size={22}
+            className="text-secondary mt-0.5 shrink-0"
             aria-hidden="true"
-          >
-            cookie
-          </span>
+          />
           <h2 className="text-primary font-serif text-base leading-snug font-bold">
             Usamos cookies
           </h2>

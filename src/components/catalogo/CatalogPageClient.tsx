@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 /**
  * CatalogPageClient — Confecciones Liss
  * Recibe productos iniciales del servidor (SSR) y permite
@@ -294,14 +295,11 @@ export function CatalogPageClient({
                     {sortBy === "price-low" && "Precio: Menor a Mayor"}
                     {sortBy === "price-high" && "Precio: Mayor a Menor"}
                   </span>
-                  <span
-                    className={`material-symbols-outlined transition-transform duration-200 ${
-                      isSortOpen ? "rotate-180" : ""
-                    }`}
-                    style={{ fontSize: "18px" }}
-                  >
-                    expand_more
-                  </span>
+                  <Icon
+                    name="expand_more"
+                    size={18}
+                    className={`transition-transform duration-200 ${isSortOpen ? "rotate-180" : ""}`}
+                  />
                 </button>
 
                 {isSortOpen && (
@@ -328,11 +326,7 @@ export function CatalogPageClient({
                         }`}
                       >
                         <span>{label}</span>
-                        {sortBy === key && (
-                          <span className="material-symbols-outlined text-[16px]">
-                            check
-                          </span>
-                        )}
+                        {sortBy === key && <Icon name="check" size={16} />}
                       </button>
                     ))}
                   </div>
@@ -354,13 +348,7 @@ export function CatalogPageClient({
               onClick={() => setIsFilterDrawerOpen(true)}
               className="relative flex items-center gap-[var(--space-xs)] rounded-xl bg-slate-100 px-[var(--space-md)] py-[var(--space-sm)] font-medium text-[var(--text-sm)] text-slate-700 transition active:scale-[0.97]"
             >
-              <span
-                className="material-symbols-outlined"
-                style={{ fontSize: "var(--icon-md)" }}
-                aria-hidden="true"
-              >
-                tune
-              </span>
+              <Icon name="tune" aria-hidden="true" />
               Filtros y Orden
               {activeFilterCount > 0 && (
                 <span className="bg-primary absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold text-white">
@@ -390,9 +378,7 @@ export function CatalogPageClient({
                 <div className="mt-[var(--space-xl)] flex items-center justify-center gap-[var(--space-xs)]">
                   {currentPage === 1 ? (
                     <span className="flex aspect-square min-h-[44px] w-11 min-w-[44px] items-center justify-center rounded-lg border border-slate-200 text-slate-600 opacity-30">
-                      <span className="material-symbols-outlined">
-                        chevron_left
-                      </span>
+                      <Icon name="chevron_left" />
                     </span>
                   ) : (
                     <button
@@ -401,9 +387,7 @@ export function CatalogPageClient({
                       aria-label="Página anterior"
                       className="hover:bg-primary flex aspect-square min-h-[44px] w-11 min-w-[44px] items-center justify-center rounded-lg border border-slate-200 text-slate-600 transition-all hover:text-white"
                     >
-                      <span className="material-symbols-outlined">
-                        chevron_left
-                      </span>
+                      <Icon name="chevron_left" />
                     </button>
                   )}
 
@@ -440,9 +424,7 @@ export function CatalogPageClient({
 
                   {currentPage === totalPages ? (
                     <span className="flex aspect-square min-h-[44px] w-11 min-w-[44px] items-center justify-center rounded-lg border border-slate-200 text-slate-600 opacity-30">
-                      <span className="material-symbols-outlined">
-                        chevron_right
-                      </span>
+                      <Icon name="chevron_right" />
                     </span>
                   ) : (
                     <button
@@ -451,9 +433,7 @@ export function CatalogPageClient({
                       aria-label="Página siguiente"
                       className="hover:bg-primary flex aspect-square min-h-[44px] w-11 min-w-[44px] items-center justify-center rounded-lg border border-slate-200 text-slate-600 transition-all hover:text-white"
                     >
-                      <span className="material-symbols-outlined">
-                        chevron_right
-                      </span>
+                      <Icon name="chevron_right" />
                     </button>
                   )}
                 </div>
@@ -462,13 +442,12 @@ export function CatalogPageClient({
           ) : (
             /* Empty state */
             <div className="flex flex-col items-center justify-center py-[var(--space-3xl)] text-center">
-              <span
-                className="material-symbols-outlined mb-[var(--space-md)] text-slate-300"
-                style={{ fontSize: "4rem" }}
+              <Icon
+                name={hasActiveFilters ? "search_off" : "inventory_2"}
+                size={64}
+                className="mb-[var(--space-md)] text-slate-300"
                 aria-hidden="true"
-              >
-                {hasActiveFilters ? "search_off" : "inventory_2"}
-              </span>
+              />
               <p className="mb-[var(--space-sm)] font-medium text-slate-500">
                 {hasActiveFilters
                   ? "No se encontraron prendas con esos filtros"

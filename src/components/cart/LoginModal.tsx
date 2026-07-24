@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 import { useAuth } from "@/context/AuthContext";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import { useModal } from "@/hooks/useModal";
@@ -95,12 +96,7 @@ export function LoginModal({
             className="absolute top-[var(--space-md)] right-[var(--space-md)] flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-slate-500 transition-colors hover:text-slate-900"
             aria-label="Cerrar modal"
           >
-            <span
-              className="material-symbols-outlined"
-              style={{ fontSize: "20px" }}
-            >
-              close
-            </span>
+            <Icon name="close" />
           </button>
 
           <div
@@ -110,12 +106,7 @@ export function LoginModal({
                 : "bg-primary/10 text-primary"
             }`}
           >
-            <span
-              className="material-symbols-outlined"
-              style={{ fontSize: "32px" }}
-            >
-              {ctx.icon}
-            </span>
+            <Icon name={ctx.icon} size={32} />
           </div>
 
           <h2

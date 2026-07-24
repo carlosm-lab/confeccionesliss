@@ -233,7 +233,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="flex min-h-screen flex-col antialiased">
+      <body className="flex min-h-screen w-full max-w-full flex-col overflow-x-clip antialiased">
         {/* Material Symbols: carga async post-hidratación, no bloquea LCP/FCP */}
         <MaterialSymbolsLoader />
         <WebMCPRegistration />

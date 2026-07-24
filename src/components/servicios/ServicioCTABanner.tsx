@@ -1,5 +1,6 @@
-"use client";
+﻿"use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 import { siteConfig } from "@/config/site";
 
 interface ServicioCTABannerProps {
@@ -38,13 +39,7 @@ export function ServicioCTABanner({
           rel="noopener noreferrer"
           className="z-10 mt-4 inline-flex cursor-pointer items-center gap-2 rounded-[12px] bg-white px-8 py-4 font-sans text-base font-bold text-[#143067] shadow-md transition-colors hover:bg-white/90"
         >
-          <span
-            className="material-symbols-outlined"
-            style={{ fontVariationSettings: "'FILL' 1" }}
-            aria-hidden="true"
-          >
-            chat
-          </span>
+          <Icon name="chat" fill aria-hidden="true" />
           {ctaText}
         </a>
       </div>

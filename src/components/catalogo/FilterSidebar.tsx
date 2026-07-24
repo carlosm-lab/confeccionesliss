@@ -9,6 +9,7 @@
 import type { FilterGroup } from "@/data/types";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/config/site";
+import { Icon } from "@/components/ui/icons/Icon";
 
 export interface ActiveFilters {
   [field: string]: string[];
@@ -104,13 +105,7 @@ export function FilterSidebar({
                   : "text-slate-700 hover:bg-slate-50 hover:text-slate-900"
               )}
             >
-              <span
-                className="material-symbols-outlined shrink-0"
-                style={{ fontSize: "var(--icon-md)" }}
-                aria-hidden="true"
-              >
-                grid_view
-              </span>
+              <Icon name="grid_view" className="shrink-0" aria-hidden="true" />
               <span className="leading-tight text-[var(--text-sm)]">Todos</span>
             </button>
 
@@ -134,13 +129,7 @@ export function FilterSidebar({
                       : "text-slate-700 hover:bg-slate-50 hover:text-slate-900"
                   )}
                 >
-                  <span
-                    className="material-symbols-outlined shrink-0"
-                    style={{ fontSize: "var(--icon-md)" }}
-                    aria-hidden="true"
-                  >
-                    {icon}
-                  </span>
+                  <Icon name={icon} className="shrink-0" aria-hidden="true" />
                   <span className="leading-tight text-[var(--text-sm)]">
                     {opt.label}
                   </span>

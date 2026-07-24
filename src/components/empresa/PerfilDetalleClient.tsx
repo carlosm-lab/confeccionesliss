@@ -1,5 +1,6 @@
-"use client";
+﻿"use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 import { motion, Variants } from "framer-motion";
 import Link from "next/link";
 import { TeamMember } from "@/data/team";
@@ -31,9 +32,11 @@ export default function PerfilDetalleClient({
               href="/empresa/equipo"
               className="group inline-flex items-center gap-2 font-mono text-xs font-bold text-[#143067] transition-all hover:text-[#b43024]"
             >
-              <span className="material-symbols-outlined translate-x-0 text-sm transition-transform duration-200 group-hover:-translate-x-1.5">
-                keyboard_backspace
-              </span>
+              <Icon
+                name="keyboard_backspace"
+                size={14}
+                className="translate-x-0 transition-transform duration-200 group-hover:-translate-x-1.5"
+              />
               <span>Volver al Equipo</span>
             </Link>
           </div>

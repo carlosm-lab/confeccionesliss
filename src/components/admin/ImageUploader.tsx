@@ -1,4 +1,6 @@
-"use client";
+﻿"use client";
+
+import { Icon } from "@/components/ui/icons/Icon";
 import { useState, useRef, useEffect } from "react";
 import NextImage from "next/image";
 import { getSupabaseClient } from "@/lib/supabaseClient";
@@ -231,9 +233,7 @@ export default function ImageUploader({
               onClick={onRemoveImage}
               className="flex items-center gap-2 rounded-full bg-red-600 p-2 px-4 text-white shadow-md transition-colors hover:bg-red-700"
             >
-              <span className="material-symbols-outlined text-[18px]">
-                delete
-              </span>
+              <Icon name="delete" size={18} />
               <span className="text-sm font-bold">Cambiar Imagen</span>
             </button>
           </div>
@@ -264,9 +264,11 @@ export default function ImageUploader({
 
           {isUploading ? (
             <div className="flex w-full max-w-[200px] flex-col items-center">
-              <span className="material-symbols-outlined text-primary mb-2 animate-bounce text-4xl">
-                cloud_upload
-              </span>
+              <Icon
+                name="cloud_upload"
+                size={36}
+                className="text-primary mb-2 animate-bounce text-4xl"
+              />
               <p className="mb-2 text-sm font-bold text-slate-700 dark:text-slate-300">
                 Subiendo imagen...
               </p>
@@ -279,9 +281,11 @@ export default function ImageUploader({
             </div>
           ) : (
             <>
-              <span className="material-symbols-outlined mb-3 text-4xl text-slate-400">
-                add_photo_alternate
-              </span>
+              <Icon
+                name="add_photo_alternate"
+                size={36}
+                className="mb-3 text-slate-400"
+              />
               <p className="mb-1 text-sm font-bold text-slate-700 dark:text-slate-300">
                 Haz clic o arrastra tu imagen aquí
               </p>
@@ -294,7 +298,7 @@ export default function ImageUploader({
       )}
       {error && (
         <p className="mt-2 flex items-center gap-1 text-xs font-medium text-red-500">
-          <span className="material-symbols-outlined text-[14px]">error</span>
+          <Icon name="error" size={14} />
           {error}
         </p>
       )}

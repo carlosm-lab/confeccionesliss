@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 import { useState, useMemo, useEffect, useRef } from "react";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import type { AyudaCategory } from "@/data/ayuda";
@@ -241,12 +242,12 @@ export function AyudaPageClient({
                     Buscar pregunta
                   </label>
                   <div className="relative">
-                    <span
-                      className="material-symbols-outlined pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-[18px] text-gray-400"
+                    <Icon
+                      name="search"
+                      size={18}
+                      className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"
                       aria-hidden="true"
-                    >
-                      search
-                    </span>
+                    />
                     <input
                       id="ayuda-search-desktop"
                       type="text"
@@ -261,9 +262,7 @@ export function AyudaPageClient({
                         className="absolute top-1/2 right-2.5 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                         aria-label="Limpiar búsqueda"
                       >
-                        <span className="material-symbols-outlined text-[18px]">
-                          close
-                        </span>
+                        <Icon name="close" size={18} />
                       </button>
                     )}
                   </div>
@@ -301,9 +300,7 @@ export function AyudaPageClient({
                     }`}
                   >
                     <span className="flex items-center gap-2">
-                      <span className="material-symbols-outlined text-[16px]">
-                        grid_view
-                      </span>
+                      <Icon name="grid_view" size={16} />
                       Todas las categorías
                     </span>
                     <span
@@ -332,9 +329,11 @@ export function AyudaPageClient({
                         }`}
                       >
                         <span className="flex items-center gap-2 truncate pr-2">
-                          <span className="material-symbols-outlined shrink-0 text-[16px]">
-                            {cat.icon}
-                          </span>
+                          <Icon
+                            name={cat.icon}
+                            size={16}
+                            className="shrink-0"
+                          />
                           <span className="truncate">{cat.title}</span>
                         </span>
                         <span
@@ -362,9 +361,7 @@ export function AyudaPageClient({
                   className="flex w-full items-center justify-between rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-800 shadow-xs transition active:scale-[0.98]"
                 >
                   <span className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-primary text-[20px]">
-                      tune
-                    </span>
+                    <Icon name="tune" size={20} className="text-primary" />
                     <span>Filtros y Búsqueda por Tema</span>
                   </span>
                   <span className="bg-primary/10 text-primary max-w-[120px] truncate rounded-full px-2.5 py-0.5 text-xs font-bold">
@@ -421,9 +418,11 @@ export function AyudaPageClient({
                     borderColor: "var(--color-outline-variant)",
                   }}
                 >
-                  <span className="material-symbols-outlined mb-3 text-5xl text-gray-400">
-                    search_off
-                  </span>
+                  <Icon
+                    name="search_off"
+                    size={48}
+                    className="mb-3 text-gray-400"
+                  />
                   <h3
                     className="text-lg font-bold text-gray-800"
                     style={{ fontFamily: "var(--font-headline)" }}
@@ -465,9 +464,7 @@ export function AyudaPageClient({
                   {/* Category Header */}
                   <div className="mb-5 flex items-center gap-3 border-b border-gray-200 pb-3">
                     <div className="bg-primary/10 text-primary flex h-10 w-10 items-center justify-center rounded-xl">
-                      <span className="material-symbols-outlined text-[22px]">
-                        {cat.icon}
-                      </span>
+                      <Icon name={cat.icon} size={22} />
                     </div>
                     <div>
                       <h2
@@ -525,13 +522,11 @@ export function AyudaPageClient({
                                 {item.question}
                               </h3>
                             </div>
-                            <span
-                              className={`material-symbols-outlined shrink-0 text-[22px] text-gray-400 transition-transform duration-200 ${
-                                isOpen ? "text-primary rotate-180" : ""
-                              }`}
-                            >
-                              expand_more
-                            </span>
+                            <Icon
+                              name="expand_more"
+                              size={22}
+                              className={`shrink-0 text-gray-400 transition-transform duration-200 ${isOpen ? "text-primary rotate-180" : ""}`}
+                            />
                           </button>
 
                           {/* Answer Content */}
@@ -549,9 +544,7 @@ export function AyudaPageClient({
                                   rel="noopener noreferrer"
                                   className="text-primary inline-flex items-center gap-1 font-semibold hover:underline"
                                 >
-                                  <span className="material-symbols-outlined text-[14px]">
-                                    chat
-                                  </span>
+                                  <Icon name="chat" size={14} />
                                   Consultar sobre esto en WhatsApp
                                 </a>
                               </div>
@@ -572,9 +565,11 @@ export function AyudaPageClient({
                   borderColor: "var(--color-outline-variant)",
                 }}
               >
-                <span className="material-symbols-outlined text-primary mb-2 text-4xl">
-                  contact_support
-                </span>
+                <Icon
+                  name="contact_support"
+                  size={36}
+                  className="text-primary mb-2 text-4xl"
+                />
                 <h3
                   className="text-primary text-xl font-bold"
                   style={{ fontFamily: "var(--font-headline)" }}
@@ -593,9 +588,7 @@ export function AyudaPageClient({
                     rel="noopener noreferrer"
                     className="bg-primary inline-flex items-center gap-2 rounded-xl px-8 py-3.5 text-sm font-bold text-white shadow-md transition hover:opacity-90 active:scale-95"
                   >
-                    <span className="material-symbols-outlined text-[20px]">
-                      chat
-                    </span>
+                    <Icon name="chat" size={20} />
                     Contactar por WhatsApp (+503 7331-7181)
                   </a>
                 </div>
@@ -625,9 +618,7 @@ export function AyudaPageClient({
         {/* Drawer Header */}
         <div className="flex items-center justify-between border-b border-gray-200 px-5 py-4">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-primary text-[22px]">
-              tune
-            </span>
+            <Icon name="tune" size={22} className="text-primary" />
             <h2
               id="mobile-ayuda-filter-title"
               className="text-base font-bold text-gray-900"
@@ -641,7 +632,7 @@ export function AyudaPageClient({
             className="flex h-8 w-8 items-center justify-center rounded-full text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900"
             aria-label="Cerrar filtros"
           >
-            <span className="material-symbols-outlined text-[20px]">close</span>
+            <Icon name="close" size={20} />
           </button>
         </div>
 
@@ -657,12 +648,12 @@ export function AyudaPageClient({
               Buscar pregunta
             </label>
             <div className="relative">
-              <span
-                className="material-symbols-outlined pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-[18px] text-gray-400"
+              <Icon
+                name="search"
+                size={18}
+                className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"
                 aria-hidden="true"
-              >
-                search
-              </span>
+              />
               <input
                 id="ayuda-search-mobile"
                 type="text"
@@ -677,9 +668,7 @@ export function AyudaPageClient({
                   className="absolute top-1/2 right-2.5 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                   aria-label="Limpiar búsqueda"
                 >
-                  <span className="material-symbols-outlined text-[18px]">
-                    close
-                  </span>
+                  <Icon name="close" size={18} />
                 </button>
               )}
             </div>
@@ -717,9 +706,7 @@ export function AyudaPageClient({
                 }`}
               >
                 <span className="flex items-center gap-2">
-                  <span className="material-symbols-outlined text-[16px]">
-                    grid_view
-                  </span>
+                  <Icon name="grid_view" size={16} />
                   Todas las categorías
                 </span>
                 <span
@@ -749,9 +736,7 @@ export function AyudaPageClient({
                     }`}
                   >
                     <span className="flex items-center gap-2 truncate pr-2">
-                      <span className="material-symbols-outlined shrink-0 text-[16px]">
-                        {cat.icon}
-                      </span>
+                      <Icon name={cat.icon} size={16} className="shrink-0" />
                       <span className="truncate">{cat.title}</span>
                     </span>
                     <span

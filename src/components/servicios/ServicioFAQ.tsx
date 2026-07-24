@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -25,15 +26,11 @@ function FAQItem({ question, answer }: FAQ) {
         <span className="text-primary font-serif text-lg font-bold">
           {question}
         </span>
-        <span
-          className={cn(
-            "material-symbols-outlined text-[#143067] transition-transform duration-300",
-            isOpen && "rotate-180"
-          )}
+        <Icon
+          name="expand_more"
+          className="text-[#143067] transition-transform duration-300"
           aria-hidden="true"
-        >
-          expand_more
-        </span>
+        />
       </button>
       <div
         className={cn(

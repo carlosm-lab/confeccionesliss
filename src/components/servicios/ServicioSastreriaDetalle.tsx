@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -36,15 +37,11 @@ function FAQItem({ question, answer }: FAQItemProps) {
         <span className="text-primary font-serif text-lg font-bold">
           {question}
         </span>
-        <span
-          className={cn(
-            "material-symbols-outlined text-secondary transition-transform duration-300",
-            isOpen && "rotate-180"
-          )}
+        <Icon
+          name="expand_more"
+          className="text-secondary transition-transform duration-300"
           aria-hidden="true"
-        >
-          expand_more
-        </span>
+        />
       </button>
       <div
         className={cn(
@@ -136,9 +133,11 @@ export function ServicioSastreriaDetalle({
                         className="border-primary/12 text-primary animate-fade-in-up flex w-full items-center gap-2 rounded-full border bg-white px-4 py-2 font-sans text-sm font-medium shadow-xs"
                         style={{ animationDelay: `${index * 50 + 200}ms` }}
                       >
-                        <span className="material-symbols-outlined text-secondary mr-2 shrink-0 text-[16px]">
-                          {b.icon}
-                        </span>
+                        <Icon
+                          name={b.icon}
+                          size={16}
+                          className="text-secondary mr-2 shrink-0"
+                        />
                         <span className="leading-tight">{b.text}</span>
                       </div>
                     ))}
@@ -215,12 +214,12 @@ export function ServicioSastreriaDetalle({
                   "Tobillo",
                 ].map((medida) => (
                   <div key={medida} className="flex items-center gap-2">
-                    <span
-                      className="material-symbols-outlined text-outline-variant text-sm"
+                    <Icon
+                      name="straighten"
+                      size={14}
+                      className="text-outline-variant text-sm"
                       aria-hidden="true"
-                    >
-                      straighten
-                    </span>
+                    />
                     <span className="text-on-surface font-sans text-base">
                       {medida}
                     </span>
@@ -428,9 +427,11 @@ export function ServicioSastreriaDetalle({
                       key={cat.title}
                       className="border-primary/10 flex flex-col rounded-xl border bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
                     >
-                      <span className="material-symbols-outlined text-primary mb-4 text-[36px]">
-                        {cat.icon}
-                      </span>
+                      <Icon
+                        name={cat.icon}
+                        size={36}
+                        className="text-primary mb-4"
+                      />
                       <h3 className="text-primary mb-2 font-serif text-lg font-bold">
                         {cat.title}
                       </h3>
@@ -485,12 +486,7 @@ export function ServicioSastreriaDetalle({
                   rel="noopener noreferrer"
                   className="inline-flex cursor-pointer items-center gap-2 rounded-lg bg-white px-8 py-4 font-sans text-xs font-bold tracking-wider text-[#143067] uppercase shadow-md transition-colors hover:bg-white/90"
                 >
-                  <span
-                    className="material-symbols-outlined text-[20px]"
-                    aria-hidden="true"
-                  >
-                    chat
-                  </span>
+                  <Icon name="chat" size={20} aria-hidden="true" />
                   {service.ctaBanner.ctaText}
                 </a>
               </div>

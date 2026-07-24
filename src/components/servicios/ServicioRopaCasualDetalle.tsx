@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -31,15 +32,11 @@ function FAQItem({ question, answer }: FAQItemProps) {
         <span className="text-primary font-serif text-lg font-bold">
           {question}
         </span>
-        <span
-          className={cn(
-            "material-symbols-outlined transition-transform duration-300",
-            isOpen && "rotate-180"
-          )}
+        <Icon
+          name="expand_more"
+          className="transition-transform duration-300"
           aria-hidden="true"
-        >
-          expand_more
-        </span>
+        />
       </button>
       <div
         className={cn(
@@ -197,9 +194,11 @@ export function ServicioRopaCasualDetalle({
                         className="border-primary/12 text-primary animate-fade-in-up flex w-full items-center gap-2 rounded-full border bg-white px-4 py-2 font-sans text-sm font-medium shadow-xs"
                         style={{ animationDelay: `${index * 50 + 200}ms` }}
                       >
-                        <span className="material-symbols-outlined text-secondary mr-2 shrink-0 text-[16px]">
-                          {b.icon}
-                        </span>
+                        <Icon
+                          name={b.icon}
+                          size={16}
+                          className="text-secondary mr-2 shrink-0"
+                        />
                         <span className="leading-tight">{b.text}</span>
                       </div>
                     ))}
@@ -341,12 +340,11 @@ export function ServicioRopaCasualDetalle({
             {/* Cuadrícula Completa de Tipos de Prenda (10 categorías reales) */}
             <div className="border-primary/10 rounded-2xl border bg-white p-6 shadow-sm md:p-8">
               <h3 className="text-primary mb-6 flex items-center gap-2 font-serif text-xl font-bold">
-                <span
-                  className="material-symbols-outlined text-secondary"
+                <Icon
+                  name="checklist"
+                  className="text-secondary"
                   aria-hidden="true"
-                >
-                  checklist
-                </span>
+                />
                 Catálogo completo de confección personalizada
               </h3>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
@@ -356,12 +354,12 @@ export function ServicioRopaCasualDetalle({
                     className="border-primary/8 hover:border-primary/25 bg-surface-container-low/40 flex flex-col gap-2 rounded-xl border p-4 transition-all hover:bg-white hover:shadow-xs"
                   >
                     <div className="text-primary flex items-center gap-2 font-sans text-sm font-bold">
-                      <span
-                        className="material-symbols-outlined text-secondary shrink-0 text-[18px]"
+                      <Icon
+                        name={item.icon}
+                        size={18}
+                        className="text-secondary shrink-0"
                         aria-hidden="true"
-                      >
-                        {item.icon}
-                      </span>
+                      />
                       <span className="leading-tight">{item.title}</span>
                     </div>
                     <p className="text-on-surface-variant font-sans text-xs leading-relaxed">
@@ -390,9 +388,7 @@ export function ServicioRopaCasualDetalle({
                 {/* Paso 1 */}
                 <div className="z-10 flex w-full flex-col items-center text-center md:w-1/4">
                   <div className="border-primary/10 text-primary mb-4 flex h-16 w-16 items-center justify-center rounded-full border bg-white shadow-sm">
-                    <span className="material-symbols-outlined text-3xl">
-                      image
-                    </span>
+                    <Icon name="image" size={30} className="text-3xl" />
                   </div>
                   <h3 className="text-primary mb-2 font-sans text-xs font-bold tracking-wider uppercase">
                     1. Envíanos tu foto
@@ -403,19 +399,17 @@ export function ServicioRopaCasualDetalle({
                   </p>
                 </div>
 
-                <span
-                  className="material-symbols-outlined text-secondary mb-12 hidden text-4xl opacity-85 md:block"
+                <Icon
+                  name="arrow_right_alt"
+                  size={36}
+                  className="text-secondary mb-12 hidden opacity-85 md:block"
                   aria-hidden="true"
-                >
-                  arrow_right_alt
-                </span>
+                />
 
                 {/* Paso 2 */}
                 <div className="z-10 flex w-full flex-col items-center text-center md:w-1/4">
                   <div className="border-primary/10 text-primary mb-4 flex h-16 w-16 items-center justify-center rounded-full border bg-white shadow-sm">
-                    <span className="material-symbols-outlined text-3xl">
-                      texture
-                    </span>
+                    <Icon name="texture" size={30} className="text-3xl" />
                   </div>
                   <h3 className="text-primary mb-2 font-sans text-xs font-bold tracking-wider uppercase">
                     2. Elegimos la tela
@@ -425,19 +419,17 @@ export function ServicioRopaCasualDetalle({
                   </p>
                 </div>
 
-                <span
-                  className="material-symbols-outlined text-secondary mb-12 hidden text-4xl opacity-85 md:block"
+                <Icon
+                  name="arrow_right_alt"
+                  size={36}
+                  className="text-secondary mb-12 hidden opacity-85 md:block"
                   aria-hidden="true"
-                >
-                  arrow_right_alt
-                </span>
+                />
 
                 {/* Paso 3 */}
                 <div className="z-10 flex w-full flex-col items-center text-center md:w-1/4">
                   <div className="border-primary/10 text-primary mb-4 flex h-16 w-16 items-center justify-center rounded-full border bg-white shadow-sm">
-                    <span className="material-symbols-outlined text-3xl">
-                      content_cut
-                    </span>
+                    <Icon name="content_cut" size={30} className="text-3xl" />
                   </div>
                   <h3 className="text-primary mb-2 font-sans text-xs font-bold tracking-wider uppercase">
                     3. Confeccionamos
@@ -447,19 +439,17 @@ export function ServicioRopaCasualDetalle({
                   </p>
                 </div>
 
-                <span
-                  className="material-symbols-outlined text-secondary mb-12 hidden text-4xl opacity-85 md:block"
+                <Icon
+                  name="arrow_right_alt"
+                  size={36}
+                  className="text-secondary mb-12 hidden opacity-85 md:block"
                   aria-hidden="true"
-                >
-                  arrow_right_alt
-                </span>
+                />
 
                 {/* Paso 4 */}
                 <div className="z-10 flex w-full flex-col items-center text-center md:w-1/4">
                   <div className="border-primary/10 text-primary mb-4 flex h-16 w-16 items-center justify-center rounded-full border bg-white shadow-sm">
-                    <span className="material-symbols-outlined text-3xl">
-                      checkroom
-                    </span>
+                    <Icon name="checkroom" size={30} className="text-3xl" />
                   </div>
                   <h3 className="text-primary mb-2 font-sans text-xs font-bold tracking-wider uppercase">
                     4. Prenda lista
@@ -480,12 +470,12 @@ export function ServicioRopaCasualDetalle({
               <div className="border-primary/12 relative flex flex-col gap-6 overflow-hidden rounded-2xl border bg-white p-8 shadow-sm md:flex-row md:items-center md:p-10">
                 <div className="bg-primary absolute top-0 bottom-0 left-0 w-1.5" />
                 <div className="border-primary/10 text-primary bg-primary/5 flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl">
-                  <span
-                    className="material-symbols-outlined text-3xl"
+                  <Icon
+                    name="schedule"
+                    size={30}
+                    className="text-3xl"
                     aria-hidden="true"
-                  >
-                    schedule
-                  </span>
+                  />
                 </div>
                 <div className="flex flex-col gap-2">
                   <h2 className="text-primary font-serif text-2xl font-bold md:text-3xl">
@@ -585,7 +575,7 @@ export function ServicioRopaCasualDetalle({
               rel="noopener noreferrer"
               className="hover:bg-surface-container-low inline-flex cursor-pointer items-center justify-center rounded-md bg-white px-10 py-4 font-sans text-xs font-bold tracking-wider text-[#143067] uppercase shadow-lg transition-all"
             >
-              <span className="material-symbols-outlined mr-2">chat</span>
+              <Icon name="chat" className="mr-2" />
               {service.ctaBanner.ctaText}
             </a>
           </div>

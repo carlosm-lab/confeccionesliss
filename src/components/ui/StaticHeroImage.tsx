@@ -15,9 +15,8 @@ export function StaticHeroImage({ sizes: _sizes }: StaticHeroImageProps) {
         rel="preload"
         as="image"
         href="/images/hero/hero-home-640.webp"
-        // @ts-expect-error — imagesrcset/imagesizes son atributos HTML válidos pero no tipados en React
-        imagesrcset="/images/hero/hero-home-640.webp 640w, /images/hero/hero-home-800.webp 800w, /images/hero/hero-home.webp 1122w"
-        imagesizes="(max-width:768px) 80vw, 40vw"
+        imageSrcSet="/images/hero/hero-home-640.webp 640w, /images/hero/hero-home-800.webp 800w, /images/hero/hero-home.webp 1122w"
+        imageSizes="(max-width:768px) 80vw, 40vw"
         fetchPriority="high"
       />
       <div className="absolute inset-0 overflow-hidden rounded-xl">

@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -26,12 +27,12 @@ function FAQItem({ q, a }: { q: string; a: string }) {
         aria-expanded={open}
       >
         <span className="text-primary font-serif text-lg font-bold">{q}</span>
-        <span
-          className={`material-symbols-outlined text-[#143067] transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+        <Icon
+          name="expand_more"
+          className="text-[#143067] transition-transform duration-300"
+          style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
           aria-hidden="true"
-        >
-          expand_more
-        </span>
+        />
       </button>
       <div
         className={`overflow-hidden px-6 transition-all duration-300 ease-out ${open ? "max-h-[300px] pb-5" : "max-h-0"}`}
@@ -121,12 +122,12 @@ export function ServicioBordadosDetalle({
                       className="border-primary/12 text-primary animate-fade-in-up flex w-full items-center gap-2 rounded-full border bg-white px-4 py-2 font-sans text-sm font-medium shadow-xs"
                       style={{ animationDelay: `${index * 50 + 200}ms` }}
                     >
-                      <span
-                        className="material-symbols-outlined text-secondary mr-2 shrink-0 text-[16px]"
+                      <Icon
+                        name={f.icon}
+                        size={16}
+                        className="text-secondary mr-2 shrink-0"
                         aria-hidden="true"
-                      >
-                        {f.icon}
-                      </span>
+                      />
                       <span className="leading-tight">{f.text}</span>
                     </div>
                   ))}
@@ -195,12 +196,12 @@ export function ServicioBordadosDetalle({
                 />
                 <div className="absolute inset-0 z-10 flex items-center justify-center">
                   <div className="rounded-full bg-white/90 p-6 shadow-lg backdrop-blur-sm">
-                    <span
-                      className="material-symbols-outlined text-primary text-[48px]"
+                    <Icon
+                      name="strikethrough_s"
+                      size={48}
+                      className="text-primary"
                       aria-hidden="true"
-                    >
-                      strikethrough_s
-                    </span>
+                    />
                   </div>
                 </div>
               </div>
@@ -208,12 +209,12 @@ export function ServicioBordadosDetalle({
               {/* Texto derecha */}
               <div className="order-1 flex flex-col gap-4 md:order-2">
                 <h2 className="text-primary flex items-center gap-3 font-serif text-2xl font-bold md:text-3xl">
-                  <span
-                    className="material-symbols-outlined text-primary text-3xl"
+                  <Icon
+                    name="info"
+                    size={30}
+                    className="text-primary text-3xl"
                     aria-hidden="true"
-                  >
-                    info
-                  </span>
+                  />
                   {sections[0].heading}
                 </h2>
                 <p className="text-on-surface-variant font-sans text-base leading-relaxed">
@@ -342,12 +343,12 @@ export function ServicioBordadosDetalle({
                             key={icon}
                             className="bg-primary/10 flex h-14 w-14 items-center justify-center rounded-full"
                           >
-                            <span
-                              className="material-symbols-outlined text-primary text-[28px]"
+                            <Icon
+                              name={icon}
+                              size={28}
+                              className="text-primary"
                               aria-hidden="true"
-                            >
-                              {icon}
-                            </span>
+                            />
                           </div>
                         )
                       )}
@@ -412,12 +413,11 @@ export function ServicioBordadosDetalle({
                       key={item.label}
                       className="border-primary/12 flex items-center gap-4 rounded-[12px] border bg-white p-4 shadow-sm"
                     >
-                      <span
-                        className="material-symbols-outlined text-primary text-3xl"
+                      <Icon
+                        name={item.icon}
+                        className="text-primary text-3xl"
                         aria-hidden="true"
-                      >
-                        {item.icon}
-                      </span>
+                      />
                       <div>
                         <p className="text-on-surface-variant font-sans text-[10px] font-semibold tracking-wider uppercase md:text-xs">
                           {item.label}
@@ -482,13 +482,7 @@ export function ServicioBordadosDetalle({
               rel="noopener noreferrer"
               className="z-10 mt-4 inline-flex cursor-pointer items-center gap-2 rounded-[12px] bg-white px-8 py-4 font-sans text-base font-bold text-[#143067] shadow-md transition-colors hover:bg-white/90"
             >
-              <span
-                className="material-symbols-outlined"
-                style={{ fontVariationSettings: "'FILL' 1" }}
-                aria-hidden="true"
-              >
-                chat
-              </span>
+              <Icon name="chat" fill aria-hidden="true" />
               {service.ctaBanner.ctaText}
             </a>
           </div>

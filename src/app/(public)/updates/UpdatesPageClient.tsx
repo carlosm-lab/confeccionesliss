@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
@@ -220,12 +221,12 @@ export function UpdatesPageClient({
                               : "rgba(180, 48, 36, 0.05)",
                         }}
                       >
-                        <span
-                          className={`material-symbols-outlined text-[20px] ${s.colorClass.split(" ")[1]}`}
+                        <Icon
+                          name={s.icon}
+                          size={20}
+                          className={s.colorClass.split(" ")[1]}
                           aria-hidden="true"
-                        >
-                          {s.icon}
-                        </span>
+                        />
                       </div>
                       <div>
                         <div

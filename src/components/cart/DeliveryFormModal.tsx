@@ -1,5 +1,6 @@
-"use client";
+﻿"use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 /**
  * DeliveryFormModal — Confecciones Liss
  *
@@ -261,9 +262,7 @@ export function DeliveryForm({
           onClick={onBack}
           className="flex w-fit items-center gap-1 text-xs font-semibold text-[var(--color-on-surface-variant)] transition-colors hover:text-[var(--color-on-surface)]"
         >
-          <span className="material-symbols-outlined text-sm">
-            arrow_back_ios
-          </span>
+          <Icon name="arrow_back_ios" size={14} className="text-sm" />
           Atrás
         </button>
       )}
@@ -284,12 +283,7 @@ export function DeliveryForm({
       {!hasALaMedidaItem && (
         <div className="rounded-2xl border border-[var(--color-outline-variant)]/20 bg-[var(--color-surface-container-lowest)] p-4">
           <p className="mb-3 flex items-center gap-1.5 text-[11px] font-bold tracking-wider text-[var(--color-primary)] uppercase">
-            <span
-              className="material-symbols-outlined"
-              style={{ fontSize: "14px" }}
-            >
-              local_shipping
-            </span>
+            <Icon name="local_shipping" />
             Selecciona el Tipo de Entrega
           </p>
 
@@ -304,9 +298,7 @@ export function DeliveryForm({
                   : "border-[var(--color-outline-variant)]/40 bg-[var(--color-surface)] hover:border-slate-400"
               }`}
             >
-              <span className="material-symbols-outlined mb-1.5 text-xl">
-                store
-              </span>
+              <Icon name="store" size={20} className="mb-1.5 text-xl" />
               <span className="text-xs font-bold">Retiro en Taller</span>
             </button>
 
@@ -320,9 +312,7 @@ export function DeliveryForm({
                   : "border-[var(--color-outline-variant)]/40 bg-[var(--color-surface)] hover:border-slate-400"
               }`}
             >
-              <span className="material-symbols-outlined mb-1.5 text-xl">
-                handshake
-              </span>
+              <Icon name="handshake" size={20} className="mb-1.5 text-xl" />
               <span className="text-xs font-bold">Punto Medio (Finde)</span>
             </button>
 
@@ -336,9 +326,11 @@ export function DeliveryForm({
                   : "border-[var(--color-outline-variant)]/40 bg-[var(--color-surface)] hover:border-slate-400"
               }`}
             >
-              <span className="material-symbols-outlined mb-1.5 text-xl">
-                local_shipping
-              </span>
+              <Icon
+                name="local_shipping"
+                size={20}
+                className="mb-1.5 text-xl"
+              />
               <span className="text-xs font-bold">A Domicilio</span>
             </button>
           </div>
@@ -348,12 +340,7 @@ export function DeliveryForm({
       {/* ── ⚠️ Warning de precios desactualizados (Siempre visible si se ha seleccionado o asignado método) ── */}
       {form.deliveryMethod && (
         <div className="flex items-start gap-2.5 rounded-xl border border-amber-400/20 bg-amber-50/50 p-3 text-xs text-amber-800 dark:bg-amber-950/10 dark:text-amber-300">
-          <span
-            className="material-symbols-outlined shrink-0 text-amber-500"
-            style={{ fontSize: "16px" }}
-          >
-            warning
-          </span>
+          <Icon name="warning" className="shrink-0 text-amber-500" />
           <p>
             Los precios se actualizan periódicamente. En caso de alguna
             variación, confirmaremos el precio antes de procesar tu pedido.
@@ -366,9 +353,11 @@ export function DeliveryForm({
         <div className="animate-fade-in flex flex-col items-center justify-center gap-3 rounded-2xl border border-[var(--color-primary)]/10 bg-[var(--color-primary-container)]/5 py-8">
           <div className="relative flex h-10 w-10 items-center justify-center">
             <div className="absolute h-full w-full animate-spin rounded-full border-4 border-slate-200 border-t-[var(--color-primary)]" />
-            <span className="material-symbols-outlined animate-pulse text-sm text-[var(--color-primary)]">
-              payments
-            </span>
+            <Icon
+              name="payments"
+              size={14}
+              className="animate-pulse text-[var(--color-primary)]"
+            />
           </div>
           <span className="animate-pulse text-xs font-semibold tracking-wide text-[var(--color-primary)]">
             {calculationText}
@@ -382,12 +371,10 @@ export function DeliveryForm({
           {/* A. Warning ÚNICO de A LA MEDIDA */}
           {hasALaMedidaItem && (
             <div className="flex items-start gap-2.5 rounded-xl border border-blue-400/40 bg-blue-50/80 p-3.5 text-xs text-blue-900 dark:bg-blue-900/20 dark:text-blue-300">
-              <span
-                className="material-symbols-outlined mt-0.5 shrink-0 text-blue-500"
-                style={{ fontSize: "18px" }}
-              >
-                straighten
-              </span>
+              <Icon
+                name="straighten"
+                className="mt-0.5 shrink-0 text-blue-500"
+              />
               <p>
                 <span className="font-semibold">
                   Toma de medidas obligatoria:
@@ -403,12 +390,7 @@ export function DeliveryForm({
           {/* D. Datos del CLIENTE / DESTINATARIO (Primero) */}
           <div className="flex flex-col gap-3 rounded-2xl border border-[var(--color-outline-variant)]/20 bg-[var(--color-surface)] p-4">
             <p className="mb-1 flex items-center gap-1.5 text-[11px] font-bold tracking-wider text-[var(--color-primary)] uppercase">
-              <span
-                className="material-symbols-outlined"
-                style={{ fontSize: "14px" }}
-              >
-                person
-              </span>
+              <Icon name="person" />
               {form.deliveryMethod === "domicilio"
                 ? "Datos del Destinatario"
                 : "Datos del Cliente"}
@@ -472,12 +454,7 @@ export function DeliveryForm({
           {form.deliveryMethod === "domicilio" && !hasALaMedidaItem && (
             <div className="flex flex-col gap-3 rounded-2xl border border-[var(--color-outline-variant)]/20 bg-[var(--color-surface)] p-4">
               <p className="mb-1 flex items-center gap-1.5 text-[11px] font-bold tracking-wider text-[var(--color-primary)] uppercase">
-                <span
-                  className="material-symbols-outlined"
-                  style={{ fontSize: "14px" }}
-                >
-                  location_on
-                </span>
+                <Icon name="location_on" />
                 Dirección de Envío
               </p>
 
@@ -631,12 +608,11 @@ export function DeliveryForm({
                 <div className="flex flex-col items-center justify-center gap-2 py-5">
                   <div className="relative flex h-8 w-8 items-center justify-center">
                     <div className="absolute h-full w-full animate-spin rounded-full border-4 border-slate-200 border-t-[var(--color-primary)]" />
-                    <span
-                      className="material-symbols-outlined animate-pulse text-xs text-[var(--color-primary)]"
-                      style={{ fontSize: "13px" }}
-                    >
-                      payments
-                    </span>
+                    <Icon
+                      name="payments"
+                      size={12}
+                      className="animate-pulse text-[var(--color-primary)]"
+                    />
                   </div>
                   <span className="animate-pulse text-[11px] font-semibold tracking-wide text-[var(--color-primary)]">
                     Calculando tarifa...
@@ -676,15 +652,7 @@ export function DeliveryForm({
                 className="peer h-4 w-4 cursor-pointer appearance-none rounded border border-[var(--color-outline-variant)] bg-[var(--color-surface)] transition-all checked:border-[var(--color-primary)] checked:bg-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary-container)] focus:outline-none"
               />
               <span className="pointer-events-none absolute top-0 left-0 hidden h-4 w-4 items-center justify-center peer-checked:flex">
-                <span
-                  className="material-symbols-outlined text-white"
-                  style={{
-                    fontSize: "11px",
-                    fontVariationSettings: "'FILL' 1",
-                  }}
-                >
-                  check
-                </span>
+                <Icon name="check" fill className="text-white" />
               </span>
             </div>
             <p className="text-xs leading-relaxed text-[var(--color-on-surface-variant)]">

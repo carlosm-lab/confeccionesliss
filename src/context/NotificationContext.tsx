@@ -1,5 +1,6 @@
-"use client";
+﻿"use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 /**
  * NotificationContext
  * ─────────────────────────────────────────────────────────────
@@ -314,18 +315,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
               maxWidth: "320px",
             }}
           >
-            <span
-              className="material-symbols-outlined"
-              style={{
-                fontSize: "22px",
-                color: "#143067",
-                flexShrink: 0,
-                marginTop: "2px",
-                fontVariationSettings: "'FILL' 1",
-              }}
-            >
-              notifications_active
-            </span>
+            <Icon name="notifications_active" fill />
             <div style={{ flex: 1 }}>
               <p
                 style={{

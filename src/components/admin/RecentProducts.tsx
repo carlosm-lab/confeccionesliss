@@ -1,4 +1,6 @@
-"use client";
+﻿"use client";
+
+import { Icon } from "@/components/ui/icons/Icon";
 import Link from "next/link";
 import Image from "next/image";
 import { formatPrice } from "@/lib/formatPrice";
@@ -78,9 +80,7 @@ export default function RecentProducts({
                       />
                     ) : (
                       <div className="flex h-full w-full items-center justify-center text-slate-400">
-                        <span className="material-symbols-outlined text-[20px]">
-                          image
-                        </span>
+                        <Icon name="image" size={20} />
                       </div>
                     )}
                   </div>

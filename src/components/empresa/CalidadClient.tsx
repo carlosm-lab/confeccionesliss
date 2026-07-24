@@ -1,5 +1,6 @@
-"use client";
+﻿"use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
@@ -463,9 +464,10 @@ export default function CalidadClient() {
 
                 <div className="space-y-4 font-sans text-sm text-[#444650]">
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined font-bold text-[#143067] select-none">
-                      check_box
-                    </span>
+                    <Icon
+                      name="check_box"
+                      className="font-bold text-[#143067] select-none"
+                    />
                     <div>
                       <strong className="block text-[#191c1e]">
                         Costuras estructurales
@@ -477,9 +479,10 @@ export default function CalidadClient() {
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined font-bold text-[#143067] select-none">
-                      check_box
-                    </span>
+                    <Icon
+                      name="check_box"
+                      className="font-bold text-[#143067] select-none"
+                    />
                     <div>
                       <strong className="block text-[#191c1e]">
                         Terminaciones
@@ -491,9 +494,10 @@ export default function CalidadClient() {
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined font-bold text-[#143067] select-none">
-                      check_box
-                    </span>
+                    <Icon
+                      name="check_box"
+                      className="font-bold text-[#143067] select-none"
+                    />
                     <div>
                       <strong className="block text-[#191c1e]">
                         Limpieza del tejido
@@ -504,9 +508,10 @@ export default function CalidadClient() {
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined font-bold text-[#143067] select-none">
-                      check_box
-                    </span>
+                    <Icon
+                      name="check_box"
+                      className="font-bold text-[#143067] select-none"
+                    />
                     <div>
                       <strong className="block text-[#191c1e]">
                         Planchado
@@ -517,9 +522,10 @@ export default function CalidadClient() {
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined font-bold text-[#143067] select-none">
-                      check_box
-                    </span>
+                    <Icon
+                      name="check_box"
+                      className="font-bold text-[#143067] select-none"
+                    />
                     <div>
                       <strong className="block text-[#191c1e]">
                         Presentación e insumos
@@ -638,9 +644,10 @@ export default function CalidadClient() {
                   key={index}
                   className="border-primary/35 flex gap-4 rounded-2xl border bg-[#f8f9fb] p-4 transition-colors duration-300 hover:border-[#143067]/40 hover:shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]"
                 >
-                  <span className="material-symbols-outlined shrink-0 font-bold text-[#143067] select-none">
-                    cancel
-                  </span>
+                  <Icon
+                    name="cancel"
+                    className="shrink-0 font-bold text-[#143067] select-none"
+                  />
                   <div className="space-y-1">
                     <h3 className="font-serif text-base font-bold text-[#143067]">
                       {item.title}

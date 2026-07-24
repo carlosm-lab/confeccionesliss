@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 /**
  * ProductReviews — Confecciones Liss v5
  * - Tarjetas con altura fija + modal al hacer clic para ver reseña completa
@@ -37,17 +38,14 @@ function Stars({ rating, size = 16 }: { rating: number; size?: number }) {
       aria-label={`${rating} de 5 estrellas`}
     >
       {[1, 2, 3, 4, 5].map((s) => (
-        <span
+        <Icon
           key={s}
-          className="material-symbols-outlined leading-none text-amber-400 select-none"
-          style={{
-            fontSize: size,
-            fontVariationSettings: s <= rating ? "'FILL' 1" : "'FILL' 0",
-          }}
+          name={s <= Math.round(rating) ? "star" : "star_outline"}
+          fill={s <= Math.round(rating)}
+          size={size}
+          className="leading-none text-amber-400 select-none"
           aria-hidden="true"
-        >
-          star
-        </span>
+        />
       ))}
     </span>
   );
@@ -210,12 +208,7 @@ function ReviewModal({
             className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700"
             aria-label="Cerrar"
           >
-            <span
-              className="material-symbols-outlined"
-              style={{ fontSize: 18 }}
-            >
-              close
-            </span>
+            <Icon name="close" />
           </button>
         </div>
 
@@ -311,9 +304,7 @@ function ReviewCard({
                   aria-label="Editar reseña"
                   title="Editar"
                 >
-                  <span className="material-symbols-outlined text-[14px]">
-                    edit
-                  </span>
+                  <Icon name="edit" size={14} />
                 </button>
                 <button
                   type="button"
@@ -327,13 +318,13 @@ function ReviewCard({
                   title="Eliminar"
                 >
                   {isDeleting ? (
-                    <span className="material-symbols-outlined animate-spin text-[14px]">
-                      progress_activity
-                    </span>
+                    <Icon
+                      name="progress_activity"
+                      size={14}
+                      className="animate-spin"
+                    />
                   ) : (
-                    <span className="material-symbols-outlined text-[14px]">
-                      delete
-                    </span>
+                    <Icon name="delete" size={14} />
                   )}
                 </button>
               </div>
@@ -403,16 +394,13 @@ function StarPicker({
             onClick={() => onChange(s)}
             className="transition-transform hover:scale-110 active:scale-95"
           >
-            <span
-              className="material-symbols-outlined leading-none text-amber-400 transition-all"
-              style={{
-                fontSize: 30,
-                fontVariationSettings: s <= active ? "'FILL' 1" : "'FILL' 0",
-              }}
+            <Icon
+              name={s <= active ? "star" : "star_outline"}
+              fill={s <= active}
+              size={24}
+              className="leading-none text-amber-400 transition-all"
               aria-hidden="true"
-            >
-              star
-            </span>
+            />
           </button>
         ))}
       </div>
@@ -595,9 +583,11 @@ function ReviewForm({
           >
             {isPending ? (
               <>
-                <span className="material-symbols-outlined animate-spin text-[15px]">
-                  progress_activity
-                </span>
+                <Icon
+                  name="progress_activity"
+                  size={15}
+                  className="animate-spin"
+                />
                 Guardando…
               </>
             ) : editTarget ? (
@@ -755,9 +745,7 @@ export function ProductReviews({
             }}
             className="bg-primary hover:bg-primary/90 flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:shadow-md active:scale-[0.97]"
           >
-            <span className="material-symbols-outlined text-[16px]">
-              rate_review
-            </span>
+            <Icon name="rate_review" size={16} />
             Escribir reseña
           </button>
         )}
@@ -767,7 +755,7 @@ export function ProductReviews({
             onClick={() => showAuthModal("reviews")}
             className="border-primary/25 text-primary hover:border-primary/40 flex w-full items-center justify-center gap-2 rounded-xl border bg-white px-4 py-2.5 text-sm font-semibold shadow-sm transition hover:shadow-md active:scale-[0.97] md:w-auto md:justify-start"
           >
-            <span className="material-symbols-outlined text-[15px]">login</span>
+            <Icon name="login" size={15} />
             Inicia sesión para calificar
           </button>
         )}
@@ -811,12 +799,11 @@ export function ProductReviews({
       ) : (
         !showForm && (
           <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-white py-14 text-center">
-            <span
-              className="material-symbols-outlined mb-3 text-[40px] text-slate-300"
-              style={{ fontVariationSettings: "'FILL' 0, 'wght' 200" }}
-            >
-              rate_review
-            </span>
+            <Icon
+              name="rate_review"
+              size={40}
+              className="mb-3 text-slate-300"
+            />
             <p className="font-serif text-base font-bold text-slate-700">
               Sin reseñas aún
             </p>
@@ -834,9 +821,7 @@ export function ProductReviews({
                 }}
                 className="bg-primary hover:bg-primary/90 mt-5 flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-white shadow-sm transition active:scale-[0.98]"
               >
-                <span className="material-symbols-outlined text-[15px]">
-                  rate_review
-                </span>
+                <Icon name="rate_review" size={15} />
                 Ser el primero
               </button>
             )}
@@ -846,9 +831,7 @@ export function ProductReviews({
                 onClick={() => showAuthModal("reviews")}
                 className="border-primary/25 text-primary hover:bg-primary/5 mt-5 flex items-center gap-2 rounded-xl border px-5 py-2.5 text-sm font-semibold transition"
               >
-                <span className="material-symbols-outlined text-[14px]">
-                  login
-                </span>
+                <Icon name="login" size={14} />
                 Inicia sesión para calificar
               </button>
             )}

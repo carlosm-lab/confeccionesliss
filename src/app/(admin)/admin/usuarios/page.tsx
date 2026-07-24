@@ -1,4 +1,6 @@
 "use client";
+
+import { Icon } from "@/components/ui/icons/Icon";
 import { useState, useEffect, useCallback } from "react";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import { logger } from "@/lib/logger";
@@ -217,9 +219,7 @@ export default function AdminUsuariosPage() {
               <div
                 className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${stat.color}`}
               >
-                <span className="material-symbols-outlined text-[20px]">
-                  {stat.icon}
-                </span>
+                <Icon name={stat.icon} size={20} />
               </div>
               <div>
                 <p className="text-xl font-black text-slate-900 md:text-2xl dark:text-white">
@@ -238,9 +238,7 @@ export default function AdminUsuariosPage() {
       <div className="border-primary/30 dark:border-primary/20 mb-6 flex flex-col gap-3 rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.12),0_0_10px_2px_rgba(20,48,103,0.08)] sm:flex-row sm:items-center dark:bg-white/5">
         <div className="relative min-w-[220px] flex-1">
           <span className="pointer-events-none absolute top-1/2 left-3 flex -translate-y-1/2 items-center leading-[0] text-slate-400">
-            <span className="material-symbols-outlined text-[20px] leading-[0]">
-              search
-            </span>
+            <Icon name="search" size={20} className="leading-[0]" />
           </span>
           <input
             type="text"
@@ -274,9 +272,7 @@ export default function AdminUsuariosPage() {
           ) : filteredUsers.length === 0 ? (
             <div className="flex flex-col items-center justify-center p-12 text-center">
               <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-50 text-slate-400 dark:bg-transparent">
-                <span className="material-symbols-outlined text-[32px]">
-                  person_off
-                </span>
+                <Icon name="person_off" size={32} />
               </div>
               <h3 className="mb-1 text-lg font-bold text-slate-900 dark:text-white">
                 Sin resultados
@@ -339,12 +335,7 @@ export default function AdminUsuariosPage() {
                           </p>
                           {superAdmin && (
                             <span className="inline-flex items-center gap-0.5 rounded-full bg-gradient-to-r from-amber-400 to-orange-400 px-2 py-0.5 text-[10px] font-black text-white shadow-sm">
-                              <span
-                                className="material-symbols-outlined text-[10px]"
-                                style={{ fontVariationSettings: "'FILL' 1" }}
-                              >
-                                star
-                              </span>
+                              <Icon name="star" size={10} fill />
                               OWNER
                             </span>
                           )}
@@ -364,9 +355,10 @@ export default function AdminUsuariosPage() {
                             : "bg-slate-100 text-slate-600 dark:bg-white/10 dark:text-slate-300"
                         }`}
                       >
-                        <span className="material-symbols-outlined text-[13px]">
-                          {isAdmin ? "shield_person" : "person"}
-                        </span>
+                        <Icon
+                          name={isAdmin ? "shield_person" : "person"}
+                          size={13}
+                        />
                         {isAdmin ? "Admin" : "Usuario"}
                       </span>
                     </div>
@@ -393,9 +385,7 @@ export default function AdminUsuariosPage() {
                           className="flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-400"
                           title="Esta cuenta no puede modificarse"
                         >
-                          <span className="material-symbols-outlined text-[15px]">
-                            lock
-                          </span>
+                          <Icon name="lock" size={15} />
                           <span className="hidden sm:inline">Protegida</span>
                         </div>
                       ) : (
@@ -430,9 +420,7 @@ export default function AdminUsuariosPage() {
                                   />
                                 </svg>
                               ) : (
-                                <span className="material-symbols-outlined text-[14px]">
-                                  remove_moderator
-                                </span>
+                                <Icon name="remove_moderator" size={14} />
                               )}
                               <span className="hidden sm:inline">Degradar</span>
                             </button>
@@ -465,9 +453,7 @@ export default function AdminUsuariosPage() {
                                   />
                                 </svg>
                               ) : (
-                                <span className="material-symbols-outlined text-[14px]">
-                                  shield_person
-                                </span>
+                                <Icon name="shield_person" size={14} />
                               )}
                               <span className="hidden sm:inline">Promover</span>
                             </button>
@@ -502,9 +488,7 @@ export default function AdminUsuariosPage() {
                                 />
                               </svg>
                             ) : (
-                              <span className="material-symbols-outlined text-[14px]">
-                                delete
-                              </span>
+                              <Icon name="delete" size={14} />
                             )}
                             <span className="hidden sm:inline">Eliminar</span>
                           </button>

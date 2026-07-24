@@ -1,4 +1,5 @@
 import { siteConfig } from "@/config/site";
+import { Icon } from "@/components/ui/icons/Icon";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -135,7 +136,7 @@ function SocialIcon({ id, className }: { id: string; className?: string }) {
 
 export function Footer() {
   return (
-    <footer className="mt-auto border-t border-[#1e2d4a] bg-[#0b1b3d] font-sans text-white">
+    <footer className="mt-auto w-full max-w-full overflow-x-clip border-t border-[#1e2d4a] bg-[#0b1b3d] font-sans text-white">
       <div className="mx-auto max-w-screen-2xl px-6 py-16 md:px-12 lg:py-20">
         {/* ================= MOBILE LAYOUT (max-width: 767px) ================= */}
         <div className="block md:hidden">
@@ -247,9 +248,7 @@ export function Footer() {
                       className="inline-flex items-center gap-1 font-semibold text-white transition-colors duration-200 hover:text-white hover:underline"
                     >
                       Leer Más
-                      <span className="material-symbols-outlined text-[16px]">
-                        arrow_right_alt
-                      </span>
+                      <Icon name="arrow_right_alt" size={16} />
                     </Link>
                   </li>
                 </ul>
@@ -263,17 +262,21 @@ export function Footer() {
               </p>
               <ul className="flex flex-col items-start space-y-4 text-sm text-[#a5b1c9]">
                 <li className="flex gap-3 text-left">
-                  <span className="material-symbols-outlined mt-0.5 shrink-0 text-[20px] text-white">
-                    location_on
-                  </span>
+                  <Icon
+                    name="location_on"
+                    size={20}
+                    className="mt-0.5 shrink-0 text-white"
+                  />
                   <span className="leading-relaxed">
                     {siteConfig.address.full}
                   </span>
                 </li>
                 <li className="flex justify-start gap-3 text-left">
-                  <span className="material-symbols-outlined shrink-0 text-[20px] text-white">
-                    phone
-                  </span>
+                  <Icon
+                    name="phone"
+                    size={20}
+                    className="shrink-0 text-white"
+                  />
                   <a
                     href={siteConfig.links.whatsappDirect}
                     target="_blank"
@@ -284,9 +287,7 @@ export function Footer() {
                   </a>
                 </li>
                 <li className="flex justify-start gap-3 text-left">
-                  <span className="material-symbols-outlined shrink-0 text-[20px] text-white">
-                    mail
-                  </span>
+                  <Icon name="mail" size={20} className="shrink-0 text-white" />
                   <a
                     href={`mailto:${siteConfig.email}`}
                     className="transition-colors duration-200 hover:text-white hover:underline"
@@ -295,9 +296,11 @@ export function Footer() {
                   </a>
                 </li>
                 <li className="flex justify-start gap-3 text-left">
-                  <span className="material-symbols-outlined mt-0.5 shrink-0 text-[20px] text-white">
-                    schedule
-                  </span>
+                  <Icon
+                    name="schedule"
+                    size={20}
+                    className="mt-0.5 shrink-0 text-white"
+                  />
                   <span className="leading-relaxed">{siteConfig.schedule}</span>
                 </li>
               </ul>
@@ -357,17 +360,21 @@ export function Footer() {
                 </p>
                 <ul className="space-y-4 text-sm text-[#a5b1c9]">
                   <li className="flex items-start gap-3">
-                    <span className="material-symbols-outlined mt-0.5 shrink-0 text-[20px] text-white">
-                      location_on
-                    </span>
+                    <Icon
+                      name="location_on"
+                      size={20}
+                      className="mt-0.5 shrink-0 text-white"
+                    />
                     <span className="leading-relaxed">
                       {siteConfig.address.full}
                     </span>
                   </li>
                   <li className="flex items-center gap-3">
-                    <span className="material-symbols-outlined shrink-0 text-[20px] text-white">
-                      phone
-                    </span>
+                    <Icon
+                      name="phone"
+                      size={20}
+                      className="shrink-0 text-white"
+                    />
                     <a
                       href={siteConfig.links.whatsappDirect}
                       target="_blank"
@@ -378,9 +385,11 @@ export function Footer() {
                     </a>
                   </li>
                   <li className="flex items-center gap-3">
-                    <span className="material-symbols-outlined shrink-0 text-[20px] text-white">
-                      mail
-                    </span>
+                    <Icon
+                      name="mail"
+                      size={20}
+                      className="shrink-0 text-white"
+                    />
                     <a
                       href={`mailto:${siteConfig.email}`}
                       className="transition-colors duration-200 hover:text-white hover:underline"
@@ -389,9 +398,11 @@ export function Footer() {
                     </a>
                   </li>
                   <li className="flex items-start gap-3">
-                    <span className="material-symbols-outlined mt-0.5 shrink-0 text-[20px] text-white">
-                      schedule
-                    </span>
+                    <Icon
+                      name="schedule"
+                      size={20}
+                      className="mt-0.5 shrink-0 text-white"
+                    />
                     <span className="leading-relaxed">
                       {siteConfig.schedule}
                     </span>
@@ -470,9 +481,7 @@ export function Footer() {
                       className="inline-flex items-center gap-1 font-semibold text-white transition-colors duration-200 hover:text-white hover:underline"
                     >
                       Leer Más
-                      <span className="material-symbols-outlined text-[16px]">
-                        arrow_right_alt
-                      </span>
+                      <Icon name="arrow_right_alt" size={16} />
                     </Link>
                   </li>
                 </ul>
@@ -557,17 +566,17 @@ export function Footer() {
             </p>
             <ul className="space-y-4 text-sm text-[#a5b1c9]">
               <li className="flex items-start gap-3">
-                <span className="material-symbols-outlined mt-0.5 shrink-0 text-[20px] text-white">
-                  location_on
-                </span>
+                <Icon
+                  name="location_on"
+                  size={20}
+                  className="mt-0.5 shrink-0 text-white"
+                />
                 <span className="leading-relaxed">
                   {siteConfig.address.full}
                 </span>
               </li>
               <li className="flex items-center gap-3">
-                <span className="material-symbols-outlined shrink-0 text-[20px] text-white">
-                  phone
-                </span>
+                <Icon name="phone" size={20} className="shrink-0 text-white" />
                 <a
                   href={siteConfig.links.whatsappDirect}
                   target="_blank"
@@ -578,9 +587,7 @@ export function Footer() {
                 </a>
               </li>
               <li className="flex items-center gap-3">
-                <span className="material-symbols-outlined shrink-0 text-[20px] text-white">
-                  mail
-                </span>
+                <Icon name="mail" size={20} className="shrink-0 text-white" />
                 <a
                   href={`mailto:${siteConfig.email}`}
                   className="transition-colors duration-200 hover:text-white hover:underline"
@@ -589,9 +596,11 @@ export function Footer() {
                 </a>
               </li>
               <li className="flex items-start gap-3">
-                <span className="material-symbols-outlined mt-0.5 shrink-0 text-[20px] text-white">
-                  schedule
-                </span>
+                <Icon
+                  name="schedule"
+                  size={20}
+                  className="mt-0.5 shrink-0 text-white"
+                />
                 <span className="leading-relaxed">{siteConfig.schedule}</span>
               </li>
             </ul>
@@ -630,9 +639,7 @@ export function Footer() {
                   className="inline-flex items-center gap-1 font-semibold text-white transition-colors duration-200 hover:text-white hover:underline"
                 >
                   Leer Más
-                  <span className="material-symbols-outlined text-[16px]">
-                    arrow_right_alt
-                  </span>
+                  <Icon name="arrow_right_alt" size={16} />
                 </Link>
               </li>
             </ul>

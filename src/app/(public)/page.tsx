@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Icon } from "@/components/ui/icons/Icon";
 import { StaticHeroImage } from "@/components/ui/StaticHeroImage";
 import {
   schemaFAQ,
@@ -196,7 +197,7 @@ export default async function HomePage() {
           </div>
 
           {/* IMAGEN HERO ÚNICA - OPTIMIZADA RESPONSIVE (ESTRUCTURA Y SOMBRA ORIGINALES 3d12cbd) */}
-          <div className="order-2 flex w-full max-w-sm self-center md:order-3 md:col-span-1 md:h-full md:max-w-none md:self-stretch lg:order-none lg:col-span-5 lg:row-span-2 lg:h-full lg:items-center">
+          <div className="order-2 mx-auto flex w-full max-w-md self-center justify-self-center sm:max-w-lg md:order-3 md:col-span-1 md:h-full md:max-w-none md:self-stretch lg:order-none lg:col-span-5 lg:row-span-2 lg:h-full lg:items-center">
             <div className="border-primary/35 relative z-10 flex w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:h-full">
               <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
               <div className="relative aspect-[4/5] w-full rounded-xl md:aspect-auto md:h-full md:w-full">
@@ -223,9 +224,11 @@ export default async function HomePage() {
                   className="animate-fade-in-up border-primary/5 text-secondary flex w-full items-center gap-2 rounded-full border bg-white/60 px-2.5 py-1.5 text-xs font-medium shadow-xs backdrop-blur-xs sm:text-sm"
                   style={{ animationDelay: `${index * 50 + 200}ms` }}
                 >
-                  <span className="material-symbols-outlined text-primary flex h-5 w-5 shrink-0 items-center justify-center text-[15px] font-bold">
-                    {b.icon}
-                  </span>
+                  <Icon
+                    name={b.icon}
+                    size={15}
+                    className="text-primary flex h-5 w-5 shrink-0 items-center justify-center font-bold"
+                  />
                   <span className="leading-tight font-semibold text-gray-700">
                     {b.text}
                   </span>
@@ -233,23 +236,23 @@ export default async function HomePage() {
               ))}
             </div>
             <div className="flex w-full flex-col gap-3 sm:flex-row sm:gap-4">
-              <Link
-                href="/catalogo"
-                prefetch={false}
-                className="animate-fade-in-up btn-gradient font-body ambient-shadow flex h-11 w-full items-center justify-center rounded-md px-10 text-center text-base font-semibold whitespace-nowrap text-white transition hover:opacity-90 active:scale-[0.97] sm:h-12 sm:flex-1"
-                style={{ animationDelay: "400ms" }}
-              >
-                Catálogo
-              </Link>
               <a
                 href="https://maps.app.goo.gl/XSs2vgjLG8uvJGoQ7"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="animate-fade-in-up border-outline text-primary hover:bg-surface-variant/50 flex h-11 w-full items-center justify-center rounded-md border bg-transparent px-10 text-center font-serif text-base font-medium whitespace-nowrap transition active:scale-[0.97] sm:h-12 sm:flex-1"
-                style={{ animationDelay: "450ms" }}
+                style={{ animationDelay: "400ms" }}
               >
                 Cómo llegar
               </a>
+              <Link
+                href="/catalogo"
+                prefetch={false}
+                className="animate-fade-in-up btn-gradient font-body ambient-shadow flex h-11 w-full items-center justify-center rounded-md px-10 text-center text-base font-semibold whitespace-nowrap text-white transition hover:opacity-90 active:scale-[0.97] sm:h-12 sm:flex-1"
+                style={{ animationDelay: "450ms" }}
+              >
+                Catálogo
+              </Link>
             </div>
           </div>
         </div>
@@ -319,9 +322,7 @@ export default async function HomePage() {
                 style={{ animationDelay: `${index * 75 + 150}ms` }}
               >
                 <div className="bg-primary flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-white lg:mb-6 lg:h-16 lg:w-16">
-                  <span className="material-symbols-outlined text-3xl">
-                    {w.icon}
-                  </span>
+                  <Icon name={w.icon} size={32} />
                 </div>
                 <div>
                   <h3 className="text-primary mb-1 font-serif text-lg lg:mb-3 lg:text-xl">

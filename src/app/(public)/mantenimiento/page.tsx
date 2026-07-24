@@ -1,3 +1,4 @@
+﻿import { Icon } from "@/components/ui/icons/Icon";
 import type { Metadata } from "next";
 import Image from "next/image";
 
@@ -26,12 +27,12 @@ export default function MantenimientoPage() {
 
         {/* Ícono de mantenimiento animado */}
         <div className="flex h-24 w-24 items-center justify-center rounded-full bg-blue-50 shadow-inner ring-1 ring-blue-100 dark:bg-blue-950/30 dark:ring-blue-800">
-          <span
-            className="material-symbols-outlined animate-pulse text-5xl text-blue-500"
+          <Icon
+            name="construction"
+            size={48}
+            className="animate-pulse text-blue-500"
             aria-hidden="true"
-          >
-            construction
-          </span>
+          />
         </div>
 
         {/* Texto principal */}

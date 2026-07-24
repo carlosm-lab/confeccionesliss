@@ -1,3 +1,4 @@
+﻿import { Icon } from "@/components/ui/icons/Icon";
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 import { buildWebPageSchema, buildBreadcrumbSchema } from "@/lib/schemas";
@@ -663,12 +664,11 @@ export default function GarantiaPage() {
           <div className="my-6 space-y-6">
             <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950">
               <h3 className="flex items-center gap-2 text-base font-bold text-slate-900 dark:text-white">
-                <span
-                  className="material-symbols-outlined text-primary"
+                <Icon
+                  name="workspace_premium"
+                  className="text-primary"
                   aria-hidden="true"
-                >
-                  workspace_premium
-                </span>
+                />
                 Garantía Premier de Ajuste
               </h3>
               <Ul
@@ -683,12 +683,11 @@ export default function GarantiaPage() {
 
             <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950">
               <h3 className="flex items-center gap-2 text-base font-bold text-slate-900 dark:text-white">
-                <span
-                  className="material-symbols-outlined text-primary"
+                <Icon
+                  name="verified"
+                  className="text-primary"
                   aria-hidden="true"
-                >
-                  verified
-                </span>
+                />
                 Garantía por Defecto de Fabricación
               </h3>
               <Ul
@@ -703,9 +702,7 @@ export default function GarantiaPage() {
 
             <div className="rounded-xl border border-red-100 bg-red-50/20 p-5 shadow-sm dark:border-red-950/20 dark:bg-red-950/5">
               <h3 className="flex items-center gap-2 text-base font-bold text-red-800 dark:text-red-400">
-                <span className="material-symbols-outlined" aria-hidden="true">
-                  block
-                </span>
+                <Icon name="block" aria-hidden="true" />
                 Sin Cobertura de Garantía
               </h3>
               <Ul

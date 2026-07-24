@@ -7,6 +7,8 @@ import { Navbar } from "@/components/layout/Navbar";
 import { DeliveryForm } from "@/components/cart/DeliveryFormModal";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 
+import { Icon } from "@/components/ui/icons/Icon";
+
 interface MatchingProduct {
   id: string;
   name: string;
@@ -113,6 +115,46 @@ export default function SandboxPage() {
           <br />
           Esta ruta se utiliza exclusivamente para validar visualmente y probar
           los componentes del proyecto.
+        </div>
+
+        {/* Panel de prueba de Componente Icon.tsx */}
+        <div className="mb-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <h2 className="mb-4 text-xl font-bold tracking-tight text-slate-800">
+            Prueba de Componente Icon (Lucide React - Zero FOUT)
+          </h2>
+          <div className="flex flex-wrap gap-4 text-slate-700">
+            {[
+              "home",
+              "storefront",
+              "design_services",
+              "business",
+              "mail",
+              "location_on",
+              "phone",
+              "schedule",
+              "shopping_bag",
+              "shopping_cart",
+              "favorite",
+              "star",
+              "verified",
+              "local_shipping",
+              "payments",
+              "security",
+              "eco",
+              "checkroom",
+              "cookie",
+              "gavel",
+              "help",
+            ].map((iconName) => (
+              <div
+                key={iconName}
+                className="flex items-center gap-2 rounded-lg border border-slate-100 bg-slate-50 px-3 py-2 text-xs font-semibold"
+              >
+                <Icon name={iconName} className="text-primary h-5 w-5" />
+                <span>{iconName}</span>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Panel de Migración de Base de Datos */}

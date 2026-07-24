@@ -1,3 +1,4 @@
+import { Icon } from "@/components/ui/icons/Icon";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -85,22 +86,22 @@ export default function ServiciosPage() {
             >
               {/* Indicador visual de navegación (siempre visible) */}
               <div className="bg-primary absolute top-4 right-4 z-20 flex h-7 w-7 items-center justify-center rounded-full text-white shadow-md transition-all duration-300">
-                <span
-                  className="material-symbols-outlined text-[15px] font-semibold"
+                <Icon
+                  name="open_in_new"
+                  size={15}
+                  className="font-semibold"
                   aria-hidden="true"
-                >
-                  open_in_new
-                </span>
+                />
               </div>
 
               {/* Brand white header */}
               <div className="text-primary flex min-h-[4.25rem] items-center gap-3 bg-white px-6 py-3.5 transition-colors duration-300">
-                <span
-                  className="material-symbols-outlined shrink-0 text-2xl transition-transform duration-300 [transition-timing-function:var(--ease-out-expo)] group-hover:scale-110"
+                <Icon
+                  name={page.navIcon}
+                  size={24}
+                  className="shrink-0 transition-transform duration-300 [transition-timing-function:var(--ease-out-expo)] group-hover:scale-110"
                   aria-hidden="true"
-                >
-                  {page.navIcon}
-                </span>
+                />
                 <h2 className="group-hover:text-primary/95 pr-9 font-serif text-base leading-snug font-bold transition-colors duration-300">
                   {page.title}
                 </h2>

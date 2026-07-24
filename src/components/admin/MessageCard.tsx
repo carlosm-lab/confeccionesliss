@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 interface MessageCardMessage {
   id: string;
   name: string;
@@ -45,9 +46,7 @@ export default function MessageCard({
         <div
           className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${!message.is_read ? "bg-primary text-white" : "bg-slate-100 text-slate-400 dark:bg-white/5 dark:text-slate-500"}`}
         >
-          <span className="material-symbols-outlined text-[20px]">
-            {message.is_read ? "drafts" : "mail"}
-          </span>
+          <Icon name={message.is_read ? "drafts" : "mail"} size={20} />
         </div>
 
         {/* Content */}
@@ -81,9 +80,7 @@ export default function MessageCard({
               className="flex h-8 w-8 items-center justify-center rounded-full text-slate-400 transition-colors hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/20"
               aria-label="Eliminar mensaje"
             >
-              <span className="material-symbols-outlined text-[18px]">
-                delete
-              </span>
+              <Icon name="delete" size={18} />
             </button>
           </div>
         </div>

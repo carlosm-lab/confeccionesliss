@@ -1,5 +1,6 @@
-"use client";
+﻿"use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/formatPrice";
@@ -14,9 +15,11 @@ export default function CuentaPageClient() {
     return (
       <section className="px-5 pt-16 pb-20 md:px-8">
         <div className="mx-auto flex min-h-[60vh] max-w-screen-2xl flex-col items-center justify-center gap-6">
-          <span className="material-symbols-outlined text-primary animate-spin text-5xl">
-            progress_activity
-          </span>
+          <Icon
+            name="progress_activity"
+            size={48}
+            className="text-primary animate-spin text-5xl"
+          />
         </div>
       </section>
     );
@@ -26,16 +29,11 @@ export default function CuentaPageClient() {
     return (
       <section className="px-5 pt-16 pb-20 md:px-8">
         <div className="mx-auto flex min-h-[60vh] max-w-screen-2xl flex-col items-center justify-center gap-6 text-center">
-          <span
-            className="animate-fade-in-up material-symbols-outlined text-primary text-6xl"
-            style={{
-              fontVariationSettings: "'FILL' 0",
-              animationDelay: "100ms",
-            }}
+          <Icon
+            name="manage_accounts"
+            className="animate-fade-in-up text-primary text-6xl"
             aria-hidden="true"
-          >
-            manage_accounts
-          </span>
+          />
           <h1
             className="animate-fade-in-up text-primary font-serif text-3xl font-bold"
             style={{ animationDelay: "200ms" }}
@@ -86,9 +84,11 @@ export default function CuentaPageClient() {
               />
             ) : (
               <div className="bg-primary/10 flex h-full w-full items-center justify-center">
-                <span className="material-symbols-outlined text-primary text-4xl">
-                  person
-                </span>
+                <Icon
+                  name="person"
+                  size={36}
+                  className="text-primary text-4xl"
+                />
               </div>
             )}
           </div>
@@ -117,9 +117,7 @@ export default function CuentaPageClient() {
             style={{ animationDelay: "100ms" }}
           >
             <h2 className="mb-4 flex items-center gap-2 font-semibold text-slate-800">
-              <span className="material-symbols-outlined text-primary">
-                shopping_cart
-              </span>
+              <Icon name="shopping_cart" className="text-primary" />
               Carrito actual ({cartItems.length}{" "}
               {cartItems.length === 1 ? "producto" : "productos"})
             </h2>
@@ -171,9 +169,7 @@ export default function CuentaPageClient() {
               href="/admin"
               className="bg-primary inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90"
             >
-              <span className="material-symbols-outlined text-[18px]">
-                admin_panel_settings
-              </span>
+              <Icon name="admin_panel_settings" size={18} />
               Ir al Panel Admin
             </Link>
           </div>
@@ -185,9 +181,7 @@ export default function CuentaPageClient() {
             onClick={signOut}
             className="flex w-full items-center justify-center gap-2 rounded-2xl border border-red-100 bg-red-50 py-4 text-sm font-semibold text-red-600 transition hover:bg-red-100 active:scale-[0.97]"
           >
-            <span className="material-symbols-outlined text-[20px]">
-              logout
-            </span>
+            <Icon name="logout" size={20} />
             Cerrar sesión
           </button>
         </div>

@@ -1,3 +1,4 @@
+import { Icon } from "@/components/ui/icons/Icon";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
@@ -268,24 +269,24 @@ export default function LegalHubBackground({
               </p>
               <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-semibold text-slate-500">
                 <span className="flex items-center gap-1">
-                  <span
-                    className="material-symbols-outlined text-[14px] text-emerald-600"
+                  <Icon
+                    name="check_circle"
+                    size={14}
+                    className="text-emerald-600"
                     aria-hidden="true"
-                  >
-                    check_circle
-                  </span>
+                  />
                   <span className="text-emerald-700">
                     {available} disponibles
                   </span>
                 </span>
                 <span className="text-slate-300">·</span>
                 <span className="flex items-center gap-1">
-                  <span
-                    className="material-symbols-outlined text-[14px] text-amber-600"
+                  <Icon
+                    name="pending"
+                    size={14}
+                    className="text-amber-600"
                     aria-hidden="true"
-                  >
-                    pending
-                  </span>
+                  />
                   <span className="text-amber-700">
                     {LEGAL_DOCS.length - available} próximamente
                   </span>
@@ -338,12 +339,7 @@ function DocCard({ doc }: { doc: LegalDoc }) {
     >
       {doc.available ? (
         <div className="bg-primary absolute top-3 right-3 z-20 flex items-center gap-1 rounded-full px-2 py-0.5 text-white shadow-md">
-          <span
-            className="material-symbols-outlined text-[12px]"
-            aria-hidden="true"
-          >
-            schedule
-          </span>
+          <Icon name="schedule" size={12} aria-hidden="true" />
           <span className="text-[10px] font-semibold">
             {doc.readingTime} min
           </span>
@@ -355,16 +351,15 @@ function DocCard({ doc }: { doc: LegalDoc }) {
           </span>
         </div>
       )}
-      <span
+      <Icon
+        name={doc.icon}
+        size={80}
         className={cn(
-          "material-symbols-outlined text-white/80 transition-transform duration-300",
+          "text-white/80 transition-transform duration-300",
           doc.available && "group-hover:scale-110"
         )}
-        style={{ fontSize: "80px" }}
         aria-hidden="true"
-      >
-        {doc.icon}
-      </span>
+      />
     </div>
   );
 

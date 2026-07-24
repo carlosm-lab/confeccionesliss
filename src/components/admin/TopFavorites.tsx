@@ -1,4 +1,6 @@
-"use client";
+﻿"use client";
+
+import { Icon } from "@/components/ui/icons/Icon";
 import Image from "next/image";
 import { formatPrice } from "@/lib/formatPrice";
 
@@ -68,9 +70,7 @@ export default function TopFavorites({ products, loading }: TopFavoritesProps) {
                         />
                       ) : (
                         <div className="flex h-full w-full items-center justify-center text-slate-400">
-                          <span className="material-symbols-outlined text-[20px]">
-                            image
-                          </span>
+                          <Icon name="image" size={20} />
                         </div>
                       )}
                     </div>
@@ -89,9 +89,11 @@ export default function TopFavorites({ products, loading }: TopFavoritesProps) {
                   </div>
                 </div>
                 <div className="flex shrink-0 flex-col items-center justify-center rounded-lg bg-pink-50 px-3 py-1.5 dark:bg-pink-900/10">
-                  <span className="material-symbols-outlined mb-0.5 text-[16px] text-pink-500">
-                    favorite
-                  </span>
+                  <Icon
+                    name="favorite"
+                    size={16}
+                    className="mb-0.5 text-pink-500"
+                  />
                   <span className="text-xs font-bold text-pink-600 dark:text-pink-400">
                     {product.fav_count}
                   </span>

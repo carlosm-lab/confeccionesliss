@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 /**
  * ProductDetailClient — Confecciones Liss
  * Vista de detalle usando DbProduct (schema de Supabase).
@@ -432,9 +433,7 @@ export function ProductDetailClient({
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center bg-slate-100 text-slate-300">
-                  <span className="material-symbols-outlined text-6xl">
-                    image
-                  </span>
+                  <Icon name="image" className="text-6xl" />
                 </div>
               )}
             </button>
@@ -457,16 +456,12 @@ export function ProductDetailClient({
                   isFavorited ? "Quitar de favoritos" : "Agregar a favoritos"
                 }
               >
-                <span
-                  className="material-symbols-outlined text-[22px] text-red-500"
-                  style={{
-                    fontVariationSettings: isFavorited
-                      ? "'FILL' 1"
-                      : "'FILL' 0",
-                  }}
-                >
-                  favorite
-                </span>
+                <Icon
+                  name={isFavorited ? "favorite" : "favorite_border"}
+                  size={22}
+                  fill={isFavorited}
+                  className={isFavorited ? "text-red-500" : "text-slate-400"}
+                />
               </button>
 
               {/* Share button (Mobile only) */}
@@ -477,9 +472,7 @@ export function ProductDetailClient({
                 title="Compartir"
                 aria-label="Compartir este producto"
               >
-                <span className="material-symbols-outlined text-[20px]">
-                  share
-                </span>
+                <Icon name="share" size={20} />
               </button>
             </div>
           </div>
@@ -541,12 +534,7 @@ export function ProductDetailClient({
               title="Compartir"
               aria-label="Compartir este producto"
             >
-              <span
-                className="material-symbols-outlined"
-                style={{ fontSize: "22px" }}
-              >
-                share
-              </span>
+              <Icon name="share" />
             </button>
           </div>
 
@@ -587,13 +575,11 @@ export function ProductDetailClient({
                       key={item}
                       className="flex items-start gap-2 text-sm text-slate-600"
                     >
-                      <span
-                        className="material-symbols-outlined text-primary mt-0.5 shrink-0"
-                        style={{ fontSize: "1rem" }}
+                      <Icon
+                        name="check_circle"
+                        className="text-primary mt-0.5 shrink-0"
                         aria-hidden="true"
-                      >
-                        check_circle
-                      </span>
+                      />
                       {item}
                     </li>
                   ))}
@@ -654,12 +640,7 @@ export function ProductDetailClient({
               {((product as { cantidad_minima?: number | null })
                 .cantidad_minima ?? 1) > 1 && (
                 <div className="flex items-center gap-1.5 rounded-lg bg-amber-50 px-3 py-2 text-xs font-semibold text-amber-700">
-                  <span
-                    className="material-symbols-outlined"
-                    style={{ fontSize: "16px" }}
-                  >
-                    info
-                  </span>
+                  <Icon name="info" />
                   Pedido mínimo:{" "}
                   {
                     (product as { cantidad_minima?: number | null })
@@ -673,12 +654,7 @@ export function ProductDetailClient({
               {(product as { solo_san_miguel?: boolean | null })
                 .solo_san_miguel && (
                 <div className="flex items-center gap-1.5 rounded-lg bg-blue-50 px-3 py-2 text-xs font-semibold text-blue-700">
-                  <span
-                    className="material-symbols-outlined"
-                    style={{ fontSize: "16px" }}
-                  >
-                    location_on
-                  </span>
+                  <Icon name="location_on" />
                   Solo disponible en San Miguel
                 </div>
               )}
@@ -687,12 +663,7 @@ export function ProductDetailClient({
                 !(product as { solo_san_miguel?: boolean | null })
                   .solo_san_miguel && (
                   <div className="flex items-center gap-1.5 rounded-lg bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-600">
-                    <span
-                      className="material-symbols-outlined"
-                      style={{ fontSize: "16px" }}
-                    >
-                      store
-                    </span>
+                    <Icon name="store" />
                     Retiro en tienda
                   </div>
                 )}
@@ -764,12 +735,10 @@ export function ProductDetailClient({
                   </div>
                   {selectedSize === "A la medida" && (
                     <div className="text-blue-955 mt-3 flex animate-pulse items-start gap-2.5 rounded-xl border border-blue-400/40 bg-blue-50/80 p-3 text-xs dark:bg-blue-900/20 dark:text-blue-300">
-                      <span
-                        className="material-symbols-outlined shrink-0 animate-bounce text-blue-500"
-                        style={{ fontSize: "18px" }}
-                      >
-                        info
-                      </span>
+                      <Icon
+                        name="info"
+                        className="shrink-0 animate-bounce text-blue-500"
+                      />
                       <p>
                         <span className="font-semibold">Nota:</span> Al elegir
                         la opción{" "}
@@ -793,13 +762,11 @@ export function ProductDetailClient({
                 <div className="flex flex-col gap-1">
                   {isALaMedida ? (
                     <li className="flex items-start gap-2 text-sm text-slate-600">
-                      <span
-                        className="material-symbols-outlined text-primary mt-0.5 shrink-0"
-                        style={{ fontSize: "1rem" }}
+                      <Icon
+                        name="chat"
+                        className="text-primary mt-0.5 shrink-0"
                         aria-hidden="true"
-                      >
-                        chat
-                      </span>
+                      />
                       <span>
                         Los precios por servicio a la medida se cotizan por
                         WhatsApp. Pero tranquil@ 🥰 los uniformes confeccionados
@@ -863,13 +830,11 @@ export function ProductDetailClient({
                       {/* Vigencia activa */}
                       {onSale && offerEndsAt && !isOfferScheduled && (
                         <li className="flex items-start gap-2 text-sm text-slate-600">
-                          <span
-                            className="material-symbols-outlined text-primary mt-0.5 shrink-0"
-                            style={{ fontSize: "1rem" }}
+                          <Icon
+                            name="timer"
+                            className="text-primary mt-0.5 shrink-0"
                             aria-hidden="true"
-                          >
-                            timer
-                          </span>
+                          />
                           <span>
                             Oferta válida hasta el{" "}
                             <strong className="text-slate-800">
@@ -888,13 +853,11 @@ export function ProductDetailClient({
                       {/* Oferta programada */}
                       {isOfferScheduled && offerStartsAt && (
                         <li className="flex items-start gap-2 text-sm text-slate-600">
-                          <span
-                            className="material-symbols-outlined text-primary mt-0.5 shrink-0"
-                            style={{ fontSize: "1rem" }}
+                          <Icon
+                            name="schedule"
+                            className="text-primary mt-0.5 shrink-0"
                             aria-hidden="true"
-                          >
-                            schedule
-                          </span>
+                          />
                           <span>
                             Disponible desde el{" "}
                             <strong className="text-slate-800">
@@ -913,13 +876,11 @@ export function ProductDetailClient({
                       {/* Condiciones */}
                       {offerTerms && (
                         <li className="flex items-start gap-2 text-sm text-slate-600">
-                          <span
-                            className="material-symbols-outlined text-primary mt-0.5 shrink-0"
-                            style={{ fontSize: "1rem" }}
+                          <Icon
+                            name="info"
+                            className="text-primary mt-0.5 shrink-0"
                             aria-hidden="true"
-                          >
-                            info
-                          </span>
+                          />
                           <span>{offerTerms}</span>
                         </li>
                       )}
@@ -929,9 +890,7 @@ export function ProductDetailClient({
                 {/* Personalización — siempre visible */}
                 <div>
                   <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-700">
-                    <span className="material-symbols-outlined text-[1.125rem]">
-                      edit_note
-                    </span>
+                    <Icon name="edit_note" className="text-[1.125rem]" />
                     <span>¿Necesitas personalizar tu pedido?</span>
                   </div>
                   <textarea
@@ -952,9 +911,7 @@ export function ProductDetailClient({
                     onClick={handleAddToCart}
                     className="bg-primary hover:bg-primary/90 flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl py-3.5 font-bold text-white shadow-md transition hover:shadow-lg active:scale-[0.97] md:py-2.5 lg:py-2.5"
                   >
-                    <span className="material-symbols-outlined">
-                      shopping_cart
-                    </span>
+                    <Icon name="shopping_cart" />
                     Agregar
                   </button>
 
@@ -1057,7 +1014,7 @@ export function ProductDetailClient({
             className="absolute top-4 right-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-black/40 text-white/80 transition-all hover:bg-black/70 hover:text-white sm:top-6 sm:right-6"
             aria-label="Cerrar imagen"
           >
-            <span className="material-symbols-outlined text-2xl">close</span>
+            <Icon name="close" size={24} className="text-2xl" />
           </button>
           <div className="relative z-10 h-[80dvh] w-[90vw] overflow-hidden rounded-2xl">
             <Image
@@ -1082,7 +1039,7 @@ export function ProductDetailClient({
               className="absolute top-4 right-4 z-10 text-slate-400 transition-colors hover:text-slate-600"
               aria-label="Cerrar modal"
             >
-              <span className="material-symbols-outlined text-2xl">close</span>
+              <Icon name="close" size={24} className="text-2xl" />
             </button>
             <div className="elegant-scrollbar overflow-y-auto pt-2 pr-1">
               <DeliveryForm

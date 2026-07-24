@@ -1,5 +1,7 @@
 "use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
+
 interface StatCard {
   id: string;
   label: string;
@@ -32,9 +34,7 @@ export default function StatsCards({ stats, onCardClick }: StatsCardsProps) {
               <div
                 className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition-transform group-hover:scale-110 md:h-11 md:w-11 ${stat.colorClass || "bg-primary/10 text-primary"}`}
               >
-                <span className="material-symbols-outlined text-[18px] md:text-[22px]">
-                  {stat.icon}
-                </span>
+                <Icon name={stat.icon} size={20} />
               </div>
               <h3 className="text-xl leading-tight font-black text-slate-900 md:text-2xl dark:text-white">
                 {stat.value}

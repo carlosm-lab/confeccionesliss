@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/ui/icons/Icon";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import Image from "next/image";
@@ -631,9 +632,7 @@ function StationAlmacen({ station }: { station: Station }) {
               <div className="space-y-3 border-b border-white/5 pr-0 pb-8 last:border-0 md:border-b-0 md:pr-8 md:pb-0">
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-white/40">
-                    <span className="material-symbols-outlined text-lg text-white">
-                      {step.icon}
-                    </span>
+                    <Icon name={step.icon} size={18} className="text-white" />
                   </div>
                   <span className="font-mono text-[9px] font-bold tracking-widest text-white uppercase">
                     Paso {i + 1}
@@ -1115,18 +1114,14 @@ export default function InstalacionesClient() {
               href="/contacto"
               className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg bg-[#143067] px-6 py-3.5 font-sans text-[14px] font-semibold text-white shadow-sm transition-all hover:bg-[#0f2550] hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#143067]"
             >
-              <span className="material-symbols-outlined text-lg">
-                calendar_month
-              </span>
+              <Icon name="calendar_month" size={18} className="text-lg" />
               Programar una Visita
             </Link>
             <Link
               href="/catalogo"
               className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-[#143067] bg-transparent px-6 py-3.5 font-sans text-[14px] font-semibold text-[#143067] shadow-sm transition-all hover:bg-[#dae2ff]/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#143067]"
             >
-              <span className="material-symbols-outlined text-lg">
-                menu_book
-              </span>
+              <Icon name="menu_book" size={18} className="text-lg" />
               Ver Catálogo
             </Link>
           </div>
