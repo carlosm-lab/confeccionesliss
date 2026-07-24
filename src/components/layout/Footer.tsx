@@ -183,9 +183,9 @@ export function Footer() {
             <div className="mb-10 grid w-full grid-cols-2 gap-8">
               {/* Explorar */}
               <div>
-                <p className="mb-4 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+                <h3 className="mb-4 font-serif text-sm font-semibold tracking-wider text-white uppercase">
                   Explorar
-                </p>
+                </h3>
                 <ul className="space-y-3 text-sm">
                   {[
                     { href: "/", label: "Inicio" },
@@ -211,9 +211,9 @@ export function Footer() {
 
               {/* Legal */}
               <div>
-                <p className="mb-4 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+                <h3 className="mb-4 font-serif text-sm font-semibold tracking-wider text-white uppercase">
                   Legal
-                </p>
+                </h3>
                 <ul className="space-y-3 text-sm">
                   {[
                     {
@@ -257,9 +257,9 @@ export function Footer() {
 
             {/* 6. Contacto al final, encima del copyright */}
             <div className="w-full border-t border-[#1e2d4a]/50 pt-8">
-              <p className="mb-4 text-left font-serif text-sm font-semibold tracking-wider text-white uppercase">
+              <h3 className="mb-4 text-left font-serif text-sm font-semibold tracking-wider text-white uppercase">
                 Contacto
-              </p>
+              </h3>
               <ul className="flex flex-col items-start space-y-4 text-sm text-[#a5b1c9]">
                 <li className="flex gap-3 text-left">
                   <Icon
@@ -355,9 +355,9 @@ export function Footer() {
                 </p>
               </div>
               <div>
-                <p className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+                <h3 className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
                   Contacto
-                </p>
+                </h3>
                 <ul className="space-y-4 text-sm text-[#a5b1c9]">
                   <li className="flex items-start gap-3">
                     <Icon
@@ -414,9 +414,9 @@ export function Footer() {
             {/* Columna Central: Explorar (Centrada) */}
             <div className="flex flex-col items-center">
               <div className="w-fit">
-                <p className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+                <h3 className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
                   Explorar
-                </p>
+                </h3>
                 <ul className="space-y-3 text-sm">
                   {[
                     { href: "/", label: "Inicio" },
@@ -444,9 +444,9 @@ export function Footer() {
             {/* Columna Derecha: Legal */}
             <div className="flex flex-col items-end">
               <div className="w-fit">
-                <p className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+                <h3 className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
                   Legal
-                </p>
+                </h3>
                 <ul className="space-y-3 text-sm">
                   {[
                     {
@@ -533,9 +533,9 @@ export function Footer() {
 
           {/* Column 2: Explorar */}
           <div className="lg:col-span-2">
-            <p className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+            <h3 className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
               Explorar
-            </p>
+            </h3>
             <ul className="space-y-3 text-sm">
               {[
                 { href: "/", label: "Inicio" },
@@ -561,9 +561,9 @@ export function Footer() {
 
           {/* Column 3: Contacto */}
           <div className="lg:col-span-3">
-            <p className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+            <h3 className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
               Contacto
-            </p>
+            </h3>
             <ul className="space-y-4 text-sm text-[#a5b1c9]">
               <li className="flex items-start gap-3">
                 <Icon
@@ -608,9 +608,9 @@ export function Footer() {
 
           {/* Column 4: Legal */}
           <div className="lg:col-span-3">
-            <p className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
+            <h3 className="mb-6 font-serif text-sm font-semibold tracking-wider text-white uppercase">
               Legal
-            </p>
+            </h3>
             <ul className="space-y-3 text-sm">
               {[
                 { href: "/legal/privacidad", label: "Política de Privacidad" },

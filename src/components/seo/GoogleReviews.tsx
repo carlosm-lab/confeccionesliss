@@ -87,7 +87,7 @@ export function GoogleReviews({ reviews }: GoogleReviewsProps) {
                 />
               </div>
             </div>
-            <span className="rounded-full bg-slate-100 px-3 py-0.5 font-sans text-xs font-medium text-slate-500">
+            <span className="rounded-full bg-slate-100 px-3 py-0.5 font-sans text-xs font-medium text-slate-700">
               4.8 de 5 &middot; 21 reseñas
             </span>
           </div>
@@ -156,7 +156,7 @@ export function GoogleReviews({ reviews }: GoogleReviewsProps) {
                       <cite className="text-on-surface block font-sans text-sm font-semibold not-italic">
                         {r.author_name}
                       </cite>
-                      <span className="flex items-center gap-1 text-xs text-slate-400">
+                      <span className="flex items-center gap-1 text-xs text-slate-600">
                         Cliente verificado
                         <Icon
                           name="verified"

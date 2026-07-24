@@ -116,6 +116,8 @@ export function MobileBottomNav() {
               href={item.href}
               onClick={handleTabClick}
               prefetch={false}
+              aria-label={item.label}
+              aria-current={isActive ? "page" : undefined}
               className={cn(
                 "relative flex h-full w-full flex-col items-center justify-center gap-0.5 transition-colors",
                 isActive
@@ -127,6 +129,7 @@ export function MobileBottomNav() {
                 name={item.icon}
                 size={22}
                 strokeWidth={isActive ? 2.5 : 1.75}
+                aria-hidden="true"
                 className={cn(
                   "transition-all duration-200",
                   isActive
@@ -139,7 +142,9 @@ export function MobileBottomNav() {
                   {cartCount > 99 ? "99+" : cartCount}
                 </span>
               )}
-              <span className="text-[10px] font-semibold">{item.label}</span>
+              <span aria-hidden="true" className="text-[10px] font-semibold">
+                {item.label}
+              </span>
             </Link>
           );
         })}

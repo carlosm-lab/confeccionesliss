@@ -100,7 +100,7 @@ function TypewriterPlaceholder() {
 
   return (
     <div
-      className="pointer-events-none flex min-w-0 items-center overflow-hidden text-sm whitespace-nowrap text-gray-400"
+      className="pointer-events-none flex min-w-0 items-center overflow-hidden text-sm whitespace-nowrap text-gray-600"
       aria-hidden="true"
     >
       <span className="truncate">{mounted ? text : "Buscar producto..."}</span>
@@ -414,7 +414,10 @@ export function Navbar() {
               </div>
 
               {/* Non-negotiable 24px left margin (double inter-pill gap of 12px) */}
-              <nav className="ml-6 flex gap-3">
+              <nav
+                className="ml-6 flex gap-3"
+                aria-label="Navegación principal"
+              >
                 {visiblePills.map((link) => {
                   const isActive =
                     link.href === "/"
@@ -426,6 +429,7 @@ export function Navbar() {
                       key={link.href}
                       href={link.href}
                       prefetch={false}
+                      aria-current={isActive ? "page" : undefined}
                       className={cn(
                         "border-primary/10 text-primary flex h-10 items-center justify-center rounded-full border px-4 text-sm font-bold whitespace-nowrap shadow-[0_4px_12px_-1px_rgba(20,48,103,0.2),0_2px_6px_-1px_rgba(20,48,103,0.15)] transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-3px_rgba(20,48,103,0.3),0_4px_10px_-2px_rgba(20,48,103,0.2)]",
                         isActive
@@ -598,84 +602,92 @@ export function Navbar() {
                   {/* Nav links */}
                   <ul className="space-y-1 p-4">
                     {/* Para Mobile (< md): Muestra todos los enlaces correspondientes */}
-                    <div className="space-y-1 md:hidden">
-                      {navLinks.map((link) => {
-                        const isActive =
-                          link.href === "/"
-                            ? !pathname || pathname === "/" || pathname === ""
-                            : pathname?.startsWith(link.href);
+                    {navLinks.map((link) => {
+                      const isActive =
+                        link.href === "/"
+                          ? !pathname || pathname === "/" || pathname === ""
+                          : pathname?.startsWith(link.href);
 
-                        const isOnBottomBar = [
-                          "/",
-                          "/catalogo",
-                          "/servicios",
-                          "/empresa",
-                          "/contacto",
-                        ].includes(link.href);
+                      const isOnBottomBar = [
+                        "/",
+                        "/catalogo",
+                        "/servicios",
+                        "/empresa",
+                        "/contacto",
+                      ].includes(link.href);
 
-                        return (
-                          <li
-                            key={link.href}
-                            className={cn(isOnBottomBar && "hidden sm:block")}
+                      return (
+                        <li
+                          key={link.href}
+                          className={cn(
+                            "md:hidden",
+                            isOnBottomBar && "hidden sm:block"
+                          )}
+                        >
+                          <Link
+                            href={link.href}
+                            onClick={closeMenu}
+                            prefetch={false}
+                            aria-current={isActive ? "page" : undefined}
+                            className={cn(
+                              "flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all",
+                              isActive
+                                ? "bg-primary text-on-primary shadow-sm"
+                                : "hover:bg-primary/5 hover:text-primary text-gray-700"
+                            )}
                           >
-                            <Link
-                              href={link.href}
-                              onClick={closeMenu}
-                              prefetch={false}
-                              className={cn(
-                                "flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all",
-                                isActive
-                                  ? "bg-primary text-on-primary shadow-sm"
-                                  : "hover:bg-primary/5 hover:text-primary text-gray-700"
-                              )}
-                            >
-                              <Icon
-                                name={link.mobileIcon}
-                                size={18}
-                                aria-hidden="true"
-                              />
-                              {link.label}
-                            </Link>
-                          </li>
-                        );
-                      })}
-                    </div>
+                            <Icon
+                              name={link.mobileIcon}
+                              size={18}
+                              aria-hidden="true"
+                            />
+                            {link.label}
+                          </Link>
+                        </li>
+                      );
+                    })}
 
                     {/* Para Tablet/Desktop (>= md): Muestra únicamente los enlaces que están ocultos del menú principal (hiddenPills) */}
-                    <div className="hidden space-y-1 md:block">
-                      {hiddenPills.map((link) => {
-                        const isActive =
-                          link.href === "/"
-                            ? !pathname || pathname === "/" || pathname === ""
-                            : pathname?.startsWith(link.href);
+                    {hiddenPills.map((link) => {
+                      const isActive =
+                        link.href === "/"
+                          ? !pathname || pathname === "/" || pathname === ""
+                          : pathname?.startsWith(link.href);
 
-                        return (
-                          <li key={link.href}>
-                            <Link
-                              href={link.href}
-                              onClick={closeMenu}
-                              prefetch={false}
-                              className={cn(
-                                "flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all",
-                                isActive
-                                  ? "bg-primary text-on-primary shadow-sm"
-                                  : "hover:bg-primary/5 hover:text-primary text-gray-700"
-                              )}
-                            >
-                              <Icon
-                                name={link.mobileIcon}
-                                size={18}
-                                aria-hidden="true"
-                              />
-                              {link.label}
-                            </Link>
-                          </li>
-                        );
-                      })}
-                    </div>
+                      return (
+                        <li
+                          key={`tablet-${link.href}`}
+                          className="hidden md:block"
+                        >
+                          <Link
+                            href={link.href}
+                            onClick={closeMenu}
+                            prefetch={false}
+                            aria-current={isActive ? "page" : undefined}
+                            className={cn(
+                              "flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all",
+                              isActive
+                                ? "bg-primary text-on-primary shadow-sm"
+                                : "hover:bg-primary/5 hover:text-primary text-gray-700"
+                            )}
+                          >
+                            <Icon
+                              name={link.mobileIcon}
+                              size={18}
+                              aria-hidden="true"
+                            />
+                            {link.label}
+                          </Link>
+                        </li>
+                      );
+                    })}
 
                     {/* Divider */}
-                    <li className="my-2 border-t border-gray-100" />
+                    <li
+                      role="separator"
+                      className="my-2 border-t border-gray-100"
+                      aria-hidden="true"
+                    />
                     {/* Links Page */}
                     <li>
                       <Link
