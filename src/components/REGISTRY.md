@@ -32,11 +32,6 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 
 ### WebMCPRegistration
 
-- **Ruta:** `src/components/ai/WebMCPRegistration.tsx`
-- **Descripción:** Componente de registro declarativo y runtime para herramientas y esquemas de WebMCP (Web Model Context Protocol). Permite a agentes de IA (Chrome AI, PageSpeed Insights, navegadores de LLM) descubrir e inspeccionar esquemas JSON Schema válidos.
-- **Props:** No recibe props.
-- **Ejemplo:** `<WebMCPRegistration />`
-
 ## UI Components
 
 ### Icon

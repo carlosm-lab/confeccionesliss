@@ -275,14 +275,20 @@ export function ServicioBordadosDetalle({
                     key={logo.label}
                     className="border-primary/10 flex flex-col items-center gap-2 rounded-[12px] border bg-white p-3 text-center shadow-sm"
                   >
-                    <div className="relative h-16 w-full">
-                      <Image
-                        src={logo.image}
-                        alt={logo.label}
-                        fill
-                        sizes="(max-width: 640px) 30vw, 10vw"
-                        className="object-contain"
-                      />
+                    <div className="relative flex h-16 w-full items-center justify-center">
+                      {logo.label === "UNAB" || !logo.image ? (
+                        <div className="bg-primary/10 text-primary flex h-12 w-12 items-center justify-center rounded-full">
+                          <Icon name="school" className="h-6 w-6" />
+                        </div>
+                      ) : (
+                        <Image
+                          src={logo.image}
+                          alt={logo.label}
+                          fill
+                          sizes="(max-width: 640px) 30vw, 10vw"
+                          className="object-contain"
+                        />
+                      )}
                     </div>
                     <span className="text-primary font-sans text-[10px] font-semibold tracking-wider uppercase">
                       {logo.label}

@@ -16,6 +16,19 @@ This document tracks important architectural decisions made during the project l
 
 ## Logged Decisions
 
+**Date:** 2026-07-24
+**Decision:** Integración de Chat con Inteligencia Artificial "Lucas" usando Groq API, Pre-compilación de Knowledge Base y Carga Lazy en DeferredProviders
+**Context:** Se requiere un chat conversacional inteligente disponible en el 100% de las páginas del sitio para resolver consultas sobre productos, servicios, precios y las 19+ políticas de la empresa. Debido a las restricciones de hosting en Vercel y límites de cuota de Gemini, se necesitaba un proveedor con free tier alto, sin consumo de recursos del servidor y con cero impacto en el rendimiento Core Web Vitals (LCP/FCP) del frontend.
+**Decision:**
+
+- **Proveedor IA:** Se selecciona Groq API con el modelo `llama-3.3-70b-versatile` (128K context window, 14,400 req/día gratis).
+- **Knowledge Base Pre-compilado:** Se implementó `scripts/compile-knowledge.mjs` que compacta todas las políticas, historia y catálogo en un string único (`src/data/chat-knowledge.ts`) inyectado como system prompt.
+- **Rendimiento Cero Impacto:** El widget de chat (`ChatWidget`) y su contexto (`ChatProvider`) se cargan exclusivamente en `DeferredProviders` (`ssr: false` vía `next/dynamic` post-LCP), manteniendo la directiva ANT (SSG puro + cero bloqueo de FCP/LCP).
+- **Persistencia en Supabase:** Se crearon las tablas `chat_conversations` y `chat_messages` con RLS para guardar el historial de usuarios autenticados y permitir la auditoría desde `/admin/chats`.
+- **Experiencia Humana (Queue Ficticia):** La apertura del chat simula asignación de soporte humano ("Posición #2 de la cola... -> Lucas disponible").
+
+---
+
 **Date:** 2026-07-23
 **Decision:** Migración 100% Completa de Iconos a SVG Inline (`lucide-react` + `<Icon />`) y Eliminación Total de FOUT
 **Context:** Se identificó que la carga diferida de la fuente de Google Fonts (`Material Symbols Outlined` ~3.8 MB) generaba un parpadeo de texto (FOUT) al cargar o recargar el sitio web, haciendo que los iconos se mostraran temporalmente como texto llano (ej. "shopping_bag", "favorite") hasta que la fuente terminaba de descargarse.

@@ -270,6 +270,8 @@ export function Navbar() {
   useEffect(() => {
     if (typeof window === "undefined" || isHomeOnly) return;
 
+    let rafId: number;
+
     const calculateVisibleLinks = () => {
       if (window.innerWidth < 768) return;
 
@@ -277,23 +279,15 @@ export function Navbar() {
       const pillsContainer = navPillsRef.current;
       if (!container || !pillsContainer) return;
 
-      // Non-negotiable: 24px on each side (double the 12px inter-pill gap)
       const SIDE_MARGIN = 24;
-
-      // ── Batch DOM read: leer todos los anchos de una sola vez ─────────────
-      // Esto evita reflows síncronos forzados (layout thrashing) que ocurren
-      // cuando se intercalan lecturas y escrituras de propiedades de layout.
       const availableWidth =
         container.getBoundingClientRect().width - SIDE_MARGIN * 2;
 
       const pillElements = Array.from(pillsContainer.children) as HTMLElement[];
-
-      // Leer todos los anchos en una sola pasada (sin escribir nada al DOM)
       const pillWidths = pillElements.map(
-        (el) => el.getBoundingClientRect().width + 12 // +12px inter-pill gap
+        (el) => el.getBoundingClientRect().width + 12
       );
 
-      // ── Cálculo aritmético puro (cero accesos al DOM) ─────────────────────
       let accumulatedWidth = 0;
       let count = 0;
 
@@ -308,8 +302,13 @@ export function Navbar() {
       setVisibleCount(count);
     };
 
+    const scheduleCalculation = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(calculateVisibleLinks);
+    };
+
     const observer = new ResizeObserver(() => {
-      calculateVisibleLinks();
+      scheduleCalculation();
     });
 
     const container = navContainerRef.current;
@@ -317,10 +316,10 @@ export function Navbar() {
       observer.observe(container);
     }
 
-    // Ejecutar inicialmente
-    calculateVisibleLinks();
+    scheduleCalculation();
 
     return () => {
+      cancelAnimationFrame(rafId);
       if (container) {
         observer.unobserve(container);
       }

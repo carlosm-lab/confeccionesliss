@@ -11,7 +11,7 @@ const LOGO_SRCS = [
   "/logos/univo.png",
   "/logos/ues.png",
   "/logos/ugb-1.png",
-  "/logos/unab.png",
+  "/logos/ieproes.png",
   "/logos/ieproes.png",
   "/logos/uma.png",
   "/logos/ugb-2.png",
@@ -244,7 +244,7 @@ const UNIVERSIDADES_BASE = [
     sigla: "UNAB",
     nombre: "Universidad Andrés Bello",
     carreras: ["Enfermería", "Etc..."],
-    logo: "/logos/unab.png",
+    logo: "/logos/ieproes.png",
   },
   {
     slug: "ues",
