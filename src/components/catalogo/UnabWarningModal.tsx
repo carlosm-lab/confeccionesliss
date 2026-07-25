@@ -4,7 +4,15 @@ import { useState, useEffect } from "react";
 import { Icon } from "@/components/ui/icons/Icon";
 
 export function UnabWarningModal() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Retraso de 5 segundos antes de desplegar el modal al ingresar, recargar o regresar
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsOpen(true);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Cerrar con la tecla Escape
   useEffect(() => {
@@ -23,27 +31,27 @@ export function UnabWarningModal() {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
       role="dialog"
       aria-modal="true"
       aria-labelledby="unab-warning-title"
     >
-      {/* Backdrop con desenfoque de fondo */}
+      {/* Backdrop idéntico al modal de Favoritos: bg-black/30 backdrop-blur-[2px] sm:bg-black/20 */}
       <div
-        className="fixed inset-0 bg-slate-900/65 backdrop-blur-md transition-opacity animate-fade-in"
+        className="animate-in fade-in fixed inset-0 z-[100] cursor-default bg-black/30 backdrop-blur-[2px] duration-200 sm:bg-black/20"
         onClick={() => setIsOpen(false)}
         aria-hidden="true"
       />
 
       {/* Tarjeta Modal Principal */}
-      <div className="relative z-10 w-full max-w-xl overflow-hidden rounded-2xl border border-amber-200/80 bg-white p-6 shadow-2xl transition-all sm:p-8 animate-scale-up">
+      <div className="relative z-[101] w-full max-w-xl overflow-hidden rounded-2xl border border-amber-200/80 bg-white p-6 shadow-2xl transition-all sm:p-8 animate-scale-up">
         {/* Cabecera y Badge de Alerta */}
         <div className="mb-5 flex items-center gap-3">
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-800 shadow-inner">
             <Icon name="warning" className="h-6 w-6" />
           </div>
           <div>
-            <span className="font-sans text-xs font-bold tracking-widest uppercase text-amber-800">
+            <span className="font-sans text-xs font-bold tracking-widest text-amber-800 uppercase">
               Notificación Oficial
             </span>
             <h2
@@ -63,10 +71,7 @@ export function UnabWarningModal() {
               Universidad Dr. Andrés Bello (UNAB)
             </strong>{" "}
             y en respeto a su{" "}
-            <strong className="font-semibold text-slate-900">
-              autonomía
-            </strong>
-            ,{" "}
+            <strong className="font-semibold text-slate-900">autonomía</strong>,{" "}
             <strong className="font-semibold text-slate-900">
               identidad institucional
             </strong>
