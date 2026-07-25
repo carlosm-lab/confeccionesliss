@@ -7,6 +7,7 @@ import {
   getCategoriesForUniversity,
 } from "@/lib/catalogService";
 import { OffersReadTracker } from "@/components/ui/OffersReadTracker";
+import { UnabWarningModal } from "@/components/catalogo/UnabWarningModal";
 import type { CategoryConfig } from "@/data/types";
 
 // ── SSG puro + On-Demand Revalidation ──────────────────────────────────────
@@ -208,6 +209,7 @@ export default async function UniversidadPage({
   return (
     <>
       <OffersReadTracker />
+      {universidad === "unab" && <UnabWarningModal />}
       <CatalogPageClient
         sector="universitario"
         config={catalogConfig}

@@ -5,6 +5,7 @@ import { useState, useRef, useEffect } from "react";
 import { siteConfig } from "@/config/site";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
+import { Icon } from "@/components/ui/icons/Icon";
 
 // ── Logos disponibles (PNG limpios) ──────────────────────────────────────────
 const LOGO_SRCS = [
@@ -244,7 +245,7 @@ const UNIVERSIDADES_BASE = [
     sigla: "UNAB",
     nombre: "Universidad Andrés Bello",
     carreras: ["Enfermería", "Etc..."],
-    logo: "/logos/ieproes.png",
+    logo: "",
   },
   {
     slug: "ues",
@@ -322,7 +323,7 @@ function UnivTile({
       </div>
 
       <div
-        className="pointer-events-none absolute top-5 right-5"
+        className="pointer-events-none absolute top-5 right-5 flex items-center justify-center"
         style={{
           width: 44,
           height: 44,
@@ -331,13 +332,19 @@ function UnivTile({
         }}
         aria-hidden="true"
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={univ.logo}
-          alt=""
-          className="h-full w-full object-contain"
-          style={{ mixBlendMode: "multiply" }}
-        />
+        {univ.slug === "unab" || !univ.logo ? (
+          <div className="bg-[#143067]/10 text-[#143067] flex h-10 w-10 items-center justify-center rounded-full">
+            <Icon name="school" className="h-5 w-5" />
+          </div>
+        ) : (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={univ.logo}
+            alt=""
+            className="h-full w-full object-contain"
+            style={{ mixBlendMode: "multiply" }}
+          />
+        )}
       </div>
 
       <div className="relative">

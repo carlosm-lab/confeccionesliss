@@ -228,6 +228,13 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 - **Dependencias:** `AuthContext`, `getSupabaseClient`, `reviewSchema`, `DbReview` type, `react-hot-toast`, Material Symbols icons.
 - **Ejemplo:** `<ProductReviews productId={product.id} initialReviews={[]} averageRating={0} totalCount={0} />`
 
+### UnabWarningModal
+
+- **Ruta:** `src/components/catalogo/UnabWarningModal.tsx`
+- **Descripción:** Modal de aviso legal e institucional obligatorio que se despliega automáticamente en la página del catálogo de la UNAB (`/catalogo/universidades/unab`) al ingresar, recargar o regresar a la ruta. Notifica formalmente la suspensión temporal del uso de logotipos institucionales oficiales.
+- **Props:** No recibe props (se controla automáticamente en el cliente mediante montaje).
+- **Ejemplo:** `<UnabWarningModal />`
+
 ## SEO Components
 
 ### ServiciosPrincipales
