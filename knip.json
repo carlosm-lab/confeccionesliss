@@ -8,10 +8,12 @@
     "server-only",
     "zustand",
     "@testing-library/react",
-    "sharp"
+    "sharp",
+    "groq-sdk"
   ],
   "ignore": [
     ".agents/**",
+    ".backup/**",
     ".gemini/**",
     "public/sw.js",
     "supabase/**",
