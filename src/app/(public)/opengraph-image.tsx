@@ -1,5 +1,5 @@
 ﻿// src/app/(public)/opengraph-image.tsx
-// OG Image para / (Home) — Layout de 2 columnas simétrico, tipografía de alto contraste y grilla equilibrada.
+// OG Image para / (Home) — Layout 2 columnas simétrico con logo +10% y titular expandido.
 
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
@@ -58,10 +58,10 @@ export default async function HomeOGImage() {
         fontFamily: "Inter",
       }}
     >
-      {/* Columna Izquierda: Logo (38%) */}
+      {/* Columna Izquierda: Logo (+10% -> 330px) */}
       <div
         style={{
-          width: "38%",
+          width: "40%",
           height: "100%",
           display: "flex",
           flexDirection: "column",
@@ -74,36 +74,36 @@ export default async function HomeOGImage() {
         <img
           src={logoSrc}
           alt="Confecciones Liss"
-          width={310}
-          height={310}
-          style={{ width: "310px", height: "310px", objectFit: "contain" }}
+          width={330}
+          height={330}
+          style={{ width: "330px", height: "330px", objectFit: "contain" }}
         />
       </div>
 
-      {/* Columna Derecha: Titular + 4 Píldoras Simétricas + Botón CTA Blanco (62%) */}
+      {/* Columna Derecha: Titular + 4 Píldoras Simétricas + Botón CTA Blanco */}
       <div
         style={{
-          width: "62%",
+          width: "60%",
           height: "100%",
           display: "flex",
           flexDirection: "column",
           alignItems: "flex-start",
           justifyContent: "center",
-          padding: "0 56px",
+          padding: "0 48px",
         }}
       >
-        {/* Titular Principal Claro */}
+        {/* Titular Principal con "Médica para:" */}
         <div
           style={{
             color: "#FFFFFF",
-            fontSize: "38px",
+            fontSize: "36px",
             fontWeight: 700,
             lineHeight: 1.2,
             letterSpacing: "-0.015em",
-            marginBottom: "28px",
+            marginBottom: "26px",
           }}
         >
-          Scrubs, Uniformes, Ropa e Indumentaria
+          Scrubs, Uniformes, Ropa e Indumentaria Médica para:
         </div>
 
         {/* 4 Píldoras de Ancho 100% Simétrico en 2 Filas x 2 Columnas */}
@@ -144,7 +144,7 @@ export default async function HomeOGImage() {
         <div
           style={{
             width: "100%",
-            height: "58px",
+            height: "56px",
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
