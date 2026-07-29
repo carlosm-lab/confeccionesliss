@@ -1,5 +1,5 @@
 ﻿// src/app/(public)/opengraph-image.tsx
-// OG Image para / (Home) — Alineación Justificada estricta mediante flex space-between en palabras del titular.
+// OG Image para / (Home) — Márgenes exteriores idénticos (75px a la izquierda del logo y 75px a la derecha de píldoras/CTA) y titular natural sin justificar.
 
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
@@ -44,102 +44,74 @@ export default async function HomeOGImage() {
     color: "#FFFFFF",
     fontSize: "20px",
     fontWeight: 600,
+    boxSizing: "border-box" as const,
   };
 
   return new ImageResponse(
     <div
       style={{
-        width: "100%",
-        height: "100%",
+        width: "1200px",
+        height: "630px",
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
         backgroundColor: "#143067",
         fontFamily: "Inter",
+        boxSizing: "border-box",
       }}
     >
-      {/* Columna Izquierda: Logo 330px centrado en 40% (margen izquierdo exterior = 75px) */}
+      {/* Columna Izquierda (450px): Logo 300px centrado -> Margen Izquierdo Exterior = 75px */}
       <div
         style={{
-          width: "40%",
+          width: "450px",
           height: "100%",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
+          boxSizing: "border-box",
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={logoSrc}
           alt="Confecciones Liss"
-          width={330}
+          width={300}
           height={330}
-          style={{ width: "330px", height: "330px", objectFit: "contain" }}
+          style={{ width: "300px", height: "300px", objectFit: "contain" }}
         />
       </div>
 
-      {/* Columna Derecha: Margen derecho exterior = 75px (idéntico al margen del logo) */}
+      {/* Columna Derecha (750px): Padding Derecho = 75px -> Margen Derecho Exterior = 75px (Igual al logo!) */}
       <div
         style={{
-          width: "60%",
+          width: "750px",
           height: "100%",
           display: "flex",
           flexDirection: "column",
           alignItems: "flex-start",
           justifyContent: "center",
-          padding: "0 75px 0 15px",
+          paddingLeft: "35px",
+          paddingRight: "75px",
+          boxSizing: "border-box",
         }}
       >
-        {/* Titular mediante flex space-between: fuerza a ambas líneas a iniciar y terminar en los bordes exactos del 100% de la columna */}
+        {/* Titular Natural Restaurado */}
         <div
           style={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            gap: "6px",
+            color: "#FFFFFF",
+            fontSize: "38px",
+            fontWeight: 700,
+            lineHeight: 1.2,
+            letterSpacing: "-0.015em",
             marginBottom: "26px",
+            boxSizing: "border-box",
           }}
         >
-          {/* Línea 1 Justificada de Borde a Borde */}
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              color: "#FFFFFF",
-              fontSize: "40px",
-              fontWeight: 700,
-            }}
-          >
-            <span>Scrubs,</span>
-            <span>Uniformes,</span>
-            <span>Ropa</span>
-            <span>e</span>
-          </div>
-
-          {/* Línea 2 Justificada de Borde a Borde (sin dos puntos) */}
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              color: "#FFFFFF",
-              fontSize: "40px",
-              fontWeight: 700,
-            }}
-          >
-            <span>Indumentaria</span>
-            <span>Médica</span>
-            <span>para</span>
-          </div>
+          Scrubs, Uniformes, Ropa e Indumentaria Médica para:
         </div>
 
-        {/* 4 Píldoras en 2x2 al 100% del ancho del contenedor */}
+        {/* 4 Píldoras en 2x2 al 100% del ancho (640px) */}
         <div
           style={{
             width: "100%",
@@ -147,6 +119,7 @@ export default async function HomeOGImage() {
             flexDirection: "column",
             gap: "14px",
             marginBottom: "32px",
+            boxSizing: "border-box",
           }}
         >
           <div
@@ -155,6 +128,7 @@ export default async function HomeOGImage() {
               flexDirection: "row",
               gap: "14px",
               width: "100%",
+              boxSizing: "border-box",
             }}
           >
             <div style={pillStyle}>Hospitales</div>
@@ -166,6 +140,7 @@ export default async function HomeOGImage() {
               flexDirection: "row",
               gap: "14px",
               width: "100%",
+              boxSizing: "border-box",
             }}
           >
             <div style={pillStyle}>Laboratorios</div>
@@ -173,7 +148,7 @@ export default async function HomeOGImage() {
           </div>
         </div>
 
-        {/* Botón CTA Blanco al 100% del ancho (56px alto, 20px font) */}
+        {/* Botón CTA Blanco al 100% del ancho (640px) */}
         <div
           style={{
             width: "100%",
@@ -188,6 +163,7 @@ export default async function HomeOGImage() {
             fontSize: "20px",
             fontWeight: 700,
             letterSpacing: "0.08em",
+            boxSizing: "border-box",
           }}
         >
           <svg
