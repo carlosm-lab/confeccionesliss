@@ -1,7 +1,7 @@
 ﻿// src/app/(public)/links/opengraph-image.tsx
-// Genera el Open Graph Image para /links en build time (SSG).
-// Layout: split — logo izquierda · 12 iconos en 2 filas de 6 derecha.
-// NOTA: Los SVGs en Satori requieren `fill` como atributo directo, no en style.
+// OG Image para /links — Layout split: logo izq · 12 iconos 2x6 der.
+// Fix: fill como atributo directo (no style) para que Satori lo aplique.
+// Sin linea divisoria. Letter-spacing del URL calibrado para igualar ancho de iconos.
 
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
@@ -9,13 +9,10 @@ import { join } from "node:path";
 
 export const alt = "Redes Sociales Oficiales | Confecciones Liss";
 
-export const size = {
-  width: 1200,
-  height: 630,
-};
-
+export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+// 12 iconos del footer en mismo orden que socialBubbles
 const SOCIAL_ICONS = [
   {
     key: "instagram",
@@ -71,14 +68,19 @@ const ROW_1 = SOCIAL_ICONS.slice(0, 6);
 const ROW_2 = SOCIAL_ICONS.slice(6, 12);
 
 export default async function LinksOGImage() {
-  const logoWhiteData = await readFile(
+  const logoData = await readFile(
     join(process.cwd(), "public", "logo-white.png")
   );
-  const logoBase64 = `data:image/png;base64,${logoWhiteData.toString("base64")}`;
+  const logoSrc = `data:image/png;base64,${logoData.toString("base64")}`;
 
-  const ICON_SIZE = 62;
-  const ICON_GAP = 30;
-  const ICON_FILL = "rgba(255,255,255,0.9)";
+  // Columna derecha: 58% de 1200 = 696px, padding 2x52 = 592px util
+  // 6 iconos x 72px + 5 gaps x 34px = 432 + 170 = 602px aprox
+  const ICON_SIZE = 72;
+  const ICON_GAP = 34;
+  const ICON_FILL = "rgba(255,255,255,0.92)";
+  // URL: "CONFECCIONESLISS.COM/LINKS" = 26 chars, font-size 22px
+  // Para llenar ~602px: letter-spacing ~15px
+  const URL_LETTER_SPACING = "0.62em";
 
   const renderRow = (icons: typeof ROW_1) => (
     <div
@@ -117,7 +119,7 @@ export default async function LinksOGImage() {
         backgroundColor: "#143067",
       }}
     >
-      {/* Columna izquierda: Logo */}
+      {/* Columna izquierda: Logo — sin borde divisor */}
       <div
         style={{
           width: "42%",
@@ -126,16 +128,15 @@ export default async function LinksOGImage() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          borderRight: "1px solid rgba(255,255,255,0.1)",
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={logoBase64}
+          src={logoSrc}
           alt="Confecciones Liss"
-          width={260}
-          height={260}
-          style={{ width: "260px", height: "260px", objectFit: "contain" }}
+          width={290}
+          height={290}
+          style={{ width: "290px", height: "290px", objectFit: "contain" }}
         />
       </div>
 
@@ -151,18 +152,20 @@ export default async function LinksOGImage() {
           padding: "0 52px",
         }}
       >
-        <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "36px" }}>
           {renderRow(ROW_1)}
           {renderRow(ROW_2)}
         </div>
+
+        {/* URL — bold, blanca, letter-spacing calibrado al ancho de iconos */}
         <p
           style={{
-            color: "rgba(255,255,255,0.7)",
-            fontSize: "20px",
+            color: "rgba(255,255,255,0.75)",
+            fontSize: "22px",
             fontWeight: 700,
-            letterSpacing: "0.12em",
+            letterSpacing: URL_LETTER_SPACING,
             textTransform: "uppercase",
-            marginTop: "48px",
+            marginTop: "46px",
             marginBottom: 0,
           }}
         >
