@@ -333,7 +333,7 @@ function UnivTile({
         aria-hidden="true"
       >
         {univ.slug === "unab" || !univ.logo ? (
-          <div className="bg-[#143067]/10 text-[#143067] flex h-10 w-10 items-center justify-center rounded-full">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#143067]/10 text-[#143067]">
             <Icon name="school" className="h-5 w-5" />
           </div>
         ) : (

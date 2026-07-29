@@ -44,7 +44,7 @@ export function UnabWarningModal() {
       />
 
       {/* Tarjeta Modal Principal */}
-      <div className="relative z-[101] w-full max-w-xl overflow-hidden rounded-2xl border border-amber-200/80 bg-white p-6 shadow-2xl transition-all sm:p-8 animate-scale-up">
+      <div className="animate-scale-up relative z-[101] w-full max-w-xl overflow-hidden rounded-2xl border border-amber-200/80 bg-white p-6 shadow-2xl transition-all sm:p-8">
         {/* Cabecera y Badge de Alerta */}
         <div className="mb-5 flex items-center gap-3">
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-800 shadow-inner">
