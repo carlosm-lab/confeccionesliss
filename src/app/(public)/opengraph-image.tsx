@@ -1,5 +1,5 @@
 ﻿// src/app/(public)/opengraph-image.tsx
-// OG Image para / (Home) — Márgenes exteriores idénticos (75px a la izquierda del logo y 75px a la derecha de píldoras/CTA) y titular natural sin justificar.
+// OG Image para / (Home) — Simetría visual de 120px a cada lado (compensa el margen transparente interno del PNG del logo) y titular sin dos puntos.
 
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
@@ -31,7 +31,7 @@ export default async function HomeOGImage() {
     fontMediumBuf.byteOffset + fontMediumBuf.byteLength
   );
 
-  // Estilo de píldora idéntica (52px alto, 20px font, flex: 1)
+  // Píldoras simétricas (52px alto, 19px font, flex: 1)
   const pillStyle = {
     flex: 1,
     height: "52px",
@@ -42,7 +42,7 @@ export default async function HomeOGImage() {
     border: "1.5px solid rgba(255, 255, 255, 0.25)",
     borderRadius: "10px",
     color: "#FFFFFF",
-    fontSize: "20px",
+    fontSize: "19px",
     fontWeight: 600,
     boxSizing: "border-box" as const,
   };
@@ -60,10 +60,10 @@ export default async function HomeOGImage() {
         boxSizing: "border-box",
       }}
     >
-      {/* Columna Izquierda (450px): Logo 300px centrado -> Margen Izquierdo Exterior = 75px */}
+      {/* Columna Izquierda (440px): Logo 330px centrado -> Margen Izquierdo Visible = ~115px */}
       <div
         style={{
-          width: "450px",
+          width: "440px",
           height: "100%",
           display: "flex",
           flexDirection: "column",
@@ -76,42 +76,62 @@ export default async function HomeOGImage() {
         <img
           src={logoSrc}
           alt="Confecciones Liss"
-          width={300}
+          width={330}
           height={330}
-          style={{ width: "300px", height: "300px", objectFit: "contain" }}
+          style={{ width: "330px", height: "330px", objectFit: "contain" }}
         />
       </div>
 
-      {/* Columna Derecha (750px): Padding Derecho = 75px -> Margen Derecho Exterior = 75px (Igual al logo!) */}
+      {/* Columna Derecha (760px): Padding Derecho = 120px -> Margen Derecho Visible = 120px (Simétrico con el logo) */}
       <div
         style={{
-          width: "750px",
+          width: "760px",
           height: "100%",
           display: "flex",
           flexDirection: "column",
           alignItems: "flex-start",
           justifyContent: "center",
-          paddingLeft: "35px",
-          paddingRight: "75px",
+          paddingLeft: "15px",
+          paddingRight: "120px",
           boxSizing: "border-box",
         }}
       >
-        {/* Titular Natural Restaurado */}
+        {/* Titular en 2 líneas SIN dos puntos al final */}
         <div
           style={{
-            color: "#FFFFFF",
-            fontSize: "38px",
-            fontWeight: 700,
-            lineHeight: 1.2,
-            letterSpacing: "-0.015em",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            gap: "4px",
             marginBottom: "26px",
             boxSizing: "border-box",
           }}
         >
-          Scrubs, Uniformes, Ropa e Indumentaria Médica para:
+          <span
+            style={{
+              color: "#FFFFFF",
+              fontSize: "38px",
+              fontWeight: 700,
+              lineHeight: 1.15,
+              whiteSpace: "nowrap",
+            }}
+          >
+            Scrubs, Uniformes, Ropa e
+          </span>
+          <span
+            style={{
+              color: "#FFFFFF",
+              fontSize: "38px",
+              fontWeight: 700,
+              lineHeight: 1.15,
+              whiteSpace: "nowrap",
+            }}
+          >
+            Indumentaria Médica para
+          </span>
         </div>
 
-        {/* 4 Píldoras en 2x2 al 100% del ancho (640px) */}
+        {/* 4 Píldoras en 2x2 alineadas a la derecha con el final del texto del título */}
         <div
           style={{
             width: "100%",
@@ -148,7 +168,7 @@ export default async function HomeOGImage() {
           </div>
         </div>
 
-        {/* Botón CTA Blanco al 100% del ancho (640px) */}
+        {/* Botón CTA Blanco alineado a la derecha con el final del texto del título */}
         <div
           style={{
             width: "100%",
