@@ -1,6 +1,5 @@
 ﻿// src/app/(public)/opengraph-image.tsx
-// OG Image para / (Home) — Layout split 2 columnas (Logo izq · Contenido der).
-// Píldoras en 2x2 para sectores + Botón CTA "VER CATÁLOGO" estilo outline.
+// OG Image para / (Home) — Layout de 2 columnas simétrico, tipografía de alto contraste y grilla equilibrada.
 
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
@@ -32,6 +31,21 @@ export default async function HomeOGImage() {
     fontMediumBuf.byteOffset + fontMediumBuf.byteLength
   );
 
+  // Estilo de píldora simétrica de ancho uniforme (flex: 1)
+  const pillStyle = {
+    flex: 1,
+    height: "52px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.12)",
+    border: "1.5px solid rgba(255, 255, 255, 0.25)",
+    borderRadius: "10px",
+    color: "#FFFFFF",
+    fontSize: "20px",
+    fontWeight: 600,
+  };
+
   return new ImageResponse(
     <div
       style={{
@@ -44,161 +58,115 @@ export default async function HomeOGImage() {
         fontFamily: "Inter",
       }}
     >
-      {/* Columna Izquierda: Logo (42%) */}
+      {/* Columna Izquierda: Logo (38%) */}
       <div
         style={{
-          width: "42%",
+          width: "38%",
           height: "100%",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
+          borderRight: "1px solid rgba(255, 255, 255, 0.12)",
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={logoSrc}
           alt="Confecciones Liss"
-          width={260}
-          height={260}
-          style={{ width: "260px", height: "260px", objectFit: "contain" }}
+          width={310}
+          height={310}
+          style={{ width: "310px", height: "310px", objectFit: "contain" }}
         />
       </div>
 
-      {/* Columna Derecha: Titular + Píldoras + Botón CTA (58%) */}
+      {/* Columna Derecha: Titular + 4 Píldoras Simétricas + Botón CTA Blanco (62%) */}
       <div
         style={{
-          width: "58%",
+          width: "62%",
           height: "100%",
           display: "flex",
           flexDirection: "column",
           alignItems: "flex-start",
           justifyContent: "center",
-          padding: "0 48px",
+          padding: "0 56px",
         }}
       >
-        {/* Titular Principal */}
+        {/* Titular Principal Claro */}
         <div
           style={{
             color: "#FFFFFF",
-            fontSize: "32px",
+            fontSize: "38px",
             fontWeight: 700,
-            lineHeight: 1.25,
-            marginBottom: "24px",
+            lineHeight: 1.2,
+            letterSpacing: "-0.015em",
+            marginBottom: "28px",
           }}
         >
           Scrubs, Uniformes, Ropa e Indumentaria
         </div>
 
-        {/* Subetiqueta para píldoras */}
+        {/* 4 Píldoras de Ancho 100% Simétrico en 2 Filas x 2 Columnas */}
         <div
           style={{
-            color: "rgba(255, 255, 255, 0.65)",
-            fontSize: "14px",
-            fontWeight: 700,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            marginBottom: "14px",
-          }}
-        >
-          PARA:
-        </div>
-
-        {/* 4 Píldoras en 2 filas x 2 columnas */}
-        <div
-          style={{
+            width: "100%",
             display: "flex",
             flexDirection: "column",
-            gap: "12px",
-            marginBottom: "36px",
+            gap: "14px",
+            marginBottom: "32px",
           }}
         >
-          <div style={{ display: "flex", flexDirection: "row", gap: "12px" }}>
-            <div
-              style={{
-                backgroundColor: "rgba(255, 255, 255, 0.08)",
-                border: "1px solid rgba(255, 255, 255, 0.18)",
-                borderRadius: "30px",
-                padding: "8px 20px",
-                color: "#FFFFFF",
-                fontSize: "18px",
-                fontWeight: 500,
-              }}
-            >
-              Hospitales
-            </div>
-            <div
-              style={{
-                backgroundColor: "rgba(255, 255, 255, 0.08)",
-                border: "1px solid rgba(255, 255, 255, 0.18)",
-                borderRadius: "30px",
-                padding: "8px 20px",
-                color: "#FFFFFF",
-                fontSize: "18px",
-                fontWeight: 500,
-              }}
-            >
-              Universidades
-            </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: "14px",
+              width: "100%",
+            }}
+          >
+            <div style={pillStyle}>Hospitales</div>
+            <div style={pillStyle}>Universidades</div>
           </div>
-          <div style={{ display: "flex", flexDirection: "row", gap: "12px" }}>
-            <div
-              style={{
-                backgroundColor: "rgba(255, 255, 255, 0.08)",
-                border: "1px solid rgba(255, 255, 255, 0.18)",
-                borderRadius: "30px",
-                padding: "8px 20px",
-                color: "#FFFFFF",
-                fontSize: "18px",
-                fontWeight: 500,
-              }}
-            >
-              Laboratorios
-            </div>
-            <div
-              style={{
-                backgroundColor: "rgba(255, 255, 255, 0.08)",
-                border: "1px solid rgba(255, 255, 255, 0.18)",
-                borderRadius: "30px",
-                padding: "8px 20px",
-                color: "#FFFFFF",
-                fontSize: "18px",
-                fontWeight: 500,
-              }}
-            >
-              Clínicas & Más
-            </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: "14px",
+              width: "100%",
+            }}
+          >
+            <div style={pillStyle}>Laboratorios</div>
+            <div style={pillStyle}>Clínicas & Más</div>
           </div>
         </div>
 
-        {/* Botón CTA "VER CATÁLOGO" estilo Outline */}
+        {/* Botón CTA Blanco de Alto Impacto */}
         <div
           style={{
+            width: "100%",
+            height: "58px",
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "center",
-            border: "2px solid rgba(255, 255, 255, 0.85)",
-            borderRadius: "10px",
-            padding: "12px 28px",
-            backgroundColor: "rgba(255, 255, 255, 0.06)",
-            color: "#FFFFFF",
-            fontSize: "18px",
+            backgroundColor: "#FFFFFF",
+            borderRadius: "12px",
+            color: "#143067",
+            fontSize: "20px",
             fontWeight: 700,
             letterSpacing: "0.08em",
           }}
         >
-          {/* SVG Bolsa de Compras */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
+            stroke="#143067"
+            strokeWidth="2.5"
             strokeLinecap="round"
             strokeLinejoin="round"
-            width={22}
-            height={22}
+            width={24}
+            height={24}
             style={{ marginRight: "12px" }}
           >
             <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
