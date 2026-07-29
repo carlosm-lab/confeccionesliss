@@ -1,5 +1,5 @@
 ﻿// src/app/(public)/opengraph-image.tsx
-// OG Image para / (Home) — Equilibrio óptico de márgenes exteriores (70px izq / 100px der) y titular sin dos puntos al final.
+// OG Image para / (Home) — Equilibrio de márgenes exteriores (75px izq / 80px der) y titular sin dos puntos al final.
 
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
@@ -57,16 +57,16 @@ export default async function HomeOGImage() {
         alignItems: "center",
         backgroundColor: "#143067",
         fontFamily: "Inter",
-        paddingLeft: "70px",
-        paddingRight: "100px",
+        paddingLeft: "75px",
+        paddingRight: "80px",
         justifyContent: "space-between",
         boxSizing: "border-box",
       }}
     >
-      {/* Columna Izquierda: Logo (320px) -> Margen Izquierdo Exterior = 70px */}
+      {/* Columna Izquierda: Logo (330px) -> Margen Izquierdo Exterior = 75px */}
       <div
         style={{
-          width: "320px",
+          width: "330px",
           height: "100%",
           display: "flex",
           flexDirection: "column",
@@ -79,16 +79,16 @@ export default async function HomeOGImage() {
         <img
           src={logoSrc}
           alt="Confecciones Liss"
-          width={320}
-          height={320}
-          style={{ width: "320px", height: "320px", objectFit: "contain" }}
+          width={330}
+          height={330}
+          style={{ width: "330px", height: "330px", objectFit: "contain" }}
         />
       </div>
 
-      {/* Columna Derecha: Contenido (660px) -> Margen Derecho Exterior = 100px (Equilibrio óptico con el botón CTA blanco) */}
+      {/* Columna Derecha: Contenido (670px) -> Margen Derecho Exterior = 80px */}
       <div
         style={{
-          width: "660px",
+          width: "670px",
           height: "100%",
           display: "flex",
           flexDirection: "column",
@@ -111,7 +111,7 @@ export default async function HomeOGImage() {
           <span
             style={{
               color: "#FFFFFF",
-              fontSize: "38px",
+              fontSize: "39px",
               fontWeight: 700,
               lineHeight: 1.15,
               whiteSpace: "nowrap",
@@ -122,7 +122,7 @@ export default async function HomeOGImage() {
           <span
             style={{
               color: "#FFFFFF",
-              fontSize: "38px",
+              fontSize: "39px",
               fontWeight: 700,
               lineHeight: 1.15,
               whiteSpace: "nowrap",
@@ -132,7 +132,7 @@ export default async function HomeOGImage() {
           </span>
         </div>
 
-        {/* 4 Píldoras en 2x2 al 100% del ancho del bloque derechista (660px) */}
+        {/* 4 Píldoras en 2x2 al 100% del ancho del bloque derechista (670px) */}
         <div
           style={{
             width: "100%",
@@ -169,7 +169,7 @@ export default async function HomeOGImage() {
           </div>
         </div>
 
-        {/* Botón CTA Blanco al 100% del ancho (660px) */}
+        {/* Botón CTA Blanco al 100% del ancho (670px) */}
         <div
           style={{
             width: "100%",
