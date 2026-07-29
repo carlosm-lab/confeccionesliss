@@ -1,15 +1,9 @@
-// src/app/(public)/opengraph-image.tsx
-// OG Image para / (home) — Layout split: logo izq · texto tipografico der.
-// Texto: dos lineas de ancho calibrado para apariencia justificada.
-// Separadores centrados (U+00B7 middle dot) como en la descripcion visible de /links.
-
+﻿// src/app/(public)/opengraph-image.tsx
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
-export const alt =
-  "Confecciones Liss - Uniformes, Scrubs y Ropa para Hospitales, Laboratorios, Clinicas, Universidades y Mas";
-
+export const alt = "Confecciones Liss - Líder en Diseño y Confección";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -19,14 +13,12 @@ export default async function HomeOGImage() {
   );
   const logoSrc = `data:image/png;base64,${logoData.toString("base64")}`;
 
-  // Columna derecha disponible: 58% de 1200 = 696px, padding 2x52 = 592px util
-  // Linea 1 (mas corta):  "Uniformes, Scrubs, Ropa e Indumentaria Para"  ~43 chars
-  // Linea 2 (mas larga): "Hospitales · Laboratorios · Clinicas · Universidades & Mas" ~58 chars
-  //
-  // Estrategia: font-size diferente por linea + letter-spacing para igualar anchos.
-  // Linea 1 usa font mas grande (38px) + letter-spacing para alcanzar el ancho de linea 2.
-  // Linea 2 usa font base (30px) con letter-spacing normal.
-  // Separadores · (U+00B7) centrados verticalmente — igual a los de /links description.
+  const fontBold = await readFile(
+    join(process.cwd(), "public", "fonts", "Inter-Bold.ttf")
+  );
+  const fontMedium = await readFile(
+    join(process.cwd(), "public", "fonts", "Inter-Medium.ttf")
+  );
 
   return new ImageResponse(
     <div
@@ -34,114 +26,125 @@ export default async function HomeOGImage() {
         width: "100%",
         height: "100%",
         display: "flex",
-        flexDirection: "row",
+        flexDirection: "column",
         alignItems: "center",
+        justifyContent: "center",
         backgroundColor: "#143067",
+        padding: "60px 80px",
+        textAlign: "center",
+        fontFamily: "Inter",
       }}
     >
-      {/* Columna izquierda: Logo */}
+      {/* Logo centrado arriba */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={logoSrc}
+        alt="Confecciones Liss"
+        width={170}
+        height={170}
+        style={{
+          width: "170px",
+          height: "170px",
+          objectFit: "contain",
+          marginBottom: "32px",
+        }}
+      />
+
+      {/* Título Principal Legible */}
       <div
         style={{
-          width: "42%",
-          height: "100%",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
+          gap: "6px",
+          marginBottom: "24px",
         }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={logoSrc}
-          alt="Confecciones Liss"
-          width={290}
-          height={290}
-          style={{ width: "290px", height: "290px", objectFit: "contain" }}
-        />
+        <span
+          style={{
+            color: "#FFFFFF",
+            fontSize: "36px",
+            fontWeight: 700,
+            letterSpacing: "-0.01em",
+            lineHeight: 1.2,
+          }}
+        >
+          Uniformes, Scrubs, Ropa e Indumentaria
+        </span>
+        <span
+          style={{
+            color: "rgba(255, 255, 255, 0.85)",
+            fontSize: "24px",
+            fontWeight: 500,
+            letterSpacing: "0.05em",
+            textTransform: "uppercase",
+          }}
+        >
+          Para
+        </span>
       </div>
 
-      {/* Columna derecha: Texto tipografico */}
+      {/* Categorías con Viñetas Centradoras Legibles */}
       <div
         style={{
-          width: "58%",
-          height: "100%",
           display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
+          flexDirection: "row",
+          alignItems: "center",
           justifyContent: "center",
-          padding: "0 52px",
-          gap: "0px",
+          gap: "16px",
+          backgroundColor: "rgba(255, 255, 255, 0.08)",
+          padding: "14px 28px",
+          borderRadius: "50px",
+          border: "1px solid rgba(255, 255, 255, 0.15)",
+          marginBottom: "36px",
         }}
       >
-        {/* Linea 1 — font mayor + letter-spacing calibrado para igualar ancho de linea 2 */}
-        <p
-          style={{
-            color: "rgba(255,255,255,0.95)",
-            fontSize: "32px",
-            fontWeight: 700,
-            letterSpacing: "0.09em",
-            textTransform: "uppercase",
-            margin: 0,
-            lineHeight: 1.2,
-            marginBottom: "26px",
-          }}
-        >
-          Uniformes, Scrubs, Ropa e Indumentaria Para
-        </p>
-
-        {/* Separador decorativo */}
-        <div
-          style={{
-            width: "48px",
-            height: "3px",
-            backgroundColor: "rgba(255,255,255,0.3)",
-            borderRadius: "2px",
-            marginBottom: "28px",
-          }}
-        />
-
-        {/* Linea 2 — sectores con separadores · centrados (middle dot U+00B7) */}
-        <p
-          style={{
-            color: "rgba(255,255,255,0.72)",
-            fontSize: "25px",
-            fontWeight: 500,
-            letterSpacing: "0.025em",
-            margin: 0,
-            lineHeight: 1.3,
-          }}
-        >
-          Hospitales · Laboratorios · Clínicas
-        </p>
-        <p
-          style={{
-            color: "rgba(255,255,255,0.72)",
-            fontSize: "25px",
-            fontWeight: 500,
-            letterSpacing: "0.025em",
-            margin: 0,
-            lineHeight: 1.3,
-          }}
-        >
+        <span style={{ color: "#FFFFFF", fontSize: "20px", fontWeight: 500 }}>
+          Hospitales
+        </span>
+        <span style={{ color: "#60A5FA", fontSize: "20px" }}>•</span>
+        <span style={{ color: "#FFFFFF", fontSize: "20px", fontWeight: 500 }}>
+          Laboratorios
+        </span>
+        <span style={{ color: "#60A5FA", fontSize: "20px" }}>•</span>
+        <span style={{ color: "#FFFFFF", fontSize: "20px", fontWeight: 500 }}>
+          Clínicas
+        </span>
+        <span style={{ color: "#60A5FA", fontSize: "20px" }}>•</span>
+        <span style={{ color: "#FFFFFF", fontSize: "20px", fontWeight: 500 }}>
           Universidades & Más
-        </p>
-
-        {/* URL — bold, blanca */}
-        <p
-          style={{
-            color: "rgba(255,255,255,0.45)",
-            fontSize: "16px",
-            fontWeight: 700,
-            letterSpacing: "0.18em",
-            textTransform: "uppercase",
-            marginTop: "40px",
-            marginBottom: 0,
-          }}
-        >
-          confeccionesliss.com
-        </p>
+        </span>
       </div>
+
+      {/* Footer / URL */}
+      <span
+        style={{
+          color: "rgba(255, 255, 255, 0.5)",
+          fontSize: "16px",
+          fontWeight: 700,
+          letterSpacing: "0.15em",
+          textTransform: "uppercase",
+        }}
+      >
+        confeccionesliss.com
+      </span>
     </div>,
-    { ...size }
+    {
+      ...size,
+      fonts: [
+        {
+          name: "Inter",
+          data: fontBold,
+          style: "normal",
+          weight: 700,
+        },
+        {
+          name: "Inter",
+          data: fontMedium,
+          style: "normal",
+          weight: 500,
+        },
+      ],
+    }
   );
 }
