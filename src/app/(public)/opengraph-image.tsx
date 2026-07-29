@@ -1,5 +1,5 @@
 ﻿// src/app/(public)/opengraph-image.tsx
-// OG Image para / (Home) — Simetría visual de 120px a cada lado (compensa el margen transparente interno del PNG del logo) y titular sin dos puntos.
+// OG Image para / (Home) — Matriz matemática simétrica perfecta de 75px (75px margen izq, 75px espacio central, 75px margen der).
 
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
@@ -31,7 +31,7 @@ export default async function HomeOGImage() {
     fontMediumBuf.byteOffset + fontMediumBuf.byteLength
   );
 
-  // Píldoras simétricas (52px alto, 19px font, flex: 1)
+  // Estilo de píldora simétrica (52px alto, 20px font, flex: 1)
   const pillStyle = {
     flex: 1,
     height: "52px",
@@ -42,7 +42,7 @@ export default async function HomeOGImage() {
     border: "1.5px solid rgba(255, 255, 255, 0.25)",
     borderRadius: "10px",
     color: "#FFFFFF",
-    fontSize: "19px",
+    fontSize: "20px",
     fontWeight: 600,
     boxSizing: "border-box" as const,
   };
@@ -57,13 +57,16 @@ export default async function HomeOGImage() {
         alignItems: "center",
         backgroundColor: "#143067",
         fontFamily: "Inter",
+        paddingLeft: "75px",
+        paddingRight: "75px",
+        justifyContent: "space-between",
         boxSizing: "border-box",
       }}
     >
-      {/* Columna Izquierda (440px): Logo 330px centrado -> Margen Izquierdo Visible = ~115px */}
+      {/* Columna Izquierda: Logo (300px) -> Margen Izquierdo Exterior = 75px */}
       <div
         style={{
-          width: "440px",
+          width: "300px",
           height: "100%",
           display: "flex",
           flexDirection: "column",
@@ -76,23 +79,21 @@ export default async function HomeOGImage() {
         <img
           src={logoSrc}
           alt="Confecciones Liss"
-          width={330}
-          height={330}
-          style={{ width: "330px", height: "330px", objectFit: "contain" }}
+          width={300}
+          height={300}
+          style={{ width: "300px", height: "300px", objectFit: "contain" }}
         />
       </div>
 
-      {/* Columna Derecha (760px): Padding Derecho = 120px -> Margen Derecho Visible = 120px (Simétrico con el logo) */}
+      {/* Columna Derecha: Contenido (675px) -> Espacio Central = 75px, Margen Derecho Exterior = 75px */}
       <div
         style={{
-          width: "760px",
+          width: "675px",
           height: "100%",
           display: "flex",
           flexDirection: "column",
           alignItems: "flex-start",
           justifyContent: "center",
-          paddingLeft: "15px",
-          paddingRight: "120px",
           boxSizing: "border-box",
         }}
       >
@@ -110,7 +111,7 @@ export default async function HomeOGImage() {
           <span
             style={{
               color: "#FFFFFF",
-              fontSize: "38px",
+              fontSize: "39px",
               fontWeight: 700,
               lineHeight: 1.15,
               whiteSpace: "nowrap",
@@ -121,7 +122,7 @@ export default async function HomeOGImage() {
           <span
             style={{
               color: "#FFFFFF",
-              fontSize: "38px",
+              fontSize: "39px",
               fontWeight: 700,
               lineHeight: 1.15,
               whiteSpace: "nowrap",
@@ -131,7 +132,7 @@ export default async function HomeOGImage() {
           </span>
         </div>
 
-        {/* 4 Píldoras en 2x2 alineadas a la derecha con el final del texto del título */}
+        {/* 4 Píldoras en 2x2 al 100% del ancho (675px) */}
         <div
           style={{
             width: "100%",
@@ -168,7 +169,7 @@ export default async function HomeOGImage() {
           </div>
         </div>
 
-        {/* Botón CTA Blanco alineado a la derecha con el final del texto del título */}
+        {/* Botón CTA Blanco al 100% del ancho (675px) */}
         <div
           style={{
             width: "100%",
