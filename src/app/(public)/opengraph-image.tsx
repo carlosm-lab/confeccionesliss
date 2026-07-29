@@ -1,5 +1,5 @@
 ﻿// src/app/(public)/opengraph-image.tsx
-// OG Image para / (Home) — Layout 2 columnas simétrico con logo +10% y titular expandido.
+// OG Image para / (Home) — Título grande de alto impacto (40px) sin alterar márgenes o píldoras.
 
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
@@ -31,10 +31,10 @@ export default async function HomeOGImage() {
     fontMediumBuf.byteOffset + fontMediumBuf.byteLength
   );
 
-  // Estilo de píldora simétrica de ancho uniforme (flex: 1)
+  // Píldora flex de ancho simétrico
   const pillStyle = {
     flex: 1,
-    height: "52px",
+    height: "50px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -42,7 +42,7 @@ export default async function HomeOGImage() {
     border: "1.5px solid rgba(255, 255, 255, 0.25)",
     borderRadius: "10px",
     color: "#FFFFFF",
-    fontSize: "20px",
+    fontSize: "19px",
     fontWeight: 600,
   };
 
@@ -58,7 +58,7 @@ export default async function HomeOGImage() {
         fontFamily: "Inter",
       }}
     >
-      {/* Columna Izquierda: Logo (+10% -> 330px) */}
+      {/* Columna Izquierda: Logo 330px centrado en 40% */}
       <div
         style={{
           width: "40%",
@@ -67,7 +67,6 @@ export default async function HomeOGImage() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          borderRight: "1px solid rgba(255, 255, 255, 0.12)",
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -80,7 +79,7 @@ export default async function HomeOGImage() {
         />
       </div>
 
-      {/* Columna Derecha: Titular + 4 Píldoras Simétricas + Botón CTA Blanco */}
+      {/* Columna Derecha: Margen simétrico de 75px a la derecha */}
       <div
         style={{
           width: "60%",
@@ -89,31 +88,31 @@ export default async function HomeOGImage() {
           flexDirection: "column",
           alignItems: "flex-start",
           justifyContent: "center",
-          padding: "0 48px",
+          padding: "0 75px 0 20px",
         }}
       >
-        {/* Titular Principal con "Médica para:" */}
+        {/* Titular Principal en 40px */}
         <div
           style={{
             color: "#FFFFFF",
-            fontSize: "36px",
+            fontSize: "40px",
             fontWeight: 700,
-            lineHeight: 1.2,
-            letterSpacing: "-0.015em",
+            lineHeight: 1.15,
+            letterSpacing: "-0.02em",
             marginBottom: "26px",
           }}
         >
           Scrubs, Uniformes, Ropa e Indumentaria Médica para:
         </div>
 
-        {/* 4 Píldoras de Ancho 100% Simétrico en 2 Filas x 2 Columnas */}
+        {/* 4 Píldoras con ancho simétrico */}
         <div
           style={{
             width: "100%",
             display: "flex",
             flexDirection: "column",
             gap: "14px",
-            marginBottom: "32px",
+            marginBottom: "30px",
           }}
         >
           <div
@@ -140,7 +139,7 @@ export default async function HomeOGImage() {
           </div>
         </div>
 
-        {/* Botón CTA Blanco de Alto Impacto */}
+        {/* Botón CTA Blanco alineado */}
         <div
           style={{
             width: "100%",
