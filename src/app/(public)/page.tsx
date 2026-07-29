@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Scrubs y Uniformes Médicos en San Miguel, El Salvador | Liss",
+    title: "Scrubs y Uniformes Médicos En El Salvador | Confecciones Liss",
     description:
       "Empresa de uniformes médicos y universitarios en San Miguel, El Salvador. Scrubs, uniformes para IEPROES, UNIVO, UNAB, UGB, UES y UMA. Desde $35.",
     creator: siteConfig.twitterHandle,

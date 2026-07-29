@@ -1,5 +1,5 @@
 ﻿// src/app/(public)/opengraph-image.tsx
-// OG Image para / (Home) — Márgenes simétricos de 75px en ambos extremos, sin dos puntos en "para", titular 42px y píldoras 52px idénticas.
+// OG Image para / (Home) — Márgenes simétricos de 75px, píldoras y CTA restauradas, titular 44px alineado 100% al ancho exacto.
 
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
@@ -31,7 +31,7 @@ export default async function HomeOGImage() {
     fontMediumBuf.byteOffset + fontMediumBuf.byteLength
   );
 
-  // Estilo de píldora idéntica (52px alto, 20px font, flex: 1)
+  // Píldora simétrica restaurada (52px alto, 20px font, flex: 1)
   const pillStyle = {
     flex: 1,
     height: "52px",
@@ -91,7 +91,7 @@ export default async function HomeOGImage() {
           padding: "0 75px 0 15px",
         }}
       >
-        {/* Titular en 42px sin dos puntos, extendiéndose hasta x = 1125px (alineado flush a la derecha con píldoras) */}
+        {/* Titular en 44px sin dos puntos, extendiéndose hasta x = 1125px (alineado flush a la derecha con píldoras) */}
         <div
           style={{
             width: "100%",
@@ -103,10 +103,10 @@ export default async function HomeOGImage() {
           <span
             style={{
               color: "#FFFFFF",
-              fontSize: "42px",
+              fontSize: "44px",
               fontWeight: 700,
               lineHeight: 1.15,
-              letterSpacing: "-0.02em",
+              letterSpacing: "-0.025em",
               whiteSpace: "nowrap",
             }}
           >
@@ -115,10 +115,10 @@ export default async function HomeOGImage() {
           <span
             style={{
               color: "#FFFFFF",
-              fontSize: "42px",
+              fontSize: "44px",
               fontWeight: 700,
               lineHeight: 1.15,
-              letterSpacing: "0.015em",
+              letterSpacing: "0.045em",
               whiteSpace: "nowrap",
             }}
           >
