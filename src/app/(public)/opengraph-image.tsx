@@ -1,5 +1,5 @@
 ﻿// src/app/(public)/opengraph-image.tsx
-// OG Image para / (Home) — Márgenes simétricos exactos de 65px (Logo de 330px a la izquierda, bloque de contenido de 690px a la derecha).
+// OG Image para / (Home) — Márgenes laterales idénticos (75px), píldoras (50px) y CTA (56px) restaurados, titular de 40px adaptado exactamente al ancho sin dos puntos.
 
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
@@ -31,10 +31,10 @@ export default async function HomeOGImage() {
     fontMediumBuf.byteOffset + fontMediumBuf.byteLength
   );
 
-  // Píldoras idénticas (52px alto, 20px font, flex: 1)
+  // Estilo de píldora restaurado (50px alto, 19px font, flex: 1)
   const pillStyle = {
     flex: 1,
-    height: "52px",
+    height: "50px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -42,37 +42,31 @@ export default async function HomeOGImage() {
     border: "1.5px solid rgba(255, 255, 255, 0.25)",
     borderRadius: "10px",
     color: "#FFFFFF",
-    fontSize: "20px",
+    fontSize: "19px",
     fontWeight: 600,
-    boxSizing: "border-box" as const,
   };
 
   return new ImageResponse(
     <div
       style={{
-        width: "1200px",
-        height: "630px",
+        width: "100%",
+        height: "100%",
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
         backgroundColor: "#143067",
         fontFamily: "Inter",
-        paddingLeft: "65px",
-        paddingRight: "65px",
-        justifyContent: "space-between",
-        boxSizing: "border-box",
       }}
     >
-      {/* Columna Izquierda: Logo (330px) -> Margen Izquierdo Exterior = 65px */}
+      {/* Columna Izquierda: Logo 330px centrado en 40% (margen izquierdo exterior = 75px) */}
       <div
         style={{
-          width: "330px",
+          width: "40%",
           height: "100%",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          boxSizing: "border-box",
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -85,27 +79,25 @@ export default async function HomeOGImage() {
         />
       </div>
 
-      {/* Columna Derecha: Contenido (690px) -> Margen Derecho Exterior = 65px */}
+      {/* Columna Derecha: Margen derecho exterior = 75px (idéntico al margen del logo) */}
       <div
         style={{
-          width: "690px",
+          width: "60%",
           height: "100%",
           display: "flex",
           flexDirection: "column",
           alignItems: "flex-start",
           justifyContent: "center",
-          boxSizing: "border-box",
+          padding: "0 75px 0 25px",
         }}
       >
-        {/* Titular en 2 líneas SIN dos puntos al final */}
+        {/* Titular en 40px adaptado exactamente al ancho del contenedor de píldoras (SIN dos puntos) */}
         <div
           style={{
             width: "100%",
             display: "flex",
             flexDirection: "column",
-            gap: "4px",
             marginBottom: "26px",
-            boxSizing: "border-box",
           }}
         >
           <span
@@ -114,6 +106,7 @@ export default async function HomeOGImage() {
               fontSize: "40px",
               fontWeight: 700,
               lineHeight: 1.15,
+              letterSpacing: "-0.025em",
               whiteSpace: "nowrap",
             }}
           >
@@ -125,6 +118,7 @@ export default async function HomeOGImage() {
               fontSize: "40px",
               fontWeight: 700,
               lineHeight: 1.15,
+              letterSpacing: "0.005em",
               whiteSpace: "nowrap",
             }}
           >
@@ -132,15 +126,14 @@ export default async function HomeOGImage() {
           </span>
         </div>
 
-        {/* 4 Píldoras en 2x2 al 100% del ancho del bloque derechista (690px) */}
+        {/* 4 Píldoras en 2x2 al 100% del ancho del contenedor */}
         <div
           style={{
             width: "100%",
             display: "flex",
             flexDirection: "column",
             gap: "14px",
-            marginBottom: "32px",
-            boxSizing: "border-box",
+            marginBottom: "30px",
           }}
         >
           <div
@@ -149,7 +142,6 @@ export default async function HomeOGImage() {
               flexDirection: "row",
               gap: "14px",
               width: "100%",
-              boxSizing: "border-box",
             }}
           >
             <div style={pillStyle}>Hospitales</div>
@@ -161,7 +153,6 @@ export default async function HomeOGImage() {
               flexDirection: "row",
               gap: "14px",
               width: "100%",
-              boxSizing: "border-box",
             }}
           >
             <div style={pillStyle}>Laboratorios</div>
@@ -169,7 +160,7 @@ export default async function HomeOGImage() {
           </div>
         </div>
 
-        {/* Botón CTA Blanco al 100% del ancho (690px) */}
+        {/* Botón CTA Blanco al 100% del ancho (56px alto, 20px font) */}
         <div
           style={{
             width: "100%",
@@ -184,7 +175,6 @@ export default async function HomeOGImage() {
             fontSize: "20px",
             fontWeight: 700,
             letterSpacing: "0.08em",
-            boxSizing: "border-box",
           }}
         >
           <svg
