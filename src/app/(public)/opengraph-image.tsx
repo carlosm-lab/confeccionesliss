@@ -1,5 +1,5 @@
 ﻿// src/app/(public)/opengraph-image.tsx
-// OG Image para / (Home) — Título grande de alto impacto (40px) sin alterar márgenes o píldoras.
+// OG Image para / (Home) — Alineación perfecta a la izquierda y derecha del bloque completo (Título, Píldoras y CTA en 474px exactos).
 
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
@@ -31,7 +31,7 @@ export default async function HomeOGImage() {
     fontMediumBuf.byteOffset + fontMediumBuf.byteLength
   );
 
-  // Píldora flex de ancho simétrico
+  // Estilo de píldora simétrica (ancho uniforme)
   const pillStyle = {
     flex: 1,
     height: "50px",
@@ -45,6 +45,8 @@ export default async function HomeOGImage() {
     fontSize: "19px",
     fontWeight: 600,
   };
+
+  const BOX_WIDTH = "474px";
 
   return new ImageResponse(
     <div
@@ -79,7 +81,7 @@ export default async function HomeOGImage() {
         />
       </div>
 
-      {/* Columna Derecha: Margen simétrico de 75px a la derecha */}
+      {/* Columna Derecha (60%) */}
       <div
         style={{
           width: "60%",
@@ -88,91 +90,122 @@ export default async function HomeOGImage() {
           flexDirection: "column",
           alignItems: "flex-start",
           justifyContent: "center",
-          padding: "0 75px 0 20px",
+          padding: "0 65px 0 20px",
         }}
       >
-        {/* Titular Principal en 40px */}
+        {/* Contenedor estricto de 474px: Titular, Píldoras y CTA alineados al milímetro a izquierda y derecha */}
         <div
           style={{
-            color: "#FFFFFF",
-            fontSize: "40px",
-            fontWeight: 700,
-            lineHeight: 1.15,
-            letterSpacing: "-0.02em",
-            marginBottom: "26px",
-          }}
-        >
-          Scrubs, Uniformes, Ropa e Indumentaria Médica para:
-        </div>
-
-        {/* 4 Píldoras con ancho simétrico */}
-        <div
-          style={{
-            width: "100%",
+            width: BOX_WIDTH,
             display: "flex",
             flexDirection: "column",
-            gap: "14px",
-            marginBottom: "30px",
+            alignItems: "flex-start",
           }}
         >
+          {/* Titular en 2 líneas de igual ancho justo al borde de 474px */}
           <div
             style={{
-              display: "flex",
-              flexDirection: "row",
-              gap: "14px",
               width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              marginBottom: "26px",
             }}
           >
-            <div style={pillStyle}>Hospitales</div>
-            <div style={pillStyle}>Universidades</div>
+            <span
+              style={{
+                color: "#FFFFFF",
+                fontSize: "33px",
+                fontWeight: 700,
+                lineHeight: 1.15,
+                letterSpacing: "-0.015em",
+                whiteSpace: "nowrap",
+              }}
+            >
+              Scrubs, Uniformes, Ropa e
+            </span>
+            <span
+              style={{
+                color: "#FFFFFF",
+                fontSize: "33px",
+                fontWeight: 700,
+                lineHeight: 1.15,
+                letterSpacing: "0.01em",
+                whiteSpace: "nowrap",
+              }}
+            >
+              Indumentaria Médica para:
+            </span>
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              gap: "14px",
-              width: "100%",
-            }}
-          >
-            <div style={pillStyle}>Laboratorios</div>
-            <div style={pillStyle}>Clínicas & Más</div>
-          </div>
-        </div>
 
-        {/* Botón CTA Blanco alineado */}
-        <div
-          style={{
-            width: "100%",
-            height: "56px",
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "#FFFFFF",
-            borderRadius: "12px",
-            color: "#143067",
-            fontSize: "20px",
-            fontWeight: 700,
-            letterSpacing: "0.08em",
-          }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#143067"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            width={24}
-            height={24}
-            style={{ marginRight: "12px" }}
+          {/* 4 Píldoras en 2x2 abarcando exactamente 474px */}
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              gap: "14px",
+              marginBottom: "30px",
+            }}
           >
-            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <path d="M16 10a4 4 0 01-8 0" />
-          </svg>
-          <span>VER CATÁLOGO</span>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                gap: "14px",
+                width: "100%",
+              }}
+            >
+              <div style={pillStyle}>Hospitales</div>
+              <div style={pillStyle}>Universidades</div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                gap: "14px",
+                width: "100%",
+              }}
+            >
+              <div style={pillStyle}>Laboratorios</div>
+              <div style={pillStyle}>Clínicas & Más</div>
+            </div>
+          </div>
+
+          {/* Botón CTA Blanco abarcando exactamente 474px */}
+          <div
+            style={{
+              width: "100%",
+              height: "56px",
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "#FFFFFF",
+              borderRadius: "12px",
+              color: "#143067",
+              fontSize: "20px",
+              fontWeight: 700,
+              letterSpacing: "0.08em",
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#143067"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              width={24}
+              height={24}
+              style={{ marginRight: "12px" }}
+            >
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <path d="M16 10a4 4 0 01-8 0" />
+            </svg>
+            <span>VER CATÁLOGO</span>
+          </div>
         </div>
       </div>
     </div>,
