@@ -1,5 +1,5 @@
 ﻿// src/app/(public)/opengraph-image.tsx
-// OG Image para / (Home) — Márgenes laterales idénticos (75px), píldoras (50px) y CTA (56px) restaurados, titular de 40px adaptado exactamente al ancho.
+// OG Image para / (Home) — Márgenes simétricos de 75px en ambos extremos, sin dos puntos en "para", titular 42px y píldoras 52px idénticas.
 
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
@@ -31,10 +31,10 @@ export default async function HomeOGImage() {
     fontMediumBuf.byteOffset + fontMediumBuf.byteLength
   );
 
-  // Estilo de píldora restaurado (50px alto, 19px font, flex: 1)
+  // Estilo de píldora idéntica (52px alto, 20px font, flex: 1)
   const pillStyle = {
     flex: 1,
-    height: "50px",
+    height: "52px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -42,7 +42,7 @@ export default async function HomeOGImage() {
     border: "1.5px solid rgba(255, 255, 255, 0.25)",
     borderRadius: "10px",
     color: "#FFFFFF",
-    fontSize: "19px",
+    fontSize: "20px",
     fontWeight: 600,
   };
 
@@ -88,10 +88,10 @@ export default async function HomeOGImage() {
           flexDirection: "column",
           alignItems: "flex-start",
           justifyContent: "center",
-          padding: "0 75px 0 25px",
+          padding: "0 75px 0 15px",
         }}
       >
-        {/* Titular en 40px adaptado exactamente al ancho del contenedor de píldoras */}
+        {/* Titular en 42px sin dos puntos, extendiéndose hasta x = 1125px (alineado flush a la derecha con píldoras) */}
         <div
           style={{
             width: "100%",
@@ -103,10 +103,10 @@ export default async function HomeOGImage() {
           <span
             style={{
               color: "#FFFFFF",
-              fontSize: "40px",
+              fontSize: "42px",
               fontWeight: 700,
               lineHeight: 1.15,
-              letterSpacing: "-0.025em",
+              letterSpacing: "-0.02em",
               whiteSpace: "nowrap",
             }}
           >
@@ -115,14 +115,14 @@ export default async function HomeOGImage() {
           <span
             style={{
               color: "#FFFFFF",
-              fontSize: "40px",
+              fontSize: "42px",
               fontWeight: 700,
               lineHeight: 1.15,
-              letterSpacing: "0.005em",
+              letterSpacing: "0.015em",
               whiteSpace: "nowrap",
             }}
           >
-            Indumentaria Médica para:
+            Indumentaria Médica para
           </span>
         </div>
 
@@ -133,7 +133,7 @@ export default async function HomeOGImage() {
             display: "flex",
             flexDirection: "column",
             gap: "14px",
-            marginBottom: "30px",
+            marginBottom: "32px",
           }}
         >
           <div
