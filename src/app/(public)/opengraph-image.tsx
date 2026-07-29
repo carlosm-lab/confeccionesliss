@@ -1,5 +1,5 @@
 ﻿// src/app/(public)/opengraph-image.tsx
-// OG Image para / (Home) — Márgenes simétricos de 75px, píldoras y CTA restauradas, titular 44px alineado 100% al ancho exacto.
+// OG Image para / (Home) — Alineación Justificada estricta mediante flex space-between en palabras del titular.
 
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
@@ -31,7 +31,7 @@ export default async function HomeOGImage() {
     fontMediumBuf.byteOffset + fontMediumBuf.byteLength
   );
 
-  // Píldora simétrica restaurada (52px alto, 20px font, flex: 1)
+  // Estilo de píldora idéntica (52px alto, 20px font, flex: 1)
   const pillStyle = {
     flex: 1,
     height: "52px",
@@ -91,39 +91,52 @@ export default async function HomeOGImage() {
           padding: "0 75px 0 15px",
         }}
       >
-        {/* Titular en 44px sin dos puntos, extendiéndose hasta x = 1125px (alineado flush a la derecha con píldoras) */}
+        {/* Titular mediante flex space-between: fuerza a ambas líneas a iniciar y terminar en los bordes exactos del 100% de la columna */}
         <div
           style={{
             width: "100%",
             display: "flex",
             flexDirection: "column",
+            gap: "6px",
             marginBottom: "26px",
           }}
         >
-          <span
+          {/* Línea 1 Justificada de Borde a Borde */}
+          <div
             style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
               color: "#FFFFFF",
-              fontSize: "44px",
+              fontSize: "40px",
               fontWeight: 700,
-              lineHeight: 1.15,
-              letterSpacing: "-0.025em",
-              whiteSpace: "nowrap",
             }}
           >
-            Scrubs, Uniformes, Ropa e
-          </span>
-          <span
+            <span>Scrubs,</span>
+            <span>Uniformes,</span>
+            <span>Ropa</span>
+            <span>e</span>
+          </div>
+
+          {/* Línea 2 Justificada de Borde a Borde (sin dos puntos) */}
+          <div
             style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
               color: "#FFFFFF",
-              fontSize: "44px",
+              fontSize: "40px",
               fontWeight: 700,
-              lineHeight: 1.15,
-              letterSpacing: "0.045em",
-              whiteSpace: "nowrap",
             }}
           >
-            Indumentaria Médica para
-          </span>
+            <span>Indumentaria</span>
+            <span>Médica</span>
+            <span>para</span>
+          </div>
         </div>
 
         {/* 4 Píldoras en 2x2 al 100% del ancho del contenedor */}
