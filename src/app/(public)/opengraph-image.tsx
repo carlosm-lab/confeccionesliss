@@ -1,5 +1,5 @@
 ﻿// src/app/(public)/opengraph-image.tsx
-// OG Image para / (Home) — Píldoras y CTA restaurados al 100% del tamaño original + Titular ampliado a 44px alineado exactamente a los bordes.
+// OG Image para / (Home) — Márgenes laterales idénticos (75px), píldoras (50px) y CTA (56px) restaurados, titular de 40px adaptado exactamente al ancho.
 
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
@@ -31,10 +31,10 @@ export default async function HomeOGImage() {
     fontMediumBuf.byteOffset + fontMediumBuf.byteLength
   );
 
-  // Estilo de píldora restaurado al 100% del tamaño deseado (52px alto, 20px font)
+  // Estilo de píldora restaurado (50px alto, 19px font, flex: 1)
   const pillStyle = {
     flex: 1,
-    height: "52px",
+    height: "50px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -42,7 +42,7 @@ export default async function HomeOGImage() {
     border: "1.5px solid rgba(255, 255, 255, 0.25)",
     borderRadius: "10px",
     color: "#FFFFFF",
-    fontSize: "20px",
+    fontSize: "19px",
     fontWeight: 600,
   };
 
@@ -58,7 +58,7 @@ export default async function HomeOGImage() {
         fontFamily: "Inter",
       }}
     >
-      {/* Columna Izquierda: Logo 330px centrado en 40% */}
+      {/* Columna Izquierda: Logo 330px centrado en 40% (margen izquierdo exterior = 75px) */}
       <div
         style={{
           width: "40%",
@@ -79,7 +79,7 @@ export default async function HomeOGImage() {
         />
       </div>
 
-      {/* Columna Derecha: Restaurada a padding 0 48px */}
+      {/* Columna Derecha: Margen derecho exterior = 75px (idéntico al margen del logo) */}
       <div
         style={{
           width: "60%",
@@ -88,10 +88,10 @@ export default async function HomeOGImage() {
           flexDirection: "column",
           alignItems: "flex-start",
           justifyContent: "center",
-          padding: "0 48px",
+          padding: "0 75px 0 25px",
         }}
       >
-        {/* Titular ampliado a 44px para cubrir exactamente el mismo ancho de 624px de las píldoras grandes */}
+        {/* Titular en 40px adaptado exactamente al ancho del contenedor de píldoras */}
         <div
           style={{
             width: "100%",
@@ -103,10 +103,10 @@ export default async function HomeOGImage() {
           <span
             style={{
               color: "#FFFFFF",
-              fontSize: "44px",
+              fontSize: "40px",
               fontWeight: 700,
               lineHeight: 1.15,
-              letterSpacing: "-0.02em",
+              letterSpacing: "-0.025em",
               whiteSpace: "nowrap",
             }}
           >
@@ -115,10 +115,10 @@ export default async function HomeOGImage() {
           <span
             style={{
               color: "#FFFFFF",
-              fontSize: "44px",
+              fontSize: "40px",
               fontWeight: 700,
               lineHeight: 1.15,
-              letterSpacing: "0.008em",
+              letterSpacing: "0.005em",
               whiteSpace: "nowrap",
             }}
           >
@@ -126,14 +126,14 @@ export default async function HomeOGImage() {
           </span>
         </div>
 
-        {/* 4 Píldoras Restauradas al Tamaño Grande Original en 2x2 */}
+        {/* 4 Píldoras en 2x2 al 100% del ancho del contenedor */}
         <div
           style={{
             width: "100%",
             display: "flex",
             flexDirection: "column",
             gap: "14px",
-            marginBottom: "32px",
+            marginBottom: "30px",
           }}
         >
           <div
@@ -160,7 +160,7 @@ export default async function HomeOGImage() {
           </div>
         </div>
 
-        {/* Botón CTA Blanco Restaurado al Ancho Completo (100%) */}
+        {/* Botón CTA Blanco al 100% del ancho (56px alto, 20px font) */}
         <div
           style={{
             width: "100%",
