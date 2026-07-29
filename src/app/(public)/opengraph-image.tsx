@@ -8,16 +8,25 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function HomeOGImage() {
-  const logoData = await readFile(
+  const logoBuf = await readFile(
     join(process.cwd(), "public", "logo-white.png")
   );
-  const logoSrc = `data:image/png;base64,${logoData.toString("base64")}`;
+  const logoSrc = `data:image/png;base64,${logoBuf.toString("base64")}`;
 
-  const fontBold = await readFile(
+  const fontBoldBuf = await readFile(
     join(process.cwd(), "public", "fonts", "Inter-Bold.ttf")
   );
-  const fontMedium = await readFile(
+  const fontMediumBuf = await readFile(
     join(process.cwd(), "public", "fonts", "Inter-Medium.ttf")
+  );
+
+  const fontBold = fontBoldBuf.buffer.slice(
+    fontBoldBuf.byteOffset,
+    fontBoldBuf.byteOffset + fontBoldBuf.byteLength
+  );
+  const fontMedium = fontMediumBuf.buffer.slice(
+    fontMediumBuf.byteOffset,
+    fontMediumBuf.byteOffset + fontMediumBuf.byteLength
   );
 
   return new ImageResponse(
