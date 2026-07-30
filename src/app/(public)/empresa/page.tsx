@@ -1,4 +1,4 @@
-﻿import { Icon } from "@/components/ui/icons/Icon";
+import { Icon } from "@/components/ui/icons/Icon";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -347,13 +347,15 @@ export default function EmpresaPage() {
                   className="group border-primary hover:border-primary/80 relative flex h-[400px] flex-col justify-between overflow-hidden rounded-2xl border-2 border-dashed bg-white p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]"
                   href="/empresa/sobre-nosotros"
                 >
-                  <Image
-                    src="/logo.png"
-                    alt="Logo Liss"
-                    width={80}
-                    height={40}
-                    className="absolute top-6 right-6 z-10 h-auto w-16 object-contain opacity-20 grayscale transition-opacity duration-300 group-hover:opacity-40"
-                  />
+                  <span className="absolute top-6 right-6 z-10 flex h-11 w-11 items-center justify-center rounded-xl bg-[#143067] p-1.5 opacity-60 transition-opacity duration-300 group-hover:opacity-100">
+                    <Image
+                      src="/logo.png"
+                      alt="Logo Liss"
+                      width={80}
+                      height={80}
+                      className="h-auto w-full object-contain brightness-0 invert"
+                    />
+                  </span>
                   <div
                     className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden font-serif leading-none font-black text-slate-900 opacity-[0.04] select-none"
                     style={{
@@ -398,13 +400,15 @@ export default function EmpresaPage() {
                     className="group border-primary hover:border-primary/80 relative flex flex-col justify-between overflow-hidden rounded-2xl border-2 border-dashed bg-white p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]"
                     href="/empresa/filosofia"
                   >
-                    <Image
-                      src="/logo.png"
-                      alt="Logo Liss"
-                      width={80}
-                      height={40}
-                      className="absolute top-6 right-6 z-10 h-auto w-16 object-contain opacity-20 grayscale transition-opacity duration-300 group-hover:opacity-40"
-                    />
+                    <span className="absolute top-6 right-6 z-10 flex h-11 w-11 items-center justify-center rounded-xl bg-[#143067] p-1.5 opacity-60 transition-opacity duration-300 group-hover:opacity-100">
+                      <Image
+                        src="/logo.png"
+                        alt="Logo Liss"
+                        width={80}
+                        height={80}
+                        className="h-auto w-full object-contain brightness-0 invert"
+                      />
+                    </span>
                     <div
                       className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden font-serif leading-none font-black text-slate-900 opacity-[0.04] select-none"
                       style={{
@@ -431,13 +435,15 @@ export default function EmpresaPage() {
                     className="group border-primary hover:border-primary/80 relative flex h-[200px] flex-col justify-between overflow-hidden rounded-2xl border-2 border-dashed bg-white p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] sm:h-full"
                     href="/empresa/equipo"
                   >
-                    <Image
-                      src="/logo.png"
-                      alt="Logo Liss"
-                      width={80}
-                      height={40}
-                      className="absolute top-6 right-6 z-10 h-auto w-16 object-contain opacity-20 grayscale transition-opacity duration-300 group-hover:opacity-40"
-                    />
+                    <span className="absolute top-6 right-6 z-10 flex h-11 w-11 items-center justify-center rounded-xl bg-[#143067] p-1.5 opacity-60 transition-opacity duration-300 group-hover:opacity-100">
+                      <Image
+                        src="/logo.png"
+                        alt="Logo Liss"
+                        width={80}
+                        height={80}
+                        className="h-auto w-full object-contain brightness-0 invert"
+                      />
+                    </span>
                     <div
                       className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden font-serif leading-none font-black text-slate-900 opacity-[0.04] select-none"
                       style={{
@@ -470,13 +476,15 @@ export default function EmpresaPage() {
                   className="group border-primary hover:border-primary/80 relative flex h-[250px] flex-col justify-between overflow-hidden rounded-2xl border-2 border-dashed bg-white p-8 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]"
                   href="/empresa/instalaciones"
                 >
-                  <Image
-                    src="/logo.png"
-                    alt="Logo Liss"
-                    width={80}
-                    height={40}
-                    className="absolute top-6 right-6 z-10 h-auto w-16 object-contain opacity-20 grayscale transition-opacity duration-300 group-hover:opacity-40"
-                  />
+                  <span className="absolute top-6 right-6 z-10 flex h-11 w-11 items-center justify-center rounded-xl bg-[#143067] p-1.5 opacity-60 transition-opacity duration-300 group-hover:opacity-100">
+                    <Image
+                      src="/logo.png"
+                      alt="Logo Liss"
+                      width={80}
+                      height={80}
+                      className="h-auto w-full object-contain brightness-0 invert"
+                    />
+                  </span>
                   <div
                     className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden font-serif leading-none font-black text-slate-900 opacity-[0.04] select-none"
                     style={{
@@ -501,13 +509,15 @@ export default function EmpresaPage() {
                 </Link>
                 {/* Icon Grid for Processes */}
                 <div className="group border-primary hover:border-primary/80 relative grid flex-grow grid-cols-1 gap-4 overflow-hidden rounded-2xl border-2 border-dashed bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]">
-                  <Image
-                    src="/logo.png"
-                    alt="Logo Liss"
-                    width={80}
-                    height={40}
-                    className="absolute top-6 right-6 z-10 h-auto w-16 object-contain opacity-20 grayscale transition-opacity duration-300 group-hover:opacity-40"
-                  />
+                  <span className="absolute top-6 right-6 z-10 flex h-11 w-11 items-center justify-center rounded-xl bg-[#143067] p-1.5 opacity-60 transition-opacity duration-300 group-hover:opacity-100">
+                    <Image
+                      src="/logo.png"
+                      alt="Logo Liss"
+                      width={80}
+                      height={80}
+                      className="h-auto w-full object-contain brightness-0 invert"
+                    />
+                  </span>
                   <Link
                     className="hover:bg-surface-container-low group flex items-center gap-4 rounded p-4 transition-colors"
                     href="/empresa/proceso-de-confeccion"
@@ -570,13 +580,15 @@ export default function EmpresaPage() {
                   className="group border-primary hover:border-primary/80 relative flex h-[160px] flex-col justify-between overflow-hidden rounded-2xl border-2 border-dashed bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] md:p-8"
                   href="/empresa/responsabilidad-social"
                 >
-                  <Image
-                    src="/logo.png"
-                    alt="Logo Liss"
-                    width={80}
-                    height={40}
-                    className="absolute top-6 right-6 z-10 h-auto w-16 object-contain opacity-20 grayscale transition-opacity duration-300 group-hover:opacity-40"
-                  />
+                  <span className="absolute top-6 right-6 z-10 flex h-11 w-11 items-center justify-center rounded-xl bg-[#143067] p-1.5 opacity-60 transition-opacity duration-300 group-hover:opacity-100">
+                    <Image
+                      src="/logo.png"
+                      alt="Logo Liss"
+                      width={80}
+                      height={80}
+                      className="h-auto w-full object-contain brightness-0 invert"
+                    />
+                  </span>
                   <div
                     className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden font-serif leading-none font-black text-slate-900 opacity-[0.04] select-none"
                     style={{
@@ -606,13 +618,15 @@ export default function EmpresaPage() {
                   className="group border-primary hover:border-primary/80 relative flex h-[160px] flex-col justify-between overflow-hidden rounded-2xl border-2 border-dashed bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] md:p-8"
                   href="/empresa/transparencia"
                 >
-                  <Image
-                    src="/logo.png"
-                    alt="Logo Liss"
-                    width={80}
-                    height={40}
-                    className="absolute top-6 right-6 z-10 h-auto w-16 object-contain opacity-20 grayscale transition-opacity duration-300 group-hover:opacity-40"
-                  />
+                  <span className="absolute top-6 right-6 z-10 flex h-11 w-11 items-center justify-center rounded-xl bg-[#143067] p-1.5 opacity-60 transition-opacity duration-300 group-hover:opacity-100">
+                    <Image
+                      src="/logo.png"
+                      alt="Logo Liss"
+                      width={80}
+                      height={80}
+                      className="h-auto w-full object-contain brightness-0 invert"
+                    />
+                  </span>
                   <div
                     className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden font-serif leading-none font-black text-slate-900 opacity-[0.04] select-none"
                     style={{
@@ -642,13 +656,15 @@ export default function EmpresaPage() {
                   className="group border-primary hover:border-primary/80 relative flex h-[160px] flex-col justify-between overflow-hidden rounded-2xl border-2 border-dashed bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)] md:p-8"
                   href="/empresa/media-kit"
                 >
-                  <Image
-                    src="/logo.png"
-                    alt="Logo Liss"
-                    width={80}
-                    height={40}
-                    className="absolute top-6 right-6 z-10 h-auto w-16 object-contain opacity-20 grayscale transition-opacity duration-300 group-hover:opacity-40"
-                  />
+                  <span className="absolute top-6 right-6 z-10 flex h-11 w-11 items-center justify-center rounded-xl bg-[#143067] p-1.5 opacity-60 transition-opacity duration-300 group-hover:opacity-100">
+                    <Image
+                      src="/logo.png"
+                      alt="Logo Liss"
+                      width={80}
+                      height={80}
+                      className="h-auto w-full object-contain brightness-0 invert"
+                    />
+                  </span>
                   <div
                     className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden font-serif leading-none font-black text-slate-900 opacity-[0.04] select-none"
                     style={{

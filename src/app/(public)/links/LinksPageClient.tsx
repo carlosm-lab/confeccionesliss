@@ -239,8 +239,8 @@ export function LinksPageClient() {
                 height: "100%",
                 borderRadius: "50%",
                 overflow: "hidden",
-                background: "#fff",
-                border: "3px solid #fff",
+                background: "#143067",
+                border: "3px solid #143067",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -255,7 +255,8 @@ export function LinksPageClient() {
                   width: "100%",
                   height: "100%",
                   objectFit: "contain",
-                  padding: "8px",
+                  padding: "12px",
+                  filter: "brightness(0) invert(1)",
                 }}
                 priority
               />

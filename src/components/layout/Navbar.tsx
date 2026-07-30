@@ -366,6 +366,10 @@ export function Navbar() {
                 height={96}
                 sizes="48px"
                 className="h-12 w-auto"
+                style={{
+                  filter:
+                    "brightness(0) saturate(100%) invert(17%) sepia(63%) saturate(763%) hue-rotate(193deg) brightness(91%) contrast(103%)",
+                }}
               />
               {/* Texto del logo — siempre en DOM para SEO; visible en sm+ */}
               <span className="sr-only">
