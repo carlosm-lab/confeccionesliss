@@ -368,7 +368,7 @@ export function Navbar() {
                 className="h-12 w-auto"
                 style={{
                   filter:
-                    "brightness(0) saturate(100%) invert(17%) sepia(63%) saturate(763%) hue-rotate(193deg) brightness(91%) contrast(103%)",
+                    "brightness(0) saturate(100%) invert(16%) sepia(99%) saturate(7400%) hue-rotate(222deg) brightness(96%) contrast(118%)",
                 }}
               />
               {/* Texto del logo — siempre en DOM para SEO; visible en sm+ */}
