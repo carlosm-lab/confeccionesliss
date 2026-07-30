@@ -35,7 +35,7 @@ const LEGAL_DOCS: LegalDoc[] = [
     slug: "cotizaciones",
     title: "COTIZACIONES",
     tagline: "Proceso, tiempos y condiciones de nuestras cotizaciones.",
-    icon: "request_quote",
+    icon: "attach_money",
     available: true,
     readingTime: 18,
   },
@@ -137,7 +137,7 @@ const LEGAL_DOCS: LegalDoc[] = [
     title: "COMUNICACIONES",
     tagline:
       "Condiciones de uso de WhatsApp, redes sociales oficiales y canales de atención.",
-    icon: "chat",
+    icon: "campaign",
     available: true,
     readingTime: 12,
   },
@@ -182,7 +182,7 @@ const LEGAL_DOCS: LegalDoc[] = [
     title: "GARANTÍA & PRODUCTO",
     tagline:
       "Condiciones de cobertura, plazos de reclamo por defectos de fábrica y soporte de calidad.",
-    icon: "verified",
+    icon: "workspace_premium",
     available: true,
     readingTime: 15,
   },

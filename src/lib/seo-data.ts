@@ -111,33 +111,6 @@ export const processSteps = [
   },
 ];
 
-export const testimonials = [
-  {
-    nombre: "Juan Carlos Garcia",
-    cargo: "Enfermería",
-    texto:
-      "Pedí uniformes para un grupo de compañeras de enfermería y todo salió perfecto todos los scrubs quedaron bien hechos, en las medidas exactas de cada una, y los entregaron en el tiempo acordado ña atención por WhatsApp fue rápida y clara durante todo el proceso. ademas la señora me recuerda a mi abuelita :)",
-    stars: 5,
-    enlace: "https://share.google/45wqfJwWUEBMLeKSA",
-  },
-  {
-    nombre: "José Antonio dias",
-    cargo: "Cliente particular",
-    texto:
-      "Excelente taller de uniformes médicos y scrubs en San Miguel, la atención rápida por WhatsApp, precios justos y lo más importante es que hacen los uniformes a la medida de cada persona. Yo tengo una talla difícil de encontrar y aquí no fue ningún problema ademas ni me cobraron demas por talla extra.",
-    stars: 5,
-    enlace: "https://share.google/BgOrs6SYsdNadJogs",
-  },
-  {
-    nombre: "Kairo Boutique",
-    cargo: "Cliente comercial",
-    texto:
-      "Mandamos a hacer los uniformes de la tienda en Confecciones Liss y la verdad es que quedamos muy satisfechos, precios comodos, nos hicieron descuento por mayoreo, en fin, encantados.",
-    stars: 5,
-    enlace: "https://share.google/ffVaegduSiB3hRcir",
-  },
-];
-
 export const socialLinks = [
   {
     red: "Instagram",

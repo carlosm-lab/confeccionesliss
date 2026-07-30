@@ -298,6 +298,20 @@ This document tracks important architectural decisions made during the project l
 
 ---
 
+**Date:** 2026-07-30
+**Decision:** Remediciación de Reseñas Duplicadas en JSON-LD para Cumplimiento de Políticas de Google Search
+**Context:** Google envió un aviso referente a la detección de reseñas duplicadas en los fragmentos JSON-LD de los productos del catálogo. La causa era el uso de la constante `PRODUCT_REVIEWS` (testimonios globales de la empresa) como fallback cuando un producto individual no tenía reseñas reales en Supabase.
+**Decision:**
+
+- Se eliminó la constante de fallback `PRODUCT_REVIEWS` y la importación de `testimonials` en las páginas de detalle de catálogo general (`/catalogo/[sector]/[id]/page.tsx`) y universidades (`/catalogo/universidades/[universidad]/[id]/page.tsx`).
+- Si un producto NO posee reseñas registradas por usuarios en la base de datos (`hasRealReviews = false`), la propiedad `review` en el JSON-LD de `Product` toma valor `undefined` y es omitida automáticamente por `JSON.stringify()`.
+- Se conserva `aggregateRating` (basada en calificación general verificada) de acuerdo a las recomendaciones de Google para mantener activas las directivas de calificacion general sin incurrir en spam de reseñas duplicadas.
+  **Consequences:**
+- El marcado JSON-LD de los productos sin reseñas individuales ya no incluye arreglos de `Review` repetidos.
+- Se elimina completamente el riesgo de penalización por contenido duplicado o spam estructurado en Google Search Console.
+
+---
+
 **Date:** 2026-06-17
 **Decision:** Sistema de Precios Avanzados + Checkout por Pasos + WhatsApp RPC con Anti-Tampering
 

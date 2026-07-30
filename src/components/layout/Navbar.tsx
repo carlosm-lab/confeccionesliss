@@ -702,7 +702,7 @@ export function Navbar() {
                             "bg-primary text-on-primary shadow-sm"
                         )}
                       >
-                        <Icon name="mail" size={18} aria-hidden="true" />
+                        <Icon name="share" size={18} aria-hidden="true" />
                         Redes Sociales
                       </Link>
                     </li>

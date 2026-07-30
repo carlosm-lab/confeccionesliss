@@ -9,7 +9,6 @@ import {
   getProductUniversity,
 } from "@/lib/catalogService";
 import { getProductReviews } from "@/lib/reviewsService";
-import { testimonials } from "@/lib/seo-data";
 import { CATEGORIES } from "@/data/categories";
 import type { Sector } from "@/data/types";
 
@@ -63,28 +62,6 @@ export async function generateStaticParams(): Promise<
 }
 
 // ── Schema constants ───────────────────────────────────────────────────────────
-const PRODUCT_AGGREGATE_RATING = {
-  "@type": "AggregateRating",
-  ratingValue: "5.0",
-  ratingCount: "3",
-  reviewCount: "3",
-  bestRating: "5",
-  worstRating: "1",
-} as const;
-
-const PRODUCT_REVIEWS = testimonials.map((t) => ({
-  "@type": "Review",
-  author: { "@type": "Person", name: t.nombre },
-  reviewBody: t.texto,
-  reviewRating: {
-    "@type": "Rating",
-    ratingValue: String(t.stars),
-    bestRating: "5",
-    worstRating: "1",
-  },
-  datePublished: "2025-06-01",
-}));
-
 const SHIPPING_DETAILS_SV = {
   "@type": "OfferShippingDetails",
   shippingRate: { "@type": "MonetaryAmount", value: "0", currency: "USD" },
@@ -242,7 +219,7 @@ export default async function UniversityProductDetailPage({
         bestRating: 5,
         worstRating: 1,
       }
-    : PRODUCT_AGGREGATE_RATING;
+    : undefined;
 
   const jsonLdReviews = hasRealReviews
     ? reviewData.reviews.map((r) => ({
@@ -257,7 +234,7 @@ export default async function UniversityProductDetailPage({
         },
         datePublished: r.created_at.slice(0, 10),
       }))
-    : PRODUCT_REVIEWS;
+    : undefined;
 
   return (
     <>

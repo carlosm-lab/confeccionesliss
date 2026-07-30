@@ -7,3 +7,9 @@ declare module "react/jsx-runtime" {
     }
   }
 }
+
+declare module "lucide-react/dist/esm/icons/*.js" {
+  export const __iconNode: [string, Record<string, string>][];
+  const component: any;
+  export default component;
+}

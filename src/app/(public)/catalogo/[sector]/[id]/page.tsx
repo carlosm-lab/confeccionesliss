@@ -12,7 +12,6 @@ import {
   getAllProductsForSitemap,
 } from "@/lib/catalogService";
 import { getProductReviews } from "@/lib/reviewsService";
-import { testimonials } from "@/lib/seo-data";
 
 // ── SSG puro + On-Demand Revalidation ──────────────────────────────────────
 // No ISR por tiempo. Revalidación on-demand vía src/actions/catalog.ts.
@@ -40,33 +39,6 @@ export async function generateStaticParams(): Promise<
     return [];
   }
 }
-
-// ── Constantes de Schema para Google Rich Results ─────────────────────────────
-// Fuente: testimonios reales verificados de clientes (src/lib/seo-data.ts)
-const PRODUCT_AGGREGATE_RATING = {
-  "@type": "AggregateRating",
-  ratingValue: "5.0",
-  ratingCount: "3",
-  reviewCount: "3",
-  bestRating: "5",
-  worstRating: "1",
-} as const;
-
-const PRODUCT_REVIEWS = testimonials.map((t) => ({
-  "@type": "Review",
-  author: {
-    "@type": "Person",
-    name: t.nombre,
-  },
-  reviewBody: t.texto,
-  reviewRating: {
-    "@type": "Rating",
-    ratingValue: String(t.stars),
-    bestRating: "5",
-    worstRating: "1",
-  },
-  datePublished: "2025-06-01",
-}));
 
 // Política de envío para El Salvador (OfferShippingDetails)
 const SHIPPING_DETAILS_SV = {
@@ -239,7 +211,6 @@ export default async function ProductDetailPage({
       : `${siteConfig.url}${imageUrl}`
     : undefined;
 
-  // ── JSON-LD: Usar reseñas reales si existen, de lo contrario testimonios reales como fallback
   const hasRealReviews = reviewData.totalCount > 0;
 
   const jsonLdAggregateRating = hasRealReviews
@@ -251,7 +222,7 @@ export default async function ProductDetailPage({
         bestRating: 5,
         worstRating: 1,
       }
-    : PRODUCT_AGGREGATE_RATING;
+    : undefined;
 
   const jsonLdReviews = hasRealReviews
     ? reviewData.reviews.map((r) => ({
@@ -266,7 +237,7 @@ export default async function ProductDetailPage({
         },
         datePublished: r.created_at.slice(0, 10),
       }))
-    : PRODUCT_REVIEWS;
+    : undefined;
 
   return (
     <>

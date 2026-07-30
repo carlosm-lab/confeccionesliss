@@ -194,16 +194,6 @@ export function ServicioBordadosDetalle({
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="absolute inset-0 z-0 object-cover"
                 />
-                <div className="absolute inset-0 z-10 flex items-center justify-center">
-                  <div className="rounded-full bg-white/90 p-6 shadow-lg backdrop-blur-sm">
-                    <Icon
-                      name="strikethrough_s"
-                      size={48}
-                      className="text-primary"
-                      aria-hidden="true"
-                    />
-                  </div>
-                </div>
               </div>
 
               {/* Texto derecha */}
