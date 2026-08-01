@@ -3,6 +3,7 @@ import { CategoryHubClient } from "@/components/catalogo/CategoryHubClient";
 import { siteConfig } from "@/config/site";
 import { getProductCountsBySector } from "@/lib/catalogService";
 import { OffersReadTracker } from "@/components/ui/OffersReadTracker";
+import { buildBreadcrumbSchema } from "@/lib/schemas";
 
 const PAGE_URL = `${siteConfig.url}/catalogo`;
 const PAGE_TITLE = "Catálogo de Uniformes por Categoría";
@@ -47,29 +48,40 @@ export default async function CatalogoPage() {
     0
   );
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": `${PAGE_URL}#webpage`,
+        name: "Catálogo completo de uniformes y scrubs — Confecciones Liss",
+        description:
+          "Catálogo completo de uniformes médicos, universitarios, escolares y corporativos en San Miguel, El Salvador.",
+        url: PAGE_URL,
+        numberOfItems: totalProducts,
+        provider: {
+          "@type": "LocalBusiness",
+          name: siteConfig.name,
+          url: siteConfig.url,
+        },
+      },
+      buildBreadcrumbSchema([
+        { name: "Inicio", item: siteConfig.url },
+        { name: "Catálogo", item: PAGE_URL },
+      ]),
+    ],
+  };
+
   return (
     <>
       <OffersReadTracker />
       <CategoryHubClient productCounts={productCounts} />
 
-      {/* JSON-LD: CollectionPage */}
+      {/* JSON-LD: CollectionPage + BreadcrumbList */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "CollectionPage",
-            name: "Catálogo completo de uniformes y scrubs — Confecciones Liss",
-            description:
-              "Catálogo completo de uniformes médicos, universitarios, escolares y corporativos en San Miguel, El Salvador.",
-            url: `${siteConfig.url}/catalogo`,
-            numberOfItems: totalProducts,
-            provider: {
-              "@type": "LocalBusiness",
-              name: siteConfig.name,
-              url: siteConfig.url,
-            },
-          }).replace(/</g, "\\u003c"),
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
         }}
       />
     </>

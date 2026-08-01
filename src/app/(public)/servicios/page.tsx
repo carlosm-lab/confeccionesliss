@@ -5,6 +5,7 @@ import Image from "next/image";
 import { SERVICE_PAGES } from "@/data/services";
 import { siteConfig } from "@/config/site";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
+import { buildBreadcrumbSchema } from "@/lib/schemas";
 
 const PAGE_URL = `${siteConfig.url}/servicios`;
 const PAGE_TITLE =
@@ -45,6 +46,30 @@ export const metadata: Metadata = {
 };
 
 export default function ServiciosPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ItemList",
+        name: "Servicios Profesionales — Confecciones Liss",
+        description:
+          "Servicios profesionales de bordado, sublimación, confección a medida y mano de obra en San Miguel.",
+        url: PAGE_URL,
+        numberOfItems: SERVICE_PAGES.length,
+        itemListElement: SERVICE_PAGES.map((p, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          url: `${siteConfig.url}/servicios/${p.slug}`,
+          name: p.title,
+        })),
+      },
+      buildBreadcrumbSchema([
+        { name: "Inicio", item: siteConfig.url },
+        { name: "Servicios", item: PAGE_URL },
+      ]),
+    ],
+  };
+
   return (
     <>
       {/* Editorial page header — no colored banner, clean typography */}
@@ -124,25 +149,11 @@ export default function ServiciosPage() {
         </div>
       </section>
 
-      {/* JSON-LD */}
+      {/* JSON-LD: ItemList + BreadcrumbList */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "ItemList",
-            name: "Servicios Profesionales — Confecciones Liss",
-            description:
-              "Servicios profesionales de bordado, sublimación, confección a medida y mano de obra en San Miguel.",
-            url: `${siteConfig.url}/servicios`,
-            numberOfItems: SERVICE_PAGES.length,
-            itemListElement: SERVICE_PAGES.map((p, i) => ({
-              "@type": "ListItem",
-              position: i + 1,
-              url: `${siteConfig.url}/servicios/${p.slug}`,
-              name: p.title,
-            })),
-          }).replace(/</g, "\\u003c"),
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
         }}
       />
     </>

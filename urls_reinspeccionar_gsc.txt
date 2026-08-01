@@ -1,0 +1,30 @@
+# ==============================================================================
+# LISTA DE URLS PARA RE-INSPECCIONAR EN GOOGLE SEARCH CONSOLE (GSC)
+# Confecciones Liss — San Miguel, El Salvador
+# ==============================================================================
+
+# 🚨 PRIORIDAD 1: CRÍTICAS (Home y Servicios Restaurados)
+https://www.confeccionesliss.com/
+https://www.confeccionesliss.com/servicios
+https://www.confeccionesliss.com/servicios/confeccion-a-medida
+https://www.confeccionesliss.com/servicios/bordados-personalizados
+https://www.confeccionesliss.com/servicios/sublimacion
+
+# 🎓 PRIORIDAD 2: HUBS DE CATEGORÍAS Y UNIVERSIDADES
+https://www.confeccionesliss.com/catalogo
+https://www.confeccionesliss.com/catalogo/scrubs
+https://www.confeccionesliss.com/catalogo/universitario
+https://www.confeccionesliss.com/catalogo/escolar
+https://www.confeccionesliss.com/catalogo/corporativo
+https://www.confeccionesliss.com/catalogo/universidades
+https://www.confeccionesliss.com/catalogo/universidades/ieproes
+https://www.confeccionesliss.com/catalogo/universidades/univo
+https://www.confeccionesliss.com/catalogo/universidades/unab
+https://www.confeccionesliss.com/catalogo/universidades/ugb
+https://www.confeccionesliss.com/catalogo/universidades/ues
+https://www.confeccionesliss.com/catalogo/universidades/uma
+
+# ℹ️ PRIORIDAD 3: AYUDA Y UBICACIÓN HIPERLOCAL
+https://www.confeccionesliss.com/ayuda
+https://www.confeccionesliss.com/contacto
+https://www.confeccionesliss.com/empresa
