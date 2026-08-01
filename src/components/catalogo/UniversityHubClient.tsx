@@ -619,7 +619,7 @@ export function UniversityHubClient() {
             items={[
               { label: "Inicio", href: "/" },
               { label: "Catálogo", href: "/catalogo" },
-              { label: "Universitarios" },
+              { label: "Universidades" },
             ]}
           />
         </div>
