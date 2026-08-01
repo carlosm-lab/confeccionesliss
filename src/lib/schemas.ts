@@ -151,73 +151,64 @@ export const schemaFAQ = {
   ],
 };
 
-/** Tarifas de envío oficial según /legal/envios */
-export const SHIPPING_DETAILS_SV = [
-  {
-    "@type": "OfferShippingDetails",
-    name: "Envío Zona Oriental (San Miguel, Usulután, La Unión, Morazán)",
-    shippingRate: {
-      "@type": "MonetaryAmount",
-      value: "3.00",
-      currency: "USD",
-    },
-    shippingDestination: {
-      "@type": "DefinedRegion",
-      addressCountry: "SV",
-      addressRegion: ["San Miguel", "Usulután", "La Unión", "Morazán"],
-    },
-    deliveryTime: {
-      "@type": "ShippingDeliveryTime",
-      handlingTime: {
-        "@type": "QuantitativeValue",
-        minValue: 1,
-        maxValue: 2,
-        unitCode: "DAY",
-      },
-      transitTime: {
-        "@type": "QuantitativeValue",
-        minValue: 1,
-        maxValue: 3,
-        unitCode: "DAY",
-      },
-    },
+/** Tarifas de envío oficial según /legal/envios (Política de envío) */
+export const SHIPPING_DETAILS_SV = {
+  "@type": "OfferShippingDetails",
+  name: "Política de envío",
+  shippingRate: {
+    "@type": "MonetaryAmount",
+    value: "6.00",
+    currency: "USD",
   },
-  {
-    "@type": "OfferShippingDetails",
-    name: "Envío Resto del País (San Salvador, Santa Ana, etc.)",
-    shippingRate: {
-      "@type": "MonetaryAmount",
-      value: "6.00",
-      currency: "USD",
-    },
-    shippingDestination: {
-      "@type": "DefinedRegion",
-      addressCountry: "SV",
-    },
-    deliveryTime: {
-      "@type": "ShippingDeliveryTime",
-      handlingTime: {
-        "@type": "QuantitativeValue",
-        minValue: 1,
-        maxValue: 2,
-        unitCode: "DAY",
-      },
-      transitTime: {
-        "@type": "QuantitativeValue",
-        minValue: 1,
-        maxValue: 7,
-        unitCode: "DAY",
-      },
-    },
+  shippingDestination: {
+    "@type": "DefinedRegion",
+    addressCountry: "SV",
   },
-];
+  deliveryTime: {
+    "@type": "ShippingDeliveryTime",
+    handlingTime: {
+      "@type": "QuantitativeValue",
+      minValue: 1,
+      maxValue: 2,
+      unitCode: "DAY",
+    },
+    transitTime: {
+      "@type": "QuantitativeValue",
+      minValue: 1,
+      maxValue: 2,
+      unitCode: "DAY",
+    },
+    cutoffTime: "17:00-08:00",
+  },
+} as const;
 
 /** Política de devoluciones oficial según /legal/devoluciones */
 export const MERCHANT_RETURN_POLICY = {
   "@type": "MerchantReturnPolicy",
+  name: "Política de devoluciones",
+  merchantReturnLink: "https://www.confeccionesliss.com/legal/devoluciones",
   applicableCountry: "SV",
   returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
-  merchantReturnDays: 30,
-  returnMethod: "https://schema.org/ReturnInStore",
-  returnFees: "https://schema.org/FreeReturn",
-};
+  merchantReturnDays: 15,
+  returnMethod: [
+    "https://schema.org/ReturnInStore",
+    "https://schema.org/ReturnAtKiosk",
+    "https://schema.org/ReturnByMail",
+  ],
+  returnFees: "https://schema.org/ReturnFeesCustomerPaying",
+  itemCondition: [
+    "https://schema.org/NewCondition",
+    "https://schema.org/UsedCondition",
+  ],
+  restockingFee: {
+    "@type": "MonetaryAmount",
+    value: "6.00",
+    currency: "USD",
+  },
+  refundType: "https://schema.org/FullRefund",
+  refundProcessingTime: {
+    "@type": "QuantitativeValue",
+    value: 7,
+    unitCode: "DAY",
+  },
+} as const;

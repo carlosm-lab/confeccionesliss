@@ -179,9 +179,9 @@ export default function PoliticaEnviosPage() {
           <P>
             3.1 El tiempo de preparación y despacho del pedido por parte del
             Taller es de un (1) día hábil mínimo y dos (2) días hábiles máximo,
-            contados a partir de la finalización de la confección del pedido y
-            la verificación del pago completo, incluyendo los gastos de envío
-            correspondientes.
+            contados a partir de la confirmación del pedido. La hora límite de
+            corte para recepción y procesamiento de pedidos el mismo día es a
+            las 17:00 (5:00 p.m. GMT-08:00).
           </P>
           <P>
             3.2 Los días de procesamiento y despacho por parte del Taller son de
@@ -189,15 +189,15 @@ export default function PoliticaEnviosPage() {
             domingos ni días festivos oficiales de la República de El Salvador.
           </P>
           <P>
-            3.3 El tiempo de transporte a cargo del Tercero es de un (1) día
-            hábil mínimo y siete (7) días hábiles máximo para todos los destinos
-            dentro del territorio nacional, operando igualmente de lunes a
+            3.3 El tiempo de transporte a cargo del proveedor de mensajería es
+            de un (1) día hábil mínimo y dos (2) días hábiles máximo para todos
+            los destinos dentro del territorio nacional, operando de lunes a
             sábado.
           </P>
           <P>
             3.4 El tiempo total estimado de entrega al Cliente, desde la
             confirmación del pedido hasta su recepción en el destino indicado,
-            es de dos (2) a nueve (9) días hábiles, conforme al siguiente
+            es de dos (2) a cuatro (4) días hábiles, conforme al siguiente
             esquema:
           </P>
           <InfoBox type="blue" title="Desglose de tiempos de envío nacional:">
@@ -209,61 +209,43 @@ export default function PoliticaEnviosPage() {
                 lineHeight: "1.4",
               }}
             >
-              • Tiempo de preparación: 1 a 2 días hábiles (Taller)
+              • Hora límite de corte diaria: 17:00 (5:00 p.m. GMT-08:00)
               <br />
-              • Tiempo de transporte: 1 a 7 días hábiles (Tercero)
+              • Tiempo de preparación: 1 a 2 días hábiles (Lun-Sáb)
+              <br />
+              • Tiempo de transporte: 1 a 2 días hábiles (Lun-Sáb)
               <br />
               -----------------------------------------------------
-              <br />• Tiempo total estimado: 2 a 9 días hábiles
+              <br />• Tiempo total de entrega: 2 a 4 días hábiles
             </span>
           </InfoBox>
           <P>
             3.5 El cómputo del tiempo de entrega inicia desde el momento en que
-            el Taller hace entrega física del producto al Tercero, no desde la
-            fecha de confirmación del pedido. Los días de preparación no forman
-            parte del tiempo de transporte.
+            el Taller hace entrega física del producto al proveedor de
+            mensajería.
           </P>
           <P>
-            3.6 Los tiempos indicados son estimados y pueden variar por causas
-            atribuibles al Tercero, condiciones climatológicas, situaciones de
-            orden público, fuerza mayor u otras circunstancias fuera del control
-            del Taller. Dichas variaciones no generan responsabilidad alguna
-            para Confecciones Liss.
+            3.6 Los tiempos indicados son estimados y aplican a todos los
+            productos y destinos dentro de la República de El Salvador.
           </P>
         </Section>
         <Hr />
 
         <Section n={4} title="Tarifas de envío y envío gratuito">
           <P>
-            4.1 El costo del servicio de envío tiene una tarifa base fija de
-            tres dólares (USD $3.00) a cinco dólares (USD $5.00), expresados en
-            moneda de curso legal de los Estados Unidos de América, según el
-            destino, peso y volumen del paquete, de conformidad con las tarifas
-            del Tercero utilizado.
+            4.1 El costo del servicio de envío para todos los pedidos nacionales
+            con un valor total menor a trescientos cincuenta dólares (USD
+            $350.00) tiene una tarifa fija universal de seis dólares exactos
+            (USD $6.00) para todos los destinos dentro de El Salvador.
           </P>
           <P>
-            4.2 Las tarifas de envío pueden variar en función del tamaño y peso
-            del paquete, conforme a las políticas y tablas de cobro del
-            proveedor de delivery seleccionado por el Taller para cada envío. El
-            Cliente será informado del costo exacto del envío previo a la
-            confirmación del pedido.
-          </P>
-          <P>
-            4.3 Los pedidos cuyo valor total de productos supere los trescientos
+            4.2 Los pedidos cuyo valor total de productos supere los trescientos
             cincuenta dólares (USD $350.00) en una sola transacción gozarán de
-            envío gratuito dentro del territorio nacional, asumiendo el Taller
-            el costo del servicio de delivery correspondiente.
+            envío gratuito dentro de todo el territorio nacional.
           </P>
           <P>
-            4.4 El beneficio de envío gratuito aplica sobre el valor total de
-            los productos del pedido, sin incluir costos de personalización
-            especial, cargos por tallas especiales u otros conceptos adicionales
-            que no formen parte del precio base de los productos.
-          </P>
-          <P>
-            4.5 Confecciones Liss realizará envíos de productos de cualquier
-            valor, siempre que el Cliente asuma y apruebe expresamente el costo
-            total del envío.
+            4.3 Todos los precios y tarifas están expresados en Moneda de los
+            Estados Unidos de América (USD $).
           </P>
           <InfoBox type="blue" title="Ejemplo ilustrativo de cobros de envío:">
             Si un producto tiene un valor de dos dólares (USD $2.00) y el costo

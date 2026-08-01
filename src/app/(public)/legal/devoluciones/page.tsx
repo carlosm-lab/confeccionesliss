@@ -118,46 +118,52 @@ export default function PoliticaDevolucionesPage() {
         </P>
         <Hr />
 
-        <Section n={1} title="Principio general: no devoluciones ni cambios">
+        <Section n={1} title="Condiciones y plazo de devolución y cambio">
           <P>
-            1.1 Confecciones Liss opera bajo una política de NO DEVOLUCIÓN ni de
-            CAMBIO de carácter absoluto, general e irrestricto. El Taller no
-            realiza devoluciones ni cambios de ningún tipo, bajo ninguna
-            circunstancia, modalidad, argumento ni excepción, salvo lo dispuesto
-            expresamente en el Artículo 6 de la presente Política.
+            1.1 Confecciones Liss acepta solicitudes de devolución y cambio de
+            productos tanto defectuosos como no defectuosos adquiridos dentro
+            del territorio de El Salvador.
           </P>
           <P>
-            1.2 Esta política aplica a la totalidad de productos, servicios y
-            procesos ofrecidos por el Taller, incluyendo sin limitarse a:
-            confección de prendas a medida, uniformes institucionales, prendas
-            corporativas, ropa deportiva, bordados, sublimación, personalización
-            de prendas, y cualquier otro producto o servicio disponible en el
-            catálogo de Confecciones Liss.
+            1.2 <strong>Plazo de devolución:</strong> El Cliente dispone de un
+            plazo máximo de quince (15) días calendario contados a partir de la
+            fecha de recepción del producto para solicitar una devolución o
+            cambio.
           </P>
           <P>
-            1.3 La naturaleza personalizada, a pedido y a medida de los
-            productos confeccionados por el Taller hace imposible su devolución,
-            reventa o reutilización para otros clientes, lo que justifica plena
-            y razonablemente la aplicación de esta política sin excepciones.
+            1.3 <strong>Estado del producto aceptado:</strong> Se aceptan
+            devoluciones y cambios de productos en estado nuevo o poco usado
+            (esto incluye productos cuyo embalaje original se ha abierto o que
+            hayan tenido un uso ligero comprobable).
           </P>
           <P>
-            1.4 El Cliente, al realizar cualquier pago, anticipo, depósito o
-            confirmación de pedido, declara haber leído, comprendido y aceptado
-            de forma libre, voluntaria e informada la presente Política,
-            renunciando expresamente a cualquier reclamación de devolución,
-            reembolso o reversión de pago posterior a dicha aceptación.
+            1.4 <strong>Métodos de devolución disponibles:</strong> El cliente
+            podrá realizar la devolución o cambio a través de cualquiera de los
+            siguientes tres métodos:
           </P>
-          <InfoBox
-            type="amber"
-            title="Cláusula especial sobre cambios de prenda:"
-          >
-            1.5 De la misma manera, Confecciones Liss no acepta cambios de
-            prendas, modelos, diseños ni tallas una vez que la producción ha
-            sido iniciada o que el producto ha sido entregado, debido a la
-            naturaleza personalizada y a la medida de la confección. El Cliente
-            asume la responsabilidad de validar todas las especificaciones
-            (incluyendo tallas y colores) antes de autorizar la producción.
-          </InfoBox>
+          <Ul
+            items={[
+              "a) En tienda física: Directamente en nuestro taller ubicado en Barrio La Merced, San Miguel.",
+              "b) En un punto de entrega autorizado.",
+              "c) Por correo o mensajería privada.",
+            ]}
+          />
+          <P>
+            1.5 <strong>Etiqueta de devolución:</strong> La etiqueta de
+            devolución viene incluida dentro del paquete o es proporcionada
+            directamente al cliente.
+          </P>
+          <P>
+            1.6 <strong>Tarifa de aprovisionamiento (Restocking Fee):</strong>{" "}
+            Se aplica un costo fijo de reabastecimiento de seis dólares (USD
+            $6.00) por cada proceso de devolución o cambio.
+          </P>
+          <P>
+            1.7 <strong>Tiempo de procesamiento del reembolso:</strong> Una vez
+            recibido y verificado el producto devuelto, el reembolso será
+            procesado y emitido en la moneda local (USD $) en un plazo máximo de
+            siete (7) días hábiles.
+          </P>
         </Section>
         <Hr />
 
