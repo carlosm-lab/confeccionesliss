@@ -498,52 +498,61 @@ export function ProductDetailClient({
             {/* Breadcrumb */}
             <div className="w-full min-w-0 sm:w-auto sm:flex-1">
               <Breadcrumb
-                items={
-                  sector === "universitario"
-                    ? (() => {
-                        // Derive university slug from product.category (e.g. "ieproes-enfermeria" → "ieproes")
-                        const univSlug =
-                          typeof product.category === "string"
-                            ? product.category.split("-")[0]
-                            : "";
-                        const UNIV_SIGLAS: Record<string, string> = {
-                          univo: "UNIVO",
-                          ieproes: "IEPROES",
-                          ugb: "UGB",
-                          unab: "UNAB",
-                          ues: "UES",
-                          uma: "UMA",
-                        };
-                        const univLabel =
-                          UNIV_SIGLAS[univSlug] ?? config.subtitle;
-                        return [
-                          { label: "Inicio", href: "/" },
-                          { label: "Catálogo", href: "/catalogo" },
-                          {
-                            label: "Universidades",
-                            href: "/catalogo/universidades",
-                          },
-                          {
-                            label: univLabel,
-                            href: `/catalogo/universidades/${univSlug || sector}`,
-                          },
-                          {
-                            label: product.name,
-                          },
-                        ];
-                      })()
-                    : [
-                        { label: "Inicio", href: "/" },
-                        { label: "Catálogo", href: "/catalogo" },
-                        {
-                          label: config.subtitle,
-                          href: `/catalogo/${sector}`,
-                        },
-                        {
-                          label: product.name,
-                        },
-                      ]
-                }
+                items={(() => {
+                  const UNIFORME_SECTORS = new Set([
+                    "scrubs",
+                    "universitario",
+                    "escolar",
+                    "corporativo",
+                    "deportivo",
+                  ]);
+                  const productBreadcrumbLabel = UNIFORME_SECTORS.has(sector)
+                    ? "Uniforme"
+                    : "Artículo";
+
+                  if (sector === "universitario") {
+                    const univSlug =
+                      typeof product.category === "string"
+                        ? product.category.split("-")[0]
+                        : "";
+                    const UNIV_SIGLAS: Record<string, string> = {
+                      univo: "UNIVO",
+                      ieproes: "IEPROES",
+                      ugb: "UGB",
+                      unab: "UNAB",
+                      ues: "UES",
+                      uma: "UMA",
+                    };
+                    const univLabel = UNIV_SIGLAS[univSlug] ?? config.subtitle;
+                    return [
+                      { label: "Inicio", href: "/" },
+                      { label: "Catálogo", href: "/catalogo" },
+                      {
+                        label: "Universidades",
+                        href: "/catalogo/universidades",
+                      },
+                      {
+                        label: univLabel,
+                        href: `/catalogo/universidades/${univSlug || sector}`,
+                      },
+                      {
+                        label: productBreadcrumbLabel,
+                      },
+                    ];
+                  }
+
+                  return [
+                    { label: "Inicio", href: "/" },
+                    { label: "Catálogo", href: "/catalogo" },
+                    {
+                      label: config.subtitle,
+                      href: `/catalogo/${sector}`,
+                    },
+                    {
+                      label: productBreadcrumbLabel,
+                    },
+                  ];
+                })()}
               />
             </div>
             <button
