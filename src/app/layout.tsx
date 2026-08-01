@@ -199,6 +199,8 @@ export default function RootLayout({
                     siteConfig.links.threads,
                     siteConfig.links.twitter,
                     siteConfig.links.googleMaps,
+                    siteConfig.links.linkedin,
+                    siteConfig.links.pinterest,
                   ],
                   offers: {
                     "@type": "Offer",
@@ -250,6 +252,14 @@ export default function RootLayout({
                         },
                       },
                     ],
+                  },
+                  aggregateRating: {
+                    "@type": "AggregateRating",
+                    ratingValue: "4.8",
+                    ratingCount: "21",
+                    reviewCount: "21",
+                    bestRating: "5",
+                    worstRating: "1",
                   },
                 },
                 {

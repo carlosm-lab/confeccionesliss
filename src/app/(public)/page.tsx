@@ -21,13 +21,15 @@ import type { Metadata } from "next";
 // del layout raíz duplique "| Confecciones Liss" al final del título.
 export const metadata: Metadata = {
   title: {
-    absolute: "Scrubs y Uniformes Médicos En El Salvador | Confecciones Liss",
+    absolute:
+      "Scrubs y Uniformes Médicos en San Miguel, El Salvador | Confecciones Liss",
   },
   description:
     "Empresa de uniformes médicos y universitarios en San Miguel, El Salvador. Scrubs, uniformes para IEPROES, UNIVO, UNAB, UGB, UES y UMA. Desde $35.",
   alternates: { canonical: siteConfig.url },
   openGraph: {
-    title: "Scrubs y Uniformes Médicos En El Salvador | Confecciones Liss",
+    title:
+      "Scrubs y Uniformes Médicos en San Miguel, El Salvador | Confecciones Liss",
     description:
       "Empresa de uniformes médicos y universitarios en San Miguel, El Salvador. Scrubs, uniformes para IEPROES, UNIVO, UNAB, UGB, UES y UMA. Desde $35.",
     url: siteConfig.url,
@@ -37,7 +39,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Scrubs y Uniformes Médicos En El Salvador | Confecciones Liss",
+    title:
+      "Scrubs y Uniformes Médicos en San Miguel, El Salvador | Confecciones Liss",
     description:
       "Empresa de uniformes médicos y universitarios en San Miguel, El Salvador. Scrubs, uniformes para IEPROES, UNIVO, UNAB, UGB, UES y UMA. Desde $35.",
     creator: siteConfig.twitterHandle,

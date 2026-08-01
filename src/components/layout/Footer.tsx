@@ -174,9 +174,8 @@ export function Footer() {
 
             {/* 3. Texto de descripción centrado */}
             <p className="mb-8 max-w-sm text-center text-sm leading-relaxed text-[#a5b1c9]">
-              Confección profesional de scrubs médicos, uniformes empresariales
-              y escolares. Calidad artesanal y diseño contemporáneo desde San
-              Miguel, El Salvador.
+              Scrubs médicos y uniformes universitarios hechos a la medida en
+              San Miguel, El Salvador. Tela Sincatex desde $35.
             </p>
 
             {/* 5. Explorar y Legal en dos columnas iguales */}
@@ -349,9 +348,8 @@ export function Footer() {
             <div className="space-y-8">
               <div>
                 <p className="text-sm leading-relaxed text-[#a5b1c9]">
-                  Confección profesional de scrubs médicos, uniformes
-                  empresariales y escolares. Calidad artesanal y diseño
-                  contemporáneo desde San Miguel, El Salvador.
+                  Scrubs médicos y uniformes universitarios hechos a la medida
+                  en San Miguel, El Salvador. Tela Sincatex desde $35.
                 </p>
               </div>
               <div>
@@ -506,9 +504,8 @@ export function Footer() {
                 />
               </Link>
               <p className="max-w-sm text-sm leading-relaxed text-[#a5b1c9]">
-                Confección profesional de scrubs médicos, uniformes
-                empresariales y escolares. Calidad artesanal y diseño
-                contemporáneo desde San Miguel, El Salvador.
+                Scrubs médicos y uniformes universitarios hechos a la medida en
+                San Miguel, El Salvador. Tela Sincatex desde $35.
               </p>
             </div>
 

@@ -35,9 +35,10 @@ const UNIVERSITY_CONFIG: Record<
   ieproes: {
     sigla: "IEPROES",
     nombre: "Instituto Especializado de Profesionales de la Salud",
-    seoTitle: "Uniformes IEPROES | Confecciones Liss",
+    seoTitle:
+      "Uniformes IEPROES en San Miguel, El Salvador | Confecciones Liss",
     seoDescription:
-      "Scrubs clínicos con colores oficiales para estudiantes de IEPROES. Enfermería, Fisioterapia y Laboratorio Clínico. Tela Sincatex. San Miguel, El Salvador.",
+      "Scrubs y uniformes clínicos con colores oficiales para IEPROES. Enfermería, Fisioterapia, Salud Ambiental y Laboratorio Clínico. Desde $35. Entrega en San Miguel, El Salvador.",
   },
   ugb: {
     sigla: "UGB",
