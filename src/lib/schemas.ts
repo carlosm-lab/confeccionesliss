@@ -152,35 +152,67 @@ export const schemaFAQ = {
 };
 
 /** Tarifas de envío oficial según /legal/envios (Política de envío) */
-export const SHIPPING_DETAILS_SV = {
-  "@type": "OfferShippingDetails",
-  name: "Política de envío",
-  shippingRate: {
-    "@type": "MonetaryAmount",
-    value: "6.00",
-    currency: "USD",
-  },
-  shippingDestination: {
-    "@type": "DefinedRegion",
-    addressCountry: "SV",
-  },
-  deliveryTime: {
-    "@type": "ShippingDeliveryTime",
-    handlingTime: {
-      "@type": "QuantitativeValue",
-      minValue: 1,
-      maxValue: 2,
-      unitCode: "DAY",
+export const SHIPPING_DETAILS_SV = [
+  {
+    "@type": "OfferShippingDetails",
+    name: "Envío Zona Oriental (San Miguel, Usulután, La Unión, Morazán)",
+    shippingRate: {
+      "@type": "MonetaryAmount",
+      value: "3.00",
+      currency: "USD",
     },
-    transitTime: {
-      "@type": "QuantitativeValue",
-      minValue: 1,
-      maxValue: 2,
-      unitCode: "DAY",
+    shippingDestination: {
+      "@type": "DefinedRegion",
+      addressCountry: "SV",
+      addressRegion: ["San Miguel", "Usulután", "La Unión", "Morazán"],
     },
-    cutoffTime: "17:00-08:00",
+    deliveryTime: {
+      "@type": "ShippingDeliveryTime",
+      handlingTime: {
+        "@type": "QuantitativeValue",
+        minValue: 1,
+        maxValue: 2,
+        unitCode: "DAY",
+      },
+      transitTime: {
+        "@type": "QuantitativeValue",
+        minValue: 1,
+        maxValue: 3,
+        unitCode: "DAY",
+      },
+      cutoffTime: "17:00-08:00",
+    },
   },
-} as const;
+  {
+    "@type": "OfferShippingDetails",
+    name: "Envío Resto del País (San Salvador, Santa Ana, etc.)",
+    shippingRate: {
+      "@type": "MonetaryAmount",
+      value: "6.00",
+      currency: "USD",
+    },
+    shippingDestination: {
+      "@type": "DefinedRegion",
+      addressCountry: "SV",
+    },
+    deliveryTime: {
+      "@type": "ShippingDeliveryTime",
+      handlingTime: {
+        "@type": "QuantitativeValue",
+        minValue: 1,
+        maxValue: 2,
+        unitCode: "DAY",
+      },
+      transitTime: {
+        "@type": "QuantitativeValue",
+        minValue: 1,
+        maxValue: 7,
+        unitCode: "DAY",
+      },
+      cutoffTime: "17:00-08:00",
+    },
+  },
+] as const;
 
 /** Política de devoluciones oficial según /legal/devoluciones */
 export const MERCHANT_RETURN_POLICY = {

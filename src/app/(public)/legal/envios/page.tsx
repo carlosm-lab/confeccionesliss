@@ -180,8 +180,8 @@ export default function PoliticaEnviosPage() {
             3.1 El tiempo de preparación y despacho del pedido por parte del
             Taller es de un (1) día hábil mínimo y dos (2) días hábiles máximo,
             contados a partir de la confirmación del pedido. La hora límite de
-            corte para recepción y procesamiento de pedidos el mismo día es a
-            las 17:00 (5:00 p.m. GMT-08:00).
+            corte diaria para recepción de pedidos es a las 17:00 (5:00 p.m.
+            GMT-08:00).
           </P>
           <P>
             3.2 Los días de procesamiento y despacho por parte del Taller son de
@@ -190,17 +190,18 @@ export default function PoliticaEnviosPage() {
           </P>
           <P>
             3.3 El tiempo de transporte a cargo del proveedor de mensajería es
-            de un (1) día hábil mínimo y dos (2) días hábiles máximo para todos
-            los destinos dentro del territorio nacional, operando de lunes a
-            sábado.
+            de un (1) a tres (3) días hábiles para la Zona Oriental (San Miguel,
+            Usulután, La Unión, Morazán) y de un (1) a siete (7) días hábiles
+            para el Resto del País, operando de lunes a sábado.
           </P>
           <P>
-            3.4 El tiempo total estimado de entrega al Cliente, desde la
-            confirmación del pedido hasta su recepción en el destino indicado,
-            es de dos (2) a cuatro (4) días hábiles, conforme al siguiente
-            esquema:
+            3.4 El tiempo total estimado de entrega al Cliente (preparación +
+            transporte) se desglosa conforme al siguiente esquema oficial:
           </P>
-          <InfoBox type="blue" title="Desglose de tiempos de envío nacional:">
+          <InfoBox
+            type="blue"
+            title="Desglose oficial de tiempos de envío nacional:"
+          >
             <span
               style={{
                 display: "block",
@@ -211,12 +212,12 @@ export default function PoliticaEnviosPage() {
             >
               • Hora límite de corte diaria: 17:00 (5:00 p.m. GMT-08:00)
               <br />
-              • Tiempo de preparación: 1 a 2 días hábiles (Lun-Sáb)
+              • Tiempo de preparación general: 1 a 2 días hábiles (Lun-Sáb)
               <br />
-              • Tiempo de transporte: 1 a 2 días hábiles (Lun-Sáb)
-              <br />
-              -----------------------------------------------------
-              <br />• Tiempo total de entrega: 2 a 4 días hábiles
+              • Entrega Zona Oriental (San Miguel, Usulután, La Unión, Morazán):
+              2 a 5 días hábiles total ($3.00 USD)
+              <br />• Entrega Resto del País (San Salvador, Santa Ana, etc.): 2
+              a 9 días hábiles total ($6.00 USD)
             </span>
           </InfoBox>
           <P>
@@ -224,20 +225,21 @@ export default function PoliticaEnviosPage() {
             el Taller hace entrega física del producto al proveedor de
             mensajería.
           </P>
-          <P>
-            3.6 Los tiempos indicados son estimados y aplican a todos los
-            productos y destinos dentro de la República de El Salvador.
-          </P>
         </Section>
         <Hr />
 
         <Section n={4} title="Tarifas de envío y envío gratuito">
           <P>
-            4.1 El costo del servicio de envío para todos los pedidos nacionales
-            con un valor total menor a trescientos cincuenta dólares (USD
-            $350.00) tiene una tarifa fija universal de seis dólares exactos
-            (USD $6.00) para todos los destinos dentro de El Salvador.
+            4.1 El costo del servicio de envío para pedidos con un valor total
+            menor a trescientos cincuenta dólares (USD $350.00) se estructura de
+            la siguiente manera:
           </P>
+          <Ul
+            items={[
+              "a) Zona Oriental (San Miguel, Usulután, La Unión, Morazán): Tres dólares exactos (USD $3.00).",
+              "b) Resto del País (San Salvador, Santa Ana, Sonsonate, La Libertad, etc.): Seis dólares exactos (USD $6.00).",
+            ]}
+          />
           <P>
             4.2 Los pedidos cuyo valor total de productos supere los trescientos
             cincuenta dólares (USD $350.00) en una sola transacción gozarán de
