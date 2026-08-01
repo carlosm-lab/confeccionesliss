@@ -500,22 +500,35 @@ export function ProductDetailClient({
               <Breadcrumb
                 items={
                   sector === "universitario"
-                    ? [
-                        { label: "Inicio", href: "/" },
-                        { label: "Catálogo", href: "/catalogo" },
-                        {
-                          label: "Universidades",
-                          href: "/catalogo/universidades",
-                        },
-                        {
-                          label: config.subtitle,
-                          href: `/catalogo/universidades/${
-                            typeof product.category === "string"
-                              ? product.category.split("-")[0]
-                              : sector
-                          }`,
-                        },
-                      ]
+                    ? (() => {
+                        // Derive university slug from product.category (e.g. "ieproes-enfermeria" → "ieproes")
+                        const univSlug =
+                          typeof product.category === "string"
+                            ? product.category.split("-")[0]
+                            : "";
+                        const UNIV_SIGLAS: Record<string, string> = {
+                          univo: "UNIVO",
+                          ieproes: "IEPROES",
+                          ugb: "UGB",
+                          unab: "UNAB",
+                          ues: "UES",
+                          uma: "UMA",
+                        };
+                        const univLabel =
+                          UNIV_SIGLAS[univSlug] ?? config.subtitle;
+                        return [
+                          { label: "Inicio", href: "/" },
+                          { label: "Catálogo", href: "/catalogo" },
+                          {
+                            label: "Universidades",
+                            href: "/catalogo/universidades",
+                          },
+                          {
+                            label: univLabel,
+                            href: `/catalogo/universidades/${univSlug || sector}`,
+                          },
+                        ];
+                      })()
                     : [
                         { label: "Inicio", href: "/" },
                         { label: "Catálogo", href: "/catalogo" },
