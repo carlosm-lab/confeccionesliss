@@ -153,20 +153,38 @@ const VALID_UNIVERSITY_SLUGS = new Set([
  * Obtiene el slug de la universidad asociada al producto, si aplica.
  */
 export function getProductUniversity(
-  product: Pick<DbProduct, "category" | "categories">
+  product: Pick<DbProduct, "category" | "categories" | "sector">
 ): string | null {
+  // 1. Check categories relation (handle both object and array response formats from PostgREST)
+  const catObj = Array.isArray(product.categories)
+    ? product.categories[0]
+    : product.categories;
+
   if (
-    product.categories?.catalog &&
-    VALID_UNIVERSITY_SLUGS.has(product.categories.catalog)
+    catObj?.catalog &&
+    VALID_UNIVERSITY_SLUGS.has(catObj.catalog.toLowerCase())
   ) {
-    return product.categories.catalog;
+    return catObj.catalog.toLowerCase();
   }
+
+  // 2. Check category string for any university slug segment (e.g., "univo-medicina", "medicina-univo")
   if (product.category) {
-    const prefix = product.category.split("-")[0];
-    if (VALID_UNIVERSITY_SLUGS.has(prefix)) {
-      return prefix;
+    const catLower = product.category.toLowerCase();
+    for (const univ of VALID_UNIVERSITY_SLUGS) {
+      if (catLower.split("-").includes(univ) || catLower.includes(univ)) {
+        return univ;
+      }
     }
   }
+
+  // 3. Check sector string if it directly specifies a university slug
+  if (
+    product.sector &&
+    VALID_UNIVERSITY_SLUGS.has(product.sector.toLowerCase())
+  ) {
+    return product.sector.toLowerCase();
+  }
+
   return null;
 }
 

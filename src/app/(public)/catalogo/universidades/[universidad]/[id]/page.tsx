@@ -103,7 +103,8 @@ export async function generateMetadata({
   if (!product) return { title: "Producto no encontrado" };
 
   const productUniv = getProductUniversity(product);
-  if (productUniv !== universidad) return { title: "Producto no encontrado" };
+  if (productUniv && productUniv !== universidad)
+    return { title: "Producto no encontrado" };
 
   const config = CATEGORIES["universitario" as Sector];
   const PAGE_URL = `${siteConfig.url}/catalogo/universidades/${universidad}/${id}`;
@@ -190,7 +191,7 @@ export default async function UniversityProductDetailPage({
   if (!product || !config) notFound();
 
   const productUniv = getProductUniversity(product);
-  if (productUniv !== universidad) {
+  if (productUniv && productUniv !== universidad) {
     notFound();
   }
 
