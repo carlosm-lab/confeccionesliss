@@ -3,12 +3,12 @@ import { env } from "@/env";
 export const siteConfig = {
   name: "Confecciones Liss",
   description:
-    "Empresa de uniformes médicos y universitarios en San Miguel, El Salvador. Scrubs, uniformes para IEPROES, UNIVO, UNAB, UGB, UES, UMA y más. Desde $35.",
+    "Taller de confección de uniformes médicos y universitarios en San Miguel, El Salvador. Scrubs, uniformes para IEPROES, UNIVO, UNAB, UGB, UES, UMA y más. Desde $35.",
   url: "https://www.confeccionesliss.com",
 
   twitterHandle: "@confeccionliss",
   keywords:
-    "scrubs El Salvador, uniformes médicos San Miguel, uniformes universitarios zona oriental, UNIVO uniformes, UGB uniformes, UNAB uniformes, IEPROES uniformes, UES uniformes, UMA uniformes, scrubs Sincatex El Salvador, empresa uniformes San Miguel, venta uniformes médicos El Salvador",
+    "scrubs El Salvador, uniformes médicos San Miguel, uniformes universitarios zona oriental, UNIVO uniformes, UGB uniformes, UNAB uniformes, IEPROES uniformes, UES uniformes, UMA uniformes, scrubs Sincatex El Salvador, taller uniformes San Miguel, confección uniformes médicos El Salvador",
 
   // Contacto
   phone: "+503 7331-7181",

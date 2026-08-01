@@ -1,7 +1,7 @@
 // SEO content data extracted from plan.tsx strategy
 
 export const heroTrustBadges = [
-  { icon: "straighten", text: "Tallas S a XXL disponibles" },
+  { icon: "straighten", text: "Confección a la medida" },
   { icon: "local_shipping", text: "Envíos a todo El Salvador" },
   { icon: "payments", text: "Pago al recibir" },
   { icon: "star", text: "Bordados en cualquier prenda" },
@@ -11,26 +11,26 @@ export const heroTrustBadges = [
 
 export const services = [
   {
-    title: "Scrubs Médicos Profesionales",
+    title: "Scrubs Médicos a la Medida",
     description:
-      "Contamos con <strong>scrubs en tela Sincatex anti-fluidos y Lino Oxford</strong> para médicos, enfermeras, odontólogos, laboratoristas, fisioterapeutas y todo el personal de salud. Disponibles en tallas S a XXL o a la medida en San Miguel. Enviamos a todo El Salvador.",
+      "Fabricamos <strong>scrubs en tela Sincatex anti-fluidos y Lino Oxford</strong> para médicos, enfermeras, odontólogos, laboratoristas, fisioterapeutas y todo el personal de salud. Confección a la medida en San Miguel. Enviamos por tallas a todo El Salvador.",
     features: [
       "Tela Sincatex anti-fluidos certificada",
       "Lino Oxford de alta calidad",
-      "Tallas S-M-L-XL-XXL o a la medida",
+      "A la medida o por tallas S-M-L-XL-XXL",
       "Bordado de nombre/especialidad disponible",
       "Desde $35.00 USD",
     ],
-    cta: "Ver scrubs médicos",
-    waText: "Hola,%20quisiera%20ver%20los%20scrubs%20médicos",
+    cta: "Cotizar scrubs médicos",
+    waText: "Hola,%20quisiera%20cotizar%20scrubs%20médicos",
     imgSrc: "/images/categorias/scrubs.webp",
     imgAlt:
-      "Scrubs médicos disponibles en talla y a la medida en tela Sincatex - San Miguel El Salvador",
+      "Scrubs médicos confeccionados a la medida en tela Sincatex - San Miguel El Salvador",
   },
   {
     title: "Uniformes Universitarios",
     description:
-      "Proveemos <strong>uniformes oficiales para todas las universidades de San Miguel y zona oriental</strong>. Especialidades de salud: medicina, enfermería, odontología, fisioterapia, laboratorio clínico y más. Precio especial para grupos de sección.",
+      "Confeccionamos <strong>uniformes oficiales para todas las universidades de San Miguel y zona oriental</strong>. Especialidades de salud: medicina, enfermería, odontología, fisioterapia, laboratorio clínico y más. Precio especial para grupos de sección.",
     features: [
       "UNIVO — Universidad de Oriente",
       "UNAB — Universidad Dr. Andrés Bello",
@@ -40,7 +40,7 @@ export const services = [
       "UES — Universidad de El Salvador",
       "UEES y más instituciones",
     ],
-    cta: "Ver uniformes universitarios",
+    cta: "Cotizar uniformes universitarios",
     waText: "Hola,%20necesito%20uniformes%20universitarios",
     imgSrc: "/images/categorias/universitarios.webp",
     imgAlt:
@@ -49,7 +49,7 @@ export const services = [
   {
     title: "Escolares, Corporativos y Bordados",
     description:
-      "Ofrecemos <strong>uniformes escolares para colegios y escuelas</strong>, uniformes corporativos con bordado de logo para empresas e instituciones, ropa deportiva personalizada con sublimación y ropa general para damas, caballeros y niños.",
+      "Confeccionamos <strong>uniformes escolares para colegios y escuelas</strong>, uniformes corporativos con bordado de logo para empresas e instituciones, ropa deportiva personalizada con sublimación y ropa general para damas, caballeros y niños.",
     features: [
       "Uniformes escolares cualquier color/diseño",
       "Uniformes corporativos con logo bordado",
@@ -57,7 +57,7 @@ export const services = [
       "Crop tops y ropa femenina a la medida",
       "Ropa para niños, damas y caballeros",
     ],
-    cta: "Ver catálogo",
+    cta: "Cotizar ahora",
     waText: "Hola,%20necesito%20uniformes%20escolares%20o%20corporativos",
     imgSrc: "/images/categorias/escolares.webp",
     imgAlt:
@@ -67,19 +67,19 @@ export const services = [
 
 export const whyItems = [
   {
-    icon: "storefront",
-    title: "Catálogo disponible",
-    desc: "Tallas S a XXL en stock. También fabricamos a la medida para un ajuste perfecto. Tú eliges la opción que más te conviene.",
+    icon: "straighten",
+    title: "100% A la medida",
+    desc: "No vendemos tallas importadas. Confeccionamos según tus medidas exactas para un ajuste perfecto en cada turno de trabajo.",
   },
   {
     icon: "location_on",
     title: "En San Miguel, para San Miguel",
-    desc: "Local físico en el Barrio La Merced. Puedes visitarnos, recoger tu pedido o recibir tu uniforme en cualquier parte de El Salvador.",
+    desc: "Taller físico en el Barrio La Merced. Puedes venir a probarte, a recoger tu pedido o enviamos a todo El Salvador.",
   },
   {
     icon: "payments",
     title: "Pago al recibir",
-    desc: "Enviamos a todo El Salvador con pago al recibir. Sin riesgo para ti. También aceptamos transferencia bancaria.",
+    desc: "Enviamos por tallas a todo El Salvador con pago al recibir. Sin riesgo para ti. También aceptamos transferencia bancaria.",
   },
   {
     icon: "local_hospital",
@@ -88,21 +88,66 @@ export const whyItems = [
   },
 ];
 
+export const universities = [
+  {
+    sigla: "UNIVO",
+    nombre: "Universidad de Oriente",
+    ciudad: "San Miguel",
+    logo: "/logos/univo.png",
+  },
+  {
+    sigla: "UNAB",
+    nombre: "Universidad Dr. Andrés Bello",
+    ciudad: "San Miguel",
+    logo: "/logos/unab.png",
+  },
+  {
+    sigla: "UGB",
+    nombre: "Universidad Gerardo Barrios",
+    ciudad: "San Miguel",
+    logo: "/logos/ugb-2.png",
+  },
+  {
+    sigla: "UMA",
+    nombre: "Universidad Modular Abierta",
+    ciudad: "San Miguel",
+    logo: "/logos/uma.png",
+  },
+  {
+    sigla: "IEPROES",
+    nombre: "Instituto Especializado de Prof. de la Salud",
+    ciudad: "San Miguel",
+    logo: "/logos/ieproes.png",
+  },
+  {
+    sigla: "UES",
+    nombre: "Universidad de El Salvador",
+    ciudad: "El Salvador",
+    logo: "/logos/ues.png",
+  },
+  {
+    sigla: "UEES",
+    nombre: "Universidad Evangélica de El Salvador",
+    ciudad: "El Salvador",
+    logo: "/logos/uees.avif",
+  },
+];
+
 export const processSteps = [
   {
     n: "1",
-    title: "Elige tu uniforme",
-    desc: "Explora el catálogo en línea o escríbenos por WhatsApp al +503 7331-7181. Cuéntanos qué necesitas.",
+    title: "Escríbenos al WhatsApp",
+    desc: "Cuéntanos qué necesitas: tipo de uniforme, tela, colores y cantidad. Al +503 7331-7181.",
   },
   {
     n: "2",
     title: "Recibe tu cotización",
-    desc: "En pocas horas te enviamos el precio y tiempo de entrega según tu pedido.",
+    desc: "En pocas horas te enviamos el precio y tiempo de entrega según tu pedido específico.",
   },
   {
     n: "3",
-    title: "Confirma tu talla o medidas",
-    desc: "Pide por tallas estándar para envío nacional, o visita nuestro local en San Miguel si prefieres medida exacta.",
+    title: "Confirmamos medidas",
+    desc: "Visita el taller en San Miguel para toma de medidas, o pide por tallas si es envío nacional.",
   },
   {
     n: "4",
@@ -110,6 +155,286 @@ export const processSteps = [
     desc: "Entregamos en San Miguel o enviamos a todo El Salvador con pago cómodo al recibir.",
   },
 ];
+
+export const faqItems = [
+  {
+    q: "¿Dónde comprar scrubs en San Miguel El Salvador?",
+    a: "En Confecciones Liss, ubicados en el Barrio La Merced, 5A Calle Poniente & 1A Avenida Sur, San Miguel — a la par del edificio anexo de la UNAB. Somos el único taller de scrubs a la medida en la zona oriental. Horario: lunes a sábado de 8:00 a.m. a 5:00 p.m. WhatsApp: 7331-7181.",
+  },
+  {
+    q: "¿Hacen uniformes para UNIVO, UNAB, UGB, UMA, IEPROES y UES?",
+    a: "Sí. Confeccionamos uniformes oficiales para todas las universidades de San Miguel y la zona oriental. Trabajamos con las especificaciones exactas de cada carrera y universidad. Precio especial para grupos de sección.",
+  },
+  {
+    q: "¿Envían uniformes a San Salvador, Santa Ana, Usulután y todo El Salvador?",
+    a: "Sí. Enviamos a todo El Salvador por tallas estándar con pago al recibir. Para pedidos a la medida, el cliente visita el taller en San Miguel o enviamos una guía de tallas. Cubrimos todos los 14 departamentos y sus municipios.",
+  },
+  {
+    q: "¿Cuánto cuestan los scrubs médicos en El Salvador?",
+    a: "Los scrubs médicos en Confecciones Liss comienzan desde $35.00 USD. El precio varía según modelo, tela y personalización (bordado de nombre, logo, etc.). Los pedidos grupales tienen precio especial.",
+  },
+  {
+    q: "¿Hacen uniformes para doctores, enfermeras y personal de hospitales?",
+    a: "Sí. Atendemos a médicos generales y especialistas, enfermeras y enfermeros, odontólogos, laboratoristas, fisioterapeutas, farmacéuticos, nutricionistas y todo el personal del sector salud. Tela Sincatex anti-fluidos certificada.",
+  },
+  {
+    q: "¿Realizan bordados y personalización en uniformes?",
+    a: "Sí. Bordamos nombres, especialidades, logos institucionales y cualquier diseño sobre scrubs, uniformes corporativos, camisas y más. También hacemos sublimación para uniformes deportivos. Consulte por diseños especiales.",
+  },
+  {
+    q: "¿Cómo pagar los uniformes?",
+    a: "Aceptamos efectivo al entregar en el taller, pago al recibir para envíos nacionales y transferencia bancaria. No cobramos anticipos en la mayoría de pedidos individuales. Para pedidos grandes se solicita anticipo.",
+  },
+  {
+    q: "¿Cuánto tiempo tardan en hacer los uniformes?",
+    a: "Uniformes individuales: 3 a 7 días hábiles. Pedidos grupales (5-20 prendas): 7 a 15 días. Pedidos institucionales grandes: 15 a 30 días. Los tiempos pueden variar en temporada de alta demanda (inicio de año universitario).",
+  },
+];
+
+export const testimonials = [
+  {
+    nombre: "Juan Carlos Garcia",
+    cargo: "Enfermería",
+    texto:
+      "Pedí uniformes para un grupo de compañeras de enfermería y todo salió perfecto todos los scrubs quedaron bien hechos, en las medidas exactas de cada una, y los entregaron en el tiempo acordado ña atención por WhatsApp fue rápida y clara durante todo el proceso. ademas la señora me recuerda a mi abuelita :)",
+    stars: 5,
+    enlace: "https://share.google/45wqfJwWUEBMLeKSA",
+  },
+  {
+    nombre: "José Antonio dias",
+    cargo: "Cliente particular",
+    texto:
+      "Excelente taller de uniformes médicos y scrubs en San Miguel, la atención rápida por WhatsApp, precios justos y lo más importante es que hacen los uniformes a la medida de cada persona. Yo tengo una talla difícil de encontrar y aquí no fue ningún problema ademas ni me cobraron demas por talla extra.",
+    stars: 5,
+    enlace: "https://share.google/BgOrs6SYsdNadJogs",
+  },
+  {
+    nombre: "Kairo Boutique",
+    cargo: "Cliente comercial",
+    texto:
+      "Mandamos a hacer los uniformes de la tienda en Confecciones Liss y la verdad es que quedamos muy satisfechos, precios comodos, nos hicieron descuento por mayoreo, en fin, encantados.",
+    stars: 5,
+    enlace: "https://share.google/ffVaegduSiB3hRcir",
+  },
+];
+
+export const professions = [
+  "Médicos generales",
+  "Médicos especialistas",
+  "Enfermeras y enfermeros",
+  "Odontólogos y dentistas",
+  "Laboratoristas clínicos",
+  "Fisioterapeutas",
+  "Nutricionistas",
+  "Farmacéuticos",
+  "Radiólogos",
+  "Anestesiólogos",
+  "Cirujanos",
+  "Pediatras",
+  "Ginecólogos",
+  "Internistas",
+  "Psicólogos",
+  "Optometristas",
+  "Personal de ISSS",
+  "Personal MINSAL",
+  "Cruz Roja Salvadoreña",
+  "Bomberos El Salvador",
+  "Veterinarios",
+  "Técnicos de laboratorio",
+  "Auxiliares de salud",
+  "Estudiantes de medicina",
+  "Estudiantes de enfermería",
+  "Estudiantes de odontología",
+  "Residentes y pasantes",
+  "Personal hospitalario",
+];
+
+export const geoZonaOriental = {
+  sanMiguel: [
+    "San Miguel centro",
+    "Barrio La Merced",
+    "Barrio San Francisco",
+    "Barrio El Calvario",
+    "Colonia Ciudad Jardín",
+    "Colonia Miramundo",
+    "Colonia Conacaste",
+    "Colonia San Alberto",
+    "Moncagua",
+    "San Jorge",
+    "Nueva Guadalupe",
+    "Ciudad Barrios",
+    "Sesori",
+    "Chinameca",
+    "El Tránsito",
+    "Uluazapa",
+    "Comacarán",
+    "San Luis de la Reina",
+    "Lolotique",
+    "Nuevo Edén de San Juan",
+    "Carolina",
+    "San Gerardo",
+    "San Rafael Oriente",
+    "Quelepa",
+    "Chirilagua",
+    "San Antonio (San Miguel)",
+  ],
+  usulutan: [
+    "Usulután",
+    "Santiago de María",
+    "Jiquilisco",
+    "Berlín",
+    "Alegría",
+    "Jucuapa",
+    "Puerto El Triunfo",
+    "Mercedes Umaña",
+    "Santa Elena",
+    "San Agustín",
+    "Nueva Granada",
+    "El Triunfo",
+    "California",
+    "Ereguayquín",
+    "Estanzuelas",
+    "Ozatlán",
+    "Concepción Batres",
+    "Tecapán",
+    "Jucuarán",
+    "San Buenaventura",
+    "San Francisco Javier",
+  ],
+  laUnion: [
+    "La Unión",
+    "Santa Rosa de Lima",
+    "El Carmen (La Unión)",
+    "Pasaquina",
+    "Anamorós",
+    "Conchagua",
+    "Intipucá",
+    "San Alejo",
+    "Bolívar",
+    "El Sauce",
+    "Lislique",
+    "Nueva Esparta",
+    "Polorós",
+    "San José (La Unión)",
+    "Yayantique",
+    "Yucuaiquín",
+    "Meanguera del Golfo",
+  ],
+  morazan: [
+    "San Francisco Gotera",
+    "Jocoro",
+    "Osicala",
+    "Cacaopera",
+    "Sensembra",
+    "Jocoaitique",
+    "Perquín",
+    "Meanguera",
+    "Sociedad",
+    "Torola",
+    "San Simón",
+    "El Divisadero",
+    "Corinto",
+    "Arambala",
+    "Chilanga",
+    "Guatajiagua",
+    "Delicias de Concepción",
+    "Gualococti",
+    "Joateca",
+    "Lolotiquillo",
+    "San Carlos",
+    "San Fernando (Morazán)",
+    "San Isidro (Morazán)",
+    "Yamabal",
+    "Yoloaiquín",
+  ],
+};
+
+export const geoRestoPais = {
+  sanSalvador: [
+    "San Salvador",
+    "Soyapango",
+    "Mejicanos",
+    "Apopa",
+    "Ilopango",
+    "San Marcos",
+    "Cuscatancingo",
+    "San Martín",
+    "Tonacatepeque",
+    "Aguilares",
+    "Guazapa",
+    "Nejapa",
+    "Panchimalco",
+    "Rosario de Mora",
+    "Santiago Texacuangos",
+    "Santo Tomás",
+    "El Paisnal",
+    "Ayutuxtepeque",
+  ],
+  laLibertad: [
+    "Santa Tecla",
+    "Antiguo Cuscatlán",
+    "Nuevo Cuscatlán",
+    "Colón",
+    "La Libertad",
+    "Quezaltepeque",
+    "San José Villanueva",
+    "Opico",
+    "Zaragoza",
+    "Jayaque",
+    "Jicalapa",
+    "Tamanique",
+    "Comasagua",
+    "Sacacoyo",
+    "San Matías",
+    "Talnique",
+    "Teotepeque",
+    "Tepecoyo",
+  ],
+  santaAna: [
+    "Santa Ana",
+    "Chalchuapa",
+    "Metapán",
+    "Coatepeque",
+    "El Congo",
+    "Candelaria de la Frontera",
+    "Texistepeque",
+    "Santiago de la Frontera",
+    "Masahuat",
+    "El Porvenir",
+    "San Sebastián Salitrillo",
+    "Santa Rosa Guachipilín",
+    "San Antonio Pajonal",
+  ],
+  sonsonateLaPaz: [
+    "Sonsonate",
+    "Acajutla",
+    "Izalco",
+    "Juayúa",
+    "Nahuizalco",
+    "Armenia",
+    "Zacatecoluca",
+    "Olocuilta",
+    "San Luis La Herradura",
+    "San Luis Talpa",
+    "San Juan Nonualco",
+    "Santiago Nonualco",
+    "Cuyultitán",
+  ],
+  resto: [
+    "Chalatenango",
+    "La Palma",
+    "San Ignacio",
+    "Cojutepeque",
+    "Suchitoto",
+    "San Vicente",
+    "Ilobasco",
+    "Sensuntepeque",
+    "Ahuachapán",
+    "Atiquizaya",
+    "Concepción de Ataco",
+    "Apaneca",
+  ],
+};
 
 export const socialLinks = [
   {

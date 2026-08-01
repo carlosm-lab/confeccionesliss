@@ -2,12 +2,23 @@ import Image from "next/image";
 import { siteConfig } from "@/config/site";
 import { Icon } from "@/components/ui/icons/Icon";
 import type { GoogleReview } from "@/lib/googleReviewsService";
+import { testimonials } from "@/lib/seo-data";
 
 interface GoogleReviewsProps {
   reviews: GoogleReview[];
 }
 
-export function GoogleReviews({ reviews }: GoogleReviewsProps) {
+export function GoogleReviews({ reviews: rawReviews }: GoogleReviewsProps) {
+  const reviews =
+    rawReviews && rawReviews.length > 0
+      ? rawReviews
+      : (testimonials.map((t, idx) => ({
+          id: `testimonial-${idx}`,
+          author_name: t.nombre,
+          rating: t.stars,
+          comment: t.texto,
+          created_at: new Date().toISOString(),
+        })) as GoogleReview[]);
   // Enlaces de cada reseña compartidos por el usuario, mapeados por nombre para consistencia
   const reviewLinksByName: Record<string, string> = {
     "Iris M.": "https://maps.app.goo.gl/duFjMseLjYQHTERh6",

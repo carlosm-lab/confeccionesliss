@@ -14,6 +14,11 @@ import { getGoogleReviews } from "@/lib/googleReviewsService";
 import { ServiciosPrincipales } from "@/components/seo/ServiciosPrincipales";
 import { NapContacto } from "@/components/seo/NapContacto";
 import { GoogleReviews } from "@/components/seo/GoogleReviews";
+import { CoberturaNacional } from "@/components/seo/CoberturaNacional";
+import { FaqSection } from "@/components/seo/FaqSection";
+import { KeywordsSeoFooter } from "@/components/seo/KeywordsSeoFooter";
+import { ProfesionesMedicas } from "@/components/seo/ProfesionesMedicas";
+import { UniversidadesCoverage } from "@/components/seo/UniversidadesCoverage";
 
 import type { Metadata } from "next";
 
@@ -25,13 +30,13 @@ export const metadata: Metadata = {
       "Scrubs y Uniformes Médicos en San Miguel, El Salvador | Confecciones Liss",
   },
   description:
-    "Empresa de uniformes médicos y universitarios en San Miguel, El Salvador. Scrubs, uniformes para IEPROES, UNIVO, UNAB, UGB, UES y UMA. Desde $35.",
+    "Taller de confección de uniformes médicos y universitarios en San Miguel, El Salvador. Scrubs a la medida para IEPROES, UNIVO, UNAB, UGB, UES y UMA. Desde $35.",
   alternates: { canonical: siteConfig.url },
   openGraph: {
     title:
       "Scrubs y Uniformes Médicos en San Miguel, El Salvador | Confecciones Liss",
     description:
-      "Empresa de uniformes médicos y universitarios en San Miguel, El Salvador. Scrubs, uniformes para IEPROES, UNIVO, UNAB, UGB, UES y UMA. Desde $35.",
+      "Taller de confección de uniformes médicos y universitarios en San Miguel, El Salvador. Scrubs a la medida para IEPROES, UNIVO, UNAB, UGB, UES y UMA. Desde $35.",
     url: siteConfig.url,
     siteName: siteConfig.name,
     locale: "es_SV",
@@ -42,17 +47,12 @@ export const metadata: Metadata = {
     title:
       "Scrubs y Uniformes Médicos en San Miguel, El Salvador | Confecciones Liss",
     description:
-      "Empresa de uniformes médicos y universitarios en San Miguel, El Salvador. Scrubs, uniformes para IEPROES, UNIVO, UNAB, UGB, UES y UMA. Desde $35.",
+      "Taller de confección de uniformes médicos y universitarios en San Miguel, El Salvador. Scrubs a la medida para IEPROES, UNIVO, UNAB, UGB, UES y UMA. Desde $35.",
     creator: siteConfig.twitterHandle,
   },
 };
 
 // ── SSG + On-Demand Revalidation (ISR) ──────────────────────────────────────
-// revalidate = 3600 (1h) habilita ISR real en Vercel:
-//   - La página se pre-renderiza en build time y se distribuye a TODOS los CDN edges.
-//   - Se regenera automáticamente cada hora y también bajo demanda via revalidatePath('/').
-// revalidate = false causaba que cada edge node renderizara la página en su primer hit
-// (lazy cold-start), produciendo FCP variable de 1.5s vs 2.4s entre audits consecutivos.
 export const revalidate = 3600;
 
 export default async function HomePage() {
@@ -63,7 +63,6 @@ export default async function HomePage() {
   ]);
 
   const recentProducts = rawRecentProducts.map((p) => {
-    // 1. Resolve LCP image in server
     let rawImg = null;
     if (p.images && Array.isArray(p.images) && p.images.length > 0) {
       rawImg = p.images[0];
@@ -71,14 +70,12 @@ export default async function HomePage() {
       rawImg = p.image_path ?? null;
     }
 
-    // 2. Compute sector in server
     const sector =
       p.sector ??
       p.categories?.catalog ??
       p.category?.split("-")[0] ??
       "scrubs";
 
-    // 3. Resolve display and list prices in server
     const priceBySize = p.price_by_size;
     const offerBySize = p.offer_by_size;
     const minBasePrice =
@@ -109,7 +106,6 @@ export default async function HomePage() {
     const finalOldPrice =
       rawOldPrice !== null && rawOldPrice > finalPrice ? rawOldPrice : null;
 
-    // 4. Determine sale status in server
     let onSale = false;
     const hasOfferBySize = offerBySize && Object.keys(offerBySize).length > 0;
     const hasGlobalOldPrice = p.old_price && p.old_price > p.price;
@@ -138,7 +134,6 @@ export default async function HomePage() {
     };
   }) as unknown as typeof rawRecentProducts;
 
-  // Process reviews, slicing to top 8 with real comments to reduce HTML size by ~30KB
   const reviews = [...rawReviews]
     .sort((a, b) => {
       const hasCommentA = a.comment ? 1 : 0;
@@ -161,9 +156,9 @@ export default async function HomePage() {
             "@graph": [
               buildWebPageSchema({
                 url: siteConfig.url,
-                name: "Scrubs y Uniformes Médicos en San Miguel, El Salvador | Liss",
+                name: "Scrubs y Uniformes Médicos en San Miguel, El Salvador | Confecciones Liss",
                 description:
-                  "Empresa de uniformes médicos y universitarios en San Miguel, El Salvador. Scrubs, uniformes para IEPROES, UNIVO, UNAB, UGB, UES y UMA. Desde $35.",
+                  "Taller de confección de uniformes médicos y universitarios en San Miguel, El Salvador. Scrubs a la medida para IEPROES, UNIVO, UNAB, UGB, UES y UMA. Desde $35.",
               }),
               buildBreadcrumbSchema([{ name: "Inicio", item: siteConfig.url }]),
               schemaFAQ,
@@ -172,17 +167,15 @@ export default async function HomePage() {
         }}
       />
 
-      {/* ═══ HERO (100% alto de vista rígido lg:h-[calc(100dvh-56px)] en desktop; solo cambia a h-auto si el alto colapsa) ═══ */}
+      {/* ═══ HERO ═══ */}
       <section className="bg-surface @max-h-[750px]:h-auto @max-h-[750px]:min-h-[calc(100dvh-56px)] @max-h-[750px]:overflow-visible @max-h-[750px]:py-8 relative flex min-h-[calc(100dvh-56px)] flex-col overflow-x-hidden px-5 pt-4 pb-10 md:min-h-0 md:px-8 md:pt-6 md:pb-14 lg:h-[calc(100dvh-56px)] lg:overflow-hidden lg:pb-4">
         <div className="mx-auto grid h-full w-full max-w-screen-2xl grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2 lg:grid-cols-12 lg:items-center lg:gap-x-16 lg:gap-y-0">
-          {/* TÍTULO HERO (Ocupa ancho completo en móvil/tablet, 7 cols en desktop) */}
           <div className="z-10 order-1 w-full md:col-span-2 lg:order-none lg:col-span-7 lg:row-span-1">
             <h1 className="text-primary mb-6 w-full text-center font-serif text-2xl leading-[1.15] tracking-tight sm:text-3xl md:mb-8 md:flex md:flex-col md:items-center md:text-4xl lg:mb-4 lg:block lg:text-left lg:text-4xl xl:text-5xl xl:leading-[1.1]">
               <span className="text-center lg:text-left">
                 Scrubs y Uniformes para Salud y Universidad{" "}
               </span>
               <span className="text-secondary font-serif md:mt-2 md:flex md:w-full md:items-center md:justify-center md:gap-4 lg:mt-0 lg:inline lg:gap-0">
-                {/* LÍNEA DECORATIVA IZQUIERDA (Solo Tablet) */}
                 <span className="hidden md:flex md:flex-1 md:items-center md:gap-2 lg:hidden">
                   <span className="to-secondary/30 h-[1.5px] flex-1 bg-gradient-to-r from-transparent" />
                   <span className="bg-secondary/50 h-1.5 w-1.5 shrink-0 rotate-45" />
@@ -190,7 +183,6 @@ export default async function HomePage() {
 
                 <span className="shrink-0">en El Salvador</span>
 
-                {/* LÍNEA DECORATIVA DERECHA (Solo Tablet) */}
                 <span className="hidden md:flex md:flex-1 md:items-center md:gap-2 lg:hidden">
                   <span className="bg-secondary/50 h-1.5 w-1.5 shrink-0 rotate-45" />
                   <span className="from-secondary/30 h-[1.5px] flex-1 bg-gradient-to-r to-transparent" />
@@ -199,7 +191,6 @@ export default async function HomePage() {
             </h1>
           </div>
 
-          {/* IMAGEN HERO ÚNICA - OPTIMIZADA RESPONSIVE (ESTRUCTURA Y SOMBRA ORIGINALES 3d12cbd) */}
           <div className="order-2 mx-auto flex w-full max-w-md self-center justify-self-center sm:max-w-lg md:order-3 md:col-span-1 md:h-full md:max-w-none md:self-stretch lg:order-none lg:col-span-5 lg:row-span-2 lg:h-full lg:items-center">
             <div className="border-primary/35 relative z-10 flex w-full flex-col items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] md:h-full">
               <div className="border-primary pointer-events-none absolute inset-3 z-20 rounded-[12px] border-[2px] border-dashed" />
@@ -209,13 +200,12 @@ export default async function HomePage() {
             </div>
           </div>
 
-          {/* COLUMNA DE TEXTO Y ACCIONES (ESTRUCTURA ORIGINAL 3d12cbd) */}
           <div className="order-3 flex w-full flex-col items-start md:order-2 md:col-span-1 md:justify-center lg:order-none lg:col-span-7 lg:row-span-1">
             <p className="text-on-surface-variant font-body mb-5 w-full text-sm leading-relaxed sm:text-base md:text-base lg:mb-5 lg:text-lg">
-              Empresa especializada en scrubs médicos y uniformes universitarios
-              en tela Sincatex y Lino Oxford. Uniformes para UNIVO, UNAB, UGB,
-              colegios y empresas. Bordados, sublimación y envío a todo El
-              Salvador. <strong>Desde $35 USD.</strong>
+              Taller especializado de confección a la medida de scrubs médicos y
+              uniformes universitarios en tela Sincatex y Lino Oxford. Uniformes
+              para UNIVO, UNAB, UGB, colegios y empresas. Bordados, sublimación
+              y envío a todo El Salvador. <strong>Desde $35 USD.</strong>
             </p>
             <div className="mb-6 grid w-full grid-cols-2 gap-x-3 gap-y-2.5 md:grid-cols-1 lg:grid-cols-2">
               {heroTrustBadges.map((b) => (
@@ -296,10 +286,10 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* ═══ SERVICIOS PRINCIPALES (NEW) ═══ */}
+      {/* ═══ SERVICIOS PRINCIPALES ═══ */}
       <ServiciosPrincipales />
 
-      {/* ═══ ¿POR QUÉ ELEGIRNOS? (updated content) ═══ */}
+      {/* ═══ ¿POR QUÉ ELEGIRNOS? ═══ */}
       <section className="bg-surface-container-low border-surface-variant/50 lazy-section border-t border-b px-5 py-14 md:px-8 md:py-24">
         <div className="mx-auto max-w-screen-2xl">
           <div className="mb-12 flex flex-col items-center">
@@ -335,10 +325,62 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ═══ UNIVERSIDADES ═══ */}
+      <UniversidadesCoverage />
+
+      {/* ═══ PROCESO DE PEDIDO ═══ */}
+      <section className="bg-primary lazy-section px-5 py-14 text-white md:px-8 md:py-24">
+        <div className="mx-auto max-w-screen-2xl">
+          <div className="mb-12 flex flex-col items-center">
+            <h2 className="animate-fade-in-up section-title mb-4 text-white">
+              ¿Cómo pedir tus uniformes en Confecciones Liss?
+            </h2>
+            <div
+              className="animate-fade-in-up bg-primary-container mt-2 mb-6 h-1 w-16 rounded-full"
+              style={{ animationDelay: "100ms" }}
+            ></div>
+            <p
+              className="animate-fade-in-up text-primary-container w-full text-left text-base leading-relaxed md:mx-auto md:text-center md:text-lg"
+              style={{ animationDelay: "150ms" }}
+            >
+              Un proceso sencillo para que recibas tu uniforme perfecto sin
+              complicaciones.
+            </p>
+          </div>
+          <div className="relative grid grid-cols-1 gap-6 lg:grid-cols-4 lg:gap-8">
+            <div className="bg-primary-container/30 absolute top-12 right-[10%] left-[10%] z-0 hidden h-0.5 lg:block" />
+            {processSteps.map((s, index) => (
+              <div
+                key={s.n}
+                className="animate-fade-in-up relative z-10 flex flex-row items-center gap-4 text-left lg:flex-col lg:gap-0 lg:text-center"
+                style={{ animationDelay: `${index * 75 + 200}ms` }}
+              >
+                <div className="text-primary ambient-shadow flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white font-serif text-xl font-bold lg:mb-4 lg:h-20 lg:w-20 lg:text-2xl">
+                  {s.n}
+                </div>
+                <div>
+                  <h3 className="mb-1 font-serif text-xl lg:mb-2">{s.title}</h3>
+                  <p className="text-primary-container text-sm">{s.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ FAQ ═══ */}
+      <FaqSection />
+
       {/* ═══ GOOGLE REVIEWS (dynamic) ═══ */}
       <GoogleReviews reviews={reviews} />
 
-      {/* ═══ CTA INSTITUCIONAL (updated content) ═══ */}
+      {/* ═══ COBERTURA NACIONAL ═══ */}
+      <CoberturaNacional />
+
+      {/* ═══ PROFESIONES MÉDICAS ═══ */}
+      <ProfesionesMedicas />
+
+      {/* ═══ CTA INSTITUCIONAL ═══ */}
       <section
         aria-labelledby="institucional-heading"
         className="bg-primary px-5 py-14 text-white md:px-8 md:py-20"
@@ -373,8 +415,11 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ═══ NAP + CONTACTO (NEW) ═══ */}
+      {/* ═══ NAP + CONTACTO ═══ */}
       <NapContacto />
+
+      {/* ═══ KEYWORDS SEO FOOTER ═══ */}
+      <KeywordsSeoFooter />
     </>
   );
 }
