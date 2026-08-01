@@ -9,6 +9,7 @@ import {
   getProductUniversity,
 } from "@/lib/catalogService";
 import { getProductReviews } from "@/lib/reviewsService";
+import { SHIPPING_DETAILS_SV, MERCHANT_RETURN_POLICY } from "@/lib/schemas";
 import { CATEGORIES } from "@/data/categories";
 import type { Sector } from "@/data/types";
 
@@ -61,38 +62,7 @@ export async function generateStaticParams(): Promise<
   }
 }
 
-// ── Schema constants ───────────────────────────────────────────────────────────
-const SHIPPING_DETAILS_SV = {
-  "@type": "OfferShippingDetails",
-  shippingRate: { "@type": "MonetaryAmount", value: "0", currency: "USD" },
-  shippingDestination: { "@type": "DefinedRegion", addressCountry: "SV" },
-  deliveryTime: {
-    "@type": "ShippingDeliveryTime",
-    handlingTime: {
-      "@type": "QuantitativeValue",
-      minValue: 1,
-      maxValue: 3,
-      unitCode: "DAY",
-    },
-    transitTime: {
-      "@type": "QuantitativeValue",
-      minValue: 1,
-      maxValue: 3,
-      unitCode: "DAY",
-    },
-  },
-} as const;
-
-const MERCHANT_RETURN_POLICY = {
-  "@type": "MerchantReturnPolicy",
-  applicableCountry: "SV",
-  returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
-  merchantReturnDays: 7,
-  returnMethod: "https://schema.org/ReturnInStore",
-  returnFees: "https://schema.org/FreeReturn",
-} as const;
-
-// ── Metadata ───────────────────────────────────────────────────────────────────
+// ── Dynamic metadata per product ───────────────────────────────────────────────────────────────────
 export async function generateMetadata({
   params,
 }: {

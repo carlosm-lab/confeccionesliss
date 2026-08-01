@@ -150,3 +150,74 @@ export const schemaFAQ = {
     },
   ],
 };
+
+/** Tarifas de envío oficial según /legal/envios */
+export const SHIPPING_DETAILS_SV = [
+  {
+    "@type": "OfferShippingDetails",
+    name: "Envío Zona Oriental (San Miguel, Usulután, La Unión, Morazán)",
+    shippingRate: {
+      "@type": "MonetaryAmount",
+      value: "3.00",
+      currency: "USD",
+    },
+    shippingDestination: {
+      "@type": "DefinedRegion",
+      addressCountry: "SV",
+      addressRegion: ["San Miguel", "Usulután", "La Unión", "Morazán"],
+    },
+    deliveryTime: {
+      "@type": "ShippingDeliveryTime",
+      handlingTime: {
+        "@type": "QuantitativeValue",
+        minValue: 1,
+        maxValue: 2,
+        unitCode: "DAY",
+      },
+      transitTime: {
+        "@type": "QuantitativeValue",
+        minValue: 1,
+        maxValue: 3,
+        unitCode: "DAY",
+      },
+    },
+  },
+  {
+    "@type": "OfferShippingDetails",
+    name: "Envío Resto del País (San Salvador, Santa Ana, etc.)",
+    shippingRate: {
+      "@type": "MonetaryAmount",
+      value: "6.00",
+      currency: "USD",
+    },
+    shippingDestination: {
+      "@type": "DefinedRegion",
+      addressCountry: "SV",
+    },
+    deliveryTime: {
+      "@type": "ShippingDeliveryTime",
+      handlingTime: {
+        "@type": "QuantitativeValue",
+        minValue: 1,
+        maxValue: 2,
+        unitCode: "DAY",
+      },
+      transitTime: {
+        "@type": "QuantitativeValue",
+        minValue: 1,
+        maxValue: 7,
+        unitCode: "DAY",
+      },
+    },
+  },
+];
+
+/** Política de devoluciones oficial según /legal/devoluciones */
+export const MERCHANT_RETURN_POLICY = {
+  "@type": "MerchantReturnPolicy",
+  applicableCountry: "SV",
+  returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+  merchantReturnDays: 30,
+  returnMethod: "https://schema.org/ReturnInStore",
+  returnFees: "https://schema.org/FreeReturn",
+};
