@@ -247,7 +247,7 @@ export function LinksPageClient() {
               }}
             >
               <Image
-                src="/logo-white.svg"
+                src="/logo.png"
                 alt="Logo de Confecciones Liss"
                 width={150}
                 height={150}
@@ -256,6 +256,7 @@ export function LinksPageClient() {
                   height: "100%",
                   objectFit: "contain",
                   padding: "12px",
+                  filter: "brightness(0) invert(1)",
                 }}
                 priority
               />
