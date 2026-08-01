@@ -219,7 +219,211 @@ export default function MediaKitClient() {
                   Espacio libre obligatorio de 20px alrededor.
                 </p>
               </div>
-              <span>PROTECCIÓN DE MARCA</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ──────────────────────────────────────────────────────── */}
+      {/* SECCIÓN ADICIONAL 1: ISOTIPO OFICIAL (SÍMBOLO COMPLETO) */}
+      {/* ──────────────────────────────────────────────────────── */}
+      <section className="mx-auto min-h-[400px] max-w-[1600px] border-b border-[#e1e2e5] px-5 py-12 md:px-8">
+        <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
+          {/* Columna Izquierda */}
+          <div className="space-y-4 lg:col-span-4">
+            <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
+              Símbolo de Marca — Versión Completa
+            </span>
+            <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
+              Isotipo Oficial
+            </h2>
+            <div className="h-0.5 w-12 rounded-full bg-[#143067]"></div>
+            <p className="max-w-sm text-xs leading-relaxed text-[#444650]">
+              El isotipo oficial de Confecciones Liss es el símbolo gráfico
+              completo diseñado para aplicaciones de marca, avatares de perfil,
+              material impreso, marcas de agua y bordados institucionales.
+            </p>
+          </div>
+
+          {/* Columna Derecha: 4 Módulos de Isotipo Oficial */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-8 lg:grid-cols-4">
+            {/* Módulo A: Isotipo Principal SVG */}
+            <div className="border-primary/35 flex aspect-square flex-col justify-between rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <span className="font-mono text-[9px] text-[#444650]/60">
+                01 // ISOTIPO VECTORIAL
+              </span>
+              <div className="my-auto flex flex-1 items-center justify-center py-2">
+                <Image
+                  src="/logo-isotipo.svg"
+                  alt="Isotipo Oficial Confecciones Liss — versión vectorial SVG"
+                  width={180}
+                  height={180}
+                  className="h-auto max-h-[85%] w-[85%] object-contain"
+                />
+              </div>
+              <span className="text-center font-mono text-[9px] font-bold text-[#143067]">
+                NATIVO SVG (COMPLETO)
+              </span>
+            </div>
+
+            {/* Módulo B: Monocromático */}
+            <div className="border-primary/35 flex aspect-square flex-col justify-between rounded-2xl border bg-[#f8f9fb] p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <span className="font-mono text-[9px] text-[#444650]/60">
+                02 // MONOCROMÁTICO
+              </span>
+              <div className="my-auto flex flex-1 items-center justify-center py-2">
+                <Image
+                  src="/logo-isotipo.svg"
+                  alt="Isotipo Oficial Confecciones Liss — versión monocromática"
+                  width={180}
+                  height={180}
+                  className="h-auto max-h-[85%] w-[85%] object-contain grayscale"
+                />
+              </div>
+              <span className="text-center font-mono text-[9px] text-[#444650]">
+                ESCALA DE GRISES
+              </span>
+            </div>
+
+            {/* Módulo C: Negativo (Fondo Oscuro) */}
+            <div className="border-primary/35 flex aspect-square flex-col justify-between rounded-2xl border bg-[#143067] p-4 text-white shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <span className="font-mono text-[9px] text-white/60">
+                03 // NEGATIVO (BLANCO)
+              </span>
+              <div className="my-auto flex flex-1 items-center justify-center py-2">
+                <Image
+                  src="/logo-isotipo-white.svg"
+                  alt="Isotipo Oficial Confecciones Liss — versión negativa"
+                  width={180}
+                  height={180}
+                  className="h-auto max-h-[85%] w-[85%] object-contain"
+                />
+              </div>
+              <span className="text-center font-mono text-[9px] text-white/80">
+                FONDO OSCURO (#143067)
+              </span>
+            </div>
+
+            {/* Módulo D: PNG Alta Res */}
+            <div className="border-primary/35 flex aspect-square flex-col justify-between rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <span className="font-mono text-[9px] text-[#444650]/60">
+                04 // PNG RASTER
+              </span>
+              <div className="my-auto flex flex-1 items-center justify-center py-2">
+                <Image
+                  src="/logo-isotipo.png"
+                  alt="Isotipo Oficial Confecciones Liss — versión PNG 512px"
+                  width={180}
+                  height={180}
+                  className="h-auto max-h-[85%] w-[85%] object-contain"
+                />
+              </div>
+              <span className="text-center font-mono text-[9px] text-[#444650]">
+                512 × 512 PX (TRANSPARENTE)
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ──────────────────────────────────────────────────────── */}
+      {/* SECCIÓN ADICIONAL 2: ISOTIPO SIMPLIFICADO Y VARIACIONES */}
+      {/* ──────────────────────────────────────────────────────── */}
+      <section className="mx-auto min-h-[400px] max-w-[1600px] border-b border-[#e1e2e5] px-5 py-12 md:px-8">
+        <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
+          {/* Columna Izquierda */}
+          <div className="space-y-4 lg:col-span-4">
+            <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
+              Símbolo de Marca Digital
+            </span>
+            <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
+              Isotipo Simplificado
+            </h2>
+            <div className="h-0.5 w-12 rounded-full bg-[#143067]"></div>
+            <p className="max-w-sm text-xs leading-relaxed text-[#444650]">
+              El nuevo isotipo simplificado oficial de Confecciones Liss es la
+              versión de alto contraste optimizada específicamente para pestañas
+              de navegadores, favicons, resultados de búsqueda (Google Search
+              Console), avatares de redes sociales y bordados compactos.
+            </p>
+          </div>
+
+          {/* Columna Derecha: 4 Módulos de Isotipo Simplificado */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-8 lg:grid-cols-4">
+            {/* Módulo A: Isotipo Simplificado SVG */}
+            <div className="border-primary/35 flex aspect-square flex-col justify-between rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <span className="font-mono text-[9px] text-[#444650]/60">
+                01 // VECTORIAL NAVEGADOR
+              </span>
+              <div className="my-auto flex flex-1 items-center justify-center py-2">
+                <Image
+                  src="/isotipo-simplificado.svg"
+                  alt="Isotipo Simplificado Confecciones Liss — versión SVG para pestañas de navegadores"
+                  width={180}
+                  height={180}
+                  className="h-auto max-h-[85%] w-[85%] object-contain"
+                />
+              </div>
+              <span className="text-center font-mono text-[9px] font-bold text-[#143067]">
+                FAVICON / VECTOR SVG
+              </span>
+            </div>
+
+            {/* Módulo B: Monocromático */}
+            <div className="border-primary/35 flex aspect-square flex-col justify-between rounded-2xl border bg-[#f8f9fb] p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <span className="font-mono text-[9px] text-[#444650]/60">
+                02 // MONOCROMÁTICO
+              </span>
+              <div className="my-auto flex flex-1 items-center justify-center py-2">
+                <Image
+                  src="/isotipo-simplificado.svg"
+                  alt="Isotipo Simplificado Confecciones Liss — versión monocromática"
+                  width={180}
+                  height={180}
+                  className="h-auto max-h-[85%] w-[85%] object-contain grayscale"
+                />
+              </div>
+              <span className="text-center font-mono text-[9px] text-[#444650]">
+                ESCALA DE GRISES
+              </span>
+            </div>
+
+            {/* Módulo C: Negativo (Fondo Oscuro) */}
+            <div className="border-primary/35 flex aspect-square flex-col justify-between rounded-2xl border bg-[#0b2c6a] p-4 text-white shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <span className="font-mono text-[9px] text-white/60">
+                03 // NEGATIVO (BLANCO)
+              </span>
+              <div className="my-auto flex flex-1 items-center justify-center py-2">
+                <Image
+                  src="/isotipo-simplificado-white.svg"
+                  alt="Isotipo Simplificado Confecciones Liss — versión negativa"
+                  width={180}
+                  height={180}
+                  className="h-auto max-h-[85%] w-[85%] object-contain"
+                />
+              </div>
+              <span className="text-center font-mono text-[9px] text-white/80">
+                FONDO OSCURO (#0B2C6A)
+              </span>
+            </div>
+
+            {/* Módulo D: PNG Alta Res */}
+            <div className="border-primary/35 flex aspect-square flex-col justify-between rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <span className="font-mono text-[9px] text-[#444650]/60">
+                04 // PNG RASTER
+              </span>
+              <div className="my-auto flex flex-1 items-center justify-center py-2">
+                <Image
+                  src="/isotipo-simplificado.png"
+                  alt="Isotipo Simplificado Confecciones Liss — versión PNG 512px"
+                  width={180}
+                  height={180}
+                  className="h-auto max-h-[85%] w-[85%] object-contain"
+                />
+              </div>
+              <span className="text-center font-mono text-[9px] text-[#444650]">
+                512 × 512 PX (TRANSPARENTE)
+              </span>
             </div>
           </div>
         </div>
@@ -502,6 +706,235 @@ export default function MediaKitClient() {
       </section>
 
       {/* ──────────────────────────────────────────────────────── */}
+      {/* SECCIÓN ADICIONAL 1: NORMAS DE APLICACIÓN DEL ISOTIPO OFICIAL */}
+      {/* ──────────────────────────────────────────────────────── */}
+      <section className="mx-auto max-w-[1600px] border-b border-[#e1e2e5] px-5 py-16 md:px-8">
+        <div className="mb-12 space-y-3">
+          <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
+            Normas de Aplicación — Isotipo Oficial
+          </span>
+          <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
+            Uso correcto del isotipo oficial
+          </h2>
+          <div className="h-0.5 w-12 rounded-full bg-[#143067]"></div>
+          <p className="max-w-2xl text-xs leading-relaxed text-[#444650]">
+            Directrices para el uso correcto del símbolo gráfico oficial
+            (isotipo completo) en publicaciones, piezas impresas, avatares y
+            bordados institucionales.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          {/* Correcto 1 — Isotipo Oficial Claro */}
+          <div className="space-y-4">
+            <span className="inline-block rounded bg-green-100 px-3 py-1 font-mono text-[10px] font-bold tracking-wider text-green-800 uppercase">
+              CORRECTO
+            </span>
+            <div className="border-primary/35 flex aspect-[4/3] items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <Image
+                src="/logo-isotipo.svg"
+                alt="Isotipo oficial sobre fondo claro — uso correcto"
+                width={160}
+                height={160}
+                className="h-auto max-h-[75%] w-[75%] object-contain"
+              />
+            </div>
+            <h3 className="font-serif text-sm font-bold text-[#143067]">
+              Isotipo oficial en fondos claros
+            </h3>
+            <p className="text-xs leading-relaxed text-[#444650]">
+              El isotipo oficial en azul marino debe aplicarse preferiblemente
+              sobre fondos blancos o neutros.
+            </p>
+          </div>
+
+          {/* Correcto 2 — Isotipo Oficial Oscuro */}
+          <div className="space-y-4">
+            <span className="inline-block rounded bg-green-100 px-3 py-1 font-mono text-[10px] font-bold tracking-wider text-green-800 uppercase">
+              CORRECTO
+            </span>
+            <div className="border-primary/35 flex aspect-[4/3] items-center justify-center rounded-2xl border bg-[#143067] p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <Image
+                src="/logo-isotipo-white.svg"
+                alt="Isotipo oficial blanco sobre fondo oscuro — uso correcto"
+                width={160}
+                height={160}
+                className="h-auto max-h-[75%] w-[75%] object-contain"
+              />
+            </div>
+            <h3 className="font-serif text-sm font-bold text-[#143067]">
+              Isotipo oficial en fondos oscuros
+            </h3>
+            <p className="text-xs leading-relaxed text-[#444650]">
+              Sobre fondos oscuros o de color corporativo (#143067) debe usarse
+              la versión oficial en blanco o negativo.
+            </p>
+          </div>
+
+          {/* Incorrecto 1 — Alterar colores */}
+          <div className="space-y-4">
+            <span className="inline-block rounded bg-red-100 px-3 py-1 font-mono text-[10px] font-bold tracking-wider text-red-800 uppercase">
+              INCORRECTO
+            </span>
+            <div className="border-primary/35 flex aspect-[4/3] items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <Image
+                src="/logo-isotipo.svg"
+                alt="Isotipo oficial con colores alterados — uso incorrecto"
+                width={160}
+                height={160}
+                className="h-auto max-h-[75%] w-[75%] object-contain hue-rotate-[240deg] saturate-[2]"
+              />
+            </div>
+            <h3 className="font-serif text-sm font-bold text-[#143067]">
+              Alterar colores del isotipo
+            </h3>
+            <p className="text-xs leading-relaxed text-[#444650]">
+              Queda prohibido aplicar otros colores, degradados o efectos no
+              institucionales.
+            </p>
+          </div>
+
+          {/* Incorrecto 2 — Deformar */}
+          <div className="space-y-4">
+            <span className="inline-block rounded bg-red-100 px-3 py-1 font-mono text-[10px] font-bold tracking-wider text-red-800 uppercase">
+              INCORRECTO
+            </span>
+            <div className="border-primary/35 flex aspect-[4/3] items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <Image
+                src="/logo-isotipo.svg"
+                alt="Isotipo oficial deformado — uso incorrecto"
+                width={160}
+                height={160}
+                className="h-auto max-h-[75%] w-[75%] scale-x-[1.5] object-contain"
+              />
+            </div>
+            <h3 className="font-serif text-sm font-bold text-[#143067]">
+              Deformar el isotipo
+            </h3>
+            <p className="text-xs leading-relaxed text-[#444650]">
+              Queda estrictamente prohibido estirar, distorsionar o modificar
+              las proporciones.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ──────────────────────────────────────────────────────── */}
+      {/* SECCIÓN ADICIONAL 2: NORMAS DE APLICACIÓN DEL ISOTIPO SIMPLIFICADO */}
+      {/* ──────────────────────────────────────────────────────── */}
+      <section className="mx-auto max-w-[1600px] border-b border-[#e1e2e5] px-5 py-16 md:px-8">
+        <div className="mb-12 space-y-3">
+          <span className="font-mono text-xs font-bold tracking-widest text-[#143067] uppercase">
+            Normas de Aplicación — Isotipo Simplificado
+          </span>
+          <h2 className="font-serif text-2xl text-[#143067] md:text-3xl">
+            Uso correcto del isotipo simplificado
+          </h2>
+          <div className="h-0.5 w-12 rounded-full bg-[#143067]"></div>
+          <p className="max-w-2xl text-xs leading-relaxed text-[#444650]">
+            Directrices para el uso exclusivo del isotipo simplificado de alto
+            contraste en favicons, pestañas de navegadores y resultados de
+            búsqueda.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          {/* Correcto 1 — Isotipo Simplificado Claro */}
+          <div className="space-y-4">
+            <span className="inline-block rounded bg-green-100 px-3 py-1 font-mono text-[10px] font-bold tracking-wider text-green-800 uppercase">
+              CORRECTO
+            </span>
+            <div className="border-primary/35 flex aspect-[4/3] items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <Image
+                src="/isotipo-simplificado.svg"
+                alt="Isotipo simplificado sobre fondo claro — uso correcto"
+                width={160}
+                height={160}
+                className="h-auto max-h-[75%] w-[75%] object-contain"
+              />
+            </div>
+            <h3 className="font-serif text-sm font-bold text-[#143067]">
+              Isotipo simplificado en fondos claros
+            </h3>
+            <p className="text-xs leading-relaxed text-[#444650]">
+              El isotipo simplificado en versión azul marino debe aplicarse
+              preferiblemente en pestañas de navegadores, favicons y fondos
+              blancos.
+            </p>
+          </div>
+
+          {/* Correcto 2 — Isotipo Simplificado Oscuro */}
+          <div className="space-y-4">
+            <span className="inline-block rounded bg-green-100 px-3 py-1 font-mono text-[10px] font-bold tracking-wider text-green-800 uppercase">
+              CORRECTO
+            </span>
+            <div className="border-primary/35 flex aspect-[4/3] items-center justify-center rounded-2xl border bg-[#0b2c6a] p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <Image
+                src="/isotipo-simplificado-white.svg"
+                alt="Isotipo simplificado en blanco sobre fondo oscuro — uso correcto"
+                width={160}
+                height={160}
+                className="h-auto max-h-[75%] w-[75%] object-contain"
+              />
+            </div>
+            <h3 className="font-serif text-sm font-bold text-[#143067]">
+              Isotipo simplificado en fondos oscuros
+            </h3>
+            <p className="text-xs leading-relaxed text-[#444650]">
+              Sobre fondos oscuros o de color corporativo (#0B2C6A) debe usarse
+              la versión simplificada en blanco o negativo.
+            </p>
+          </div>
+
+          {/* Incorrecto 1 — Alterar colores */}
+          <div className="space-y-4">
+            <span className="inline-block rounded bg-red-100 px-3 py-1 font-mono text-[10px] font-bold tracking-wider text-red-800 uppercase">
+              INCORRECTO
+            </span>
+            <div className="border-primary/35 flex aspect-[4/3] items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <Image
+                src="/isotipo-simplificado.svg"
+                alt="Isotipo simplificado con colores alterados — uso incorrecto"
+                width={160}
+                height={160}
+                className="h-auto max-h-[75%] w-[75%] object-contain hue-rotate-[240deg] saturate-[2]"
+              />
+            </div>
+            <h3 className="font-serif text-sm font-bold text-[#143067]">
+              Alterar colores del isotipo
+            </h3>
+            <p className="text-xs leading-relaxed text-[#444650]">
+              Queda prohibido aplicar otros colores, degradados o efectos no
+              institucionales.
+            </p>
+          </div>
+
+          {/* Incorrecto 2 — Deformar */}
+          <div className="space-y-4">
+            <span className="inline-block rounded bg-red-100 px-3 py-1 font-mono text-[10px] font-bold tracking-wider text-red-800 uppercase">
+              INCORRECTO
+            </span>
+            <div className="border-primary/35 flex aspect-[4/3] items-center justify-center rounded-2xl border bg-white p-4 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)]">
+              <Image
+                src="/isotipo-simplificado.svg"
+                alt="Isotipo simplificado deformado — uso incorrecto"
+                width={160}
+                height={160}
+                className="h-auto max-h-[75%] w-[75%] scale-x-[1.5] object-contain"
+              />
+            </div>
+            <h3 className="font-serif text-sm font-bold text-[#143067]">
+              Deformar el isotipo
+            </h3>
+            <p className="text-xs leading-relaxed text-[#444650]">
+              Queda estrictamente prohibido estirar, distorsionar o modificar
+              las proporciones.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ──────────────────────────────────────────────────────── */}
       {/* BLOQUE 4: INFORMACIÓN INSTITUCIONAL */}
       {/* ──────────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-[1600px] border-b border-[#e1e2e5] px-5 py-16 md:px-8">
@@ -718,36 +1151,177 @@ export default function MediaKitClient() {
           <div className="h-0.5 w-12 rounded-full bg-[#143067]"></div>
         </div>
 
-        {/* Card única — único recurso disponible actualmente */}
-        <div className="border-primary/35 hover:border-primary/55 flex max-w-sm items-center justify-between gap-6 rounded-2xl border bg-white p-5 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300">
-          <div className="space-y-1">
-            <p className="font-serif text-sm font-bold text-[#143067]">
-              Logotipo oficial
-            </p>
-            <p className="font-mono text-[10px] text-[#444650]">Formato: PNG</p>
-          </div>
-          <a
-            href="/logo.png"
-            download
-            className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-[#143067] px-4 py-2 font-mono text-[10px] tracking-wider text-white uppercase shadow-md transition-opacity hover:opacity-80"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-3.5 w-3.5"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
+        {/* Red de Recursos Disponibles para Descarga */}
+        <div className="grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Card 1: Logotipo Oficial PNG (Normal) */}
+          <div className="border-primary/35 hover:border-primary/55 flex items-center justify-between gap-6 rounded-2xl border bg-white p-5 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300">
+            <div className="space-y-1">
+              <p className="font-serif text-sm font-bold text-[#143067]">
+                Logotipo oficial
+              </p>
+              <p className="font-mono text-[10px] text-[#444650]">
+                Formato: PNG (Con tipografía)
+              </p>
+            </div>
+            <a
+              href="/logo.png"
+              download
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-[#143067] px-4 py-2 font-mono text-[10px] tracking-wider text-white uppercase shadow-md transition-opacity hover:opacity-80"
             >
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="7 10 12 15 17 10" />
-              <line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
-            Descargar
-          </a>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-3.5 w-3.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              Descargar
+            </a>
+          </div>
+
+          {/* Card 2: Isotipo Oficial SVG (Símbolo Completo) */}
+          <div className="border-primary/35 hover:border-primary/55 flex items-center justify-between gap-6 rounded-2xl border bg-white p-5 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300">
+            <div className="space-y-1">
+              <p className="font-serif text-sm font-bold text-[#143067]">
+                Isotipo oficial
+              </p>
+              <p className="font-mono text-[10px] text-[#444650]">
+                Formato: SVG (Símbolo Completo)
+              </p>
+            </div>
+            <a
+              href="/logo-isotipo.svg"
+              download
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-[#143067] px-4 py-2 font-mono text-[10px] tracking-wider text-white uppercase shadow-md transition-opacity hover:opacity-80"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-3.5 w-3.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              Descargar SVG
+            </a>
+          </div>
+
+          {/* Card 3: Isotipo Oficial Negativo SVG */}
+          <div className="border-primary/35 hover:border-primary/55 flex items-center justify-between gap-6 rounded-2xl border bg-white p-5 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300">
+            <div className="space-y-1">
+              <p className="font-serif text-sm font-bold text-[#143067]">
+                Isotipo oficial negativo
+              </p>
+              <p className="font-mono text-[10px] text-[#444650]">
+                Formato: SVG (Blanco)
+              </p>
+            </div>
+            <a
+              href="/logo-isotipo-white.svg"
+              download
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-[#143067] px-4 py-2 font-mono text-[10px] tracking-wider text-white uppercase shadow-md transition-opacity hover:opacity-80"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-3.5 w-3.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              Descargar SVG
+            </a>
+          </div>
+
+          {/* Card 4: Isotipo Simplificado SVG (Favicon / Navegador) */}
+          <div className="border-primary/35 hover:border-primary/55 flex items-center justify-between gap-6 rounded-2xl border bg-white p-5 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300">
+            <div className="space-y-1">
+              <p className="font-serif text-sm font-bold text-[#143067]">
+                Isotipo simplificado
+              </p>
+              <p className="font-mono text-[10px] text-[#444650]">
+                Formato: SVG (Favicon / Navegador)
+              </p>
+            </div>
+            <a
+              href="/isotipo-simplificado.svg"
+              download
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-[#143067] px-4 py-2 font-mono text-[10px] tracking-wider text-white uppercase shadow-md transition-opacity hover:opacity-80"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-3.5 w-3.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              Descargar SVG
+            </a>
+          </div>
+
+          {/* Card 5: Isotipo Simplificado Negativo SVG */}
+          <div className="border-primary/35 hover:border-primary/55 flex items-center justify-between gap-6 rounded-2xl border bg-white p-5 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300">
+            <div className="space-y-1">
+              <p className="font-serif text-sm font-bold text-[#143067]">
+                Isotipo simplificado negativo
+              </p>
+              <p className="font-mono text-[10px] text-[#444650]">
+                Formato: SVG (Blanco Navegador)
+              </p>
+            </div>
+            <a
+              href="/isotipo-simplificado-white.svg"
+              download
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-[#143067] px-4 py-2 font-mono text-[10px] tracking-wider text-white uppercase shadow-md transition-opacity hover:opacity-80"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-3.5 w-3.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              Descargar SVG
+            </a>
+          </div>
         </div>
       </section>
 

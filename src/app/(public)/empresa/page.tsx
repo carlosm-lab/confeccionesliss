@@ -41,7 +41,7 @@ export default function EmpresaPage() {
         "@id": `${siteConfig.url}/#business`,
         name: siteConfig.name,
         url: siteConfig.url,
-        logo: `${siteConfig.url}/logo.png`,
+        logo: `${siteConfig.url}/logo.svg`,
         foundingDate: "2005",
         address: {
           "@type": "PostalAddress",
@@ -349,11 +349,11 @@ export default function EmpresaPage() {
                 >
                   <span className="absolute top-6 right-6 z-10 flex h-11 w-11 items-center justify-center rounded-xl bg-[#143067] p-1.5 opacity-60 transition-opacity duration-300 group-hover:opacity-100">
                     <Image
-                      src="/logo.png"
+                      src="/logo-white.svg"
                       alt="Logo Liss"
                       width={80}
                       height={80}
-                      className="h-auto w-full object-contain brightness-0 invert"
+                      className="h-auto w-full object-contain"
                     />
                   </span>
                   <div
@@ -402,11 +402,11 @@ export default function EmpresaPage() {
                   >
                     <span className="absolute top-6 right-6 z-10 flex h-11 w-11 items-center justify-center rounded-xl bg-[#143067] p-1.5 opacity-60 transition-opacity duration-300 group-hover:opacity-100">
                       <Image
-                        src="/logo.png"
+                        src="/logo-white.svg"
                         alt="Logo Liss"
                         width={80}
                         height={80}
-                        className="h-auto w-full object-contain brightness-0 invert"
+                        className="h-auto w-full object-contain"
                       />
                     </span>
                     <div
@@ -437,11 +437,11 @@ export default function EmpresaPage() {
                   >
                     <span className="absolute top-6 right-6 z-10 flex h-11 w-11 items-center justify-center rounded-xl bg-[#143067] p-1.5 opacity-60 transition-opacity duration-300 group-hover:opacity-100">
                       <Image
-                        src="/logo.png"
+                        src="/logo-white.svg"
                         alt="Logo Liss"
                         width={80}
                         height={80}
-                        className="h-auto w-full object-contain brightness-0 invert"
+                        className="h-auto w-full object-contain"
                       />
                     </span>
                     <div
@@ -478,11 +478,11 @@ export default function EmpresaPage() {
                 >
                   <span className="absolute top-6 right-6 z-10 flex h-11 w-11 items-center justify-center rounded-xl bg-[#143067] p-1.5 opacity-60 transition-opacity duration-300 group-hover:opacity-100">
                     <Image
-                      src="/logo.png"
+                      src="/logo-white.svg"
                       alt="Logo Liss"
                       width={80}
                       height={80}
-                      className="h-auto w-full object-contain brightness-0 invert"
+                      className="h-auto w-full object-contain"
                     />
                   </span>
                   <div
@@ -511,11 +511,11 @@ export default function EmpresaPage() {
                 <div className="group border-primary hover:border-primary/80 relative grid flex-grow grid-cols-1 gap-4 overflow-hidden rounded-2xl border-2 border-dashed bg-white p-6 shadow-[0_0_25px_6px_rgba(20,48,103,0.15),0_0_10px_2px_rgba(20,48,103,0.1)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_45px_15px_rgba(20,48,103,0.26),0_0_20px_5px_rgba(20,48,103,0.16)]">
                   <span className="absolute top-6 right-6 z-10 flex h-11 w-11 items-center justify-center rounded-xl bg-[#143067] p-1.5 opacity-60 transition-opacity duration-300 group-hover:opacity-100">
                     <Image
-                      src="/logo.png"
+                      src="/logo-white.svg"
                       alt="Logo Liss"
                       width={80}
                       height={80}
-                      className="h-auto w-full object-contain brightness-0 invert"
+                      className="h-auto w-full object-contain"
                     />
                   </span>
                   <Link
@@ -582,11 +582,11 @@ export default function EmpresaPage() {
                 >
                   <span className="absolute top-6 right-6 z-10 flex h-11 w-11 items-center justify-center rounded-xl bg-[#143067] p-1.5 opacity-60 transition-opacity duration-300 group-hover:opacity-100">
                     <Image
-                      src="/logo.png"
+                      src="/logo-white.svg"
                       alt="Logo Liss"
                       width={80}
                       height={80}
-                      className="h-auto w-full object-contain brightness-0 invert"
+                      className="h-auto w-full object-contain"
                     />
                   </span>
                   <div
@@ -620,11 +620,11 @@ export default function EmpresaPage() {
                 >
                   <span className="absolute top-6 right-6 z-10 flex h-11 w-11 items-center justify-center rounded-xl bg-[#143067] p-1.5 opacity-60 transition-opacity duration-300 group-hover:opacity-100">
                     <Image
-                      src="/logo.png"
+                      src="/logo-white.svg"
                       alt="Logo Liss"
                       width={80}
                       height={80}
-                      className="h-auto w-full object-contain brightness-0 invert"
+                      className="h-auto w-full object-contain"
                     />
                   </span>
                   <div
@@ -658,11 +658,11 @@ export default function EmpresaPage() {
                 >
                   <span className="absolute top-6 right-6 z-10 flex h-11 w-11 items-center justify-center rounded-xl bg-[#143067] p-1.5 opacity-60 transition-opacity duration-300 group-hover:opacity-100">
                     <Image
-                      src="/logo.png"
+                      src="/logo-white.svg"
                       alt="Logo Liss"
                       width={80}
                       height={80}
-                      className="h-auto w-full object-contain brightness-0 invert"
+                      className="h-auto w-full object-contain"
                     />
                   </span>
                   <div

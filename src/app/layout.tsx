@@ -78,41 +78,32 @@ export const metadata = {
     },
   }),
   icons: {
-    // SVG favicon primario — soporta @media (prefers-color-scheme) de forma nativa.
-    // Light mode → azul #143067 | Dark mode → blanco puro (sin recuadro, fondo transparente)
-    // Chrome 80+, Firefox 32+ leen el CSS interno del SVG automáticamente.
-    // Safari y crawlers usan los PNG de respaldo declarados a continuación.
     icon: [
+      {
+        url: "/isotipo-simplificado-white.svg",
+        type: "image/svg+xml",
+      },
+      {
+        url: "/favicon.ico",
+        sizes: "32x32",
+        type: "image/x-icon",
+      },
       {
         url: "/icons/favicon.svg",
         type: "image/svg+xml",
       },
-      // PNG fallback para Safari y navegadores sin soporte SVG favicon
-      {
-        url: "/icons/favicon-light.png",
-        type: "image/png",
-        sizes: "256x256",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icons/favicon-dark.png",
-        type: "image/png",
-        sizes: "256x256",
-        media: "(prefers-color-scheme: dark)",
-      },
     ],
-    shortcut: "/icons/favicon-light.png",
+    shortcut: "/favicon.ico",
     apple: [
+      {
+        url: "/isotipo-simplificado.png",
+        sizes: "512x512",
+        type: "image/png",
+      },
       {
         url: "/icons/apple-icon-light.png",
         sizes: "180x180",
         type: "image/png",
-      },
-      {
-        url: "/icons/apple-icon-dark.png",
-        sizes: "180x180",
-        type: "image/png",
-        media: "(prefers-color-scheme: dark)",
       },
     ],
   },

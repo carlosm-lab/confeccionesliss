@@ -1,0 +1,85 @@
+Petición:
+este es mi sitio web https://www.confeccionesliss.com/ y estube buscando como optimizarlo y encontre un comentario en youtube que decia esto:
+
+Nunca comento videos, pero me pareció interesante de repente ayudar a la hipótesis del por qué puede estar ahí arriba. A pesar que el factor de usar palabras claves en el dominio hace unos años dejó de ser tan relevante, el dominio hace match perfecto con la keyword que usó para buscar en las SERP; ahora sería bueno validar el framework en el q está construida el sitio , viéndolo en un foco técnico. También aunq no tengo pruebas seria bueno validar el search volume de esa keyword y el KD de la misma , pero puedo juzgar solo por el resultado q debe ser bajo y ahí es donde hay algo que a muchos SEO se les olvida o ahí es donde nos catalogan como vende humo, posicionamiento no es equivalente a rendimiento , es decir importante validar CTR para ver su performance , ahora puede salir de primero en la competencia para esa KW , pero y para otra ? Puede que la competencia ahí si gane . Son varios frentes q ver . Pero resumiría q posiciona porq es lo ‘mejorcito ’ que hay para ese search intent, por ende google no responde con mas , fíjese q salen resultados de isntagram, indicio que no hay nada mas indexado y la verdad la kw reforma como decía no se q tanto sea usada . Saludos y perdón lo extenso
+
+Audita mi sitio y dime que de eso le falta o puede necesitar mi sitio web para dejar de ranquear impresiones y empiece a ranquear ctr. ya que actualmente esta experimentando una caida de clics. te comparto los informes de google search console.
+
+Respuesta:
+## 1. Confirmando la caída (no es impresión tuya)
+
+Los dos gráficos de arriba muestran la misma historia desde dos ángulos, con media móvil de 7 días para quitar el ruido diario:
+
+**El primero (impresiones):** te mantuviste entre 400-900 impresiones/semana durante mayo-junio, y el **5-6 de julio despegaste** — coincide con el lanzamiento del clúster `/catalogo/scrubs` que ampliaste a todas las carreras de salud. Para el 10 de julio ya estabas en +1,300/semana, y te has sostenido arriba de 1,700 desde entonces. Eso es 3-4x más visibilidad.
+
+**El segundo (CTR):** aquí está el problema. El CTR subió junto con el lanzamiento (llegó a su pico de **5.28% el 10 de julio** — señal de que las páginas nuevas arrancaron rankeando bien para búsquedas muy específicas de alta intención), pero desde ahí **ha caído de forma sostenida hasta 3.48% el 29 de julio**. Y no es solo el CTR: la posición promedio ponderada también empeoró en la misma ventana, de 5.30 (8 de julio) a 6.20 (27-29 de julio). Subiste impresiones, pero estás perdiendo posición y clics al mismo tiempo. Ese es literalmente "rankear impresiones sin rankear CTR."
+
+Sobre todo el periodo (90 días, 30 abr - 29 jul): 336 clics, 8,741 impresiones, CTR global 3.84%, posición promedio 5.83.
+
+## 2. Las causas, con evidencia — no solo teoría
+
+### A. Fuga de clics en tu propia marca (el hallazgo de mayor impacto)
+
+Tu consulta #1 es "confecciones liss": 46 clics de 348 impresiones = **13.22% de CTR en posición 1.76**. Eso está muy por debajo de lo normal para una búsqueda de marca en posición 1-2 (donde lo típico ronda 40-60%+ cuando no hay ambigüedad). Si sumas TODAS las variantes de marca (8 consultas, incluyendo errores de tipeo y "clinica liss"), das 370 impresiones y **siguen siendo exactamente los mismos 46 clics** — ninguna otra variante de marca convierte nada.
+
+Fui a buscar "confecciones liss" en Google para ver por qué, y ahí está la respuesta: en ese SERP compiten contigo tu propio canal de YouTube, que sí describe bien el negocio real (scrubs médicos, uniformes universitarios, bordados desde San Miguel), una publicación de Instagram, y dos páginas de Facebook — una de ellas parece ser tu página real pero desactualizada: apenas 6 "me gusta" y una descripción genérica de confección de trajes, vestidos y ropa para toda la familia, sin mencionar scrubs ni salud, y otra cuenta de Facebook adicional con el mismo nombre cuya relación con tu negocio no queda clara desde el resultado. Es exactamente lo que describe el comentario: cuando el SERP se llena de resultados de redes sociales, es indicio de que Google no tiene mucho más "fuerte" que mostrar — y en tu caso, esas redes te están quitando clics que deberían ser tuyos.
+
+### B. El clúster "buena posición, cero clics" — tu pregunta en estado puro
+
+Esta es la evidencia más directa de lo que preguntas. Ejemplos reales, con volumen real, no ruido de 1-2 impresiones:
+
+| Consulta / Página | Posición | Impresiones | Clics | CTR |
+|---|---|---|---|---|
+| `uniformes medicos san miguel` | 3.71 | 35 | 0 | 0% |
+| Página: Lic. Salud Ambiental IEPROES | 3.71 | **160** | 1 | 0.62% |
+| `uniformes de enfermera` | 5.05 | 20 | 0 | 0% |
+| `uniformes san miguel` | 5.38 | 16 | 0 | 0% |
+| Página: uniforme jogger café (scrubs) | 4.76 | 45 | 0 | 0% |
+| Página: Lic. Nutrición UES | 5.62 | 26 | 0 | 0% |
+| `bordados en san miguel` | 5.90 | 10 | 0 | 0% |
+
+El caso de la página de Salud Ambiental IEPROES es el más extremo del sitio: 160 impresiones en posición 3.71 (top de página 1) y solo 1 clic. A esa posición deberías esperar entre 12 y 18 clics, no 1.
+
+Noté algo más: varias de las páginas con 0% CTR en buena posición son específicamente de la **UES** (4 programas distintos: salud ambiental, nutrición, anestesiología, laboratorio clínico) — probablemente porque son de las páginas más nuevas del lanzamiento de julio y siguen en la "ventana de prueba" que Google le da a contenido fresco antes de asentar el ranking definitivo. Es normal que parte de esto se corrija solo en las próximas semanas si el contenido tiene buenas señales internas (enlaces, tiempo en página). Lo que sí te recomiendo verificar manualmente en la interfaz de Search Console (el CSV no cruza consulta×página): para `uniformes medicos san miguel` específicamente, entra, filtra por esa consulta, mira qué URL exacta se muestra, y confirma si el title de esa página incluye "San Miguel" de forma literal — mi sospecha es que muchas de estas búsquedas hiperlocales las está sirviendo tu homepage, cuyo title dice "En El Salvador" (nacional) en vez de mencionar San Miguel explícitamente, y eso puede debilitar el match visual en el snippet aunque el contenido sí sea relevante.
+
+*(Nota aparte, sin importancia práctica: vi una "consulta" con operadores de búsqueda tipo `-site:facebook.com -site:instagram.com...` — no es un cliente real, es ruido de alguna herramienta de terceros rastreando Google. Ignóralo.)*
+
+### C. Dilución geográfica — no es un "problema" que se arregle, pero sí distorsiona tu métrica
+
+| Segmento | Impresiones | % del total | Clics | CTR | Posición |
+|---|---|---|---|---|---|
+| El Salvador | 6,558 | 75% | 300 | **4.57%** | 5.39 |
+| Resto del mundo (58 países) | 2,183 | 25% | 36 | **1.65%** | 7.10 |
+| — de los cuales EE.UU. | 624 | 7% | 3 | 0.48% | 6.90 |
+
+Una cuarta parte de tus impresiones vienen de fuera de El Salvador — probablemente diáspora salvadoreña o búsquedas sin intención real de compra (tu checkout es WhatsApp + pago al recibir dentro del país). Esto no lo vas a "arreglar" bloqueando tráfico internacional, pero sí te recomiendo usar el **4.57% de El Salvador como tu métrica real de CTR**, no el 3.84% global — el global está inflado a la baja por impresiones que nunca iban a convertir.
+
+## 3. Sobre la hipótesis del comentario: sí se confirma, pero a escala pequeña
+
+Segmenté las 373 consultas nombradas por tipo:
+
+| Segmento | Consultas | Impresiones | Clics | CTR | Posición |
+|---|---|---|---|---|---|
+| Marca ("liss") | 8 | 370 | 46 | 12.43% | 2.11 |
+| **"Confecciones" genérico (sin marca)** | 7 | 52 | 1 | **1.92%** | 8.25 |
+| Universidad (sin marca) | 18 | 204 | 9 | 4.41% | 5.04 |
+| Resto (scrubs/uniformes genéricos, carreras, ciudad) | 340 | 1,224 | 22 | 1.80% | 7.88 |
+
+El bloque "confecciones genérico" (`confecciones`, `confeccion de uniformes`, `confecciones cerca de mi`, etc.) rankea en posición ~8 solo por match de dominio, exactamente como plantea el comentario — y convierte al 1.92% porque quien busca eso probablemente quiere un taller de costura general, no scrubs médicos por talla. Esto además confirma que la estrategia que ya vienes aplicando (excluir "confección/taller/a la medida" de títulos y meta descriptions) es la correcta: revisé el title y meta description en vivo de tu home y están limpios — "Scrubs y Uniformes Médicos En El Salvador | Confecciones Liss" y una meta description enfocada en universidades y precio. Ese trabajo previo sigue vigente y bien hecho.
+
+Pero encontré una inconsistencia con esa misma estrategia: el **footer de tu sitio** dice textualmente ahora mismo: *"Confección profesional de scrubs médicos, uniformes empresariales y escolares. Calidad artesanal y diseño contemporáneo desde San Miguel, El Salvador."* — "confección profesional" y "calidad artesanal" son justo el lenguaje de taller que decidiste evitar. Vale la pena corregirlo para que sea consistente con el resto del sitio (y con las reseñas de Google, que sí usan naturalmente esa palabra porque son de clientes reales — eso no se controla ni hay que intentarlo).
+
+## 4. Lo que ya funciona (no lo toques)
+
+- Los rich snippets de producto están activos y generando impresiones reales (2,455 impresiones) — el schema Product+Offer que se implementó sí está funcionando.
+- `/catalogo/universidades/univo` convierte a 8.14% en posición 6.18 — muy por encima del promedio del sitio para esa posición. Es tu mejor página no-home; vale la pena entender qué hace bien (probablemente el title/estructura) y replicarlo en las páginas de UES/UGB que están más flojas.
+- Tu reputación en Google Maps es un activo fuerte: 4.8/5 con 21 reseñas. Está subutilizado — el fragmento de reseña solo aparece en 33 impresiones de todo el sitio.
+
+## Plan de acción priorizado
+
+1. **Recupera el espacio de marca en el SERP.** Actualiza o redirige esa página de Facebook desactualizada (6 likes, descripción genérica) hacia contenido que sí represente el negocio actual. Agrega/confirma schema de Organization con `sameAs` enlazando todos tus perfiles reales del footer (Instagram, TikTok, YouTube, Maps, etc.) — ayuda a que Google consolide identidad y considere sitelinks en vez de repartir el SERP con redes sueltas.
+2. **Corrige el footer** — quita "Confección profesional" / "Calidad artesanal", alinéalo con el resto del copy.
+3. **Verifica en GSC (interfaz, no CSV) qué URL exacta sirve cada consulta hiperlocal** (`uniformes medicos san miguel`, `uniformes san miguel`, `bordados san miguel`) y confirma si el title menciona San Miguel explícitamente.
+4. **Extiende `AggregateRating` schema a más páginas de catálogo** para que el fragmento de reseña (4.8/5) aparezca con más frecuencia — es tu prueba social más fuerte y casi no se está mostrando.
+5. **No persigas la palabra "confecciones" genérica.** Confirma que fue correcto excluirla — no conviertas contenido para capturarla, no vale la pena.
+6. Dale 3-4 semanas más a las páginas nuevas de UES/scrubs antes de tocar su contenido — parte de esos "cero clics en buena posición" es ventana de prueba normal de Google con contenido fresco, no necesariamente un defecto.

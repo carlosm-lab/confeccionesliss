@@ -57,7 +57,7 @@ export default function LinksPage() {
           description:
             "Empresa de uniformes médicos y universitarios en San Miguel, El Salvador. Scrubs, uniformes para IEPROES, UNIVO, UNAB, UGB, UES, UMA y más. Desde $35.",
           url: siteConfig.url,
-          logo: `${siteConfig.url}/logo.png`,
+          logo: `${siteConfig.url}/logo.svg`,
           sameAs: [
             siteConfig.links.facebook,
             siteConfig.links.instagram,

@@ -360,16 +360,12 @@ export function Navbar() {
               onClick={closeMenu}
             >
               <Image
-                src="/logo.png"
+                src="/logo.svg"
                 alt="Confecciones Liss"
-                width={96}
-                height={96}
-                sizes="48px"
-                className="h-12 w-auto"
-                style={{
-                  filter:
-                    "brightness(0) saturate(100%) invert(17%) sepia(63%) saturate(763%) hue-rotate(193deg) brightness(91%) contrast(103%)",
-                }}
+                width={41}
+                height={41}
+                sizes="41px"
+                className="h-[41px] w-auto"
               />
               {/* Texto del logo — siempre en DOM para SEO; visible en sm+ */}
               <span className="sr-only">

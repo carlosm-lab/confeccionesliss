@@ -144,7 +144,7 @@ export function Footer() {
             {/* 1. Centra el logo */}
             <Link href="/" className="mb-6 inline-block">
               <Image
-                src="/logo.png"
+                src="/logo-footer.png"
                 alt="Confecciones Liss"
                 width={144}
                 height={144}
@@ -313,7 +313,7 @@ export function Footer() {
           <div className="mb-6 flex justify-center">
             <Link href="/">
               <Image
-                src="/logo.png"
+                src="/logo-footer.png"
                 alt="Confecciones Liss"
                 width={144}
                 height={144}
@@ -495,7 +495,7 @@ export function Footer() {
             <div>
               <Link href="/" className="mb-6 inline-block">
                 <Image
-                  src="/logo.png"
+                  src="/logo-footer.png"
                   alt="Confecciones Liss"
                   width={96}
                   height={96}
