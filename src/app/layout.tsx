@@ -23,6 +23,7 @@ import { siteConfig } from "@/config/site";
 import { env } from "@/env";
 import { AnalyticsScripts } from "@/components/analytics/AnalyticsScripts";
 import { MaterialSymbolsLoader } from "@/components/layout/MaterialSymbolsLoader";
+import { buildWebSiteSchema } from "@/lib/schemas";
 
 export const metadata = {
   title: {
@@ -253,15 +254,7 @@ export default function RootLayout({
                     worstRating: "1",
                   },
                 },
-                {
-                  "@type": "WebSite",
-                  "@id": `${siteConfig.url}/#website`,
-                  url: siteConfig.url,
-                  name: siteConfig.name,
-                  description: siteConfig.description,
-                  inLanguage: "es-SV",
-                  publisher: { "@id": `${siteConfig.url}/#business` },
-                },
+                buildWebSiteSchema(),
               ],
             }).replace(/</g, "\\u003c"),
           }}

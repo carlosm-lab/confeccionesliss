@@ -21,18 +21,47 @@ export function buildWebPageSchema({
   };
 }
 
-/** Helper: generates a BreadcrumbList schema */
+/** Helper: generates a WebSite schema with Sitelinks SearchBox for Google Search */
+export function buildWebSiteSchema() {
+  return {
+    "@type": "WebSite",
+    "@id": `${siteConfig.url}/#website`,
+    url: siteConfig.url,
+    name: siteConfig.name,
+    description: siteConfig.description,
+    inLanguage: "es-SV",
+    publisher: { "@id": `${siteConfig.url}/#business` },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${siteConfig.url}/catalogo?search={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
+  };
+}
+
+/** Helper: generates a BreadcrumbList schema ensuring 100% absolute URLs for Google Search Console */
 export function buildBreadcrumbSchema(
   items: Array<{ name: string; item?: string }>
 ) {
   return {
     "@type": "BreadcrumbList",
-    itemListElement: items.map((crumb, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: crumb.name,
-      ...(crumb.item ? { item: crumb.item } : {}),
-    })),
+    itemListElement: items.map((crumb, i) => {
+      let itemUrl: string | undefined = undefined;
+      if (crumb.item) {
+        itemUrl = crumb.item.startsWith("http")
+          ? crumb.item
+          : `${siteConfig.url}${crumb.item.startsWith("/") ? "" : "/"}${crumb.item}`;
+      }
+      return {
+        "@type": "ListItem",
+        position: i + 1,
+        name: crumb.name,
+        ...(itemUrl ? { item: itemUrl } : {}),
+      };
+    }),
   };
 }
 
