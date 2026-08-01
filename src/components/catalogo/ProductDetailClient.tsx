@@ -527,6 +527,9 @@ export function ProductDetailClient({
                             label: univLabel,
                             href: `/catalogo/universidades/${univSlug || sector}`,
                           },
+                          {
+                            label: product.name,
+                          },
                         ];
                       })()
                     : [
@@ -535,6 +538,9 @@ export function ProductDetailClient({
                         {
                           label: config.subtitle,
                           href: `/catalogo/${sector}`,
+                        },
+                        {
+                          label: product.name,
                         },
                       ]
                 }

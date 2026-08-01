@@ -121,6 +121,7 @@ export default function LegalArticleReader({
   const breadcrumbItems = [
     { label: "Inicio", href: "/" },
     { label: "Legal", href: "/legal" },
+    { label: title },
   ];
 
   /* ════════════════════════════════════════════════════════════════════════
