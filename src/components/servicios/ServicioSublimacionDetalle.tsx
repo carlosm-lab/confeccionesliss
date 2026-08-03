@@ -138,7 +138,7 @@ export function ServicioSublimacionDetalle({
                 </div>
                 <div className="flex w-full flex-col gap-3 sm:flex-row sm:gap-4">
                   <a
-                    href="https://maps.app.goo.gl/XSs2vgjLG8uvJGoQ7"
+                    href={siteConfig.links.googleMaps}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="animate-fade-in-up border-outline text-primary flex h-12 w-full items-center justify-center rounded-md border bg-white px-12 text-center font-serif text-base font-medium whitespace-nowrap transition hover:bg-gray-50 active:scale-[0.97] sm:flex-1"
