@@ -1,11 +1,13 @@
 "use client";
 
-import { useMemo, Suspense } from "react";
+import { useState, useEffect, useMemo, Suspense } from "react";
 import { useSearchParams, ReadonlyURLSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Icon } from "@/components/ui/icons/Icon";
 import { siteConfig } from "@/config/site";
 import { GoogleCustomerReviewsOptIn } from "@/components/analytics/GoogleCustomerReviewsOptIn";
+
+// ── Helpers ────────────────────────────────────────────────────────────────
 
 function getDefaultEstimatedDeliveryDate(): string {
   const date = new Date();
@@ -13,9 +15,7 @@ function getDefaultEstimatedDeliveryDate(): string {
   while (addedDays < 4) {
     date.setDate(date.getDate() + 1);
     const day = date.getDay();
-    if (day !== 0 && day !== 6) {
-      addedDays++;
-    }
+    if (day !== 0 && day !== 6) addedDays++;
   }
   return date.toISOString().split("T")[0];
 }
@@ -28,67 +28,103 @@ interface OrderData {
   gtin?: string;
 }
 
-function getOrderDataFromUrlOrSession(
-  searchParams: ReadonlyURLSearchParams
-): OrderData | null {
-  const qOrderId = searchParams.get("order_id") || searchParams.get("orderId");
-  const qEmail = searchParams.get("email");
-  const qDeliveryDate =
-    searchParams.get("estimated_delivery_date") ||
-    searchParams.get("delivery_date") ||
-    searchParams.get("date");
-  const qCountry = searchParams.get("country") || "SV";
-  const qGtin = searchParams.get("gtin") || undefined;
-
-  let orderId = qOrderId || "";
-  let email = qEmail || "";
-  let deliveryDate = qDeliveryDate || "";
-
-  if (typeof window !== "undefined" && (!orderId || !email)) {
-    try {
-      const cachedOrder = sessionStorage.getItem("liss_last_order");
-      if (cachedOrder) {
-        const parsed = JSON.parse(cachedOrder);
-        if (parsed.orderId && !orderId) orderId = parsed.orderId;
-        if (parsed.email && !email) email = parsed.email;
-        if (parsed.estimatedDeliveryDate && !deliveryDate)
-          deliveryDate = parsed.estimatedDeliveryDate;
-      }
-    } catch (err) {
-      console.warn("Error al leer liss_last_order:", err);
-    }
-  }
-
-  // Si no hay ID de orden ni email del cliente real, retornamos null (no mostrar orden ficticia)
-  if (!orderId || !email) {
-    return null;
-  }
-
-  if (!deliveryDate) {
-    deliveryDate = getDefaultEstimatedDeliveryDate();
-  }
-
+/** Lee los parámetros de la URL únicamente (seguro en SSR y cliente). */
+function getOrderDataFromUrl(searchParams: ReadonlyURLSearchParams): Omit<
+  OrderData,
+  "estimatedDeliveryDate"
+> & {
+  estimatedDeliveryDate: string | null;
+} {
   return {
-    orderId,
-    email,
-    estimatedDeliveryDate: deliveryDate,
-    deliveryCountry: qCountry,
-    gtin: qGtin,
+    orderId: searchParams.get("order_id") || searchParams.get("orderId") || "",
+    email: searchParams.get("email") || "",
+    estimatedDeliveryDate:
+      searchParams.get("estimated_delivery_date") ||
+      searchParams.get("delivery_date") ||
+      searchParams.get("date") ||
+      null,
+    deliveryCountry: searchParams.get("country") || "SV",
+    gtin: searchParams.get("gtin") || undefined,
   };
 }
 
+// ── Componente interno ─────────────────────────────────────────────────────
+
 function OrderConfirmationContent() {
   const searchParams = useSearchParams();
-  const orderData = useMemo(
-    () => getOrderDataFromUrlOrSession(searchParams),
-    [searchParams]
+
+  /**
+   * hydrated: false → primer render (igual en SSR y cliente).
+   * hydrated: true  → después del primer paint; ya podemos leer sessionStorage.
+   */
+  const [hydrated, setHydrated] = useState(false);
+  const [orderData, setOrderData] = useState<OrderData | null>(null);
+
+  // Garantizar que el primer render SSR y el cliente sean idénticos.
+  useEffect(() => {
+    const t = setTimeout(() => setHydrated(true), 0);
+    return () => clearTimeout(t);
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+
+    const fromUrl = getOrderDataFromUrl(searchParams);
+    let { orderId, email, estimatedDeliveryDate, deliveryCountry, gtin } =
+      fromUrl;
+
+    // Solo en el cliente, leer sessionStorage si faltan datos de URL
+    if (!orderId || !email) {
+      try {
+        const raw = sessionStorage.getItem("liss_last_order");
+        if (raw) {
+          const parsed = JSON.parse(raw) as Record<string, string>;
+          if (parsed.orderId && !orderId) orderId = parsed.orderId;
+          if (parsed.email && !email) email = parsed.email;
+          if (parsed.estimatedDeliveryDate && !estimatedDeliveryDate)
+            estimatedDeliveryDate = parsed.estimatedDeliveryDate;
+        }
+      } catch (err) {
+        console.warn("[ConfirmacionPedido] Error leyendo sessionStorage:", err);
+      }
+    }
+
+    const newData: OrderData | null =
+      orderId && email
+        ? {
+            orderId,
+            email,
+            estimatedDeliveryDate:
+              estimatedDeliveryDate ?? getDefaultEstimatedDeliveryDate(),
+            deliveryCountry,
+            gtin,
+          }
+        : null;
+
+    const t = setTimeout(() => setOrderData(newData), 0);
+    return () => clearTimeout(t);
+  }, [hydrated, searchParams]);
+
+  const productsOptIn = useMemo(
+    () => (orderData?.gtin ? [{ gtin: orderData.gtin }] : undefined),
+    [orderData]
   );
 
-  const productsOptIn = useMemo(() => {
-    return orderData?.gtin ? [{ gtin: orderData.gtin }] : undefined;
-  }, [orderData]);
+  // ── Primer render: mismo en SSR y cliente (loading skeleton) ──
+  if (!hydrated) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[var(--color-surface)] p-8">
+        <div className="flex flex-col items-center gap-3">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-[var(--color-primary)] border-t-transparent" />
+          <p className="text-sm text-[var(--color-on-surface-variant)]">
+            Cargando confirmación del pedido...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
-  // Si no hay una orden válida con email y order_id, se muestra un estado limpio y seguro
+  // ── Sin pedido real ────────────────────────────────────────────────────────
   if (!orderData) {
     return (
       <div className="flex min-h-[70vh] items-center justify-center bg-[var(--color-surface)] px-4 py-16 sm:px-6 lg:px-8">
@@ -127,6 +163,7 @@ function OrderConfirmationContent() {
     );
   }
 
+  // ── Pedido confirmado ──────────────────────────────────────────────────────
   return (
     <div className="min-h-screen bg-[var(--color-surface)] px-4 py-12 sm:px-6 lg:px-8">
       {/* Módulo Opt-In oficial de Reseñas de Clientes en Google */}
@@ -140,7 +177,7 @@ function OrderConfirmationContent() {
       />
 
       <div className="mx-auto max-w-3xl">
-        <div className="overflow-hidden rounded-3xl border border-[var(--color-outline-variant)]/30 bg-[var(--color-surface-elevated)] shadow-2xl transition-all duration-300">
+        <div className="overflow-hidden rounded-3xl border border-[var(--color-outline-variant)]/30 bg-[var(--color-surface-elevated)] shadow-2xl">
           <div className="bg-gradient-to-r from-[#1B365D] via-[#2A4D7C] to-[#1B365D] p-8 text-center text-white sm:p-12">
             <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400 backdrop-blur-md">
               <Icon
@@ -167,7 +204,6 @@ function OrderConfirmationContent() {
                 <Icon name="receipt" className="text-[var(--color-primary)]" />
                 Resumen de la Confirmación
               </h2>
-
               <div className="grid grid-cols-1 gap-4 text-sm sm:grid-cols-2">
                 <div className="rounded-xl border border-[var(--color-outline-variant)]/10 bg-[var(--color-surface-elevated)] p-4">
                   <span className="mb-1 block text-xs tracking-wider text-[var(--color-on-surface-variant)] uppercase">
@@ -177,7 +213,6 @@ function OrderConfirmationContent() {
                     {orderData.orderId}
                   </span>
                 </div>
-
                 <div className="rounded-xl border border-[var(--color-outline-variant)]/10 bg-[var(--color-surface-elevated)] p-4">
                   <span className="mb-1 block text-xs tracking-wider text-[var(--color-on-surface-variant)] uppercase">
                     Correo Asociado
@@ -186,7 +221,6 @@ function OrderConfirmationContent() {
                     {orderData.email}
                   </span>
                 </div>
-
                 <div className="rounded-xl border border-[var(--color-outline-variant)]/10 bg-[var(--color-surface-elevated)] p-4">
                   <span className="mb-1 block text-xs tracking-wider text-[var(--color-on-surface-variant)] uppercase">
                     Fecha Estimada de Entrega
@@ -195,7 +229,6 @@ function OrderConfirmationContent() {
                     {orderData.estimatedDeliveryDate}
                   </span>
                 </div>
-
                 <div className="rounded-xl border border-[var(--color-outline-variant)]/10 bg-[var(--color-surface-elevated)] p-4">
                   <span className="mb-1 block text-xs tracking-wider text-[var(--color-on-surface-variant)] uppercase">
                     País de Destino
@@ -207,7 +240,7 @@ function OrderConfirmationContent() {
               </div>
             </div>
 
-            {/* Aviso sobre Reseñas de Clientes en Google */}
+            {/* Aviso Google Reviews */}
             <div className="rounded-2xl border border-blue-500/20 bg-blue-50/50 p-6 dark:bg-blue-950/20">
               <div className="flex items-start gap-4">
                 <div className="shrink-0 rounded-full bg-blue-500/10 p-3 text-blue-600 dark:text-blue-400">
@@ -235,7 +268,6 @@ function OrderConfirmationContent() {
                 <Icon name="store" />
                 Volver al Catálogo
               </Link>
-
               <a
                 href={siteConfig.links.whatsappDirect}
                 target="_blank"
@@ -253,11 +285,13 @@ function OrderConfirmationContent() {
   );
 }
 
+// ── Export ─────────────────────────────────────────────────────────────────
+
 export function ConfirmacionPedidoClient() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-screen items-center justify-center p-8">
+        <div className="flex min-h-screen items-center justify-center bg-[var(--color-surface)] p-8">
           <div className="flex flex-col items-center gap-3">
             <div className="h-8 w-8 animate-spin rounded-full border-4 border-[var(--color-primary)] border-t-transparent" />
             <p className="text-sm text-[var(--color-on-surface-variant)]">
