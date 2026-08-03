@@ -139,6 +139,7 @@ import {
   TrendingUp,
   Video,
   Rows3,
+  Flame,
 } from "lucide-react";
 
 // ─── Type ─────────────────────────────────────────────────────────────────────
@@ -369,6 +370,9 @@ const ICON_MAP: Record<string, React.ComponentType<any>> = {
   new_releases: Sparkles,
   monitoring: BarChart3,
   trending_up: TrendingUp,
+  flame: Flame,
+  fire: Flame,
+  local_fire_department: Flame,
   badge_check: BadgeCheck,
   activity: Activity,
   play_circle: PlayCircle,

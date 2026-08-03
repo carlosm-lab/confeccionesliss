@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Icon } from "@/components/ui/icons/Icon";
 /**
@@ -29,6 +29,7 @@ interface DeliveryFormState {
   department: string;
   municipality: string;
   recipientName: string;
+  recipientEmail: string;
   recipientPhone: string;
   alternatePhone: string;
   addressColonia: string;
@@ -44,6 +45,7 @@ const INITIAL_STATE: DeliveryFormState = {
   department: "",
   municipality: "",
   recipientName: "",
+  recipientEmail: "",
   recipientPhone: "",
   alternatePhone: "",
   addressColonia: "",
@@ -183,6 +185,7 @@ export function DeliveryForm({
 
     // Adjuntar datos del destinatario
     finalInfo.recipientName = form.recipientName;
+    finalInfo.recipientEmail = form.recipientEmail;
     finalInfo.recipientPhone = form.recipientPhone;
     finalInfo.alternatePhone = form.alternatePhone;
     finalInfo.termsAccepted = form.termsAccepted;
@@ -410,6 +413,25 @@ export function DeliveryForm({
                   onChange={(e) => set("recipientName", e.target.value)}
                   className={inputClass}
                   maxLength={120}
+                />
+              </div>
+
+              {/* Correo electrónico */}
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="delivery-email" className={labelClass}>
+                  Correo electrónico{" "}
+                  <span className="font-normal text-[var(--color-on-surface-variant)] normal-case">
+                    (opcional — para confirmación y encuesta de Google)
+                  </span>
+                </label>
+                <input
+                  id="delivery-email"
+                  type="email"
+                  placeholder="ejemplo@correo.com"
+                  value={form.recipientEmail}
+                  onChange={(e) => set("recipientEmail", e.target.value)}
+                  className={inputClass}
+                  maxLength={100}
                 />
               </div>
 

@@ -55,6 +55,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     },
     {
+      url: `${siteConfig.url}/blog`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.85,
+    },
+    {
       url: `${siteConfig.url}/ayuda`,
       lastModified: now,
       changeFrequency: "monthly" as const,
@@ -342,6 +348,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
   );
 
+  // ── Páginas de detalle de artículos del Blog (/blog/[slug]) ───────────────
+  // PREPARADO: Activar únicamente cuando exista la ruta dinámica src/app/(public)/blog/[slug]/page.tsx
+  /*
+  const blogPostPages: MetadataRoute.Sitemap = getPublishedBlogPosts().map((post) => ({
+    url: `${siteConfig.url}/blog/${post.slug}`,
+    lastModified: post.publishedAt ? new Date(post.publishedAt) : now,
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
+  }));
+  */
+
   return [
     ...staticPages,
     ...serviceDetailPages,
@@ -349,5 +366,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...universidadesPages,
     ...universityProductPages,
     ...productPages,
+    // ...blogPostPages, // Activar junto con /blog/[slug]
   ];
 }

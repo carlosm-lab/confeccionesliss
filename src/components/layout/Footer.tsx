@@ -190,6 +190,7 @@ export function Footer() {
                     { href: "/", label: "Inicio" },
                     { href: "/catalogo", label: "Catálogo" },
                     { href: "/servicios", label: "Servicios" },
+                    { href: "/blog", label: "Blog" },
                     { href: "/empresa", label: "Empresa" },
                     { href: "/contacto", label: "Contacto" },
                     { href: "/links", label: "Redes Sociales" },

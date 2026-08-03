@@ -399,6 +399,27 @@ export function CartDrawer() {
       return;
     }
 
+    if (shippingInfo?.recipientEmail?.trim()) {
+      try {
+        const generatedOrderId = `ORD-${Date.now().toString().slice(-6)}`;
+        const estDate = new Date();
+        estDate.setDate(estDate.getDate() + 4);
+        const formattedEstDate = estDate.toISOString().split("T")[0];
+
+        sessionStorage.setItem(
+          "liss_last_order",
+          JSON.stringify({
+            orderId: generatedOrderId,
+            email: shippingInfo.recipientEmail.trim(),
+            estimatedDeliveryDate: formattedEstDate,
+            itemsCount: cartItems.length,
+          })
+        );
+      } catch (e) {
+        logger.warn("No se pudo guardar la orden en sessionStorage:", e);
+      }
+    }
+
     setStep("sent");
 
     setTimeout(() => {
@@ -526,7 +547,12 @@ export function CartDrawer() {
                   Te hemos redirigido a WhatsApp. ¿Pudiste enviar el mensaje?
                 </p>
                 <button
-                  onClick={handleFinishAndClear}
+                  onClick={() => {
+                    handleFinishAndClear();
+                    if (shippingInfo?.recipientEmail?.trim()) {
+                      window.location.href = "/confirmacion-pedido";
+                    }
+                  }}
                   className="mb-3 w-full rounded-xl bg-[var(--color-primary)] py-3 text-sm font-bold text-[var(--color-on-primary)] transition-all duration-200 hover:bg-[var(--color-on-primary-container)] active:scale-[0.98]"
                 >
                   Sí, pedido enviado
@@ -642,6 +668,7 @@ export function CartDrawer() {
                   department: shippingInfo?.department ?? "",
                   municipality: shippingInfo?.municipality ?? "",
                   recipientName: shippingInfo?.recipientName ?? "",
+                  recipientEmail: shippingInfo?.recipientEmail ?? "",
                   recipientPhone: shippingInfo?.recipientPhone ?? "",
                   alternatePhone: shippingInfo?.alternatePhone ?? "",
                   addressColonia: shippingInfo?.addressColonia ?? "",

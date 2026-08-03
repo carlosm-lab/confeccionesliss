@@ -16,6 +16,19 @@ This document tracks important architectural decisions made during the project l
 
 ## Logged Decisions
 
+**Date:** 2026-08-02
+**Decision:** Infraestructura Estática de Datos Semilla para el Blog y Arquitectura SSG de `/blog`
+**Context:** Se requiere iniciar el plan editorial de 83 artículos para Confecciones Liss con una landing page interactiva en `/blog` que permita filtrar guías por pilar (7 pilares) y por universidad (UNIVO, IEPROES, UGB, UNAB, UES, UMA, UEES). No existe una capa de CMS/MDX en el repositorio y los 20 artículos redactados están respaldados como semillas de datos.
+**Decision:**
+
+- **Opción A (Archivo de Datos Estático):** Se creó `src/data/blog-posts.ts` definiendo la taxonomía con `BlogPilar`, `Universidad` y `BlogPost`. Permite control de versiones directo en Git y rendimiento instantáneo en tiempo de compilación.
+- **Gestión de Estados (`status`):** Cada artículo cuenta con el campo `status: "draft" | "published"`. La vista del blog filtra exclusivamente los artículos marcados como `"published"`.
+- **SSG Puro + SEO Técnico:** `/blog` opera mediante SSG estático en `src/app/(public)/blog/page.tsx`, con `generateMetadata` dinámico (canonical, OpenGraph, Twitter Card) y marcado estructurado JSON-LD que consolida `CollectionPage`, `BreadcrumbList` y `Blog` (con array de `BlogPosting`).
+- **Sitemap Dinámico:** `/blog` se registró en `sitemap.ts` y se dejó preparado (comentado) el generador para las rutas individuales `/blog/[slug]`.
+- **Navegación & Accesibilidad:** Filtros responsivos en el cliente (`BlogIndexClient`), paginación por demanda (lotes de 12), estado vacío informativo (`BlogEmptyState`) con llamadas a la acción en voz activa hacia WhatsApp y cumplimiento de normas WCAG 2.2.
+
+---
+
 **Date:** 2026-07-24
 **Decision:** Integración de Chat con Inteligencia Artificial "Lucas" usando Groq API, Pre-compilación de Knowledge Base y Carga Lazy en DeferredProviders
 **Context:** Se requiere un chat conversacional inteligente disponible en el 100% de las páginas del sitio para resolver consultas sobre productos, servicios, precios y las 19+ políticas de la empresa. Debido a las restricciones de hosting en Vercel y límites de cuota de Gemini, se necesitaba un proveedor con free tier alto, sin consumo de recursos del servidor y con cero impacto en el rendimiento Core Web Vitals (LCP/FCP) del frontend.

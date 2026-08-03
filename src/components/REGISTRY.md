@@ -243,6 +243,31 @@ Este archivo documenta los componentes UI disponibles en el proyecto, sus props 
 - **Descripción:** Componente que expone los servicios clave mediante Schema.org validado para SEO. Consume datos estáticos predefinidos seguros desde `lib/seo-data` para evitar inyecciones XSS y resolver problemas de carga de JSDOM en el runtime de Vercel.
 - **Props:** No recibe props.
 
+## Analytics & Google Components
+
+### GoogleCustomerReviewsOptIn
+
+- **Ruta:** `src/components/analytics/GoogleCustomerReviewsOptIn.tsx`
+- **Descripción:** Componente cliente que integra la encuesta de satisfacción oficial de **Reseñas de Clientes en Google** (_Google Customer Reviews Opt-In_). Carga de manera asíncrona la API `platform.js` de Google y llama a `window.gapi.surveyoptin.render(...)` con los parámetros requeridos (`merchant_id`, `order_id`, `email`, `delivery_country`, `estimated_delivery_date`).
+- **Props:**
+  - `merchantId?: number` — ID de Comerciante de Google Merchant Center (predeterminado: `5773588467`).
+  - `orderId: string` — Identificador único de la orden o pedido.
+  - `email: string` — Correo electrónico del cliente.
+  - `deliveryCountry?: string` — Código ISO de 2 letras del país (predeterminado: `"SV"`).
+  - `estimatedDeliveryDate: string` — Fecha estimada de entrega en formato `"YYYY-MM-DD"`.
+  - `products?: Array<{ gtin: string }>` — Lista opcional de GTINs de productos comprados.
+- **Ejemplo:** `<GoogleCustomerReviewsOptIn merchantId={5773588467} orderId="ORD-577358" email="cliente@ejemplo.com" estimatedDeliveryDate="2026-08-10" />`
+
+### GoogleMerchantWidget
+
+- **Ruta:** `src/components/analytics/GoogleMerchantWidget.tsx`
+- **Descripción:** Componente cliente que inyecta la librería `https://www.gstatic.com/shopping/merchant/merchantwidget.js` e inicializa la insignia oficial del comerciante (`merchantwidget.start`) de Google Merchant Center.
+- **Props:**
+  - `merchantId?: number` — Identificador de Merchant Center (predeterminado: `5773588467`).
+  - `position?: "BOTTOM_RIGHT" | "BOTTOM_LEFT" | "CENTER_LINE" | "USER_DEFINED" | string` — Posición en pantalla (predeterminado: `"BOTTOM_RIGHT"`).
+  - `region?: string` — Código ISO de región/país (predeterminado: `"SV"`).
+- **Ejemplo:** `<GoogleMerchantWidget merchantId={5773588467} position="BOTTOM_RIGHT" region="SV" />`
+
 ### CategoryHubClient
 
 - **Ruta:** `src/components/catalogo/CategoryHubClient.tsx`
@@ -722,4 +747,67 @@ Cada ruta del proyecto tiene un `loading.tsx` propio que Next.js muestra automá
     hasALaMedidaItem={true}
     onConfirm={(info) => console.log(info)}
   />
+  ```
+
+## Blog Components
+
+### BlogCard
+
+- **Ruta:** `src/components/blog/BlogCard.tsx`
+- **Descripción:** Tarjeta responsiva y accesible para cada artículo de blog. Muestra las etiquetas de pilar, universidad y carrera, título con enlace semántico hacia `/blog/${slug}`, extracto descriptivo, fecha formateada en español e indicador de lectura.
+- **Props:**
+  - `post: BlogPost` — Objeto con la metadata completa del artículo.
+  - `priority?: boolean` — Si es `true`, aplica prioridades de carga si hubiese recursos multimedia.
+- **Ejemplo:**
+  ```tsx
+  <BlogCard post={blogPostItem} />
+  ```
+
+### BlogIndexClient
+
+- **Ruta:** `src/components/blog/BlogIndexClient.tsx`
+- **Descripción:** Coordinador principal cliente del índice del blog (`/blog`). Implementa la arquitectura de layout idéntica a `/ayuda` y `/updates`: barra lateral sticky en escritorio (`lg`) con buscador de texto en tiempo real, índice navegable de 7 pilares y sub-filtro por universidad de la zona oriental. En móvil y tablet (`lg:hidden`), renderiza un drawer lateral desplegable con bloqueo de scroll de pantalla completa, barra de herramientas y grid responsivo.
+- **Props:**
+  - `publishedPosts: BlogPost[]` — Colección de artículos con estado `published`.
+- **Ejemplo:**
+  ```tsx
+  <BlogIndexClient publishedPosts={getPublishedBlogPosts()} />
+  ```
+
+### BlogEmptyState
+
+- **Ruta:** `src/components/blog/BlogEmptyState.tsx`
+- **Descripción:** Estado visual interactivo para cuando no existen artículos en estado 'published' para el filtro seleccionado. Explica el avance del plan editorial de 83 artículos y ofrece CTAs para restablecer filtros o consultar por WhatsApp.
+- **Props:**
+  - `onResetFilters: () => void` — Callback para restablecer los filtros activos.
+  - `selectedPilar?: string` — Nombre del pilar activo para mensaje personalizado.
+  - `selectedUniversity?: string | null` — Universidad activa para mensaje personalizado.
+- **Ejemplo:**
+  ```tsx
+  <BlogEmptyState
+    onResetFilters={reset}
+    selectedPilar="Universidad"
+    selectedUniversity="UNIVO"
+  />
+  ```
+
+### BlogWhatsAppCTA
+
+- **Ruta:** `src/components/blog/BlogWhatsAppCTA.tsx`
+- **Descripción:** Banner promocional al final del índice del blog con llamadas a la acción en voz activa hacia WhatsApp y hacia el catálogo de productos.
+- **Props:** No recibe props.
+- **Ejemplo:**
+  ```tsx
+  <BlogWhatsAppCTA />
+  ```
+
+### BlogIndexClient
+
+- **Ruta:** `src/components/blog/BlogIndexClient.tsx`
+- **Descripción:** Componente coordinador cliente ("use client") para la landing del blog `/blog`. Controla los estados de los filtros, sub-filtros, paginación en lotes de 12 y el renderizado de la grilla de tarjetas o estado vacío.
+- **Props:**
+  - `publishedPosts: BlogPost[]` — Arreglo de artículos en estado 'published'.
+- **Ejemplo:**
+  ```tsx
+  <BlogIndexClient publishedPosts={getPublishedBlogPosts()} />
   ```

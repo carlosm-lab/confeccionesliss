@@ -38,6 +38,7 @@ const NAV_LINKS: NavLink[] = [
   { href: "/", label: "Inicio", mobileIcon: "home" },
   { href: "/catalogo", label: "Catálogo", mobileIcon: "storefront" },
   { href: "/servicios", label: "Servicios", mobileIcon: "design_services" },
+  { href: "/blog", label: "Blog", mobileIcon: "book_open" },
   { href: "/empresa", label: "Empresa", mobileIcon: "business" },
   { href: "/contacto", label: "Contacto", mobileIcon: "mail" },
   { href: "/legal", label: "Legal", mobileIcon: "gavel" },

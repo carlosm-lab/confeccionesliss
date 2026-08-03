@@ -8,6 +8,12 @@ import { DeliveryForm } from "@/components/cart/DeliveryFormModal";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 
 import { Icon } from "@/components/ui/icons/Icon";
+import { BlogIndexClient } from "@/components/blog/BlogIndexClient";
+import { getPublishedBlogPosts, getFeaturedBlogPosts } from "@/data/blog-posts";
+import {
+  GoogleMerchantWidget,
+  type GoogleMerchantWidgetProps,
+} from "@/components/analytics/GoogleMerchantWidget";
 
 interface MatchingProduct {
   id: string;
@@ -117,6 +123,23 @@ export default function SandboxPage() {
           los componentes del proyecto.
         </div>
 
+        {/* Panel de prueba del Blog (Landing / Index / Filtros) */}
+        <div className="mb-8 rounded-2xl border border-indigo-200 bg-indigo-50/50 p-6 shadow-sm">
+          <h2 className="mb-2 text-xl font-bold tracking-tight text-indigo-900">
+            Prueba de Componentes del Blog (/blog)
+          </h2>
+          <p className="mb-6 text-sm text-indigo-700">
+            Validación de BlogFilters, BlogCard, BlogEmptyState y
+            BlogIndexClient con artículos publicados.
+          </p>
+          <div className="rounded-2xl border border-indigo-100 bg-white p-6 shadow-xs">
+            <BlogIndexClient
+              publishedPosts={getPublishedBlogPosts()}
+              featuredPosts={getFeaturedBlogPosts()}
+            />
+          </div>
+        </div>
+
         {/* Panel de prueba de Componente Icon.tsx */}
         <div className="mb-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <h2 className="mb-4 text-xl font-bold tracking-tight text-slate-800">
@@ -158,6 +181,33 @@ export default function SandboxPage() {
         </div>
 
         {/* Panel de Migración de Base de Datos */}
+        {/* Sección de Prueba de Reseñas de Clientes en Google */}
+        <div className="mb-8 rounded-2xl border border-emerald-200 bg-emerald-50/50 p-6 shadow-sm dark:bg-emerald-950/20">
+          <h2 className="mb-2 flex items-center gap-2 text-xl font-bold tracking-tight text-emerald-900 dark:text-emerald-200">
+            <Icon name="star" className="text-amber-500" />
+            Integración Reseñas de Clientes en Google (Merchant ID: 5773588467)
+          </h2>
+          <p className="mb-4 text-sm text-emerald-800 dark:text-emerald-300">
+            Prueba de componentes de la integración oficial de Google Customer
+            Reviews (*Opt-In Survey* e *Insignia*).
+          </p>
+          <div className="flex flex-wrap items-center gap-4">
+            <a
+              href="/confirmacion-pedido?order_id=ORD-TEST-577358&email=cliente@ejemplo.com&estimated_delivery_date=2026-08-10&country=SV"
+              target="_blank"
+              className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-colors hover:bg-emerald-700"
+            >
+              <Icon name="open_in_new" />
+              Probar Vista de Confirmación de Pedido (/confirmacion-pedido)
+            </a>
+            <GoogleMerchantWidget
+              merchantId={5773588467}
+              position="BOTTOM_RIGHT"
+              region="SV"
+            />
+          </div>
+        </div>
+
         <div className="mb-8 rounded-2xl border border-blue-200 bg-blue-50 p-6 shadow-sm">
           <h2 className="mb-2 text-xl font-bold tracking-tight text-blue-900">
             Herramienta de Migración de Precios (Talla L: 35 ➔ 38)

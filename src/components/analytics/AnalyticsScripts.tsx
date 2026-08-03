@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { GoogleAnalytics } from "./GoogleAnalytics";
 import { MetaPixel } from "./MetaPixel";
+import { GoogleMerchantWidget } from "./GoogleMerchantWidget";
 
 interface AnalyticsScriptsProps {
   gaId?: string;
@@ -44,6 +45,11 @@ export function AnalyticsScripts({ gaId, pixelId }: AnalyticsScriptsProps) {
     <>
       <GoogleAnalytics gaId={gaId} />
       <MetaPixel pixelId={pixelId} />
+      <GoogleMerchantWidget
+        merchantId={5773588467}
+        position="BOTTOM_RIGHT"
+        region="SV"
+      />
     </>
   );
 }

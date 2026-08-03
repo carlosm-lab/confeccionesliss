@@ -33,6 +33,8 @@ export interface ShippingInfo {
   // ── Datos del destinatario (llenados en el formulario de entrega) ──
   /** Nombre completo del destinatario */
   recipientName?: string;
+  /** Correo electrónico para confirmación de pedido y encuestas */
+  recipientEmail?: string;
   /** Teléfono principal del destinatario */
   recipientPhone?: string;
   /** Teléfono o WhatsApp de contacto alterno */
