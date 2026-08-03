@@ -34,7 +34,11 @@ interface NavLink {
   mobileIcon: string;
 }
 
-const NAV_LINKS: NavLink[] = [
+const isBlogEnabled =
+  process.env.NODE_ENV === "development" ||
+  clientEnv.NEXT_PUBLIC_ENABLE_BLOG === "true";
+
+const RAW_NAV_LINKS: NavLink[] = [
   { href: "/", label: "Inicio", mobileIcon: "home" },
   { href: "/catalogo", label: "Catálogo", mobileIcon: "storefront" },
   { href: "/servicios", label: "Servicios", mobileIcon: "design_services" },
@@ -44,6 +48,10 @@ const NAV_LINKS: NavLink[] = [
   { href: "/legal", label: "Legal", mobileIcon: "gavel" },
   { href: "/ayuda", label: "Ayuda", mobileIcon: "help" },
 ];
+
+const NAV_LINKS = RAW_NAV_LINKS.filter(
+  (item) => item.href !== "/blog" || isBlogEnabled
+);
 
 const SEARCH_PHRASES = [
   "Uniformes de la univo...",

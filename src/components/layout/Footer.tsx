@@ -1,4 +1,5 @@
 import { siteConfig } from "@/config/site";
+import { clientEnv } from "@/lib/clientEnv";
 import { Icon } from "@/components/ui/icons/Icon";
 import Image from "next/image";
 import Link from "next/link";
@@ -196,16 +197,23 @@ export function Footer() {
                     { href: "/links", label: "Redes Sociales" },
                     { href: "/updates", label: "Updates" },
                     { href: "/ayuda", label: "Ayuda" },
-                  ].map((link, idx) => (
-                    <li key={idx}>
-                      <Link
-                        href={link.href}
-                        className="text-[#a5b1c9] transition-colors duration-200 hover:text-white hover:underline"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
+                  ]
+                    .filter(
+                      (link) =>
+                        link.href !== "/blog" ||
+                        process.env.NODE_ENV === "development" ||
+                        clientEnv.NEXT_PUBLIC_ENABLE_BLOG === "true"
+                    )
+                    .map((link, idx) => (
+                      <li key={idx}>
+                        <Link
+                          href={link.href}
+                          className="text-[#a5b1c9] transition-colors duration-200 hover:text-white hover:underline"
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
                 </ul>
               </div>
 

@@ -27,6 +27,7 @@ export const clientEnv = {
   NEXT_PUBLIC_SITE_URL:
     process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   NEXT_PUBLIC_HOME_ONLY: process.env.NEXT_PUBLIC_HOME_ONLY || "false",
+  NEXT_PUBLIC_ENABLE_BLOG: process.env.NEXT_PUBLIC_ENABLE_BLOG || "false",
   NEXT_PUBLIC_GOOGLE_CLIENT_ID:
     process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || "placeholder_client_id",
   NEXT_PUBLIC_VAPID_PUBLIC_KEY:

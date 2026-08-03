@@ -87,6 +87,20 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // ── 1.5. BLOG EN DESARROLLO (Respuesta 404 limpia en Producción) ───
+  // El Blog se mantiene activo en desarrollo local (/blog) para su iteración.
+  // En producción responde con HTTP 404 Not Found explícito para no ser indexado
+  // ni generar advertencias de Soft 404 (redirección a home) en Google Search Console.
+  if (pathname.startsWith("/blog")) {
+    if (
+      env.NODE_ENV === "production" &&
+      env.NEXT_PUBLIC_ENABLE_BLOG !== "true"
+    ) {
+      url.pathname = "/not-found";
+      return NextResponse.rewrite(url, { status: 404 });
+    }
+  }
+
   // ── 2. PROTECCIÓN SERVER-SIDE DE /ADMIN ──────────────────────
   const isAdminLoginPage = pathname === "/admin/login";
   const isAdminRoute = pathname.startsWith("/admin");

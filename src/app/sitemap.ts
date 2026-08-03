@@ -54,12 +54,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 0.7,
     },
-    {
-      url: `${siteConfig.url}/blog`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.85,
-    },
+    ...(env.NODE_ENV === "development" || env.NEXT_PUBLIC_ENABLE_BLOG === "true"
+      ? [
+          {
+            url: `${siteConfig.url}/blog`,
+            lastModified: now,
+            changeFrequency: "weekly" as const,
+            priority: 0.85,
+          },
+        ]
+      : []),
     {
       url: `${siteConfig.url}/ayuda`,
       lastModified: now,

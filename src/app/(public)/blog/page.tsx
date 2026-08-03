@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { siteConfig } from "@/config/site";
+import { env } from "@/env";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Icon } from "@/components/ui/icons/Icon";
 import {
@@ -44,6 +46,13 @@ export const metadata: Metadata = {
 };
 
 export default function BlogIndexPage() {
+  if (
+    process.env.NODE_ENV === "production" &&
+    env.NEXT_PUBLIC_ENABLE_BLOG !== "true"
+  ) {
+    notFound();
+  }
+
   const allPosts = getAllBlogPosts();
   const publishedPosts = getPublishedBlogPosts();
   const featuredPosts = getFeaturedBlogPosts();
